@@ -87,4 +87,4 @@ class Normalizer():
 
 if __name__ == '__main__':
 	import doctest
-	doctest.testmod(extraglobs={'normalizer': Normalizer(affix_spacing=False)})
+	doctest.testmod(extraglobs={'normalizer': Normalizer()})
