@@ -25,7 +25,7 @@ class Normalizer():
 		])
 
 		self.affix_spacing_patterns = compile_patterns([
-			(r'([^ ])ه ی ', r'\1هٔ '), # fix hamze
+			(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
 			(r' (ن?می) ', r' \1‌'), # put zwnj after می, نمی
 			(r' (تر(ی(ن)?)?|ها(ی)?) ', r'‌\1 '), # put zwnj before تر, ترین, ها, های
 		])
@@ -64,7 +64,7 @@ class Normalizer():
 	def affix_spacing(self, text):
 		"""
 		>>> print(normalizer.affix_spacing('خانه ی پدری'))
-		خانهٔ پدری
+		خانه‌ی پدری
 
 		>>> print(normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.'))
 		فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.
