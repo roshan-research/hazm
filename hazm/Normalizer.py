@@ -7,33 +7,43 @@ compile_patterns = lambda patterns: [(re.compile(u(pattern)), repl) for pattern,
 
 
 class Normalizer():
-	def __init__(self):
+	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True):
+		self._character_refinement = character_refinement
+		self._punctuation_spacing = punctuation_spacing
+		self._affix_spacing = affix_spacing
+
 		self.translations = maketrans(u('كي%1234567890'), u('کی٪۱۲۳۴۵۶۷۸۹۰'))
 
-		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
-		self.character_refinement_patterns = compile_patterns([
-			(r'[ ]+', ' '), # extra spaces
-			(r'[\n\r]+', '\n'), # extra newlines
-			(r'ـ+', ''), # keshide
-		])
+		if character_refinement:
+			punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
+			self.character_refinement_patterns = compile_patterns([
+				(r'[ ]+', ' '), # extra spaces
+				(r'[\n\r]+', '\n'), # extra newlines
+				(r'ـ+', ''), # keshide
+			])
 
-		self.punctuation_spacing_patterns = compile_patterns([
-			(' (['+ punc_after +'])', r'\1'), # remove space before
-			('(['+ punc_before +']) ', r'\1'), # remove space after
-			('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'), # put space after
-			('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'), # put space before
-		])
+		if punctuation_spacing:
+			self.punctuation_spacing_patterns = compile_patterns([
+				(' (['+ punc_after +'])', r'\1'), # remove space before
+				('(['+ punc_before +']) ', r'\1'), # remove space after
+				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'), # put space after
+				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'), # put space before
+			])
 
-		self.affix_spacing_patterns = compile_patterns([
-			(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
-			(r' (ن?می) ', r' \1‌'), # put zwnj after می, نمی
-			(r' (تر(ی(ن)?)?|ها(ی)?) ', r'‌\1 '), # put zwnj before تر, ترین, ها, های
-		])
+		if affix_spacing:
+			self.affix_spacing_patterns = compile_patterns([
+				(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
+				(r' (ن?می) ', r' \1‌'), # put zwnj after می, نمی
+				(r' (تر(ی(ن)?)?|ها(ی)?) ', r'‌\1 '), # put zwnj before تر, ترین, ها, های
+			])
 
 	def normalize(self, text):
-		text = self.character_refinement(text)
-		text = self.punctuation_spacing(text)
-		text = self.affix_spacing(text)
+		if self._character_refinement:
+			text = self.character_refinement(text)
+		if self._punctuation_spacing:
+			text = self.punctuation_spacing(text)
+		if self._affix_spacing:
+			text = self.affix_spacing(text)
 		return text
 
 	def character_refinement(self, text):
@@ -77,4 +87,4 @@ class Normalizer():
 
 if __name__ == '__main__':
 	import doctest
-	doctest.testmod(extraglobs={'normalizer': Normalizer()})
+	doctest.testmod(extraglobs={'normalizer': Normalizer(affix_spacing=False)})
