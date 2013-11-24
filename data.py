@@ -10,14 +10,14 @@ def create_words_file(freqs_file='resources/word-freq-utf8.txt', output='data/wo
 
 	words = []
 	normalizer = Normalizer()
-	stemmer = Stemmer()
+	stemmer = Stemmer(words_file=None)
 	words_file = codecs.open(output, 'w', 'utf8')
 	for line in codecs.open(freqs_file, 'r', 'utf8'):
 		word, count = line.strip().split(',')
 		if int(count) > 10:
 			words.append(normalizer.normalize(word))
 
-	word_set = set(words)
+	word_set = set(words + list(stemmer.tenses.values()))
 	for word in words:
 		stem = stemmer.stem(word)
 		if stem == word or stem not in word_set:
