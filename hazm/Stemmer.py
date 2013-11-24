@@ -1,5 +1,7 @@
+#coding=utf8
 
 from nltk.stem.api import StemmerI
+
 
 class Stemmer(StemmerI):
 	def __init__(self):
