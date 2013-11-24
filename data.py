@@ -4,7 +4,7 @@ import sys, codecs
 from hazm import Normalizer, Stemmer
 
 
-def create_words_file(freqs_file='resources/word-freq-utf8.txt', output='data/words.dat'):
+def create_words_file(dic_file='resources/persian.dic', output='data/words.dat'):
 	"""
 	"""
 
@@ -12,10 +12,9 @@ def create_words_file(freqs_file='resources/word-freq-utf8.txt', output='data/wo
 	normalizer = Normalizer()
 	stemmer = Stemmer(words_file=None)
 	words_file = codecs.open(output, 'w', 'utf8')
-	for line in codecs.open(freqs_file, 'r', 'utf8'):
-		word, count = line.strip().split(',')
-		if int(count) > 10:
-			words.append(normalizer.normalize(word))
+	for line in codecs.open(dic_file, encoding='utf8'):
+		word = line.split('\t')[0]
+		words.append(normalizer.normalize(word))
 
 	word_set = set(words + list(stemmer.tenses.values()))
 	for word in words:
@@ -31,7 +30,7 @@ def create_verbs_file(valency_file='resources/valency.txt', output='data/verbs.d
 	"""
 
 	verbs = []
-	for l, line in enumerate(codecs.open(valency_file, 'r', 'utf8')):
+	for l, line in enumerate(codecs.open(valency_file, encoding='utf8')):
 		parts = line.split('\t')
 		if l > 1 and len(parts) == 6:
 			mazi, pishvand = parts[0], parts[2]

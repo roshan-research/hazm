@@ -6,7 +6,7 @@ from nltk.stem.api import StemmerI
 
 class Stemmer(StemmerI):
 	def __init__(self, words_file='data/words.dat', tenses_file='data/tenses.dat'):
-		self.ends = ['ان', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', '‌']
+		self.ends = ['ات', 'ان', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', '‌']
 		self.tenses = {}
 		self.words = set([])
 
@@ -30,8 +30,8 @@ class Stemmer(StemmerI):
 		'کتاب'
 		>>> stemmer.stem('کتابهایشان')
 		'کتاب'
-		>>> stemmer.stem('لبنان')
-		'لبنان'
+		>>> stemmer.stem('آتشفشان')
+		'آتشفشان'
 		>>> stemmer.stem('می‌روم')
 		'رفتن'
 		"""
