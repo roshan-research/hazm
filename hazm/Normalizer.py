@@ -33,6 +33,7 @@ class Normalizer():
 		if affix_spacing:
 			self.affix_spacing_patterns = compile_patterns([
 				(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
+				(r'(^| )می ([^\s\d])', r'\1می‌\2'), # join می to verb
 				(r' (ن?می) ', r' \1‌'), # put zwnj after می, نمی
 				(r' (تر(ی(ن)?)?|ها(ی)?) ', r'‌\1 '), # put zwnj before تر, ترین, ها, های
 			])
@@ -78,6 +79,9 @@ class Normalizer():
 
 		>>> print(normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.'))
 		فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.
+
+		>>> print(normalizer.affix_spacing('می روم'))
+		می‌روم
 		"""
 
 		for pattern, repl in self.affix_spacing_patterns:
