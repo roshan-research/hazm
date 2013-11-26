@@ -1,12 +1,15 @@
 
-import six
+import sys
 from os import path
+PY3 = sys.version_info.major == 3
 
 
-if six.PY2:
-	u = lambda s: s.decode('utf8')
-else:
+if PY3:
 	u = lambda s: s
+	list_u = u
+else:
+	u = lambda s: s.decode('utf8')
+	list_u = lambda l: map(u, l)
 
 
 data_path = path.join(path.dirname(__file__), 'data')

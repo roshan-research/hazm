@@ -1,7 +1,7 @@
 #coding=utf8
 
 import codecs, itertools
-from .utils import u, default_words, default_verbs
+from .utils import u, list_u, default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
 
@@ -25,7 +25,7 @@ class Lemmatizer():
 			tokenizer = WordTokenizer(verbs_file=verbs_file)
 			verbs = [verb.strip() for verb in codecs.open(verbs_file, encoding='utf8') if verb]
 			for verb, after_verb in itertools.product(verbs, tokenizer.after_verbs):
-				self.dict[verb.split('#')[0] +'ه '+ after_verb] = verb
+				self.dict[verb.split('#')[0] + u'ه ' + after_verb] = verb
 
 	def lemmatize(self, word):
 		"""
@@ -58,20 +58,20 @@ class Lemmatizer():
 		"""
 
 		past, present = verb.split('#')
-		with_nots = lambda items: items + list(map(lambda item: 'ن' + item, items))
+		with_nots = lambda items: items + list(map(lambda item: u'ن' + item, items))
 
-		ends = ['م', 'ی', '', 'یم', 'ید', 'ند']
+		ends = list_u(['م', 'ی', '', 'یم', 'ید', 'ند'])
 		past_simples = [past + end for end in ends]
-		past_imperfects = ['می‌'+ item for item in past_simples]
-		past_narratives = [past +'ه‌ام' for end in ends]
+		past_imperfects = [u'می‌'+ item for item in past_simples]
+		past_narratives = [past + u'ه‌ام' for end in ends]
 
-		ends = ['م', 'ی', 'د', 'یم', 'ید', 'ند']
+		ends = list_u(['م', 'ی', 'د', 'یم', 'ید', 'ند'])
 		present_simples = [present + end for end in ends]
-		present_imperfects = ['می‌'+ item for item in present_simples]
-		present_subjunctives = ['ب'+ item for item in present_simples]
-		present_not_subjunctives = ['ن'+ item for item in present_simples]
+		present_imperfects = [u'می‌'+ item for item in present_simples]
+		present_subjunctives = [u'ب'+ item for item in present_simples]
+		present_not_subjunctives = [u'ن'+ item for item in present_simples]
 
-		imperatives = ['ب'+ present, 'ن'+ present]
+		imperatives = [u'ب'+ present, u'ن'+ present]
 
 		return with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives
 

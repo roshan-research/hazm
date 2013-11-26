@@ -1,7 +1,7 @@
 #coding=utf8
 
 import re, codecs
-from .utils import u, default_verbs
+from .utils import u, list_u, default_verbs
 from nltk.tokenize.api import TokenizerI
 
 
@@ -11,7 +11,7 @@ class WordTokenizer(TokenizerI):
 		self.pattern = re.compile(u(r'([!:\.،؛؟»\]\)\}«\[\(\{\?]+)'))
 
 		if join_verb_parts:
-			self.after_verbs = set([
+			self.after_verbs = set(list_u([
 				'ام', 'ای', 'است', 'ایم', 'اید', 'اند', 'بودم', 'بودی', 'بود', 'بودیم', 'بودید', 'بودند', 'باشم', 'باشی', 'باشد', 'باشیم', 'باشید', 'باشند',
 				'شده ام', 'شده ای', 'شده است', 'شده ایم', 'شده اید', 'شده اند', 'شده بودم', 'شده بودی', 'شده بود', 'شده بودیم', 'شده بودید', 'شده بودند', 'شده باشم', 'شده باشی', 'شده باشد', 'شده باشیم', 'شده باشید', 'شده باشند',
 				'نشده ام', 'نشده ای', 'نشده است', 'نشده ایم', 'نشده اید', 'نشده اند', 'نشده بودم', 'نشده بودی', 'نشده بود', 'نشده بودیم', 'نشده بودید', 'نشده بودند', 'نشده باشم', 'نشده باشی', 'نشده باشد', 'نشده باشیم', 'نشده باشید', 'نشده باشند',
@@ -21,14 +21,14 @@ class WordTokenizer(TokenizerI):
 				'نمی‌شوم', 'نمی‌شوی', 'نمی‌شود', 'نمی‌شویم', 'نمی‌شوید', 'نمی‌شوند', 'نمی‌شدم', 'نمی‌شدی', 'نمی‌شد', 'نمی‌شدیم', 'نمی‌شدید', 'نمی‌شدند',
 				'خواهم شد', 'خواهی شد', 'خواهد شد', 'خواهیم شد', 'خواهید شد', 'خواهند شد',
 				'نخواهم شد', 'نخواهی شد', 'نخواهد شد', 'نخواهیم شد', 'نخواهید شد', 'نخواهند شد',
-			])
+			]))
 
-			self.before_verbs = set([
+			self.before_verbs = set(list_u([
 				'خواهم', 'خواهی', 'خواهد', 'خواهیم', 'خواهید', 'خواهند',
 				'نخواهم', 'نخواهی', 'نخواهد', 'نخواهیم', 'نخواهید', 'نخواهند'
-			])
+			]))
 
-			self.verbe = set([verb.split('#')[0] +'ه' for verb in codecs.open(verbs_file, encoding='utf8') if verb])
+			self.verbe = set([verb.split('#')[0] + u'ه' for verb in codecs.open(verbs_file, encoding='utf8') if verb])
 
 	def tokenize(self, text):
 		"""
@@ -55,6 +55,7 @@ class WordTokenizer(TokenizerI):
 		>>> tokenizer.join_verb_parts(['خسته', 'شدید'])
 		['خسته', 'شدید']
 		"""
+
 		result = ['']
 		for token in reversed(tokens):
 			if token in self.before_verbs or (result[-1] in self.after_verbs and token in self.verbe):
@@ -62,6 +63,7 @@ class WordTokenizer(TokenizerI):
 			else:
 				result.append(token)
 		return list(reversed(result[1:]))
+
 
 if __name__ == '__main__':
 	import doctest

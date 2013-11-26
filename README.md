@@ -7,7 +7,8 @@ Python library for digesting Persian text.
 
 ## Tests
 
-	python3 -m hazm.WordTokenizer
 	python3 -m hazm.SentenceTokenizer
+	python3 -m hazm.WordTokenizer
 	python3 -m hazm.Normalizer
 	python3 -m hazm.Stemmer
+	python3 -m hazm.Lemmatizer
