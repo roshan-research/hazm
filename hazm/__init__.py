@@ -3,6 +3,7 @@ from .SentenceTokenizer import SentenceTokenizer
 from .WordTokenizer import WordTokenizer
 from .Normalizer import Normalizer
 from .Stemmer import Stemmer
+from .Lemmatizer import Lemmatizer
 
 sentence_tokenizer = SentenceTokenizer()
 sent_tokenize = lambda text: sentence_tokenizer.tokenize(text)

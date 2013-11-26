@@ -5,7 +5,7 @@ from hazm import Normalizer, Stemmer
 
 
 def create_words_file(dic_file='resources/persian.dic', output='data/words.dat'):
-	"""
+	""" prepares list of persian word lemmas from [Virastyar dic](https://sourceforge.net/projects/virastyar/files/Data/1.3.1/persian.dic/download) file.
 	"""
 
 	words = []
@@ -26,7 +26,7 @@ def create_words_file(dic_file='resources/persian.dic', output='data/words.dat')
 
 
 def create_verbs_file(valency_file='resources/valency.txt', output='data/verbs.dat'):
-	"""
+	""" prepares list of persian verbs from [Verb Valency](http://dadegan.ir/pervallex) corpus.
 	"""
 
 	verbs = []
