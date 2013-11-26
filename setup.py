@@ -8,6 +8,7 @@ setup(name='hazm',
 	author_email='alireza.nournia@gmail.com',
 	url='https://github.com/nournia/hazm',
 	packages=['hazm'],
+	package_data={'hazm': ['data/*.dat']},
 	classifiers=[
 		'Topic :: Text Processing',
 		'Natural Language :: Persian',

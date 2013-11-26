@@ -1,12 +1,12 @@
 #coding=utf8
 
 import re, codecs
-from .utils import u
+from .utils import u, default_verbs
 from nltk.tokenize.api import TokenizerI
 
 
 class WordTokenizer(TokenizerI):
-	def __init__(self, verbs_file='data/verbs.dat', join_verb_parts=True):
+	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(u(r'([!:\.،؛؟»\]\)\}«\[\(\{\?]+)'))
 

@@ -4,7 +4,7 @@ import sys, codecs
 from hazm import Normalizer, Stemmer
 
 
-def create_words_file(dic_file='resources/persian.dic', output='data/words.dat'):
+def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
 	""" prepares list of persian word words from [Virastyar dic](https://sourceforge.net/projects/virastyar/files/Data/1.3.1/persian.dic/download) file.
 	"""
 
@@ -13,7 +13,7 @@ def create_words_file(dic_file='resources/persian.dic', output='data/words.dat')
 	print(output, 'created')
 
 
-def create_verbs_file(valency_file='resources/valency.txt', output='data/verbs.dat'):
+def create_verbs_file(valency_file='resources/valency.txt', output='hazm/data/verbs.dat'):
 	""" prepares list of persian verbs from [Verb Valency](http://dadegan.ir/pervallex) corpus.
 	"""
 

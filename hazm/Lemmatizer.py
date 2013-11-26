@@ -1,12 +1,13 @@
 #coding=utf8
 
 import codecs, itertools
+from .utils import u, default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
 
 
 class Lemmatizer():
-	def __init__(self, words_file='data/words.dat', verbs_file='data/verbs.dat', joined_verb_parts=True):
+	def __init__(self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True):
 		self.dict = {}
 		self.words = set([])
 		self.stemmer = Stemmer()
