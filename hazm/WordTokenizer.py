@@ -6,7 +6,7 @@ from nltk.tokenize.api import TokenizerI
 
 
 class WordTokenizer(TokenizerI):
-	def __init__(self, verbs_file='data/verbs.dat', join_verb_parts=False):
+	def __init__(self, verbs_file='data/verbs.dat', join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(u(r'([!:\.،؛؟»\]\)\}«\[\(\{\?]+)'))
 
@@ -28,8 +28,7 @@ class WordTokenizer(TokenizerI):
 				'نخواهم', 'نخواهی', 'نخواهد', 'نخواهیم', 'نخواهید', 'نخواهند'
 			])
 
-			verbs = codecs.open(verbs_file, encoding='utf8').readlines()
-			self.verbe = set([verb.strip() +'ه' for verb in verbs])
+			self.verbe = set([verb.split('#')[0] +'ه' for verb in codecs.open(verbs_file, encoding='utf8') if verb])
 
 	def tokenize(self, text):
 		"""

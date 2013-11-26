@@ -21,10 +21,10 @@ def create_verbs_file(valency_file='resources/valency.txt', output='data/verbs.d
 	for l, line in enumerate(codecs.open(valency_file, encoding='utf8')):
 		parts = line.split('\t')
 		if l > 1 and len(parts) == 6:
-			mazi, pishvand = parts[0], parts[2]
+			past, present = parts[0], parts[1]
 
-			if mazi != '-':
-				verb = mazi if pishvand == '-' else pishvand + mazi
+			if past != '-':
+				verb = past+'#'+present
 				if verb not in verbs:
 					verbs.append(verb)
 
