@@ -38,6 +38,9 @@ class Lemmatizer():
 		'گفتن'
 		"""
 
+		if word in self.words:
+			return word
+
 		if word in self.dict:
 			return self.dict[word]
 
