@@ -28,4 +28,5 @@ Python library for digesting Persian text.
 
 ## Tests
 
+	python3 -m hazm.{module}
 	python3 -m doctest README.md
