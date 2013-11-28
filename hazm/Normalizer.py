@@ -35,7 +35,7 @@ class Normalizer():
 				(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
 				(r'(^| )می ([^\s\d])', r'\1می‌\2'), # join می to verb
 				(r' (ن?می) ', r' \1‌'), # put zwnj after می, نمی
-				(r' (تر(ی(ن)?)?|ها(ی)?) ', r'‌\1 '), # put zwnj before تر, ترین, ها, های
+				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ '+ punc_after + punc_before +'])', r'‌\1'), # put zwnj before تر, ترین, ها, های
 			])
 
 	def normalize(self, text):
