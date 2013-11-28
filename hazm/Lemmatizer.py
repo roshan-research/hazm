@@ -16,19 +16,16 @@ class Lemmatizer():
 			self.words = set(map(lambda w: w.strip(), codecs.open(words_file, encoding='utf8')))
 
 		if verbs_file:
-			self.verbs[u'است'] = u'#است'
-			for verb in map(lambda v: v.strip(), codecs.open(verbs_file, encoding='utf8')):
-				if verb:
-					for tense in self.conjugations(verb):
-						self.verbs[tense] = verb
-
-		if joined_verb_parts:
 			tokenizer = WordTokenizer(verbs_file=verbs_file)
-			verbs = [verb.strip() for verb in codecs.open(verbs_file, encoding='utf8') if verb]
-			for verb, after_verb in itertools.product(verbs, tokenizer.after_verbs):
-				self.verbs[verb.split('#')[0] + u'ه ' + after_verb] = verb
-			for verb, before_verb in itertools.product(verbs, tokenizer.before_verbs):
-				self.verbs[before_verb + u' ' + verb.split('#')[0]] = verb
+			self.verbs[u'است'] = u'#است'
+			for verb in tokenizer.verbs:
+				for tense in self.conjugations(verb):
+					self.verbs[tense] = verb
+			if joined_verb_parts:
+				for verb, after_verb in itertools.product(tokenizer.verbs, tokenizer.after_verbs):
+					self.verbs[verb.split('#')[0] + u'ه ' + after_verb] = verb
+				for verb, before_verb in itertools.product(tokenizer.verbs, tokenizer.before_verbs):
+					self.verbs[before_verb + u' ' + verb.split('#')[0]] = verb
 
 	def lemmatize(self, word, pos=''):
 		"""

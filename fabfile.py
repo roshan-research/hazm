@@ -34,7 +34,7 @@ def create_verbs_file(valency_file='resources/valency.txt', output='hazm/data/ve
 
 def evaluate_lemmatizer(dependency_corpus='resources/dependency.conll'):
 	lemmatizer = Lemmatizer()
-	output = codecs.open('errors.txt', 'w', 'utf8')
+	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
 	errors = []
 
 	for line in codecs.open(dependency_corpus, encoding='utf8'):
