@@ -49,11 +49,11 @@ class Normalizer():
 
 	def character_refinement(self, text):
 		"""
-		>>> print(normalizer.character_refinement('اصلاح كاف و ياي عربي'))
-		اصلاح کاف و یای عربی
+		>>> normalizer.character_refinement('اصلاح كاف و ياي عربي')
+		'اصلاح کاف و یای عربی'
 
-		>>> print(normalizer.character_refinement('رمــــان'))
-		رمان
+		>>> normalizer.character_refinement('رمــــان')
+		'رمان'
 		"""
 
 		text = text.translate(self.translations)
@@ -63,8 +63,8 @@ class Normalizer():
 
 	def punctuation_spacing(self, text):
 		"""
-		>>> print(normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .'))
-		اصلاح (پرانتزها) در متن.
+		>>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
+		'اصلاح (پرانتزها) در متن.'
 		"""
 
 		# todo: don't put space inside time and float numbers
@@ -74,14 +74,14 @@ class Normalizer():
 
 	def affix_spacing(self, text):
 		"""
-		>>> print(normalizer.affix_spacing('خانه ی پدری'))
-		خانه‌ی پدری
+		>>> normalizer.affix_spacing('خانه ی پدری')
+		'خانه‌ی پدری'
 
-		>>> print(normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.'))
-		فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.
+		>>> normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.')
+		'فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.'
 
-		>>> print(normalizer.affix_spacing('می روم'))
-		می‌روم
+		>>> normalizer.affix_spacing('می روم')
+		'می‌روم'
 		"""
 
 		for pattern, repl in self.affix_spacing_patterns:
