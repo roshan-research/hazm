@@ -1,37 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <title>Hazm by nournia</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>Hazm</h1>
-          <h2>Python library for digesting Persian text.</h2>
-        </header>
+      <header>
+        <h1>Hazm</h1>
+        <p>Python library for digesting Persian text.</p>
+      </header>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/nournia/hazm/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/nournia/hazm/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/nournia/hazm" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+      <div id="banner">
+        <span id="logo"></span>
 
-        <hr>
+        <a href="https://github.com/nournia/hazm" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/nournia/hazm/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/nournia/hazm/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
 
-        <section id="main_content">
-          <h1>
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
 <a name="hazm" class="anchor" href="#hazm"><span class="octicon octicon-link"></span></a>Hazm</h1>
 
 <p>Python library for digesting Persian text.</p>
@@ -42,41 +50,40 @@
 </ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<pre><code>pip install hazm
+<pre lang="shell"><code>pip install hazm
 </code></pre>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<pre><code>&gt;&gt;&gt; from hazm import sent_tokenize, word_tokenize
-&gt;&gt;&gt; sent_tokenize('جدا کردن ساده است. تقریبا البته!')
-['جدا کردن ساده است.', 'تقریبا البته!']
-&gt;&gt;&gt; word_tokenize('این جمله معمولی است.')
-['این', 'جمله', 'معمولی', 'است', '.']
+<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'جدا کردن ساده است. تقریبا البته!'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'جدا کردن ساده است.'</span><span class="p">,</span> <span class="s">'تقریبا البته!'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'این جمله معمولی است.'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'این'</span><span class="p">,</span> <span class="s">'جمله'</span><span class="p">,</span> <span class="s">'معمولی'</span><span class="p">,</span> <span class="s">'است'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">]</span>
 
-&gt;&gt;&gt; from hazm import Stemmer, Lemmatizer
-&gt;&gt;&gt; stemmer = Stemmer()
-&gt;&gt;&gt; stemmer.stem('کتاب‌ها')
-'کتاب'
-&gt;&gt;&gt; lemmatizer = Lemmatizer()
-&gt;&gt;&gt; lemmatizer.lemmatize('می‌روم')
-'رفت#رو'
-</code></pre>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Stemmer</span><span class="p">,</span> <span class="n">Lemmatizer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s">'کتاب‌ها'</span><span class="p">)</span>
+<span class="s">'کتاب'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s">'می‌روم'</span><span class="p">)</span>
+<span class="s">'رفت#رو'</span>
+
+</pre></div>
 
 <h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<pre><code>python3 -m doctest README.md
+<pre lang="shell"><code>python3 -m doctest README.md
 </code></pre>
-        </section>
-
-        <footer>
-          Hazm is maintained by <a href="https://github.com/nournia">nournia</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/nournia">nournia</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
