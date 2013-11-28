@@ -8,7 +8,7 @@ from .WordTokenizer import WordTokenizer
 
 class Lemmatizer():
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True):
-		self.dict = {}
+		self.verbs = {}
 		self.words = set([])
 		self.stemmer = Stemmer()
 
@@ -16,18 +16,21 @@ class Lemmatizer():
 			self.words = set(map(lambda w: w.strip(), codecs.open(words_file, encoding='utf8')))
 
 		if verbs_file:
+			self.verbs[u'است'] = u'#است'
 			for verb in map(lambda v: v.strip(), codecs.open(verbs_file, encoding='utf8')):
 				if verb:
 					for tense in self.conjugations(verb):
-						self.dict[tense] = verb
+						self.verbs[tense] = verb
 
 		if joined_verb_parts:
 			tokenizer = WordTokenizer(verbs_file=verbs_file)
 			verbs = [verb.strip() for verb in codecs.open(verbs_file, encoding='utf8') if verb]
 			for verb, after_verb in itertools.product(verbs, tokenizer.after_verbs):
-				self.dict[verb.split('#')[0] + u'ه ' + after_verb] = verb
+				self.verbs[verb.split('#')[0] + u'ه ' + after_verb] = verb
+			for verb, before_verb in itertools.product(verbs, tokenizer.before_verbs):
+				self.verbs[before_verb + u' ' + verb.split('#')[0]] = verb
 
-	def lemmatize(self, word):
+	def lemmatize(self, word, pos=''):
 		"""
 		>>> lemmatizer.lemmatize('کتاب‌ها')
 		'کتاب'
@@ -37,13 +40,15 @@ class Lemmatizer():
 		'رفت#رو'
 		>>> lemmatizer.lemmatize('گفته شده است')
 		'گفت#گو'
+		>>> lemmatizer.lemmatize('مردم', pos='N')
+		'مردم'
 		"""
+
+		if (not pos or pos == 'V') and word in self.verbs:
+			return self.verbs[word]
 
 		if word in self.words:
 			return word
-
-		if word in self.dict:
-			return self.dict[word]
 
 		stem = self.stemmer.stem(word)
 		if stem in self.words:
@@ -53,17 +58,20 @@ class Lemmatizer():
 
 	def conjugations(self, verb):
 		"""
-		>>> print(*lemmatizer.conjugations('خورد#خور'))
-		خورم خوری خورد خوریم خورید خورند نخورم نخوری نخورد نخوریم نخورید نخورند می‌خوردم می‌خوردی می‌خورد می‌خوردیم می‌خوردید می‌خوردند نمی‌خوردم نمی‌خوردی نمی‌خورد نمی‌خوردیم نمی‌خوردید نمی‌خوردند خورده‌ام خورده‌ام خورده‌ام خورده‌ام خورده‌ام خورده‌ام نخورده‌ام نخورده‌ام نخورده‌ام نخورده‌ام نخورده‌ام نخورده‌ام خورم خوری خورد خوریم خورید خورند نخورم نخوری نخورد نخوریم نخورید نخورند می‌خورم می‌خوری می‌خورد می‌خوریم می‌خورید می‌خورند نمی‌خورم نمی‌خوری نمی‌خورد نمی‌خوریم نمی‌خورید نمی‌خورند بخورم بخوری بخورد بخوریم بخورید بخورند نخورم نخوری نخورد نخوریم نخورید نخورند بخور نخور
+		>>> lemmatizer.conjugations('خورد#خور')
+		['خوردم', 'خوردی', 'خورد', 'خوردیم', 'خوردید', 'خوردند', 'نخوردم', 'نخوردی', 'نخورد', 'نخوردیم', 'نخوردید', 'نخوردند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خوردم', 'می‌خوردی', 'می‌خورد', 'می‌خوردیم', 'می‌خوردید', 'می‌خوردند', 'نمی‌خوردم', 'نمی‌خوردی', 'نمی‌خورد', 'نمی‌خوردیم', 'نمی‌خوردید', 'نمی‌خوردند', 'خورده‌ام', 'خورده‌ای', 'خورده', 'خورده‌ایم', 'خورده‌اید', 'خورده‌اند', 'نخورده‌ام', 'نخورده‌ای', 'نخورده', 'نخورده‌ایم', 'نخورده‌اید', 'نخورده‌اند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خورم', 'می‌خوری', 'می‌خورد', 'می‌خوریم', 'می‌خورید', 'می‌خورند', 'نمی‌خورم', 'نمی‌خوری', 'نمی‌خورد', 'نمی‌خوریم', 'نمی‌خورید', 'نمی‌خورند', 'بخورم', 'بخوری', 'بخورد', 'بخوریم', 'بخورید', 'بخورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'بخور', 'نخور']
 		"""
 
 		past, present = verb.split('#')
-		with_nots = lambda items: items + list(map(lambda item: u'ن' + item, items))
-
 		ends = list_u(['م', 'ی', '', 'یم', 'ید', 'ند'])
+
+		if verb == u'#هست':
+			return [u'هست' + end for end in ends] + [u'نیست' + end for end in ends]
+
 		past_simples = [past + end for end in ends]
 		past_imperfects = [u'می‌'+ item for item in past_simples]
-		past_narratives = [past + u'ه‌ام' for end in ends]
+		ends = list_u(['ه‌ام', 'ه‌ای', 'ه', 'ه‌ایم', 'ه‌اید', 'ه‌اند'])
+		past_narratives = [past + end for end in ends]
 
 		ends = list_u(['م', 'ی', 'د', 'یم', 'ید', 'ند'])
 		present_simples = [present + end for end in ends]
@@ -73,7 +81,8 @@ class Lemmatizer():
 
 		imperatives = [u'ب'+ present, u'ن'+ present]
 
-		return with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives
+		with_nots = lambda items: items + list(map(lambda item: u'ن' + item, items))
+		return with_nots(past_simples) + with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives
 
 
 if __name__ == '__main__':

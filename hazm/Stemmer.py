@@ -7,7 +7,7 @@ from nltk.stem.api import StemmerI
 
 class Stemmer(StemmerI):
 	def __init__(self):
-		self.ends = list_u(['ات', 'ان', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', '‌'])
+		self.ends = list_u(['ات', 'ان', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', 'ٔ', '‌'])
 
 	def stem(self, word):
 		"""
@@ -24,6 +24,9 @@ class Stemmer(StemmerI):
 		for end in self.ends:
 			if word.endswith(end):
 				word = word[:-len(end)]
+
+		if word.endswith(u'ۀ'):
+			word = word[:-len(end)] + u'ه'
 
 		return word
 
