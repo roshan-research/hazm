@@ -1,7 +1,7 @@
 
 from __future__ import print_function
 import sys, codecs
-from hazm import Normalizer, Stemmer
+from hazm import Lemmatizer
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -32,9 +32,21 @@ def create_verbs_file(valency_file='resources/valency.txt', output='hazm/data/ve
 	print(output, 'created')
 
 
-if __name__ == '__main__':
-	if len(sys.argv) == 2:
-		if sys.argv[1] == 'create_words_file':
-			create_words_file()
-		elif sys.argv[1] == 'create_verbs_file':
-			create_verbs_file()
+def evaluate_lemmatizer(dependency_corpus='resources/dependency.conll'):
+	lemmatizer = Lemmatizer()
+	output = codecs.open('errors.txt', 'w', 'utf8')
+	errors = []
+
+	for line in codecs.open(dependency_corpus, encoding='utf8'):
+		parts = line.split('\t')
+		if len(parts) < 10:
+			continue
+		word, lemma, pos = parts[1], parts[2], parts[3]
+		if lemmatizer.lemmatize(word, pos) != lemma:
+			errors.append((word, lemma, lemmatizer.lemmatize(word)))
+
+	print(len(errors), 'errors', file=output)
+	from collections import Counter
+	counter = Counter(errors)
+	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+		print(count, *item, file=output)
