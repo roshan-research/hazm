@@ -14,8 +14,8 @@ class Normalizer():
 
 		self.translations = maketrans(u'كي%1234567890', u'کی٪۱۲۳۴۵۶۷۸۹۰')
 
+		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
-			punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 			self.character_refinement_patterns = compile_patterns([
 				(r'[ ]+', ' '), # extra spaces
 				(r'[\n\r]+', '\n'), # extra newlines
