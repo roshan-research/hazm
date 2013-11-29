@@ -1,5 +1,5 @@
 language: python
 python:
   - "3.3"
-install: git clone https://github.com/nltk/nltk/ && cd nltk && python setup.py install
+install: git clone https://github.com/nltk/nltk/ && cd nltk && python setup.py install && cd ..
 script: python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer
