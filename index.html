@@ -45,22 +45,22 @@
 <p>Python library for digesting Persian text.</p>
 
 <ul>
-<li>Python 3.3 and 2.7 compatible</li>
-<li>NLTK inspired</li>
+<li>NLTK compatible</li>
+<li>Supports Python 3.3 and 2.7</li>
 </ul><h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<pre lang="shell"><code>pip install hazm
-</code></pre>
-
-<h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'جدا کردن ساده است. تقریبا البته!'</span><span class="p">)</span>
-<span class="p">[</span><span class="s">'جدا کردن ساده است.'</span><span class="p">,</span> <span class="s">'تقریبا البته!'</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'این جمله معمولی است.'</span><span class="p">)</span>
-<span class="p">[</span><span class="s">'این'</span><span class="p">,</span> <span class="s">'جمله'</span><span class="p">,</span> <span class="s">'معمولی'</span><span class="p">,</span> <span class="s">'است'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">]</span>
+<div class="highlight highlight-python"><pre>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Normalizer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند'</span><span class="p">)</span>
+<span class="s">'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'ما هم برای وصل کردن آمدیم!'</span><span class="p">,</span> <span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'ولی'</span><span class="p">,</span> <span class="s">'برای'</span><span class="p">,</span> <span class="s">'پردازش'</span><span class="p">,</span> <span class="s">'،'</span><span class="p">,</span> <span class="s">'جدا'</span><span class="p">,</span> <span class="s">'بهتر'</span><span class="p">,</span> <span class="s">'نیست'</span><span class="p">,</span> <span class="s">'؟'</span><span class="p">]</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Stemmer</span><span class="p">,</span> <span class="n">Lemmatizer</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
@@ -73,9 +73,16 @@
 </pre></div>
 
 <h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>pip install hazm
+</code></pre>
+
+<h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<pre lang="shell"><code>python3 -m doctest README.md
+<pre><code>python3 -m doctest README.md
+python3 -m hazm.{module}
 </code></pre>
       </section>
       <footer>
