@@ -2,4 +2,4 @@ language: python
 python:
   - "3.3"
 install: git clone https://github.com/nltk/nltk/ && cd nltk && python setup.py install && cd ..
-script: python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer
+script: python -m hazm.Normalizer && python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer && python -m hazm.Stemmer && python -m hazm.Lemmatizer
