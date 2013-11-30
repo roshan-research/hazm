@@ -1,7 +1,8 @@
 #coding=utf8
 
+from __future__ import unicode_literals
 import codecs, itertools
-from .utils import u, list_u, default_words, default_verbs
+from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
 
@@ -17,15 +18,15 @@ class Lemmatizer():
 
 		if verbs_file:
 			tokenizer = WordTokenizer(verbs_file=verbs_file)
-			self.verbs[u'است'] = u'#است'
+			self.verbs['است'] = '#است'
 			for verb in tokenizer.verbs:
 				for tense in self.conjugations(verb):
 					self.verbs[tense] = verb
 			if joined_verb_parts:
 				for verb, after_verb in itertools.product(tokenizer.verbs, tokenizer.after_verbs):
-					self.verbs[verb.split('#')[0] + u'ه ' + after_verb] = verb
+					self.verbs[verb.split('#')[0] +'ه '+ after_verb] = verb
 				for verb, before_verb in itertools.product(tokenizer.verbs, tokenizer.before_verbs):
-					self.verbs[before_verb + u' ' + verb.split('#')[0]] = verb
+					self.verbs[before_verb +' '+ verb.split('#')[0]] = verb
 
 	def lemmatize(self, word, pos=''):
 		"""
@@ -62,26 +63,26 @@ class Lemmatizer():
 		"""
 
 		past, present = verb.split('#')
-		ends = list_u(['م', 'ی', '', 'یم', 'ید', 'ند'])
+		ends = ['م', 'ی', '', 'یم', 'ید', 'ند']
 
-		if verb == u'#هست':
-			return [u'هست' + end for end in ends] + [u'نیست' + end for end in ends]
+		if verb == '#هست':
+			return ['هست' + end for end in ends] + ['نیست' + end for end in ends]
 
 		past_simples = [past + end for end in ends]
-		past_imperfects = [u'می‌'+ item for item in past_simples]
-		ends = list_u(['ه‌ام', 'ه‌ای', 'ه', 'ه‌ایم', 'ه‌اید', 'ه‌اند'])
+		past_imperfects = ['می‌'+ item for item in past_simples]
+		ends = ['ه‌ام', 'ه‌ای', 'ه', 'ه‌ایم', 'ه‌اید', 'ه‌اند']
 		past_narratives = [past + end for end in ends]
 
-		ends = list_u(['م', 'ی', 'د', 'یم', 'ید', 'ند'])
+		ends = ['م', 'ی', 'د', 'یم', 'ید', 'ند']
 		present_simples = [present + end for end in ends]
-		present_imperfects = [u'می‌'+ item for item in present_simples]
-		present_subjunctives = [u'ب'+ item for item in present_simples]
-		present_not_subjunctives = [u'ن'+ item for item in present_simples]
+		present_imperfects = ['می‌'+ item for item in present_simples]
+		present_subjunctives = ['ب'+ item for item in present_simples]
+		present_not_subjunctives = ['ن'+ item for item in present_simples]
 
-		imperatives = [u'ب'+ present, u'ن'+ present]
+		imperatives = ['ب'+ present, 'ن'+ present]
 
-		with_nots = lambda items: items + list(map(lambda item: u'ن' + item, items))
-		aa_refinement = lambda items: list(map(lambda item: item.replace(u'بآ', u'بیا').replace(u'نآ', u'نیا'), items)) if items[0].startswith(u'آ') else items
+		with_nots = lambda items: items + list(map(lambda item: 'ن' + item, items))
+		aa_refinement = lambda items: list(map(lambda item: item.replace('بآ', 'بیا').replace('نآ', 'نیا'), items)) if items[0].startswith('آ') else items
 		return aa_refinement(with_nots(past_simples) + with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives)
 
 

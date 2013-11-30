@@ -1,13 +1,13 @@
 #coding=utf8
 
+from __future__ import unicode_literals
 import re
-from .utils import u
 from nltk.tokenize.api import TokenizerI
 
 
 class SentenceTokenizer(TokenizerI):
 	def __init__(self):
-		self.pattern = re.compile(u(r'([!\.\?⸮؟]+)[ \n]+'))
+		self.pattern = re.compile(r'([!\.\?⸮؟]+)[ \n]+')
 
 	def tokenize(self, text):
 		"""

@@ -1,9 +1,9 @@
 #coding=utf8
 
+from __future__ import unicode_literals
 import re
-from .utils import u
 maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
-compile_patterns = lambda patterns: [(re.compile(u(pattern)), u(repl)) for pattern, repl in patterns]
+compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer():
@@ -12,7 +12,7 @@ class Normalizer():
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
 
-		self.translations = maketrans(u'كي%1234567890', u'کی٪۱۲۳۴۵۶۷۸۹۰')
+		self.translations = maketrans('كي%1234567890', 'کی٪۱۲۳۴۵۶۷۸۹۰')
 
 		if character_refinement:
 			punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
