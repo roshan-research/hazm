@@ -5,4 +5,4 @@ python:
 notifications:
   email: false
 install: git clone https://github.com/nltk/nltk/ && cd nltk && python setup.py install && cd ..
-script: python -m hazm.Normalizer && python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer && python -m hazm.Stemmer && python -m hazm.Lemmatizer
+script: python -m doctest README.md && python -m hazm.Normalizer && python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer && python -m hazm.Stemmer && python -m hazm.Lemmatizer
