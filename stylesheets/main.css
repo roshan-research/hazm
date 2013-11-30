@@ -1,0 +1,88 @@
+
+@font-face {
+	font-family: BMitra;
+	font-weight: normal;
+	src: url('../fonts/BMitra.eot?#') format('eot'), url('../fonts/BMitra.woff') format('woff'), url('../fonts/BMitra.ttf') format('truetype');
+}
+@font-face {
+	font-family: BMitra;
+	font-weight: bold;
+	src: url('../fonts/BMitraBold.eot?#') format('eot'), url('../fonts/BMitraBold.woff') format('woff'), url('../fonts/BMitraBold.ttf') format('truetype');
+}
+
+.container {
+	max-width: 600px;
+}
+
+body {
+	direction: rtl;
+	font-family: BMitra, Arial;
+	color: #666;
+	font-weight: 300;
+	margin: 0px;
+	padding: 0px 0 20px 0px;
+	background: url(../images/body-background.png) #eae6d1;
+}
+pre, code {
+	padding: 8px 20px;
+	direction: ltr;
+	background: #333;
+	font: 14px/22px Arial, sans-serif;
+	text-shadow: 0px 1px 0px #000;
+}
+code {
+	font-family: serif;
+	color: #efefef !important;
+}
+
+h1, h2 {
+	color: #333;
+	font-family: BMitra;
+	font-weight: bold;
+}
+h2 {
+	font-size: 20px;
+}
+p, ul {
+	color: #666;
+	font-size: 18px;
+}
+ul {
+	padding-right: 20px;
+	list-style-image: url("../images/bullet.png");
+}
+.eng {
+	font-size: .9em;
+	font-family: serif;
+}
+
+.header {
+	background: url(../images/background.png) #4276b6;
+	margin-bottom: 20px;
+	box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
+}
+.header h1 {
+	color: #f3f3f3;
+	text-shadow: 0px 2px 0px #235796;
+}
+.header p {
+	color: #d8d8d8;
+	text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
+	font-size: 18px;
+}
+
+.content {
+	padding: 10px 30px;
+	background: #fbfbfb;
+	border-radius: 3px;
+	border: 1px solid #cbcbcb;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+}
+
+.footer {
+	margin-top: 15px;
+}
+.footer p {
+	color: #aaa;
+	font-size: 16px;
+}
