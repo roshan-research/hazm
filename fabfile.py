@@ -13,25 +13,6 @@ def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.
 	print(output, 'created')
 
 
-def create_verbs_file(valency_file='resources/valency.txt', output='hazm/data/verbs.dat'):
-	""" prepares list of persian verbs from [Verb Valency](http://dadegan.ir/pervallex) corpus.
-	"""
-
-	verbs = []
-	for l, line in enumerate(codecs.open(valency_file, encoding='utf8')):
-		parts = line.split('\t')
-		if l > 1 and len(parts) == 6:
-			past, present = parts[0], parts[1]
-
-			if past != '-':
-				verb = past+'#'+present
-				if verb not in verbs:
-					verbs.append(verb)
-
-	print(*verbs, sep='\n', file=codecs.open(output, 'w', 'utf8'))
-	print(output, 'created')
-
-
 def evaluate_lemmatizer(dependency_corpus='resources/dependency.conll'):
 	lemmatizer = Lemmatizer()
 	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
