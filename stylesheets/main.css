@@ -11,7 +11,7 @@
 }
 
 .container {
-	max-width: 600px;
+	max-width: 670px;
 }
 
 body {
@@ -27,7 +27,7 @@ pre, code {
 	padding: 8px 20px;
 	direction: ltr;
 	background: #333;
-	font: 14px/22px Arial, sans-serif;
+	font: 14px/22px monospace, Arial;
 	text-shadow: 0px 1px 0px #000;
 }
 code {
