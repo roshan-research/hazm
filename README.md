@@ -6,6 +6,8 @@ Python library for digesting Persian text.
 + NLTK compatible
 + Supports Python 3.3 and 2.7
 
+[![Build Status](https://travis-ci.org/nournia/hazm.png)](https://travis-ci.org/nournia/hazm)
+
 ## Usage
 
 ```python
