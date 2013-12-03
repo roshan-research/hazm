@@ -22,8 +22,7 @@ class BijankhanReader():
 		self._bijankhan_corpus = bijankhan_corpus
 		self.joined_verb_parts = joined_verb_parts
 		self._pos_map = dadegan_map
-		self._normalizer = Normalizer()
-		self._normalizer1 = Normalizer(punctuation_spacing=False)
+		self._normalizer = Normalizer(punctuation_spacing=False)
 		self._tokenizer = WordTokenizer()
 		self._pattern_pos_removal = re.compile(r'/[a-zA-z]+')
 
@@ -47,7 +46,7 @@ class BijankhanReader():
 			else:
 				new_sent = []
 
-				pos_text = self._normalizer1.normalize(sentence)
+				pos_text = self._normalizer.normalize(sentence)
 				pos_tokens = pos_text.split(' ')
 
 				raw_text = self._pattern_pos_removal.sub(r'', sentence)
@@ -87,9 +86,19 @@ class BijankhanReader():
 			else:
 				if (add_pos == True):
 					new_pos = mapper(pos)
-					sentence.append(word + self._separator + new_pos)
+					if ('؛' in word):
+						word = word.replace('؛', '')
+						sentence.append(word + self._separator + new_pos)
+						sentence.append('؛' + self._separator + mapper('DELM'))
+					else:
+						sentence.append(word + self._separator + new_pos)
 				else:
-					sentence.append(word)
+					if ('؛' in word):
+						word = word.replace('؛', '')
+						sentence.append(word)
+						sentence.append('؛')
+					else:
+						sentence.append(word)
 					
 				if (word == '.' and pos == 'DELM'):
 					yield normalized(sentence)
