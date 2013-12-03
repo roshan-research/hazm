@@ -1,3 +1,4 @@
 resources
 build
+dist
 *.pyc

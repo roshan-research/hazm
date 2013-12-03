@@ -1,4 +1,5 @@
 
+from .BijankhanReader import BijankhanReader
 from .HamshahriReader import HamshahriReader
 from .SentenceTokenizer import SentenceTokenizer
 from .WordTokenizer import WordTokenizer
