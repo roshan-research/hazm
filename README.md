@@ -42,5 +42,5 @@ Python library for digesting Persian text.
 
 ## Thanks
 
-+ from constributors: [Mojtab Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
++ from constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
 + from [Virastyar](http://virastyar.ir/) for persian word list.
