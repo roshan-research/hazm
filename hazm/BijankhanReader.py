@@ -26,7 +26,7 @@ class BijankhanReader():
 		self._tokenizer = WordTokenizer()
 		self._pattern_pos_removal = re.compile(r'/[a-zA-z]+')
 
-	def sents(self, add_pos=False, use_cpos=False):
+	def sents(self, add_pos=True, use_cpos=False):
 		def word_pos(token, use_cpos=False):
 			# 11/26/2013/POS => [11/26/2013, POS]
 			word = self._pattern_pos_removal.sub(r'', token)
@@ -79,6 +79,8 @@ class BijankhanReader():
 		for line in lines:
 			parts = re.split("[ \t]+", line)
 			word = '‌'.join(parts[0:len(parts)-1])
+			if (word != '.'):
+				word = word.replace('.', '_')
 			pos = parts[len(parts)-1]
 			if (word == '#'):
 				yield normalized(sentence)
@@ -90,6 +92,11 @@ class BijankhanReader():
 						word = word.replace('؛', '')
 						sentence.append(word + self._separator + new_pos)
 						sentence.append('؛' + self._separator + mapper('DELM'))
+					elif (word[0] == '(' and word[len(word)-1] == ')'):
+						word = word[1:len(word)-1]
+						sentence.append('(' + self._separator + mapper('DELM'))
+						sentence.append(word + self._separator + new_pos)
+						sentence.append(')' + self._separator + mapper('DELM'))
 					else:
 						sentence.append(word + self._separator + new_pos)
 				else:

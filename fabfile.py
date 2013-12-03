@@ -1,7 +1,7 @@
 
 from __future__ import print_function
-import sys, codecs
-from hazm import Lemmatizer
+import os, sys, codecs
+from hazm import Lemmatizer, POSTagger
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -31,3 +31,12 @@ def evaluate_lemmatizer(dependency_corpus='resources/dependency.conll'):
 	counter = Counter(errors)
 	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
 		print(count, *item, file=output)
+
+def train_pos_tagger(model_name, bijankhan_file='resources/bijankhan.txt', use_cpos=False, properties_file='resources/persian-left3words-distsim.tagger.props', path_to_jar='resources/stanford-postagger.jar'):
+	bijankhan = BijankhanReader(bijankhan_file)
+	temp_file = 'resources/tagger_data.txt'
+	output = codecs.open(temp_file, 'w', 'utf8')
+	for sent in bijankhan.sents(use_cpos):
+		print(sent, file=output)
+	POSTagger.train(train_file=temp_file, model_name=model_name, properties_file=properties_file, path_to_jar=path_to_jar)
+	#os.remove(temp_file)
