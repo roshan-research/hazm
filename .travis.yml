@@ -4,5 +4,5 @@ python:
   - "3.3"
 notifications:
   email: false
-install: git clone https://github.com/nltk/nltk/ && cd nltk && python setup.py install && cd ..
+install: pip install http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz
 script: python -m doctest README.md && python -m hazm.Normalizer && python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer && python -m hazm.Stemmer && python -m hazm.Lemmatizer

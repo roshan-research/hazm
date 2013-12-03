@@ -3,10 +3,13 @@ Hazm
 
 Python library for digesting Persian text.
 
-+ NLTK compatible
-+ Supports Python 3.3 and 2.7
-
-[![Build Status](https://travis-ci.org/nournia/hazm.png)](https://travis-ci.org/nournia/hazm)
++ Text cleaning
++ Sentence and word tokenizer
++ Word lemmatizer
++ Corpus readers for [Hamshahri](http://ece.ut.ac.ir/dbrg/hamshahri/) and [Bijankhan](http://ece.ut.ac.ir/dbrg/bijankhan/)
++ [NLTK](http://nltk.org/) compatible
++ Python 3.3 and 2.7 support
++ [![Build Status](https://travis-ci.org/nournia/hazm.png)](https://travis-ci.org/nournia/hazm)
 
 ## Usage
 
@@ -37,7 +40,7 @@ Python library for digesting Persian text.
 
 	pip install hazm
 
-## Tests
+## Thanks
 
-	python3 -m doctest README.md
-	python3 -m hazm.{module}
++ from constributors: [Mojtab Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
++ from [Virastyar](http://virastyar.ir/) for persian word list.
