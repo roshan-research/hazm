@@ -18,7 +18,7 @@ class BijankhanReader():
 		self._pos_map = pos_map
 		self._normalizer = Normalizer(punctuation_spacing=False)
 		self._tokenizer = WordTokenizer()
-		self._map_items = lambda item: (self._normalizer.normalize(item[0]), self._pos_map.get(item[1], item[1]))
+		self._map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))
 
 	def _sentences(self):
 		sentence = []
@@ -27,7 +27,7 @@ class BijankhanReader():
 			if len(parts) == 2:
 				word, tag = parts
 				if word != '#':
-					sentence.append((word, tag))
+					sentence.append((self._normalizer.normalize(word), tag))
 				if tag == 'DELM':
 					if len(sentence):
 						yield sentence
@@ -35,8 +35,8 @@ class BijankhanReader():
 
 	def _join_verb_parts(self, sentence):
 		"""
-		>>> bijankhan._join_verb_parts([('اولين', 'ADJ_SUP'), ('سياره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسي', 'ADJ_SIM'), ('ديده', 'ADJ_INO'), ('شد', 'V_PA'), ('.', 'DELM')])
-		[('اولين', 'ADJ_SUP'), ('سياره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسي', 'ADJ_SIM'), ('ديده شد', 'V_PA'), ('.', 'DELM')]
+		>>> bijankhan._join_verb_parts([('اولین', 'ADJ_SUP'), ('سیاره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسی', 'ADJ_SIM'), ('دیده', 'ADJ_INO'), ('شد', 'V_PA'), ('.', 'DELM')])
+		[('اولین', 'ADJ_SUP'), ('سیاره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسی', 'ADJ_SIM'), ('دیده شد', 'V_PA'), ('.', 'DELM')]
 		"""
 		return sentence
 
@@ -44,7 +44,7 @@ class BijankhanReader():
 		for sentence in self._sentences():
 			if self._joined_verb_parts:
 				sentence = self._join_verb_parts(sentence)
-			yield list(map(self._map_items, sentence))
+			yield list(map(self._map_poses, sentence))
 
 
 if __name__ == '__main__':
