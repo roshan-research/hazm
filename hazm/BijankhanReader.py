@@ -28,7 +28,7 @@ class BijankhanReader():
 				word, tag = parts
 				if word != '#':
 					sentence.append((self._normalizer.normalize(word), tag))
-				if tag == 'DELM':
+				if tag == 'DELM' and word in ('#', '.', '؟', '!') :
 					if len(sentence):
 						yield sentence
 						sentence = []
@@ -38,7 +38,14 @@ class BijankhanReader():
 		>>> bijankhan._join_verb_parts([('اولین', 'ADJ_SUP'), ('سیاره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسی', 'ADJ_SIM'), ('دیده', 'ADJ_INO'), ('شد', 'V_PA'), ('.', 'DELM')])
 		[('اولین', 'ADJ_SUP'), ('سیاره', 'N_SING'), ('خارج', 'ADJ_SIM'), ('از', 'P'), ('منظومه', 'N_SING'), ('شمسی', 'ADJ_SIM'), ('دیده شد', 'V_PA'), ('.', 'DELM')]
 		"""
-		return sentence
+
+		result = [('', '')]
+		for word in reversed(sentence):
+			if word[0] in self._tokenizer.before_verbs or (result[-1][0] in self._tokenizer.after_verbs and word[0] in self._tokenizer.verbe):
+				result[-1] = (word[0] +' '+ result[-1][0], result[-1][1])
+			else:
+				result.append(word)
+		return list(reversed(result[1:]))
 
 	def sents(self):
 		for sentence in self._sentences():
