@@ -6,6 +6,7 @@ from .WordTokenizer import WordTokenizer
 from .Normalizer import Normalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
+from .POSTagger import POSTagger
 
 sentence_tokenizer = SentenceTokenizer()
 sent_tokenize = lambda text: sentence_tokenizer.tokenize(text)

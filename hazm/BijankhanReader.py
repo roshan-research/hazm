@@ -11,7 +11,7 @@ default_pos_map = {'ADJ': 'ADJ', 'ADJ_CMPR': 'ADJ', 'ADJ_INO': 'ADJ', 'ADJ_ORD':
 class BijankhanReader():
 	def __init__(self, bijankhan_file='resources/bijankhan.txt', joined_verb_parts=True, pos_map=default_pos_map):
 		"""
-			downnload bijankhan corpus from ...
+		interfaces [Bijankhan Corpus](http://ece.ut.ac.ir/dbrg/bijankhan/Corpus/BijanKhan_Corpus_Processed.zip) that you must download and extract it.
 		"""
 		self._bijankhan_file = bijankhan_file
 		self._joined_verb_parts = joined_verb_parts
@@ -26,9 +26,10 @@ class BijankhanReader():
 			parts = re.split('  +', line.strip())
 			if len(parts) == 2:
 				word, tag = parts
-				if word != '#':
-					sentence.append((self._normalizer.normalize(word), tag))
-				if tag == 'DELM' and word in ('#', '.', '؟', '!') :
+				if word not in ('#', '*'):
+					word = self._normalizer.normalize(word)
+					sentence.append((word if word else '_', tag))
+				if tag == 'DELM' and word in ('#', '*', '.', '؟', '!') :
 					if len(sentence):
 						yield sentence
 						sentence = []
