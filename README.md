@@ -34,6 +34,11 @@ Python library for digesting Persian text.
 >>> lemmatizer.lemmatize('می‌روم')
 'رفت#رو'
 
+>>> from hazm import POSTagger
+>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
+[('من', 'PR'), ('به', 'PREP'), ('مدرسه', 'N'), ('رفته بودم', 'V'), ('.', 'PUNC')]
+
+
 ```
 
 ## Installation

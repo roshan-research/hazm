@@ -33,19 +33,18 @@ def evaluate_lemmatizer(dependency_corpus='resources/dependency.conll'):
 		print(count, *item, file=output)
 
 
-def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', memory_min='-Xms1g', memory_max='-Xmx2g'):
+def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian-left3words.tagger.props', memory_min='-Xms1g', memory_max='-Xmx2g', test_split=.1):
 	bijankhan = BijankhanReader(bijankhan_file)
 	train_file = 'resources/tagger_train_data.txt'
 	output = codecs.open(train_file, 'w', 'utf8')
-	for sentence in bijankhan.sents():
+	sentences = list(bijankhan.sents())
+	train_part = int(len(sentences) * (1 - test_split))
+
+	for sentence in sentences[:train_part]:
 		print(*(map(lambda w: '/'.join(w).replace(' ', '_'), sentence)), file=output)
-	properties_file='resources/persian-left3words.tagger.props' # only outputs properties
 	cmd = ['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']
-	subprocess.Popen(cmd)
+	process = subprocess.Popen(cmd)
+	process.wait()
 
-
-def evaluate_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar'):
 	tagger = POSTagger()
-	bijankhan = BijankhanReader(bijankhan_file)
-	tests = list(itertools.islice(bijankhan.sents(), 0, 1000))
-	print(tagger.evaluate(tests))
+	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(sentences[train_part:]))
