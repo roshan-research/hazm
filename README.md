@@ -35,6 +35,7 @@ Python library for digesting Persian text.
 'رفت#رو'
 
 >>> from hazm import POSTagger
+>>> tagger = POSTagger()
 >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
 [('من', 'PR'), ('به', 'PREP'), ('مدرسه', 'N'), ('رفته بودم', 'V'), ('.', 'PUNC')]
 
