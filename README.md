@@ -6,7 +6,7 @@ Python library for digesting Persian text.
 + Text cleaning
 + Sentence and word tokenizer
 + Word lemmatizer
-+ POS Tagger
++ POS tagger
 + Corpus readers for [Hamshahri](http://ece.ut.ac.ir/dbrg/hamshahri/) and [Bijankhan](http://ece.ut.ac.ir/dbrg/bijankhan/)
 + [NLTK](http://nltk.org/) compatible
 + Python 3.3 and 2.7 support
@@ -45,6 +45,8 @@ Python library for digesting Persian text.
 ## Installation
 
 	pip install hazm
+
+We also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip) which you may put them in `resources` folder of your project.
 
 ## Thanks
 

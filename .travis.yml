@@ -4,5 +4,5 @@ python:
   - "3.3"
 notifications:
   email: false
-install: pip install http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz && wget https://dl.dropboxusercontent.com/u/90405495/resources.zip && unzip resources.zip -d resources
+install: pip install http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz && wget http://dl.dropboxusercontent.com/u/90405495/resources.zip && unzip resources.zip -d resources
 script: export JAVAHOME=/usr/bin/java && python -m doctest README.md && python -m hazm.Normalizer && python -m hazm.SentenceTokenizer && python -m hazm.WordTokenizer && python -m hazm.Stemmer && python -m hazm.Lemmatizer && python -m hazm.BijankhanReader && python -m hazm.POSTagger
