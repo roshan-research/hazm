@@ -20,6 +20,7 @@
 		<li>تمیز و مرتب کردن متن</li>
 		<li>تقطیع جمله‌ها و واژه‌ها</li>
 		<li>ریشه‌یابی واژه‌ها</li>
+		<li>تعیین برچسب اجزای سخن</li>
 		<li>واسط برای پیکره‌های <a href="http://ece.ut.ac.ir/dbrg/hamshahri/">همشهری</a> و <a href="http://ece.ut.ac.ir/dbrg/bijankhan/">بی‌جن‌خان</a></li>
 		<li>سازگار با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
 		<li>پشتیبانی از پایتون ۲.۷ و ۳.۳</li>
@@ -27,11 +28,11 @@
 	</ul>
 
 	<h2>روش استفاده</h2>
-<div class="highlight highlight-python"><pre>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Normalizer</span>
+<div class="highlight highlight-python">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Normalizer</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند'</span><span class="p">)</span>
-<span class="s">'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم&zwnj;فاصله پردازش را آسان مي كند'</span><span class="p">)</span>
+<span class="s">'اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند'</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
@@ -41,11 +42,16 @@
 
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Stemmer</span><span class="p">,</span> <span class="n">Lemmatizer</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s">'کتاب‌ها'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s">'کتاب&zwnj;ها'</span><span class="p">)</span>
 <span class="s">'کتاب'</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s">'می‌روم'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s">'می&zwnj;روم'</span><span class="p">)</span>
 <span class="s">'رفت#رو'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">POSTagger</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ما بسیار کتاب می&zwnj;خوانیم'</span><span class="p">))</span>
+<span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می&zwnj;خوانیم'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
 
 </pre></div>
 
