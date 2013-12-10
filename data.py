@@ -1,8 +1,11 @@
+#encoding=utf8
 
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 import os, sys, codecs, subprocess, itertools
 from nltk.parse import DependencyGraph
 from hazm import Lemmatizer, BijankhanReader, POSTagger
+
+dadegan_refine = lambda text: text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '')
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -14,18 +17,18 @@ def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.
 	print(output, 'created')
 
 
-def evaluate_lemmatizer(dependency_file='resources/dependency.conll'):
+def evaluate_lemmatizer(conll_file='resources/train.conll'):
 	lemmatizer = Lemmatizer()
 	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
 	errors = []
 
-	for line in codecs.open(dependency_file, encoding='utf8'):
-		parts = line.split('\t')
+	for line in codecs.open(conll_file, encoding='utf8'):
+		parts = dadegan_refine(line).split('\t')
 		if len(parts) < 10:
 			continue
 		word, lemma, pos = parts[1], parts[2], parts[3]
 		if lemmatizer.lemmatize(word, pos) != lemma:
-			errors.append((word, lemma, lemmatizer.lemmatize(word)))
+			errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
 
 	print(len(errors), 'errors', file=output)
 	from collections import Counter
@@ -51,11 +54,11 @@ def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='re
 	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(sentences[train_part:]))
 
 
-def train_dependency_parser(dependency_file='resources/dependency.conll', path_to_model='resources/langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
+def train_dependency_parser(conll_file='resources/train.conll', path_to_model='resources/langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
 	train_file = 'resources/parser_train_data.txt'
 	output = codecs.open(train_file, 'w', 'utf8')
-	dependency_corpus = codecs.open(dependency_file, encoding='utf8').read().replace(' ', '_').replace('\r', '')
+	dependency_corpus = dadegan_refine(codecs.open(conll_file, encoding='utf8').read()).replace(' ', '_')
 	nodelists = [DependencyGraph(item).nodelist[1:] for item in dependency_corpus.split('\n\n')]
 
 	sentences = [[node['word'] for node in nodelist] for nodelist in nodelists]
