@@ -8,7 +8,7 @@ from nltk.parse.malt import MaltParser
 
 
 class DependencyParser(MaltParser):
-	def __init__(self, tagger=POSTagger(), lemmatizer=Lemmatizer(), path_to_model='resources/langModel.mco', working_dir='resources'):
+	def __init__(self, tagger=POSTagger(), lemmatizer=Lemmatizer(), path_to_model='langModel.mco', working_dir='resources'):
 		os.environ['MALTPARSERHOME'] = working_dir
 		super(DependencyParser, self).__init__(tagger=tagger, mco=path_to_model, working_dir=working_dir)
 		self.lemmatizer = lemmatizer
@@ -28,7 +28,7 @@ class DependencyParser(MaltParser):
 		_input = codecs.open(input_file, 'w', 'utf8')
 		for sentence in sentences:
 			for i, (word, tag) in enumerate(sentence, start=1):
-				print(i, word, lemmatize(word), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=_input)
+				print(i, word.replace(' ', '_'), lemmatize(word).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=_input)
 			print(file=_input)
 
 		cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_file, '-o', output_file, '-m', 'parse']

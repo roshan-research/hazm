@@ -65,7 +65,7 @@ def train_dependency_parser(dependency_file='resources/dependency.conll', path_t
 		for i, (node, word) in enumerate(zip(nodelist, sentence), start=1):
 			node['tag'] = word[1]
 			node['lemma'] = lemmatizer.lemmatize(node['word'].replace('_', ' '), node['tag'])
-			print(i, node['word'].replace(' ', '_'), node['lemma'], node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
+			print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
 		print(file=output)
 
 	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', path_to_model, '-i', train_file, '-f', options_file, '-F', features_file, '-m', 'learn']
