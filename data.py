@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals
 import os, sys, codecs, subprocess, itertools
+from collections import Counter
 from nltk.parse import DependencyGraph
 from hazm import Lemmatizer, BijankhanReader, POSTagger
 
@@ -17,11 +18,11 @@ def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.
 	print(output, 'created')
 
 
-def evaluate_lemmatizer(conll_file='resources/train.conll'):
+def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='resources/bijankhan.txt'):
 	lemmatizer = Lemmatizer()
-	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
-	errors = []
 
+	errors = []
+	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
 	for line in codecs.open(conll_file, encoding='utf8'):
 		parts = dadegan_refine(line).split('\t')
 		if len(parts) < 10:
@@ -29,12 +30,23 @@ def evaluate_lemmatizer(conll_file='resources/train.conll'):
 		word, lemma, pos = parts[1], parts[2], parts[3]
 		if lemmatizer.lemmatize(word, pos) != lemma:
 			errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
-
 	print(len(errors), 'errors', file=output)
-	from collections import Counter
 	counter = Counter(errors)
 	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
 		print(count, *item, file=output)
+
+	missed = []
+	output = codecs.open('resources/lemmatizer_missed.txt', 'w', 'utf8')
+	bijankhan = BijankhanReader(bijankhan_file)
+	for sentence in bijankhan.sents():
+		for word in sentence:
+			if word[1] == 'V':
+				if word[0] == lemmatizer.lemmatize(word[0]):
+					missed.append(word[0])
+	print(len(missed), 'missed', file=output)
+	counter = Counter(missed)
+	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+		print(count, item, file=output)
 
 
 def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian-left3words.tagger.props', memory_min='-Xms1g', memory_max='-Xmx2g', test_split=.1):

@@ -73,13 +73,16 @@ class Lemmatizer():
 		ends = ['ه‌ام', 'ه‌ای', 'ه', 'ه‌ایم', 'ه‌اید', 'ه‌اند']
 		past_narratives = [past + end for end in ends]
 
+		imperatives = ['ب'+ present, 'ن'+ present]
+
+		if present.endswith('ا') or present in ('آ', 'گو'):
+			present = present + 'ی'
+
 		ends = ['م', 'ی', 'د', 'یم', 'ید', 'ند']
 		present_simples = [present + end for end in ends]
 		present_imperfects = ['می‌'+ item for item in present_simples]
 		present_subjunctives = ['ب'+ item for item in present_simples]
 		present_not_subjunctives = ['ن'+ item for item in present_simples]
-
-		imperatives = ['ب'+ present, 'ن'+ present]
 
 		with_nots = lambda items: items + list(map(lambda item: 'ن' + item, items))
 		aa_refinement = lambda items: list(map(lambda item: item.replace('بآ', 'بیا').replace('نآ', 'نیا'), items)) if items[0].startswith('آ') else items
