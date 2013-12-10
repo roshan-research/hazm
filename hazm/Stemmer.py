@@ -7,7 +7,7 @@ from nltk.stem.api import StemmerI
 
 class Stemmer(StemmerI):
 	def __init__(self):
-		self.ends = ['ات', 'ان', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', 'ٔ', '‌']
+		self.ends = ['ات', 'ان', 'ترین', 'تر', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', 'ٔ', '‌ا', '‌']
 
 	def stem(self, word):
 		"""
@@ -19,6 +19,8 @@ class Stemmer(StemmerI):
 		'کتاب'
 		>>> stemmer.stem('کتابهایشان')
 		'کتاب'
+		>>> stemmer.stem('اندیشه‌اش')
+		'اندیشه'
 		"""
 
 		for end in self.ends:
