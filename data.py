@@ -6,7 +6,10 @@ from collections import Counter
 from nltk.parse import DependencyGraph
 from hazm import Lemmatizer, BijankhanReader, POSTagger
 
-dadegan_refine = lambda text: text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '')
+
+def dadegan_text(conll_file='resources/train.conll'):
+	text = codecs.open(conll_file, encoding='utf8').read()
+	return text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '')
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -23,8 +26,8 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 
 	errors = []
 	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
-	for line in codecs.open(conll_file, encoding='utf8'):
-		parts = dadegan_refine(line).split('\t')
+	for line in dadegan_text(conll_file).split('\n'):
+		parts = line.split('\t')
 		if len(parts) < 10:
 			continue
 		word, lemma, pos = parts[1], parts[2], parts[3]
@@ -70,8 +73,7 @@ def train_dependency_parser(conll_file='resources/train.conll', path_to_model='r
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
 	train_file = 'resources/parser_train_data.txt'
 	output = codecs.open(train_file, 'w', 'utf8')
-	dependency_corpus = dadegan_refine(codecs.open(conll_file, encoding='utf8').read()).replace(' ', '_')
-	nodelists = [DependencyGraph(item).nodelist[1:] for item in dependency_corpus.split('\n\n')]
+	nodelists = [DependencyGraph(item).nodelist[1:] for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n')]
 
 	sentences = [[node['word'] for node in nodelist] for nodelist in nodelists]
 	tagged = tagger.batch_tag(sentences)
