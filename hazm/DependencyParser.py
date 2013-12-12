@@ -8,7 +8,7 @@ from nltk.parse.malt import MaltParser
 
 
 class DependencyParser(MaltParser):
-	def __init__(self, tagger=POSTagger(), lemmatizer=Lemmatizer(), path_to_model='langModel.mco', working_dir='resources'):
+	def __init__(self, tagger, lemmatizer=Lemmatizer(), path_to_model='langModel.mco', working_dir='resources'):
 		os.environ['MALTPARSERHOME'] = working_dir
 		super(DependencyParser, self).__init__(tagger=tagger, mco=path_to_model, working_dir=working_dir)
 		self.lemmatizer = lemmatizer
@@ -40,4 +40,4 @@ class DependencyParser(MaltParser):
 
 if __name__ == '__main__':
 	import doctest
-	doctest.testmod(extraglobs={'parser': DependencyParser()})
+	doctest.testmod(extraglobs={'parser': DependencyParser(tagger=POSTagger())})
