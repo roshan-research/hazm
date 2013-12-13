@@ -52,7 +52,7 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 		print(count, item, file=output)
 
 
-def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian-left3words.tagger.props', memory_min='-Xms1g', memory_max='-Xmx2g', test_split=.1):
+def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian.tagger.props', memory_min='-Xms1g', memory_max='-Xmx2g', test_split=.1):
 	bijankhan = BijankhanReader(bijankhan_file)
 	train_file = 'resources/tagger_train_data.txt'
 	output = codecs.open(train_file, 'w', 'utf8')
