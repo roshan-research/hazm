@@ -9,7 +9,7 @@ from hazm import Lemmatizer, BijankhanReader, POSTagger
 
 def dadegan_text(conll_file='resources/train.conll'):
 	text = codecs.open(conll_file, encoding='utf8').read()
-	return text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '')
+	return text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -69,9 +69,9 @@ def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='re
 	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(sentences[train_part:]))
 
 
-def train_dependency_parser(conll_file='resources/train.conll', path_to_model='resources/langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
+def train_dependency_parser(conll_file='resources/train.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
-	train_file = 'resources/parser_train_data.txt'
+	train_file = 'resources/parser_train_data.conll'
 	output = codecs.open(train_file, 'w', 'utf8')
 	nodelists = [DependencyGraph(item).nodelist[1:] for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n')]
 
@@ -85,6 +85,6 @@ def train_dependency_parser(conll_file='resources/train.conll', path_to_model='r
 			print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
 		print(file=output)
 
-	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', path_to_model, '-i', train_file, '-f', options_file, '-F', features_file, '-m', 'learn']
+	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_file, '-f', options_file, '-F', features_file, '-m', 'learn']
 	process = subprocess.Popen(cmd)
 	process.wait()
