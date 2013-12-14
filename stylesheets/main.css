@@ -86,3 +86,22 @@ ul {
 	color: #aaa;
 	font-size: 16px;
 }
+
+a.github {
+	text-decoration: none;
+	border: 1px solid #dba500;
+	background: linear-gradient(#ffe788, #ffce38);
+	border-radius: 2px;
+	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
+	background-color: #FFE788;
+	padding: 2px 5px 0;
+	font-size: 14px;
+	color: #555;
+	font-weight: bold;
+	display: inline-block;
+	text-align: center;
+}
+a.github:hover {
+	background: linear-gradient(#ffe788, #ffe788);
+	background-color: #ffeca0;
+}
