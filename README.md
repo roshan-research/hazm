@@ -41,6 +41,11 @@ Python library for digesting Persian text.
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PR'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
+>>> from hazm import DependencyParser
+>>> parser = DependencyParser(tagger=POSTagger())
+>>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید ؟'))
+<DependencyGraph with 8 nodes>
+
 ```
 
 ## Installation
