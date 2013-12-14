@@ -4,7 +4,7 @@ from __future__ import print_function, unicode_literals
 import os, sys, codecs, subprocess, itertools
 from collections import Counter
 from nltk.parse import DependencyGraph
-from hazm import Lemmatizer, BijankhanReader, POSTagger
+from hazm import Lemmatizer, BijankhanReader, POSTagger, DependencyParser
 
 
 def dadegan_text(conll_file='resources/train.conll'):
@@ -69,22 +69,43 @@ def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='re
 	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(sentences[train_part:]))
 
 
-def train_dependency_parser(conll_file='resources/train.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
-	lemmatizer, tagger = Lemmatizer(), POSTagger()
-	train_file = 'resources/parser_train_data.conll'
-	output = codecs.open(train_file, 'w', 'utf8')
-	nodelists = [DependencyGraph(item).nodelist[1:] for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n')]
+def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 
-	sentences = [[node['word'] for node in nodelist] for nodelist in nodelists]
+	def read_conll(conll_file):
+		trees = [DependencyGraph(item) for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n') if item.strip()]
+		sentences = [[node['word'] for node in tree.nodelist[1:]] for tree in trees]
+		return trees, sentences
+
+	lemmatizer, tagger = Lemmatizer(), POSTagger()
+
+	trees, sentences = read_conll(train_file)
 	tagged = tagger.batch_tag(sentences)
 
-	for nodelist, sentence in zip(nodelists, tagged):
-		for i, (node, word) in enumerate(zip(nodelist, sentence), start=1):
-			node['tag'] = word[1]
-			node['lemma'] = lemmatizer.lemmatize(node['word'].replace('_', ' '), node['tag'])
-			print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
-		print(file=output)
+	train_data = train_file +'.data'
+	with codecs.open(train_data, 'w', 'utf8') as output:
+		for tree, sentence in zip(trees, tagged):
+			for i, (node, word) in enumerate(zip(tree.nodelist[1:], sentence), start=1):
+				node['tag'] = word[1]
+				node['lemma'] = lemmatizer.lemmatize(node['word'].replace('_', ' '), node['tag'])
+				print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
+			print(file=output)
 
-	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_file, '-f', options_file, '-F', features_file, '-m', 'learn']
+	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_data, '-f', options_file, '-F', features_file, '-m', 'learn']
+	process = subprocess.Popen(cmd)
+	process.wait()
+
+	# evaluation
+	print('\nEvaluating trained model on test data:')
+	parser = DependencyParser(tagger=tagger, model_file=model_file)
+
+	trees, sentences = read_conll(test_file)
+	tagged = tagger.batch_tag(sentences)
+	parsed = parser.tagged_batch_parse(tagged)
+
+	test_data, test_results = test_file +'.data', test_file +'.results'
+	print('\n'.join([sentence.to_conll(10) for sentence in trees]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
+	print('\n'.join([sentence.to_conll(10) for sentence in parsed]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
+
+	cmd = ['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]
 	process = subprocess.Popen(cmd)
 	process.wait()

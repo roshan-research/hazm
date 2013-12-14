@@ -20,24 +20,25 @@ class DependencyParser(MaltParser):
 		'(رفته_بودم من (به مدرسه) .)'
 		"""
 
-		input_file, output_file = os.path.join(self.working_dir, 'malt_input.conll'), os.path.join(self.working_dir, 'malt_output.conll')
+		input_filename, output_filename = os.path.join(self.working_dir, 'malt_input.conll'), os.path.join(self.working_dir, 'malt_output.conll')
 
 		if self.lemmatizer:
 			lemmatize = self.lemmatizer.lemmatize
 		else:
 			lemmatize = lambda w: '_'
 
-		with codecs.open(input_file, 'w', 'utf8') as _input:
+		with codecs.open(input_filename, 'w', 'utf8') as input_file:
 			for sentence in sentences:
 				for i, (word, tag) in enumerate(sentence, start=1):
-					print(i, word.replace(' ', '_'), lemmatize(word).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=_input)
-				print(file=_input)
+					print(i, word.replace(' ', '_'), lemmatize(word).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=input_file)
+				print(file=input_file)
 
-		cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_file, '-o', output_file, '-m', 'parse']
+		cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_filename, '-o', output_filename, '-m', 'parse']
 		if self._execute(cmd, verbose) != 0:
 			raise Exception("MaltParser parsing failed: %s" % (' '.join(cmd)))
 
-		return DependencyGraph.load(output_file)
+		with codecs.open(output_filename, encoding='utf8') as output_file:
+			return [DependencyGraph(item) for item in output_file.read().split('\n\n')]
 
 
 if __name__ == '__main__':
