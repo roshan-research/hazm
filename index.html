@@ -58,6 +58,10 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'زنگ&zwnj;ها برای که به صدا درمی&zwnj;آید ؟'</span><span class="p">))</span>
 </pre></div>
 
+	<div id="tree" class="tree text-center">
+		<div class="pull-right">درخت وابستگی حاصل:</div>
+	</div>
+
 	<h2>نصب</h2>
 	<pre><code>pip install hazm</code></pre>
 	<p>ما <a href="http://dl.dropboxusercontent.com/u/90405495/resources.zip">مدل‌های آماده برچسب‌زنی و تجزیه</a> را هم آماده کرده‌ایم که می‌توانید در پوشه <span class="eng">resources</span> پروژه خود قرار دهید.</p>
@@ -72,5 +76,17 @@
 <div class="container footer">
 	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
 </div>
+
+<link rel="stylesheet" href="http://nournia.github.io/d3-dependency-parse-tree/main.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://nournia.github.io/d3-dependency-parse-tree/jquery.js"></script>
+<script type="text/javascript" src="http://nournia.github.io/d3-dependency-parse-tree/d3.js"></script>
+<script type="text/javascript" src="http://nournia.github.io/d3-dependency-parse-tree/dependency-tree.js"> </script>
+<script type="text/javascript">
+	$(function() {
+		$('svg').remove();
+		data = "1\tزنگ\u200cها\t_\tN\tN\t_\t6\tSBJ\t_\t_\n2\tبرای\t_\tPREP\tPREP\t_\t6\tADV\t_\t_\n3\tکه\t_\tCONJ\tCONJ\t_\t2\tPOSDEP\t_\t_\n4\tبه\t_\tPREP\tPREP\t_\t6\tVPP\t_\t_\n5\tصدا\t_\tN\tN\t_\t4\tPOSDEP\t_\t_\n6\tدرمی\u200cآید\t_\tV\tV\t_\t0\tROOT\t_\t_\n7\t؟\t_\tPUNC\tPUNC\t_\t6\tPUNC\t_\t_\n";
+		drawTree(data, '#tree', true);
+	});
+</script>
 </body>
 </html>
