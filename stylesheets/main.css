@@ -94,7 +94,7 @@ a.github {
 	border-radius: 2px;
 	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
 	background-color: #FFE788;
-	padding: 2px 5px 0;
+	padding: 1px 5px 1px;
 	font-size: 14px;
 	color: #555;
 	font-weight: bold;
