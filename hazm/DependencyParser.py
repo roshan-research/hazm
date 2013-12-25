@@ -25,12 +25,12 @@ class DependencyParser(MaltParser):
 		if self.lemmatizer:
 			lemmatize = self.lemmatizer.lemmatize
 		else:
-			lemmatize = lambda w: '_'
+			lemmatize = lambda w, t: '_'
 
 		with codecs.open(input_filename, 'w', 'utf8') as input_file:
 			for sentence in sentences:
 				for i, (word, tag) in enumerate(sentence, start=1):
-					print(i, word.replace(' ', '_'), lemmatize(word).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=input_file)
+					print(i, word.replace(' ', '_'), lemmatize(word, tag).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=input_file)
 				print(file=input_file)
 
 		cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_filename, '-o', output_filename, '-m', 'parse']

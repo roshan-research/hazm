@@ -13,6 +13,7 @@ Python library for digesting Persian text.
 + Python 3.3 and 2.7 support
 + [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
 
+
 ## Usage
 
 ```python
@@ -48,12 +49,12 @@ Python library for digesting Persian text.
 
 ```
 
+
 ## Installation
 
 	pip install hazm
 
 We have also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip). You may put these models in the `resources` folder of your project.
-
 
 
 ## Thanks
