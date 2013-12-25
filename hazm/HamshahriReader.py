@@ -38,7 +38,7 @@ class HamshahriReader():
 								doc['text'] += item.data
 
 						# refine text
-						doc['text'] = self._paragraph_pattern.sub(r'\1\n', doc['text']).replace('\no ', '')
+						doc['text'] = self._paragraph_pattern.sub(r'\1\n', doc['text']).replace('\no ', '\n')
 
 						yield doc
 
