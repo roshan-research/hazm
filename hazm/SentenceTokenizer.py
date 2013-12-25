@@ -15,9 +15,8 @@ class SentenceTokenizer(TokenizerI):
 		['جدا کردن ساده است.', 'تقریبا البته!']
 		"""
 
-		text = text.replace('\n', ' ')
-		text = self.pattern.sub(r'\1\n', text)
-		return [sentence.strip() for sentence in text.split('\n') if sentence]
+		text = self.pattern.sub(r'\1\n\n', text)
+		return [sentence.replace('\n', ' ').strip() for sentence in text.split('\n\n') if sentence.strip()]
 
 
 if __name__ == '__main__':
