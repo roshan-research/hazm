@@ -30,6 +30,7 @@ class DependencyParser(MaltParser):
 		with codecs.open(input_filename, 'w', 'utf8') as input_file:
 			for sentence in sentences:
 				for i, (word, tag) in enumerate(sentence, start=1):
+					if not word.strip(): word = '_'
 					print(i, word.replace(' ', '_'), lemmatize(word, tag).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=input_file)
 				print(file=input_file)
 
