@@ -1,6 +1,6 @@
 
 from __future__ import print_function
-import os, sys
+import os, sys, re
 from xml.dom import minidom
 
 
@@ -11,6 +11,7 @@ class HamshahriReader():
 	def __init__(self, root='resources/hamshahri'):
 		self._root = root
 		self._invalids = set(['hamshahri.dtd', 'HAM2-960622.xml', 'HAM2-960630.xml', 'HAM2-960701.xml', 'HAM2-960709.xml', 'HAM2-960710.xml', 'HAM2-960711.xml', 'HAM2-960817.xml', 'HAM2-960818.xml', 'HAM2-960819.xml', 'HAM2-960820.xml', 'HAM2-961019.xml', 'HAM2-961112.xml', 'HAM2-961113.xml', 'HAM2-961114.xml', 'HAM2-970414.xml', 'HAM2-970415.xml', 'HAM2-970612.xml', 'HAM2-970614.xml', 'HAM2-970710.xml', 'HAM2-970712.xml', 'HAM2-970713.xml', 'HAM2-970717.xml', 'HAM2-970719.xml', 'HAM2-980317.xml', 'HAM2-040820.xml', 'HAM2-040824.xml', 'HAM2-040825.xml', 'HAM2-040901.xml', 'HAM2-040917.xml', 'HAM2-040918.xml', 'HAM2-040920.xml', 'HAM2-041025.xml', 'HAM2-041026.xml', 'HAM2-041027.xml', 'HAM2-041230.xml', 'HAM2-041231.xml', 'HAM2-050101.xml', 'HAM2-050102.xml', 'HAM2-050223.xml', 'HAM2-050224.xml', 'HAM2-050406.xml', 'HAM2-050407.xml', 'HAM2-050416.xml'])
+		self._paragraph_pattern = re.compile(r'(\n.{0,50})(?=\n)')
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
@@ -35,6 +36,9 @@ class HamshahriReader():
 						for item in element.getElementsByTagName('TEXT')[0].childNodes:
 							if item.nodeType == 4:  # CDATA
 								doc['text'] += item.data
+
+						# refine text
+						doc['text'] = self._paragraph_pattern.sub(r'\1\n', doc['text']).replace('\no ', '')
 
 						yield doc
 
