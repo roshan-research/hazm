@@ -55,6 +55,17 @@ ul {
 	font-size: .9em;
 	font-family: serif;
 }
+.btn {
+	font-size: 17px;
+	padding: 4px 8px 2px;
+}
+.glyphicon {
+	top: 3px;
+}
+textarea.form-control {
+	font-size: 18px;
+	margin-bottom: 5px;
+}
 
 .header {
 	background: url(../images/background.png) #4276b6;
@@ -87,21 +98,30 @@ ul {
 	font-size: 16px;
 }
 
-a.github {
+.header .container {
+	position: relative;
+}
+.menu {
+	position: absolute;
+	left: 15px;
+	bottom: -14px;
+}
+.menu a {
 	text-decoration: none;
 	border: 1px solid #dba500;
 	background: linear-gradient(#ffe788, #ffce38);
 	border-radius: 2px;
 	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
 	background-color: #FFE788;
-	padding: 1px 5px 1px;
+	padding: 3px 7px 1px;
+	margin-right: 4px;
 	font-size: 14px;
 	color: #555;
 	font-weight: bold;
 	display: inline-block;
 	text-align: center;
 }
-a.github:hover {
+.menu a:hover {
 	background: linear-gradient(#ffe788, #ffe788);
 	background-color: #ffeca0;
 }

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>هضم</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+	<link rel="stylesheet" href="stylesheets/main.css">
+</head>
+<body>
+<div class="header">
+	<div class="container">
+		<h1>هضم</h1>
+		<p>برای پردازش زبان فارسی در پایتون</p>
+		<div class="menu">
+			<a href="demo.html"><span class="glyphicon glyphicon-cog"></span> استفاده</a>
+			<a href="https://github.com/sobhe/hazm"><span class="glyphicon glyphicon-star"></span> هم‌راهی</a>
+			<a href="https://github.com/sobhe/hazm/archive/master.zip"><span class="glyphicon glyphicon-arrow-down"></span> دریافت</a>
+		</div>
+	</div>
+</div>
+<div class="container content">
+	<h2>تجزیه نحوی</h2>
+	<div id="parse">
+		<textarea class="form-control">ما به مدرسه می‌رویم.</textarea>
+		<button class="btn btn-default">تجزیه</button>
+	</div>
+	<div class="tree">
+		<svg height="0"></svg>
+	</div>
+</div>
+<div class="container footer">
+	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
+</div>
+
+<link rel="stylesheet" href="http://nournia.github.io/d3-dependency-parse-tree/tree.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://nournia.github.io/d3-dependency-parse-tree/d3.js"></script>
+<script type="text/javascript" src="http://nournia.github.io/d3-dependency-parse-tree/dependency-tree.js"> </script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$('#parse .btn').click(function() {
+			$.post('http://hazm-nournia.rhcloud.com/api/parse', {'sentence': $('#parse textarea').val()}, function(data) {
+				drawTree('.tree svg', data);
+			});
+		});
+	})
+</script>
+</body>
+</html>
