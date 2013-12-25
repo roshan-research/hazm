@@ -55,7 +55,7 @@
 
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">DependencyParser</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">POSTagger</span><span class="p">())</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'زنگ&zwnj;ها برای که به صدا درمی&zwnj;آید ؟'</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'زنگ&zwnj;ها برای که به صدا درمی&zwnj;آید؟'</span><span class="p">))</span>
 </pre></div>
 
 	<p class="pull-right" style="margin-bottom: 0; height: 0">درخت وابستگی حاصل:</p>
@@ -66,6 +66,13 @@
 	<h2>نصب</h2>
 	<pre><code>pip install hazm</code></pre>
 	<p>ما <a href="http://dl.dropboxusercontent.com/u/90405495/resources.zip">مدل‌های آماده برچسب‌زنی و تجزیه</a> را هم آماده کرده‌ایم که می‌توانید در پوشه <span class="eng">resources</span> پروژه خود قرار دهید.</p>
+
+	<h2>ارزیابی</h2>
+	<p>رویه‌های آموزش و ارزیابی مدل‌ها هم <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a> هستند. نتیجه ارزیابی این نسخه:</p>
+	<ul>
+		<li>دقت برچسب اجزای سخن: 96.6%</li>
+		<li>دقت تجزیه نحوی: 83.3%</li>
+	</ul>
 
 	<h2>سپاس</h2>
 	<ul>
