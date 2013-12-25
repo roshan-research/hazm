@@ -52,9 +52,11 @@ Python library for digesting Persian text.
 
 	pip install hazm
 
-We also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip) which you may put them in `resources` folder of your project.
+We have also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip). You may put these models in the `resources` folder of your project.
+
+
 
 ## Thanks
 
-+ from constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
-+ from [Virastyar](http://virastyar.ir/) for persian word list.
++ to constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
++ to [Virastyar](http://virastyar.ir/) project for persian word list.
