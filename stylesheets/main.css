@@ -49,7 +49,7 @@ p, ul {
 }
 ul {
 	padding-right: 20px;
-	list-style-image: url("../images/bullet.png");
+	/*list-style-image: url("../images/bullet.png");*/
 }
 .eng {
 	font-size: .9em;
