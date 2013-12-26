@@ -22,7 +22,10 @@
 	<h2>تجزیه نحوی</h2>
 	<div id="parse">
 		<textarea class="form-control">ما به مدرسه می‌رویم.</textarea>
-		<button class="btn btn-default">تجزیه</button>
+		<div class="controls">
+			<button class="btn btn-default">تجزیه</button><span class="loading"></span>
+			<span class="text-danger">خطا در ارتباط!</span>
+		</div>
 	</div>
 	<div class="tree">
 		<svg height="0"></svg>
@@ -38,10 +41,27 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
 	$(function () {
+		var showLoading = function() {
+			$('#parse .btn').attr('disabled','disabled');
+			$('#parse .loading').show();
+			$('#parse .text-danger').hide();
+		}
+		var hideLoading = function() {
+			$('#parse .btn').removeAttr('disabled');
+			$('#parse .loading').hide();
+			$('#parse .text-danger').hide();
+		}
+
 		$('#parse .btn').click(function() {
-			$.post('http://hazm-nournia.rhcloud.com/api/parse', {'sentence': $('#parse textarea').val()}, function(data) {
-				drawTree('.tree svg', data);
-			});
+			showLoading();
+			$.post('http://hazm-nournia.rhcloud.com/api/parse', {'sentence': $('#parse textarea').val()})
+				.done(function(data) {
+					drawTree('.tree svg', data);
+					hideLoading();
+				}).fail(function() {
+					hideLoading();
+					$('#parse .text-danger').show();
+				});
 		});
 	})
 </script>
