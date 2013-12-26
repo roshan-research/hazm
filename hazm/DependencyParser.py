@@ -1,7 +1,7 @@
 #coding=utf8
 
-from __future__ import print_function
-import os, codecs
+from __future__ import print_function, unicode_literals
+import os, codecs, tempfile
 from .Lemmatizer import Lemmatizer
 from .POSTagger import POSTagger
 from nltk.parse import DependencyGraph
@@ -12,7 +12,7 @@ class DependencyParser(MaltParser):
 	def __init__(self, tagger, lemmatizer=Lemmatizer(), model_file='langModel.mco', working_dir='resources'):
 		os.environ['MALTPARSERHOME'] = working_dir
 		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
-		self.lemmatizer = lemmatizer
+		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
 	def tagged_batch_parse(self, sentences, verbose=False):
 		"""
@@ -20,27 +20,29 @@ class DependencyParser(MaltParser):
 		'(رفته_بودم من (به مدرسه) .)'
 		"""
 
-		input_filename, output_filename = os.path.join(self.working_dir, 'malt_input.conll'), os.path.join(self.working_dir, 'malt_output.conll')
+		input_file = tempfile.NamedTemporaryFile(prefix='malt_input.conll', dir=self.working_dir, delete=False)
+		output_file = tempfile.NamedTemporaryFile(prefix='malt_output.conll', dir=self.working_dir, delete=False)
 
-		if self.lemmatizer:
-			lemmatize = self.lemmatizer.lemmatize
-		else:
-			lemmatize = lambda w, t: '_'
-
-		with codecs.open(input_filename, 'w', 'utf8') as input_file:
+		try:
 			for sentence in sentences:
 				for i, (word, tag) in enumerate(sentence, start=1):
 					word = word.strip()
 					if not word: word = '_'
-					print(i, word.replace(' ', '_'), lemmatize(word, tag).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', sep='\t', file=input_file)
-				print(file=input_file)
+					input_file.write(('\t'.join([str(i), word.replace(' ', '_'), self.lemmatize(word, tag).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', '\n'])).encode('utf8'))
+				input_file.write('\n\n'.encode('utf8'))
+			input_file.close()
 
-		cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_filename, '-o', output_filename, '-m', 'parse']
-		if self._execute(cmd, verbose) != 0:
-			raise Exception("MaltParser parsing failed: %s" % (' '.join(cmd)))
+			cmd = ['java', '-jar', self._malt_bin, '-w', self.working_dir, '-c', self.mco, '-i', input_file.name, '-o', output_file.name, '-m', 'parse']
+			if self._execute(cmd, verbose) != 0:
+				raise Exception("MaltParser parsing failed: %s" % (' '.join(cmd)))
 
-		with codecs.open(output_filename, encoding='utf8') as output_file:
-			return [DependencyGraph(item) for item in output_file.read().split('\n\n')]
+			return [DependencyGraph(item) for item in codecs.open(output_file.name, encoding='utf8').read().split('\n\n')]
+
+		finally:
+			input_file.close()
+			os.remove(input_file.name)
+			output_file.close()
+			os.remove(output_file.name)
 
 
 if __name__ == '__main__':
