@@ -17,6 +17,7 @@ Python library for digesting Persian text.
 ## Usage
 
 ```python
+>>> from __future__ import unicode_literals
 
 >>> from hazm import Normalizer
 >>> normalizer = Normalizer()
@@ -44,7 +45,7 @@ Python library for digesting Persian text.
 
 >>> from hazm import DependencyParser
 >>> parser = DependencyParser(tagger=POSTagger())
->>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید ؟'))
+>>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
 
 ```
