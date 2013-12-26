@@ -41,7 +41,7 @@
 .highlight .ne { color: #bbbbbb } /* Name.Exception */
 .highlight .nf { color: #447fcf } /* Name.Function */
 .highlight .nl { color: #d0d0d0 } /* Name.Label */
-.highlight .nn { color: #447fcf; text-decoration: underline } /* Name.Namespace */
+.highlight .nn { color: #447fcf } /* Name.Namespace */
 .highlight .nx { color: #d0d0d0 } /* Name.Other */
 .highlight .py { color: #d0d0d0 } /* Name.Property */
 .highlight .nt { color: #6ab825;} /* Name.Tag */
