@@ -35,8 +35,8 @@ class Normalizer():
 			self.affix_spacing_patterns = compile_patterns([
 				(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
 				(r'(^| )(ن?می) ', r'\1\2‌'), # put zwnj after می, نمی
-				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ '+ punc_after + punc_before +'\r\n]?)', r'‌\1'), # put zwnj before تر, ترین, ها, های
-				(r'([^ ][هی]) (ا(م|ی|یم|ید|ند))(?=[ \n'+ punc_after +']?)', r'\1‌\2'), # join ام, ای, ایم, اید, اند
+				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'), # put zwnj before تر, ترین, ها, های
+				(r'([^ ][هی]) (ا(م|ی|یم|ید|ند))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'), # join ام, ای, ایم, اید, اند
 			])
 
 	def normalize(self, text):
