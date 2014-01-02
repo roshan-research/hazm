@@ -9,7 +9,7 @@ from nltk.tokenize.api import TokenizerI
 class WordTokenizer(TokenizerI):
 	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
-		self.pattern = re.compile(r'([!:\.،؛؟»\]\)\}«\[\(\{\?]+)')
+		self.pattern = re.compile(r'([!:\.،؛؟»\]\)\}"«\[\(\{\?]+)')
 
 		if join_verb_parts:
 			self.after_verbs = set([
