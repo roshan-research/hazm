@@ -9,7 +9,7 @@ from nltk.tokenize.api import TokenizerI
 class WordTokenizer(TokenizerI):
 	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
-		self.pattern = re.compile(r'([!:\.،؛؟»\]\)\}"«\[\(\{\?]+)')
+		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
 		if join_verb_parts:
 			self.after_verbs = set([
@@ -34,8 +34,8 @@ class WordTokenizer(TokenizerI):
 
 	def tokenize(self, text):
 		"""
-		>>> tokenizer.tokenize('این جمله معمولی است.')
-		['این', 'جمله', 'معمولی', 'است', '.']
+		>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
+		['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 		"""
 
 		text = self.pattern.sub(r' \1 ', text)
