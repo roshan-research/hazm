@@ -12,7 +12,7 @@ class Normalizer():
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
 
-		self.translations = maketrans('كي;%1234567890', 'کی؛٪۱۲۳۴۵۶۷۸۹۰')
+		self.translations = maketrans(' كي;%1234567890', ' کی؛٪۱۲۳۴۵۶۷۸۹۰')
 
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
