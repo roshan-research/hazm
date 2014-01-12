@@ -1,22 +1,11 @@
 
-@font-face {
-	font-family: BMitra;
-	font-weight: normal;
-	src: url('../fonts/BMitra.eot?#') format('eot'), url('../fonts/BMitra.woff') format('woff'), url('../fonts/BMitra.ttf') format('truetype');
-}
-@font-face {
-	font-family: BMitra;
-	font-weight: bold;
-	src: url('../fonts/BMitraBold.eot?#') format('eot'), url('../fonts/BMitraBold.woff') format('woff'), url('../fonts/BMitraBold.ttf') format('truetype');
-}
-
 .container {
 	max-width: 670px;
 }
 
 body {
 	direction: rtl;
-	font-family: BMitra, Arial;
+	font-family: BMitra, ENassim, Arial;
 	color: #666;
 	font-size: 18px;
 	font-weight: 300;
@@ -35,14 +24,20 @@ code {
 	font-family: serif;
 	color: #efefef !important;
 }
+.highlight .s {
+	font-family: Arial;
+}
 
-h1, h2 {
+h1, h2, h3 {
 	color: #333;
 	font-family: BMitra;
 	font-weight: bold;
 }
 h2 {
 	font-size: 20px;
+}
+h3 {
+	font-size: 16px;
 }
 p, ul {
 	color: #666;
@@ -89,6 +84,9 @@ textarea.form-control {
 	border-radius: 3px;
 	border: 1px solid #cbcbcb;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+}
+.demo div {
+	margin-top: 10px;
 }
 
 .footer {

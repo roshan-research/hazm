@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>هضم</title>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://sobhe.ap01.aws.af.cm/css/Fonts.css">
 	<link rel="stylesheet" href="../stylesheets/pygment_trac.css">
 	<link rel="stylesheet" href="../stylesheets/main.css">
 </head>
@@ -18,18 +19,20 @@
 		</div>
 	</div>
 </div>
-<div class="container content">
-	<h2>تجزیه نحوی</h2>
-	<div id="parse">
-		<textarea class="form-control">ما به مدرسه می‌رویم.</textarea>
+<div class="container content demo">
+	<h3>متن</h3>
+	<div id="query">
+		<textarea class="form-control" style="min-height: 90px">هربار وقتی از سفری به ایران برمی گردم، دوست دارم سر فرو بیافکنم و برخاک سرزمینم بوسه ای بیافشانم. این اولین بار بود که چنین حسی نداشتم. برعکس، پاره ای از تنم را جا گذاشته بودم پشت خطوط مرزی، خطوط بی راه و بی روح مرزی.</textarea>
 		<div class="controls">
-			<button class="btn btn-default">تجزیه</button><span class="loading"></span>
+			<button class="btn btn-default">پردازش</button><span class="loading"></span>
 			<span class="text-danger">خطا در ارتباط!</span>
 		</div>
 	</div>
-	<div class="tree">
-		<svg height="0"></svg>
-	</div>
+	<div id="normalized"></div>
+	<div id="tokenized"></div>
+	<div id="tagged"></div>
+	<div id="lemmatized"></div>
+	<div id="parsed"></div>
 </div>
 <div class="container footer">
 	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
@@ -40,28 +43,74 @@
 <script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
+	var server = 'https://hazm-nournia.rhcloud.com/api';
+
+	var normalize = function(text) {
+		$.post(server + '/normalize', {'text': text})
+			.done(function(normalized_text) {
+				$('#normalized').text(normalized_text);
+				tokenize(normalized_text);
+			});
+	};
+	var tokenize = function(normalized_text) {
+		$.post(server + '/tokenize', {'normalized_text': normalized_text})
+			.done(function(tokenized_text) {
+				$('#tokenized').text(tokenized_text);
+				tag(tokenized_text);
+			});
+	};
+	var tag = function(tokenized_text) {
+		$.post(server + '/tag', {'tokenized_text': tokenized_text})
+			.done(function(tagged_text) {
+				$('#tagged').text(tagged_text);
+				lemmatize(tagged_text);
+				parse(tagged_text);
+			});
+	};
+	var lemmatize = function(tagged_text) {
+		$.post(server + '/lemmatize', {'tagged_text': tagged_text})
+			.done(function(lemmatized_text) {
+				$('#lemmatized').text(lemmatized_text);
+			});
+	};
+	var parse = function(tagged_text) {
+		$.ajax({
+			type: 'POST', dataType: 'json', url: server + '/parse',
+			data: {'tagged_text': tagged_text},
+			success: function(parsed_text) {
+				$('#parsed').empty();
+				for (s in parsed_text) {
+					if (parsed_text[s].length) {
+						$('#parsed').append('<div class="tree"><svg id="tree'+ s +'"></svg></div>');
+						drawTree('#tree'+ s, parsed_text[s]);
+					}
+				}
+			}
+		});
+	};
+
 	$(function () {
+
 		var showLoading = function() {
-			$('#parse .btn').attr('disabled','disabled');
-			$('#parse .loading').show();
-			$('#parse .text-danger').hide();
+			$('#query .btn').attr('disabled','disabled');
+			$('#query .loading').show();
+			$('#query .text-danger').hide();
 		}
 		var hideLoading = function() {
-			$('#parse .btn').removeAttr('disabled');
-			$('#parse .loading').hide();
-			$('#parse .text-danger').hide();
+			$('#query .btn').removeAttr('disabled');
+			$('#query .loading').hide();
+			$('#query .text-danger').hide();
 		}
 
-		$('#parse .btn').click(function() {
-			showLoading();
-			$.post('http://hazm-nournia.rhcloud.com/api/parse', {'sentence': $('#parse textarea').val()})
-				.done(function(data) {
-					drawTree('.tree svg', data);
-					hideLoading();
-				}).fail(function() {
-					hideLoading();
-					$('#parse .text-danger').show();
-				});
+		$('#query .btn').click(function() {
+			// showLoading();
+			normalize($('#query textarea').val());
+
+				// 	// hideLoading();
+				// }).fail(function() {
+				// 	// hideLoading();
+				// 	// $('#parse .text-danger').show();
+				// });
 		});
 	})
 </script>
