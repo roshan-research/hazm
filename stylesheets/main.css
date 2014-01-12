@@ -79,14 +79,11 @@ textarea.form-control {
 }
 
 .content {
-	padding: 10px 30px;
+	padding: 10px 30px 20px;
 	background: #fbfbfb;
 	border-radius: 3px;
 	border: 1px solid #cbcbcb;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
-}
-.demo div {
-	margin-top: 10px;
 }
 
 .footer {
@@ -126,12 +123,14 @@ textarea.form-control {
 }
 
 /* controls */
+
 .controls button, .controls span {
 	float: right;
 }
 .controls {
 	height: 32px;
 	font-size: 17px;
+	margin-bottom: 10px;
 }
 .controls .btn {
 	margin-left: 8px;
@@ -145,4 +144,10 @@ textarea.form-control {
 .text-danger {
 	display: none;
 	margin-top: 5px;
+}
+
+/* demo */
+
+div.demo {
+	display: none;
 }

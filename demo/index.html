@@ -19,20 +19,34 @@
 		</div>
 	</div>
 </div>
-<div class="container content demo">
-	<h3>متن</h3>
+<div class="container content">
 	<div id="query">
-		<textarea class="form-control" style="min-height: 90px">هربار وقتی از سفری به ایران برمی گردم، دوست دارم سر فرو بیافکنم و برخاک سرزمینم بوسه ای بیافشانم. این اولین بار بود که چنین حسی نداشتم. برعکس، پاره ای از تنم را جا گذاشته بودم پشت خطوط مرزی، خطوط بی راه و بی روح مرزی.</textarea>
+		<h3>متن</h3>
+		<textarea class="form-control" style="min-height: 90px">هربار وقتی از سفری به ایران بر می گردم، دوست دارم سر فرو بیافکنم و برخاک سرزمینم بوسه ای بیافشانم. این اولین بار بود که چنین حسی نداشتم. برعکس، پاره ای از تنم را جا گذاشته بودم پشت خطوط مرزی، خطوط بی راه و بی روح مرزی.</textarea>
 		<div class="controls">
 			<button class="btn btn-default">پردازش</button><span class="loading"></span>
-			<span class="text-danger">خطا در ارتباط!</span>
 		</div>
 	</div>
-	<div id="normalized"></div>
-	<div id="tokenized"></div>
-	<div id="tagged"></div>
-	<div id="lemmatized"></div>
-	<div id="parsed"></div>
+	<div class="demo" id="normalized">
+		<h3>متن</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="tokenized">
+		<h3>واژه‌ها</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="lemmatized">
+		<h3>ریشه‌ها</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="tagged">
+		<h3>برچسب اجزای سخن</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="parsed">
+		<h3>تجزیه نحوی</h3>
+		<div></div>
+	</div>
 </div>
 <div class="container footer">
 	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
@@ -48,69 +62,69 @@
 	var normalize = function(text) {
 		$.post(server + '/normalize', {'text': text})
 			.done(function(normalized_text) {
-				$('#normalized').text(normalized_text);
+				$('#normalized').show().find('div').text(normalized_text);
 				tokenize(normalized_text);
-			});
+			})
 	};
 	var tokenize = function(normalized_text) {
 		$.post(server + '/tokenize', {'normalized_text': normalized_text})
 			.done(function(tokenized_text) {
-				$('#tokenized').text(tokenized_text);
 				tag(tokenized_text);
+
+				sentences = $.parseJSON(tokenized_text);
+				$('#tokenized').show().find('div').empty();
+				for (s in sentences)
+					$('#tokenized div').append('<li>'+ sentences[s].join(' ') +'</li>');
 			});
 	};
 	var tag = function(tokenized_text) {
 		$.post(server + '/tag', {'tokenized_text': tokenized_text})
 			.done(function(tagged_text) {
-				$('#tagged').text(tagged_text);
 				lemmatize(tagged_text);
 				parse(tagged_text);
+
+				sentences = $.parseJSON(tagged_text);
+				$('#tagged').show().find('div').empty();
+				for (s in sentences) {
+					sentence = $.map(sentences[s], function(word) { return word.join('/'); });
+					$('#tagged div').append('<li>'+ sentence.join(' ') +'</li>');
+				}
 			});
 	};
 	var lemmatize = function(tagged_text) {
 		$.post(server + '/lemmatize', {'tagged_text': tagged_text})
 			.done(function(lemmatized_text) {
-				$('#lemmatized').text(lemmatized_text);
+				sentences = $.parseJSON(lemmatized_text);
+				$('#lemmatized').show().find('div').empty();
+				for (s in sentences)
+					$('#lemmatized div').append('<li>'+ sentences[s].join(' ') +'</li>');
 			});
 	};
 	var parse = function(tagged_text) {
-		$.ajax({
-			type: 'POST', dataType: 'json', url: server + '/parse',
-			data: {'tagged_text': tagged_text},
-			success: function(parsed_text) {
-				$('#parsed').empty();
-				for (s in parsed_text) {
-					if (parsed_text[s].length) {
-						$('#parsed').append('<div class="tree"><svg id="tree'+ s +'"></svg></div>');
-						drawTree('#tree'+ s, parsed_text[s]);
+		$.post(server + '/parse', {'tagged_text': tagged_text})
+			.done(function(parsed_text) {
+				sentences = $.parseJSON(parsed_text);
+				div = $('#parsed > div'); div.empty();
+				for (s in sentences) {
+					if (sentences[s].length) {
+						div.append('<div class="tree"><svg id="tree'+ s +'"></svg></div>');
+						drawTree('#tree'+ s, sentences[s]);
 					}
 				}
-			}
-		});
+				$('#parsed').show();
+			})
+			.always(function() {
+				$('#query .btn').removeAttr('disabled');
+				$('#query .loading').hide();
+			});
 	};
 
 	$(function () {
-
-		var showLoading = function() {
-			$('#query .btn').attr('disabled','disabled');
-			$('#query .loading').show();
-			$('#query .text-danger').hide();
-		}
-		var hideLoading = function() {
-			$('#query .btn').removeAttr('disabled');
-			$('#query .loading').hide();
-			$('#query .text-danger').hide();
-		}
-
 		$('#query .btn').click(function() {
-			// showLoading();
 			normalize($('#query textarea').val());
-
-				// 	// hideLoading();
-				// }).fail(function() {
-				// 	// hideLoading();
-				// 	// $('#parse .text-danger').show();
-				// });
+			$('.demo').hide();
+			$('#query .loading').show();
+			$('#query .btn').attr('disabled','disabled');
 		});
 	})
 </script>
