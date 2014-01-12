@@ -21,26 +21,26 @@
 </div>
 <div class="container content">
 	<div id="query">
-		<h3>متن</h3>
-		<textarea class="form-control" style="min-height: 90px">هربار وقتی از سفری به ایران بر می گردم، دوست دارم سر فرو بیافکنم و برخاک سرزمینم بوسه ای بیافشانم. این اولین بار بود که چنین حسی نداشتم. برعکس، پاره ای از تنم را جا گذاشته بودم پشت خطوط مرزی، خطوط بی راه و بی روح مرزی.</textarea>
+		<h3>متن ورودی</h3>
+		<textarea class="form-control" style="min-height: 90px">هربار وقتی از سفری به ایران بر می گردم ، دوست دارم سر فرو بیافکنم و برخاک سرزمینم بوسه ای بیافشانم. این اولین بار بود که چنین حسی نداشتم. برعکس، پاره ای از تنم را جا گذاشته بودم پشت خطوط مرزی، خطوط بی راه و بی روح مرزی.</textarea>
 		<div class="controls">
 			<button class="btn btn-default">پردازش</button><span class="loading"></span>
 		</div>
 	</div>
 	<div class="demo" id="normalized">
-		<h3>متن</h3>
+		<h3>متن تمیز</h3>
 		<div></div>
 	</div>
 	<div class="demo" id="tokenized">
-		<h3>واژه‌ها</h3>
+		<h3>واژه‌های متن</h3>
 		<div></div>
 	</div>
 	<div class="demo" id="lemmatized">
-		<h3>ریشه‌ها</h3>
+		<h3>ریشه واژه‌ها</h3>
 		<div></div>
 	</div>
 	<div class="demo" id="tagged">
-		<h3>برچسب اجزای سخن</h3>
+		<h3>تحلیل صرفی</h3>
 		<div></div>
 	</div>
 	<div class="demo" id="parsed">
@@ -108,7 +108,7 @@
 				for (s in sentences) {
 					if (sentences[s].length) {
 						div.append('<div class="tree"><svg id="tree'+ s +'"></svg></div>');
-						drawTree('#tree'+ s, sentences[s]);
+						drawTree('#tree'+ s, sentences[s].replace(/_/g,' '));
 					}
 				}
 				$('#parsed').show();
