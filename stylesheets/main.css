@@ -59,8 +59,9 @@ ul {
 	top: 3px;
 }
 textarea.form-control {
-	font-size: 18px;
+	font-size: 85%;
 	margin-bottom: 5px;
+	font-family: Arial;
 }
 
 .header {
