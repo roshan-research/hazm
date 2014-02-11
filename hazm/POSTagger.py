@@ -20,8 +20,3 @@ class POSTagger(stanford.POSTagger):
 		_sentences = [[item.replace(' ', '_') for item in sentence] for sentence in sentences]
 		results = super(stanford.POSTagger, self).batch_tag(_sentences)
 		return [[(word, tag[1].split('/')[-1]) for word, tag in zip(sentence, result)] for sentence, result in zip(sentences, results)]
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'tagger': POSTagger()})

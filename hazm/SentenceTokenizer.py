@@ -11,14 +11,9 @@ class SentenceTokenizer(TokenizerI):
 
 	def tokenize(self, text):
 		"""
-		>>> tokenizer.tokenize('جدا کردن ساده است. تقریبا البته!')
+		>>> sentence_tokenizer.tokenize('جدا کردن ساده است. تقریبا البته!')
 		['جدا کردن ساده است.', 'تقریبا البته!']
 		"""
 
 		text = self.pattern.sub(r'\1\n\n', text)
 		return [sentence.replace('\n', ' ').strip() for sentence in text.split('\n\n') if sentence.strip()]
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'tokenizer': SentenceTokenizer()})

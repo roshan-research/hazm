@@ -53,8 +53,3 @@ class BijankhanReader():
 			if self._joined_verb_parts:
 				sentence = self._join_verb_parts(sentence)
 			yield list(map(self._map_poses, sentence))
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'bijankhan': BijankhanReader()})

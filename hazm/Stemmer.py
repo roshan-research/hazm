@@ -31,8 +31,3 @@ class Stemmer(StemmerI):
 			word = word[:-len(end)] + 'ه'
 
 		return word
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'stemmer': Stemmer()})

@@ -43,8 +43,3 @@ class DependencyParser(MaltParser):
 			os.remove(input_file.name)
 			output_file.close()
 			os.remove(output_file.name)
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'parser': DependencyParser(tagger=POSTagger())})

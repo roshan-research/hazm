@@ -87,8 +87,3 @@ class Lemmatizer():
 		with_nots = lambda items: items + list(map(lambda item: 'ن' + item, items))
 		aa_refinement = lambda items: list(map(lambda item: item.replace('بآ', 'بیا').replace('نآ', 'نیا'), items)) if items[0].startswith('آ') else items
 		return aa_refinement(with_nots(past_simples) + with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives)
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'lemmatizer': Lemmatizer()})

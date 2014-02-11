@@ -91,8 +91,3 @@ class Normalizer():
 		for pattern, repl in self.affix_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'normalizer': Normalizer()})

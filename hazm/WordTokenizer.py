@@ -34,7 +34,7 @@ class WordTokenizer(TokenizerI):
 
 	def tokenize(self, text):
 		"""
-		>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
+		>>> word_tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
 		['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 		"""
 
@@ -46,15 +46,15 @@ class WordTokenizer(TokenizerI):
 
 	def join_verb_parts(self, tokens):
 		"""
-		>>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
+		>>> word_tokenizer.join_verb_parts(['خواهد', 'رفت'])
 		['خواهد رفت']
-		>>> tokenizer.join_verb_parts(['رفته', 'است'])
+		>>> word_tokenizer.join_verb_parts(['رفته', 'است'])
 		['رفته است']
-		>>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
+		>>> word_tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
 		['گفته شده است']
-		>>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
+		>>> word_tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
 		['گفته خواهد شد']
-		>>> tokenizer.join_verb_parts(['خسته', 'شدید'])
+		>>> word_tokenizer.join_verb_parts(['خسته', 'شدید'])
 		['خسته', 'شدید']
 		"""
 
@@ -65,8 +65,3 @@ class WordTokenizer(TokenizerI):
 			else:
 				result.append(token)
 		return list(reversed(result[1:]))
-
-
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod(extraglobs={'tokenizer': WordTokenizer(join_verb_parts=True)})
