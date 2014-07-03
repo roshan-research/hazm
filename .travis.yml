@@ -1,8 +1,9 @@
 language: python
 python:
+  - "2.7"
   - "3.2"
   - "3.3"
 notifications:
   email: false
-install: pip install http://nltk.org/nltk3-alpha/nltk-3.0a3.tar.gz && wget http://dl.dropboxusercontent.com/u/90405495/resources.zip && unzip resources.zip -d resources
+install: pip install https://github.com/nltk/nltk/archive/develop.zip && wget http://dl.dropboxusercontent.com/u/90405495/resources.zip && unzip resources.zip -d resources
 script: export JAVAHOME=/usr/bin/java && python tests.py
