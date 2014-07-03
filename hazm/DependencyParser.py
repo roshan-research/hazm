@@ -5,6 +5,7 @@ import os, codecs, tempfile
 from .Lemmatizer import Lemmatizer
 from .POSTagger import POSTagger
 from nltk.parse import DependencyGraph
+# from .DadeganReader import DependencyGraph
 from nltk.parse.malt import MaltParser
 
 
@@ -14,7 +15,7 @@ class DependencyParser(MaltParser):
 		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
-	def tagged_batch_parse(self, sentences, verbose=False):
+	def tagged_parse_sents(self, sentences, verbose=False):
 		"""
 		>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
 		'(رفته_بودم من (به مدرسه) .)'
