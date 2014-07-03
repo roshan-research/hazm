@@ -5,7 +5,6 @@ import os, codecs, tempfile
 from .Lemmatizer import Lemmatizer
 from .POSTagger import POSTagger
 from nltk.parse import DependencyGraph
-# from .DadeganReader import DependencyGraph
 from nltk.parse.malt import MaltParser
 
 

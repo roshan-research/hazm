@@ -1,5 +1,6 @@
 #coding=utf8
 
+from __future__ import unicode_literals
 from nltk.tag import stanford
 
 
