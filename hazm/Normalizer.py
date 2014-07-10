@@ -17,8 +17,7 @@ class Normalizer():
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
 			self.character_refinement_patterns = compile_patterns([
-				('"(.+)"', r'«\1»'),
-				("'(.+)'", r'«\1»'),
+				('" *([^"]+) *"', r'«\1»'),
 				('([\d+]).([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r'[ـ\r]', ''), # remove keshide, carriage returns
 				(r' +', ' '), # remove extra spaces
