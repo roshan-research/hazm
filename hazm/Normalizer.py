@@ -17,6 +17,9 @@ class Normalizer():
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
 			self.character_refinement_patterns = compile_patterns([
+				('"(.+)"', r'«\1»'),
+				("'(.+)'", r'«\1»'),
+				('([\d+]).([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r'[ـ\r]', ''), # remove keshide, carriage returns
 				(r' +', ' '), # remove extra spaces
 				(r'\n\n+', '\n\n'), # remove extra newlines
@@ -56,10 +59,9 @@ class Normalizer():
 		>>> normalizer.character_refinement('رمــــان')
 		'رمان'
 		"""
-
-		text = text.translate(self.translations)
 		for pattern, repl in self.character_refinement_patterns:
 			text = pattern.sub(repl, text)
+		text = text.translate(self.translations)
 		return text
 
 	def punctuation_spacing(self, text):
