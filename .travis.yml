@@ -8,6 +8,6 @@ notifications:
   email: false
 install:
   - pip install .
-	- wget http://dl.dropboxusercontent.com/u/90405495/resources.zip
-	- unzip resources.zip -d resources
+  - wget http://dl.dropboxusercontent.com/u/90405495/resources.zip
+  - unzip resources.zip -d resources
 script: export JAVAHOME=/usr/bin/java && python tests.py
