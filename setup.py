@@ -2,7 +2,7 @@
 from distutils.core import setup
 
 setup(name='hazm',
-	version='0.1',
+	version='0.2',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
 	author_email='alireza.nournia@gmail.com',
@@ -17,5 +17,5 @@ setup(name='hazm',
 		'Programming Language :: Python :: 3.3',
 		'License :: OSI Approved :: MIT License',
 	],
-	install_requires=['nltk']
+	install_requires=['nltk>=3.0.0b1']
 )
