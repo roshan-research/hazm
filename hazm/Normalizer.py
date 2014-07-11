@@ -1,4 +1,4 @@
-#coding=utf8
+# coding: utf8
 
 from __future__ import unicode_literals
 import re
@@ -17,11 +17,11 @@ class Normalizer():
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
 			self.character_refinement_patterns = compile_patterns([
-				('" *([^"]+) *"', r'«\1»'),
-				('([\d+]).([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r'[ـ\r]', ''), # remove keshide, carriage returns
 				(r' +', ' '), # remove extra spaces
 				(r'\n\n+', '\n\n'), # remove extra newlines
+				('"([^"]+)"', r'«\1»'), # replace quotation with gyoome
+				('([\d+]).([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r' ?\.\.\.', ' …'), # replace 3 dots
 			])
 

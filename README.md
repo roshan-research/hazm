@@ -10,7 +10,7 @@ Python library for digesting Persian text.
 + Dependency parser
 + Corpus readers for [Hamshahri](http://ece.ut.ac.ir/dbrg/hamshahri/) and [Bijankhan](http://ece.ut.ac.ir/dbrg/bijankhan/)
 + [NLTK](http://nltk.org/) compatible
-+ Python 3.3 and 2.7 support
++ Python 2.7, 3.2, 3.3 and 3.4 support
 + [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
 
 

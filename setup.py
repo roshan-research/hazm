@@ -15,6 +15,7 @@ setup(name='hazm',
 		'Programming Language :: Python :: 2.7',
 		'Programming Language :: Python :: 3.2',
 		'Programming Language :: Python :: 3.3',
+		'Programming Language :: Python :: 3.4',
 		'License :: OSI Approved :: MIT License',
 	],
 	install_requires=['nltk>=3.0.0b1']
