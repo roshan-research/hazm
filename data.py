@@ -1,4 +1,4 @@
-#encoding=utf8
+# coding: utf8
 
 from __future__ import print_function, unicode_literals
 import os, sys, codecs, subprocess, itertools
@@ -16,7 +16,7 @@ def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.
 	""" prepares list of persian word words from [Virastyar dic](https://sourceforge.net/projects/virastyar/files/Data/1.3.1/persian.dic/download) file.
 	"""
 
-	dic_words = [line.split('\t')[0] for line in codecs.open(dic_file, encoding='utf8')]
+	dic_words = sorted([line.split('\t')[0] for line in codecs.open(dic_file, encoding='utf8')])
 	print(*dic_words, sep='\n', file=codecs.open(output, 'w', 'utf8'))
 	print(output, 'created')
 
