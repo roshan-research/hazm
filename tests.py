@@ -13,6 +13,7 @@ modules = {
 	'stemmer': Stemmer(),
 	'lemmatizer': Lemmatizer(),
 	'tagger': POSTagger(),
+	'chunker': Chunker(),
 	'parser': DependencyParser(tagger=POSTagger())
 }
 

@@ -9,6 +9,7 @@ from .Normalizer import Normalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
 from .POSTagger import POSTagger
+from .Chunker import Chunker
 from .DependencyParser import DependencyParser
 
 sentence_tokenizer = SentenceTokenizer()
