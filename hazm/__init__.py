@@ -2,6 +2,7 @@
 from .PeykareReader import PeykareReader
 from .BijankhanReader import BijankhanReader
 from .HamshahriReader import HamshahriReader
+from .DadeganReader import DadeganReader
 from .SentenceTokenizer import SentenceTokenizer
 from .WordTokenizer import WordTokenizer
 from .Normalizer import Normalizer

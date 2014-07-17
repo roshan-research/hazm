@@ -8,37 +8,36 @@ from .WordTokenizer import *
 tokenizer = WordTokenizer()
 
 
-def universal_pos(tags):
+def coarse_pos(tags):
 	"""
-	Map function for converting Peykare tags to Universial POS tags.
-	Petrov, S., Das, D., & McDonald, R. (2012). A Universal Part-of-Speech Tagset. In Proceedings of LREC.
+	Coarse POS tags of Peykare corpus:
+		N: Noun, V: Verb, AJ: Adjective, ADV: Adverb, PRO: Pronoun, DET: Determiner, P: Preposition, POSTP: Postposition, NUM: Number, CONJ: Conjunction, PUNC: Punctuation, RES: Residual, CL: Classifier, INT: Interjection
 
-	>>> universal_pos(['N','COM','SING'])
-	'NOUN'
+	>>> coarse_pos(['N','COM','SING'])
+	'N'
 	"""
 
-	peykare_universal = {'N': 'NOUN', 'V': 'VERB', 'AJ': 'ADJ', 'ADV': 'ADV', 'PRO': 'PRON', 'DET': 'DET', 'P': 'ADP', 'POSTP': 'ADP', 'NUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': '.', 'CL': 'X', 'INT': 'X', 'RES': 'X'}
-	return [peykare_universal[tag] for tag in tags if tag in peykare_universal][0]
+	return list(set(tags) & {'N', 'V', 'AJ', 'ADV', 'PRO', 'DET', 'P', 'POSTP', 'NUM', 'CONJ', 'PUNC', 'CL', 'INT', 'RES'})[0]
 
 
-def universal_pos_e(tags):
+def coarse_pos_e(tags):
 	"""
-	Universal POS tags plus Ezafe.
+	Coarse POS tags plus Ezafe.
 	Asghari, H., Maleki, J., & Faili, H. (2014). A Probabilistic Approach to Persian Ezafe Recognition. In EACL 2014.
 
-	>>> universal_pos_e(['AJ','SIM','EZ'])
-	'ADJe'
+	>>> coarse_pos_e(['AJ','SIM','EZ'])
+	'AJe'
 	"""
 
-	return universal_pos(tags) + ('e' if 'EZ' in tags else '')
+	return coarse_pos(tags) + ('e' if 'EZ' in tags else '')
 
 
 def join_verb_parts(sentence):
 	"""
 	Join verb parts like Dadedgan corpus.
 
-	>>> join_verb_parts([('اولین', 'ADJ'), ('سیاره', 'NOUNe'), ('خارج', 'ADJ'), ('از', 'ADP'), ('منظومه', 'NOUNe'), ('شمسی', 'ADJ'), ('دیده', 'ADJ'), ('شد', 'VERB'), ('.', '.')])
-	[('اولین', 'ADJ'), ('سیاره', 'NOUNe'), ('خارج', 'ADJ'), ('از', 'ADP'), ('منظومه', 'NOUNe'), ('شمسی', 'ADJ'), ('دیده شد', 'VERB'), ('.', '.')]
+	>>> join_verb_parts([('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده', 'AJ'), ('شد', 'V'), ('.', 'PUNC')])
+	[('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده شد', 'V'), ('.', 'PUNC')]
 	"""
 
 	result = [('', '')]
@@ -54,12 +53,9 @@ class PeykareReader():
 	"""
 	interfaces [Peykare Corpus](http://dadegan.ir/catalog/D3920121a)
 	Bijankhan, M., Sheykhzadegan, J., Bahrani, M., & Ghayoomi, M. (2011). Lessons from building a Persian written corpus: Peykare. Language Resources and Evaluation, 45, 143–164.
-
-	Peykare POS tags:
-		N: Noun, V: Verb, AJ: Adjective, ADV: Adverb, PRO: Pronoun, DET: Determiner, P: Preposition, POSTP: Postposition, NUM: Number, CONJ: Conjunction, PUNC: Punctuation, RES: Residual, CL: Classifier, INT: Interjection
 	"""
 
-	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=universal_pos_e):
+	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=coarse_pos_e):
 		self._root = root
 		self._pos_map = pos_map
 		self._joined_verb_parts = joined_verb_parts
@@ -94,7 +90,7 @@ class PeykareReader():
 	def sents(self):
 		"""
 		>>> next(peykare.sents())
-		[('دیرزمانی', 'NOUN'), ('از', 'ADP'), ('راه‌اندازی', 'NOUNe'), ('شبکه‌ی', 'NOUNe'), ('خبر', 'NOUNe'), ('الجزیره', 'NOUN'), ('نمی‌گذرد', 'VERB'), ('،', '.'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'NOUNe'), ('خبری', 'ADJe'), ('عربی', 'NOUN'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'VERB'), ('در', 'ADP'), ('میان', 'NOUNe'), ('شبکه‌های', 'NOUNe'), ('عظیم', 'ADJe'), ('خبری', 'ADJ'), ('و', 'CONJ'), ('بنگاه‌های', 'NOUNe'), ('چندرسانه‌ای', 'ADJe'), ('دنیا', 'NOUN'), ('خودی', 'NOUN'), ('نشان', 'NOUN'), ('دهد', 'VERB'), ('.', '.')]
+		[('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 		"""
 
 		refine = lambda item: (self._normalizer.normalize(item[0]), self._pos_map(item[1].split(',')))

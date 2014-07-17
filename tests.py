@@ -6,6 +6,7 @@ modules = {
 	'peykare': PeykareReader(),
 	'bijankhan': BijankhanReader(),
 	'hamshahri': HamshahriReader(),
+	'dadegan': DadeganReader(),
 	'sentence_tokenizer': SentenceTokenizer(),
 	'word_tokenizer': WordTokenizer(),
 	'normalizer': Normalizer(),
