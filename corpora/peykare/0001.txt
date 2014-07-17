@@ -1,0 +1,29 @@
+W * N N,COM,SING,TIME,YA œÌ—“„«‰Ì
+W * P P «“
+W * N N,COM,SING,EZ —«Â «‰œ«“Ì
+W * N N,COM,SING,EZ ‘»ﬂÂ Ì
+W * N N,COM,SING,EZ Œ»—
+W * N N,PR,SING «·Ã“Ì—Â
+W * V V,PRES,NEG,3 ‰„Ì ê–—œ
+W * PUNC PUNC °
+W * CONJ CONJ «„«
+W * DET DET,DEMO «Ì‰
+W * N N,COM,SING,EZ ‘»ﬂÂ Ì
+W * AJ AJ,SIM,EZ Œ»—Ì
+W * N N,PR,SING ⁄—»Ì
+W * ADV ADV,INTSF,SIM »”Ì«—
+W * ADV ADV,GENR,SIM ”—Ì⁄
+W * V V,PASTP  Ê«‰” Â
+W * P P œ—
+W * N N,COM,SING,EZ „Ì«‰
+W * N N,COM,PL,EZ ‘»ﬂÂ Â«Ì
+W * AJ AJ,SIM,EZ ⁄ŸÌ„
+W * AJ AJ,SIM Œ»—Ì
+W * CONJ CONJ Ê
+W * N N,COM,PL,EZ »‰ê«Â Â«Ì
+W * AJ AJ,SIM,EZ ç‰œ—”«‰Â «Ì
+W * N N,COM,SING œ‰Ì«
+W * N N,COM,SING,YA ŒÊœÌ
+W * N N,COM,SING ‰‘«‰
+W * V V,SUB,POS,3 œÂœ
+W * PUNC PUNC .

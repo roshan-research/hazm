@@ -1,4 +1,5 @@
 
+from .PeykareReader import PeykareReader
 from .BijankhanReader import BijankhanReader
 from .HamshahriReader import HamshahriReader
 from .SentenceTokenizer import SentenceTokenizer
