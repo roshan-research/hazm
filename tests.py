@@ -4,15 +4,15 @@ from hazm import *
 
 modules = {
 	'peykare': PeykareReader(),
-	# 'bijankhan': BijankhanReader(),
-	# 'hamshahri': HamshahriReader(),
-	# 'sentence_tokenizer': SentenceTokenizer(),
-	# 'word_tokenizer': WordTokenizer(),
-	# 'normalizer': Normalizer(),
-	# 'stemmer': Stemmer(),
-	# 'lemmatizer': Lemmatizer(),
-	# 'tagger': POSTagger(),
-	# 'parser': DependencyParser(tagger=POSTagger())
+	'bijankhan': BijankhanReader(),
+	'hamshahri': HamshahriReader(),
+	'sentence_tokenizer': SentenceTokenizer(),
+	'word_tokenizer': WordTokenizer(),
+	'normalizer': Normalizer(),
+	'stemmer': Stemmer(),
+	'lemmatizer': Lemmatizer(),
+	'tagger': POSTagger(),
+	'parser': DependencyParser(tagger=POSTagger())
 }
 
 decode = lambda s: s.decode('utf8')
@@ -42,8 +42,8 @@ suites = []
 for name, object in modules.items():
 	suites.append(doctest.DocTestSuite(inspect.getmodule(object), extraglobs={name: object}, checker=checker))
 
-# if not PY2:
-# 	suites.append(doctest.DocFileSuite('README.md'))
+if not PY2:
+	suites.append(doctest.DocFileSuite('README.md'))
 
 runner = unittest.TextTestRunner(verbosity=2)
 for suite in suites:

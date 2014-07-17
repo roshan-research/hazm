@@ -1,0 +1,10 @@
+#                                                 DELM
+اولين                                             ADJ_SUP
+سياره                                             N_SING
+خارج                                              ADJ_SIM
+از                                                P
+منظومه                                            N_SING
+شمسي                                              ADJ_SIM
+ديده                                              ADJ_INO
+شد                                                V_PA
+.                                                 DELM
