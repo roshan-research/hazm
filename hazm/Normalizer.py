@@ -20,7 +20,7 @@ class Normalizer():
 				(r'[ـ\r]', ''), # remove keshide, carriage returns
 				(r' +', ' '), # remove extra spaces
 				(r'\n\n+', '\n\n'), # remove extra newlines
-				('"([^"]+)"', r'«\1»'), # replace quotation with gyoome
+				('"([^\n"]+)"', r'«\1»'), # replace quotation with gyoome
 				('([\d+])\.([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r' ?\.\.\.', ' …'), # replace 3 dots
 			])
