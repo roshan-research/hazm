@@ -38,13 +38,19 @@ if PY2:
 else:
 	checker = None
 
-suites = []
-for name, object in modules.items():
-	suites.append(doctest.DocTestSuite(inspect.getmodule(object), extraglobs={name: object}, checker=checker))
 
-if not PY2:
-	suites.append(doctest.DocFileSuite('README.md'))
+if __name__ == '__main__':
+	# test all modules if no one specified
+	all_modules = len(sys.argv) < 2
 
-runner = unittest.TextTestRunner(verbosity=2)
-for suite in suites:
-	runner.run(suite)
+	suites = []
+	for name, object in modules.items():
+		if all_modules or name in sys.argv:
+			suites.append(doctest.DocTestSuite(inspect.getmodule(object), extraglobs={name: object}, checker=checker))
+
+	if not PY2 and all_modules:
+		suites.append(doctest.DocFileSuite('README.md'))
+
+	runner = unittest.TextTestRunner(verbosity=2)
+	for suite in suites:
+		runner.run(suite)
