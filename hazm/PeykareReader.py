@@ -80,6 +80,7 @@ class PeykareReader():
 				tags, word = parts[3], '‌'.join(parts[4:])
 
 				if word != '#':
+					word = self._normalizer.normalize(word)
 					sentence.append((word, tags))
 
 				if parts[2] == 'PUNC' and word in {'#', '.', '؟', '!'}:
@@ -93,10 +94,10 @@ class PeykareReader():
 		[('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 		"""
 
-		refine = lambda item: (self._normalizer.normalize(item[0]), self._pos_map(item[1].split(',')))
+		map_pos = lambda item: (item[0], self._pos_map(item[1].split(',')))
 
 		for sentence in self._sentences():
 			if self._joined_verb_parts:
 				sentence = join_verb_parts(sentence)
 
-			yield list(map(refine, sentence))
+			yield list(map(map_pos, sentence))
