@@ -58,6 +58,11 @@ Python library for digesting Persian text.
 We have also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip). You may put these models in the `resources` folder of your project.
 
 
+## Extensions
+
++ [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java version of Hazm
++ [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# version of Hazm
+
 ## Thanks
 
 + to constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
