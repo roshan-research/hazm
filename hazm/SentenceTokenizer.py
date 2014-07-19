@@ -7,7 +7,7 @@ from nltk.tokenize.api import TokenizerI
 
 class SentenceTokenizer(TokenizerI):
 	def __init__(self):
-		self.pattern = re.compile(r'([!\.\?⸮؟]+)[ \n]+')
+		self.pattern = re.compile(r'([!\.\?⸮؟:]+)[ \n]+')
 
 	def tokenize(self, text):
 		"""
