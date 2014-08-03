@@ -82,7 +82,7 @@ class PeykareReader():
 				parts = line.split(' ')
 				tags, word = parts[3], '‌'.join(parts[4:])
 
-				if word != '#':
+				if word and word != '#':
 					word = self._normalizer.normalize(word)
 					sentence.append((word, tags))
 
