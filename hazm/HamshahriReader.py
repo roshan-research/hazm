@@ -17,7 +17,7 @@ class HamshahriReader():
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
-			for name in files:
+			for name in sorted(files):
 				if name in self._invalids:
 					continue
 

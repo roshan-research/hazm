@@ -66,7 +66,7 @@ class PeykareReader():
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
-			for name in files:
+			for name in sorted(files):
 				text = codecs.open(os.path.join(root, name), encoding='windows-1256').read()
 				if text:
 					yield text
