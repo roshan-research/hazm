@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This Document is created with the Clark System! http://www.bultreebank.org -->
+<!-- All rights of the data from the Bijankhan Corpus are reserved for the University of Tehran <http://ece.ut.ac.ir/dbrg/bijankhan/>. -->
+<!-- All rights of the provided syntactic analyses are reserved for Masood Ghayoomi <masood.ghayoomi@fu-berlin.de>. -->
+<!DOCTYPE PTB SYSTEM "PTB">
+<PTB>
+    <ROOT>
+        <S>
+            <Discourse>
+                <InDiscourse></InDiscourse>
+                <OutDiscourse></OutDiscourse></Discourse>
+            <Index>
+                <Discontinuous></Discontinuous></Index>
+            <VPS sent_type="stat" v-voice="active">
+                <NPC clitic="empty">
+                    <N clitic="ezafe">
+                        <w clitic="ezafe" gc="Ncsp--z" lc="Ncsp--z" lemma="دنیا">دنیای</w></N>
+                    <MN clitic="empty" ne_sort="pers">
+                        <N clitic="empty">
+                            <w clitic="empty" gc="Nasp---" lc="Nasp---" lemma="آدولف" n_type="prop" ne_sort="pers">آدولف</w></N>
+                        <N clitic="empty">
+                            <w clitic="empty" gc="Nasp---" lc="Nasp---" lemma="بورن" n_type="prop" ne_sort="pers">بورن</w></N></MN></NPC>
+                <VPC sent_type="stat" v-voice="active">
+                    <NPC clitic="empty">
+                        <N clitic="ezafe">
+                            <w clitic="ezafe" gc="Ncsp--z" lc="Ncsp--z" lemma="دنیا">دنیای</w></N>
+                        <NPA clitic="empty">
+                            <N clitic="ezafe">
+                                <w clitic="ezafe" gc="Nclp--- ; Nclp--z" lc="Nclp--z" lemma="اتفاق">اتفاقات</w></N>
+                            <ADJ clitic="empty">
+                                <w clitic="empty" gc="Aps- ; Apsz ; Ncsp--- ; Ncsp--y" lc="Aps-" lemma="رویایی">رویایی</w></ADJ></NPA></NPC>
+                    <V v-voice="active">
+                        <w clitic="empty" gc="Vpykshs----" inf_form="بودن" lc="Vpykshs----" past_stem="بود" pres_stem="باش">است</w></V></VPC></VPS>
+            <PUNC clitic="empty">
+                <w clitic="empty" gc="On ; Oe" lc="Oe" lemma=".">.</w></PUNC></S></ROOT>
+</PTB>
+
