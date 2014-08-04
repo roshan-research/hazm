@@ -80,10 +80,9 @@ class PeykareReader():
 					continue
 
 				parts = line.split(' ')
-				tags, word = parts[3], '‌'.join(parts[4:])
+				tags, word = parts[3], self._normalizer.normalize('‌'.join(parts[4:]))
 
 				if word and word != '#':
-					word = self._normalizer.normalize(word)
 					sentence.append((word, tags))
 
 				if parts[2] == 'PUNC' and word in {'#', '.', '؟', '!'}:
