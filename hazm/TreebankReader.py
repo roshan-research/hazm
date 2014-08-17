@@ -10,18 +10,14 @@ from .Chunker import tree2brackets
 def coarse_pos(tags):
 	"""
 	Coarse POS tags of Treebank corpus:
-		N: Noun, V: Verb, A: Adjective, R: Adverb, P: Pronoun, D: Determiner, Sp: Preposition, St: Postposition, M: Number, C: Conjunction, O: Punctuation, X: Residual, Y: Abbreviation, I: Interjection
+		N: Noun, V: Verb, A: Adjective, D: Adverb, Z: Pronoun, T: Determiner, E: Preposition, P: Postposition, U: Number, J: Conjunction, O: Punctuation, R: Residual, L: Classifier
 
 	>>> coarse_pos(['Nasp---', 'pers', 'prop'])
 	'N'
 	"""
 
-	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'R': 'ADV', 'P': 'PRO', 'D': 'DET', 'M': 'NUM', 'C': 'CONJ', 'O':'PUNC', 'X': 'RES', 'I': 'INT', 'Y': 'N'}
+	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'D': 'ADV', 'Z': 'PRO', 'T': 'DET', 'E': 'P', 'P': 'POSTP', 'U': 'NUM', 'J': 'CONJ', 'O': 'PUNC', 'R': 'RES', 'L': 'CL'}
 	try:
-		if tags[0].startswith('Sp'):
-			return 'P'
-		if tags[0].startswith('St'):
-			return 'POSTP'
 		return map[tags[0][0]]
 	except Exception:
 		return ''
