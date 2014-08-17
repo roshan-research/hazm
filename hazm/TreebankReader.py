@@ -4,6 +4,7 @@ from __future__ import unicode_literals, print_function
 import os, sys, re,codecs
 from xml.dom import minidom
 from nltk.tree import Tree
+from .Chunker import tree2brackets
 
 
 def coarse_pos(tags):
@@ -62,10 +63,16 @@ class TreebankReader():
 		"""
 
 		def traverse(node):
+			if not len(node.childNodes):
+				return
 			first = node.childNodes[0]
 			if (first.tagName == 'w'):
 				return Tree(node.tagName, [first.childNodes[0].data])
 			childs = node.childNodes[2:] if node.tagName =='S' else node.childNodes
+			for child in childs:
+				if not len(child.childNodes):
+					childs.remove(child)
+
 			return Tree(node.tagName, map(traverse, childs))
 
 		for doc in self.docs():
@@ -101,3 +108,98 @@ class TreebankReader():
 					sentence.append((W.childNodes[0].data, self._pos_map(pos)))
 
 				yield sentence
+
+	def chunked_trees(self):
+		"""
+		>>> tree2brackets(next(treebank.chunked_trees()))
+		'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
+		"""
+
+		def collapse(node, new_label):
+			poses=node.pos()
+			return Tree(new_label, [Tree(poses[i][1], [poses[i][0]]) for i in range(len(poses))])
+
+
+		def traverse(node, parent, chunks):
+			if ( node.label().count('-nid') > 0 ):
+				node.set_label(node.label().replace('-nid', ''))
+			if ( node.label().count('-nid') > 0 ):
+				node.set_label(node.label().replace('-nid', ''))
+			if ( node.label().count('-DiscA') > 0 ):
+				node.set_label(node.label().replace('-DiscA', ''))
+
+			if node.label() in {'CONJ', 'PUNC'}:
+				chunks.append(node)
+				return 1
+
+			if node.label() == 'PREP':
+				chunks.append(Tree('PP', [node]))
+				return 1
+
+			if node.label() == 'PostP':
+				chunks.append(Tree('POSTPP', [node]))
+				return
+
+
+			for leaf in node.pos():
+				if leaf[1] in { 'PUNC', 'CONJ', 'PREP', 'PostP'}:
+					for i in range(len(node)):
+						traverse(node[i], node, chunks)
+					return
+
+
+			if node.label() == 'NPA' and parent.label() in  {'CPC','PPC'}:
+				chunks.append(collapse(node, 'NP'))
+				return
+
+			if node.label() == 'NPA' and len(node)>=1:
+				if (node[0].label()=='ADV'):
+					chunks.append(collapse(node,'NP'))
+					return
+
+			if node.label() in {'NPC', 'N', 'PRON', 'INFV', 'DPA', 'CLASS', 'DPC', 'DET', 'DEM'}:
+				chunks.append(collapse(node, 'NP'))
+				return
+
+			if node.label() == 'DPC' and len(node) >= 2:
+				chunkable = True
+				for leaf in node[1].pos():
+					if leaf[1] in {'PUNC', 'CONJ', 'PREP', 'PostP'}:
+						chunkable = False
+				if (node[1].label() in {'N', 'NPA', 'NPC'} and chunkable):
+					chunks.append(collapse(node, 'NP'))
+					return
+
+			if node.label() == 'DPA' and len(node)>=2:
+				if (node[1].label()=='ADV'):
+					chunks.append(collapse(node, 'ADVP'))
+					return
+
+			if node.label() in {'MV', 'V'}:
+				chunks.append(Tree('VP', [node]))
+				return
+
+			if node.label() in {'ADJ', 'ADJPC', 'MADJ', 'ADVPA'}:
+				chunks.append(Tree('ADJP', [node]))
+				return
+
+			if node.label() in {'ADV', 'MADV', 'ADVPC'}:
+				chunks.append(Tree('ADVP', [node]))
+				return
+
+			if type(node[0]) != Tree:
+				chunks.append(node)
+				return
+
+			for i in range(len(node)):
+				traverse(node[i], node, chunks)
+
+		for tree in self.trees():
+			chunks=[]
+			traverse(tree, None, chunks)
+			for i in range(len(chunks)):
+				if(chunks[i].label()== 'PUNC'):
+					chunks[i]=chunks[i].pos()[0]
+				else:
+					chunks[i]=Tree(chunks[i].label(), chunks[i].pos())
+			yield Tree('S', chunks)
