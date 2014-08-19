@@ -1,7 +1,7 @@
 # coding: utf8
 
 from __future__ import unicode_literals, print_function
-import os, sys, re,codecs
+import os, sys, re, codecs
 from xml.dom import minidom
 from nltk.tree import Tree
 from .Chunker import tree2brackets
@@ -46,7 +46,7 @@ class TreebankReader():
 		for root, dirs, files in os.walk(self._root):
 			for name in sorted(files):
 				try:
-					raw = codecs.open(os.path.join(root, name) , encoding='utf8').read();
+					raw = codecs.open(os.path.join(root, name), encoding='utf8').read();
 					raw = re.sub(r'\n *', '', raw)
 					yield minidom.parseString(raw.encode('utf8'))
 				except Exception as e:
@@ -54,14 +54,20 @@ class TreebankReader():
 
 	def trees(self):
 		"""
-		>>> next(treebank.trees()).leaves()
-		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
+		>>> print(next(treebank.trees()))
+		(S
+		  (VPS
+		    (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
+		    (VPC
+		      (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
+		      (V است/V)))
+		  (PUNC ./PUNC))
 		"""
 
 		def traverse(node):
 			def extract_tags(W):
 				pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
-				if W.getAttribute('clitic')=='ezafe':
+				if W.getAttribute('clitic') == 'ezafe':
 					pos.append('ezafe')
 				if W.getAttribute('ne_sort'):
 					pos.append(W.getAttribute('ne_sort'))
@@ -80,10 +86,10 @@ class TreebankReader():
 			if not len(node.childNodes):
 				return
 			first = node.childNodes[0]
-			if (first.tagName == 'w'):
+			if first.tagName == 'w':
 				pos=extract_tags(first)
-				return Tree(node.tagName,[(first.childNodes[0].data ,self._pos_map(pos))])
-			childs = node.childNodes[2:] if node.tagName =='S' else node.childNodes
+				return Tree(node.tagName, [(first.childNodes[0].data, self._pos_map(pos))])
+			childs = node.childNodes[2:] if node.tagName == 'S' else node.childNodes
 			for child in childs:
 				if not len(child.childNodes):
 					childs.remove(child)
@@ -115,11 +121,11 @@ class TreebankReader():
 
 
 		def traverse(node, parent, chunks):
-			if ( node.label().count('-nid') > 0 ):
+			if node.label().count('-nid') > 0:
 				node.set_label(node.label().replace('-nid', ''))
-			if ( node.label().count('-nid') > 0 ):
+			if node.label().count('-nid') > 0:
 				node.set_label(node.label().replace('-nid', ''))
-			if ( node.label().count('-DiscA') > 0 ):
+			if node.label().count('-DiscA') > 0:
 				node.set_label(node.label().replace('-DiscA', ''))
 
 			if node.label() in {'CONJ', 'PUNC'}:
@@ -134,20 +140,19 @@ class TreebankReader():
 				chunks.append(Tree('POSTPP', [node]))
 				return
 
-
 			for leaf in node.pos():
-				if leaf[1] in { 'PUNC', 'CONJ', 'PREP', 'PostP'}:
+				if leaf[1] in {'PUNC', 'CONJ', 'PREP', 'PostP'}:
 					for i in range(len(node)):
 						traverse(node[i], node, chunks)
 					return
 
-			if node.label() == 'NPA' and parent.label() in  {'CPC','PPC'}:
+			if node.label() == 'NPA' and parent.label() in {'CPC', 'PPC'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
 			if node.label() == 'NPA' and len(node)>=1:
-				if (node[0].label()=='ADV'):
-					chunks.append(collapse(node,'NP'))
+				if node[0].label() == 'ADV':
+					chunks.append(collapse(node, 'NP'))
 					return
 
 			if node.label() in {'NPC', 'N', 'PRON', 'INFV', 'DPA', 'CLASS', 'DPC', 'DET', 'DEM', 'INTJ'}:
@@ -159,12 +164,12 @@ class TreebankReader():
 				for leaf in node[1].pos():
 					if leaf[1] in {'PUNC', 'CONJ', 'PREP', 'PostP'}:
 						chunkable = False
-				if (node[1].label() in {'N', 'NPA', 'NPC'} and chunkable):
+				if node[1].label() in {'N', 'NPA', 'NPC'} and chunkable:
 					chunks.append(collapse(node, 'NP'))
 					return
 
 			if node.label() == 'DPA' and len(node)>=2:
-				if (node[1].label()=='ADV'):
+				if node[1].label() == 'ADV':
 					chunks.append(collapse(node, 'ADVP'))
 					return
 
@@ -188,11 +193,11 @@ class TreebankReader():
 				traverse(node[i], node, chunks)
 
 		for tree in self.trees():
-			chunks=[]
+			chunks = []
 			traverse(tree, None, chunks)
 			for i in range(len(chunks)):
-				if(chunks[i].label()== 'PUNC'):
-					chunks[i]=chunks[i][0]
+				if chunks[i].label() == 'PUNC':
+					chunks[i] = chunks[i][0]
 				else:
-					chunks[i]=Tree(chunks[i].label(), chunks[i].leaves())
+					chunks[i] = Tree(chunks[i].label(), chunks[i].leaves())
 			yield Tree('S', chunks)
