@@ -12,7 +12,7 @@ class Normalizer():
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
 
-		self.translations = maketrans(' كي;%1234567890', ' کی؛٪۱۲۳۴۵۶۷۸۹۰')
+		self.translations = maketrans(' كي%1234567890;“”', ' کی٪۱۲۳۴۵۶۷۸۹۰؛""')
 
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
@@ -61,9 +61,10 @@ class Normalizer():
 		>>> normalizer.character_refinement('رمــــان')
 		'رمان'
 		"""
+
+		text = text.translate(self.translations)
 		for pattern, repl in self.character_refinement_patterns:
 			text = pattern.sub(repl, text)
-		text = text.translate(self.translations)
 		return text
 
 	def punctuation_spacing(self, text):
@@ -72,7 +73,7 @@ class Normalizer():
 		'اصلاح (پرانتزها) در متن.'
 		"""
 
-		# todo: don't put space inside time and float numbers
+		# todo: don't put space inside time
 		for pattern, repl in self.punctuation_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
