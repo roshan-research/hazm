@@ -10,13 +10,13 @@ from .Chunker import tree2brackets
 def coarse_pos(tags):
 	"""
 	Coarse POS tags of Treebank corpus:
-		N: Noun, V: Verb, A: Adjective, D: Adverb, Z: Pronoun, T: Determiner, E: Preposition, P: Postposition, U: Number, J: Conjunction, O: Punctuation, R: Residual, L: Classifier
+		N: Noun, V: Verb, A: Adjective, D: Adverb, Z: Pronoun, T: Determiner, E: Preposition, P: Postposition, U: Number, J: Conjunction, O: Punctuation, R: Residual, L: Classifier, I: Interjection
 
 	>>> coarse_pos(['Nasp---', 'pers', 'prop'])
 	'N'
 	"""
 
-	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'D': 'ADV', 'Z': 'PRO', 'T': 'DET', 'E': 'P', 'P': 'POSTP', 'U': 'NUM', 'J': 'CONJ', 'O': 'PUNC', 'R': 'RES', 'L': 'CL'}
+	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'D': 'ADV', 'Z': 'PRO', 'T': 'DET', 'E': 'P', 'P': 'POSTP', 'U': 'NUM', 'J': 'CONJ', 'O': 'PUNC', 'R': 'RES', 'L': 'CL', 'I': 'INT', 'C': 'V'}
 	try:
 		return map[tags[0][0]]
 	except Exception:
@@ -55,20 +55,38 @@ class TreebankReader():
 	def trees(self):
 		"""
 		>>> next(treebank.trees()).leaves()
-		['دنیای', 'آدولف', 'بورن', 'دنیای', 'اتفاقات', 'رویایی', 'است', '.']
+		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
 		"""
 
 		def traverse(node):
+			def extract_tags(W):
+				pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
+				if W.getAttribute('clitic')=='ezafe':
+					pos.append('ezafe')
+				if W.getAttribute('ne_sort'):
+					pos.append(W.getAttribute('ne_sort'))
+				if W.getAttribute('n_type'):
+					pos.append(W.getAttribute('n_type'))
+				if W.getAttribute('ya_type'):
+					pos.append(W.getAttribute('ya_type'))
+				if W.getAttribute('ke_type'):
+					pos.append(W.getAttribute('ke_type'))
+				if W.getAttribute('type'):
+					pos.append(W.getAttribute('type'))
+				if W.getAttribute('kind'):
+					pos.append(W.getAttribute('kind'))
+				return pos
+
 			if not len(node.childNodes):
 				return
 			first = node.childNodes[0]
 			if (first.tagName == 'w'):
-				return Tree(node.tagName, [first.childNodes[0].data])
+				pos=extract_tags(first)
+				return Tree(node.tagName,[(first.childNodes[0].data ,self._pos_map(pos))])
 			childs = node.childNodes[2:] if node.tagName =='S' else node.childNodes
 			for child in childs:
 				if not len(child.childNodes):
 					childs.remove(child)
-
 			return Tree(node.tagName, map(traverse, childs))
 
 		for doc in self.docs():
@@ -81,29 +99,9 @@ class TreebankReader():
 		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
 		"""
 
-		for doc in self.docs():
-			for S in doc.getElementsByTagName('S'):
-				sentence = []
-				for W in S.getElementsByTagName('w'):
-					pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
-					if W.getAttribute('clitic')=='ezafe':
-						pos.append('ezafe')
-					if W.getAttribute('ne_sort'):
-						pos.append(W.getAttribute('ne_sort'))
-					if W.getAttribute('n_type'):
-						pos.append(W.getAttribute('n_type'))
-					if W.getAttribute('ya_type'):
-						pos.append(W.getAttribute('ya_type'))
-					if W.getAttribute('ke_type'):
-						pos.append(W.getAttribute('ke_type'))
-					if W.getAttribute('type'):
-						pos.append(W.getAttribute('type'))
-					if W.getAttribute('kind'):
-						pos.append(W.getAttribute('kind'))
+		for tree in self.trees():
+			yield tree.leaves()
 
-					sentence.append((W.childNodes[0].data, self._pos_map(pos)))
-
-				yield sentence
 
 	def chunked_trees(self):
 		"""
@@ -143,7 +141,6 @@ class TreebankReader():
 						traverse(node[i], node, chunks)
 					return
 
-
 			if node.label() == 'NPA' and parent.label() in  {'CPC','PPC'}:
 				chunks.append(collapse(node, 'NP'))
 				return
@@ -153,7 +150,7 @@ class TreebankReader():
 					chunks.append(collapse(node,'NP'))
 					return
 
-			if node.label() in {'NPC', 'N', 'PRON', 'INFV', 'DPA', 'CLASS', 'DPC', 'DET', 'DEM'}:
+			if node.label() in {'NPC', 'N', 'PRON', 'INFV', 'DPA', 'CLASS', 'DPC', 'DET', 'DEM', 'INTJ'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
@@ -171,7 +168,7 @@ class TreebankReader():
 					chunks.append(collapse(node, 'ADVP'))
 					return
 
-			if node.label() in {'MV', 'V'}:
+			if node.label() in {'MV', 'V', 'AUX'}:
 				chunks.append(Tree('VP', [node]))
 				return
 
@@ -195,7 +192,7 @@ class TreebankReader():
 			traverse(tree, None, chunks)
 			for i in range(len(chunks)):
 				if(chunks[i].label()== 'PUNC'):
-					chunks[i]=chunks[i].pos()[0]
+					chunks[i]=chunks[i][0]
 				else:
-					chunks[i]=Tree(chunks[i].label(), chunks[i].pos())
+					chunks[i]=Tree(chunks[i].label(), chunks[i].leaves())
 			yield Tree('S', chunks)
