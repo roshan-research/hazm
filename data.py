@@ -1,10 +1,12 @@
 # coding: utf8
 
 from __future__ import print_function, unicode_literals
-import os, sys, codecs, subprocess, itertools
+import codecs, subprocess
 from collections import Counter
 from nltk.parse import DependencyGraph
-from hazm import Lemmatizer, BijankhanReader, POSTagger, DependencyParser
+from sklearn.cross_validation import train_test_split
+from hazm import *
+from hazm.Chunker import tree2brackets
 
 
 def dadegan_text(conll_file='resources/train.conll'):
@@ -52,21 +54,18 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 		print(count, item, file=output)
 
 
-def train_pos_tagger(bijankhan_file='resources/bijankhan.txt', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian.tagger.props', memory_min='-Xms1g', memory_max='-Xmx2g', test_split=.1):
-	bijankhan = BijankhanReader(bijankhan_file)
+def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian.tagger.props', memory_min='-Xms1g', memory_max='-Xmx8g', test_size=.1):
+	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
-	output = codecs.open(train_file, 'w', 'utf8')
-	sentences = list(bijankhan.sents())
-	train_part = int(len(sentences) * (1 - test_split))
+	train, test = train_test_split(list(peykare.sents()), test_size=test_size, random_state=0)
 
-	for sentence in sentences[:train_part]:
+	output = codecs.open(train_file, 'w', 'utf8')
+	for sentence in train:
 		print(*(map(lambda w: '/'.join(w).replace(' ', '_'), sentence)), file=output)
-	cmd = ['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']
-	process = subprocess.Popen(cmd)
-	process.wait()
+	subprocess.Popen(['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']).wait()
 
 	tagger = POSTagger()
-	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(sentences[train_part:]))
+	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(test))
 
 
 def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
