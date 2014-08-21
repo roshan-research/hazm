@@ -11,6 +11,8 @@ class POSTagger(stanford.POSTagger):
 			kwargs['path_to_model'] = 'resources/persian.tagger'
 		if 'path_to_jar' not in kwargs:
 			kwargs['path_to_jar'] = 'resources/stanford-postagger.jar'
+
+		self._SEPARATOR = '/'
 		super(stanford.POSTagger, self).__init__(*args, **kwargs)
 
 	def tag_sents(self, sentences):
@@ -18,6 +20,6 @@ class POSTagger(stanford.POSTagger):
 		>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
 		[('من', 'PR'), ('به', 'PREP'), ('مدرسه', 'N'), ('رفته بودم', 'V'), ('.', 'PUNC')]
 		"""
-		_sentences = [[item.replace(' ', '_') for item in sentence] for sentence in sentences]
-		results = super(stanford.POSTagger, self).tag_sents(_sentences)
-		return [[(word, tag[1].split('/')[-1]) for word, tag in zip(sentence, result)] for sentence, result in zip(sentences, results)]
+
+		replace_spaces = lambda sentence: [word.replace(' ', '_') for word in sentence]
+		return super(stanford.POSTagger, self).tag_sents(map(replace_spaces, sentences))
