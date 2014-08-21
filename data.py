@@ -72,7 +72,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian.tagger.props', memory_min='-Xms1g', memory_max='-Xmx8g', test_size=.1):
 	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
-	train, test = train_test_split(list(peykare.sents()), test_size=test_size, random_state=0)
+	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
 
 	output = codecs.open(train_file, 'w', 'utf8')
 	for sentence in train:

@@ -62,7 +62,7 @@ class PeykareReader():
 		self._root = root
 		self._pos_map = pos_map
 		self._joined_verb_parts = joined_verb_parts
-		self._normalizer = Normalizer(punctuation_spacing=False)
+		self._normalizer = Normalizer(punctuation_spacing=False, affix_spacing=False)
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
