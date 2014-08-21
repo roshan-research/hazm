@@ -16,8 +16,19 @@ def coarse_pos(tags):
 	'N'
 	"""
 
-	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'D': 'ADV', 'Z': 'PRO', 'T': 'DET', 'E': 'P', 'P': 'POSTP', 'U': 'NUM', 'J': 'CONJ', 'O': 'PUNC', 'R': 'RES', 'L': 'CL', 'I': 'INT', 'C': 'V'}
+	map = {'N': 'N', 'V': 'V', 'A': 'AJ', 'D': 'ADV', 'Z': 'PRO', 'T': 'DET', 'E': 'P', 'P': 'POSTP', 'U': 'NUM', 'J': 'CONJ', 'O': 'PUNC', 'R': 'RES', 'L': 'CL', 'I': 'INT'}
 	try:
+		if tags[0][0] == 'C':
+			if 'pronominal' in tags:
+				tags[0] = 'Z'
+			elif 'verb' in tags:
+				tags[0] = 'V'
+			elif 'prep' in tags:
+				tags[0] = 'E'
+			elif 'adv' in tags:
+				tags[0] = 'D'
+			elif 'det' in tags:
+				tags[0] = 'T'
 		return map[tags[0][0]]
 	except Exception:
 		return ''
@@ -67,8 +78,8 @@ class TreebankReader():
 		def traverse(node):
 			def extract_tags(W):
 				pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
-				if W.getAttribute('clitic') == 'ezafe':
-					pos.append('ezafe')
+				if W.getAttribute('clitic') in {'ezafe', 'pronominal', 'verb', 'prep', 'adv', 'det'}:
+					pos.append(W.getAttribute('clitic'))
 				if W.getAttribute('ne_sort'):
 					pos.append(W.getAttribute('ne_sort'))
 				if W.getAttribute('n_type'):
@@ -121,22 +132,35 @@ class TreebankReader():
 
 
 		def traverse(node, parent, chunks):
-			if node.label().count('-nid') > 0:
-				node.set_label(node.label().replace('-nid', ''))
-			if node.label().count('-nid') > 0:
-				node.set_label(node.label().replace('-nid', ''))
-			if node.label().count('-DiscA') > 0:
-				node.set_label(node.label().replace('-DiscA', ''))
+			label = node.label()
 
-			if node.label() in {'CONJ', 'PUNC'}:
+			if label.count('-nid') > 0:
+				label = label.replace('-nid', '')
+			if label.count('-nid') > 0:
+				label = label.replace('-nid', '')
+			if label.count('-DiscA') > 0:
+				label = label.replace('-DiscA', '')
+			if label == 'CLITIC':
+				if node[0][1] == 'V':
+					label = 'V'
+				elif node[0][1] == 'P':
+					label = 'PREP'
+				elif node[0][1] == 'DET':
+					label = 'DET'
+				elif node[0][1] == 'ADV':
+					label = 'ADV'
+				elif node[0][1] == 'PRO':
+					label = 'PRON'
+
+			if label in {'CONJ', 'PUNC'}:
 				chunks.append(node)
-				return 1
+				return
 
-			if node.label() == 'PREP':
+			if label == 'PREP':
 				chunks.append(Tree('PP', [node]))
-				return 1
+				return
 
-			if node.label() == 'PostP':
+			if label == 'PostP':
 				chunks.append(Tree('POSTPP', [node]))
 				return
 
@@ -146,20 +170,25 @@ class TreebankReader():
 						traverse(node[i], node, chunks)
 					return
 
-			if node.label() == 'NPA' and parent.label() in {'CPC', 'PPC'}:
+			if label == 'NPA' and parent.label() in {'CPC', 'PPC'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
-			if node.label() == 'NPA' and len(node)>=1:
+			if label == 'NPA' and len(node)>=1:
 				if node[0].label() == 'ADV':
 					chunks.append(collapse(node, 'NP'))
 					return
 
-			if node.label() in {'NPC', 'N', 'PRON', 'INFV', 'DPA', 'CLASS', 'DPC', 'DET', 'DEM', 'INTJ'}:
+			if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM', 'INTJ', 'MN', 'PRON', 'DET'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
-			if node.label() == 'DPC' and len(node) >= 2:
+			if label == 'NPA' and len(node) >= 2:
+				if node[0].label() == 'ADJ' and node[1].label() == 'NPC' or node[0].label() in {'N', 'PRON'} and node[1].label() in {'ADJ', 'N'} or node[0].label() == 'NUM' and node[1].label() in {'N', 'NPC'} or node[0].label() == 'N' and node[1].label() == 'NUM' or node[0].label() == 'NPC' and node[1].label() == 'ADJ':
+					chunks.append(collapse(node, 'NP'))
+					return
+
+			if label == 'DPC' and len(node) >= 2:
 				chunkable = True
 				for leaf in node[1].pos():
 					if leaf[1] in {'PUNC', 'CONJ', 'PREP', 'PostP'}:
@@ -168,20 +197,20 @@ class TreebankReader():
 					chunks.append(collapse(node, 'NP'))
 					return
 
-			if node.label() == 'DPA' and len(node)>=2:
+			if label == 'DPA' and len(node)>=2:
 				if node[1].label() == 'ADV':
 					chunks.append(collapse(node, 'ADVP'))
 					return
 
-			if node.label() in {'MV', 'V', 'AUX'}:
+			if label in {'MV', 'V', 'AUX'}:
 				chunks.append(Tree('VP', [node]))
 				return
 
-			if node.label() in {'ADJ', 'ADJPC', 'MADJ', 'ADVPA'}:
+			if label in {'ADJ', 'ADJPC', 'MADJ', 'ADVPA'}:
 				chunks.append(Tree('ADJP', [node]))
 				return
 
-			if node.label() in {'ADV', 'MADV', 'ADVPC'}:
+			if label in {'ADV', 'MADV', 'ADVPC'}:
 				chunks.append(Tree('ADVP', [node]))
 				return
 
@@ -196,7 +225,7 @@ class TreebankReader():
 			chunks = []
 			traverse(tree, None, chunks)
 			for i in range(len(chunks)):
-				if chunks[i].label() == 'PUNC':
+				if chunks[i].label() in {'PUNC', 'CONJ'}:
 					chunks[i] = chunks[i][0]
 				else:
 					chunks[i] = Tree(chunks[i].label(), chunks[i].leaves())
