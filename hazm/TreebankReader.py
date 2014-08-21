@@ -179,17 +179,14 @@ class TreebankReader():
 					chunks.append(collapse(node, 'NP'))
 					return
 
-			if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM', 'INTJ'}:
+			if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM', 'INTJ', 'MN', 'PRON', 'DET'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
-			if label == 'PRON':
-				chunks.append(Tree('PRO', [node]))
-				return
-
-			if label == 'DET':
-				chunks.append(Tree('DET', [node]))
-				return
+			if label == 'NPA' and len(node) >= 2:
+				if node[0].label() == 'ADJ' and node[1].label() == 'NPC' or node[0].label() in {'N', 'PRON'} and node[1].label() in {'ADJ', 'N'} or node[0].label() == 'NUM' and node[1].label() in {'N', 'NPC'} or node[0].label() == 'N' and node[1].label() == 'NUM' or node[0].label() == 'NPC' and node[1].label() == 'ADJ':
+					chunks.append(collapse(node, 'NP'))
+					return
 
 			if label == 'DPC' and len(node) >= 2:
 				chunkable = True
