@@ -10,7 +10,7 @@ from nltk.parse.malt import MaltParser
 
 class DependencyParser(MaltParser):
 	def __init__(self, tagger, lemmatizer=Lemmatizer(), model_file='langModel.mco', working_dir='resources'):
-		os.environ['MALTPARSERHOME'] = working_dir
+		os.environ['MALT_PARSER'] = working_dir
 		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
