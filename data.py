@@ -69,7 +69,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/persian.tagger.props', memory_min='-Xms1g', memory_max='-Xmx8g', test_size=.1):
+def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx8g', test_size=.1):
 	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
 	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
@@ -83,7 +83,7 @@ def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/pe
 	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(test))
 
 
-def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/options.xml', features_file='resources/features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
+def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 
 	def read_conll(conll_file):
 		trees = [DependencyGraph(item) for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n') if item.strip()]
