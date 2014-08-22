@@ -163,7 +163,7 @@ class TreebankReader():
 				return
 
 			if label == 'PostP':
-				chunks.append(Tree('POSTPP', [node]))
+				chunks.append(Tree('POSTP', [node]))
 				return
 
 			for leaf in node.pos():
