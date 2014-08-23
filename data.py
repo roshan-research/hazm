@@ -57,11 +57,12 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 def evaluate_chunker(treebank_root='corpora/treebank'):
 	treebank = TreebankReader(treebank_root)
 	chunker = Chunker()
+	chunked_trees = list(treebank.chunked_trees())
 
-	print(chunker.evaluate(treebank.chunked_trees()))
+	print(chunker.evaluate(chunked_trees))
 
 	output = codecs.open('resources/chunker_errors.txt', 'w', 'utf8')
-	for sentence, gold in zip(treebank.sents(), treebank.chunked_trees()):
+	for sentence, gold in zip(treebank.sents(), chunked_trees):
 		chunked = chunker.parse(sentence)
 		if chunked != gold:
 			print(tree2brackets(chunked), file=output)
@@ -69,7 +70,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx8g', test_size=.1):
+def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1):
 	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
 	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)

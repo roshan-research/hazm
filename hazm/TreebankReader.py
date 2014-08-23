@@ -128,10 +128,7 @@ class TreebankReader():
 		'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
 		"""
 
-		def collapse(node, new_label):
-			poses=node.pos()
-			return Tree(new_label, [Tree(poses[i][1], [poses[i][0]]) for i in range(len(poses))])
-
+		collapse = lambda node, label: Tree(label, [Tree(pos[1], [pos[0]]) for pos in node.pos()])
 
 		def traverse(node, parent, chunks):
 			label = node.label()
@@ -142,6 +139,7 @@ class TreebankReader():
 				label = label.replace('-nid', '')
 			if label.count('-DiscA') > 0:
 				label = label.replace('-DiscA', '')
+
 			if label == 'CLITIC':
 				if node[0][1] == 'V':
 					label = 'V'
