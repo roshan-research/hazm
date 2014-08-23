@@ -7,7 +7,7 @@ from nltk.chunk import RegexpParser, tree2conlltags
 class Chunker(RegexpParser):
 	"""
 		>>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUM'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
-		'[نامه ۱۰ فوریه شما را NP] [دریافت داشتم VP] .'
+		'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
 
 
 		# VP
@@ -19,7 +19,7 @@ class Chunker(RegexpParser):
 		'[به PP] [سه رأی NP] [افزایش می‌یابد VP]'
 
 		>>> tree2brackets(chunker.parse([('عملیات', 'Ne'), ('نظامی', 'AJe'), ('روسیه', 'N'), ('را', 'POSTP'), ('در', 'P'), ('چچن', 'N'), ('محکوم', 'AJ'), ('کردند', 'V')]))
-		'[عملیات نظامی روسیه را NP] [در PP] [چچن NP] [محکوم کردند VP]'
+		'[عملیات نظامی روسیه NP] [را POSTP] [در PP] [چچن NP] [محکوم کردند VP]'
 
 		>>> tree2brackets(chunker.parse([('در', 'P'), ('مورد', 'Ne'), ('پیوستن', 'Ne'), ('آنها', 'PRO'), ('به', 'P'), ('اتحادیه', 'N'), ('است', 'V')]))
 		'[در PP] [مورد پیوستن آنها NP] [به PP] [اتحادیه NP] [است VP]'
@@ -49,11 +49,14 @@ class Chunker(RegexpParser):
 				<.*[^e]>{<AJe?><Pe?>}
 
 			NP:
-				{<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|POSTP|CL|RESe?>*}
+				{<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
 				<N>}{<Ne?>
 
 			ADJP:
 				{<AJe?>}
+
+			POSTP:
+				{<POSTP>}
 
 			PP:
 				{<Pe?>+}

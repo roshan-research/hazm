@@ -47,10 +47,12 @@ def coarse_pos_e(tags):
 
 
 class TreebankReader():
+	"""
+	interfaces [Per­si­an Tree­bank](http://hpsg.fu-berlin.de/~ghayoomi/PTB.html)
+	"""
 
 	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e):
 		self._root = root
-		self._paragraph_pattern = re.compile(r'(\n.{0,50})(?=\n)')
 		self._pos_map = pos_map
 
 	def docs(self):
@@ -161,7 +163,7 @@ class TreebankReader():
 				return
 
 			if label == 'PostP':
-				chunks.append(Tree('POSTPP', [node]))
+				chunks.append(Tree('POSTP', [node]))
 				return
 
 			for leaf in node.pos():
