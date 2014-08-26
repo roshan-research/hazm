@@ -21,5 +21,6 @@ class POSTagger(stanford.POSTagger):
 		[('من', 'PR'), ('به', 'PREP'), ('مدرسه', 'N'), ('رفته بودم', 'V'), ('.', 'PUNC')]
 		"""
 
-		replace_spaces = lambda sentence: [word.replace(' ', '_') for word in sentence]
-		return super(stanford.POSTagger, self).tag_sents(map(replace_spaces, sentences))
+		refined = map(lambda s: [w.replace(' ', '_') for w in s], sentences)
+		tagged = super(stanford.POSTagger, self).tag_sents(refined)
+		return list(map(lambda s: [(w.replace('_', ' '), t) for w, t in s], tagged))
