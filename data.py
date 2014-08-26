@@ -3,15 +3,9 @@
 from __future__ import print_function, unicode_literals
 import codecs, subprocess
 from collections import Counter
-from nltk.parse import DependencyGraph
 from sklearn.cross_validation import train_test_split
 from hazm import *
 from hazm.Chunker import tree2brackets
-
-
-def dadegan_text(conll_file='resources/train.conll'):
-	text = codecs.open(conll_file, encoding='utf8').read()
-	return text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -27,31 +21,30 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 	lemmatizer = Lemmatizer()
 
 	errors = []
-	output = codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8')
-	for line in dadegan_text(conll_file).split('\n'):
-		parts = line.split('\t')
-		if len(parts) < 10:
-			continue
-		word, lemma, pos = parts[1], parts[2], parts[3]
-		if lemmatizer.lemmatize(word, pos) != lemma:
-			errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
-	print(len(errors), 'errors', file=output)
-	counter = Counter(errors)
-	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
-		print(count, *item, file=output)
+	with codecs.open('resources/lemmatizer_errors.txt', 'w', 'utf8') as output:
+		dadegan = DadeganReader(conll_file)
+		for tree in dadegan.trees():
+			for node in tree.nodelist[1:]:
+				word, lemma, pos = node['word'], node['lemma'], node['ctag']
+				if lemmatizer.lemmatize(word, pos) != lemma:
+					errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
+		print(len(errors), 'errors', file=output)
+		counter = Counter(errors)
+		for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+			print(count, *item, file=output)
 
 	missed = []
-	output = codecs.open('resources/lemmatizer_missed.txt', 'w', 'utf8')
-	bijankhan = BijankhanReader(bijankhan_file)
-	for sentence in bijankhan.sents():
-		for word in sentence:
-			if word[1] == 'V':
-				if word[0] == lemmatizer.lemmatize(word[0]):
-					missed.append(word[0])
-	print(len(missed), 'missed', file=output)
-	counter = Counter(missed)
-	for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
-		print(count, item, file=output)
+	with codecs.open('resources/lemmatizer_missed.txt', 'w', 'utf8') as output:
+		bijankhan = BijankhanReader(bijankhan_file)
+		for sentence in bijankhan.sents():
+			for word in sentence:
+				if word[1] == 'V':
+					if word[0] == lemmatizer.lemmatize(word[0]):
+						missed.append(word[0])
+		print(len(missed), 'missed', file=output)
+		counter = Counter(missed)
+		for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+			print(count, item, file=output)
 
 
 def evaluate_chunker(treebank_root='corpora/treebank'):
@@ -86,41 +79,31 @@ def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/pe
 
 def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 
-	def read_conll(conll_file):
-		trees = [DependencyGraph(item) for item in dadegan_text(conll_file).replace(' ', '_').split('\n\n') if item.strip()]
-		sentences = [[node['word'] for node in tree.nodelist[1:]] for tree in trees]
-		return trees, sentences
-
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
+	train, test = DadeganReader(train_file), DadeganReader(test_file)
 
-	trees, sentences = read_conll(train_file)
-	tagged = tagger.batch_tag(sentences)
+	tagged = tagger.tag_sents(train.sents())
 
 	train_data = train_file +'.data'
 	with codecs.open(train_data, 'w', 'utf8') as output:
-		for tree, sentence in zip(trees, tagged):
+		for tree, sentence in zip(train.trees(), tagged):
 			for i, (node, word) in enumerate(zip(tree.nodelist[1:], sentence), start=1):
 				node['tag'] = word[1]
 				node['lemma'] = lemmatizer.lemmatize(node['word'].replace('_', ' '), node['tag'])
 				print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['tag'], node['tag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
 			print(file=output)
 
-	cmd = ['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_data, '-f', options_file, '-F', features_file, '-m', 'learn']
-	process = subprocess.Popen(cmd)
-	process.wait()
+	subprocess.Popen(['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_data, '-f', options_file, '-F', features_file, '-m', 'learn']).wait()
 
 	# evaluation
 	print('\nEvaluating trained model on test data:')
 	parser = DependencyParser(tagger=tagger, model_file=model_file)
 
-	trees, sentences = read_conll(test_file)
-	tagged = tagger.batch_tag(sentences)
-	parsed = parser.tagged_batch_parse(tagged)
+	tagged = tagger.tag_sents(test.sents())
+	parsed = parser.tagged_parse_sents(tagged)
 
 	test_data, test_results = test_file +'.data', test_file +'.results'
-	print('\n'.join([sentence.to_conll(10) for sentence in trees]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
+	print('\n'.join([sentence.to_conll(10) for sentence in test.trees()]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
 	print('\n'.join([sentence.to_conll(10) for sentence in parsed]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
 
-	cmd = ['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]
-	process = subprocess.Popen(cmd)
-	process.wait()
+	subprocess.Popen(['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]).wait()
