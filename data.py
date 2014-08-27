@@ -9,7 +9,7 @@ from hazm.Chunker import tree2brackets
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
-	""" prepares list of persian word words from [Virastyar dic](https://sourceforge.net/projects/virastyar/files/Data/1.3.1/persian.dic/download) file.
+	""" prepares list of persian word words from [Virastyar](https://sourceforge.net/projects/virastyar/) dic file.
 	"""
 
 	dic_words = sorted([line.split('\t')[0] for line in codecs.open(dic_file, encoding='utf8')])
@@ -63,10 +63,11 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1):
+def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.2):
 	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
 	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
+	print('Peykare loaded.')
 
 	output = codecs.open(train_file, 'w', 'utf8')
 	for sentence in train:
@@ -74,7 +75,8 @@ def train_pos_tagger(peykare_root='corpora/peykare', path_to_model='resources/pe
 	subprocess.Popen(['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']).wait()
 
 	tagger = POSTagger()
-	print('\n\n', 'Tagger Accuracy on Test Split:', tagger.evaluate(test))
+	print('Tagger Accuracy on Test Split:')
+	print(tagger.evaluate(test))
 
 
 def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):

@@ -58,7 +58,7 @@ class PeykareReader():
 	Bijankhan, M., Sheykhzadegan, J., Bahrani, M., & Ghayoomi, M. (2011). Lessons from building a Persian written corpus: Peykare. Language Resources and Evaluation, 45, 143–164.
 	"""
 
-	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=coarse_pos_e):
+	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=coarse_pos):
 		self._root = root
 		self._pos_map = pos_map
 		self._joined_verb_parts = joined_verb_parts
