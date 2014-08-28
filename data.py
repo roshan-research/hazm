@@ -79,16 +79,16 @@ def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/per
 	print(tagger.evaluate(test))
 
 
-def train_dependency_parser(train_file='resources/train.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
+def train_maltparser(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
-	train, test = DadeganReader(train_file), DadeganReader(test_file)
-
-	tagged = tagger.tag_sents(train.sents())
+	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
+	train_sents = list(train.sents()) + list(validation.sents())
+	train_trees = list(train.trees()) + list(validation.trees())
 
 	train_data = train_file +'.data'
 	with codecs.open(train_data, 'w', 'utf8') as output:
-		for tree, sentence in zip(train.trees(), tagged):
+		for tree, sentence in zip(train_trees, tagger.tag_sents(train_sents)):
 			for i, (node, word) in enumerate(zip(tree.nodelist[1:], sentence), start=1):
 				node['tag'] = word[1]
 				node['lemma'] = lemmatizer.lemmatize(node['word'].replace('_', ' '), node['tag'])
