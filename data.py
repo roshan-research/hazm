@@ -105,7 +105,7 @@ def train_maltparser(train_file='resources/train.conll', validation_file='resour
 	parsed = parser.tagged_parse_sents(tagged)
 
 	test_data, test_results = test_file +'.data', test_file +'.results'
-	print('\n'.join([sentence.to_conll(10) for sentence in test.trees()]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
+	print('\n'.join([sentence.to_conll(10).replace('/', '') for sentence in test.trees()]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
 	print('\n'.join([sentence.to_conll(10) for sentence in parsed]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
 
 	subprocess.Popen(['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]).wait()
