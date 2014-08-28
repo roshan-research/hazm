@@ -49,7 +49,7 @@ class Lemmatizer():
 			return word
 
 		stem = self.stemmer.stem(word)
-		if stem in self.words:
+		if stem and stem in self.words:
 			return stem
 
 		return word
