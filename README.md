@@ -8,7 +8,7 @@ Python library for digesting Persian text.
 + Word lemmatizer
 + POS tagger
 + Dependency parser
-+ Corpus readers for [Hamshahri](http://ece.ut.ac.ir/dbrg/hamshahri/) and [Bijankhan](http://ece.ut.ac.ir/dbrg/bijankhan/)
++ Interfaces for Persian corpora 
 + [NLTK](http://nltk.org/) compatible
 + Python 2.7, 3.2, 3.3 and 3.4 support
 + [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
@@ -62,6 +62,7 @@ We have also trained [tagger and parser models](http://dl.dropboxusercontent.com
 
 + [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java version of Hazm
 + [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# version of Hazm
+
 
 ## Thanks
 
