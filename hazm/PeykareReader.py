@@ -54,7 +54,7 @@ def join_verb_parts(sentence):
 
 class PeykareReader():
 	"""
-	interfaces [Peykare Corpus](http://dadegan.ir/catalog/D3920121a)
+	interfaces [Peykare Corpus](http://www.rcisp.com/?q=%D9%BE%DB%8C%DA%A9%D8%B1%D9%87%20%D9%85%D8%AA%D9%86%DB%8C%20%D8%B2%D8%A8%D8%A7%D9%86%20%D9%81%D8%A7%D8%B1%D8%B3%DB%8C)
 	Bijankhan, M., Sheykhzadegan, J., Bahrani, M., & Ghayoomi, M. (2011). Lessons from building a Persian written corpus: Peykare. Language Resources and Evaluation, 45, 143–164.
 	"""
 
