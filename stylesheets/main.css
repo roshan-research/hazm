@@ -126,6 +126,10 @@ textarea.form-control {
 	background-color: #ffeca0;
 }
 
+p {
+	text-align: justify;
+}
+
 /* controls */
 
 .controls button, .controls span {

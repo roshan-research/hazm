@@ -31,7 +31,7 @@
 		<li>واسط استفاده از داده‌های زبان فارسی</li>
 		<li>سازگاری با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
 		<li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
-		<li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm"><img src="https://travis-ci.org/sobhe/hazm.png" alt="وضعیت تست" style="max-width:100%;"></a></li>
+		<li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm"><img src="https://travis-ci.org/sobhe/hazm.png" alt="وضعیت تست" style="max-width:100%; margin-top: -2px;"></a></li>
 	</ul>
 
 	<h2>استفاده</h2>
@@ -60,7 +60,7 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">POSTagger</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ما بسیار کتاب می‌خوانیم'</span><span class="p">))</span>
-<span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PR'</span><span class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می‌خوانیم'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
+<span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می‌خوانیم'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">DependencyParser</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">POSTagger</span><span class="p">())</span>
@@ -68,7 +68,7 @@
 <span class="o">&lt;</span><span class="n">DependencyGraph</span> <span class="k">with</span> <span class="mi">8</span> <span class="n">nodes</span><span class="o">&gt;</span>
 </pre></div>
 
-	<p class="pull-right" style="margin-bottom: 0; height: 0">درخت وابستگی حاصل:</p>
+	<div class="pull-right" style="height: 0">درخت وابستگی حاصل:</div>
 	<div id="tree" class="tree">
 		<svg height="0"></svg>
 	</div>
@@ -77,6 +77,9 @@
 	<pre><code>pip install hazm</code></pre>
 	<p>توجه کنید که برچسب‌زن صرفی و تجزیه‌گر نحوی نیاز به مدل‌های آموزش‌دیده دارند. ما این مدل‌ها را هم آماده کرده‌ایم، می‌توانید آنها را <a href="http://dl.dropboxusercontent.com/u/90405495/resources.zip">دریافت کنید</a> و در پوشه‌ای با عنوان <span class="eng">resources</span> در پروژه خود قرار دهید. البته رویه‌های آموزش و ارزیابی مدل‌ها هم <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a> هستند.</p>
 
+	<h2>اجازه‌نامه</h2>
+	<p>شما می‌توانید مطابق <a href="https://github.com/sobhe/hazm/blob/master/LICENSE">اجازه‌نامه</a>، از این محصول در هر نوع پروژه‌ای از جمله تحقیقاتی یا تجاری استفاده کنید. فقط توجه کنید که اجازه‌نامه هضم فقط مربوط به کدهای این پروژه است و برای استفاده از مدل‌های آماده شده باید به مجوز داده‌های مورد استفاده در آموزش آنها مراجعه کنید؛ که خب هیچ‌کدام اجازه استفاده تجاری را نمی‌دهند :(</p>
+	
 	<h2>آخرین تغییرات</h2>
 	<div><a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3"><span class="glyphicon glyphicon-flash"></span> ۶ شهریور ۹۳</a></div>
 	<ul>
