@@ -28,9 +28,9 @@
 		<li>ریشه‌یابی واژه‌ها</li>
 		<li>تعیین برچسب اجزای سخن</li>
 		<li>تجزیه نحوی جمله</li>
-		<li>واسط برای پیکره‌های <a href="http://ece.ut.ac.ir/dbrg/hamshahri/">همشهری</a> و <a href="http://ece.ut.ac.ir/dbrg/bijankhan/">بی‌جن‌خان</a></li>
+		<li>واسط استفاده از داده‌های زبان فارسی</li>
 		<li>سازگاری با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
-		<li>پشتیبانی از پایتون ۲.۷ و ۳.۳</li>
+		<li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
 		<li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm"><img src="https://travis-ci.org/sobhe/hazm.png" alt="وضعیت تست" style="max-width:100%;"></a></li>
 	</ul>
 
@@ -75,13 +75,30 @@
 
 	<h2>نصب</h2>
 	<pre><code>pip install hazm</code></pre>
-	<p>ما <a href="http://dl.dropboxusercontent.com/u/90405495/resources.zip">مدل‌های آماده برچسب‌زنی و تجزیه</a> را هم آماده کرده‌ایم که می‌توانید در پوشه <span class="eng">resources</span> پروژه خود قرار دهید.</p>
+	<p>توجه کنید که برچسب‌زن صرفی و تجزیه‌گر نحوی نیاز به مدل‌های آموزش‌دیده دارند. ما این مدل‌ها را هم آماده کرده‌ایم، می‌توانید آنها را <a href="http://dl.dropboxusercontent.com/u/90405495/resources.zip">دریافت کنید</a> و در پوشه‌ای با عنوان <span class="eng">resources</span> در پروژه خود قرار دهید. البته رویه‌های آموزش و ارزیابی مدل‌ها هم <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a> هستند.</p>
 
-	<h2>ارزیابی</h2>
-	<p>رویه‌های آموزش و ارزیابی مدل‌ها هم <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a> هستند. نتیجه ارزیابی این نسخه:</p>
+	<h2>آخرین تغییرات</h2>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3"><span class="glyphicon glyphicon-flash"></span> ۶ شهریور ۹۳</a></div>
 	<ul>
-		<li>دقت برچسب اجزای سخن: 96.6%</li>
-		<li>دقت تجزیه نحوی: 83.3%</li>
+		<li>دقت برچسب‌زن صرفی: 96.59%</li>
+		<li>دقت تجزیه‌گر نحوی: 85.2%</li>
+		<li>آموزش برچسب‌زن صرفی روی پیکره</li>
+		<li>واسط استفاده از داده‌های پیکره و دادگان</li>
+	</ul>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.1...v0.2"><span class="glyphicon glyphicon-flash"></span>۲۱ تیر ۹۳</a></div>
+	<ul>
+		<li>نسخه جدید فهرست واژه‌های ویراستیار</li>
+		<li>جایگزینی علامت نقل قول و ممیز</li>
+		<li>سازگاری با نسخه جدید NLTK</li>
+		<li>اجرای تست‌ها در پایتون ۲</li>
+	</ul>
+	<div><a href="https://github.com/sobhe/hazm/compare/41843e...v0.1"><span class="glyphicon glyphicon-flash"></span> ۲۳ آذر ۹۲</a></div>
+	<ul>
+		<li>دقت برچسب‌زن صرفی: 96.6%</li>
+		<li>دقت تجزیه‌گر نحوی: 83.3%</li>
+		<li>آموزش برچسب‌زن صرفی روی بی‌جن‌خان</li>
+		<li>آموزش تجزیه‌گر نحوی روی دادگان</li>
+		<li>واسط استفاده از داده‌های همشهری و بی‌جن‌خان</li>
 	</ul>
 
 	<h2>سپاس</h2>

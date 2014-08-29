@@ -58,6 +58,9 @@ ul {
 .glyphicon {
 	top: 3px;
 }
+.content .glyphicon {
+  font-size: 90%;
+}
 textarea.form-control {
 	font-size: 85%;
 	margin-bottom: 5px;
