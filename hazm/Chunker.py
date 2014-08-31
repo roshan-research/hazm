@@ -17,7 +17,8 @@ class Chunker(RegexpParser):
 				<P>{<N>}<V>
 
 			VP:
-				<.*[^e]>?{<N>?<V><V>?}
+				<.*[^e]>{<N><V>}
+				{<V>}
 
 			ADVP:
 				{<ADVe?><AJ>?}
