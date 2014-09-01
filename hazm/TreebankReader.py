@@ -122,7 +122,7 @@ class TreebankReader():
 			yield tree.leaves()
 
 
-	def chunked_trees(self):
+	def chunked_trees(self, join_clitics=True):
 		"""
 		>>> tree2brackets(next(treebank.chunked_trees()))
 		'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
@@ -140,7 +140,7 @@ class TreebankReader():
 			if label.count('-DiscA') > 0:
 				label = label.replace('-DiscA', '')
 
-			if label == 'CLITIC':
+			if label == 'CLITIC' and not join_clitics:
 				if node[0][1] == 'V':
 					label = 'V'
 				elif node[0][1] == 'P':
@@ -155,6 +155,14 @@ class TreebankReader():
 			if label in {'CONJ', 'PUNC'} and len(node) == 1:
 				chunks.append(node)
 				return
+
+			if label == 'CLITIC' and join_clitics:
+				if node[0][1] == 'P':
+					label = 'PREP'
+				else :
+					chunks.append(Tree('CLITIC', [node]))
+					return
+
 
 			if label == 'PREP':
 				chunks.append(Tree('PP', [node]))
@@ -227,6 +235,10 @@ class TreebankReader():
 			for i in range(len(chunks)):
 				if chunks[i].label() in {'PUNC', 'CONJ'}:
 					chunks[i] = chunks[i][0]
+				elif chunks[i].label() == 'CLITIC' and i > 0 :
+					x=chunks[i-1][-1]
+					chunks[i-1][-1] = (chunks[i-1][-1][0] + chunks[i][0][0][0], chunks[i-1][-1][1])
 				else:
 					chunks[i] = Tree(chunks[i].label(), chunks[i].leaves())
+			chunks = [chunk for chunk in chunks if type(chunk) != Tree or chunk.label() != 'CLITIC']
 			yield Tree('S', chunks)
