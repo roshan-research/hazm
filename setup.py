@@ -2,7 +2,7 @@
 from distutils.core import setup
 
 setup(name='hazm',
-	version='0.2',
+	version='0.3',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
 	author_email='alireza.nournia@gmail.com',

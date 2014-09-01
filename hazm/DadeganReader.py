@@ -1,6 +1,6 @@
 # coding: utf8
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals
 import codecs
 from nltk.parse import DependencyGraph
 
@@ -26,3 +26,7 @@ class DadeganReader():
 	def trees(self):
 		for sentence in self._sentences():
 			yield DependencyGraph(sentence)
+
+	def sents(self):
+		for tree in self.trees():
+			yield [node['word'] for node in tree.nodelist[1:]]
