@@ -118,7 +118,7 @@ class TreebankReader():
 				if not len(child.childNodes):
 					childs.remove(child)
 			tree = Tree(node.tagName, map(traverse, childs))
-			if len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] != 'P':
+			if len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] not in {'P', 'V'}:
 				clitic=tree[-1]
 				tree = Tree(tree.label(), [subtree for subtree in tree[0]])
 				clitic_join(tree, clitic)
