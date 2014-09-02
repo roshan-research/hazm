@@ -51,9 +51,10 @@ class TreebankReader():
 	interfaces [Per­si­an Tree­bank](http://hpsg.fu-berlin.de/~ghayoomi/PTB.html)
 	"""
 
-	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e):
+	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e, join_clitics=True):
 		self._root = root
 		self._pos_map = pos_map
+		self._join_clitics = join_clitics
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
@@ -96,6 +97,16 @@ class TreebankReader():
 					pos.append(W.getAttribute('kind'))
 				return pos
 
+			def clitic_join(tree, clitic):
+				if type(tree[-1]) == Tree:
+					return clitic_join(tree[-1], clitic)
+				else:
+					if(clitic[0][0][0] == 'ا'):
+						clitic[0] = ('‌' + clitic[0][0], clitic[0][1])
+					tree[-1]=(tree[-1][0] + clitic[0][0], clitic[0][1])
+					tree.set_label('CLITICS')
+					return
+
 			if not len(node.childNodes):
 				return
 			first = node.childNodes[0]
@@ -106,7 +117,12 @@ class TreebankReader():
 			for child in childs:
 				if not len(child.childNodes):
 					childs.remove(child)
-			return Tree(node.tagName, map(traverse, childs))
+			tree = Tree(node.tagName, map(traverse, childs))
+			if len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] != 'P':
+				clitic=tree[-1]
+				tree = Tree(tree.label(), [subtree for subtree in tree[0]])
+				clitic_join(tree, clitic)
+			return tree
 
 		for doc in self.docs():
 			for S in doc.getElementsByTagName('S'):
@@ -122,7 +138,7 @@ class TreebankReader():
 			yield tree.leaves()
 
 
-	def chunked_trees(self, join_clitics=True):
+	def chunked_trees(self):
 		"""
 		>>> tree2brackets(next(treebank.chunked_trees()))
 		'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
@@ -140,7 +156,7 @@ class TreebankReader():
 			if label.count('-DiscA') > 0:
 				label = label.replace('-DiscA', '')
 
-			if label == 'CLITIC' and not join_clitics:
+			if label in {'CLITIC', 'CLITICS'}:
 				if node[0][1] == 'V':
 					label = 'V'
 				elif node[0][1] == 'P':
@@ -156,13 +172,9 @@ class TreebankReader():
 				chunks.append(node)
 				return
 
-			if label == 'CLITIC' and join_clitics:
-				if node[0][1] == 'P':
-					label = 'PREP'
-				else :
-					chunks.append(Tree('CLITIC', [node]))
-					return
-
+			if label == 'PPC' and len(node) == 1:
+				chunks.append(Tree('PP', [node[0]]))
+				return
 
 			if label == 'PREP':
 				chunks.append(Tree('PP', [node]))
@@ -235,10 +247,6 @@ class TreebankReader():
 			for i in range(len(chunks)):
 				if chunks[i].label() in {'PUNC', 'CONJ'}:
 					chunks[i] = chunks[i][0]
-				elif chunks[i].label() == 'CLITIC' and i > 0 :
-					x=chunks[i-1][-1]
-					chunks[i-1][-1] = (chunks[i-1][-1][0] + chunks[i][0][0][0], chunks[i-1][-1][1])
 				else:
 					chunks[i] = Tree(chunks[i].label(), chunks[i].leaves())
-			chunks = [chunk for chunk in chunks if type(chunk) != Tree or chunk.label() != 'CLITIC']
 			yield Tree('S', chunks)
