@@ -5,6 +5,7 @@ import os, sys, re, codecs
 from xml.dom import minidom
 from nltk.tree import Tree
 from .Chunker import tree2brackets
+from .WordTokenizer import *
 
 
 def coarse_pos(tags):
@@ -51,10 +52,11 @@ class TreebankReader():
 	interfaces [Per­si­an Tree­bank](http://hpsg.fu-berlin.de/~ghayoomi/PTB.html)
 	"""
 
-	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e, join_clitics=True):
+	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e, join_clitics=False, join_verb_parts=False):
 		self._root = root
 		self._pos_map = pos_map
 		self._join_clitics = join_clitics
+		self._join_verb_parts = join_verb_parts
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
@@ -78,6 +80,7 @@ class TreebankReader():
 		  (PUNC ./PUNC))
 		"""
 
+		tokenizer = WordTokenizer()
 		def traverse(node):
 			def extract_tags(W):
 				pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
@@ -118,10 +121,29 @@ class TreebankReader():
 				if not len(child.childNodes):
 					childs.remove(child)
 			tree = Tree(node.tagName, map(traverse, childs))
-			if len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] not in {'P', 'V'}:
+			if self._join_clitics and len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] not in {'P', 'V'}:
 				clitic=tree[-1]
 				tree = Tree(tree.label(), [subtree for subtree in tree[0]])
 				clitic_join(tree, clitic)
+			if self._join_verb_parts and len(tree) > 1 and type(tree[1]) == Tree and type(tree[0]) == Tree and tree[0].label() == 'AUX' and tree[0][0][0] in tokenizer.before_verbs:
+				tree[1][0] = (tree[0][0][0] + tree[1][0][0], tree[1][0][1])
+				tree.remove(tree[0])
+			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in tokenizer.after_verbs and tree.leaves()[-2][0] in tokenizer.verbe :
+				tree[1][0] = (tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
+				path = tree.leaf_treeposition(len(tree.leaves())-2)
+				removingtree = tree
+				while len(path) > 2 :
+					removingtree = removingtree[path[0]]
+					path = path[1:]
+				removingtree.remove(Tree(tree.pos()[-2][1],[tree.pos()[-2][0]]))
+			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in tokenizer.after_verbs and tree.leaves()[-2][0] in tokenizer.verbe :
+				tree[1][0] = (tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
+				path = tree.leaf_treeposition(len(tree.leaves())-2)
+				removingtree = tree
+				while len(path) > 2 :
+					removingtree = removingtree[path[0]]
+					path = path[1:]
+				removingtree.remove(Tree(tree.pos()[-2][1],[tree.pos()[-2][0]]))
 			return tree
 
 		for doc in self.docs():
