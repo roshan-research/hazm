@@ -48,7 +48,7 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 
 
 def evaluate_chunker(treebank_root='corpora/treebank'):
-	treebank = TreebankReader(treebank_root, join_clitics=True, join_verb_parts=True)
+	treebank = TreebankReader(treebank_root)
 	chunker = Chunker()
 	chunked_trees = list(treebank.chunked_trees())
 
