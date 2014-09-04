@@ -221,12 +221,12 @@ class TreebankReader():
 					chunks.append(collapse(node, 'NP'))
 					return
 
-			if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM', 'INTJ', 'MN', 'PRON', 'DET', 'NUM'}:
+			if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM', 'INTJ', 'MN', 'PRON', 'DET', 'NUM', 'RES'}:
 				chunks.append(collapse(node, 'NP'))
 				return
 
 			if label == 'NPA' and len(node) >= 2:
-				if node[0].label() == 'ADJ' and node[1].label() == 'NPC' or node[0].label() in {'N', 'PRON'} and node[1].label() in {'ADJ', 'N'} or node[0].label() == 'NUM' and node[1].label() in {'N', 'NPC', 'MN', 'NUM'} or node[0].label() in {'N', 'NPC', 'MN'} and node[1].label() == 'NUM' or node[0].label() == 'NPC' and node[1].label() == 'ADJ' or node[0].label() == 'NPA' and node[1].label() != 'NPC' or node[1].label() == 'NPA' and node[0].label() != 'NPC':
+				if node[0].label() == 'ADJ' and node[1].label() == 'NPC' or node[0].label() in {'N', 'PRON'} and node[1].label() in {'ADJ', 'ADJPA', 'N'} or node[0].label() == 'NUM' and node[1].label() in {'N', 'NPC', 'MN', 'NUM'} or node[0].label() in {'N', 'NPC', 'MN'} and node[1].label() == 'NUM' or node[0].label() == 'NPC' and node[1].label() == 'ADJ' or node[0].label() == 'NPA' and node[1].label() != 'NPC' or node[1].label() == 'NPA' and node[0].label() != 'NPC':
 					chunks.append(collapse(node, 'NP'))
 					return
 
