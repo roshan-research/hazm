@@ -115,7 +115,7 @@ class TreebankReader():
 			first = node.childNodes[0]
 			if first.tagName == 'w':
 				pos=extract_tags(first)
-				return Tree(node.tagName, [(first.childNodes[0].data, self._pos_map(pos))])
+				return Tree(node.tagName, [(first.childNodes[0].data.replace('می ', 'می‌'), self._pos_map(pos))])
 			childs = node.childNodes[2:] if node.tagName == 'S' else node.childNodes
 			for child in childs:
 				if not len(child.childNodes):
@@ -126,7 +126,7 @@ class TreebankReader():
 				tree = Tree(tree.label(), [subtree for subtree in tree[0]])
 				clitic_join(tree, clitic)
 			if self._join_verb_parts and len(tree) > 1 and type(tree[1]) == Tree and type(tree[0]) == Tree and tree[0].label() == 'AUX' and tree[0][0][0] in tokenizer.before_verbs:
-				tree[1][0] = (tree[0][0][0] + tree[1][0][0], tree[1][0][1])
+				tree[1][0] = (tree[0][0][0] + ' ' + tree[1][0][0], tree[1][0][1])
 				tree.remove(tree[0])
 			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in tokenizer.after_verbs and tree.leaves()[-2][0] in tokenizer.verbe :
 				tree[1][0] = (tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
@@ -244,7 +244,7 @@ class TreebankReader():
 					chunks.append(collapse(node, 'ADVP'))
 					return
 
-			if label in {'MV', 'V', 'AUX'}:
+			if label in {'MV', 'V', 'AUX', 'PPARV'}:
 				chunks.append(Tree('VP', [node]))
 				return
 
