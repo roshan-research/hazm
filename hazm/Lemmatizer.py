@@ -40,10 +40,18 @@ class Lemmatizer():
 		'گفت#گو'
 		>>> lemmatizer.lemmatize('مردم', pos='N')
 		'مردم'
+		>>> lemmatizer.lemmatize('اجتماعی', pos='AJ')
+		'اجتماعی'
 		"""
 
 		if (not pos or pos == 'V') and word in self.verbs:
 			return self.verbs[word]
+
+		if pos.startswith('AJ') and word[-1] == 'ی':
+			return word
+
+		if pos == 'PRO':
+			return word
 
 		if word in self.words:
 			return word
