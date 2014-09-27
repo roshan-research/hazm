@@ -8,31 +8,19 @@ from .WordTokenizer import *
 tokenizer = WordTokenizer()
 
 
-def coarse_pos(tags):
+def coarse_pos_e(tags):
 	"""
 	Coarse POS tags of Peykare corpus:
 		N: Noun, V: Verb, AJ: Adjective, ADV: Adverb, PRO: Pronoun, DET: Determiner, P: Preposition, POSTP: Postposition, NUM: Number, CONJ: Conjunction, PUNC: Punctuation, RES: Residual, CL: Classifier, INT: Interjection
 
-	>>> coarse_pos(['N','COM','SING'])
+	>>> coarse_pos_e(['N','COM','SING'])
 	'N'
 	"""
 
 	try:
-		return list(set(tags) & {'N', 'V', 'AJ', 'ADV', 'PRO', 'DET', 'P', 'POSTP', 'NUM', 'CONJ', 'PUNC', 'CL', 'INT', 'RES'})[0]
+		return list(set(tags) & {'N', 'V', 'AJ', 'ADV', 'PRO', 'DET', 'P', 'POSTP', 'NUM', 'CONJ', 'PUNC', 'CL', 'INT', 'RES'})[0] + ('e' if 'EZ' in tags else '')
 	except Exception:
 		return 'N'
-
-
-def coarse_pos_e(tags):
-	"""
-	Coarse POS tags plus Ezafe.
-	Asghari, H., Maleki, J., & Faili, H. (2014). A Probabilistic Approach to Persian Ezafe Recognition. In EACL 2014.
-
-	>>> coarse_pos_e(['AJ','SIM','EZ'])
-	'AJe'
-	"""
-
-	return coarse_pos(tags) + ('e' if 'EZ' in tags else '')
 
 
 def join_verb_parts(sentence):
@@ -60,7 +48,7 @@ class PeykareReader():
 
 	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=coarse_pos_e):
 		self._root = root
-		self._pos_map = pos_map
+		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 		self._joined_verb_parts = joined_verb_parts
 		self._normalizer = Normalizer(punctuation_spacing=False, affix_spacing=False)
 
