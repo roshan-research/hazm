@@ -30,7 +30,8 @@ class WordTokenizer(TokenizerI):
 			])
 
 			self.verbs = list(reversed([verb.strip() for verb in codecs.open(verbs_file, encoding='utf8') if verb]))
-			self.verbe = set([verb.split('#')[0] + 'ه' for verb in self.verbs])
+			self.bons = set([verb.split('#')[0] for verb in self.verbs])
+			self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
 		"""
