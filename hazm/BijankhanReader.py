@@ -36,7 +36,7 @@ class BijankhanReader():
 	def sents(self):
 		"""
 		>>> next(bijankhan.sents())
-		[('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده شد', 'V'), ('.', 'PUNC')]
+		[('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 		"""
 
 		map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))

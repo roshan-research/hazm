@@ -18,9 +18,8 @@ class POSTagger(stanford.POSTagger):
 	def tag_sents(self, sentences):
 		"""
 		>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
-		[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته بودم', 'V'), ('.', 'PUNC')]
+		[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
 		"""
 
 		refined = map(lambda s: [w.replace(' ', '_') for w in s], sentences)
-		tagged = super(stanford.POSTagger, self).tag_sents(refined)
-		return list(map(lambda s: [(w.replace('_', ' '), t) for w, t in s], tagged))
+		return super(stanford.POSTagger, self).tag_sents(refined)

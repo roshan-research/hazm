@@ -24,9 +24,9 @@ class Lemmatizer():
 					self.verbs[tense] = verb
 			if joined_verb_parts:
 				for verb, after_verb in itertools.product(tokenizer.verbs, tokenizer.after_verbs):
-					self.verbs[verb.split('#')[0] +'ه '+ after_verb] = verb
+					self.verbs[verb.split('#')[0] +'ه_'+ after_verb] = verb
 				for verb, before_verb in itertools.product(tokenizer.verbs, tokenizer.before_verbs):
-					self.verbs[before_verb +' '+ verb.split('#')[0]] = verb
+					self.verbs[before_verb +'_'+ verb.split('#')[0]] = verb
 
 	def lemmatize(self, word, pos=''):
 		"""
@@ -36,7 +36,7 @@ class Lemmatizer():
 		'آتشفشان'
 		>>> lemmatizer.lemmatize('می‌روم')
 		'رفت#رو'
-		>>> lemmatizer.lemmatize('گفته شده است')
+		>>> lemmatizer.lemmatize('گفته_شده_است')
 		'گفت#گو'
 		>>> lemmatizer.lemmatize('مردم', pos='N')
 		'مردم'

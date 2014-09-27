@@ -28,13 +28,13 @@ def join_verb_parts(sentence):
 	Join verb parts like Dadedgan corpus.
 
 	>>> join_verb_parts([('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده', 'AJ'), ('شد', 'V'), ('.', 'PUNC')])
-	[('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده شد', 'V'), ('.', 'PUNC')]
+	[('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 	"""
 
 	result = [('', '')]
 	for word in reversed(sentence):
 		if word[0] in tokenizer.before_verbs or (result[-1][0] in tokenizer.after_verbs and word[0] in tokenizer.verbe):
-			result[-1] = (word[0] +' '+ result[-1][0], result[-1][1])
+			result[-1] = (word[0] +'_'+ result[-1][0], result[-1][1])
 		else:
 			result.append(word)
 	return list(reversed(result[1:]))
