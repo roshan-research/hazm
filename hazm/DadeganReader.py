@@ -15,7 +15,7 @@ def coarse_pos_e(tags):
 	"""
 
 	map = {'N': 'N', 'V': 'V', 'ADJ': 'AJ', 'ADV': 'ADV', 'PR': 'PRO', 'PREM': 'DET', 'PREP': 'P', 'POSTP': 'POSTP', 'PRENUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': 'PUNC'}
-	return map.get(tags[0]) + ('e' if 'EZ' in tags else '')
+	return map.get(tags[0], '') + ('e' if 'EZ' in tags else '')
 
 
 class DadeganReader():
@@ -23,8 +23,9 @@ class DadeganReader():
 	interfaces [Persian Dependency Treebank](http://dadegan.ir/perdt/download)
 	"""
 
-	def __init__(self, conll_file='corpora/dadegan.conll'):
+	def __init__(self, conll_file='corpora/dadegan.conll', pos_map=coarse_pos_e):
 		self._conll_file = conll_file
+		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 
 	def _sentences(self):
 		text = codecs.open(self._conll_file, encoding='utf8').read()
@@ -38,22 +39,25 @@ class DadeganReader():
 
 	def trees(self):
 		for sentence in self._sentences():
-			yield DependencyGraph(sentence)
+			tree = DependencyGraph(sentence)
 
-	def sents(self, pos_map=coarse_pos_e):
+			for node in tree.nodelist[1:]:
+				node['mtag'] = [node['ctag'], node['tag']]
+
+			for node in tree.nodelist[1:]:
+				if node['rel'] in ('MOZ', 'NPOSTMOD'):
+					tree.nodelist[node['head']]['mtag'].append('EZ')
+
+			for node in tree.nodelist[1:]:
+				node['mtag'] = self._pos_map(node['mtag'])
+
+			yield tree
+
+	def sents(self):
 		"""
 		>>> next(dadegan.sents())
 		[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
 		"""
 
-		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
-
 		for tree in self.trees():
-			sentence = []
-			for node in tree.nodelist[1:]:
-				sentence.append((node['word'], [node['ctag'], node['tag']]))
-
-				if node['rel'] in ('MOZ', 'NPOSTMOD'):
-					sentence[node['head']-1][1].append('EZ')
-
-			yield list(map(lambda item: (item[0], self._pos_map(item[1])), sentence))
+			yield [(node['word'], node['mtag']) for node in tree.nodelist[1:]]
