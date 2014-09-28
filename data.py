@@ -17,7 +17,7 @@ def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.
 	print(output, 'created')
 
 
-def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='resources/bijankhan.txt'):
+def evaluate_lemmatizer(conll_file='resources/train.conll', peykare_root='corpora/peykare'):
 	lemmatizer = Lemmatizer()
 
 	errors = []
@@ -25,7 +25,7 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 		dadegan = DadeganReader(conll_file)
 		for tree in dadegan.trees():
 			for node in tree.nodelist[1:]:
-				word, lemma, pos = node['word'], node['lemma'], node['ctag']
+				word, lemma, pos = node['word'], node['lemma'], node['mtag']
 				if lemmatizer.lemmatize(word, pos) != lemma:
 					errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
 		print(len(errors), 'errors', file=output)
@@ -35,8 +35,8 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', bijankhan_file='reso
 
 	missed = []
 	with codecs.open('resources/lemmatizer_missed.txt', 'w', 'utf8') as output:
-		bijankhan = BijankhanReader(bijankhan_file)
-		for sentence in bijankhan.sents():
+		peykare = PeykareReader(peykare_root)
+		for sentence in peykare.sents():
 			for word in sentence:
 				if word[1] == 'V':
 					if word[0] == lemmatizer.lemmatize(word[0]):

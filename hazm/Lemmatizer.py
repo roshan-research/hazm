@@ -1,7 +1,7 @@
 # coding: utf8
 
 from __future__ import unicode_literals
-import codecs, itertools
+import codecs
 from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
@@ -23,10 +23,13 @@ class Lemmatizer():
 				for tense in self.conjugations(verb):
 					self.verbs[tense] = verb
 			if joined_verb_parts:
-				for verb, after_verb in itertools.product(tokenizer.verbs, tokenizer.after_verbs):
-					self.verbs[verb.split('#')[0] +'ه '+ after_verb] = verb
-				for verb, before_verb in itertools.product(tokenizer.verbs, tokenizer.before_verbs):
-					self.verbs[before_verb +' '+ verb.split('#')[0]] = verb
+				for verb in tokenizer.verbs:
+					bon = verb.split('#')[0]
+					for after_verb in tokenizer.after_verbs:
+						self.verbs[bon +'ه_'+ after_verb] = verb
+						self.verbs['ن'+ bon +'ه_'+ after_verb] = verb
+					for before_verb in tokenizer.before_verbs:
+						self.verbs[before_verb +'_'+ bon] = verb
 
 	def lemmatize(self, word, pos=''):
 		"""
@@ -36,14 +39,24 @@ class Lemmatizer():
 		'آتشفشان'
 		>>> lemmatizer.lemmatize('می‌روم')
 		'رفت#رو'
-		>>> lemmatizer.lemmatize('گفته شده است')
+		>>> lemmatizer.lemmatize('گفته_شده_است')
 		'گفت#گو'
+		>>> lemmatizer.lemmatize('نچشیده_است')
+		'چشید#چش'
 		>>> lemmatizer.lemmatize('مردم', pos='N')
 		'مردم'
+		>>> lemmatizer.lemmatize('اجتماعی', pos='AJ')
+		'اجتماعی'
 		"""
 
 		if (not pos or pos == 'V') and word in self.verbs:
 			return self.verbs[word]
+
+		if pos.startswith('AJ') and word[-1] == 'ی':
+			return word
+
+		if pos == 'PRO':
+			return word
 
 		if word in self.words:
 			return word

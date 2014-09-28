@@ -4,16 +4,16 @@ from __future__ import unicode_literals, print_function
 import os, sys, re, codecs
 from xml.dom import minidom
 from nltk.tree import Tree
+from .WordTokenizer import WordTokenizer
 from .Chunker import tree2brackets
-from .WordTokenizer import *
 
 
-def coarse_pos(tags):
+def coarse_pos_e(tags):
 	"""
 	Coarse POS tags of Treebank corpus:
 		N: Noun, V: Verb, A: Adjective, D: Adverb, Z: Pronoun, T: Determiner, E: Preposition, P: Postposition, U: Number, J: Conjunction, O: Punctuation, R: Residual, L: Classifier, I: Interjection
 
-	>>> coarse_pos(['Nasp---', 'pers', 'prop'])
+	>>> coarse_pos_e(['Nasp---', 'pers', 'prop'])
 	'N'
 	"""
 
@@ -30,21 +30,9 @@ def coarse_pos(tags):
 				tags[0] = 'D'
 			elif 'det' in tags:
 				tags[0] = 'T'
-		return map[tags[0][0]]
+		return map[tags[0][0]] + ('e' if 'ezafe' in tags else '')
 	except Exception:
 		return ''
-
-
-def coarse_pos_e(tags):
-	"""
-	Coarse POS tags plus Ezafe.
-	Asghari, H., Maleki, J., & Faili, H. (2014). A Probabilistic Approach to Persian Ezafe Recognition. In EACL 2014.
-
-	>>> coarse_pos_e(['Ncsp--z', 'ezafe'])
-	'Ne'
-	"""
-
-	return coarse_pos(tags) + ('e' if 'ezafe' in tags else '')
 
 
 class TreebankReader():
@@ -54,7 +42,7 @@ class TreebankReader():
 
 	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e, join_clitics=False, join_verb_parts=False):
 		self._root = root
-		self._pos_map = pos_map
+		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 		self._join_clitics = join_clitics
 		self._join_verb_parts = join_verb_parts
 
