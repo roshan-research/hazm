@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import codecs
 from nltk.parse import DependencyGraph
+from .Chunker import tree2brackets
 
 
 class DadeganReader():
@@ -28,5 +29,15 @@ class DadeganReader():
 			yield DependencyGraph(sentence)
 
 	def sents(self):
+		"""
+		>>> next(dadegan.sents())
+		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
+		"""
 		for tree in self.trees():
 			yield [node['word'] for node in tree.nodelist[1:]]
+
+	def chunked_trees(self):
+		"""
+		>>> tree2brackets(next(dadegan.chunked_trees()))
+		'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده شد VP] .'
+		"""
