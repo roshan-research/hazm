@@ -56,8 +56,13 @@ class DadeganReader():
 	def sents(self):
 		"""
 		>>> next(dadegan.sents())
-		[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
+		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
 		"""
-
 		for tree in self.trees():
 			yield [(node['word'], node['mtag']) for node in tree.nodelist[1:]]
+
+	def chunked_trees(self):
+		"""
+		>>> tree2brackets(next(dadegan.chunked_trees()))
+		'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده شد VP] .'
+		"""
