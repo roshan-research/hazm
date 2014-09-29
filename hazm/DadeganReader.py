@@ -30,14 +30,15 @@ class DadeganReader():
 		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 
 	def _sentences(self):
-		text = codecs.open(self._conll_file, encoding='utf8').read()
+		with codecs.open(self._conll_file, encoding='utf8') as conll_file:
+			text = conll_file.read()
 
-		# refine text
-		text = text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
+			# refine text
+			text = text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
 
-		for item in text.replace(' ', '_').split('\n\n'):
-			if item.strip():
-				yield item
+			for item in text.replace(' ', '_').split('\n\n'):
+				if item.strip():
+					yield item
 
 	def trees(self):
 		for sentence in self._sentences():

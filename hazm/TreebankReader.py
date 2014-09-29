@@ -50,9 +50,9 @@ class TreebankReader():
 		for root, dirs, files in os.walk(self._root):
 			for name in sorted(files):
 				try:
-					raw = codecs.open(os.path.join(root, name), encoding='utf8').read();
-					raw = re.sub(r'\n *', '', raw)
-					yield minidom.parseString(raw.encode('utf8'))
+					with codecs.open(os.path.join(root, name), encoding='utf8') as treebank_file:
+						raw = re.sub(r'\n *', '', treebank_file.read())
+						yield minidom.parseString(raw.encode('utf8'))
 				except Exception as e:
 					print('error in reading', name, e, file=sys.stderr)
 
