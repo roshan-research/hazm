@@ -3,6 +3,8 @@
 from __future__ import unicode_literals
 import codecs
 from nltk.parse import DependencyGraph
+from nltk.tree import Tree
+from .Chunker import tree2brackets
 
 
 def coarse_pos_e(tags):
@@ -58,6 +60,59 @@ class DadeganReader():
 		>>> next(dadegan.sents())
 		[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
 		"""
-
 		for tree in self.trees():
 			yield [(node['word'], node['mtag']) for node in tree.nodelist[1:]]
+
+	def chunked_trees(self):
+		"""
+		>>> tree2brackets(next(dadegan.chunked_trees()))
+		'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
+		"""
+		trees = self.trees()
+		for tree in trees:
+			chunks = []
+			nodelist = tree.nodelist
+			for i in range(1, len(nodelist)):
+				node = (nodelist[i]['word'], nodelist[i]['mtag'])
+				appended = False
+				if nodelist[i]['ctag'] in ['PREP']:
+					for j in nodelist[i]['deps']:
+						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
+							chunks[-1].append(node)
+							appended = True
+					if nodelist[i]['head'] == i - 1 and chunks[-1].label() != Tree and chunks[-1].label() == 'PP':
+						chunks[-1].append(node)
+						appended = True
+					if not appended:
+						chunks.append(Tree('PP', [node]))
+				elif nodelist[i]['ctag'] in ['PUNC']:
+					chunks.append(node)
+				elif nodelist[i]['ctag'] in ['N', 'PREM', 'ADJ', 'PR' ]:
+					for j in nodelist[i]['deps']:
+						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
+							chunks[-1].append(node)
+							appended = True
+					if nodelist[i]['head'] == i - 1 and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
+						chunks[-1].append(node)
+						appended = True
+					if not appended:
+						chunks.append(Tree('NP', [node]))
+				elif nodelist[i]['ctag'] in ['V']:
+					appended = False
+					for j in nodelist[i]['deps']:
+						if j == i - 1 and type(chunks[-1]) == Tree:
+							leaves = chunks.pop().leaves()
+							leaves.append(node)
+							chunks.append(Tree('VP', leaves))
+							appended = True
+					if not appended:
+						chunks.append(Tree('VP', [node]))
+			yield Tree('S', chunks)
+
+
+
+
+
+
+
+
