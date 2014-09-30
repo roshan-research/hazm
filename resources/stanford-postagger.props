@@ -1,6 +1,6 @@
                    model = persian.tagger
                     arch = left3words,naacl2003unknowns,wordshapes(-1,1)
-            wordFunction = edu.stanford.nlp.process.AmericanizeFunction
+            wordFunction =
          closedClassTags =
  closedClassTagThreshold = 40
  curWordMinFeatureThresh = 2
@@ -9,7 +9,7 @@
             tagSeparator = /
                 encoding = UTF-8
               iterations = 100
-                    lang = english
+                    lang = arabic
     learnClosedClassTags = false
         minFeatureThresh = 2
            openClassTags =
@@ -20,7 +20,7 @@ rareWordMinFeatureThresh = 10
             sigmaSquared = 0.0
                    regL1 = 0.75
                tagInside =
-                tokenize = true
+                tokenize = false
         tokenizerFactory =
         tokenizerOptions =
                  verbose = false
