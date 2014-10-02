@@ -17,7 +17,7 @@ modules = {
 	'lemmatizer': Lemmatizer(),
 	'tagger': POSTagger(),
 	'chunker': Chunker(),
-	'parser': DependencyParser(tagger=POSTagger())
+	'parser': DependencyParser(tagger=POSTagger(), lemmatizer=Lemmatizer())
 }
 
 
