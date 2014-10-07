@@ -19,7 +19,6 @@ def coarse_pos_e(tags):
 	map = {'N': 'N', 'V': 'V', 'ADJ': 'AJ', 'ADV': 'ADV', 'PR': 'PRO', 'PREM': 'DET', 'PREP': 'P', 'POSTP': 'POSTP', 'PRENUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': 'PUNC'}
 	return map.get(tags[0], '') + ('e' if 'EZ' in tags else '')
 
-
 class DadeganReader():
 	"""
 	interfaces [Persian Dependency Treebank](http://dadegan.ir/perdt/download)
@@ -75,7 +74,7 @@ class DadeganReader():
 			for i in range(1, len(nodelist)):
 				node = (nodelist[i]['word'], nodelist[i]['mtag'])
 				appended = False
-				if nodelist[i]['ctag'] in ['PREP']:
+				if nodelist[i]['ctag'] in ['PREP', 'POSTP']:
 					for j in nodelist[i]['deps']:
 						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
 							chunks[-1].append(node)
@@ -85,14 +84,28 @@ class DadeganReader():
 						appended = True
 					if not appended:
 						chunks.append(Tree('PP', [node]))
-				elif nodelist[i]['ctag'] in ['PUNC']:
+				elif nodelist[i]['ctag'] in ['PUNC', 'CONJ']:
 					chunks.append(node)
-				elif nodelist[i]['ctag'] in ['N', 'PREM', 'ADJ', 'PR' ]:
+				elif nodelist[i]['ctag'] in ['N', 'PREM', 'ADJ', 'PR', 'ADR' ]:
+					if nodelist[i]['rel'] == 'MOZ':
+						if type(chunks[-1]) == Tree:
+							j = i - len(chunks[-1].leaves())
+							chunks[-1].append(node)
+							while j > nodelist[i]['head']:
+								leaves = chunks.pop().leaves()
+								if type(chunks[-1]) == Tree:
+									for node in leaves:
+										chunks[-1].append(node)
+								else:
+									leaves.insert(0, chunks.pop())
+									chunks.append(Tree('NP', leaves))
+								j -= 1
+							continue
 					for j in nodelist[i]['deps']:
 						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
 							chunks[-1].append(node)
 							appended = True
-					if nodelist[i]['head'] == i - 1 and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
+					if nodelist[i]['head'] == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
 						chunks[-1].append(node)
 						appended = True
 					if not appended:
