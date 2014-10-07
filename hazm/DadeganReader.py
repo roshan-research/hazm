@@ -77,24 +77,40 @@ class DadeganReader():
 				n = node['address']
 				item = (node['word'], node['mtag'])
 				appended = False
-				if node['ctag'] in {'PREP'}:
+				if node['ctag'] in {'PREP', 'POSTP'}:
 					for d in node['deps']:
 						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
 							chunks[-1].append(item)
 							appended = True
-					if node['head'] == n - 1 and chunks[-1].label() != Tree and chunks[-1].label() == 'PP':
+					if node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
 						chunks[-1].append(item)
 						appended = True
 					if not appended:
 						chunks.append(Tree('PP', [item]))
-				elif node['ctag'] in {'PUNC'}:
+				elif node['ctag'] in {'PUNC', 'CONJ', 'SUBR', 'PART'}:
 					chunks.append(item)
-				elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR'}:
+				elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR', 'ADR', 'PRENUM', 'ADV', 'IDEN', 'POSNUM'}:
+					if node['rel'] == 'MOZ':
+						if type(chunks[-1]) == Tree:
+							j = n - len(chunks[-1].leaves())
+							chunks[-1].append(item)
+							while j > node['head']:
+								leaves = chunks.pop().leaves()
+								if len(chunks) < 1:
+									chunks.append(Tree('NP', leaves))
+								elif type(chunks[-1]) == Tree:
+									for l in leaves:
+										chunks[-1].append(l)
+								else:
+									leaves.insert(0, chunks.pop())
+									chunks.append(Tree('NP', leaves))
+								j -= 1
+							continue
 					for d in node['deps']:
 						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
 							chunks[-1].append(item)
 							appended = True
-					if node['head'] == n - 1 and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
+					if node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
 						chunks[-1].append(item)
 						appended = True
 					if not appended:
@@ -109,4 +125,9 @@ class DadeganReader():
 							appended = True
 					if not appended:
 						chunks.append(Tree('VP', [item]))
+				elif node['ctag'] in {'PSUS'}:
+					if node['rel'] == 'ADV':
+						chunks.append(Tree('ADVP', [item]))
+					else:
+						chunks.append(Tree('V', [item]))
 			yield Tree('S', chunks)
