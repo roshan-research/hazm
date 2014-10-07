@@ -45,14 +45,15 @@ class TreebankReader():
 		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 		self._join_clitics = join_clitics
 		self._join_verb_parts = join_verb_parts
+		self._tokenizer = WordTokenizer()
 
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
 			for name in sorted(files):
 				try:
-					raw = codecs.open(os.path.join(root, name), encoding='utf8').read();
-					raw = re.sub(r'\n *', '', raw)
-					yield minidom.parseString(raw.encode('utf8'))
+					with codecs.open(os.path.join(root, name), encoding='utf8') as treebank_file:
+						raw = re.sub(r'\n *', '', treebank_file.read())
+						yield minidom.parseString(raw.encode('utf8'))
 				except Exception as e:
 					print('error in reading', name, e, file=sys.stderr)
 
@@ -68,7 +69,6 @@ class TreebankReader():
 		  (PUNC ./PUNC))
 		"""
 
-		tokenizer = WordTokenizer()
 		def traverse(node):
 			def extract_tags(W):
 				pos = [W.getAttribute('lc') if W.getAttribute('lc') else None]
@@ -113,10 +113,10 @@ class TreebankReader():
 				clitic=tree[-1]
 				tree = Tree(tree.label(), [subtree for subtree in tree[0]])
 				clitic_join(tree, clitic)
-			if self._join_verb_parts and len(tree) > 1 and type(tree[1]) == Tree and type(tree[0]) == Tree and tree[0].label() == 'AUX' and tree[0][0][0] in tokenizer.before_verbs:
+			if self._join_verb_parts and len(tree) > 1 and type(tree[1]) == Tree and type(tree[0]) == Tree and tree[0].label() == 'AUX' and tree[0][0][0] in self._tokenizer.before_verbs:
 				tree[1][0] = (tree[0][0][0] + ' ' + tree[1][0][0], tree[1][0][1])
 				tree.remove(tree[0])
-			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in tokenizer.after_verbs and tree.leaves()[-2][0] in tokenizer.verbe :
+			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in self._tokenizer.after_verbs and tree.leaves()[-2][0] in self._tokenizer.verbe :
 				tree[1][0] = (tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
 				path = tree.leaf_treeposition(len(tree.leaves())-2)
 				removingtree = tree
@@ -124,7 +124,7 @@ class TreebankReader():
 					removingtree = removingtree[path[0]]
 					path = path[1:]
 				removingtree.remove(Tree(tree.pos()[-2][1],[tree.pos()[-2][0]]))
-			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in tokenizer.after_verbs and tree.leaves()[-2][0] in tokenizer.verbe :
+			if self._join_verb_parts and len(tree.leaves()) > 1 and tree.leaves()[-1][0] in self._tokenizer.after_verbs and tree.leaves()[-2][0] in self._tokenizer.verbe :
 				tree[1][0] = (tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
 				path = tree.leaf_treeposition(len(tree.leaves())-2)
 				removingtree = tree

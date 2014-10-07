@@ -2,10 +2,8 @@
 
 from __future__ import unicode_literals
 import os, codecs
-from .Normalizer import *
-from .WordTokenizer import *
-
-tokenizer = WordTokenizer()
+from .Normalizer import Normalizer
+from . import word_tokenizer
 
 
 def coarse_pos_e(tags):
@@ -33,7 +31,7 @@ def join_verb_parts(sentence):
 
 	result = [('', '')]
 	for word in reversed(sentence):
-		if word[0] in tokenizer.before_verbs or (result[-1][0] in tokenizer.after_verbs and word[0] in tokenizer.verbe):
+		if word[0] in word_tokenizer.before_verbs or (result[-1][0] in word_tokenizer.after_verbs and word[0] in word_tokenizer.verbe):
 			result[-1] = (word[0] +'_'+ result[-1][0], result[-1][1])
 		else:
 			result.append(word)
@@ -55,9 +53,10 @@ class PeykareReader():
 	def docs(self):
 		for root, dirs, files in os.walk(self._root):
 			for name in sorted(files):
-				text = codecs.open(os.path.join(root, name), encoding='windows-1256').read()
-				if text:
-					yield text
+				with codecs.open(os.path.join(root, name), encoding='windows-1256') as peykare_file:
+					text = peykare_file.read()
+					if text:
+						yield text
 
 	def _sentences(self):
 		for doc in self.docs():

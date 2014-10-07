@@ -14,7 +14,8 @@ class Lemmatizer():
 		self.stemmer = Stemmer()
 
 		if words_file:
-			self.words = set(map(lambda w: w.strip(), codecs.open(words_file, encoding='utf8')))
+			with codecs.open(words_file, encoding='utf8') as words_file:
+				self.words = set(map(lambda w: w.strip(), words_file))
 
 		if verbs_file:
 			tokenizer = WordTokenizer(verbs_file=verbs_file)

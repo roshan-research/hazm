@@ -19,6 +19,7 @@ def coarse_pos_e(tags):
 	map = {'N': 'N', 'V': 'V', 'ADJ': 'AJ', 'ADV': 'ADV', 'PR': 'PRO', 'PREM': 'DET', 'PREP': 'P', 'POSTP': 'POSTP', 'PRENUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': 'PUNC'}
 	return map.get(tags[0], '') + ('e' if 'EZ' in tags else '')
 
+
 class DadeganReader():
 	"""
 	interfaces [Persian Dependency Treebank](http://dadegan.ir/perdt/download)
@@ -29,14 +30,15 @@ class DadeganReader():
 		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 
 	def _sentences(self):
-		text = codecs.open(self._conll_file, encoding='utf8').read()
+		with codecs.open(self._conll_file, encoding='utf8') as conll_file:
+			text = conll_file.read()
 
-		# refine text
-		text = text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
+			# refine text
+			text = text.replace('‌‌','‌').replace('\t‌','\t').replace('‌\t','\t').replace('\t ','\t').replace(' \t','\t').replace('\r', '').replace('\u2029', '‌')
 
-		for item in text.replace(' ', '_').split('\n\n'):
-			if item.strip():
-				yield item
+			for item in text.replace(' ', '_').split('\n\n'):
+				if item.strip():
+					yield item
 
 	def trees(self):
 		for sentence in self._sentences():
@@ -59,6 +61,7 @@ class DadeganReader():
 		>>> next(dadegan.sents())
 		[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
 		"""
+
 		for tree in self.trees():
 			yield [(node['word'], node['mtag']) for node in tree.nodelist[1:]]
 
@@ -67,65 +70,43 @@ class DadeganReader():
 		>>> tree2brackets(next(dadegan.chunked_trees()))
 		'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
 		"""
-		trees = self.trees()
-		for tree in trees:
+
+		for tree in self.trees():
 			chunks = []
-			nodelist = tree.nodelist
-			for i in range(1, len(nodelist)):
-				node = (nodelist[i]['word'], nodelist[i]['mtag'])
+			for node in tree.nodelist[1:]:
+				n = node['address']
+				item = (node['word'], node['mtag'])
 				appended = False
-				if nodelist[i]['ctag'] in ['PREP', 'POSTP']:
-					for j in nodelist[i]['deps']:
-						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
-							chunks[-1].append(node)
+				if node['ctag'] in {'PREP'}:
+					for d in node['deps']:
+						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
+							chunks[-1].append(item)
 							appended = True
-					if nodelist[i]['head'] == i - 1 and chunks[-1].label() != Tree and chunks[-1].label() == 'PP':
-						chunks[-1].append(node)
+					if node['head'] == n - 1 and chunks[-1].label() != Tree and chunks[-1].label() == 'PP':
+						chunks[-1].append(item)
 						appended = True
 					if not appended:
-						chunks.append(Tree('PP', [node]))
-				elif nodelist[i]['ctag'] in ['PUNC', 'CONJ']:
-					chunks.append(node)
-				elif nodelist[i]['ctag'] in ['N', 'PREM', 'ADJ', 'PR', 'ADR' ]:
-					if nodelist[i]['rel'] == 'MOZ':
-						if type(chunks[-1]) == Tree:
-							j = i - len(chunks[-1].leaves())
-							chunks[-1].append(node)
-							while j > nodelist[i]['head']:
-								leaves = chunks.pop().leaves()
-								if type(chunks[-1]) == Tree:
-									for node in leaves:
-										chunks[-1].append(node)
-								else:
-									leaves.insert(0, chunks.pop())
-									chunks.append(Tree('NP', leaves))
-								j -= 1
-							continue
-					for j in nodelist[i]['deps']:
-						if j == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
-							chunks[-1].append(node)
+						chunks.append(Tree('PP', [item]))
+				elif node['ctag'] in {'PUNC'}:
+					chunks.append(item)
+				elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR'}:
+					for d in node['deps']:
+						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
+							chunks[-1].append(item)
 							appended = True
-					if nodelist[i]['head'] == i - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
-						chunks[-1].append(node)
+					if node['head'] == n - 1 and chunks[-1].label() != Tree and chunks[-1].label() != 'PP':
+						chunks[-1].append(item)
 						appended = True
 					if not appended:
-						chunks.append(Tree('NP', [node]))
-				elif nodelist[i]['ctag'] in ['V']:
+						chunks.append(Tree('NP', [item]))
+				elif node['ctag'] in {'V'}:
 					appended = False
-					for j in nodelist[i]['deps']:
-						if j == i - 1 and type(chunks[-1]) == Tree:
+					for d in node['deps']:
+						if d == n - 1 and type(chunks[-1]) == Tree:
 							leaves = chunks.pop().leaves()
-							leaves.append(node)
+							leaves.append(item)
 							chunks.append(Tree('VP', leaves))
 							appended = True
 					if not appended:
-						chunks.append(Tree('VP', [node]))
+						chunks.append(Tree('VP', [item]))
 			yield Tree('S', chunks)
-
-
-
-
-
-
-
-

@@ -29,9 +29,10 @@ class WordTokenizer(TokenizerI):
 				'نخواهم', 'نخواهی', 'نخواهد', 'نخواهیم', 'نخواهید', 'نخواهند'
 			])
 
-			self.verbs = list(reversed([verb.strip() for verb in codecs.open(verbs_file, encoding='utf8') if verb]))
-			self.bons = set([verb.split('#')[0] for verb in self.verbs])
-			self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
+			with codecs.open(verbs_file, encoding='utf8') as verbs_file:
+				self.verbs = list(reversed([verb.strip() for verb in verbs_file if verb]))
+				self.bons = set([verb.split('#')[0] for verb in self.verbs])
+				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
 		"""

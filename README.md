@@ -44,7 +44,7 @@ Python library for digesting Persian text.
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
 >>> from hazm import DependencyParser
->>> parser = DependencyParser(tagger=POSTagger())
+>>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
 
