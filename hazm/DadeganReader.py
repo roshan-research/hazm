@@ -16,8 +16,8 @@ def coarse_pos_e(tags):
 	'N'
 	"""
 
-	map = {'N': 'N', 'V': 'V', 'ADJ': 'AJ', 'ADV': 'ADV', 'PR': 'PRO', 'PREM': 'DET', 'PREP': 'P', 'POSTP': 'POSTP', 'PRENUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': 'PUNC'}
-	return map.get(tags[0], '') + ('e' if 'EZ' in tags else '')
+	map = {'N': 'N', 'V': 'V', 'ADJ': 'AJ', 'ADV': 'ADV', 'PR': 'PRO', 'PREM': 'DET', 'PREP': 'P', 'POSTP': 'POSTP', 'PRENUM': 'NUM', 'CONJ': 'CONJ', 'PUNC': 'PUNC', 'SUBR': 'CONJ'}
+	return map.get(tags[0], 'X') + ('e' if 'EZ' in tags else '')
 
 
 class DadeganReader():
@@ -79,23 +79,30 @@ class DadeganReader():
 				appended = False
 				if node['ctag'] in {'PREP', 'POSTP'}:
 					for d in node['deps']:
-						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
+						label = 'PP'
+						if node['ctag'] == 'POSTP':
+							label = 'POSTP'
+						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() == label:
 							chunks[-1].append(item)
 							appended = True
-					if node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and chunks[-1].label() == 'PP':
+					if node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and chunks[-1].label() == label:
 						chunks[-1].append(item)
 						appended = True
 					if not appended:
-						chunks.append(Tree('PP', [item]))
+						chunks.append(Tree(label, [item]))
 				elif node['ctag'] in {'PUNC', 'CONJ', 'SUBR', 'PART'}:
 					chunks.append(item)
-				elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR', 'ADR', 'PRENUM', 'ADV', 'IDEN', 'POSNUM'}:
+				elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR', 'ADR', 'PRENUM', 'IDEN', 'POSNUM'}:
 					if node['rel'] == 'MOZ':
 						if type(chunks[-1]) == Tree:
 							j = n - len(chunks[-1].leaves())
 							chunks[-1].append(item)
 							while j > node['head']:
 								leaves = chunks.pop().leaves()
+								if type(chunks[-1]) == Tree:
+									j -= len(chunks[-1].leaves())
+								else:
+									j -= 1
 								if len(chunks) < 1:
 									chunks.append(Tree('NP', leaves))
 								elif type(chunks[-1]) == Tree:
@@ -104,7 +111,6 @@ class DadeganReader():
 								else:
 									leaves.insert(0, chunks.pop())
 									chunks.append(Tree('NP', leaves))
-								j -= 1
 							continue
 					for d in node['deps']:
 						if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP':
@@ -130,4 +136,15 @@ class DadeganReader():
 						chunks.append(Tree('ADVP', [item]))
 					else:
 						chunks.append(Tree('V', [item]))
+				elif node['ctag'] in {'ADV'}:
+					appended = False
+					for d in node['deps']:
+						if d == n - 1 and type(chunks[-1]) == Tree:
+							leaves = chunks.pop().leaves()
+							leaves.append(item)
+							chunks.append(Tree('ADVP', leaves))
+							appended = True
+					if not appended:
+						chunks.append(Tree('ADVP', [item]))
+
 			yield Tree('S', chunks)
