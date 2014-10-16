@@ -4,6 +4,7 @@ from .SentenceTokenizer import SentenceTokenizer
 from .PeykareReader import PeykareReader
 from .BijankhanReader import BijankhanReader
 from .HamshahriReader import HamshahriReader
+from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
 from .Normalizer import Normalizer

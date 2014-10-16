@@ -9,6 +9,7 @@ modules = {
 	'bijankhan': BijankhanReader(),
 	'hamshahri': HamshahriReader(),
 	'dadegan': DadeganReader(),
+	'valency': VerbValencyReader(),
 	'treebank': TreebankReader(),
 	'sentence_tokenizer': SentenceTokenizer(),
 	'word_tokenizer': WordTokenizer(),
