@@ -1,7 +1,7 @@
 # coding: utf8
 
 from __future__ import unicode_literals
-import re, codecs
+import codecs
 from collections import namedtuple
 
 
@@ -18,8 +18,12 @@ class VerbValencyReader():
 		self._valency_file = valency_file
 
 	def verbs(self):
+		with codecs.open(self._valency_file, encoding='utf-8') as valency_file:
+			for line in valency_file:
+				if 'بن ماضی' in line:
+					continue
 
-		for line in codecs.open(self._valency_file, encoding='utf-8'):
-			parts = re.split(' +', line.strip())
-			if len(parts) == 6:
-				yield Verb(*parts)
+				line = line.strip().replace('-\t', '\t')
+				parts = line.split('\t')
+				if len(parts) == 6:
+					yield Verb(*parts)
