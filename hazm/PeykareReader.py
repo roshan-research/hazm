@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 import os, codecs
 from .Normalizer import Normalizer
-from . import word_tokenizer
+from .WordTokenizer import WordTokenizer
 
 
 def coarse_pos_e(tags):
@@ -29,9 +29,13 @@ def join_verb_parts(sentence):
 	[('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 	"""
 
+	if not hasattr(join_verb_parts, 'tokenizer'):
+		join_verb_parts.tokenizer = WordTokenizer()
+	before_verbs, after_verbs, verbe = join_verb_parts.tokenizer.before_verbs, join_verb_parts.tokenizer.after_verbs, join_verb_parts.tokenizer.verbe
+
 	result = [('', '')]
 	for word in reversed(sentence):
-		if word[0] in word_tokenizer.before_verbs or (result[-1][0] in word_tokenizer.after_verbs and word[0] in word_tokenizer.verbe):
+		if word[0] in before_verbs or (result[-1][0] in after_verbs and word[0] in verbe):
 			result[-1] = (word[0] +'_'+ result[-1][0], result[-1][1])
 		else:
 			result.append(word)
