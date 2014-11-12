@@ -39,6 +39,9 @@ class Tokenizer(TokenizerI):
 	]
 
 	def __init__(self):
+		for delim in self.delimiters:
+			assert len(delim) == 1
+		
 		self.pattern = re.compile(escapeSeq(self.delimiters))
 
 	def tokenize(self, text):
