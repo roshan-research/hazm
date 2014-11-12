@@ -18,9 +18,7 @@ class SentenceTokenizer(Tokenizer):
 	def tokenize(self, text):
 		## overriding from parent class just to add the doc
 		"""
-		returns a generator, you can loop over it, or just convert it to list
-		
-		>>> list(sentence_tokenizer.tokenize('جدا کردن ساده است. تقریبا البته!'))
+		>>> sentence_tokenizer.tokenize('جدا کردن ساده است. تقریبا البته!')
 		['جدا کردن ساده است.', 'تقریبا البته!']
 		"""
 		
