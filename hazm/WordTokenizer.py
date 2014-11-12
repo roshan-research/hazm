@@ -3,13 +3,21 @@
 from __future__ import unicode_literals
 import re, codecs
 from .utils import default_verbs
-from nltk.tokenize.api import TokenizerI
 
+from .Tokenizer import Tokenizer
+from .StatementTokenizer import StatementTokenizer
 
-class WordTokenizer(TokenizerI):
+class WordTokenizer(Tokenizer):
+	delimiters = [
+		' ',
+		'|',
+		'-',
+		'٬',
+	] + StatementTokenizer.delimiters + Tokenizer.digits
+
 	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
+		Tokenizer.__init__(self)
 		self._join_verb_parts = join_verb_parts
-		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
 		if join_verb_parts:
 			self.after_verbs = set([
@@ -40,8 +48,7 @@ class WordTokenizer(TokenizerI):
 		['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 		"""
 
-		text = self.pattern.sub(r' \1 ', text)
-		tokens = [word for word in text.split(' ') if word]
+		tokens = Tokenizer.tokenize(self, text)
 		if self._join_verb_parts:
 			tokens = self.join_verb_parts(tokens)
 		return tokens
