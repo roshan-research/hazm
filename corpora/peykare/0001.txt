@@ -1,29 +1,29 @@
-W * N N,COM,SING,TIME,YA ѕн—“г«дн
-W * P P «“
-W * N N,COM,SING,EZ —«е «дѕ«“н
-W * N N,COM,SING,EZ ‘»яе н
-W * N N,COM,SING,EZ ќ»—
-W * N N,PR,SING «бћ“н—е
-W * V V,PRES,NEG,3 дгн Р–—ѕ
-W * PUNC PUNC °
-W * CONJ CONJ «г«
-W * DET DET,DEMO «нд
-W * N N,COM,SING,EZ ‘»яе н
-W * AJ AJ,SIM,EZ ќ»—н
-W * N N,PR,SING Џ—»н
-W * ADV ADV,INTSF,SIM »”н«—
-W * ADV ADV,GENR,SIM ”—нЏ
-W * V V,PASTP  ж«д” е
-W * P P ѕ—
-W * N N,COM,SING,EZ гн«д
-W * N N,COM,PL,EZ ‘»яе е«н
-W * AJ AJ,SIM,EZ Џўнг
-W * AJ AJ,SIM ќ»—н
-W * CONJ CONJ ж
-W * N N,COM,PL,EZ »дР«е е«н
-W * AJ AJ,SIM,EZ Ндѕ—”«де «н
-W * N N,COM,SING ѕдн«
-W * N N,COM,SING,YA ќжѕн
-W * N N,COM,SING д‘«д
-W * V V,SUB,POS,3 ѕеѕ
+W * N N,COM,SING,TIME,YA ЎѓўКЎ±Ў≤ўЕЎІўЖўК
+W * P P ЎІЎ≤
+W * N N,COM,SING,EZ Ў±ЎІўЗ ЎІўЖЎѓЎІЎ≤ўК
+W * N N,COM,SING,EZ ЎіЎ®ўГўЗ ўК
+W * N N,COM,SING,EZ ЎЃЎ®Ў±
+W * N N,PR,SING ЎІўДЎђЎ≤ўКЎ±ўЗ
+W * V V,PRES,NEG,3 ўЖўЕўК ЏѓЎ∞Ў±Ўѓ
+W * PUNC PUNC ЎМ
+W * CONJ CONJ ЎІўЕЎІ
+W * DET DET,DEMO ЎІўКўЖ
+W * N N,COM,SING,EZ ЎіЎ®ўГўЗ ўК
+W * AJ AJ,SIM,EZ ЎЃЎ®Ў±ўК
+W * N N,PR,SING ЎєЎ±Ў®ўК
+W * ADV ADV,INTSF,SIM Ў®Ў≥ўКЎІЎ±
+W * ADV ADV,GENR,SIM Ў≥Ў±ўКЎє
+W * V V,PASTP Ў™ўИЎІўЖЎ≥Ў™ўЗ
+W * P P ЎѓЎ±
+W * N N,COM,SING,EZ ўЕўКЎІўЖ
+W * N N,COM,PL,EZ ЎіЎ®ўГўЗ ўЗЎІўК
+W * AJ AJ,SIM,EZ ЎєЎЄўКўЕ
+W * AJ AJ,SIM ЎЃЎ®Ў±ўК
+W * CONJ CONJ ўИ
+W * N N,COM,PL,EZ Ў®ўЖЏѓЎІўЗ ўЗЎІўК
+W * AJ AJ,SIM,EZ ЏЖўЖЎѓЎ±Ў≥ЎІўЖўЗ ЎІўК
+W * N N,COM,SING ЎѓўЖўКЎІ
+W * N N,COM,SING,YA ЎЃўИЎѓўК
+W * N N,COM,SING ўЖЎіЎІўЖ
+W * V V,SUB,POS,3 ЎѓўЗЎѓ
 W * PUNC PUNC .
