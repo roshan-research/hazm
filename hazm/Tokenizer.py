@@ -51,6 +51,24 @@ class Tokenizer(TokenizerI):
 			if token:
 				tokens.append(token)
 		return tokens
+	def trainInit(self):
+		from collections import Counter
+		self.delimUsage = Counter()
+	def trainUpdate(self, text):
+		for delim in self.delimiters:
+			self.delimUsage[delim] += text.count(delim)
+	def trainFinish(self):
+		data = sorted([
+			(count, delim) for delim, count in self.delimUsage.items()
+		], reverse=True)
+		del self.delimUsage
+		return data
+
+
+
+
+
+
 
 
 

@@ -6,13 +6,15 @@ import re
 from .Tokenizer import Tokenizer
 
 class SentenceTokenizer(Tokenizer):
+    ## frequency order of delimiters is pretty much the same
+    ## in all kinds of persian text, which is:
 	delimiters = [
-		'!',
+		'\n',
 		'.',
+		'!',
 		'?',
 		'⸮',
 		'؟',
-		'\n',
 	]
 
 	def tokenize(self, text):
