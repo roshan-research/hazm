@@ -43,14 +43,15 @@ class Tokenizer(TokenizerI):
 			assert len(delim) == 1
 		
 		self.pattern = re.compile(escapeSeq(self.delimiters))
-
-	def tokenize(self, text):
+	def splitPattern(self, pattern, text):
 		tokens = []
-		for token in self.pattern.split(text):
+		for token in pattern.split(text):
 			token = token.strip()
 			if token:
 				tokens.append(token)
 		return tokens
+	def tokenize(self, text):
+		return self.splitPattern(self, pattern, text)
 	def trainInit(self):
 		from collections import Counter
 		self.delimUsage = Counter()
