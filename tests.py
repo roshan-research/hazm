@@ -50,6 +50,11 @@ if __name__ == '__main__':
 	if not utils.PY2 and all_modules:
 		suites.append(doctest.DocFileSuite('README.md'))
 
+	failure = False
 	runner = unittest.TextTestRunner(verbosity=2)
 	for suite in suites:
-		runner.run(suite)
+		if not runner.run(suite).wasSuccessful():
+			failure = True
+
+	if failure:
+		exit(1)
