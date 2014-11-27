@@ -40,7 +40,7 @@ class WordTokenizer(TokenizerI):
 		['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 		"""
 
-		text = self.pattern.sub(r' \1 ', text)
+		text = self.pattern.sub(r' \1 ', text.replace('\n', ' '))
 		tokens = [word for word in text.split(' ') if word]
 		if self._join_verb_parts:
 			tokens = self.join_verb_parts(tokens)
