@@ -97,12 +97,24 @@ class DadeganReader():
                     if not appended:
                         chunks.append(Tree(label, [item]))
                 elif node['ctag'] in {'PUNC', 'CONJ', 'SUBR', 'PART'}:
-                    chunks.append(item)
+                    if item[0] in {"'", '"', '(', ')', '{', '}', '[', ']', '-', '#', '«', '»'} and len(chunks) > 0 and type(chunks[-1]) == Tree:
+                        for l in chunks[-1].leaves():
+                            if l[1] == item[1]:
+                                chunks[-1].append(item)
+                                appended = True
+                                break
+                    if appended is not True:
+                        chunks.append(item)
                 elif node['ctag'] in {'N', 'PREM', 'ADJ', 'PR', 'ADR', 'PRENUM', 'IDEN', 'POSNUM', 'SADV'}:
                     if node['rel'] in {'MOZ', 'NPOSTMOD'}:
-                        if len(chunks) > 0 and type(chunks[-1]) == Tree:
-                            j = n - len(chunks[-1].leaves())
-                            chunks[-1].append(item)
+                        if len(chunks) > 0:
+                            if type(chunks[-1]) == Tree:
+                                j = n - len(chunks[-1].leaves())
+                                chunks[-1].append(item)
+                            else:
+                                j = n - 1
+                                treeNode = Tree('NP', [chunks.pop(), item])
+                                chunks.append(treeNode)
                             while j > node['head']:
                                 leaves = chunks.pop().leaves()
                                 if len(chunks) < 1:
@@ -131,11 +143,13 @@ class DadeganReader():
                                     j -= 1
                             chunks.append(Tree('NP', leaves))
                             appended = True
-                    elif node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and not chunks[-1].label() == 'PP':
+                    elif node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and not chunks[
+                        -1].label() == 'PP':
                         chunks[-1].append(item)
                         appended = True
                     for d in node['deps']:
-                        if d == n - 1 and type(chunks[-1]) == Tree and chunks[-1].label() != 'PP' and appended is not True:
+                        if d == n - 1 and type(chunks[-1]) == Tree and chunks[
+                            -1].label() != 'PP' and appended is not True:
                             leaves = chunks.pop().leaves()
                             leaves.append(item)
                             chunks.append(Tree('NP', leaves))
@@ -166,21 +180,19 @@ class DadeganReader():
                             leaves.append(item)
                             chunks.append(Tree('VP', leaves))
                             appended = True
-                        """
-						elif tree.nodelist[d]['rel'] in {'VPRT', 'NVE'}:
-							vp_nodes = [item]
-							i = n - d
-							while i > 0:
-								if type(chunks[-1]) == Tree:
-									leaves = chunks.pop().leaves()
-									i -= len(leaves)
-									vp_nodes = leaves + vp_nodes
-								else:
-									i -= 1
-									vp_nodes.insert(0, chunks.pop())
-							chunks.append(Tree('VP', vp_nodes))
-							appended = True
-						"""
+                        elif tree.nodelist[d]['rel'] in {'VPRT', 'NVE'}:
+                            vp_nodes = [item]
+                            i = n - d
+                            while i > 0:
+                                if type(chunks[-1]) == Tree:
+                                    leaves = chunks.pop().leaves()
+                                    i -= len(leaves)
+                                    vp_nodes = leaves + vp_nodes
+                                else:
+                                    i -= 1
+                                    vp_nodes.insert(0, chunks.pop())
+                            chunks.append(Tree('VP', vp_nodes))
+                            appended = True
                     if not appended:
                         chunks.append(Tree('VP', [item]))
                 elif node['ctag'] in {'PSUS'}:
