@@ -156,6 +156,6 @@ p {
 
 /* demo */
 
-div.demo {
+div.demo, #tag, #parse {
 	display: none;
 }

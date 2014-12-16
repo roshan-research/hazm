@@ -25,7 +25,10 @@
 		<h3>متن ورودی</h3>
 		<textarea class="form-control" style="min-height: 80px">هربار وقتي از سفري به ايران بر مي گردم ، دوست دارم سر فرو بيافکنم و برخاک سرزمينم بوسه اي بيافشانم. اين اولين بار بود که چنين حسي نداشتم. برعکس ، پاره اي از تنم را جا گذاشته بودم پشت خطوط مرزي ، خطوط بي راه و بي روح مرزي.</textarea>
 		<div class="controls">
-			<button class="btn btn-default">پردازش</button><span class="loading"></span>
+			<button id="process" class="btn btn-primary">پردازش</button>
+			<button id="tag" class="btn btn-success">تحلیل صرفی</button>
+			<button id="parse" class="btn btn-danger">تجزیه نحوی</button>
+			<span class="loading"></span>
 		</div>
 	</div>
 	<div class="demo" id="normalized">
@@ -60,40 +63,28 @@
 <script type="text/javascript">
 	var server = 'https://hazm-nournia.rhcloud.com/api';
 
-	var normalize = function(text) {
-		$.post(server + '/normalize', {'text': text})
+	var normalize = function(data) {
+		$.post(server + '/normalize', data)
 			.done(function(normalized_text) {
 				$('#normalized').show().find('div').text(normalized_text);
-				tokenize(normalized_text);
+				tokenize({'normalized_text': normalized_text});
 			})
 	};
-	var tokenize = function(normalized_text) {
-		$.post(server + '/tokenize', {'normalized_text': normalized_text})
+	var tokenize = function(data) {
+		$.post(server + '/tokenize', data)
 			.done(function(tokenized_text) {
-				tag(tokenized_text);
+				lemmatize({'tokenized_text': tokenized_text})
+				$('#tag').attr('tokenized_text', tokenized_text).show();
 
 				sentences = $.parseJSON(tokenized_text);
 				$('#tokenized').show().find('div').empty();
 				for (s in sentences)
 					$('#tokenized div').append('<li>'+ sentences[s].join(' ') +'</li>');
-			});
+			})
+			.always(hideLoading);
 	};
-	var tag = function(tokenized_text) {
-		$.post(server + '/tag', {'tokenized_text': tokenized_text})
-			.done(function(tagged_text) {
-				lemmatize(tagged_text);
-				parse(tagged_text);
-
-				sentences = $.parseJSON(tagged_text);
-				$('#tagged').show().find('div').empty();
-				for (s in sentences) {
-					sentence = $.map(sentences[s], function(word) { return word.join('/'); });
-					$('#tagged div').append('<li>'+ sentence.join(' ') +'</li>');
-				}
-			});
-	};
-	var lemmatize = function(tagged_text) {
-		$.post(server + '/lemmatize', {'tagged_text': tagged_text})
+	var lemmatize = function(data) {
+		$.post(server + '/lemmatize', data)
 			.done(function(lemmatized_text) {
 				sentences = $.parseJSON(lemmatized_text);
 				$('#lemmatized').show().find('div').empty();
@@ -101,9 +92,27 @@
 					$('#lemmatized div').append('<li>'+ sentences[s].join(' ') +'</li>');
 			});
 	};
-	var parse = function(tagged_text) {
-		$.post(server + '/parse', {'tagged_text': tagged_text})
+	var tag = function(data) {
+		$.post(server + '/tag', data)
+			.done(function(tagged_text) {
+				lemmatize({'tagged_text': tagged_text});
+				$('#tag').hide();
+				$('#parse').attr('tagged_text', tagged_text).show();
+
+				sentences = $.parseJSON(tagged_text);
+				$('#tagged').show().find('div').empty();
+				for (s in sentences) {
+					sentence = $.map(sentences[s], function(word) { return word.join('/'); });
+					$('#tagged div').append('<li>'+ sentence.join(' ') +'</li>');
+				}
+			})
+			.always(hideLoading);
+	};
+	var parse = function(data) {
+		$.post(server + '/parse', data)
 			.done(function(parsed_text) {
+				$('#parse').hide();
+
 				sentences = $.parseJSON(parsed_text);
 				div = $('#parsed > div'); div.empty();
 				for (s in sentences) {
@@ -114,20 +123,31 @@
 				}
 				$('#parsed').show();
 			})
-			.always(function() {
-				$('#query .btn').removeAttr('disabled');
-				$('#query .loading').hide();
-			});
+			.always(hideLoading);
 	};
 
-	$(function () {
-		$('#query .btn').click(function() {
-			normalize($('#query textarea').val());
-			$('.demo').hide();
-			$('#query .loading').show();
-			$('#query .btn').attr('disabled','disabled');
-		});
-	})
+	var hideLoading = function() {
+		$('#query .btn').removeAttr('disabled');
+		$('#query .loading').hide();
+	}
+	var showLoading = function() {
+		$('#query .loading').show();
+		$('#query .btn').attr('disabled','disabled');
+	}
+
+	$('#process').click(function() {
+		$('.demo, #tag, #parse').hide();
+		normalize({'text': $('#query textarea').val()});
+		showLoading();
+	});
+	$('#tag').click(function() {
+		tag({'tokenized_text': $(this).attr('tokenized_text')});
+		showLoading();
+	});
+	$('#parse').click(function() {
+		parse({'tagged_text': $(this).attr('tagged_text')});
+		showLoading();
+	});
 </script>
 
 <script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" "); for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]); mixpanel.init("a0573846705a6e929c17adf747ee8955");</script>
