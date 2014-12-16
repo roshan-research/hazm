@@ -2,10 +2,10 @@
 from distutils.core import setup
 
 setup(name='hazm',
-	version='0.3',
+	version='0.4',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
-	author_email='alireza.nournia@gmail.com',
+	author_email='az.nourian@gmail.com',
 	url='http://www.sobhe.ir/hazm/',
 	packages=['hazm'],
 	package_data={'hazm': ['data/*.dat']},
