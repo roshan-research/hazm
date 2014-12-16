@@ -174,7 +174,7 @@ class DadeganReader():
 				elif node['ctag'] in {'V'}:
 					appended = False
 					for d in node['deps']:
-						if d == n - 1 Convert and type(chunks[-1]) == Tree and tree.nodelist[d]['rel'] in {'NVE', 'ENC'}:
+						if d == n - 1 and type(chunks[-1]) == Tree and tree.nodelist[d]['rel'] in {'NVE', 'ENC'}:
 							leaves = chunks.pop().leaves()
 							leaves.append(item)
 							chunks.append(Tree('VP', leaves))
