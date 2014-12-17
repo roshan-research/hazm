@@ -130,7 +130,7 @@ class DadeganReader():
 							continue
 					elif node['rel'] == 'POSDEP' and tree.nodelist[node['head']]['rel'] in {'NCONJ', 'AJCONJ'}:
 						conj = tree.nodelist[node['head']]
-						if tree.nodelist[conj['head']]['rel'] in {'MOZ', 'NPOSTMOD'}:
+						if tree.nodelist[conj['head']]['rel'] in {'MOZ', 'NPOSTMOD', 'AJCONJ'}:
 							leaves = [item]
 							j = n - 1
 							while j >= conj['head']:
@@ -145,6 +145,36 @@ class DadeganReader():
 					elif node['head'] == n - 1 and len(chunks) > 0 and type(chunks[-1]) == Tree and not chunks[
 						-1].label() == 'PP':
 						chunks[-1].append(item)
+						appended = True
+					elif node['rel'] == 'AJCONJ' and tree.nodelist[node['head']]['rel'] in {'NPOSTMOD', 'AJCONJ'}:
+						np_nodes = [item]
+						label = 'NP'
+						i = n - node['head']
+						while i > 0:
+							if type(chunks[-1]) == Tree:
+								label = chunks[-1].label()
+								leaves = chunks.pop().leaves()
+								i -= len(leaves)
+								np_nodes = leaves + np_nodes
+							else:
+								i -= 1
+								np_nodes.insert(0, chunks.pop())
+						chunks.append(Tree(label, np_nodes))
+						appended = True
+					elif node['ctag'] == 'ADJ' and node['rel'] == 'POSDEP' and tree.nodelist[node['head']]['ctag'] != 'CONJ':
+						np_nodes = [item]
+						i = n - node['head']
+						while i > 0:
+							label = 'ADJP'
+							if type(chunks[-1]) == Tree:
+								label = chunks[-1].label()
+								leaves = chunks.pop().leaves()
+								i -= len(leaves)
+								np_nodes = leaves + np_nodes
+							else:
+								i -= 1
+								np_nodes.insert(0, chunks.pop())
+						chunks.append(Tree(label, np_nodes))
 						appended = True
 					for d in node['deps']:
 						if d == n - 1 and type(chunks[-1]) == Tree and chunks[
@@ -170,6 +200,8 @@ class DadeganReader():
 						label = 'NP'
 						if node['ctag'] == 'ADJ':
 							label = 'ADJP'
+						elif node['rel'] == 'ADV':
+							label = 'ADVP'
 						chunks.append(Tree(label, [item]))
 				elif node['ctag'] in {'V'}:
 					appended = False
