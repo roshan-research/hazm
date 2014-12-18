@@ -130,7 +130,7 @@ class DadeganReader():
 							continue
 					elif node['rel'] == 'POSDEP' and tree.nodelist[node['head']]['rel'] in {'NCONJ', 'AJCONJ'}:
 						conj = tree.nodelist[node['head']]
-						if tree.nodelist[conj['head']]['rel'] in {'MOZ', 'NPOSTMOD', 'AJCONJ'}:
+						if tree.nodelist[conj['head']]['rel'] in {'MOZ', 'NPOSTMOD', 'AJCONJ', 'POSDEP'}:
 							label = 'NP'
 							leaves = [item]
 							j = n - 1
