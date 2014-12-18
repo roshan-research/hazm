@@ -77,8 +77,6 @@ class DadeganReader():
 
 		for tree in self.trees():
 			chunks = []
-			if tree.nodelist[1]['word'] == u'دستگاه':
-				print 'hi'
 			for node in tree.nodelist[1:]:
 				n = node['address']
 				item = (node['word'], node['mtag'])
