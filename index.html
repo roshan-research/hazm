@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<title>هضم</title>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://sobhe.ap01.aws.af.cm/css/Fonts.css">
 	<link rel="stylesheet" href="stylesheets/pygment_trac.css">
 	<link rel="stylesheet" href="stylesheets/main.css">
 </head>
@@ -14,7 +13,7 @@
 		<h1>هضم</h1>
 		<p>برای پردازش زبان فارسی در پایتون</p>
 		<div class="menu">
-			<a href="http://www.ommidvar.ir/hazm" onclick="mixpanel.track('Donate Link')"><span class="glyphicon glyphicon-tree-deciduous"></span> حمایت از پروژه</a>
+			<a id="ommidvar-donate" href="#"><span class="glyphicon glyphicon-tree-deciduous"></span> حمایت از پروژه</a>
 			<a href="http://www.sobhe.ir/hazm/demo/"><span class="glyphicon glyphicon-certificate"></span> نمایش</a>
 			<a href="https://github.com/sobhe/hazm"><span class="glyphicon glyphicon-send"></span> کدها</a>
 			<a href="https://github.com/sobhe/hazm/archive/master.zip"><span class="glyphicon glyphicon-download"></span> دریافت</a>
@@ -128,6 +127,7 @@
 <link rel="stylesheet" href="http://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen" />
 <script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
 <script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 	data = "1\tزنگ\u200cها\t_\tN\tN\t_\t6\tSBJ\t_\t_\n2\tبرای\t_\tPREP\tPREP\t_\t6\tADV\t_\t_\n3\tکه\t_\tCONJ\tCONJ\t_\t2\tPOSDEP\t_\t_\n4\tبه\t_\tPREP\tPREP\t_\t6\tVPP\t_\t_\n5\tصدا\t_\tN\tN\t_\t4\tPOSDEP\t_\t_\n6\tدرمی\u200cآید\t_\tV\tV\t_\t0\tROOT\t_\t_\n7\t؟\t_\tPUNC\tPUNC\t_\t6\tPUNC\t_\t_\n";
 	drawTree('#tree svg', data);
@@ -135,7 +135,13 @@
 
 <script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" "); for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]); mixpanel.init("a0573846705a6e929c17adf747ee8955");</script>
 <script type="text/javascript">
-	mixpanel.track('Main Page');
+	$('#ommidvar-donate').click(function() {
+		mixpanel.track('Donate Link');
+	});
+	mixpanel.track('Demo Page');
 </script>
+
+<link rel="stylesheet" href="http://ommidvar.ir/static/css/donate.css">
+<script type="text/javascript" src="http://ommidvar.ir/projects/16/donate.js"></script>
 </body>
 </html>

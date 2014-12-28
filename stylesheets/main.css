@@ -174,3 +174,7 @@ p {
 div.demo, #tag, #parse {
 	display: none;
 }
+
+.amount {
+	font-family: BMitra;
+}
