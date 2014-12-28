@@ -1,3 +1,18 @@
+@font-face {
+	font-family: IRMitra;
+	font-weight: normal;
+	src: url('../fonts/IRMitra.woff') format('woff');
+}
+@font-face {
+	font-family: IRMitra;
+	font-weight: bold;
+	src: url('../fonts/IRMitraBd.woff') format('woff');
+}
+@font-face {
+  font-family: BMitra;
+  font-weight: normal;
+  src: url('../fonts/BMitra.woff') format('woff');
+}
 
 .container {
 	max-width: 670px;
@@ -5,7 +20,7 @@
 
 body {
 	direction: rtl;
-	font-family: BMitra, ENassim, Arial;
+	font-family: IRMitra, Arial;
 	color: #666;
 	font-size: 18px;
 	font-weight: 300;
@@ -30,7 +45,7 @@ code {
 
 h1, h2, h3 {
 	color: #333;
-	font-family: BMitra;
+	font-family: IRMitra;
 	font-weight: bold;
 }
 h2 {
