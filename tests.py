@@ -16,7 +16,7 @@ modules = {
 	'normalizer': Normalizer,
 	'stemmer': Stemmer,
 	'lemmatizer': Lemmatizer,
-	'tagger': POSTagger,
+	'tagger': SequenceTagger,
 	'chunker': Chunker,
 	'parser': DependencyParser
 }
