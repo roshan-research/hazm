@@ -12,9 +12,10 @@ install:
   - wget http://dl.dropboxusercontent.com/u/90405495/resources.zip
   - unzip resources.zip -d resources
 
-notifications:
-  email: false
-
 env: JAVAHOME=/usr/bin/java
 
 script: python tests.py
+
+sudo: false
+notifications:
+  email: false
