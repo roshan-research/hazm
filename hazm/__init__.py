@@ -10,6 +10,7 @@ from .TreebankReader import TreebankReader
 from .Normalizer import Normalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
+from .SequenceTagger import SequenceTagger
 from .POSTagger import POSTagger
 from .Chunker import Chunker
 from .DependencyParser import DependencyParser

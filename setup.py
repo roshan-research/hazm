@@ -18,5 +18,5 @@ setup(name='hazm',
 		'Programming Language :: Python :: 3.4',
 		'License :: OSI Approved :: MIT License',
 	],
-	install_requires=['nltk>=3.0.0']
+	install_requires=['nltk>=3.0.0', 'libwapiti>=0.2.1']
 )
