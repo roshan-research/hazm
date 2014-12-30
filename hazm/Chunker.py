@@ -6,8 +6,9 @@ from nltk.chunk import RegexpParser, tree2conlltags
 
 class Chunker(RegexpParser):
 	"""
-		>>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUM'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
-		'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
+	>>> chunker = Chunker()
+	>>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUM'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+	'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
 	"""
 
 	def __init__(self):
