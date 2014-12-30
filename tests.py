@@ -5,20 +5,20 @@ import sys, inspect, doctest, unittest
 from hazm import *
 
 modules = {
-	'peykare': PeykareReader(),
-	'bijankhan': BijankhanReader(),
-	'hamshahri': HamshahriReader(),
-	'dadegan': DadeganReader(),
-	'valency': VerbValencyReader(),
-	'treebank': TreebankReader(),
-	'sentence_tokenizer': SentenceTokenizer(),
-	'word_tokenizer': WordTokenizer(),
-	'normalizer': Normalizer(),
-	'stemmer': Stemmer(),
-	'lemmatizer': Lemmatizer(),
-	'tagger': POSTagger(),
-	'chunker': Chunker(),
-	'parser': DependencyParser(tagger=POSTagger(), lemmatizer=Lemmatizer())
+	'peykare': PeykareReader,
+	'bijankhan': BijankhanReader,
+	'hamshahri': HamshahriReader,
+	'dadegan': DadeganReader,
+	'valency': VerbValencyReader,
+	'treebank': TreebankReader,
+	'sentence_tokenizer': SentenceTokenizer,
+	'word_tokenizer': WordTokenizer,
+	'normalizer': Normalizer,
+	'stemmer': Stemmer,
+	'lemmatizer': Lemmatizer,
+	'tagger': POSTagger,
+	'chunker': Chunker,
+	'parser': DependencyParser
 }
 
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	checker = UnicodeOutputChecker() if utils.PY2 else None
 	for name, object in modules.items():
 		if all_modules or name in sys.argv:
-			suites.append(doctest.DocTestSuite(inspect.getmodule(object), extraglobs={name: object}, checker=checker))
+			suites.append(doctest.DocTestSuite(inspect.getmodule(object), checker=checker))
 
 	if not utils.PY2 and all_modules:
 		suites.append(doctest.DocFileSuite('README.md'))

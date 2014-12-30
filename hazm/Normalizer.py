@@ -52,6 +52,7 @@ class Normalizer():
 
 	def character_refinement(self, text):
 		"""
+		>>> normalizer = Normalizer()
 		>>> normalizer.character_refinement('اصلاح كاف و ياي عربي')
 		'اصلاح کاف و یای عربی'
 
@@ -69,6 +70,7 @@ class Normalizer():
 
 	def punctuation_spacing(self, text):
 		"""
+		>>> normalizer = Normalizer()
 		>>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
 		'اصلاح (پرانتزها) در متن.'
 		"""
@@ -80,6 +82,7 @@ class Normalizer():
 
 	def affix_spacing(self, text):
 		"""
+		>>> normalizer = Normalizer()
 		>>> normalizer.affix_spacing('خانه ی پدری')
 		'خانه‌ی پدری'
 

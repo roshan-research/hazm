@@ -7,17 +7,19 @@ from nltk.parse.malt import MaltParser
 
 
 class DependencyParser(MaltParser):
+	"""
+	>>> from hazm import POSTagger, Lemmatizer
+	>>> parser = DependencyParser(tagger=POSTagger(), lemmatizer=Lemmatizer())
+	>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
+	'(رفته_بودم من (به مدرسه) .)'
+	"""
+
 	def __init__(self, tagger, lemmatizer, model_file='langModel.mco', working_dir='resources'):
 		os.environ['MALT_PARSER'] = working_dir
 		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
 	def tagged_parse_sents(self, sentences, verbose=False):
-		"""
-		>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
-		'(رفته_بودم من (به مدرسه) .)'
-		"""
-
 		input_file = tempfile.NamedTemporaryFile(prefix='malt_input.conll', dir=self.working_dir, delete=False)
 		output_file = tempfile.NamedTemporaryFile(prefix='malt_output.conll', dir=self.working_dir, delete=False)
 

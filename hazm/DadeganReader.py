@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import codecs
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
-from .Chunker import tree2brackets
 
 
 def coarse_pos_e(tags):
@@ -23,6 +22,14 @@ def coarse_pos_e(tags):
 class DadeganReader():
 	"""
 	interfaces [Persian Dependency Treebank](http://dadegan.ir/perdt/download)
+
+	>>> dadegan = DadeganReader()
+	>>> next(dadegan.sents())
+	[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
+
+	>>> from hazm.Chunker import tree2brackets
+	>>> tree2brackets(next(dadegan.chunked_trees()))
+	'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
 	"""
 
 	def __init__(self, conll_file='corpora/dadegan.conll', pos_map=coarse_pos_e):
@@ -61,20 +68,10 @@ class DadeganReader():
 			yield tree
 
 	def sents(self):
-		"""
-		>>> next(dadegan.sents())
-		[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
-		"""
-
 		for tree in self.trees():
 			yield [(node['word'], node['mtag']) for node in tree.nodelist[1:]]
 
 	def chunked_trees(self):
-		"""
-		>>> tree2brackets(next(dadegan.chunked_trees()))
-		'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
-		"""
-
 		for tree in self.trees():
 			chunks = []
 			for node in tree.nodelist[1:]:

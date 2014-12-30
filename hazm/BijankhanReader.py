@@ -11,9 +11,13 @@ default_pos_map = {'ADJ': 'ADJ', 'ADJ_CMPR': 'ADJ', 'ADJ_INO': 'ADJ', 'ADJ_ORD':
 class BijankhanReader():
 	"""
 	interfaces [Bijankhan Corpus](http://ece.ut.ac.ir/dbrg/bijankhan/Corpus/BijanKhan_Corpus_Processed.zip) that you must download and extract it.
+
+	>>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
+	>>> next(bijankhan.sents())
+	[('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 	"""
 
-	def __init__(self, bijankhan_file='corpora/bijankhan.txt', joined_verb_parts=True, pos_map=default_pos_map):
+	def __init__(self, bijankhan_file, joined_verb_parts=True, pos_map=default_pos_map):
 		self._bijankhan_file = bijankhan_file
 		self._joined_verb_parts = joined_verb_parts
 		self._pos_map = pos_map
@@ -34,11 +38,6 @@ class BijankhanReader():
 						sentence = []
 
 	def sents(self):
-		"""
-		>>> next(bijankhan.sents())
-		[('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
-		"""
-
 		map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))
 
 		for sentence in self._sentences():

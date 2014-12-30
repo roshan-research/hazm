@@ -46,9 +46,13 @@ class PeykareReader():
 	"""
 	interfaces [Peykare Corpus](http://www.rcisp.com/?q=%D9%BE%DB%8C%DA%A9%D8%B1%D9%87%20%D9%85%D8%AA%D9%86%DB%8C%20%D8%B2%D8%A8%D8%A7%D9%86%20%D9%81%D8%A7%D8%B1%D8%B3%DB%8C)
 	Bijankhan, M., Sheykhzadegan, J., Bahrani, M., & Ghayoomi, M. (2011). Lessons from building a Persian written corpus: Peykare. Language Resources and Evaluation, 45, 143–164.
+
+	>>> peykare = PeykareReader(root='corpora/peykare')
+	>>> next(peykare.sents())
+	[('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 	"""
 
-	def __init__(self, root='corpora/peykare', joined_verb_parts=True, pos_map=coarse_pos_e):
+	def __init__(self, root, joined_verb_parts=True, pos_map=coarse_pos_e):
 		self._root = root
 		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 		self._joined_verb_parts = joined_verb_parts
@@ -82,11 +86,6 @@ class PeykareReader():
 					sentence = []
 
 	def sents(self):
-		"""
-		>>> next(peykare.sents())
-		[('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
-		"""
-
 		map_pos = lambda item: (item[0], self._pos_map(item[1].split(',')))
 
 		for sentence in self._sentences():

@@ -7,6 +7,12 @@ from nltk.tokenize.api import TokenizerI
 
 
 class WordTokenizer(TokenizerI):
+	"""
+	>>> tokenizer = WordTokenizer()
+	>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
+	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
+	"""
+
 	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
@@ -35,11 +41,6 @@ class WordTokenizer(TokenizerI):
 				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
-		"""
-		>>> word_tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
-		['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
-		"""
-
 		text = self.pattern.sub(r' \1 ', text.replace('\n', ' '))
 		tokens = [word for word in text.split(' ') if word]
 		if self._join_verb_parts:
@@ -48,15 +49,16 @@ class WordTokenizer(TokenizerI):
 
 	def join_verb_parts(self, tokens):
 		"""
-		>>> word_tokenizer.join_verb_parts(['خواهد', 'رفت'])
+		>>> tokenizer = WordTokenizer()
+		>>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
 		['خواهد_رفت']
-		>>> word_tokenizer.join_verb_parts(['رفته', 'است'])
+		>>> tokenizer.join_verb_parts(['رفته', 'است'])
 		['رفته_است']
-		>>> word_tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
+		>>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
 		['گفته_شده_است']
-		>>> word_tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
+		>>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
 		['گفته_خواهد_شد']
-		>>> word_tokenizer.join_verb_parts(['خسته', 'شدید'])
+		>>> tokenizer.join_verb_parts(['خسته', 'شدید'])
 		['خسته', 'شدید']
 		"""
 

@@ -5,7 +5,6 @@ import os, sys, re, codecs
 from xml.dom import minidom
 from nltk.tree import Tree
 from .WordTokenizer import WordTokenizer
-from .Chunker import tree2brackets
 
 
 def coarse_pos_e(tags):
@@ -38,9 +37,26 @@ def coarse_pos_e(tags):
 class TreebankReader():
 	"""
 	interfaces [Per­si­an Tree­bank](http://hpsg.fu-berlin.de/~ghayoomi/PTB.html)
+
+	>>> treebank = TreebankReader(root='corpora/treebank')
+	>>> print(next(treebank.trees()))
+	(S
+	  (VPS
+	    (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
+	    (VPC
+	      (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
+	      (V است/V)))
+	  (PUNC ./PUNC))
+
+	>>> next(treebank.sents())
+	[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
+
+	>>> from .Chunker import tree2brackets
+	>>> tree2brackets(next(treebank.chunked_trees()))
+	'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
 	"""
 
-	def __init__(self, root='corpora/treebank', pos_map=coarse_pos_e, join_clitics=False, join_verb_parts=False):
+	def __init__(self, root, pos_map=coarse_pos_e, join_clitics=False, join_verb_parts=False):
 		self._root = root
 		self._pos_map = pos_map if pos_map else lambda tags: ','.join(tags)
 		self._join_clitics = join_clitics
@@ -58,16 +74,6 @@ class TreebankReader():
 					print('error in reading', name, e, file=sys.stderr)
 
 	def trees(self):
-		"""
-		>>> print(next(treebank.trees()))
-		(S
-		  (VPS
-		    (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
-		    (VPC
-		      (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
-		      (V است/V)))
-		  (PUNC ./PUNC))
-		"""
 
 		def traverse(node):
 			def extract_tags(W):
@@ -139,21 +145,11 @@ class TreebankReader():
 				yield traverse(S)
 
 	def sents(self):
-		"""
-		>>> next(treebank.sents())
-		[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
-		"""
-
 		for tree in self.trees():
 			yield tree.leaves()
 
 
 	def chunked_trees(self):
-		"""
-		>>> tree2brackets(next(treebank.chunked_trees()))
-		'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
-		"""
-
 		collapse = lambda node, label: Tree(label, [Tree(pos[1], [pos[0]]) for pos in node.pos()])
 
 		def traverse(node, parent, chunks):

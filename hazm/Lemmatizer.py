@@ -8,6 +8,24 @@ from .WordTokenizer import WordTokenizer
 
 
 class Lemmatizer():
+	"""
+	>>> lemmatizer = Lemmatizer()
+	>>> lemmatizer.lemmatize('کتاب‌ها')
+	'کتاب'
+	>>> lemmatizer.lemmatize('آتشفشان')
+	'آتشفشان'
+	>>> lemmatizer.lemmatize('می‌روم')
+	'رفت#رو'
+	>>> lemmatizer.lemmatize('گفته_شده_است')
+	'گفت#گو'
+	>>> lemmatizer.lemmatize('نچشیده_است')
+	'چشید#چش'
+	>>> lemmatizer.lemmatize('مردم', pos='N')
+	'مردم'
+	>>> lemmatizer.lemmatize('اجتماعی', pos='AJ')
+	'اجتماعی'
+	"""
+
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True):
 		self.verbs = {}
 		self.words = set([])
@@ -33,23 +51,6 @@ class Lemmatizer():
 						self.verbs[before_verb +'_'+ bon] = verb
 
 	def lemmatize(self, word, pos=''):
-		"""
-		>>> lemmatizer.lemmatize('کتاب‌ها')
-		'کتاب'
-		>>> lemmatizer.lemmatize('آتشفشان')
-		'آتشفشان'
-		>>> lemmatizer.lemmatize('می‌روم')
-		'رفت#رو'
-		>>> lemmatizer.lemmatize('گفته_شده_است')
-		'گفت#گو'
-		>>> lemmatizer.lemmatize('نچشیده_است')
-		'چشید#چش'
-		>>> lemmatizer.lemmatize('مردم', pos='N')
-		'مردم'
-		>>> lemmatizer.lemmatize('اجتماعی', pos='AJ')
-		'اجتماعی'
-		"""
-
 		if (not pos or pos == 'V') and word in self.verbs:
 			return self.verbs[word]
 
@@ -70,6 +71,7 @@ class Lemmatizer():
 
 	def conjugations(self, verb):
 		"""
+		>>> lemmatizer = Lemmatizer()
 		>>> lemmatizer.conjugations('خورد#خور')
 		['خوردم', 'خوردی', 'خورد', 'خوردیم', 'خوردید', 'خوردند', 'نخوردم', 'نخوردی', 'نخورد', 'نخوردیم', 'نخوردید', 'نخوردند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خوردم', 'می‌خوردی', 'می‌خورد', 'می‌خوردیم', 'می‌خوردید', 'می‌خوردند', 'نمی‌خوردم', 'نمی‌خوردی', 'نمی‌خورد', 'نمی‌خوردیم', 'نمی‌خوردید', 'نمی‌خوردند', 'خورده‌ام', 'خورده‌ای', 'خورده', 'خورده‌ایم', 'خورده‌اید', 'خورده‌اند', 'نخورده‌ام', 'نخورده‌ای', 'نخورده', 'نخورده‌ایم', 'نخورده‌اید', 'نخورده‌اند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خورم', 'می‌خوری', 'می‌خورد', 'می‌خوریم', 'می‌خورید', 'می‌خورند', 'نمی‌خورم', 'نمی‌خوری', 'نمی‌خورد', 'نمی‌خوریم', 'نمی‌خورید', 'نمی‌خورند', 'بخورم', 'بخوری', 'بخورد', 'بخوریم', 'بخورید', 'بخورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'بخور', 'نخور']
 		>>> lemmatizer.conjugations('آورد#آور')
