@@ -2,22 +2,26 @@
 
 from __future__ import unicode_literals
 from nltk.tag import stanford
+from .SequenceTagger import SequenceTagger
 
 
-class POSTagger(stanford.POSTagger):
+class POSTagger(SequenceTagger):
 	"""
-	>>> tagger = POSTagger()
+	>>> tagger = POSTagger(model='resources/postagger.model')
 	>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
 	[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
 	"""
 
-	def __init__(self, *args, **kwargs):
-		kwargs['encoding'] = 'utf8'
-		if 'path_to_model' not in kwargs:
-			kwargs['path_to_model'] = 'resources/persian.tagger'
-		if 'path_to_jar' not in kwargs:
-			kwargs['path_to_jar'] = 'resources/stanford-postagger.jar'
 
+class StanfordPOSTagger(stanford.POSTagger):
+	"""
+	>>> tagger = StanfordPOSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
+	>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته بودم', '.'])
+	[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+	"""
+
+	def __init__(self, path_to_jar, path_to_model, *args, **kwargs):
+		kwargs['encoding'] = 'utf8'
 		self._SEPARATOR = '/'
 		super(stanford.POSTagger, self).__init__(*args, **kwargs)
 
