@@ -86,4 +86,4 @@ class RuleBasedChunker(RegexpParser):
 
 		"""
 
-		super(Chunker, self).__init__(grammar=grammar)
+		super(RuleBasedChunker, self).__init__(grammar=grammar)
