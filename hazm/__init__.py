@@ -11,7 +11,7 @@ from .Normalizer import Normalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger
-from .POSTagger import POSTagger, StanfordPOSTagger
+from .POSTagger import SequencePOSTagger, POSTagger
 from .Chunker import Chunker, RuleBasedChunker
 from .DependencyParser import DependencyParser
 
