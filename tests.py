@@ -17,6 +17,7 @@ modules = {
 	'stemmer': Stemmer,
 	'lemmatizer': Lemmatizer,
 	'tagger': SequenceTagger,
+	'postagger': POSTagger,
 	'chunker': Chunker,
 	'parser': DependencyParser
 }

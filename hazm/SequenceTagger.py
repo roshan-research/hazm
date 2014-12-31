@@ -13,8 +13,8 @@ class SequenceTagger(TaggerI):
 	>>> tagger.tag_sents([['من', 'به', 'مدرسه', 'رفته_بودم', '.']])
 	[[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]
 
-	>>> tagger.save_model('resources/test.tagger')
-	>>> SequenceTagger(model='resources/test.tagger').tag_sents([['من', 'به', 'مدرسه', 'رفته_بودم', '.']])
+	>>> tagger.save_model('resources/test.model')
+	>>> SequenceTagger(model='resources/test.model').tag_sents([['من', 'به', 'مدرسه', 'رفته_بودم', '.']])
 	[[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]
 	"""
 

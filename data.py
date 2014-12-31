@@ -63,20 +63,40 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1):
+def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/postagger.model', test_size=.1):
+
+	tagger = POSTagger(patterns=[
+		'U:w=%x[0,0]'
+	])
+
 	peykare = PeykareReader(peykare_root)
-	train_file = 'resources/tagger_train_data.txt'
-	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
-	print('Peykare loaded.')
+	train_sents, test_sents = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
 
-	output = codecs.open(train_file, 'w', 'utf8')
-	for sentence in train:
-		print(*(map(lambda w: '/'.join(w).replace(' ', '_'), sentence)), file=output)
-	subprocess.Popen(['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']).wait()
+	tagger.train(train_sents)
+	tagger.save_model(model_file)
 
-	tagger = POSTagger()
-	print('Tagger Accuracy on Test Split:')
-	print(tagger.evaluate(test))
+	print(tagger.evaluate(test_sents))
+
+
+def train_chunker(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='resources/chunker.model'):
+
+	chunker = Chunker(tagger=POSTagger(), patterns=[
+		'U:w=%x[0,0]',
+		'U:t=%x[0,1]'
+	])
+
+	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
+	train_sents = list(train.sents()) + list(validation.sents())
+	train_trees = list(train.trees()) + list(validation.trees())
+
+	for tree, sentence in zip(train_trees, chunker.tagger.tag_sents(train_sents)):
+		for i, (node, word) in enumerate(zip(tree.nodelist[1:], sentence), start=1):
+			node['tag'] = word[1]
+
+	chunker.train(train_trees)
+	chunker.save_model(model_file)
+
+	print(chunker.evaluate(test.trees()))
 
 
 def train_maltparser(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
@@ -109,3 +129,19 @@ def train_maltparser(train_file='resources/train.conll', validation_file='resour
 	print('\n'.join([sentence.to_conll(10) for sentence in parsed]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
 
 	subprocess.Popen(['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]).wait()
+
+
+def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1):
+	peykare = PeykareReader(peykare_root)
+	train_file = 'resources/tagger_train_data.txt'
+	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
+	print('Peykare loaded.')
+
+	output = codecs.open(train_file, 'w', 'utf8')
+	for sentence in train:
+		print(*(map(lambda w: '/'.join(w).replace(' ', '_'), sentence)), file=output)
+	subprocess.Popen(['java', memory_min, memory_max, '-classpath', path_to_jar, 'edu.stanford.nlp.tagger.maxent.MaxentTagger', '-prop', properties_file, '-model', path_to_model,  '-trainFile', train_file, '-tagSeparator', '/', '-search', 'owlqn2']).wait()
+
+	tagger = POSTagger()
+	print('Tagger Accuracy on Test Split:')
+	print(tagger.evaluate(test))
