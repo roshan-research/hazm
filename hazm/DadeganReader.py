@@ -179,7 +179,9 @@ class DadeganReader():
 						if d == n - 1 and type(chunks[-1]) == Tree and chunks[
 							-1].label() != 'PP' and appended is not True:
 							label = chunks[-1].label()
-							if label in {'ADJP', 'ADVP'}:
+							if node['rel'] == 'ADV':
+								label = 'ADVP'
+							elif label in {'ADJP', 'ADVP'}:
 								if node['ctag'] == 'N':
 									label = 'NP'
 								elif node['ctag'] == 'ADJ':
