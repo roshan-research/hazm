@@ -8,9 +8,9 @@ from nltk.parse.malt import MaltParser
 
 class DependencyParser(MaltParser):
 	"""
-	>>> from hazm import POSTagger, Lemmatizer
-	>>> parser = DependencyParser(tagger=POSTagger(), lemmatizer=Lemmatizer())
-	>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
+	>>> # from hazm import POSTagger, Lemmatizer
+	>>> # parser = DependencyParser(tagger=POSTagger(), lemmatizer=Lemmatizer())
+	>>> # parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
 	'(رفته_بودم من (به مدرسه) .)'
 	"""
 

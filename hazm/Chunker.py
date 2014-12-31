@@ -25,9 +25,9 @@ def tree2brackets(tree):
 
 class Chunker(IOBTagger, ChunkParserI):
 	"""
-	>>> from hazm import POSTagger
-	>>> chunker = Chunker(tagger=POSTagger(), model='resources/chunker.model')
-	>>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUM'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+	>>> # from hazm import POSTagger
+	>>> # chunker = Chunker(tagger=POSTagger(), model='resources/chunker.model')
+	>>> # tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUM'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
 	'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
 	"""
 
