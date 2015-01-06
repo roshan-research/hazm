@@ -7,23 +7,32 @@ compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, re
 
 
 class Normalizer():
-	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True):
+	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True, translate_nums=True):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
+		self._translate_nums = translate_nums
 
-		self.translations = maketrans(' كي%1234567890;“”', ' کی٪۱۲۳۴۵۶۷۸۹۰؛""')
+		if translate_nums:
+			self.translations = maketrans(' كي%1234567890;“”', ' کی٪۱۲۳۴۵۶۷۸۹۰؛""')
+		else:
+			self.translations = maketrans(' كي“”', ' کی""')
 
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
-			self.character_refinement_patterns = compile_patterns([
+			refinement_patterns = [
 				(r'[ـ\r]', ''), # remove keshide, carriage returns
 				(r' +', ' '), # remove extra spaces
 				(r'\n\n+', '\n\n'), # remove extra newlines
 				('"([^\n"]+)"', r'«\1»'), # replace quotation with gyoome
-				('([\d+])\.([\d+])', r'\1٫\2'), # replace dot with momayez
 				(r' ?\.\.\.', ' …'), # replace 3 dots
-			])
+			]
+			if translate_nums:
+				refinement_patterns.append(
+					('([\d+])\.([\d+])', r'\1٫\2'), # replace dot with momayez
+				)
+			self.character_refinement_patterns = compile_patterns(refinement_patterns)
+
 
 		if punctuation_spacing:
 			self.punctuation_spacing_patterns = compile_patterns([
