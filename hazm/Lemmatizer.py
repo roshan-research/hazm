@@ -5,7 +5,11 @@ import codecs
 from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
-from itertools import imap, repeat
+try:
+    import itertools.imap as map
+except ImportError:
+    pass
+from itertools import repeat
 
 
 class Lemmatizer():
@@ -74,7 +78,7 @@ class Lemmatizer():
 		"""
 		Lemmatize iterable.
 		"""
-		return imap(self.lemmatize, iterable, repeat(pos))
+		return map(self.lemmatize, iterable, repeat(pos))
 
 	def conjugations(self, verb):
 		"""
