@@ -31,3 +31,9 @@ class Stemmer(StemmerI):
 			word = word[:-len(end)] + 'ه'
 
 		return word
+
+	def istem(self, iterable):
+		"""
+		Stem an iterable.
+		"""
+		return map(self.stem, iterable)

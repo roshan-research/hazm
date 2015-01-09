@@ -5,6 +5,7 @@ import codecs
 from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
+from itertools import imap, repeat
 
 
 class Lemmatizer():
@@ -68,6 +69,12 @@ class Lemmatizer():
 			return stem
 
 		return word
+
+	def ilemmatize(self, iterable, pos=''):
+		"""
+		Lemmatize iterable.
+		"""
+		return imap(self.lemmatize, iterable, repeat(pos))
 
 	def conjugations(self, verb):
 		"""
