@@ -20,6 +20,10 @@ class DependencyParser(MaltParser):
 		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
+	def parse_sents(self, sentences, verbose=False):
+		tagged_sentences = self.tagger.tag_sents(sentences)
+		return self.tagged_parse_sents(tagged_sentences, verbose)
+
 	def tagged_parse_sents(self, sentences, verbose=False):
 		input_file = tempfile.NamedTemporaryFile(prefix='malt_input.conll', dir=self.working_dir, delete=False)
 		output_file = tempfile.NamedTemporaryFile(prefix='malt_output.conll', dir=self.working_dir, delete=False)
