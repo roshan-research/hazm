@@ -4,6 +4,7 @@ from __future__ import print_function, unicode_literals
 import codecs, subprocess
 from collections import Counter
 from itertools import islice
+from nltk.tag import untag
 from sklearn.cross_validation import train_test_split
 from hazm import *
 from hazm.Chunker import tree2brackets
@@ -111,28 +112,40 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 	print(tagger.evaluate(test_sents))
 
 
-def train_chunker(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='resources/chunker.model'):
+def train_chunker(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='resources/chunker.model'):
 
-	chunker = Chunker(tagger=SequencePOSTagger(), patterns=[
-		'u:w=%x[0,0]',
-		'u:t=%x[0,1]'
+	chunker = Chunker(tagger=SequencePOSTagger(model='resources/postagger.model'), patterns=[
+		'*',
+
+		'u:wll=%X[-2,0]',
+		'u:wl=%X[-1,0]',
+		'u:w=%X[0,0]',
+		'u:wr=%X[1,0]',
+		'u:wrr=%X[2,0]',
+
+		'u:tll=%X[-2,1]',
+		'u:tl=%X[-1,1]',
+		'u:t=%X[0,1]',
+		'u:tr=%X[1,1]',
+		'u:trr=%X[2,1]',
 	])
 
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
 	train_sents = list(train.sents()) + list(validation.sents())
-	train_trees = list(train.trees()) + list(validation.trees())
+	train_trees = list(train.chunked_trees()) + list(validation.chunked_trees())
 
-	for tree, sentence in zip(train_trees, chunker.tagger.tag_sents(train_sents)):
-		for i, (node, word) in enumerate(zip(tree.nodelist[1:], sentence), start=1):
-			node['tag'] = word[1]
+	tagged_sents = chunker.tagger.tag_sents([untag(sent) for sent in train_sents])
+	for tree, sentence in zip(train_trees, tagged_sents):
+		for (n, word) in zip(tree.treepositions('leaves'), sentence):
+			tree[n] = word
 
 	chunker.train(train_trees)
 	chunker.save_model(model_file)
 
-	print(chunker.evaluate(test.trees()))
+	print(chunker.evaluate(test.chunked_trees()))
 
 
-def train_maltparser(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
+def train_maltparser(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
 
 	lemmatizer, tagger = Lemmatizer(), POSTagger()
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)

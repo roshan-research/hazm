@@ -1,7 +1,8 @@
 # coding: utf8
 
 from __future__ import unicode_literals
-from nltk.chunk import ChunkParserI, RegexpParser, tree2conlltags, conlltags2tree
+from nltk.chunk import ChunkParserI, RegexpParser, ChunkScore, tree2conlltags, conlltags2tree
+from nltk.tag import untag
 from .SequenceTagger import IOBTagger
 
 
@@ -39,14 +40,21 @@ class Chunker(IOBTagger, ChunkParserI):
 		super(Chunker, self).train(map(tree2conlltags, trees))
 
 	def parse(self, sentence):
-		return self.parse_sents([sentence])[0]
+		return next(self.parse_sents([sentence]))
 
 	def parse_sents(self, sentences):
 		tagged_sentences = self.tagger.tag_sents(sentences)
 		return self.tagged_parse_sents(tagged_sentences)
 
 	def tagged_parse_sents(self, sentences):
-		return conlltags2tree(super(Chunker, self).tag_sents(sentences))
+		for conlltagged in super(Chunker, self).tag_sents(sentences):
+			yield conlltags2tree(conlltagged)
+
+	def evaluate(self, gold):
+		chunkscore = ChunkScore()
+		for correct in gold:
+			chunkscore.score(correct, self.parse(untag(correct.leaves())))
+		return chunkscore
 
 
 class RuleBasedChunker(RegexpParser):
