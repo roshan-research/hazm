@@ -33,6 +33,7 @@ class Chunker(IOBTagger, ChunkParserI):
 
 	def __init__(self, tagger, **kwargs):
 		self.tagger = tagger
+		super(Chunker, self).__init__(**kwargs)
 
 	def train(self, trees):
 		super(Chunker, self).train(map(tree2conlltags, trees))
