@@ -70,27 +70,22 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 	tagger = SequencePOSTagger(type='crf', algo='rprop', compact=True, patterns=[
 		'*',
 
-		'u:wll=%X[-2,0]',
-		'u:wl=%X[-1,0]',
-		'u:w=%X[0,0]',
-		'u:wr=%X[1,0]',
-		'u:wrr=%X[2,0]',
+		'u:wll=%x[-2,0]',
+		'u:wl=%x[-1,0]',
+		'u:w=%x[0,0]',
+		'u:wr=%x[1,0]',
+		'u:wrr=%x[2,0]',
 
-		'u:w2l=%X[-1,0]/%X[0,0]',
-		'u:w2r=%X[0,0]/%X[1,0]',
-
-		# 'u:w3l=%X[-2,0]/%X[-1,0]/%X[0,0]',
-		# 'u:w3r=%X[0,0]/%X[1,0]/%X[2,0]',
+		# 'u:w2l=%x[-1,0]/%x[0,0]',
+		# 'u:w2r=%x[0,0]/%x[1,0]',
 
 		'*:p1=%m[0,0,"^.?"]',
 		'*:p2=%m[0,0,"^.?.?"]',
 		'*:p3=%m[0,0,"^.?.?.?"]',
-		'*:p4=%m[0,0,"^.?.?.?.?"]',
 
 		'*:s1=%m[0,0,".?$"]',
 		'*:s2=%m[0,0,".?.?$"]',
 		'*:s3=%m[0,0,".?.?.?$"]',
-		'*:s4=%m[0,0,".?.?.?.?$"]',
 
 		'*:p?l=%t[-1,0,"\p"]',
 		'*:p?=%t[0,0,"\p"]',
@@ -118,17 +113,17 @@ def train_chunker(train_file='corpora/train.conll', validation_file='corpora/val
 	chunker = Chunker(type='crf', algo='l-bfgs', compact=True, patterns=[
 		'*',
 
-		'u:wll=%X[-2,0]',
-		'u:wl=%X[-1,0]',
-		'u:w=%X[0,0]',
-		'u:wr=%X[1,0]',
-		'u:wrr=%X[2,0]',
+		'u:wll=%x[-2,0]',
+		'u:wl=%x[-1,0]',
+		'u:w=%x[0,0]',
+		'u:wr=%x[1,0]',
+		'u:wrr=%x[2,0]',
 
-		'*:tll=%X[-2,1]',
-		'*:tl=%X[-1,1]',
-		'*:t=%X[0,1]',
-		'*:tr=%X[1,1]',
-		'*:trr=%X[2,1]',
+		'*:tll=%x[-2,1]',
+		'*:tl=%x[-1,1]',
+		'*:t=%x[0,1]',
+		'*:tr=%x[1,1]',
+		'*:trr=%x[2,1]',
 	])
 
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
