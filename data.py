@@ -3,6 +3,7 @@
 from __future__ import print_function, unicode_literals
 import codecs, subprocess
 from collections import Counter
+from itertools import islice
 from sklearn.cross_validation import train_test_split
 from hazm import *
 from hazm.Chunker import tree2brackets
@@ -63,9 +64,9 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/postagger.model', test_size=.1, sents_limit=None):
+def train_postagger(peykare_root='corpora/peykare', model_file='resources/postagger.model', test_size=.1, sents_limit=None):
 
-	tagger = POSTagger(type='crf', compact=True, algo='rprop', patterns=[
+	tagger = SequencePOSTagger(type='crf', compact=True, algo='rprop', patterns=[
 		'*',
 
 		'u:wll=%X[-2,0]',
@@ -102,7 +103,7 @@ def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/pos
 	])
 
 	peykare = PeykareReader(peykare_root)
-	train_sents, test_sents = train_test_split(list(islice(peykare.sents(), sents_limit)), test_size=float(test_size), random_state=0)
+	train_sents, test_sents = train_test_split(list(islice(peykare.sents(), sents_limit)), test_size=test_size, random_state=0)
 
 	tagger.train(train_sents)
 	tagger.save_model(model_file)
@@ -112,7 +113,7 @@ def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/pos
 
 def train_chunker(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='resources/chunker.model'):
 
-	chunker = Chunker(tagger=POSTagger(), patterns=[
+	chunker = Chunker(tagger=SequencePOSTagger(), patterns=[
 		'u:w=%x[0,0]',
 		'u:t=%x[0,1]'
 	])
@@ -166,7 +167,7 @@ def train_maltparser(train_file='resources/train.conll', validation_file='resour
 def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1):
 	peykare = PeykareReader(peykare_root)
 	train_file = 'resources/tagger_train_data.txt'
-	train, test = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
+	train, test = train_test_split(list(peykare.sents()), test_size=test_size, random_state=0)
 	print('Peykare loaded.')
 
 	output = codecs.open(train_file, 'w', 'utf8')
