@@ -8,7 +8,7 @@ from wapiti import Model
 class SequenceTagger(TaggerI):
 	""" wrapper for [Wapiti](http://wapiti.limsi.fr) sequence tagger
 
-	>>> tagger = SequenceTagger(patterns=['*', 'U:word-%x[0,0]'])
+	>>> tagger = SequenceTagger(patterns=['*', 'u:word-%x[0,0]'])
 	>>> tagger.train([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
 	>>> tagger.tag_sents([['من', 'به', 'مدرسه', 'رفته_بودم', '.']])
 	[[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]

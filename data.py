@@ -63,14 +63,46 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/postagger.model', test_size=.1):
+def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/postagger.model', test_size=.1, sents_limit=None):
 
-	tagger = POSTagger(patterns=[
-		'U:w=%x[0,0]'
+	tagger = POSTagger(type='crf', compact=True, algo='rprop', patterns=[
+		'*',
+
+		'u:wll=%X[-2,0]',
+		'u:wl=%X[-1,0]',
+		'u:w=%X[0,0]',
+		'u:wr=%X[1,0]',
+		'u:wrr=%X[2,0]',
+
+		'u:w2l=%X[-1,0]/%X[0,0]',
+		'u:w2r=%X[0,0]/%X[1,0]',
+
+		# 'u:w3l=%X[-2,0]/%X[-1,0]/%X[0,0]',
+		# 'u:w3r=%X[0,0]/%X[1,0]/%X[2,0]',
+
+		'*:p1=%m[0,0,"^.?"]',
+		'*:p2=%m[0,0,"^.?.?"]',
+		'*:p3=%m[0,0,"^.?.?.?"]',
+		'*:p4=%m[0,0,"^.?.?.?.?"]',
+
+		'*:s1=%m[0,0,".?$"]',
+		'*:s2=%m[0,0,".?.?$"]',
+		'*:s3=%m[0,0,".?.?.?$"]',
+		'*:s4=%m[0,0,".?.?.?.?$"]',
+
+		'*:p?l=%t[-1,0,"\p"]',
+		'*:p?=%t[0,0,"\p"]',
+		'*:p?r=%t[1,0,"\p"]',
+		'*:p?a=%t[0,0,"^\p*$"]',
+
+		'*:n?l=%t[-1,0,"\d"]',
+		'*:n?=%t[0,0,"\d"]',
+		'*:n?r=%t[1,0,"\d"]',
+		'*:n?a=%t[0,0,"^\d*$"]',
 	])
 
 	peykare = PeykareReader(peykare_root)
-	train_sents, test_sents = train_test_split(list(peykare.sents()), test_size=float(test_size), random_state=0)
+	train_sents, test_sents = train_test_split(list(islice(peykare.sents(), sents_limit)), test_size=float(test_size), random_state=0)
 
 	tagger.train(train_sents)
 	tagger.save_model(model_file)
@@ -81,8 +113,8 @@ def train_postagger(peykare_root='corpora/peykare', path_to_model='resources/pos
 def train_chunker(train_file='resources/train.conll', validation_file='resources/validation.conll', test_file='resources/test.conll', model_file='resources/chunker.model'):
 
 	chunker = Chunker(tagger=POSTagger(), patterns=[
-		'U:w=%x[0,0]',
-		'U:t=%x[0,1]'
+		'u:w=%x[0,0]',
+		'u:t=%x[0,1]'
 	])
 
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
