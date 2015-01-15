@@ -32,10 +32,6 @@ class Chunker(IOBTagger, ChunkParserI):
 	'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
 	"""
 
-	def __init__(self, tagger, **kwargs):
-		self.tagger = tagger
-		super(Chunker, self).__init__(**kwargs)
-
 	def train(self, trees):
 		super(Chunker, self).train(map(tree2conlltags, trees))
 
@@ -43,18 +39,11 @@ class Chunker(IOBTagger, ChunkParserI):
 		return next(self.parse_sents([sentence]))
 
 	def parse_sents(self, sentences):
-		tagged_sentences = self.tagger.tag_sents(sentences)
-		return self.tagged_parse_sents(tagged_sentences)
-
-	def tagged_parse_sents(self, sentences):
 		for conlltagged in super(Chunker, self).tag_sents(sentences):
 			yield conlltags2tree(conlltagged)
 
 	def evaluate(self, gold):
-		chunkscore = ChunkScore()
-		for correct in gold:
-			chunkscore.score(correct, self.parse(untag(correct.leaves())))
-		return chunkscore
+		return ChunkParserI.evaluate(self, gold)
 
 
 class RuleBasedChunker(RegexpParser):

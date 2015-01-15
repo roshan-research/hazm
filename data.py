@@ -67,7 +67,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 
 def train_postagger(peykare_root='corpora/peykare', model_file='resources/postagger.model', test_size=.1, sents_limit=None):
 
-	tagger = SequencePOSTagger(type='crf', compact=True, algo='rprop', patterns=[
+	tagger = SequencePOSTagger(type='crf', algo='rprop', compact=True, patterns=[
 		'*',
 
 		'u:wll=%X[-2,0]',
@@ -114,7 +114,8 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 
 def train_chunker(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='resources/chunker.model'):
 
-	chunker = Chunker(tagger=SequencePOSTagger(model='resources/postagger.model'), patterns=[
+	tagger = SequencePOSTagger(model='resources/postagger.model')
+	chunker = Chunker(type='crf', algo='l-bfgs', compact=True, patterns=[
 		'*',
 
 		'u:wll=%X[-2,0]',
@@ -123,18 +124,18 @@ def train_chunker(train_file='corpora/train.conll', validation_file='corpora/val
 		'u:wr=%X[1,0]',
 		'u:wrr=%X[2,0]',
 
-		'u:tll=%X[-2,1]',
-		'u:tl=%X[-1,1]',
-		'u:t=%X[0,1]',
-		'u:tr=%X[1,1]',
-		'u:trr=%X[2,1]',
+		'*:tll=%X[-2,1]',
+		'*:tl=%X[-1,1]',
+		'*:t=%X[0,1]',
+		'*:tr=%X[1,1]',
+		'*:trr=%X[2,1]',
 	])
 
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
 	train_sents = list(train.sents()) + list(validation.sents())
 	train_trees = list(train.chunked_trees()) + list(validation.chunked_trees())
 
-	tagged_sents = chunker.tagger.tag_sents([untag(sent) for sent in train_sents])
+	tagged_sents = tagger.tag_sents([untag(sent) for sent in train_sents])
 	for tree, sentence in zip(train_trees, tagged_sents):
 		for (n, word) in zip(tree.treepositions('leaves'), sentence):
 			tree[n] = word
