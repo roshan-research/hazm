@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 from nltk.tag.api import TaggerI
+from nltk.metrics import accuracy
 from wapiti import Model
 
 
@@ -50,3 +51,7 @@ class IOBTagger(SequenceTagger):
 		results = self.model.label_sequence(lines).decode('utf8')
 		tags = iter(results.strip().split('\n'))
 		return [[(word[0], word[1], next(tags)) for word in sentence] for sentence in sentences]
+
+	def evaluate(self, gold):
+		tagged_sents = self.tag_sents(([tokens[:-1] for tokens in sent] for sent in gold))
+		return accuracy(sum(gold, []), sum(tagged_sents, []))
