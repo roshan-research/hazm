@@ -50,8 +50,8 @@ class IOBTagger(SequenceTagger):
 		lines = '\n\n'.join(['\n'.join([' '.join(word) for word in sentence]) for sentence in sentences])
 		results = self.model.label_sequence(lines).decode('utf8')
 		tags = iter(results.strip().split('\n'))
-		return [[(word[0], word[1], next(tags)) for word in sentence] for sentence in sentences]
+		return [[word + (next(tags),) for word in sentence] for sentence in sentences]
 
 	def evaluate(self, gold):
-		tagged_sents = self.tag_sents(([tokens[:-1] for tokens in sent] for sent in gold))
+		tagged_sents = self.tag_sents(([word[:-1] for word in sentence] for sentence in gold))
 		return accuracy(sum(gold, []), sum(tagged_sents, []))
