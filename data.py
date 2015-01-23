@@ -127,18 +127,22 @@ def train_chunker(train_file='corpora/train.conll', validation_file='corpora/val
 	])
 
 	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
-	train_sents = list(train.sents()) + list(validation.sents())
+
+	def retag_trees(trees, sents):
+		tagged_sents = tagger.tag_sents([untag(sent) for sent in sents])
+		for tree, sentence in zip(trees, tagged_sents):
+			for (n, word) in zip(tree.treepositions('leaves'), sentence):
+				tree[n] = word
+
 	train_trees = list(train.chunked_trees()) + list(validation.chunked_trees())
-
-	tagged_sents = tagger.tag_sents([untag(sent) for sent in train_sents])
-	for tree, sentence in zip(train_trees, tagged_sents):
-		for (n, word) in zip(tree.treepositions('leaves'), sentence):
-			tree[n] = word
-
+	train_sents = list(train.sents()) + list(validation.sents())
+	retag_trees(train_trees, train_sents)
 	chunker.train(train_trees)
 	chunker.save_model(model_file)
 
-	print(chunker.evaluate(test.chunked_trees()))
+	test_trees = list(test.chunked_trees())
+	retag_trees(test_trees, test.sents())
+	print(chunker.evaluate(test_trees))
 
 
 def train_maltparser(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='langModel.mco', path_to_jar='resources/malt.jar', options_file='resources/malt-options.xml', features_file='resources/malt-features.xml', memory_min='-Xms7g', memory_max='-Xmx8g'):
