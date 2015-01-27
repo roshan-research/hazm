@@ -190,7 +190,7 @@ class DadeganReader():
 							leaves.append(item)
 							chunks.append(Tree(label, leaves))
 							appended = True
-						elif tree.nodelist[d]['rel'] == 'NPREMOD':
+						elif tree.nodelist[d]['rel'] == 'NPREMOD' and appended is not True:
 							np_nodes = [item]
 							i = n - d
 							while i > 0:
@@ -213,7 +213,7 @@ class DadeganReader():
 				elif node['ctag'] in {'V'}:
 					appended = False
 					for d in node['deps']:
-						if d == n - 1 and type(chunks[-1]) == Tree and tree.nodelist[d]['rel'] in {'NVE', 'ENC'}:
+						if d == n - 1 and type(chunks[-1]) == Tree and tree.nodelist[d]['rel'] in {'NVE', 'ENC'} and appended is not True:
 							leaves = chunks.pop().leaves()
 							leaves.append(item)
 							chunks.append(Tree('VP', leaves))
@@ -231,6 +231,7 @@ class DadeganReader():
 									vp_nodes.insert(0, chunks.pop())
 							chunks.append(Tree('VP', vp_nodes))
 							appended = True
+							break
 					if not appended:
 						chunks.append(Tree('VP', [item]))
 				elif node['ctag'] in {'PSUS'}:
