@@ -65,7 +65,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 			print(file=output)
 
 
-def train_postagger(peykare_root='corpora/peykare', model_file='resources/postagger.model', test_size=.1, sents_limit=None):
+def train_postagger(peykare_root='corpora/peykare', model_file='resources/postagger.model', test_size=.1, sents_limit=None, pos_map=PeykareReader.coarse_pos_e):
 
 	tagger = SequencePOSTagger(type='crf', algo='rprop', compact=True, patterns=[
 		'*',
@@ -98,7 +98,7 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 		'*:n?a=%t[0,0,"^\d*$"]',
 	])
 
-	peykare = PeykareReader(peykare_root)
+	peykare = PeykareReader(peykare_root, pos_map=pos_map)
 	train_sents, test_sents = train_test_split(list(islice(peykare.sents(), sents_limit)), test_size=test_size, random_state=0)
 
 	tagger.train(train_sents)
@@ -107,7 +107,7 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 	print(tagger.evaluate(test_sents))
 
 
-def train_chunker(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='resources/chunker.model'):
+def train_chunker(train_file='corpora/train.conll', validation_file='corpora/validation.conll', test_file='corpora/test.conll', model_file='resources/chunker.model', pos_map=DadeganReader.coarse_pos_e):
 
 	tagger = SequencePOSTagger(model='resources/postagger.model')
 	chunker = Chunker(type='crf', algo='l-bfgs', compact=True, patterns=[
@@ -126,7 +126,7 @@ def train_chunker(train_file='corpora/train.conll', validation_file='corpora/val
 		'*:trr=%x[2,1]',
 	])
 
-	train, validation, test = DadeganReader(train_file), DadeganReader(validation_file), DadeganReader(test_file)
+	train, validation, test = DadeganReader(train_file, pos_map=pos_map), DadeganReader(validation_file, pos_map=pos_map), DadeganReader(test_file, pos_map=pos_map)
 
 	def retag_trees(trees, sents):
 		tagged_sents = tagger.tag_sents([untag(sent) for sent in sents])
@@ -134,8 +134,8 @@ def train_chunker(train_file='corpora/train.conll', validation_file='corpora/val
 			for (n, word) in zip(tree.treepositions('leaves'), sentence):
 				tree[n] = word
 
-	train_trees = list(train.chunked_trees()) + list(validation.chunked_trees())
-	train_sents = list(train.sents()) + list(validation.sents())
+	train_trees = list(train.chunked_trees())
+	train_sents = list(train.sents())
 	retag_trees(train_trees, train_sents)
 	chunker.train(train_trees)
 	chunker.save_model(model_file)
