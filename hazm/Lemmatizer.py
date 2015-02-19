@@ -51,6 +51,9 @@ class Lemmatizer():
 						self.verbs[before_verb +'_'+ bon] = verb
 
 	def lemmatize(self, word, pos=''):
+		if not pos and word in self.words:
+			return word
+
 		if (not pos or pos == 'V') and word in self.verbs:
 			return self.verbs[word]
 
