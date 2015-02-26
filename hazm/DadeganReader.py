@@ -57,7 +57,31 @@ class DadeganReader():
 				node['mtag'] = [node['ctag'], node['tag']]
 
 			for node in tree.nodelist[1:]:
-				if node['rel'] in ('MOZ', 'NPOSTMOD'):
+				if node['rel'] in ('MOZ', 'NPOSTMOD', 'NEZ') and tree.nodelist[node['head']]['ctag'] in ('N', 'ADJ', 'PR', 'ADV', 'POSNUM', 'PREP'):
+					if node['head'] != node['address'] - 1:
+						head = tree.nodelist[node['head']]
+						hasConj = False
+						for dep in head['deps']:
+							if tree.nodelist[dep]['rel'] in ('NCONJ',):
+								hasConj = True
+								for conj in tree.nodelist[dep]['deps']:
+									if tree.nodelist[conj]['rel'] == 'POSDEP':
+										tree.nodelist[conj]['mtag'].append('EZ')
+										break
+								break
+
+						deps = head['deps']
+						while len(deps) > 0:
+							dep = deps.pop()
+							if dep == tree.nodelist[dep]['head'] + 1:
+								deps = tree.nodelist[dep]['deps']
+								if len(deps) == 0:
+									tree.nodelist[dep]['mtag'].append('EZ')
+
+
+						if hasConj is True:
+							continue
+
 					tree.nodelist[node['head']]['mtag'].append('EZ')
 					if node['head'] < node['address'] - 1:
 						if node['rel'] == 'MOZ' and tree.nodelist[node['address'] - 1]['rel'] == 'NPOSTMOD':
