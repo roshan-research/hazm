@@ -28,9 +28,14 @@ class UnicodeOutputChecker(doctest.OutputChecker):
 	def check_output(self, want, got, optionflags):
 		try:
 			want, got = eval(want), eval(got)
-		except Exception:
+		except:
+			pass
+
+		try:
 			got = got.decode('unicode-escape')
 			want = want.replace('آ', 'ا')  # decode issue
+		except:
+			pass
 
 		if type(want) == unicode:
 			want = want.replace('٫', '.')  # eval issue

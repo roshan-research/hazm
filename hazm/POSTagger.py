@@ -20,6 +20,9 @@ class POSTagger(stanford.POSTagger):
 		self._SEPARATOR = '/'
 		super(stanford.POSTagger, self).__init__(encoding='utf8', path_to_jar=path_to_jar, path_to_model=path_to_model, *args, **kwargs)
 
+	def tag(self, tokens):
+		return self.tag_sents([tokens])[0]
+
 	def tag_sents(self, sentences):
 		refined = map(lambda s: [w.replace(' ', '_') for w in s], sentences)
 		return super(stanford.POSTagger, self).tag_sents(refined)

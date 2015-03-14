@@ -12,7 +12,7 @@ class DependencyParser(MaltParser):
 	>>> tagger = POSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
 	>>> parser = DependencyParser(tagger=tagger, lemmatizer=Lemmatizer())
 	>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
-	'(رفته_بودم من (به مدرسه) .)'
+	(رفته_بودم من (به مدرسه) .)
 	"""
 
 	def __init__(self, tagger, lemmatizer, model_file='langModel.mco', working_dir='resources'):
@@ -32,7 +32,8 @@ class DependencyParser(MaltParser):
 			for sentence in sentences:
 				for i, (word, tag) in enumerate(sentence, start=1):
 					word = word.strip()
-					if not word: word = '_'
+					if not word:
+						word = '_'
 					input_file.write(('\t'.join([str(i), word.replace(' ', '_'), self.lemmatize(word, tag).replace(' ', '_'), tag, tag, '_', '0', 'ROOT', '_', '_', '\n'])).encode('utf8'))
 				input_file.write('\n\n'.encode('utf8'))
 			input_file.close()
@@ -41,7 +42,7 @@ class DependencyParser(MaltParser):
 			if self._execute(cmd, verbose) != 0:
 				raise Exception("MaltParser parsing failed: %s" % (' '.join(cmd)))
 
-			return [DependencyGraph(item) for item in codecs.open(output_file.name, encoding='utf8').read().split('\n\n')]
+			return (DependencyGraph(item) for item in codecs.open(output_file.name, encoding='utf8').read().split('\n\n'))
 
 		finally:
 			input_file.close()
