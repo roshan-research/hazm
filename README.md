@@ -39,7 +39,7 @@ Python library for digesting Persian text.
 'رفت#رو'
 
 >>> from hazm import POSTagger
->>> tagger = POSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
+>>> tagger = POSTagger(model='resources/postagger.model')
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 

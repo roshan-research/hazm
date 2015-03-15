@@ -5,13 +5,17 @@ from nltk.tag import stanford
 from .SequenceTagger import SequenceTagger
 
 
-class SequencePOSTagger(SequenceTagger):
-	pass
-
-
-class POSTagger(stanford.POSTagger):
+class POSTagger(SequenceTagger):
 	"""
-	>>> tagger = POSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
+	>>> tagger = POSTagger(model='resources/postagger.model')
+	>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
+	[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+	"""
+
+
+class StanfordPOSTagger(stanford.POSTagger):
+	"""
+	>>> tagger = StanfordPOSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
 	>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
 	[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
 	"""

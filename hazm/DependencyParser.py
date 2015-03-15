@@ -9,8 +9,7 @@ from nltk.parse.malt import MaltParser
 class DependencyParser(MaltParser):
 	"""
 	>>> from hazm import POSTagger, Lemmatizer
-	>>> tagger = POSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
-	>>> parser = DependencyParser(tagger=tagger, lemmatizer=Lemmatizer())
+	>>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())
 	>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
 	(رفته_بودم من (به مدرسه) .)
 	"""
@@ -42,7 +41,7 @@ class DependencyParser(MaltParser):
 			if self._execute(cmd, verbose) != 0:
 				raise Exception("MaltParser parsing failed: %s" % (' '.join(cmd)))
 
-			return (DependencyGraph(item) for item in codecs.open(output_file.name, encoding='utf8').read().split('\n\n'))
+			return (DependencyGraph(item) for item in codecs.open(output_file.name, encoding='utf8').read().split('\n\n') if item.strip())
 
 		finally:
 			input_file.close()
