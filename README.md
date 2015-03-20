@@ -7,6 +7,7 @@ Python library for digesting Persian text.
 + Sentence and word tokenizer
 + Word lemmatizer
 + POS tagger
++ Shallow parser
 + Dependency parser
 + Interfaces for Persian corpora 
 + [NLTK](http://nltk.org/) compatible
@@ -42,6 +43,12 @@ Python library for digesting Persian text.
 >>> tagger = POSTagger(model='resources/postagger.model')
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
+
+>>> from hazm import Chunker, tree2brackets
+>>> chunker = Chunker(model='resources/chunker.model')
+>>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم.'))
+>>> tree2brackets(chunker.parse(tagged))
+'[کتاب خواندن NP] [را POSTP] [دوست داریم VP] .'
 
 >>> from hazm import DependencyParser
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
