@@ -19,19 +19,17 @@ Python library for digesting Persian text.
 
 ```python
 >>> from __future__ import unicode_literals
+>>> from hazm import *
 
->>> from hazm import Normalizer
 >>> normalizer = Normalizer()
 >>> normalizer.normalize('اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند')
 'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'
 
->>> from hazm import sent_tokenize, word_tokenize
 >>> sent_tokenize('ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟')
 ['ما هم برای وصل کردن آمدیم!', 'ولی برای پردازش، جدا بهتر نیست؟']
 >>> word_tokenize('ولی برای پردازش، جدا بهتر نیست؟')
 ['ولی', 'برای', 'پردازش', '،', 'جدا', 'بهتر', 'نیست', '؟']
 
->>> from hazm import Stemmer, Lemmatizer
 >>> stemmer = Stemmer()
 >>> stemmer.stem('کتاب‌ها')
 'کتاب'
@@ -39,18 +37,15 @@ Python library for digesting Persian text.
 >>> lemmatizer.lemmatize('می‌روم')
 'رفت#رو'
 
->>> from hazm import POSTagger
 >>> tagger = POSTagger(model='resources/postagger.model')
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
->>> from hazm import Chunker, tree2brackets
 >>> chunker = Chunker(model='resources/chunker.model')
->>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم.'))
+>>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
-'[کتاب خواندن NP] [را POSTP] [دوست داریم VP] .'
+'[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
 
->>> from hazm import DependencyParser
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
