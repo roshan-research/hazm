@@ -12,8 +12,7 @@ install:
   - wget http://dl.dropboxusercontent.com/u/90405495/resources.zip
   - wget http://dl.dropboxusercontent.com/u/90405495/resources-extra.zip
   - unzip resources.zip -d resources
-
-env: JAVAHOME=/usr/bin/java
+  - unzip resources-extra.zip -d resources
 
 script: python tests.py
 
