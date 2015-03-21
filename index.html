@@ -28,7 +28,6 @@
 		<li>ریشه‌یابی واژه‌ها</li>
 		<li>تحلیل صرفی جمله</li>
 		<li>تجزیه نحوی جمله</li>
-		<li>تجزیه نحوی کم‌عمق</li>
 		<li>واسط استفاده از داده‌های زبان فارسی</li>
 		<li>سازگاری با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
 		<li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
@@ -38,19 +37,17 @@
 	<h2>استفاده</h2>
 
 <div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Normalizer</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند'</span><span class="p">)</span>
 <span class="s">'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
 <span class="p">[</span><span class="s">'ما هم برای وصل کردن آمدیم!'</span><span class="p">,</span> <span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
 <span class="p">[</span><span class="s">'ولی'</span><span class="p">,</span> <span class="s">'برای'</span><span class="p">,</span> <span class="s">'پردازش'</span><span class="p">,</span> <span class="s">'،'</span><span class="p">,</span> <span class="s">'جدا'</span><span class="p">,</span> <span class="s">'بهتر'</span><span class="p">,</span> <span class="s">'نیست'</span><span class="p">,</span> <span class="s">'؟'</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">Stemmer</span><span class="p">,</span> <span class="n">Lemmatizer</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s">'کتاب‌ها'</span><span class="p">)</span>
 <span class="s">'کتاب'</span>
@@ -58,12 +55,15 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s">'می‌روم'</span><span class="p">)</span>
 <span class="s">'رفت#رو'</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">POSTagger</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s">'resources/postagger.model'</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ما بسیار کتاب می‌خوانیم'</span><span class="p">))</span>
 <span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می‌خوانیم'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">DependencyParser</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s">'resources/chunker.model'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'کتاب خواندن را دوست داریم'</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tree2brackets</span><span class="p">(</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tagged</span><span class="p">))</span>
+<span class="s">'[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'</span>
+
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">tagger</span><span class="p">,</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">lemmatizer</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'زنگ‌ها برای که به صدا درمی‌آید؟'</span><span class="p">))</span>
 <span class="o">&lt;</span><span class="n">DependencyGraph</span> <span class="k">with</span> <span class="mi">8</span> <span class="n">nodes</span><span class="o">&gt;</span>
@@ -82,19 +82,27 @@
 	<p>شما می‌توانید مطابق <a href="https://github.com/sobhe/hazm/blob/master/LICENSE">اجازه‌نامه</a>، از این محصول در هر نوع پروژه‌ای از جمله تحقیقاتی یا تجاری استفاده کنید. فقط توجه کنید که اجازه‌نامه هضم تنها مربوط به کدهای این پروژه است و برای استفاده از مدل‌های آماده شده باید به مجوز داده‌های مورد استفاده در آموزش آنها مراجعه کنید؛ که خب هیچ‌کدام اجازه استفاده تجاری را نمی‌دهند :(</p>
 
 	<h2>آخرین تغییرات</h2>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.4...v0.5"><span class="glyphicon glyphicon-flash"></span> ۲۹ اسفند ۹۳</a></div>
+	<ul>
+		<li>واسط استفاده از برچسب‌زن <a href="http://wapiti.limsi.fr">Wapiti</a></li>
+		<li>آموزش تجزیه‌گر سطحی روی دادگان</li>
+		<li>دقت برچسب‌زن صرفی: 97.1%</li>
+		<li>دقت تجزیه‌گر سطحی: 89.9%</li>
+	</ul>
+
 	<div><a href="https://github.com/sobhe/hazm/compare/v0.3...v0.4"><span class="glyphicon glyphicon-flash"></span> ۲۵ آذر ۹۳</a></div>
 	<ul>
-		<li>تجزیه کم‌عمق مبتنی بر قاعده</li>
-		<li>مبدل درخت تجزیه وابستگی به تجزیه کم‌عمق</li>
+		<li>تجزیه سطحی مبتنی بر قاعده</li>
+		<li>مبدل درخت تجزیه وابستگی به تجزیه سطحی</li>
 		<li>واسط استفاده از داده‌های تری‌بنک</li>
 		<li>واسط استفاده از داده‌های فرهنگ ظرفیت فعل</li>
 	</ul>
 	<div><a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3"><span class="glyphicon glyphicon-flash"></span> ۶ شهریور ۹۳</a></div>
 	<ul>
-		<li>دقت برچسب‌زن صرفی: 96.59%</li>
-		<li>دقت تجزیه‌گر نحوی: 85.2%</li>
+		<li>افزودن کسره اضافه به برچسب‌های صرفی</li>
 		<li>آموزش برچسب‌زن صرفی روی پیکره</li>
 		<li>واسط استفاده از داده‌های پیکره و دادگان</li>
+		<li>دقت تجزیه‌گر نحوی: 85.2%</li>
 	</ul>
 	<div><a href="https://github.com/sobhe/hazm/compare/v0.1...v0.2"><span class="glyphicon glyphicon-flash"></span>۲۱ تیر ۹۳</a></div>
 	<ul>
@@ -105,11 +113,11 @@
 	</ul>
 	<div><a href="https://github.com/sobhe/hazm/compare/41843e...v0.1"><span class="glyphicon glyphicon-flash"></span> ۲۳ آذر ۹۲</a></div>
 	<ul>
-		<li>دقت برچسب‌زن صرفی: 96.6%</li>
-		<li>دقت تجزیه‌گر نحوی: 83.3%</li>
 		<li>آموزش برچسب‌زن صرفی روی بی‌جن‌خان</li>
 		<li>آموزش تجزیه‌گر نحوی روی دادگان</li>
 		<li>واسط استفاده از داده‌های همشهری و بی‌جن‌خان</li>
+		<li>دقت برچسب‌زن صرفی: 96.6%</li>
+		<li>دقت تجزیه‌گر نحوی: 83.3%</li>
 	</ul>
 
 	<h2>سپاس</h2>

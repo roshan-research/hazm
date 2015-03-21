@@ -22,7 +22,7 @@
 <div class="container content">
 	<div id="query">
 		<h3>متن ورودی</h3>
-		<textarea class="form-control" style="min-height: 80px">هربار وقتي از سفري به ايران بر مي گردم ، دوست دارم سر فرو بيافکنم و برخاک سرزمينم بوسه اي بيافشانم. اين اولين بار بود که چنين حسي نداشتم. برعکس ، پاره اي از تنم را جا گذاشته بودم پشت خطوط مرزي ، خطوط بي راه و بي روح مرزي.</textarea>
+		<textarea class="form-control" style="min-height: 80px">هربار وقتي از سفري به ايران بر مي گردم ، دوست دارم سر فرو بيافکنم و بر خاک سرزمينم بوسه اي بيافشانم. اين اولين بار بود که چنين حسي نداشتم. برعکس ، پاره اي از تنم را جا گذاشته بودم پشت خطوط مرزي ، خطوط بي راه و بي روح مرزي.</textarea>
 		<div class="controls">
 			<button id="process" class="btn btn-primary">پردازش</button>
 			<button id="tag" class="btn btn-success">تحلیل صرفی</button>
@@ -44,6 +44,10 @@
 	</div>
 	<div class="demo" id="tagged">
 		<h3>تحلیل صرفی</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="chunked">
+		<h3>تجزیه سطحی</h3>
 		<div></div>
 	</div>
 	<div class="demo" id="parsed">
@@ -107,6 +111,15 @@
 			})
 			.always(hideLoading);
 	};
+	var chunk = function(data) {
+		$.post(server + '/chunk', data)
+			.done(function(chunked_text) {
+				sentences = $.parseJSON(chunked_text);
+				$('#chunked').show().find('div').empty();
+				for (s in sentences)
+					$('#chunked div').append('<li>'+ sentences[s] +'</li>');
+			});
+	};
 	var parse = function(data) {
 		$.post(server + '/parse', data)
 			.done(function(parsed_text) {
@@ -144,6 +157,7 @@
 		showLoading();
 	});
 	$('#parse').click(function() {
+		chunk({'tagged_text': $(this).attr('tagged_text')});
 		parse({'tagged_text': $(this).attr('tagged_text')});
 		showLoading();
 	});
