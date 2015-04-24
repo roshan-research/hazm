@@ -59,36 +59,9 @@ class DadeganReader():
 			for node in word_nodes(tree):
 				node['mtag'] = [node['ctag'], node['tag']]
 
-			for node in word_nodes(tree):
-				if node['rel'] in {'MOZ', 'NPOSTMOD', 'NEZ'} and tree.nodes[node['head']]['ctag'] in {'N', 'ADJ', 'PR', 'ADV', 'POSNUM', 'PREP'}:
-					if node['head'] != node['address'] - 1:
-						head = tree.nodes[node['head']]
-						hasConj = False
-						for dep in node_deps(head):
-							if tree.nodes[dep]['rel'] in ('NCONJ',):
-								hasConj = True
-								for conj in node_deps(tree.nodes[dep]):
-									if tree.nodes[conj]['rel'] == 'POSDEP':
-										tree.nodes[conj]['mtag'].append('EZ')
-										break
-								break
+				if 'ezafe' in node['feats']:
+					node['mtag'].append('EZ')
 
-						deps = node_deps(head)
-						while len(deps) > 0:
-							dep = deps.pop()
-							if dep == tree.nodes[dep]['head'] + 1:
-								deps = node_deps(tree.nodes[dep])
-								if len(deps) == 0:
-									tree.nodes[dep]['mtag'].append('EZ')
-
-						if hasConj is True:
-							continue
-
-					tree.nodes[node['head']]['mtag'].append('EZ')
-					if node['head'] < node['address'] - 1:
-						if node['rel'] == 'MOZ' and tree.nodes[node['address'] - 1]['rel'] == 'NPOSTMOD':
-							tree.nodes[node['address'] - 1]['mtag'].append('EZ')
-			for node in word_nodes(tree):
 				node['mtag'] = self._pos_map(node['mtag'])
 
 			yield tree
