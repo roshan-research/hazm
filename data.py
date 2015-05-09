@@ -162,13 +162,39 @@ def train_maltparser(train_file='corpora/train.conll', dev_file='corpora/dev.con
 	subprocess.Popen(['java', memory_min, memory_max, '-jar', path_to_jar, '-w', 'resources', '-c', model_file, '-i', train_data, '-f', options_file, '-F', features_file, '-m', 'learn']).wait()
 
 	# evaluation
-	parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer, model_file=model_file)
+	parser = MaltParser(tagger=tagger, lemmatizer=lemmatizer, model_file=model_file)
 	parsed_trees = parser.parse_sents(map(untag, test.sents()))
 
 	test_data, test_results = test_file +'.data', test_file +'.results'
 	print('\n'.join([tree.to_conll(10) for tree in test.trees()]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
 	print('\n'.join([tree.to_conll(10) for tree in parsed_trees]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
 	subprocess.Popen(['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results]).wait()
+
+
+def train_turboparser(train_file='corpora/train.conll', dev_file='corpora/dev.conll', test_file='corpora/test.conll', model_file='resources/turboparser.model'):
+
+	lemmatizer, tagger = Lemmatizer(), POSTagger(model='resources/postagger.model')
+
+	train, test = DadeganReader(train_file), DadeganReader(test_file)
+	train_data = train_file +'.data'
+	with codecs.open(train_data, 'w', 'utf8') as output:
+		for tree, sentence in zip(train.trees(), tagger.tag_sents(map(untag, train.sents()))):
+			for i, (node, word) in enumerate(zip(list(tree.nodes.values())[1:], sentence), start=1):
+				node['mtag'] = word[1]
+				node['lemma'] = lemmatizer.lemmatize(node['word'], node['mtag'])
+				print(i, node['word'].replace(' ', '_'), node['lemma'].replace(' ', '_'), node['mtag'], node['mtag'], '_', node['head'], node['rel'], '_', '_', sep='\t', file=output)
+			print(file=output)
+
+	subprocess.Popen(['./resources/TurboParser', '--train', '--file_train='+train_data, '--file_model='+model_file, '--logtostderr']).wait()
+
+	# evaluation
+	parser = TurboParser(tagger=tagger, lemmatizer=lemmatizer, model=model_file)
+	parsed_trees = parser.parse_sents(map(untag, test.sents()))
+
+	test_data, test_results = test_file +'.data', test_file +'.results'
+	print('\n'.join([tree.to_conll(10) for tree in test.trees()]).strip(), file=codecs.open(test_data, 'w', 'utf8'))
+	print('\n'.join([tree.to_conll(10) for tree in parsed_trees]).strip(), file=codecs.open(test_results, 'w', 'utf8'))
+	subprocess.Popen(['java', '-jar', 'resources/MaltEval.jar', '-g', test_data, '-s', test_results, '--pattern', '0.####', '--Metric', 'LAS;UAS']).wait()
 
 
 def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar', properties_file='resources/stanford-postagger.props', memory_min='-Xms1g', memory_max='-Xmx6g', test_size=.1, pos_map=peykare_coarse_pos_e):

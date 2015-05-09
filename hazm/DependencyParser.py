@@ -53,14 +53,14 @@ class TurboParser(ParserI):
 	interfaces [TurboParser](http://www.ark.cs.cmu.edu/TurboParser/) which you must manually install
 	"""
 
-	def __init__(self, tagger, lemmatizer, model):
+	def __init__(self, tagger, lemmatizer, model_file):
 		self.tagger = tagger
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
 		import turboparser
 		self._pturboparser = turboparser.PTurboParser()
 		self.interface = self._pturboparser.create_parser()
-		self.interface.load_parser_model(model)
+		self.interface.load_parser_model(model_file)
 
 	def parse_sents(self, sentences):
 		tagged_sentences = self.tagger.tag_sents(sentences)
