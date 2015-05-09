@@ -5,9 +5,10 @@ import sys, inspect, doctest, unittest
 from hazm import *
 
 modules = {
-	'peykare': PeykareReader,
-	'bijankhan': BijankhanReader,
+	'persica': PersicaReader,
 	'hamshahri': HamshahriReader,
+	'bijankhan': BijankhanReader,
+	'peykare': PeykareReader,
 	'dadegan': DadeganReader,
 	'valency': VerbValencyReader,
 	'treebank': TreebankReader,

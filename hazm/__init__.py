@@ -1,9 +1,10 @@
 
 from .WordTokenizer import WordTokenizer
 from .SentenceTokenizer import SentenceTokenizer
-from .PeykareReader import PeykareReader
-from .BijankhanReader import BijankhanReader
 from .HamshahriReader import HamshahriReader
+from .PersicaReader import PersicaReader
+from .BijankhanReader import BijankhanReader
+from .PeykareReader import PeykareReader
 from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
