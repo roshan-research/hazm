@@ -14,7 +14,7 @@ class MaltParser(MaltParser):
 
 	def __init__(self, tagger, lemmatizer, model_file='langModel.mco', working_dir='resources'):
 		os.environ['MALT_PARSER'] = working_dir
-		super(DependencyParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
+		super(MaltParser, self).__init__(tagger=tagger, mco=model_file, working_dir=working_dir)
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
 	def parse_sents(self, sentences, verbose=False):
