@@ -13,7 +13,7 @@ from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger
 from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
-from .DependencyParser import DependencyParser
+from .DependencyParser import DependencyParser, MaltParser, TurboParser
 
 
 def sent_tokenize(text):

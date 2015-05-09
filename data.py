@@ -70,7 +70,7 @@ def evaluate_chunker(treebank_root='corpora/treebank'):
 
 def train_postagger(peykare_root='corpora/peykare', model_file='resources/postagger.model', test_size=.1, sents_limit=None, pos_map=peykare_coarse_pos_e):
 
-	tagger = SequencePOSTagger(type='crf', algo='rprop', compact=True, patterns=[
+	tagger = POSTagger(type='crf', algo='rprop', compact=True, patterns=[
 		'*',
 
 		'u:wll=%x[-2,0]',
