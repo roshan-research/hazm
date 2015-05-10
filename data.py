@@ -110,7 +110,7 @@ def train_postagger(peykare_root='corpora/peykare', model_file='resources/postag
 	print(tagger.evaluate(test_sents))
 
 
-def train_chunker(train_file='corpora/train.conll', dev_file='corpora/dev.conll', test_file='corpora/test.conll', model_file='resources/chunker.model', pos_map=dadegan_coarse_pos_e):
+def train_chunker(train_file='corpora/train.conll', dev_file='corpora/dev.conll', test_file='corpora/test.conll', model_file='resources/chunker.model'):
 
 	tagger = POSTagger(model='resources/postagger.model')
 	chunker = Chunker(type='crf', algo='l-bfgs', compact=True, patterns=[
@@ -134,7 +134,7 @@ def train_chunker(train_file='corpora/train.conll', dev_file='corpora/dev.conll'
 			for (n, word) in zip(tree.treepositions('leaves'), sentence):
 				tree[n] = word
 
-	train, test = DadeganReader(train_file, pos_map=pos_map), DadeganReader(test_file, pos_map=pos_map)
+	train, test = DadeganReader(train_file), DadeganReader(test_file)
 	train_trees = list(train.chunked_trees())
 	retag_trees(train_trees, train.sents())
 	chunker.train(train_trees)
@@ -188,7 +188,7 @@ def train_turboparser(train_file='corpora/train.conll', dev_file='corpora/dev.co
 	subprocess.Popen(['./resources/TurboParser', '--train', '--file_train='+train_data, '--file_model='+model_file, '--logtostderr']).wait()
 
 	# evaluation
-	parser = TurboParser(tagger=tagger, lemmatizer=lemmatizer, model=model_file)
+	parser = TurboParser(tagger=tagger, lemmatizer=lemmatizer, model_file=model_file)
 	parsed_trees = parser.parse_sents(map(untag, test.sents()))
 
 	test_data, test_results = test_file +'.data', test_file +'.results'
