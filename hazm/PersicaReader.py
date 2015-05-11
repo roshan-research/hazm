@@ -34,6 +34,7 @@ class PersicaReader():
 						'category': lines[5],
 						'category2': lines[6],
 					}
+					lines = []
 
 	def texts(self):
 		for doc in self.docs():
