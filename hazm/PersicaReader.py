@@ -28,7 +28,7 @@ class PersicaReader():
 					yield {
 						'id': int(lines[0]),
 						'title': lines[1],
-						'body': lines[2],
+						'text': lines[2],
 						'date': lines[3],
 						'time': lines[4],
 						'category': lines[5],
