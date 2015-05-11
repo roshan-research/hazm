@@ -18,7 +18,7 @@ class PersicaReader():
 
 	def docs(self):
 		lines = []
-		for line in codecs.open(self._csv_file, encoding='utf8'):
+		for line in codecs.open(self._csv_file, encoding='utf-8-sig'):
 			line = line.strip()
 			if line:
 				if line.endswith(','):
