@@ -30,7 +30,7 @@ class SequenceTagger(TaggerI):
 
 	def tag_sents(self, sentences):
 		sentences = list(sentences)
-		lines = '\n\n'.join(['\n'.join(sentence) for sentence in sentences])
+		lines = '\n\n'.join(['\n'.join(sentence) for sentence in sentences]).replace(' ', '_')
 		results = self.model.label_sequence(lines).decode('utf8')
 		tags = iter(results.strip().split('\n'))
 		return [[(word, next(tags)) for word in sentence] for sentence in sentences]
@@ -47,7 +47,7 @@ class IOBTagger(SequenceTagger):
 
 	def tag_sents(self, sentences):
 		sentences = list(sentences)
-		lines = '\n\n'.join(['\n'.join([' '.join(word) for word in sentence]) for sentence in sentences])
+		lines = '\n\n'.join(['\n'.join(['\t'.join(word) for word in sentence]) for sentence in sentences]).replace(' ', '_')
 		results = self.model.label_sequence(lines).decode('utf8')
 		tags = iter(results.strip().split('\n'))
 		return [[word + (next(tags),) for word in sentence] for sentence in sentences]
