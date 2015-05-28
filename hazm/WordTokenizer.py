@@ -41,7 +41,7 @@ class WordTokenizer(TokenizerI):
 				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
-		text = self.pattern.sub(r' \1 ', text.replace('\n', ' '))
+		text = self.pattern.sub(r' \1 ', text.replace('\n', ' ').replace('\t', ' '))
 		tokens = [word for word in text.split(' ') if word]
 		if self._join_verb_parts:
 			tokens = self.join_verb_parts(tokens)
