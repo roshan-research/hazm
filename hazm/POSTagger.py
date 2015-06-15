@@ -13,7 +13,7 @@ class POSTagger(SequenceTagger):
 	"""
 
 
-class StanfordPOSTagger(stanford.POSTagger):
+class StanfordPOSTagger(stanford.StanfordPOSTagger):
 	"""
 	>>> tagger = StanfordPOSTagger(path_to_jar='resources/stanford-postagger.jar', path_to_model='resources/persian.tagger')
 	>>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
@@ -22,11 +22,11 @@ class StanfordPOSTagger(stanford.POSTagger):
 
 	def __init__(self, path_to_jar, path_to_model, *args, **kwargs):
 		self._SEPARATOR = '/'
-		super(stanford.POSTagger, self).__init__(encoding='utf8', path_to_jar=path_to_jar, path_to_model=path_to_model, *args, **kwargs)
+		super(stanford.StanfordPOSTagger, self).__init__(path_to_jar=path_to_jar, path_to_model=path_to_model, *args, **kwargs)
 
 	def tag(self, tokens):
 		return self.tag_sents([tokens])[0]
 
 	def tag_sents(self, sentences):
 		refined = map(lambda s: [w.replace(' ', '_') for w in s], sentences)
-		return super(stanford.POSTagger, self).tag_sents(refined)
+		return super(stanford.StanfordPOSTagger, self).tag_sents(refined)
