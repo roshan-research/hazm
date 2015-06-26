@@ -57,7 +57,7 @@ Python library for digesting Persian text.
 
 	pip install hazm
 
-We have also trained [tagger and parser models](http://dl.dropboxusercontent.com/u/90405495/resources.zip). You may put these models in the `resources` folder of your project.
+We have also trained [tagger and parser models](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip). You may put these models in the `resources` folder of your project.
 
 
 ## Extensions

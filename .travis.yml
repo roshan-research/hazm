@@ -9,10 +9,10 @@ python:
 
 install:
   - pip install .
-  - wget http://dl.dropboxusercontent.com/u/90405495/resources.zip
-  - wget http://dl.dropboxusercontent.com/u/90405495/resources-extra.zip
-  - unzip resources.zip -d resources
-  - unzip resources-extra.zip -d resources
+  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip
+  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-stanford.zip
+  - unzip resources-0.5.zip -d resources
+  - unzip resources-stanford.zip -d resources
 
 script: python tests.py
 
