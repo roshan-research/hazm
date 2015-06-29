@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 from nltk.tag.api import TaggerI
 from nltk.metrics import accuracy
-from wapiti import Model
 
 
 class SequenceTagger(TaggerI):
@@ -20,6 +19,7 @@ class SequenceTagger(TaggerI):
 	"""
 
 	def __init__(self, patterns=[], **options):
+		from wapiti import Model
 		self.model = Model(patterns='\n'.join(patterns), **options)
 
 	def train(self, sentences):

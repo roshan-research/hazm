@@ -1,8 +1,8 @@
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='hazm',
-	version='0.5',
+	version='0.5.1',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
 	author_email='az.nourian@gmail.com',
