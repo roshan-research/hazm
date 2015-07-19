@@ -8,7 +8,7 @@ from .PeykareReader import PeykareReader
 from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
-from .Normalizer import Normalizer
+from .Normalizer import Normalizer, InformalNormalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger

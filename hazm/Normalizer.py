@@ -2,9 +2,14 @@
 
 from __future__ import unicode_literals
 import re
+
+from .Lemmatizer import Lemmatizer
+from .WordTokenizer import *
+from .SentenceTokenizer import *
+from .POSTagger import *
+
 maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
-
 
 class Normalizer():
 	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True):
@@ -99,3 +104,84 @@ class Normalizer():
 		for pattern, repl in self.affix_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
+
+
+
+class InformalNormalizer(Normalizer):
+	def __init__(self, **args):
+		super(InformalNormalizer, self).__init__(**args)
+		lemmatizer = Lemmatizer()
+		self.verb_map = {
+			'ر': 'رفت#رو', 
+			'خوا': 'خواست#خواه',
+			'گ': 'گفت#گو',
+			'دار': 'داشت#دار',
+			'دون': 'دانست#دان',
+			'ش': 'شد#شو',
+			'کن': 'کرد#کن',
+			'تونست': 'توانستن#توانسن',
+		}
+		self.informal_verbs_mapping = {}
+		for informal, formal in self.verb_map.items():
+			informal_verbs = self.informal_conjugations(informal)
+			formal_verbs = lemmatizer.conjugations(formal)
+			for i in range(len(informal_verbs)):
+				self.informal_verbs_mapping[informal_verbs[i]] = formal_verbs[i+60]
+
+	def normalize(self, text):
+		"""
+		>>> normalizer = InformalNormalizer()
+		>>> normalizer.normalize('فردا می‌رم')
+		'فردا می‌روم'
+		"""
+		lemmatizer = Lemmatizer()
+		tagger = POSTagger(model='/home/afshin/dev/hazm/resources/postagger.model')
+		sent_tokenizer = SentenceTokenizer()
+		word_tokenizer = WordTokenizer()
+		super(InformalNormalizer, self).__init__(punctuation_spacing=False)
+		text = super(InformalNormalizer, self).normalize(text)
+		sentences = [\
+			word_tokenizer.tokenize(sentence)\
+			for sentence in sent_tokenizer.tokenize(text)\
+		]
+		tags = tagger.tag_sents(sentences)
+		formal_res = ''
+		informal_res = ''
+		for sent_tags in tags:
+			sent = [word for word, tag in sent_tags]
+			formal_res += (' '.join(sent) + '\n')
+			i = 0
+			for word, tag in sent_tags:
+				if tag == 'V': 
+					if (word.endswith('ه') and (word + 'د') in lemmatizer.verbs):
+						sent[i] = word + 'د'
+					elif word.endswith('ه') and (word[:-1] + 'د') in lemmatizer.verbs:
+						sent[i] = word[:-1] + 'د'
+					elif word.endswith('ن') and word + 'د' in lemmatizer.verbs:
+						sent[i] = word + 'د'
+					elif (word.endswith('ه') and (word[:-1] + 'ود') in lemmatizer.verbs): 
+						sent[i] = word[:-1] + 'ود'
+					elif word.endswith('ه') and word[:-1] in lemmatizer.words:
+						sent[i] = word[:-1] + ' است'
+					elif word in self.informal_verbs_mapping.keys():
+						sent[i] = self.informal_verbs_mapping[word]
+				if tag == 'N':
+					if word.endswith('ونه') and word[:-3] + 'انه' in lemmatizer.words:
+						sent[i] = word[:-3] + 'انه'
+				i += 1
+			informal_res += (' '.join(sent) + '\n')
+		return formal_res, informal_res
+
+
+	def informal_conjugations(self, verb):
+	  ends = ['م', 'ی', '', 'یم', 'ین', 'ن']
+	  present_simples = [verb + end for end in ends]
+	  if verb.endswith('ا'):
+	    present_simples[2] = verb + 'د'
+	  else:
+	    present_simples[2] = verb + 'ه'
+	  present_imperfects = ['می‌' + item for item in present_simples]
+	  present_not_imperfects = ['ن' + item for item in present_imperfects]
+	  present_subjunctives = ['ب'+ item for item in present_simples] 
+	  present_not_subjunctives = ['ن'+ item for item in present_simples] 
+	  return present_imperfects + present_not_imperfects + present_subjunctives + present_not_subjunctives

@@ -1,7 +1,8 @@
 Hazm
 ====
 
-Python library for digesting Persian text.
+This is going to be my work as an intern in Tetra co. on hazm library.
+hazm is a Python library for digesting Persian text.
 
 + Text cleaning
 + Sentence and word tokenizer
