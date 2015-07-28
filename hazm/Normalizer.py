@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import re
+from collections import Counter
 
 from .Lemmatizer import Lemmatizer
 from .WordTokenizer import *
@@ -114,19 +115,48 @@ class InformalNormalizer(Normalizer):
 		self.verb_map = {
 			'ر': 'رفت#رو', 
 			'خوا': 'خواست#خواه',
+			'خون': 'خواند#خوان',
 			'گ': 'گفت#گو',
 			'دار': 'داشت#دار',
 			'دون': 'دانست#دان',
 			'ش': 'شد#شو',
 			'کن': 'کرد#کن',
-			'تونست': 'توانستن#توانسن',
+			'تون': 'توانست#توان',
+			'د': 'داد#ده',
+			'زار': 'گزاشت#گزار',
+			'ذار': 'گذاشت#گذار',
+			'باش': 'بود#باش',
+			'کن': 'کرد#کن',
 		}
 		self.informal_verbs_mapping = {}
 		for informal, formal in self.verb_map.items():
 			informal_verbs = self.informal_conjugations(informal)
 			formal_verbs = lemmatizer.conjugations(formal)
 			for i in range(len(informal_verbs)):
-				self.informal_verbs_mapping[informal_verbs[i]] = formal_verbs[i+60]
+				self.informal_verbs_mapping[informal_verbs[i]] = formal_verbs[i+48]
+				if informal_verbs[i].startswith('می'):
+					self.informal_verbs_mapping[informal_verbs[i].replace('‌', ' ')] = formal_verbs[i+60]
+					self.informal_verbs_mapping[informal_verbs[i].replace('‌', '')] = formal_verbs[i+60]
+		self.noun_map = {}
+		for line in "یه یک\n\
+دیگه دیگر\n\
+اون آن\n\
+اگه اگر\n\
+چی چه\n\
+اقای آقای\n\
+اینا این‌ها\n\
+واسه برای\n\
+مگه مگر\n\
+ان آن\n\
+خودشون خودشان\n\
+همون همان\n\
+ایشون ایشان\n\
+اینقدر این‌قدر\n\
+اینه این است\n\
+کی کسی\n\
+هایی هایی".split('\n'):
+			n1, n2 = line.split(' ', 1)	
+			self.noun_map[n1] = n2
 
 	def normalize(self, text):
 		"""
@@ -138,7 +168,7 @@ class InformalNormalizer(Normalizer):
 		tagger = POSTagger(model='/home/afshin/dev/hazm/resources/postagger.model')
 		sent_tokenizer = SentenceTokenizer()
 		word_tokenizer = WordTokenizer()
-		super(InformalNormalizer, self).__init__(punctuation_spacing=False)
+		# super(InformalNormalizer, self).__init__(punctuation_spacing=False)
 		text = super(InformalNormalizer, self).normalize(text)
 		sentences = [\
 			word_tokenizer.tokenize(sentence)\
@@ -147,30 +177,74 @@ class InformalNormalizer(Normalizer):
 		tags = tagger.tag_sents(sentences)
 		formal_res = ''
 		informal_res = ''
+		nres = Counter()
+		vres = Counter()
 		for sent_tags in tags:
 			sent = [word for word, tag in sent_tags]
 			formal_res += (' '.join(sent) + '\n')
 			i = 0
 			for word, tag in sent_tags:
 				if tag == 'V': 
-					if (word.endswith('ه') and (word + 'د') in lemmatizer.verbs):
-						sent[i] = word + 'د'
-					elif word.endswith('ه') and (word[:-1] + 'د') in lemmatizer.verbs:
-						sent[i] = word[:-1] + 'د'
-					elif word.endswith('ن') and word + 'د' in lemmatizer.verbs:
-						sent[i] = word + 'د'
-					elif (word.endswith('ه') and (word[:-1] + 'ود') in lemmatizer.verbs): 
-						sent[i] = word[:-1] + 'ود'
-					elif word.endswith('ه') and word[:-1] in lemmatizer.words:
-						sent[i] = word[:-1] + ' است'
-					elif word in self.informal_verbs_mapping.keys():
-						sent[i] = self.informal_verbs_mapping[word]
-				if tag == 'N':
-					if word.endswith('ونه') and word[:-3] + 'انه' in lemmatizer.words:
-						sent[i] = word[:-3] + 'انه'
+					if not lemmatizer.lemmatize(word, tag) in lemmatizer.verbs:
+						if word.startswith('می') and word[2] != '‌':
+							_word = word[:2] + '‌' + word[2:]
+						elif word.startswith('نمی') and word[3] != '‌':
+							_word = word[:3] + '‌' + word[3:]
+						else:
+							_word = word
+
+						if _word in self.informal_verbs_mapping.keys():
+							sent[i] = self.informal_verbs_mapping[_word]
+
+						elif (_word.endswith('ه') and (_word + 'د') in lemmatizer.verbs):
+							sent[i] = _word + 'د'
+							vres[(word, sent[i])] += 1
+						elif _word.endswith('ه') and (_word[:-1] + 'د') in lemmatizer.verbs:
+							sent[i] = _word[:-1] + 'د'
+							vres[(word, sent[i])] += 1
+						elif _word.endswith('ن') and (_word + 'د') in lemmatizer.verbs:
+							sent[i] = _word + 'د'
+							vres[(word, sent[i])] += 1
+						elif (_word.endswith('ه') and (_word[:-1] + 'ود') in lemmatizer.verbs): 
+							sent[i] = _word[:-1] + 'ود'
+							vres[(word, sent[i])] += 1
+
+						else:
+							_word = _word[::-1].replace('و', 'ا', 1)[::-1]
+							if _word in lemmatizer.verbs:
+								sent[i] = _word
+								vres[(word, sent[i])] += 1
+							elif (_word.endswith('ه') and (_word + 'د') in lemmatizer.verbs):
+								sent[i] = _word + 'د'
+								vres[(word, sent[i])] += 1
+							elif _word.endswith('ه') and (_word[:-1] + 'د') in lemmatizer.verbs:
+								sent[i] = _word[:-1] + 'د'
+								vres[(word, sent[i])] += 1
+							elif _word.endswith('ن') and (_word + 'د') in lemmatizer.verbs:
+								sent[i] = _word + 'د'
+								vres[(word, sent[i])] += 1
+							elif (_word.endswith('ه') and (_word[:-1] + 'ود') in lemmatizer.verbs): 
+								sent[i] = _word[:-1] + 'ود'
+								vres[(word, sent[i])] += 1
+								#elif word.endswith('ه') and word[:-1] in lemmatizer.words:
+								#	sent[i] = word[:-1] + ' است'
+				else:
+					if not (word.startswith('و') or word.endswith('و')):
+						_word = word[::-1].replace('و', 'ا', 1)[::-1]
+					else:
+						_word = word
+					if not lemmatizer.lemmatize(word, tag) in lemmatizer.words:
+						if word in self.noun_map.keys():
+							sent[i] = self.noun_map[word]
+							nres[(word, sent[i])] += 1
+						elif _word in lemmatizer.words:
+							sent[i] = _word
+							nres[(word, sent[i])] += 1
+
 				i += 1
 			informal_res += (' '.join(sent) + '\n')
-		return formal_res, informal_res
+		#return formal_res, informal_res
+		return nres, vres
 
 
 	def informal_conjugations(self, verb):
@@ -180,6 +254,7 @@ class InformalNormalizer(Normalizer):
 	    present_simples[2] = verb + 'د'
 	  else:
 	    present_simples[2] = verb + 'ه'
+	  present_not_simples = ['ن' + item for item in present_simples]
 	  present_imperfects = ['می‌' + item for item in present_simples]
 	  present_not_imperfects = ['ن' + item for item in present_imperfects]
 	  present_subjunctives = ['ب'+ item for item in present_simples] 

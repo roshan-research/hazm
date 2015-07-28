@@ -106,3 +106,69 @@ class Lemmatizer():
 		with_nots = lambda items: items + list(map(lambda item: 'ن' + item, items))
 		aa_refinement = lambda items: list(map(lambda item: item.replace('بآ', 'بیا').replace('نآ', 'نیا'), items)) if items[0].startswith('آ') else items
 		return aa_refinement(with_nots(past_simples) + with_nots(present_simples) + with_nots(past_imperfects) + with_nots(past_narratives) + with_nots(present_simples) + with_nots(present_imperfects) + present_subjunctives + present_not_subjunctives + imperatives)
+
+
+class InformalLemmatizer(object):
+  def __init__(self):
+    self.lemm = Lemmatizer()
+    verb_map = {
+      'ر': 'رفت#رو', 
+      'خوا': 'خواست#خواه',
+      'گ': 'گفت#گو',
+      'دار': 'داشت#دار',
+      'دون': 'دانست#دان',
+      'ش': 'شد#شو',
+      'کن': 'کرد#کن',
+      'تونست': 'توانست#توان',
+      'خون': 'خواند#خوان',
+      'د': 'داد#ده',
+      'زار': 'گزاشت#گزار',
+      'ذار': 'گذاشت#گذار',
+      'باش': 'بود#باش',
+      'کن': 'کرد#کن',
+    }
+    self.iverbs = {}
+    for informal, formal in verb_map.items():
+      informal_verbs = self.informal_conjugations(informal)
+      formal_verbs = self.lemm.conjugations(formal)
+      for iv in informal_verbs:
+        if iv.startswith('می'):
+          self.iverbs[ iv.replace('‌', ' ') ] = formal
+          self.iverbs[ iv.replace('‌', '') ] = formal
+        self.iverbs[iv] = formal
+      for v in formal_verbs:
+        if v.startswith('می'):
+          self.iverbs[ v.replace('‌', ' ') ] = formal
+          self.iverbs[ v.replace('‌', '') ] = formal
+        self.iverbs[v] = formal
+    self.iwords = {
+      'یه': 'یک', 'دیگه': 'دیگر', 'اون': 'آن', 'اگه': 'اگر', \
+      'چی': 'چه', 'اقای': 'آقای', 'اینا': 'این‌ها', 'واسه': 'برای', \
+      'مگه': 'مگر', 'خودشون': 'خودشان', 'همون': 'همان', \
+      'ایشون': 'ایشان', 'اینقدر': 'این‌قدر', 'اینه': 'این است',\
+      'کی': 'کسی', 'هایی': 'هایی'
+    }
+
+  def lemmatize(self, word):
+    if word in self.iverbs:
+      return self.iverbs[word]
+    elif word in self.iwords:
+      return self.iwords[word]
+    if word.endswith('ی') and word[:-1].strip() in self.iwords:
+      return self.iwords
+    else:
+      return self.lemm.lemmatize(word)
+
+  def informal_conjugations(self, verb):
+    ends = ['م', 'ی', '', 'یم', 'ین', 'ید', 'ن', 'ند']
+    present_simples = [verb + end for end in ends]
+    if verb.endswith('ا'):
+      present_simples[2] = verb + 'د'
+    else:
+      present_simples[2] = verb + 'ه'
+    present_not_simples = ['ن' + item for item in present_simples]
+    present_imperfects = ['می‌' + item for item in present_simples]
+    present_not_imperfects = ['ن' + item for item in present_imperfects]
+    present_subjunctives = ['ب'+ item for item in present_simples] 
+    present_not_subjunctives = ['ن'+ item for item in present_simples] 
+    return present_simples + present_not_simples + present_imperfects + present_not_imperfects + present_subjunctives + present_not_subjunctives

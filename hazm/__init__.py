@@ -10,7 +10,7 @@ from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
 from .Normalizer import Normalizer, InformalNormalizer
 from .Stemmer import Stemmer
-from .Lemmatizer import Lemmatizer
+from .Lemmatizer import Lemmatizer, InformalLemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger
 from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
