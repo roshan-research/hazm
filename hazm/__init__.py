@@ -8,9 +8,10 @@ from .PeykareReader import PeykareReader
 from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
-from .Normalizer import Normalizer, InformalNormalizer
+from .Normalizer import Normalizer
+from .InformalNormalizer import InformalNormalizer
 from .Stemmer import Stemmer
-from .Lemmatizer import Lemmatizer, InformalLemmatizer
+from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger
 from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
