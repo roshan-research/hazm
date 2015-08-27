@@ -102,7 +102,7 @@ class Lemmatizer():
         present_simples = [present + end for end in ends]
         present_imperfects = ['می‌' + item for item in present_simples]
         present_subjunctives = [
-            item if item.startswith('ب') else 'پ' + item for item in present_simples]
+            item if item.startswith('ب') else 'ب' + item for item in present_simples]
         present_not_subjunctives = ['ن' + item for item in present_simples]
 
         with_nots = lambda items: items + \

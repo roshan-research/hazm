@@ -34,8 +34,6 @@ class InformalNormalizer(Normalizer):
                     if i.endswith('ین'):
                         res[i[:-1] + 'د'] = j
             
-            for i,j in res.items():
-                print(i,j) 
             return res
 
         with open(verb_file, 'r') as vf:
@@ -85,7 +83,7 @@ class InformalNormalizer(Normalizer):
         present_not_simples = ['ن' + item for item in present_simples]
         present_imperfects = ['می‌' + item for item in present_simples]
         present_not_imperfects = ['ن' + item for item in present_imperfects]
-        present_subjunctives = [item if item.startswith('ب') else 'پ' + item for item in present_simples]
+        present_subjunctives = [item if item.startswith('ب') else 'ب' + item for item in present_simples]
         present_not_subjunctives = ['ن' + item for item in present_simples]
         return present_simples + present_not_simples + \
             present_imperfects + present_not_imperfects + \
