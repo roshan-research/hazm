@@ -3,19 +3,26 @@ from __future__ import unicode_literals
 from .utils import informal_verbs, informal_words
 from .Normalizer import Normalizer
 from .Lemmatizer import Lemmatizer
+from .Stemmer import Stemmer
 from .WordTokenizer import *
 from .SentenceTokenizer import *
 
 
+ADAD = set(['۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', '۰'])
+
+
 class InformalNormalizer(Normalizer):
 
-    def __init__(self, verb_file=informal_verbs, word_file=informal_words, **args):
+    def __init__(self, verb_file=informal_verbs, word_file=informal_words, seperation_flag=False, **args):
+        self.seperation_flag = seperation_flag
         super(InformalNormalizer, self).__init__(**args)
-        lemmatizer = Lemmatizer()
+        self.lemmatizer = Lemmatizer()
+        self.ilemmatizer = InformalLemmatizer()
+        self.stemmer = Stemmer()
 
         def informal_to_formal_conjucation(i, f, flag):
             iv = self.informal_conjugations(i)
-            fv = lemmatizer.conjugations(f)
+            fv = self.lemmatizer.conjugations(f)
             res = {}
             if flag:
                 for i, j in zip(iv, fv[48:]):
@@ -26,14 +33,14 @@ class InformalNormalizer(Normalizer):
                     if i.endswith('ین'):
                         res[i[:-1] + 'د'] = j
             else:
-                 for i, j in zip(iv[8:], fv[56:]):
+                for i, j in zip(iv[8:], fv[56:]):
                     res[i] = j
                     if '‌' in i:
                         res[i.replace('‌', '')] = j
                         res[i.replace('‌', ' ')] = j
                     if i.endswith('ین'):
                         res[i[:-1] + 'د'] = j
-            
+
             return res
 
         with open(verb_file, 'r') as vf:
@@ -48,12 +55,56 @@ class InformalNormalizer(Normalizer):
                 map(lambda x: x.strip().split(' ', 1), wf)
             )
 
+        self.words = set()
+        if self.seperation_flag:
+            self.words.update(self.iword_map.keys())
+            self.words.update(self.iword_map.values())
+            self.words.update(self.iverb_map.keys())
+            self.words.update(self.iverb_map.values())
+            self.words.update(self.lemmatizer.words)
+            self.words.update(self.lemmatizer.verbs.keys())
+            self.words.update(self.lemmatizer.verbs.values())
+
     def normalize(self, text):
         """
         >>> normalizer = InformalNormalizer()
         >>> normalizer.normalize('فردا می‌رم')
         'فردا می‌روم'
+        >>> normalizer = InformalNormalizer(seperation_flag=True)
+        >>> normalizer.normalize("صداوسیماجمهوری")
+        'صداوسیما جمهوری'
         """
+  
+        def shekan(word):
+            res = ['']
+            for i in word:
+                res[-1] += i
+                if i in ('ا', 'د', 'ذ', 'ر', 'ز', 'ژ', 'و') or i in ADAD:
+                    res.append('')
+            while '' in res:
+                res.remove('')
+            return res
+
+        def perm(lst):
+            if len(lst) > 1:
+                up = perm(lst[1:])
+            else:
+                return [lst]
+            res = []
+            for i in up:
+                res.append([lst[0]] + i)
+                res.append([lst[0] + i[0]] + i[1:])
+            res.sort(key=len)
+            return res
+
+        def split(word):
+            word = re.sub(r'(.)\1{2,}', r'\1', word)
+            ps = perm(shekan(word))
+            for c in ps:
+                if set(map(lambda x: self.ilemmatizer.lemmatize(x), c)).issubset(self.words):
+                    return ' '.join(c)
+            return word
+
         sent_tokenizer = SentenceTokenizer()
         word_tokenizer = WordTokenizer()
         text = super(InformalNormalizer, self).normalize(text)
@@ -64,11 +115,33 @@ class InformalNormalizer(Normalizer):
 
         for i in range(len(sents)):
             for j in range(len(sents[i])):
-                if sents[i][j] in self.iverb_map:
-                    sents[i][j] = self.iverb_map[sents[i][j]]
+                word = sents[i][j]
+                if word in self.lemmatizer.words or word in self.lemmatizer.verbs:
+                    pass
 
-                if sents[i][j] in self.iword_map:
-                    sents[i][j] = self.iword_map[sents[i][j]]
+                elif word in self.iverb_map:
+                    sents[i][j] = self.iverb_map[word]
+
+                elif word in self.iword_map:
+                    sents[i][j] = self.iword_map[word]
+
+                elif word.endswith('ش') and word[:-1] in self.ilemmatizer.verbs:
+                    sents[i][j] = self.iverb_map.get(word[:-1], word[:-1]) + '‌اش'
+
+                elif word.endswith('ت') and word[:-1] in self.ilemmatizer.verbs:
+                    sents[i][j] = self.iverb_map.get(word[:-1], word[:-1]) + '‌ات'
+
+                elif (not word in self.ilemmatizer.verbs) and word.endswith('م') and word[:-1] in self.ilemmatizer.words:
+                    sents[i][j] = self.iword_map.get(word[:-1], word[:-1]) + '‌ام'
+
+                elif (not word in self.ilemmatizer.verbs) and word.endswith('ه') and word[:-1] in self.ilemmatizer.words:
+                    sents[i][j] = self.iword_map.get(word[:-1], word[:-1]) + ' است'
+
+                elif (not word in self.ilemmatizer.verbs) and word.endswith('ون') and self.lemmatizer.lemmatize(word[:-2] + 'ان') in self.ilemmatizer.words:
+                    sents[i][j] = word[:-2] + 'ان'
+
+                elif self.seperation_flag:
+                    sents[i][j] = split(word)
 
         text = '\n'.join([' '.join(word) for word in sents])
         return super(InformalNormalizer, self).normalize(text)
@@ -83,71 +156,57 @@ class InformalNormalizer(Normalizer):
         present_not_simples = ['ن' + item for item in present_simples]
         present_imperfects = ['می‌' + item for item in present_simples]
         present_not_imperfects = ['ن' + item for item in present_imperfects]
-        present_subjunctives = [item if item.startswith('ب') else 'ب' + item for item in present_simples]
+        present_subjunctives = [
+            item if item.startswith('ب') else 'ب' + item for item in present_simples]
         present_not_subjunctives = ['ن' + item for item in present_simples]
         return present_simples + present_not_simples + \
             present_imperfects + present_not_imperfects + \
             present_subjunctives + present_not_subjunctives
 
 
-class InformalLemmatizer(object):
+class InformalLemmatizer(Lemmatizer):
 
-    def __init__(self):
-        self.lemm = Lemmatizer()
+    def __init__(self, **args):
+        super(InformalLemmatizer, self).__init__(**args)
 
-    def lemmatize(self, word):
-        if (word.endswith('ه') and (word + 'د') in lemmatizer.verbs):
-          return word + 'د'
-        elif word.endswith('ه') and (word[:-1] + 'د') in lemmatizer.verbs:
-          sent[i] = word[:-1] + 'د'
-          vres[(word, sent[i])] += 1
-        elif word.endswith('ن') and (word + 'د') in lemmatizer.verbs:
-          sent[i] = word + 'د'
-          vres[(word, sent[i])] += 1
-        elif (word.endswith('ه') and (word[:-1] + 'ود') in lemmatizer.verbs):
-          sent[i] = word[:-1] + 'ود'
-          vres[(word, sent[i])] += 1
+        temp = []
+        for word in self.words:
+            if word.endswith("ً"):
+                temp.append(word[:-1])
 
+        self.words.update(temp)
+
+        temp = {}
+        for verb in self.verbs:
+            if verb.endswith("د"):
+                temp[ verb[:-1] + 'ن' ] = self.verbs[verb]
+
+        self.verbs.update(temp)
+
+        with open(informal_verbs, 'r') as vf:
+            for f, i, flag in map(lambda x: x.strip().split(' ', 2), vf):
+                self.verbs.update(dict(
+                    map(lambda x: (x, f), self.iconjugations(i))
+                ))
+
+        with open(informal_words, 'r') as wf:
+            self.words.update(
+                map(lambda x: x.strip().split(' ', 1)[0], wf)
+            )
+
+    def iconjugations(self, verb):
+        ends = ['م', 'ی', '', 'یم', 'ین', 'ن']
+        present_simples = [verb + end for end in ends]
+        if verb.endswith('ا'):
+            present_simples[2] = verb + 'د'
         else:
-            word = word[::-1].replace('و', 'ا', 1)[::-1]
-            if word in lemmatizer.verbs:
-                sent[i] = word
-                vres[(word, sent[i])] += 1
-            elif (word.endswith('ه') and (word + 'د') in lemmatizer.verbs):
-                sent[i] = word + 'د'
-                vres[(word, sent[i])] += 1
-            elif word.endswith('ه') and (word[:-1] + 'د') in lemmatizer.verbs:
-                sent[i] = word[:-1] + 'د'
-                vres[(word, sent[i])] += 1
-            elif word.endswith('ن') and (word + 'د') in lemmatizer.verbs:
-                sent[i] = word + 'د'
-                vres[(word, sent[i])] += 1
-            elif (word.endswith('ه') and (word[:-1] + 'ود') in lemmatizer.verbs):
-                sent[i] = word[:-1] + 'ود'
-                vres[(word, sent[i])] += 1
-            else:
-                if not word in inf.iword_map:
-                    nres[word] += 1
-                if not (word.startswith('و') or word.endswith('و')):
-                    word = word[::-1].replace('و', 'ا', 1)[::-1]
-                else:
-                    word = word
-            """
-            if not lemmatizer.lemmatize(word, tag) in lemmatizer.words:
-      if word in inf.iword_map:
-        sent[i] = inf.iword_map[word]
-        nres[(word, sent[i])] += 1
-      elif word in lemmatizer.words:
-        sent[i] = word
-        nres[(word, sent[i])] += 1
-
-    if word in self.iverbs:
-            return self.iverbs[word]
-        elif word in self.iwords:
-            return self.iwords[word]
-        if word.endswith('ی') and word[:-1].strip() in self.iwords:
-            return self.iwords
-        else:
-            return self.lemm.lemmatize(word)
-            """
-
+            present_simples[2] = verb + 'ه'
+        present_not_simples = ['ن' + item for item in present_simples]
+        present_imperfects = ['می‌' + item for item in present_simples]
+        present_not_imperfects = ['ن' + item for item in present_imperfects]
+        present_subjunctives = [
+            item if item.startswith('ب') else 'ب' + item for item in present_simples]
+        present_not_subjunctives = ['ن' + item for item in present_simples]
+        return present_simples + present_not_simples + \
+            present_imperfects + present_not_imperfects + \
+            present_subjunctives + present_not_subjunctives

@@ -20,7 +20,8 @@ modules = {
 	'tagger': SequenceTagger,
 	'postagger': POSTagger,
 	'chunker': Chunker,
-	'parser': DependencyParser
+	'parser': DependencyParser,
+	'informal_normalizer': InformalNormalizer,
 }
 
 
