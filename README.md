@@ -64,8 +64,8 @@ We have also trained [tagger and parser models](https://github.com/sobhe/hazm/re
 
 Note: These are not official versions of hazm, not uptodate on functionality and are not supported by Sobhe.
 
-+ [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java version of Hazm
-+ [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# version of Hazm
++ [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java port of Hazm
++ [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# port of Hazm
 
 ## Thanks
 
