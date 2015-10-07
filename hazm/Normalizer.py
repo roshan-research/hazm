@@ -17,28 +17,28 @@ class Normalizer():
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
 			self.character_refinement_patterns = compile_patterns([
-				(r'[ـ\r]', ''), # remove keshide, carriage returns
-				(r' +', ' '), # remove extra spaces
-				(r'\n\n+', '\n\n'), # remove extra newlines
-				('"([^\n"]+)"', r'«\1»'), # replace quotation with gyoome
-				('([\d+])\.([\d+])', r'\1٫\2'), # replace dot with momayez
-				(r' ?\.\.\.', ' …'), # replace 3 dots
+				(r'[ـ\r]', ''),  # remove keshide, carriage returns
+				(r' +', ' '),  # remove extra spaces
+				(r'\n\n+', '\n\n'),  # remove extra newlines
+				('"([^\n"]+)"', r'«\1»'),  # replace quotation with gyoome
+				('([\d+])\.([\d+])', r'\1٫\2'),  # replace dot with momayez
+				(r' ?\.\.\.', ' …'),  # replace 3 dots
 			])
 
 		if punctuation_spacing:
 			self.punctuation_spacing_patterns = compile_patterns([
-				(' (['+ punc_after +'])', r'\1'), # remove space before
-				('(['+ punc_before +']) ', r'\1'), # remove space after
-				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'), # put space after
-				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'), # put space before
+				(' (['+ punc_after +'])', r'\1'),  # remove space before
+				('(['+ punc_before +']) ', r'\1'),  # remove space after
+				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
+				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'),  # put space before
 			])
 
 		if affix_spacing:
 			self.affix_spacing_patterns = compile_patterns([
-				(r'([^ ]ه) ی ', r'\1‌ی '), # fix ی space
-				(r'(^| )(ن?می) ', r'\1\2‌'), # put zwnj after می, نمی
-				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'), # put zwnj before تر, ترین, ها, های
-				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'), # join ام, ات, اش, ای
+				(r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
+				(r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
+				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, ترین, ها, های
+				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
 			])
 
 	def normalize(self, text):

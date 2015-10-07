@@ -12,16 +12,18 @@ class MaltParser(MaltParser):
 	interfaces [MaltParser](http://www.maltparser.org/)
 	"""
 
-	def __init__(self, tagger, lemmatizer, model_file='langModel.mco', working_dir='resources'):
-		os.environ['MALT_PARSER'] = working_dir
-		super(MaltParser, self).__init__(tagger=tagger, model_filename=model_file, working_dir=working_dir)
+	def __init__(self, tagger, lemmatizer, working_dir='resources', model_file='langModel.mco'):
+		self.tagger = tagger
+		self.working_dir = working_dir
+		self.mco = model_file
+		self._malt_bin = os.path.join(working_dir, 'malt.jar')
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
 
 	def parse_sents(self, sentences, verbose=False):
 		tagged_sentences = self.tagger.tag_sents(sentences)
-		return self.tagged_parse_sents(tagged_sentences, verbose)
+		return self.parse_tagged_sents(tagged_sentences, verbose)
 
-	def tagged_parse_sents(self, sentences, verbose=False):
+	def parse_tagged_sents(self, sentences, verbose=False):
 		input_file = tempfile.NamedTemporaryFile(prefix='malt_input.conll', dir=self.working_dir, delete=False)
 		output_file = tempfile.NamedTemporaryFile(prefix='malt_output.conll', dir=self.working_dir, delete=False)
 
