@@ -1,5 +1,6 @@
-from __future__ import unicode_literals
+# coding: utf8
 
+from __future__ import unicode_literals
 from .utils import informal_verbs, informal_words
 from .Normalizer import Normalizer
 from .Lemmatizer import Lemmatizer
@@ -74,7 +75,7 @@ class InformalNormalizer(Normalizer):
         >>> normalizer.normalize("صداوسیماجمهوری")
         'صداوسیما جمهوری'
         """
-  
+
         def shekan(word):
             res = ['']
             for i in word:

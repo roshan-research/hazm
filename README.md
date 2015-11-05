@@ -1,8 +1,7 @@
 Hazm
 ====
 
-This is going to be my work as an intern in Tetra co. on hazm library.
-hazm is a Python library for digesting Persian text.
+Python library for digesting Persian text.
 
 + Text cleaning
 + Sentence and word tokenizer
@@ -10,7 +9,7 @@ hazm is a Python library for digesting Persian text.
 + POS tagger
 + Shallow parser
 + Dependency parser
-+ Interfaces for Persian corpora 
++ Interfaces for Persian corpora
 + [NLTK](http://nltk.org/) compatible
 + Python 2.7, 3.2, 3.3 and 3.4 support
 + [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
