@@ -2,8 +2,15 @@
 
 from __future__ import unicode_literals
 import re
+
+from .Lemmatizer import Lemmatizer
+from .WordTokenizer import *
+from .SentenceTokenizer import *
+from .POSTagger import *
+
 maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
-compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
+compile_patterns = lambda patterns: [
+    (re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer():
