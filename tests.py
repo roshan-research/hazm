@@ -12,6 +12,7 @@ modules = {
 	'dadegan': DadeganReader,
 	'valency': VerbValencyReader,
 	'treebank': TreebankReader,
+	'sentipers': SentiPersReader,
 	'sentence_tokenizer': SentenceTokenizer,
 	'word_tokenizer': WordTokenizer,
 	'normalizer': Normalizer,

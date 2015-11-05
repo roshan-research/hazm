@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Product Title="Motorola Digital Photo Frame MF700" Type="Computer">
+  <Features>
+    <Feature Name="نوع قطعه ">مانیتور</Feature>
+    <Feature Name="اندازه ">204 × 151 × 20 mm</Feature>
+    <Feature Name="وزن ">290 گرم</Feature>
+    <Feature Name="مشخصات فنی ">صفحه نمایش 7 اینچی TFT با رزولوشن 234 × 432 پیکسلقابلیت پشتیبانی از کارت‌های حافظه‌ی SD, SDHC, MS, MMCمجهز به پورت USB برای نمایش عکس‌ها از مموری کارت و فلشقابلیت چرخاندن و زوم کردن بر روی عکس‌هادارای اسلایدشوهای مختلف، نمایش عکس‌ها با حالت‌های مختلف و جلوه‌های مختلف تغییر بین عکس‌هادارای تایمر، ساعت، تقویمفرمت‌ پخش تصویر JPEGفرمت‌ پخش موسیقی MP3</Feature>
+    <Feature Name="سایر قابلیت ها ">رنگ مشکیگارانتی یکساله مارشال</Feature>
+  </Features>
+  <Review ID="ReviewBody" Value="">
+    <Sentence ID="rev-1" Value="">تاکنون نقدی برای اين محصول درج نشده است.</Sentence>
+  </Review>
+  <Advantages>
+    <Advantage>صفحه نمایش 7 اینچی TFT با رزولوشن 234 × 432 پیکسل</Advantage>
+    <Advantage>قابلیت پشتیبانی از کارت‌های حافظه‌ی SD, SDHC, MS, MMC</Advantage>
+    <Advantage>مجهز به پورت USB برای نمایش عکس‌ها از مموری کارت و فلش</Advantage>
+    <Advantage>قابلیت چرخاندن و زوم کردن بر روی عکس‌ها</Advantage>
+  </Advantages>
+  <Opinions>
+    <Opinion ID="op-1" Holder="آرمين وحيدي نسب " Value="0">
+      <Sentence ID="op-1-1" Value="0">البته که هست .</Sentence>
+      <Sentence ID="op-1-2" Value="+1">بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .</Sentence>
+      <Sentence ID="op-1-3" Value="0">خوب طبق معمول تو ايران کاربرد آنچناني ندارد چون مردم ايران دنبال اين نوع تنوع گرايي ها نيستند ولي به نظر من کاربرد خواهد داشت.</Sentence>
+      <Sentence ID="op-1-4" Value="+1">به نظر من اين مدل بهتره Motorola Digital Photo Frame MF810
+</Sentence>
+    </Opinion>
+  </Opinions>
+  <Voters Value="5" />
+  <Performance Value="6.40" />
+  <Capability Value="5.30" />
+  <Production_Quality Value="5.70" />
+  <Ergonomics Value="6.00" />
+  <Purchase_Value Value="6.00" />
+  <Tags />
+  <Keywords>
+    <Keyword ID="keywordID1000" Coordinate="[op-1-2,6,11]" Root="" Synonym="" Value="+" />
+    <Keyword ID="keywordID1001" Coordinate="[op-1-2,39,43]" Root="" Synonym="" Value="+" />
+    <Keyword ID="keywordID1002" Coordinate="[op-1-3,38,43]" Root="" Synonym="" Value="-" />
+    <Keyword ID="keywordID1003" Coordinate="[op-1-3,108,114]" Root="" Synonym="" Value="+" />
+    <Keyword ID="keywordID1004" Coordinate="[op-1-4,18,23]" Root="بهتر" Synonym="" Value="+" />
+  </Keywords>
+  <Index>
+    <Keyword_Index Value="5" />
+    <Tag_Index Value="0" />
+  </Index>
+</Product>
