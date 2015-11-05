@@ -9,7 +9,7 @@ from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
 from .Normalizer import Normalizer
-from .InformalNormalizer import InformalNormalizer, InformalLemmatizer
+from .InformalNormalizer import InformalNormalizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger
