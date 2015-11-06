@@ -21,7 +21,7 @@ class SentiPersReader():
 
 		def element_sentences(element):
 			for sentence in element.getElementsByTagName('Sentence'):
-				yield {'text': sentence.childNodes[0].data, 'id': sentence.getAttribute('ID'), 'value': int(sentence.getAttribute('Value') if sentence.getAttribute('Value') else None)}
+				yield {'text': sentence.childNodes[0].data, 'id': sentence.getAttribute('ID'), 'value': int(sentence.getAttribute('Value')) if comment.getAttribute('Value') else None}
 
 		for root, dirs, files in os.walk(self._root):
 			for filename in sorted(files):
@@ -45,7 +45,7 @@ class SentiPersReader():
 							'id': comment.getAttribute('ID'),
 							'type': comment.nodeName,
 							'author': comment.getAttribute('Holder').strip(),
-							'value': int(comment.getAttribute('Value')),
+							'value': int(comment.getAttribute('Value')) if comment.getAttribute('Value') else None,
 							'sentences': list(element_sentences(comment))
 						})
 

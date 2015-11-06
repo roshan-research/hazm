@@ -52,6 +52,20 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', peykare_root='corpor
 			print(count, item, file=output)
 
 
+def evaluate_informal_normalizer(sentipars_root='corpora/sentipers'):
+	sentipers = SentiPersReader(root=sentipars_root)
+	normalizer = Normalizer()
+	inforal_normalizer = InformalNormalizer()
+
+	output = codecs.open('resources/normalized.txt', 'w', 'utf8')
+	for comments in sentipers.comments():
+		for comment in comments:
+			for sentence in comment:
+				print(normalizer.normalize(sentence), file=output)
+				print(inforal_normalizer.normalize(sentence), file=output)
+				print(file=output)
+
+
 def evaluate_chunker(treebank_root='corpora/treebank'):
 	treebank = TreebankReader(treebank_root, join_clitics=True, join_verb_parts=True)
 	chunker = Chunker()
