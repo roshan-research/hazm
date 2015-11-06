@@ -10,7 +10,7 @@ from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
 from .SentiPersReader import SentiPersReader
 from .Normalizer import Normalizer
-from .InformalNormalizer import InformalNormalizer
+from .InformalNormalizer import InformalNormalizer, InformalLemmatizer
 from .Stemmer import Stemmer
 from .Lemmatizer import Lemmatizer
 from .SequenceTagger import SequenceTagger, IOBTagger

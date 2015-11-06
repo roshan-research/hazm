@@ -7,7 +7,7 @@ maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
-class Normalizer():
+class Normalizer(object):
 	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing

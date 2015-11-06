@@ -1,6 +1,7 @@
 # coding: utf8
 
 from __future__ import unicode_literals
+import codecs
 from .utils import informal_verbs, informal_words, NUMBERS
 from .Normalizer import Normalizer
 from .Lemmatizer import Lemmatizer
@@ -11,12 +12,12 @@ from .SentenceTokenizer import *
 
 class InformalNormalizer(Normalizer):
 
-	def __init__(self, verb_file=informal_verbs, word_file=informal_words, seperation_flag=False, **args):
+	def __init__(self, verb_file=informal_verbs, word_file=informal_words, seperation_flag=False, **kargs):
 		self.seperation_flag = seperation_flag
-		super(InformalNormalizer, self).__init__(**args)
 		self.lemmatizer = Lemmatizer()
 		self.ilemmatizer = InformalLemmatizer()
 		self.stemmer = Stemmer()
+		super(InformalNormalizer, self).__init__(**kargs)
 
 		def informal_to_formal_conjucation(i, f, flag):
 			iv = self.informal_conjugations(i)
@@ -41,14 +42,14 @@ class InformalNormalizer(Normalizer):
 
 			return res
 
-		with open(verb_file, 'r') as vf:
+		with codecs.open(verb_file, encoding='utf8') as vf:
 			self.iverb_map = {}
 			for f, i, flag in map(lambda x: x.strip().split(' ', 2), vf):
 				self.iverb_map.update(
 					informal_to_formal_conjucation(i, f, flag)
 				)
 
-		with open(word_file, 'r') as wf:
+		with codecs.open(word_file, encoding='utf8') as wf:
 			self.iword_map = dict(
 				map(lambda x: x.strip().split(' ', 1), wf)
 			)
@@ -164,8 +165,8 @@ class InformalNormalizer(Normalizer):
 
 class InformalLemmatizer(Lemmatizer):
 
-	def __init__(self, **args):
-		super(InformalLemmatizer, self).__init__(**args)
+	def __init__(self, **kargs):
+		super(InformalLemmatizer, self).__init__(**kargs)
 
 		temp = []
 		for word in self.words:
@@ -181,13 +182,13 @@ class InformalLemmatizer(Lemmatizer):
 
 		self.verbs.update(temp)
 
-		with open(informal_verbs, 'r') as vf:
+		with codecs.open(informal_verbs, encoding='utf8') as vf:
 			for f, i, flag in map(lambda x: x.strip().split(' ', 2), vf):
 				self.verbs.update(dict(
 					map(lambda x: (x, f), self.iconjugations(i))
 				))
 
-		with open(informal_words, 'r') as wf:
+		with codecs.open(informal_words, encoding='utf8') as wf:
 			self.words.update(
 				map(lambda x: x.strip().split(' ', 1)[0], wf)
 			)

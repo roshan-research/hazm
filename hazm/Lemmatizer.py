@@ -7,7 +7,7 @@ from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
 
 
-class Lemmatizer():
+class Lemmatizer(object):
 	"""
 	>>> lemmatizer = Lemmatizer()
 	>>> lemmatizer.lemmatize('کتاب‌ها')
