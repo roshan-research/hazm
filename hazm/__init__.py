@@ -8,6 +8,7 @@ from .PeykareReader import PeykareReader
 from .VerbValencyReader import VerbValencyReader
 from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
+from .WikipediaReader import WikipediaReader
 from .SentiPersReader import SentiPersReader
 from .Normalizer import Normalizer
 from .InformalNormalizer import InformalNormalizer, InformalLemmatizer
