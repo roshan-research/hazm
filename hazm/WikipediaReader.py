@@ -7,8 +7,6 @@ import re, subprocess
 class WikipediaReader():
 	"""
 	interfaces [Persian Wikipedia dump](http://download.wikimedia.org/fawiki/latest/fawiki-latest-pages-articles.xml.bz2)
-
-	this class uses `WikiExtractor.py` script from [wikpedia-extractor](https://github.com/nournia/wikipedia-extractor/)
 	"""
 
 	def __init__(self, fawiki_dump, wiki_extractor='resources/WikiExtractor.py'):
