@@ -35,6 +35,10 @@ class HamshahriReader():
 						for cat in element.getElementsByTagName('CAT'):
 							doc['categories_'+ cat.attributes['xml:lang'].value] = cat.childNodes[0].data.split('.')
 
+						for date in element.getElementsByTagName('DATE'):
+							if date.attributes['calender'].value == 'Persian':
+								doc['date'] = date.childNodes[0].data
+
 						elm = element.getElementsByTagName('TITLE')[0]
 						doc['title'] = elm.childNodes[1].data if len(elm.childNodes) > 1 else ''
 
