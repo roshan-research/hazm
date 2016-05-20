@@ -98,3 +98,11 @@ class PeykareReader():
                 sentence = join_verb_parts(sentence)
 
             yield list(map(map_pos, sentence))
+
+    def doc_to_sent(self, doc):
+        map_pos = lambda item: (item[0], self._pos_map(item[1].split(',')))
+        for sentence in self.doc_to_sentence(doc):
+            if self._joined_verb_parts:
+                sentence = join_verb_parts(sentence)
+
+            yield list(map(map_pos, sentence))
