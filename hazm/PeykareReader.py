@@ -54,7 +54,7 @@ class PeykareReader():
 	>>> next(peykare.sents())
 	[('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 	>>> doc = next(peykare.docs())
-	>>> next(peykare.doc_to_sentence(doc))
+	>>> peykare.doc_to_sentence(doc)
 	[[
 		('دیرزمانی', 'N,COM,SING,TIME,YA'), ('از', 'P'), ('راه\u200cاندازی', 'N,COM,SING,EZ'),
 		('شبکه\u200cی', 'N,COM,SING,EZ'), ('خبر', 'N,COM,SING,EZ'), ('الجزیره', 'N,PR,SING'),
@@ -65,7 +65,7 @@ class PeykareReader():
 		('بنگاه\u200cهای', 'N,COM,PL,EZ'), ('چندرسانه\u200cای', 'AJ,SIM,EZ'), ('دنیا', 'N,COM,SING'),
 		('خودی', 'N,COM,SING,YA'), ('نشان', 'N,COM,SING'), ('دهد', 'V,SUB,POS,3'), ('.', 'PUNC')
 	]]
-	>>> next(peykare.doc_to_sent(doc))
+	>>> peykare.doc_to_sent(doc))
 	[[
 		('دیرزمانی', 'N'), ('از', 'P'), ('راه\u200cاندازی', 'Ne'), ('شبکه\u200cی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'),
 		('نمی\u200cگذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه\u200cی', 'Ne'), ('خبری', 'AJe'),
@@ -74,7 +74,6 @@ class PeykareReader():
 		('چندرسانه\u200cای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')
 	]]
 	"""
-
 	def __init__(self, root, joined_verb_parts=True, pos_map=coarse_pos_e, fine_grained_tags=False):
 		self.fine_grained_tags = fine_grained_tags
 		self._root = root
@@ -116,8 +115,7 @@ class PeykareReader():
 
 				yield list(map(map_pos, sentence))
 		else:
-			for item in self.doc_to_sentence(doc):
-				yield item
+			yield from self.doc_to_sentence(doc)
 
 	def _sentences(self):
 		for doc in self.docs():
@@ -132,5 +130,4 @@ class PeykareReader():
 					sentence = join_verb_parts(sentence)
 				yield list(map(map_pos, sentence))
 		else:
-			for item in self._sentences():
-				yield item
+			yield from self._sentences()
