@@ -101,7 +101,8 @@ class PeykareReader():
 
                 yield list(map(map_pos, sentence))
         else:
-            yield from self.doc_to_sentence(doc)
+            for sentence in self.doc_to_sentence(doc):
+                yield sentence
 
     def _sentences(self):
         for doc in self.docs():
@@ -116,4 +117,5 @@ class PeykareReader():
                     sentence = join_verb_parts(sentence)
                 yield list(map(map_pos, sentence))
         else:
-            yield from self._sentences()
+            for sent in self._sentences() :
+                yield sent
