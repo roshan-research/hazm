@@ -2,8 +2,8 @@
 
 from __future__ import unicode_literals
 import re
+from .utils import maketrans
 
-maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
