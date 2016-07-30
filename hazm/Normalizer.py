@@ -2,18 +2,19 @@
 
 from __future__ import unicode_literals
 import re
-from .utils import maketrans
 
+maketrans = lambda A, B: dict((ord(a), b) for a, b in zip(A, B))
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer(object):
-	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True):
+	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True,inverse_number_translation=False):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
 
 		self.translations = maketrans(' كي%1234567890;“”', ' کی٪۱۲۳۴۵۶۷۸۹۰؛""')
+		self.inverse_number_translations = maketrans(' كي%۱۲۳۴۵۶۷۸۹۰;“”',' کی٪1234567890؛""')
 
 		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if character_refinement:
@@ -63,8 +64,10 @@ class Normalizer(object):
 		>>> normalizer.character_refinement('رمــــان')
 		'رمان'
 		"""
-
-		text = text.translate(self.translations)
+		if self.inverse_number_translations:
+			text = text.translate(self.inverse_number_translations)
+		else:
+			text = text.translate(self.translations)
 		for pattern, repl in self.character_refinement_patterns:
 			text = pattern.sub(repl, text)
 		return text
@@ -100,3 +103,4 @@ class Normalizer(object):
 		for pattern, repl in self.affix_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
+	
