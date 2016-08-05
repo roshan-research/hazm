@@ -113,7 +113,7 @@ class TreebankReader():
 			childs = node.childNodes[2:] if node.tagName == 'S' else node.childNodes
 			for child in childs:
 				if not len(child.childNodes):
-					childs.remove(child)
+					childs.clean(child)
 			tree = Tree(node.tagName, map(traverse, childs))
 			if self._join_clitics and len(tree) > 1 and type(tree[1]) == Tree and tree[1].label() == 'CLITIC' and tree[1][0][1] not in {'P', 'V'}:
 				clitic=tree[-1]
