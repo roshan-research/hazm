@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
 import codecs
+import doctest
 
 from hazm.Normalizer import Normalizer
 from .utils import default_stop_words
 
 
 class StopWord:
+    """ Class for remove stop words
+
+         >>> StopWord().clean(["بودی؟","مشهد","در","کی"])
+         ['بودی؟', 'مشهد', 'کی']
+         >>> StopWord(normal=True).clean(["بودی؟","مشهد","در","کی"])
+         ['بودی؟', 'مشهد']
+
+         """
     def __init__(self, file_path=default_stop_words, normal=False):
         self.normalizer = Normalizer().normalize
         self.stop_words = self.init(file_path, normal)
@@ -32,3 +41,4 @@ class StopWord:
             return filter(lambda item: not self[item], iterable_of_strings)
         else:
             return list(filter(lambda item: not self[item], iterable_of_strings))
+
