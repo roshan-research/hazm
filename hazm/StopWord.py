@@ -7,8 +7,9 @@ from .utils import default_stop_words
 
 class StopWord:
 	def __init__(self, file_path=default_stop_words, normal=False):
-		self.stop_words = self.init(file_path, normal)
 		self.normalizer = Normalizer()
+		self.stop_words = self.init(file_path, normal)
+
 
 	def init(self, file_path, normal):
 		if not normal:
