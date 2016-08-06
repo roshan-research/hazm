@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
+# coding: utf8
+from __future__ import unicode_literals
 import codecs
-import doctest
-
 from hazm.Normalizer import Normalizer
 from .utils import default_stop_words
 
@@ -16,19 +15,22 @@ class StopWord:
 
 		 """
 	def __init__(self, file_path=default_stop_words, normal=False):
+		self.file_path = file_path
+		self.normal = normal
 		self.normalizer = Normalizer().normalize
 		self.stop_words = self.init(file_path, normal)
 
 	def init(self, file_path, normal):
 		if not normal:
 			return set(
-					line.strip("\r\n") for line in codecs.open(file_path, "r", ).readlines())
+					line.strip("\r\n") for line in codecs.open(file_path, "r",encoding="utf-8" ).readlines())
 		else:
 			return set(
-					self.normalizer(line.strip("\r\n")) for line in codecs.open(file_path, "r", ).readlines())
+					self.normalizer(line.strip("\r\n")) for line in codecs.open(file_path, "r",encoding="utf-8").readlines())
 
 	def set_normalizer(self, func):
 		self.normalizer = func
+		self.stop_words = self.init(self.file_path,self.normal)
 
 	def __getitem__(self, item):
 		return item in self.stop_words
