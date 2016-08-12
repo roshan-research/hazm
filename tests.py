@@ -22,8 +22,7 @@ modules = {
 	'postagger': POSTagger,
 	'chunker': Chunker,
 	'parser': DependencyParser,
-	'informal_normalizer': InformalNormalizer,
-	'StopWord': StopWord,
+	'informal_normalizer': InformalNormalizer
 }
 
 

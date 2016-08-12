@@ -1,3 +1,4 @@
+
 from .WordTokenizer import WordTokenizer
 from .SentenceTokenizer import SentenceTokenizer
 from .HamshahriReader import HamshahriReader
@@ -17,7 +18,12 @@ from .SequenceTagger import SequenceTagger, IOBTagger
 from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
 from .DependencyParser import DependencyParser, MaltParser, TurboParser
-from .StopWord import StopWord
+
+
+from .utils import default_stopwords
+from nltk.corpus import WordListCorpusReader
+stopwords = WordListCorpusReader('', [default_stopwords], encoding='utf8')
+
 
 def sent_tokenize(text):
 	if not hasattr(sent_tokenize, 'tokenizer'):
