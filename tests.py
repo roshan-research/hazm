@@ -23,6 +23,7 @@ modules = {
 	'chunker': Chunker,
 	'parser': DependencyParser,
 	'informal_normalizer': InformalNormalizer,
+	'StopWord': StopWord,
 }
 
 
