@@ -45,14 +45,14 @@ class Normalizer(object):
 
 		if remove_diacritics:
 			self.diacritics_patterns = compile_patterns([
-				(r'\u064B', ''),  # remove FATHATAN
-				(r'\u064C', ''),  # remove DAMMATAN
-				(r'\u064D', ''),  # remove KASRATAN
-				(r'\u064E', ''),  # remove FATHA
-				(r'\u064F', ''),  # remove DAMMA
-				(r'\u0650', ''),  # remove KASRA
-				(r'\u0651', ''),  # remove SHADDA
-				(r'\u0652', '')  # remove SUKUN
+				('\u064B', ''),  # remove FATHATAN
+				('\u064C', ''),  # remove DAMMATAN
+				('\u064D', ''),  # remove KASRATAN
+				('\u064E', ''),  # remove FATHA
+				('\u064F', ''),  # remove DAMMA
+				('\u0650', ''),  # remove KASRA
+				('\u0651', ''),  # remove SHADDA
+				('\u0652', '')  # remove SUKUN
 			])
 
 	def normalize(self, text):
