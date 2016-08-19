@@ -1,17 +1,14 @@
 # coding: utf8
 
 from __future__ import unicode_literals
-
 import re
-
 from .utils import maketrans
 
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer(object):
-	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True,
-				 remove_diacritics=True):
+	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True,remove_diacritics=True):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
@@ -32,20 +29,20 @@ class Normalizer(object):
 
 		if punctuation_spacing:
 			self.punctuation_spacing_patterns = compile_patterns([
-				(' ([' + punc_after + '])', r'\1'),  # remove space before
-				('([' + punc_before + ']) ', r'\1'),  # remove space after
-				('([' + punc_after + '])([^ ' + punc_after + '])', r'\1 \2'),  # put space after
-				('([^ ' + punc_before + '])([' + punc_before + '])', r'\1 \2'),  # put space before
+				(' (['+ punc_after +'])', r'\1'),  # remove space before
+				('(['+ punc_before +']) ', r'\1'),  # remove space after
+				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
+				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'),  # put space before
 			])
 
 		if affix_spacing:
 			self.affix_spacing_patterns = compile_patterns([
 				(r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
 				(r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
-				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n' + punc_after + punc_before + ']|$)', r'‌\1'),
-				# put zwnj before تر, ترین, ها, های
-				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n' + punc_after + ']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
+				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, ترین, ها, های
+				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
 			])
+
 		if remove_diacritics:
 			self.diacritics_patterns = compile_patterns([
 				(r'[\u064B]', ''),  # remove FATHATAN
