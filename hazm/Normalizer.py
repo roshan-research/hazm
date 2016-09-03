@@ -8,7 +8,7 @@ compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, re
 
 
 class Normalizer(object):
-	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True,remove_diacritics=True):
+	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True, remove_diacritics=True):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
@@ -45,21 +45,14 @@ class Normalizer(object):
 
 		if remove_diacritics:
 			self.diacritics_patterns = compile_patterns([
-				('\u064B', ''),  # remove FATHATAN
-				('\u064C', ''),  # remove DAMMATAN
-				('\u064D', ''),  # remove KASRATAN
-				('\u064E', ''),  # remove FATHA
-				('\u064F', ''),  # remove DAMMA
-				('\u0650', ''),  # remove KASRA
-				('\u0651', ''),  # remove SHADDA
-				('\u0652', '')  # remove SUKUN
+				(r'[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),  # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
 			])
 
 	def normalize(self, text):
-		if self._remove_diacritics:
-			text = self.remove_diacritics(text)
 		if self._character_refinement:
 			text = self.character_refinement(text)
+		if self._remove_diacritics:
+			text = self.remove_diacritics(text)
 		if self._punctuation_spacing:
 			text = self.punctuation_spacing(text)
 		if self._affix_spacing:
@@ -72,6 +65,7 @@ class Normalizer(object):
 		>>> normalizer.remove_diacritics('بُشقابِ مَن را بِگیر')
 		'بشقاب من را بگیر'
 		"""
+
 		for pattern, repl in self.diacritics_patterns:
 			text = pattern.sub(repl, text)
 		return text
