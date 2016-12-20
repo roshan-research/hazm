@@ -41,6 +41,7 @@ class Normalizer(object):
 				(r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
 				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, ترین, ها, های
 				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
+				(r'(\w{2,}) (گر[ی?] )', r'\1‌\2'), # fix گر, گری
 			])
 
 		if remove_diacritics:
