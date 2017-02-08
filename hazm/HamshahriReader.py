@@ -7,7 +7,7 @@ from xml.dom import minidom
 
 class HamshahriReader():
 	"""
-	interfaces [Hamshahri Corpus](http://ece.ut.ac.ir/dbrg/hamshahri/files/HAM2/Corpus.zip) that you must download and extract it.
+	interfaces [Hamshahri Corpus](http://dbrg.ut.ac.ir/Hamshahri/download.html#version2) that you must download and extract it.
 
 	>>> hamshahri = HamshahriReader(root='corpora/hamshahri')
 	>>> next(hamshahri.docs())['id']
