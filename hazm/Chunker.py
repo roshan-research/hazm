@@ -1,4 +1,4 @@
-# coding: utf8
+# coding: utf-8
 
 from __future__ import unicode_literals
 from nltk.chunk import ChunkParserI, RegexpParser, tree2conlltags, conlltags2tree
