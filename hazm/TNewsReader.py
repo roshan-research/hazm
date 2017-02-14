@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from __future__ import print_function
-import os, sys
+import os, sys, re
 from xml.dom import minidom
 
 
@@ -27,7 +27,7 @@ class TNewsReader():
 					content = open(os.path.join(root, name)).read()
 
 					# fix xml formating issue
-					content = content.replace('</TNews>', '') + '</TNews>'
+					content = re.sub(r'[]', '', content).replace('</TNews>', '') + '</TNews>'
 
 					elements = minidom.parseString(content)
 					for element in elements.getElementsByTagName('NEWS'):
