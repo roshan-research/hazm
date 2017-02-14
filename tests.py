@@ -13,6 +13,7 @@ modules = {
 	'valency': VerbValencyReader,
 	'treebank': TreebankReader,
 	'sentipers': SentiPersReader,
+	'tnews': TNewsReader,
 	'sentence_tokenizer': SentenceTokenizer,
 	'word_tokenizer': WordTokenizer,
 	'normalizer': Normalizer,
