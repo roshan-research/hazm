@@ -55,14 +55,19 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', peykare_root='corpor
 def evaluate_informal_normalizer(sentipars_root='corpora/sentipers'):
 	sentipers = SentiPersReader(root=sentipars_root)
 	normalizer = Normalizer()
-	inforal_normalizer = InformalNormalizer()
+	informal_normalizer = InformalNormalizer()
 
 	output = codecs.open('resources/normalized.txt', 'w', 'utf8')
 	for comments in sentipers.comments():
 		for comment in comments:
 			for sentence in comment:
 				print(normalizer.normalize(sentence), file=output)
-				print(inforal_normalizer.normalize(sentence), file=output)
+				sents = informal_normalizer.normalize(sentence)
+				sents = [[word[0] for word in sent] for sent in sents]
+				sents = [' '.join(sent) for sent in sents]
+				text = '\n'.join(sents)
+				text = normalizer.normalize(text)
+				print(text, file=output)
 				print(file=output)
 
 

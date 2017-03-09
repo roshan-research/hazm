@@ -64,14 +64,14 @@ class InformalNormalizer(Normalizer):
 			self.words.update(self.lemmatizer.verbs.keys())
 			self.words.update(self.lemmatizer.verbs.values())
 
-	def normalize(self, text):
+	def normalized_word(self, word):
 		"""
 		>>> normalizer = InformalNormalizer()
-		>>> normalizer.normalize('فردا می‌رم')
-		'فردا می‌روم'
+		>>> normalizer.normalized_word('می‌رم')
+		['می‌روم', 'می‌رم']
 		>>> normalizer = InformalNormalizer(seperation_flag=True)
-		>>> normalizer.normalize("صداوسیماجمهوری")
-		'صداوسیما جمهوری'
+		>>> normalizer.normalized_word('صداوسیماجمهوری')
+		['صداوسیما جمهوری', 'صداوسیماجمهوری']
 		"""
 
 		def shekan(word):
@@ -104,46 +104,45 @@ class InformalNormalizer(Normalizer):
 					return ' '.join(c)
 			return word
 
+		options = []
+		if word in self.lemmatizer.words or word in self.lemmatizer.verbs:
+			pass
+
+		elif word in self.iverb_map:
+			options.append(self.iverb_map[word])
+
+		elif word in self.iword_map:
+			options.append(self.iword_map[word])
+
+		elif word[:-2] in self.ilemmatizer.verbs and word.endswith('ین'):
+			options.append(word[:-1] + 'د')
+
+		elif word.endswith("ن") and word[:-1] in self.ilemmatizer.verbs:
+			options.append(word + 'د')
+
+		elif word[:-1] in self.ilemmatizer.verbs and word.endswith('ه') and word[:-1] not in self.lemmatizer.words:
+			options.append(self.iword_map.get(word[:-1], word[:-1]) + 'د')
+
+		elif word not in self.ilemmatizer.verbs and word.endswith('ه') and word[:-1] in self.ilemmatizer.words:
+			options.append(self.iword_map.get(word[:-1], word[:-1]) + ' است')
+
+		elif word not in self.ilemmatizer.verbs and word.endswith('ون') and self.lemmatizer.lemmatize(word[:-2] + 'ان') in self.ilemmatizer.words:
+			options.append(word[:-2] + 'ان')
+
+		elif self.seperation_flag:
+			options.append(split(word))
+
+		options.append(word)
+		return options
+
+	def normalize(self, text):
+
 		sent_tokenizer = SentenceTokenizer()
 		word_tokenizer = WordTokenizer()
 		text = super(InformalNormalizer, self).normalize(text)
-		sents = [
-			word_tokenizer.tokenize(sentence)
-			for sentence in sent_tokenizer.tokenize(text)
-		]
+		sents = [word_tokenizer.tokenize(sentence) for sentence in sent_tokenizer.tokenize(text)]
 
-		for i in range(len(sents)):
-			for j in range(len(sents[i])):
-				word = sents[i][j]
-				if word in self.lemmatizer.words or word in self.lemmatizer.verbs:
-					pass
-
-				elif word in self.iverb_map:
-					sents[i][j] = self.iverb_map[word]
-
-				elif word in self.iword_map:
-					sents[i][j] = self.iword_map[word]
-
-				elif word.endswith('ش') and word[:-1] in self.ilemmatizer.verbs:
-					sents[i][j] = self.iverb_map.get(word[:-1], word[:-1]) + '‌اش'
-
-				elif word.endswith('ت') and word[:-1] in self.ilemmatizer.verbs:
-					sents[i][j] = self.iverb_map.get(word[:-1], word[:-1]) + '‌ات'
-
-				elif word not in self.ilemmatizer.verbs and word.endswith('م') and word[:-1] in self.ilemmatizer.words:
-					sents[i][j] = self.iword_map.get(word[:-1], word[:-1]) + '‌ام'
-
-				elif word not in self.ilemmatizer.verbs and word.endswith('ه') and word[:-1] in self.ilemmatizer.words:
-					sents[i][j] = self.iword_map.get(word[:-1], word[:-1]) + ' است'
-
-				elif word not in self.ilemmatizer.verbs and word.endswith('ون') and self.lemmatizer.lemmatize(word[:-2] + 'ان') in self.ilemmatizer.words:
-					sents[i][j] = word[:-2] + 'ان'
-
-				elif self.seperation_flag:
-					sents[i][j] = split(word)
-
-		text = '\n'.join([' '.join(word) for word in sents])
-		return super(InformalNormalizer, self).normalize(text)
+		return [[self.normalized_word(word) for word in sent] for sent in sents]
 
 	def informal_conjugations(self, verb):
 		ends = ['م', 'ی', '', 'یم', 'ین', 'ن']
