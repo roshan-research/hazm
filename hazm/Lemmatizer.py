@@ -31,12 +31,10 @@ class Lemmatizer(object):
 		self.words = set([])
 		self.stemmer = Stemmer()
 
-		if words_file:
-			with codecs.open(words_file, encoding='utf8') as words_file:
-				self.words = set(map(lambda w: w.strip(), words_file))
+		tokenizer = WordTokenizer(words_file=default_words, verbs_file=verbs_file)
+		self.words = tokenizer.words
 
 		if verbs_file:
-			tokenizer = WordTokenizer(verbs_file=verbs_file)
 			self.verbs['است'] = '#است'
 			for verb in tokenizer.verbs:
 				for tense in self.conjugations(verb):

@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 import re, codecs
-from .utils import default_verbs
+from .utils import default_words, default_verbs
 from nltk.tokenize.api import TokenizerI
 
 
@@ -13,9 +13,13 @@ class WordTokenizer(TokenizerI):
 	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 	"""
 
-	def __init__(self, verbs_file=default_verbs, join_verb_parts=True):
+	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
+
+		if words_file:
+			with codecs.open(words_file, encoding='utf8') as words_file:
+				self.words = set(map(lambda w: w.strip(), words_file))
 
 		if join_verb_parts:
 			self.after_verbs = set([
@@ -69,3 +73,17 @@ class WordTokenizer(TokenizerI):
 			else:
 				result.append(token)
 		return list(reversed(result[1:]))
+
+	def split_token_words(self, token):
+		"""
+		>>> tokenizer = WordTokenizer()
+		>>> tokenizer.split_token_words('صداوسیماجمهوری')
+		[('صداوسیما', 'جمهوری')]
+		>>> tokenizer.split_token_words('صداو')
+		[('صد', 'او'), ('صدا', 'و')]
+		"""
+
+		candidates = [(token[:s], token[s:]) for s in range(1, len(token))] + [(token, )]
+		candidates = list(filter(lambda cs: set(cs).issubset(self.words), candidates))
+
+		return candidates
