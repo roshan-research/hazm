@@ -6,7 +6,7 @@ from collections import Counter
 from itertools import islice
 from nltk.tag import untag
 from nltk.parse import DependencyEvaluator
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from hazm import *
 from hazm.Chunker import tree2brackets
 from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
