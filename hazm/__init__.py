@@ -21,9 +21,7 @@ from .Chunker import Chunker, RuleBasedChunker, tree2brackets
 from .DependencyParser import DependencyParser, MaltParser, TurboParser
 
 
-from .utils import default_stopwords
-from nltk.corpus import WordListCorpusReader
-stopwords = WordListCorpusReader('', [default_stopwords], encoding='utf8')
+from .utils import words_list, stopwords_list
 
 
 def sent_tokenize(text):
