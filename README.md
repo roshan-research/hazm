@@ -11,7 +11,7 @@ Python library for digesting Persian text.
 + Dependency parser
 + Interfaces for Persian corpora
 + [NLTK](http://nltk.org/) compatible
-+ Python 2.7, 3.2, 3.3, 3.4 and 3.5 support
++ Python 2.7, 3.4 and 3.5 support
 + [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
 
 
