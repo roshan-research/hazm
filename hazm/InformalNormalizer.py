@@ -64,19 +64,11 @@ class InformalNormalizer(Normalizer):
 			self.words.update(self.lemmatizer.verbs.keys())
 			self.words.update(self.lemmatizer.verbs.values())
 
-	def normalized_word(self, word):
-		"""
-		>>> normalizer = InformalNormalizer()
-		>>> normalizer.normalized_word('می‌رم')
-		['می‌روم', 'می‌رم']
-		>>> normalizer = InformalNormalizer(seperation_flag=True)
-		>>> normalizer.normalized_word('صداوسیماجمهوری')
-		['صداوسیما جمهوری', 'صداوسیماجمهوری']
-		"""
+	def split_token_words(self, token):
 
-		def shekan(word):
+		def shekan(token):
 			res = ['']
-			for i in word:
+			for i in token:
 				res[-1] += i
 				if i in set(['ا', 'د', 'ذ', 'ر', 'ز', 'ژ', 'و'] + list(NUMBERS)):
 					res.append('')
@@ -96,13 +88,23 @@ class InformalNormalizer(Normalizer):
 			res.sort(key=len)
 			return res
 
-		def split(word):
-			word = re.sub(r'(.)\1{2,}', r'\1', word)
-			ps = perm(shekan(word))
-			for c in ps:
-				if set(map(lambda x: self.ilemmatizer.lemmatize(x), c)).issubset(self.words):
-					return ' '.join(c)
-			return word
+		token = re.sub(r'(.)\1{2,}', r'\1', token)
+		ps = perm(shekan(token))
+		for c in ps:
+			if set(map(lambda x: self.ilemmatizer.lemmatize(x), c)).issubset(self.words):
+				return ' '.join(c)
+		return token
+
+
+	def normalized_word(self, word):
+		"""
+		>>> normalizer = InformalNormalizer()
+		>>> normalizer.normalized_word('می‌رم')
+		['می‌روم', 'می‌رم']
+		>>> normalizer = InformalNormalizer(seperation_flag=True)
+		>>> normalizer.normalized_word('صداوسیماجمهوری')
+		['صداوسیما جمهوری', 'صداوسیماجمهوری']
+		"""
 
 		options = []
 		if word in self.lemmatizer.words or word in self.lemmatizer.verbs:
@@ -130,7 +132,7 @@ class InformalNormalizer(Normalizer):
 			options.append(word[:-2] + 'ان')
 
 		elif self.seperation_flag:
-			options.append(split(word))
+			options.append(self.split_token_words(word))
 
 		options.append(word)
 		return options
