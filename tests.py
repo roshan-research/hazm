@@ -16,6 +16,7 @@ modules = {
 	'tnews': TNewsReader,
 	'sentence_tokenizer': SentenceTokenizer,
 	'word_tokenizer': WordTokenizer,
+	'splitter': TokenSplitter,
 	'normalizer': Normalizer,
 	'stemmer': Stemmer,
 	'lemmatizer': Lemmatizer,

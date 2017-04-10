@@ -1,6 +1,7 @@
 
 from .WordTokenizer import WordTokenizer
 from .SentenceTokenizer import SentenceTokenizer
+from .TokenSplitter import TokenSplitter
 from .HamshahriReader import HamshahriReader
 from .PersicaReader import PersicaReader
 from .BijankhanReader import BijankhanReader

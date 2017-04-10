@@ -73,17 +73,3 @@ class WordTokenizer(TokenizerI):
 			else:
 				result.append(token)
 		return list(reversed(result[1:]))
-
-	def split_token_words(self, token):
-		"""
-		>>> tokenizer = WordTokenizer()
-		>>> tokenizer.split_token_words('صداوسیماجمهوری')
-		[('صداوسیما', 'جمهوری')]
-		>>> tokenizer.split_token_words('صداو')
-		[('صد', 'او'), ('صدا', 'و')]
-		"""
-
-		candidates = [(token[:s], token[s:]) for s in range(1, len(token))] + [(token, )]
-		candidates = list(filter(lambda cs: set(cs).issubset(self.words), candidates))
-
-		return candidates
