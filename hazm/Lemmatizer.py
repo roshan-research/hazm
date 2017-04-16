@@ -4,6 +4,11 @@ from __future__ import unicode_literals
 from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
+try:
+    import itertools.imap as map
+except ImportError:
+    pass
+from itertools import repeat
 
 
 class Lemmatizer(object):
@@ -68,6 +73,12 @@ class Lemmatizer(object):
 			return stem
 
 		return word
+
+	def ilemmatize(self, iterable, pos=''):
+		"""
+		Lemmatize iterable.
+		"""
+		return map(self.lemmatize, iterable, repeat(pos))
 
 	def conjugations(self, verb):
 		"""
