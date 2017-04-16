@@ -13,7 +13,7 @@ class SentenceTokenizer(TokenizerI):
 	"""
 
 	def __init__(self):
-		self.pattern = re.compile(r'([!\.\?⸮؟]+)[ \n]+')
+		self.pattern = re.compile(r'([!\.\?⸮؟:]+)[ \n]+')
 
 	def tokenize(self, text):
 		text = self.pattern.sub(r'\1\n\n', text)
