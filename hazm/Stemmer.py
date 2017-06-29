@@ -17,6 +17,8 @@ class Stemmer(StemmerI):
 	'کتاب'
 	>>> stemmer.stem('اندیشه‌اش')
 	'اندیشه'
+	>>> stemmer.stem('خانۀ')
+	'خانه'
 	"""
 
 	def __init__(self):
@@ -28,6 +30,6 @@ class Stemmer(StemmerI):
 				word = word[:-len(end)]
 
 		if word.endswith('ۀ'):
-			word = word[:-len(end)] + 'ه'
+			word = word[:-1] + 'ه'
 
 		return word
