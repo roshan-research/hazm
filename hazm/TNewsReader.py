@@ -16,9 +16,13 @@ class TNewsReader():
 
 	def __init__(self, root):
 		self._root = root
+		self.cleaner = re.compile(r'<[^<>]+>')
 
 	def docs(self):
-		get_text = lambda element: element.childNodes[0].data if element.childNodes else ''
+		def get_text(element):
+			raw_html = element.childNodes[0].data if element.childNodes else ''
+			cleaned_text = re.sub(self.cleaner, '', raw_html)
+			return cleaned_text
 
 		for root, dirs, files in os.walk(self._root):
 			for name in sorted(files):
