@@ -14,10 +14,8 @@ class WikipediaReader():
 		self.fawiki_dump = fawiki_dump
 
 	def docs(self):
-		proc = subprocess.Popen(['python', self.wiki_extractor, '--html', '--no-templates', '--output', '-', self.fawiki_dump], stdout=subprocess.PIPE)
+		proc = subprocess.Popen(['python', self.wiki_extractor, '--no-templates', '--output', '-', self.fawiki_dump], stdout=subprocess.PIPE)
 		doc_pattern = re.compile(r'<doc id="(\d+)" url="([^\"]+)" title="([^\"]+)">')
-		link_patterns = re.compile(r'<a href="([^\"]*)">([^\"]*)</a>')
-		text_line = lambda line: not line.startswith('<')
 
 		doc = []
 		for line in iter(proc.stdout.readline, ''):
@@ -30,12 +28,7 @@ class WikipediaReader():
 				id, url, title = doc_pattern.match(doc[0]).groups()
 				html = '\n'.join(doc[1:-1])
 
-				# extract text
-				text = link_patterns.sub(r'\2', html)
-				lines = filter(text_line, text.split('\n'))
-				text = '\n'.join(lines)
-
-				yield {'id': id, 'url': url, 'title': title, 'html': html, 'text': text}
+				yield {'id': id, 'url': url, 'title': title, 'html': html, 'text': html}
 				doc = []
 
 	def texts(self):
