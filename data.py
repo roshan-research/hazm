@@ -5,7 +5,6 @@ import codecs, subprocess
 from collections import Counter
 from itertools import islice
 from nltk.tag import untag
-from nltk.parse import DependencyEvaluator
 from sklearn.model_selection import train_test_split
 from hazm import *
 from hazm.Chunker import tree2brackets
@@ -14,11 +13,12 @@ from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
-	""" prepares list of persian word words from [Virastyar](https://sourceforge.net/projects/virastyar/) dic file.
-	"""
+	""" prepares list of persian word words from [Virastyar](https://sourceforge.net/projects/virastyar/) dic file. """
 
-	dic_words = sorted([line.split('\t')[0] for line in codecs.open(dic_file, encoding='utf8')])
-	print(*dic_words, sep='\n', file=codecs.open(output, 'w', 'utf8'))
+	dic_words = [line.strip().replace(', ', ',').split('\t') for line in codecs.open(dic_file, encoding='utf-8') if len(line.strip().split('\t')) == 3]
+	dic_words = filter(lambda item: not item[2].startswith('V') and 'NEG' not in item[2], dic_words)
+	dic_words = ['\t'.join(item) for item in sorted(dic_words, key=lambda item: item[0])]
+	print(*dic_words, sep='\n', file=codecs.open(output, 'w', 'utf-8'))
 	print(output, 'created')
 
 

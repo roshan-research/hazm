@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 import re, codecs
-from .utils import default_words, default_verbs
+from .utils import words_list, default_words, default_verbs
 from nltk.tokenize.api import TokenizerI
 
 
@@ -17,9 +17,7 @@ class WordTokenizer(TokenizerI):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
-		if words_file:
-			with codecs.open(words_file, encoding='utf8') as words_file:
-				self.words = set(map(lambda w: w.strip(), words_file))
+		self.words = set([item[0] for item in words_list(default_words)])
 
 		if join_verb_parts:
 			self.after_verbs = set([
