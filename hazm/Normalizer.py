@@ -47,13 +47,14 @@ class Normalizer(object):
 
 		self.character_refinement_patterns = compile_patterns(self.character_refinement_patterns)
 
-		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
+		punc_after, punc_before = r'\.:!،؛؟»\]\)\}', r'«\[\(\{'
 		if punctuation_spacing:
 			self.punctuation_spacing_patterns = compile_patterns([
 				('" ([^\n"]+) "', r'"\1"'),  # remove space before and after quotation
 				(' (['+ punc_after +'])', r'\1'),  # remove space before
 				('(['+ punc_before +']) ', r'\1'),  # remove space after
-				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
+				('(['+ punc_after[:3] +'])([^ \d'+ punc_after +'])', r'\1 \2'),  # put space after . and :
+				('(['+ punc_after[3:] +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
 				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'),  # put space before
 			])
 
@@ -105,9 +106,11 @@ class Normalizer(object):
 		>>> normalizer = Normalizer()
 		>>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
 		'اصلاح (پرانتزها) در متن.'
+
+		>>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
+		'نسخه 0.5 در ساعت 22:00 تهران، 1396'
 		"""
 
-		# todo: don't put space inside time
 		for pattern, repl in self.punctuation_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
