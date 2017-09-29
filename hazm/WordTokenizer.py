@@ -11,11 +11,14 @@ class WordTokenizer(TokenizerI):
 	>>> tokenizer = WordTokenizer()
 	>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
 	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
+
+	>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396')
+	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
 	"""
 
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True):
 		self._join_verb_parts = join_verb_parts
-		self.pattern = re.compile(r'([؟!\?]+|[:\.،؛»\]\)\}"«\[\(\{])')
+		self.pattern = re.compile(r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
 		self.words = set([item[0] for item in words_list(default_words)])
 
