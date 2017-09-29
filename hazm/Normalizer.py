@@ -10,8 +10,7 @@ compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, re
 
 
 class Normalizer(object):
-	def __init__(self, character_refinement=True, remove_diacritics=True, persian_numbers=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
-		self._character_refinement = character_refinement
+	def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
 		self._token_based = token_based
@@ -30,11 +29,15 @@ class Normalizer(object):
 
 		self.character_refinement_patterns = []
 
-		if character_refinement:
+		if remove_extra_spaces:
 			self.character_refinement_patterns.extend([
-				(r'[ـ\r]', ''),  # remove keshide, carriage returns
 				(r' +', ' '),  # remove extra spaces
 				(r'\n\n+', '\n\n'),  # remove extra newlines
+				(r'[ـ\r]', ''),  # remove keshide, carriage returns
+			])
+
+		if persian_style:
+			self.character_refinement_patterns.extend([
 				('"([^\n"]+)"', r'«\1»'),  # replace quotation with gyoome
 				('([\d+])\.([\d+])', r'\1٫\2'),  # replace dot with momayez
 				(r' ?\.\.\.', ' …'),  # replace 3 dots
