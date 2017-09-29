@@ -2,23 +2,36 @@
 
 from __future__ import unicode_literals
 import re
+from .Lemmatizer import Lemmatizer
+from .WordTokenizer import WordTokenizer
 from .utils import maketrans
 
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer(object):
-	def __init__(self, character_refinement=True, punctuation_spacing=True, affix_spacing=True, remove_diacritics=True):
+	def __init__(self, character_refinement=True, remove_diacritics=True, persian_numbers=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
 		self._character_refinement = character_refinement
 		self._punctuation_spacing = punctuation_spacing
 		self._affix_spacing = affix_spacing
-		self._remove_diacritics = remove_diacritics
+		self._token_based = token_based
 
-		self.translations = maketrans(' كي%1234567890;“”', ' کی٪۱۲۳۴۵۶۷۸۹۰؛""')
+		translation_src, translation_dst = ' كي“”', ' کی""'
+		if persian_numbers:
+			translation_src += '0123456789%'
+			translation_dst += '۰۱۲۳۴۵۶۷۸۹٪'
+		self.translations = maketrans(translation_src, translation_dst)
 
-		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
+		if self._token_based:
+			lemmatizer = Lemmatizer()
+			self.words = lemmatizer.words
+			self.verbs = lemmatizer.verbs
+			self.tokenizer = WordTokenizer(join_verb_parts=False)
+
+		self.character_refinement_patterns = []
+
 		if character_refinement:
-			self.character_refinement_patterns = compile_patterns([
+			self.character_refinement_patterns.extend([
 				(r'[ـ\r]', ''),  # remove keshide, carriage returns
 				(r' +', ' '),  # remove extra spaces
 				(r'\n\n+', '\n\n'),  # remove extra newlines
@@ -27,8 +40,17 @@ class Normalizer(object):
 				(r' ?\.\.\.', ' …'),  # replace 3 dots
 			])
 
+		if remove_diacritics:
+			self.character_refinement_patterns.append(
+				('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),  # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
+			)
+
+		self.character_refinement_patterns = compile_patterns(self.character_refinement_patterns)
+
+		punc_after, punc_before = r'!:\.،؛؟»\]\)\}', r'«\[\(\{'
 		if punctuation_spacing:
 			self.punctuation_spacing_patterns = compile_patterns([
+				('" ([^\n"]+) "', r'"\1"'),  # remove space before and after quotation
 				(' (['+ punc_after +'])', r'\1'),  # remove space before
 				('(['+ punc_before +']) ', r'\1'),  # remove space after
 				('(['+ punc_after +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
@@ -43,31 +65,18 @@ class Normalizer(object):
 				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
 			])
 
-		if remove_diacritics:
-			self.diacritics_patterns = compile_patterns([
-				('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),  # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
-			])
-
 	def normalize(self, text):
-		if self._character_refinement:
-			text = self.character_refinement(text)
-		if self._remove_diacritics:
-			text = self.remove_diacritics(text)
-		if self._punctuation_spacing:
-			text = self.punctuation_spacing(text)
+		text = self.character_refinement(text)
 		if self._affix_spacing:
 			text = self.affix_spacing(text)
-		return text
 
-	def remove_diacritics(self, text):
-		"""
-		>>> normalizer = Normalizer()
-		>>> normalizer.remove_diacritics('بُشقابِ مَن را بِگیر')
-		'بشقاب من را بگیر'
-		"""
+		if self._token_based:
+			tokens = self.tokenizer.tokenize(text.translate(self.translations))
+			text = ' '.join(self.token_spacing(tokens))
 
-		for pattern, repl in self.diacritics_patterns:
-			text = pattern.sub(repl, text)
+		if self._punctuation_spacing:
+			text = self.punctuation_spacing(text)
+
 		return text
 
 	def character_refinement(self, text):
@@ -81,6 +90,9 @@ class Normalizer(object):
 
 		>>> normalizer.character_refinement('رمــــان')
 		'رمان'
+
+		>>> normalizer.character_refinement('بُشقابِ مَن را بِگیر')
+		'بشقاب من را بگیر'
 		"""
 
 		text = text.translate(self.translations)
@@ -119,3 +131,47 @@ class Normalizer(object):
 		for pattern, repl in self.affix_spacing_patterns:
 			text = pattern.sub(repl, text)
 		return text
+
+	def token_spacing(self, tokens):
+		"""
+		>>> normalizer = Normalizer(token_based=True)
+		>>> normalizer.token_spacing(['کتاب', 'ها'])
+		['کتاب‌ها']
+
+		>>> normalizer.token_spacing(['او', 'می', 'رود'])
+		['او', 'می‌رود']
+
+		>>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
+		['ماه', 'می', 'سال', 'جدید']
+
+		>>> normalizer.token_spacing(['اخلال', 'گر'])
+		['اخلال‌گر']
+
+		"""
+
+		result = []
+		pairs = list(map(lambda item: item[0]+'‌'+item[1], zip(tokens, tokens[1:])))
+		suffixes = {'ی', 'ای', 'ها', 'های', 'تر', 'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
+
+		i = len(tokens)-1
+		while i >= 0:
+			joined = False
+
+			if i > 0:
+				if pairs[i-1] in self.verbs or pairs[i-1] in self.words:
+					joined = True
+
+					if i < len(tokens)-1 and tokens[i]+'_'+tokens[i+1] in self.verbs:
+						joined = False
+
+				elif tokens[i] in suffixes and tokens[i-1] in self.words:
+					joined = True
+
+			if joined:
+				result.append(pairs[i-1])
+				i -= 2
+			else:
+				result.append(tokens[i])
+				i -= 1
+
+		return list(reversed(result))

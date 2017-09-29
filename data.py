@@ -52,6 +52,20 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', peykare_root='corpor
 			print(count, item, file=output)
 
 
+def evaluate_normalizer(tnews_root='corpora/tnews'):
+
+	tnews = TNewsReader(root=tnews_root)
+	normalizer = Normalizer(persian_numbers=False)
+	token_normalizer = Normalizer(token_based=True, persian_numbers=False, character_refinement=False, remove_diacritics=False, affix_spacing=False, punctuation_spacing=True)
+
+	with codecs.open('resources/normalized.txt', 'w', 'utf8') as output1, codecs.open('resources/normalized_token_based.txt', 'w', 'utf8') as output2:
+		for t, text in enumerate(tnews.texts()):
+			for sentence in sent_tokenize(text):
+				print(sentence, file=output1)
+				print(normalizer.normalize(sentence), '\n', file=output1)
+				print(sentence, file=output2)
+				print(token_normalizer.normalize(sentence), '\n', file=output2)
+
 def evaluate_informal_normalizer(sentipars_root='corpora/sentipers'):
 	sentipers = SentiPersReader(root=sentipars_root)
 	normalizer = Normalizer()
