@@ -61,7 +61,7 @@ class Normalizer(object):
 			self.affix_spacing_patterns = compile_patterns([
 				(r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
 				(r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
-				(r' (تر(ی(ن)?)?|ها(ی)?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, ترین, ها, های
+				(r'(?<=[^\n'+ punc_after + punc_before +']) (تر(ین?)?|گری?|های?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, تری, ترین, گر, گری, ها, های
 				(r'([^ ]ه) (ا(م|ت|ش|ی))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ات, اش, ای
 			])
 
@@ -126,6 +126,9 @@ class Normalizer(object):
 
 		>>> normalizer.affix_spacing('حرفه ای')
 		'حرفه‌ای'
+
+		>>> normalizer.affix_spacing('محبوب ترین ها')
+		'محبوب‌ترین‌ها'
 		"""
 
 		for pattern, repl in self.affix_spacing_patterns:
