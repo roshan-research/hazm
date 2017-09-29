@@ -20,7 +20,7 @@ class WordTokenizer(TokenizerI):
 		self._join_verb_parts = join_verb_parts
 		self.pattern = re.compile(r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
-		self.words = set([item[0] for item in words_list(default_words)])
+		self.words = {item[0]: (item[1], item[2]) for item in words_list(default_words)}
 
 		if join_verb_parts:
 			self.after_verbs = set([

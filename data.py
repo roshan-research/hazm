@@ -55,8 +55,8 @@ def evaluate_lemmatizer(conll_file='resources/train.conll', peykare_root='corpor
 def evaluate_normalizer(tnews_root='corpora/tnews'):
 
 	tnews = TNewsReader(root=tnews_root)
-	normalizer = Normalizer(persian_style=False, persian_numbers=False)
-	token_normalizer = Normalizer(token_based=True, persian_style=False, persian_numbers=False, remove_diacritics=False, affix_spacing=False, punctuation_spacing=True)
+	normalizer = Normalizer(persian_style=False, persian_numbers=False, remove_diacritics=False, token_based=False, affix_spacing=True)
+	token_normalizer = Normalizer(persian_style=False, persian_numbers=False, remove_diacritics=False, token_based=True, affix_spacing=False)
 
 	with codecs.open('resources/normalized.txt', 'w', 'utf8') as output1, codecs.open('resources/normalized_token_based.txt', 'w', 'utf8') as output2:
 		random.seed(0)

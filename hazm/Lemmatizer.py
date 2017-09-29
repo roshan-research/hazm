@@ -27,7 +27,6 @@ class Lemmatizer(object):
 
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True):
 		self.verbs = {}
-		self.words = set([])
 		self.stemmer = Stemmer()
 
 		tokenizer = WordTokenizer(words_file=default_words, verbs_file=verbs_file)
