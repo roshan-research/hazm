@@ -170,6 +170,7 @@ class InformalLemmatizer(Lemmatizer):
 		super(InformalLemmatizer, self).__init__(**kargs)
 
 		temp = []
+		self.words = set(self.words.keys())
 		for word in self.words:
 			if word.endswith("ً"):
 				temp.append(word[:-1])
