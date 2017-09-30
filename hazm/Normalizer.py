@@ -26,6 +26,7 @@ class Normalizer(object):
 			self.words = lemmatizer.words
 			self.verbs = lemmatizer.verbs
 			self.tokenizer = WordTokenizer(join_verb_parts=False)
+			self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر', 'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
 
 		self.character_refinement_patterns = []
 
@@ -156,31 +157,33 @@ class Normalizer(object):
 		>>> normalizer.token_spacing(['اخلال', 'گر'])
 		['اخلال‌گر']
 
+		>>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+		['پرداخت', 'شده', 'است']
+
+		>>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
+		['زمین‌لرزه‌ای']
 		"""
 
-		result = []
-		pairs = list(map(lambda item: item[0]+'‌'+item[1], zip(tokens, tokens[1:])))
-		suffixes = {'ی', 'ای', 'ها', 'های', 'تر', 'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
-
-		i = len(tokens)-1
-		while i >= 0:
+		i, result = 0, []
+		while i < len(tokens):
 			joined = False
 
-			if i > 0:
-				if pairs[i-1] in self.verbs or pairs[i-1] in self.words:
+			if i < len(tokens)-1:
+				token_pair = tokens[i]+'‌'+tokens[i+1]
+				if token_pair in self.verbs or token_pair in self.words:
 					joined = True
 
-					if i < len(tokens)-1 and tokens[i]+'_'+tokens[i+1] in self.verbs:
+					if i < len(tokens)-2 and tokens[i+1]+'_'+tokens[i+2] in self.verbs:
 						joined = False
 
-				elif tokens[i] in suffixes and tokens[i-1] in self.words:
+				elif tokens[i+1] in self.suffixes and tokens[i] in self.words:
 					joined = True
 
 			if joined:
-				result.append(pairs[i-1])
-				i -= 2
+				result.append(token_pair)
+				i += 2
 			else:
 				result.append(tokens[i])
-				i -= 1
+				i += 1
 
-		return list(reversed(result))
+		return result
