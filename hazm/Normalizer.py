@@ -170,7 +170,7 @@ class Normalizer(object):
 
 			if result:
 				token_pair = result[-1]+'‌'+token
-				if token_pair in self.verbs or token_pair in self.words:
+				if token_pair in self.verbs or token_pair in self.words and self.words[token_pair][0] > 0:
 					joined = True
 
 					if t < len(tokens)-1 and token+'_'+tokens[t+1] in self.verbs:

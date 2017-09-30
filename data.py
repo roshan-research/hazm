@@ -65,10 +65,9 @@ def evaluate_normalizer(tnews_root='corpora/tnews'):
 				continue
 
 			for sentence in sent_tokenize(text):
-				print(sentence, file=output1)
 				print(normalizer.normalize(sentence), '\n', file=output1)
-				print(sentence, file=output2)
 				print(token_normalizer.normalize(sentence), '\n', file=output2)
+
 
 def evaluate_informal_normalizer(sentipars_root='corpora/sentipers'):
 	sentipers = SentiPersReader(root=sentipars_root)
