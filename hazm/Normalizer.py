@@ -164,26 +164,25 @@ class Normalizer(object):
 		['زمین‌لرزه‌ای']
 		"""
 
-		i, result = 0, []
-		while i < len(tokens):
+		result = []
+		for t, token in enumerate(tokens):
 			joined = False
 
-			if i < len(tokens)-1:
-				token_pair = tokens[i]+'‌'+tokens[i+1]
+			if result:
+				token_pair = result[-1]+'‌'+token
 				if token_pair in self.verbs or token_pair in self.words:
 					joined = True
 
-					if i < len(tokens)-2 and tokens[i+1]+'_'+tokens[i+2] in self.verbs:
+					if t < len(tokens)-1 and token+'_'+tokens[t+1] in self.verbs:
 						joined = False
 
-				elif tokens[i+1] in self.suffixes and tokens[i] in self.words:
+				elif token in self.suffixes and result[-1] in self.words:
 					joined = True
 
 			if joined:
+				result.pop()
 				result.append(token_pair)
-				i += 2
 			else:
-				result.append(tokens[i])
-				i += 1
+				result.append(token)
 
 		return result
