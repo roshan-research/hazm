@@ -19,7 +19,7 @@ def coarse_pos_e(tags):
 	return map.get(tags[0], 'X') + ('e' if 'EZ' in tags else '')
 
 
-word_nodes = lambda tree: list(tree.nodes.values())[1:]
+word_nodes = lambda tree: sorted(tree.nodes.values(), key=lambda node: node['address'])[1:]
 node_deps = lambda node: sum(node['deps'].values(), [])
 
 
