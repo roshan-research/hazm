@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from __future__ import unicode_literals, print_function
-import re, subprocess
+import os, re, subprocess
 
 
 class WikipediaReader():
@@ -9,9 +9,9 @@ class WikipediaReader():
 	interfaces [Persian Wikipedia dump](http://download.wikimedia.org/fawiki/latest/fawiki-latest-pages-articles.xml.bz2)
 	"""
 
-	def __init__(self, fawiki_dump, wiki_extractor='resources/WikiExtractor.py'):
-		self.wiki_extractor = wiki_extractor
+	def __init__(self, fawiki_dump):
 		self.fawiki_dump = fawiki_dump
+		self.wiki_extractor = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'WikiExtractor.py')
 
 	def docs(self):
 		proc = subprocess.Popen(['python', self.wiki_extractor, '--no-templates', '--output', '-', self.fawiki_dump], stdout=subprocess.PIPE)
