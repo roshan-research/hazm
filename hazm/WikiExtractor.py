@@ -54,23 +54,25 @@ collecting template definitions.
 
 """
 
-from __future__ import unicode_literals, division
+from __future__ import division, unicode_literals
 
-import sys
 import argparse
 import bz2
-import codecs
 import cgi
+import codecs
 import fileinput
+import json
 import logging
 import os.path
 import re  # TODO use regex when it will be standard
+import sys
 import time
-import json
 from io import StringIO
-from multiprocessing import Queue, Process, Value, cpu_count
+from math import log as ln
+from math import (acos, asin, atan, ceil, cos, e, exp, floor, pi, sin, tan,
+                  trunc)
+from multiprocessing import Process, Queue, Value, cpu_count
 from timeit import default_timer
-
 
 PY2 = sys.version_info[0] == 2
 # Python 2.7 compatibiity
@@ -1740,7 +1742,6 @@ class Infix:
 ROUND = Infix(lambda x, y: round(x, y))
 
 
-from math import floor, ceil, pi, e, trunc, exp, log as ln, sin, cos, tan, asin, acos, atan
 
 
 def sharp_expr(extr, expr):

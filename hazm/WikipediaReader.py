@@ -1,7 +1,10 @@
 # coding: utf-8
 
-from __future__ import unicode_literals, print_function
-import os, re, subprocess
+from __future__ import print_function, unicode_literals
+
+import os
+import re
+import subprocess
 
 
 class WikipediaReader():

@@ -1,13 +1,15 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 import codecs
-from .utils import informal_verbs, informal_words, NUMBERS
-from .Normalizer import Normalizer
+
 from .Lemmatizer import Lemmatizer
-from .Stemmer import Stemmer
-from .WordTokenizer import *
+from .Normalizer import Normalizer
 from .SentenceTokenizer import *
+from .Stemmer import Stemmer
+from .utils import NUMBERS, informal_verbs, informal_words
+from .WordTokenizer import *
 
 
 class InformalNormalizer(Normalizer):
@@ -94,7 +96,6 @@ class InformalNormalizer(Normalizer):
 			if set(map(lambda x: self.ilemmatizer.lemmatize(x), c)).issubset(self.words):
 				return ' '.join(c)
 		return token
-
 
 	def normalized_word(self, word):
 		"""

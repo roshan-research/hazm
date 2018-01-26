@@ -1,15 +1,20 @@
 # coding: utf-8
 
 from __future__ import print_function, unicode_literals
-import codecs, subprocess, random
+
+import codecs
+import random
+import subprocess
 from collections import Counter
 from itertools import islice
+
 from nltk.tag import untag
-from sklearn.model_selection import train_test_split
+
 from hazm import *
 from hazm.Chunker import tree2brackets
-from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
 from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
+from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
+from sklearn.model_selection import train_test_split
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):

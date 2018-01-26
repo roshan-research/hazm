@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 from nltk.tag import stanford
+
 from .SequenceTagger import SequenceTagger
 
 

@@ -1,10 +1,12 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 import re
+
 from .Lemmatizer import Lemmatizer
-from .WordTokenizer import WordTokenizer
 from .utils import maketrans
+from .WordTokenizer import WordTokenizer
 
 compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
 

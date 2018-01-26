@@ -1,6 +1,7 @@
 # coding: utf-8
 
-import sys, codecs
+import codecs
+import sys
 from os import path
 
 PY2 = sys.version_info[0] == 2

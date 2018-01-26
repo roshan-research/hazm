@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 import re
+
 from nltk.tokenize.api import TokenizerI
 
 

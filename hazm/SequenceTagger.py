@@ -1,8 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from nltk.tag.api import TaggerI
+
 from nltk.metrics import accuracy
+from nltk.tag.api import TaggerI
 
 
 class SequenceTagger(TaggerI):

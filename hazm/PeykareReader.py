@@ -1,7 +1,10 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-import os, codecs
+
+import codecs
+import os
+
 from .Normalizer import Normalizer
 from .WordTokenizer import WordTokenizer
 

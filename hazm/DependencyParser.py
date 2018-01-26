@@ -1,7 +1,11 @@
 # coding: utf-8
 
 from __future__ import print_function, unicode_literals
-import os, codecs, tempfile
+
+import codecs
+import os
+import tempfile
+
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
 from nltk.parse.malt import MaltParser

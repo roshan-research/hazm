@@ -1,9 +1,13 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-import re, codecs
-from .utils import words_list, default_words, default_verbs
+
+import codecs
+import re
+
 from nltk.tokenize.api import TokenizerI
+
+from .utils import default_verbs, default_words, words_list
 
 
 class WordTokenizer(TokenizerI):

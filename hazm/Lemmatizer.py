@@ -1,8 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from .utils import default_words, default_verbs
+
 from .Stemmer import Stemmer
+from .utils import default_verbs, default_words
 from .WordTokenizer import WordTokenizer
 
 

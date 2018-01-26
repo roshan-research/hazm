@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 import codecs
+
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
 

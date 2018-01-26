@@ -1,7 +1,10 @@
 # coding: utf-8
 
-from __future__ import unicode_literals, print_function
-import os, sys, itertools
+from __future__ import print_function, unicode_literals
+
+import itertools
+import os
+import sys
 from xml.dom import minidom
 
 

@@ -1,9 +1,9 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+
 import codecs
 from collections import namedtuple
-
 
 Verb = namedtuple('Verb', ('past_light_verb', 'present_light_verb', 'prefix', 'nonverbal_element', 'preposition', 'valency'))
 

@@ -1,7 +1,12 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-import sys, inspect, doctest, unittest
+
+import doctest
+import inspect
+import sys
+import unittest
+
 from hazm import *
 
 modules = {
