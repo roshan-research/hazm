@@ -14,6 +14,7 @@ modules = {
 	'treebank': TreebankReader,
 	'sentipers': SentiPersReader,
 	'tnews': TNewsReader,
+	'quran': QuranCorpusReader,
 	'sentence_tokenizer': SentenceTokenizer,
 	'word_tokenizer': WordTokenizer,
 	'splitter': TokenSplitter,
