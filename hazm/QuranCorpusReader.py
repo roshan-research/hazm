@@ -7,7 +7,6 @@ from .utils import maketrans
 buckwalter_transliteration = maketrans("'>&<}AbptvjHxd*rzs$SDTZEg_fqklmnhwYyFNKaui~o^#`{:@\"[;,.!-+%]", "\u0621\u0623\u0624\u0625\u0626\u0627\u0628\u0629\u062a\u062b\u062c\u062d\u062e\u062f\u0630\u0631\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0639\u063a\u0640\u0641\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649\u064a\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652\u0653\u0654\u0670\u0671\u06dc\u06df\u06e0\u06e2\u06e3\u06e5\u06e6\u06e8\u06ea\u06eb\u06ec\u06ed")
 
 
-
 class QuranCorpusReader():
 	"""
 	interfaces [Quran Corpus](http://corpus.quran.com/download/) that you must download and extract it.
@@ -40,10 +39,10 @@ class QuranCorpusReader():
 
 		def word_item(location, parts):
 			text = ''.join([part['text'] for part in parts])
-			tag = ' '.join([part['tag'] for part in parts])
-			lem = ' '.join([part['lem'] for part in parts if 'lem' in part])
-			root = ' '.join([part['root'] for part in parts if 'root' in part])
-			return location, text, tag, lem, root, parts
+			tag = '-'.join([part['tag'] for part in parts])
+			lem = '-'.join([part['lem'] for part in parts if 'lem' in part])
+			root = '-'.join([part['root'] for part in parts if 'root' in part])
+			return '.'.join(map(str, location)), text, lem, root, tag, parts
 
 		last_location = (0, 0, 0, 0)
 		items = []
