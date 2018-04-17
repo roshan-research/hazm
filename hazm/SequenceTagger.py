@@ -25,6 +25,9 @@ class SequenceTagger(TaggerI):
 	def train(self, sentences):
 		self.model.train(['\n'.join([' '.join(word) for word in sentence]) for sentence in sentences])
 
+	def tag(self, tokens):
+		return self.tag_sents([tokens])[0]
+
 	def save_model(self, filename):
 		self.model.save(filename)
 
