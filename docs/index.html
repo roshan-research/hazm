@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>هضم</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/pygment_trac.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="header">
+	<div class="container">
+		<h1>هضم</h1>
+		<p>برای پردازش زبان فارسی در پایتون</p>
+		<div class="menu">
+			<a id="ommidvar-donate" href="#"><span class="glyphicon glyphicon-tree-deciduous"></span> حمایت از پروژه</a>
+			<a href="http://www.sobhe.ir/hazm/demo/"><span class="glyphicon glyphicon-certificate"></span> نمایش</a>
+			<a href="https://github.com/sobhe/hazm"><span class="glyphicon glyphicon-send"></span> کدها</a>
+			<a href="https://github.com/sobhe/hazm/archive/master.zip"><span class="glyphicon glyphicon-download"></span> دریافت</a>
+		</div>
+	</div>
+</div>
+<div class="container content">
+	<h2>ویژگی‌ها</h2>
+	<ul>
+		<li>تمیز و مرتب کردن متن</li>
+		<li>تقطیع جمله‌ها و واژه‌ها</li>
+		<li>ریشه‌یابی واژه‌ها</li>
+		<li>تحلیل صرفی جمله</li>
+		<li>تجزیه نحوی جمله</li>
+		<li>واسط استفاده از داده‌های زبان فارسی</li>
+		<li>سازگاری با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
+		<li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
+		<li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm" style="display: inline-block"><img src="https://travis-ci.org/sobhe/hazm.png" alt="وضعیت تست" style="float: right; margin-bottom: -5px"></a></li>
+	</ul>
+
+	<h2>استفاده</h2>
+
+<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند'</span><span class="p">)</span>
+<span class="s">'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'ما هم برای وصل کردن آمدیم!'</span><span class="p">,</span> <span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'ولی'</span><span class="p">,</span> <span class="s">'برای'</span><span class="p">,</span> <span class="s">'پردازش'</span><span class="p">,</span> <span class="s">'،'</span><span class="p">,</span> <span class="s">'جدا'</span><span class="p">,</span> <span class="s">'بهتر'</span><span class="p">,</span> <span class="s">'نیست'</span><span class="p">,</span> <span class="s">'؟'</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s">'کتاب‌ها'</span><span class="p">)</span>
+<span class="s">'کتاب'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s">'می‌روم'</span><span class="p">)</span>
+<span class="s">'رفت#رو'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s">'resources/postagger.model'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ما بسیار کتاب می‌خوانیم'</span><span class="p">))</span>
+<span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می‌خوانیم'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s">'resources/chunker.model'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'کتاب خواندن را دوست داریم'</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tree2brackets</span><span class="p">(</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tagged</span><span class="p">))</span>
+<span class="s">'[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">tagger</span><span class="p">,</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">lemmatizer</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'زنگ‌ها برای که به صدا درمی‌آید؟'</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">DependencyGraph</span> <span class="k">with</span> <span class="mi">8</span> <span class="n">nodes</span><span class="o">&gt;</span>
+</pre></div>
+
+	<div class="pull-right" style="height: 0">درخت وابستگی حاصل:</div>
+	<div id="tree" class="tree">
+		<svg height="0"></svg>
+	</div>
+
+	<h2>نصب</h2>
+    <p>هضم، یکی از بسته‌های زبان پایتون است و با این دستور نصب می‌شود:</p>
+	<pre><code>pip install hazm</code></pre>
+	<p>توجه کنید که برچسب‌زن صرفی و تجزیه‌گر نحوی نیاز به مدل‌های آموزش‌دیده دارند. ما این مدل‌ها را هم آماده کرده‌ایم، می‌توانید آنها را <a href="http://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip">دریافت کنید</a> و در پوشه‌ای با عنوان <span class="eng">resources</span> در پروژه خود قرار دهید. البته رویه‌های آموزش و ارزیابی مدل‌ها هم <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a> هستند.</p>
+    <p>برای نصب روی ویندوز، لازم است ویژگی <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">WSL</a> را فعال کرده و با اجرای دستور زیر، پایتون را برای نصب هضم آماده کنید:</p>
+	<pre><code>sudo apt install python-pip</code></pre>
+
+	<h2>اجازه‌نامه</h2>
+	<p>شما می‌توانید مطابق <a href="https://github.com/sobhe/hazm/blob/master/LICENSE">اجازه‌نامه</a>، از این محصول در هر نوع پروژه‌ای از جمله تحقیقاتی یا تجاری استفاده کنید. فقط توجه کنید که اجازه‌نامه هضم تنها مربوط به کدهای این پروژه است و برای استفاده از مدل‌های آماده شده باید به مجوز داده‌های مورد استفاده در آموزش آنها مراجعه کنید؛ که خب هیچ‌کدام اجازه استفاده تجاری را نمی‌دهند :(</p>
+
+	<h2>آخرین تغییرات</h2>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.4...v0.5"><span class="glyphicon glyphicon-flash"></span> ۲۹ اسفند ۹۳</a></div>
+	<ul>
+		<li>واسط استفاده از برچسب‌زن <a href="http://wapiti.limsi.fr">Wapiti</a></li>
+		<li>آموزش تجزیه‌گر سطحی روی دادگان</li>
+		<li>دقت برچسب‌زن صرفی: 97.1%</li>
+		<li>دقت تجزیه‌گر سطحی: 89.9%</li>
+	</ul>
+
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.3...v0.4"><span class="glyphicon glyphicon-flash"></span> ۲۵ آذر ۹۳</a></div>
+	<ul>
+		<li>تجزیه سطحی مبتنی بر قاعده</li>
+		<li>مبدل درخت تجزیه وابستگی به تجزیه سطحی</li>
+		<li>واسط استفاده از داده‌های تری‌بنک</li>
+		<li>واسط استفاده از داده‌های فرهنگ ظرفیت فعل</li>
+	</ul>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3"><span class="glyphicon glyphicon-flash"></span> ۶ شهریور ۹۳</a></div>
+	<ul>
+		<li>افزودن کسره اضافه به برچسب‌های صرفی</li>
+		<li>آموزش برچسب‌زن صرفی روی پیکره</li>
+		<li>واسط استفاده از داده‌های پیکره و دادگان</li>
+		<li>دقت تجزیه‌گر نحوی: 85.2%</li>
+	</ul>
+	<div><a href="https://github.com/sobhe/hazm/compare/v0.1...v0.2"><span class="glyphicon glyphicon-flash"></span>۲۱ تیر ۹۳</a></div>
+	<ul>
+		<li>نسخه جدید فهرست واژه‌های ویراستیار</li>
+		<li>جایگزینی علامت نقل قول و ممیز</li>
+		<li>سازگاری با نسخه جدید NLTK</li>
+		<li>اجرای تست‌ها در پایتون ۲</li>
+	</ul>
+	<div><a href="https://github.com/sobhe/hazm/compare/41843e...v0.1"><span class="glyphicon glyphicon-flash"></span> ۲۳ آذر ۹۲</a></div>
+	<ul>
+		<li>آموزش برچسب‌زن صرفی روی بی‌جن‌خان</li>
+		<li>آموزش تجزیه‌گر نحوی روی دادگان</li>
+		<li>واسط استفاده از داده‌های همشهری و بی‌جن‌خان</li>
+		<li>دقت برچسب‌زن صرفی: 96.6%</li>
+		<li>دقت تجزیه‌گر نحوی: 83.3%</li>
+	</ul>
+
+	<h2>سپاس</h2>
+	<ul>
+		<li>از مشارکت <a href="https://github.com/mojtaba-khallash">مجتبی خلاش</a> و <a href="https://github.com/imani">محسن ایمانی</a></li>
+		<li>از <a href="http://virastyar.ir/">پروژه ویراستیار</a> برای فراهم کردن فهرست واژه‌ها</li>
+		<li>از <a href="http://noorsoft.org/">مرکز تحقیقات کامپیوتری علوم اسلامی (نور)</a></li>
+		<li>از حمایت <a href="http://khak.co/">گروه راهبردی خاک</a></li>
+	</ul>
+</div>
+<div class="container footer">
+	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
+</div>
+
+<link rel="stylesheet" href="http://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
+<script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	data = "1\tزنگ\u200cها\t_\tN\tN\t_\t6\tSBJ\t_\t_\n2\tبرای\t_\tPREP\tPREP\t_\t6\tADV\t_\t_\n3\tکه\t_\tCONJ\tCONJ\t_\t2\tPOSDEP\t_\t_\n4\tبه\t_\tPREP\tPREP\t_\t6\tVPP\t_\t_\n5\tصدا\t_\tN\tN\t_\t4\tPOSDEP\t_\t_\n6\tدرمی\u200cآید\t_\tV\tV\t_\t0\tROOT\t_\t_\n7\t؟\t_\tPUNC\tPUNC\t_\t6\tPUNC\t_\t_\n";
+	drawTree('#tree svg', data);
+</script>
+
+<script type="text/javascript">(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script");r.type="text/javascript";r.async=true;r.src="https://cdn.amplitude.com/libs/amplitude-4.2.1-min.gz.js";r.onload=function(){if(e.amplitude.runQueuedFunctions){e.amplitude.runQueuedFunctions()}else{console.log("[Amplitude] Error: could not load SDK")}};var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i);function s(e,t){e.prototype[t]=function(){this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}var o=function(){this._q=[];return this};var a=["add","append","clearAll","prepend","set","setOnce","unset"];for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[];return this};var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"];function v(e){function t(t){e[t]=function(){e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){e=(!e||e.length===0?"$default_instance":e).toLowerCase();if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]};e.amplitude=n})(window,document); amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");</script>
+
+<script type="text/javascript">
+	$('#ommidvar-donate').click(function() {
+        amplitude.getInstance().logEvent('Hazm Donate');
+	});
+
+    amplitude.getInstance().logEvent('Hazm');
+</script>
+
+<link rel="stylesheet" href="http://ommidvar.ir/static/css/donate.css">
+<script type="text/javascript" src="http://ommidvar.ir/projects/16/donate.js"></script>
+</body>
+</html>
