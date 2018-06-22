@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>هضم</title>
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/pygment_trac.css">
 	<link rel="stylesheet" href="../css/main.css">
 </head>
@@ -19,6 +19,15 @@
 		</div>
 	</div>
 </div>
+<style type="text/css">
+span.info {
+	color: #bbb;
+	cursor: pointer;
+}
+span.info:hover {
+	color: #333;
+}
+</style>
 <div class="container content">
 	<div id="query">
 		<h3>متن ورودی</h3>
@@ -32,6 +41,10 @@
 	</div>
 	<div class="demo" id="normalized">
 		<h3>متن تمیز</h3>
+		<div></div>
+	</div>
+	<div class="demo" id="corrected">
+		<h3>متن اصلاح‌شده <span class="info glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="left"  title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید."></span></h3>
 		<div></div>
 	</div>
 	<div class="demo" id="tokenized">
@@ -63,6 +76,7 @@
 <script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
 <script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var server = 'http://api.sobhe.ir:5000/api';
 
@@ -71,6 +85,13 @@
 			.done(function(normalized_text) {
 				$('#normalized').show().find('div').text(normalized_text);
 				tokenize({'normalized_text': normalized_text});
+				correct({'text': data['text'], 'mode': 'cleaner'});
+			})
+	};
+	var correct = function(data) {
+		$.post(server + '/correct', data)
+			.done(function(corrected_text) {
+				$('#corrected').show().find('div').text(corrected_text);
 			})
 	};
 	var tokenize = function(data) {
@@ -166,6 +187,10 @@
 <script type="text/javascript">(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script");r.type="text/javascript";r.async=true;r.src="https://cdn.amplitude.com/libs/amplitude-4.2.1-min.gz.js";r.onload=function(){if(e.amplitude.runQueuedFunctions){e.amplitude.runQueuedFunctions()}else{console.log("[Amplitude] Error: could not load SDK")}};var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i);function s(e,t){e.prototype[t]=function(){this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}var o=function(){this._q=[];return this};var a=["add","append","clearAll","prepend","set","setOnce","unset"];for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[];return this};var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"];function v(e){function t(t){e[t]=function(){e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){e=(!e||e.length===0?"$default_instance":e).toLowerCase();if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]};e.amplitude=n})(window,document); amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");</script>
 
 <script type="text/javascript">
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+
 	$('#ommidvar-donate').click(function() {
         amplitude.getInstance().logEvent('Hazm Donate');
 	});
