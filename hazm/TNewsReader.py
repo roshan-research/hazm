@@ -1,6 +1,9 @@
 # coding: utf-8
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
 import os
 import re
@@ -8,9 +11,10 @@ import sys
 from xml.dom import minidom
 
 
-class TNewsReader():
+class TNewsReader:
     """
-    interfaces [TNews Corpus](http://datasets.tnews.ir/downloads/) that you must download and extract.
+    interfaces [TNews Corpus](http://datasets.tnews.ir/downloads/)
+    that you must download and extract.
 
     >>> tnews = TNewsReader(root='corpora/tnews')
     >>> next(tnews.docs())['id']
