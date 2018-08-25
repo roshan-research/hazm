@@ -81,8 +81,7 @@ class HamshahriReader():
                             elm.childNodes) > 1 else ''
 
                         doc['text'] = ''
-                        for item in element.getElementsByTagName('TEXT')[
-                            0].childNodes:
+                        for item in element.getElementsByTagName('TEXT')[0].childNodes:
                             if item.nodeType == 4:  # CDATA
                                 doc['text'] += item.data
 

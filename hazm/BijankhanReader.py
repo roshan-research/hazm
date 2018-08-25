@@ -6,8 +6,9 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import codecs
+import re
 
-from .Normalizer import *
+from .Normalizer import Normalizer
 from .PeykareReader import join_verb_parts
 
 default_pos_map = {'ADJ': 'ADJ', 'ADJ_CMPR': 'ADJ',

@@ -38,7 +38,8 @@ class TNewsReader:
                     content = open(os.path.join(root, name)).read()
 
                     # fix xml formatting issue
-                    content = re.sub(r'[]', '', content)
+                    content = re.sub(r'[]', '',
+                                     content)
                     content = content.replace('</TNews>', '') + '</TNews>'
 
                     elements = minidom.parseString(content)

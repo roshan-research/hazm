@@ -27,10 +27,10 @@
 #  under the terms of the GNU General Public License, version 3,
 #  as published by the Free Software Foundation.
 #
-#  Tanl is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License at <http://www.gnu.org/licenses/> for more details.
+# Tanl is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License at
+# <http://www.gnu.org/licenses/> for more details.
 #
 # =============================================================================
 
@@ -110,7 +110,8 @@ else:
 # Program version
 version = '2.75'
 
-## PARAMS ####################################################################
+# PARAMS
+######################################################################
 
 options = SimpleNamespace(
 
@@ -174,7 +175,7 @@ options = SimpleNamespace(
     expand_templates=True,
 
     ##
-    ## Whether to escape doc content
+    # Whether to escape doc content
     escape_doc=False,
 
     ##
@@ -514,7 +515,8 @@ class Frame(object):
         res = ''
         prev = self.prev
         while prev:
-            if res: res += ', '
+            if res:
+                res += ', '
             res += '(%s, %s)' % (prev.title, prev.args)
             prev = prev.prev
         return '<Frame [' + res + ']>'
@@ -572,10 +574,10 @@ class Extractor(object):
         else:
             if options.print_revision:
                 header = '<doc id="%s" revid="%s" url="%s" title="%s">\n' % (
-                self.id, self.revid, url, self.title)
+                    self.id, self.revid, url, self.title)
             else:
                 header = '<doc id="%s" url="%s" title="%s">\n' % (
-                self.id, url, self.title)
+                    self.id, url, self.title)
             footer = "\n</doc>\n"
             if out == sys.stdout:  # option -a or -o -
                 header = header.encode('utf-8')
@@ -1315,7 +1317,7 @@ def findBalanced(text, openDelim=['[['], closeDelim=[']]']):
             stack.append(delim)
             nextPat = afterPat[delim]
         else:
-            opening = stack.pop()
+            # opening = stack.pop()
             # assert opening == openDelim[closeDelim.index(next.group(0))]
             if stack:
                 nextPat = afterPat[stack[-1]]
@@ -1405,9 +1407,13 @@ def string_sub(args):
     s = params.get('s', '')
     i = int(params.get('i', 1) or 1)  # or handles case of '' value
     j = int(params.get('j', -1) or -1)
-    if i > 0: i -= 1  # lua is 1-based
-    if j < 0: j += 1
-    if j == 0: j = len(s)
+    if i > 0:
+        i -= 1  # lua is 1-based
+    if j < 0:
+        j += 1
+    if j == 0:
+        j = len(s)
+
     return s[i:j]
 
 
@@ -1879,7 +1885,7 @@ parserFunctions = {
     '#ifexpr': lambda *args: '',  # not supported
 
     '#ifexist': lambda extr, title, ifex, ifnex: extr.expand(ifnex),
-# assuming title is not present
+    # assuming title is not present
 
     '#rel2abs': lambda *args: '',  # not supported
 
@@ -1984,7 +1990,8 @@ def define_template(title, page):
     # title = normalizeTitle(title)
 
     # sanity check (empty template, e.g. Template:Crude Oil Prices))
-    if not page: return
+    if not page:
+        return
 
     # check for redirects
     m = re.match('#REDIRECT.*?\[\[([^\]]*)]]', page[0], re.IGNORECASE)
@@ -2658,7 +2665,8 @@ def compact(text):
 
 def handle_unicode(entity):
     numeric_code = int(entity[2:-1])
-    if numeric_code >= 0x10000: return ''
+    if numeric_code >= 0x10000:
+        return ''
     return chr(numeric_code)
 
 
@@ -2805,7 +2813,8 @@ def pages_from(input):
     redirect = False
     title = None
     for line in input:
-        if not isinstance(line, text_type): line = line.decode('utf-8')
+        if not isinstance(line, text_type):
+            line = line.decode('utf-8')
         if '<' not in line:  # faster than doing re.search()
             if inText:
                 page.append(line)
@@ -2874,7 +2883,8 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
     # collect siteinfo
     for line in input:
         # When an input file is .bz2 or .gz, line can be a bytes even in Python 3.
-        if not isinstance(line, text_type): line = line.decode('utf-8')
+        if not isinstance(line, text_type):
+            line = line.decode('utf-8')
         m = tagRE.search(line)
         if not m:
             continue
@@ -3090,7 +3100,7 @@ def reduce_process(opts, output_queue, spool_length,
             # progress report
             if next_page % report_period == 0:
                 interval_rate = report_period / (
-                            default_timer() - interval_start)
+                        default_timer() - interval_start)
                 logging.info("Extracted %d articles (%.1f art/s)",
                              next_page, interval_rate)
                 interval_start = default_timer()

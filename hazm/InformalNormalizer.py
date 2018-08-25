@@ -5,11 +5,14 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import codecs
+import re
+
 from .Lemmatizer import Lemmatizer
 from .Normalizer import Normalizer
-from .SentenceTokenizer import *
+from .SentenceTokenizer import SentenceTokenizer
 from .Stemmer import Stemmer
-from .WordTokenizer import *
+from .WordTokenizer import WordTokenizer
 from .utils import informal_verbs, informal_words, NUMBERS
 
 
@@ -23,34 +26,11 @@ class InformalNormalizer(Normalizer):
         self.stemmer = Stemmer()
         super(InformalNormalizer, self).__init__(**kargs)
 
-        def informal_to_formal_conjucation(i, f, flag):
-            iv = self.informal_conjugations(i)
-            fv = self.lemmatizer.conjugations(f)
-            res = {}
-            if flag:
-                for i, j in zip(iv, fv[48:]):
-                    res[i] = j
-                    if '‌' in i:
-                        res[i.replace('‌', '')] = j
-                        res[i.replace('‌', ' ')] = j
-                    if i.endswith('ین'):
-                        res[i[:-1] + 'د'] = j
-            else:
-                for i, j in zip(iv[8:], fv[56:]):
-                    res[i] = j
-                    if '‌' in i:
-                        res[i.replace('‌', '')] = j
-                        res[i.replace('‌', ' ')] = j
-                    if i.endswith('ین'):
-                        res[i[:-1] + 'د'] = j
-
-            return res
-
         with codecs.open(verb_file, encoding='utf8') as vf:
             self.iverb_map = {}
             for f, i, flag in map(lambda x: x.strip().split(' ', 2), vf):
                 self.iverb_map.update(
-                    informal_to_formal_conjucation(i, f, flag)
+                    self.informal_to_formal_conjucation(i, f, flag)
                 )
 
         with codecs.open(word_file, encoding='utf8') as wf:
@@ -67,6 +47,29 @@ class InformalNormalizer(Normalizer):
             self.words.update(self.lemmatizer.words)
             self.words.update(self.lemmatizer.verbs.keys())
             self.words.update(self.lemmatizer.verbs.values())
+
+    def informal_to_formal_conjucation(self, i, f, flag):
+        iv = self.informal_conjugations(i)
+        fv = self.lemmatizer.conjugations(f)
+        res = {}
+        if flag:
+            for i, j in zip(iv, fv[48:]):
+                res[i] = j
+                if '‌' in i:
+                    res[i.replace('‌', '')] = j
+                    res[i.replace('‌', ' ')] = j
+                if i.endswith('ین'):
+                    res[i[:-1] + 'د'] = j
+        else:
+            for i, j in zip(iv[8:], fv[56:]):
+                res[i] = j
+                if '‌' in i:
+                    res[i.replace('‌', '')] = j
+                    res[i.replace('‌', ' ')] = j
+                if i.endswith('ین'):
+                    res[i[:-1] + 'د'] = j
+
+        return res
 
     def split_token_words(self, token):
 
@@ -137,7 +140,7 @@ class InformalNormalizer(Normalizer):
 
         elif word not in self.ilemmatizer.verbs and word.endswith(
                 'ون') and self.lemmatizer.lemmatize(
-                word[:-2] + 'ان') in self.ilemmatizer.words:
+            word[:-2] + 'ان') in self.ilemmatizer.words:
             options.append(word[:-2] + 'ان')
 
         elif self.seperation_flag:

@@ -87,8 +87,8 @@ class Lemmatizer(object):
         ends = ['م', 'ی', '', 'یم', 'ید', 'ند']
 
         if verb == '#هست':
-            return ['هست' + end for end in ends] + ['نیست' + end for end in
-                                                    ends]
+            return ['هست' + end for end in ends] + \
+                   ['نیست' + end for end in ends]
 
         past_simples = [past + end for end in ends]
         past_imperfects = ['می‌' + item for item in past_simples]

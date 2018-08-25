@@ -11,9 +11,6 @@ from .Lemmatizer import Lemmatizer
 from .WordTokenizer import WordTokenizer
 from .utils import maketrans
 
-compile_patterns = lambda patterns: [(re.compile(pattern), repl) for
-                                     pattern, repl in patterns]
-
 
 class Normalizer(object):
     def __init__(self, remove_extra_spaces=True, persian_style=True,
@@ -62,12 +59,12 @@ class Normalizer(object):
                 # SHADDA, SUKUN
             )
 
-        self.character_refinement_patterns = compile_patterns(
+        self.character_refinement_patterns = self.compile_patterns(
             self.character_refinement_patterns)
 
         punc_after, punc_before = r'\.:!،؛؟»\]\)\}', r'«\[\(\{'
         if punctuation_spacing:
-            self.punctuation_spacing_patterns = compile_patterns([
+            self.punctuation_spacing_patterns = self.compile_patterns([
                 ('" ([^\n"]+) "', r'"\1"'),
                 # remove space before and after quotation
                 (' ([' + punc_after + '])', r'\1'),  # remove space before
@@ -81,7 +78,7 @@ class Normalizer(object):
             ])
 
         if affix_spacing:
-            self.affix_spacing_patterns = compile_patterns([
+            self.affix_spacing_patterns = self.compile_patterns([
                 (r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
                 (r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
                 (
@@ -200,8 +197,8 @@ class Normalizer(object):
                         self.words[token_pair][0] > 0:
                     joined = True
 
-                    if t < len(tokens) - 1 and token + '_' + tokens[
-                        t + 1] in self.verbs:
+                    if t < len(tokens) - 1 and token + '_' + tokens[t + 1] in \
+                            self.verbs:
                         joined = False
 
                 elif token in self.suffixes and result[-1] in self.words:
@@ -214,3 +211,7 @@ class Normalizer(object):
                 result.append(token)
 
         return result
+
+    def compile_patterns(self, patterns):
+        return [(re.compile(pattern), repl) for
+                pattern, repl in patterns]

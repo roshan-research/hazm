@@ -29,7 +29,8 @@ class WordTokenizer(TokenizerI):
         self._join_verb_parts = join_verb_parts
         self.pattern = re.compile(r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
 
-        self.words = {item[0]: (item[1], item[2]) for item in words_list(default_words)}
+        self.words = {item[0]: (item[1], item[2])
+                      for item in words_list(default_words)}
 
         if join_verb_parts:
             self.after_verbs = {'ام', 'ای', 'است', 'ایم', 'اید', 'اند', 'بودم',
@@ -66,12 +67,16 @@ class WordTokenizer(TokenizerI):
                                  'نخواهیم', 'نخواهید', 'نخواهند'}
 
             with codecs.open(verbs_file, encoding='utf8') as verbs_file:
-                self.verbs = list(reversed([verb.strip() for verb in verbs_file if verb]))
+                self.verbs = list(
+                    reversed([verb.strip() for verb in verbs_file if verb]))
                 self.bons = set([verb.split('#')[0] for verb in self.verbs])
-                self.verbe = set([bon + 'ه' for bon in self.bons] + ['ن' + bon + 'ه' for bon in self.bons])
+                self.verbe = set(
+                    [bon + 'ه' for bon in self.bons]
+                    + ['ن' + bon + 'ه' for bon in self.bons])
 
     def tokenize(self, text):
-        text = self.pattern.sub(r' \1 ', text.replace('\n', ' ').replace('\t', ' '))
+        text = self.pattern.sub(r' \1 ',
+                                text.replace('\n', ' ').replace('\t', ' '))
         tokens = [word for word in text.split(' ') if word]
         if self._join_verb_parts:
             tokens = self.join_verb_parts(tokens)
@@ -94,7 +99,8 @@ class WordTokenizer(TokenizerI):
 
         result = ['']
         for token in reversed(tokens):
-            if token in self.before_verbs or (result[-1] in self.after_verbs and token in self.verbe):
+            if token in self.before_verbs or (
+                    result[-1] in self.after_verbs and token in self.verbe):
                 result[-1] = token + '_' + result[-1]
             else:
                 result.append(token)

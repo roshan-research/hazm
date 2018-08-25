@@ -117,7 +117,7 @@ class TreebankReader:
                 if type(tree[-1]) == Tree:
                     return clitic_join(tree[-1], clitic)
                 else:
-                    if (clitic[0][0][0] == 'ا'):
+                    if clitic[0][0][0] == 'ا':
                         clitic[0] = ('‌' + clitic[0][0], clitic[0][1])
                     tree[-1] = (tree[-1][0] + clitic[0][0], clitic[0][1])
                     tree.set_label('CLITICS')
@@ -147,14 +147,15 @@ class TreebankReader:
                 0].label() == 'AUX' and tree[0][0][
                 0] in self._tokenizer.before_verbs:
                 tree[1][0] = (
-                tree[0][0][0] + ' ' + tree[1][0][0], tree[1][0][1])
+                    tree[0][0][0] + ' ' + tree[1][0][0], tree[1][0][1])
                 tree.remove(tree[0])
             if self._join_verb_parts and len(tree.leaves()) > 1 and \
                     tree.leaves()[-1][
                         0] in self._tokenizer.after_verbs and \
                     tree.leaves()[-2][0] in self._tokenizer.verbe:
                 tree[1][0] = (
-                tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
+                    tree[0].leaves()[-1][0] + ' ' + tree[1][0][0],
+                    tree[1][0][1])
                 path = tree.leaf_treeposition(len(tree.leaves()) - 2)
                 removingtree = tree
                 while len(path) > 2:
@@ -167,7 +168,8 @@ class TreebankReader:
                         0] in self._tokenizer.after_verbs and \
                     tree.leaves()[-2][0] in self._tokenizer.verbe:
                 tree[1][0] = (
-                tree[0].leaves()[-1][0] + ' ' + tree[1][0][0], tree[1][0][1])
+                    tree[0].leaves()[-1][0] + ' ' + tree[1][0][0],
+                    tree[1][0][1])
                 path = tree.leaf_treeposition(len(tree.leaves()) - 2)
                 removingtree = tree
                 while len(path) > 2:
@@ -185,10 +187,12 @@ class TreebankReader:
         for tree in self.trees():
             yield tree.leaves()
 
+    def collapse(self, node, label):
+        return Tree(label,
+                    [Tree(pos[1], [pos[0]]) for pos in
+                     node.pos()])
+
     def chunked_trees(self):
-        collapse = lambda node, label: Tree(label,
-                                            [Tree(pos[1], [pos[0]]) for pos in
-                                             node.pos()])
 
         def traverse(node, parent, chunks):
             label = node.label()
@@ -235,17 +239,17 @@ class TreebankReader:
                     return
 
             if label == 'NPA' and parent.label() in {'CPC', 'PPC'}:
-                chunks.append(collapse(node, 'NP'))
+                chunks.append(self.collapse(node, 'NP'))
                 return
 
             if label == 'NPA' and len(node) >= 1:
                 if node[0].label() == 'ADV':
-                    chunks.append(collapse(node, 'NP'))
+                    chunks.append(self.collapse(node, 'NP'))
                     return
 
             if label in {'NPC', 'N', 'INFV', 'DPA', 'CLASS', 'DPC', 'DEM',
                          'INTJ', 'MN', 'PRON', 'DET', 'NUM', 'RES'}:
-                chunks.append(collapse(node, 'NP'))
+                chunks.append(self.collapse(node, 'NP'))
                 return
 
             if label == 'NPA' and len(node) >= 2:
@@ -261,7 +265,7 @@ class TreebankReader:
                     0].label() == 'NPA' and node[
                     1].label() != 'NPC' or node[1].label() == 'NPA' and node[
                     0].label() != 'NPC':
-                    chunks.append(collapse(node, 'NP'))
+                    chunks.append(self.collapse(node, 'NP'))
                     return
 
             if label == 'DPC' and len(node) >= 2:
@@ -270,12 +274,12 @@ class TreebankReader:
                     if leaf[1] in {'PUNC', 'CONJ', 'PREP', 'PostP'}:
                         chunkable = False
                 if node[1].label() in {'N', 'NPA', 'NPC'} and chunkable:
-                    chunks.append(collapse(node, 'NP'))
+                    chunks.append(self.collapse(node, 'NP'))
                     return
 
             if label == 'DPA' and len(node) >= 2:
                 if node[1].label() == 'ADV':
-                    chunks.append(collapse(node, 'ADVP'))
+                    chunks.append(self.collapse(node, 'ADVP'))
                     return
 
             if label in {'MV', 'V', 'AUX', 'PPARV'}:
