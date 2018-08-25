@@ -5,7 +5,10 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from nltk.chunk import ChunkParserI, RegexpParser, tree2conlltags, conlltags2tree
+from nltk.chunk import ChunkParserI
+from nltk.chunk import RegexpParser
+from nltk.chunk import conlltags2tree
+from nltk.chunk import tree2conlltags
 
 from .SequenceTagger import IOBTagger
 
@@ -31,7 +34,8 @@ def tree2brackets(tree):
 class Chunker(IOBTagger, ChunkParserI):
     """
     >>> chunker = Chunker(model='resources/chunker.model')
-    >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+    >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'),
+    ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
     '[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'
     """
 
@@ -52,7 +56,9 @@ class Chunker(IOBTagger, ChunkParserI):
 class RuleBasedChunker(RegexpParser):
     """
     >>> chunker = RuleBasedChunker()
-    >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUMe'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+    >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUMe'),
+     ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'),
+      ('داشتم', 'V'), ('.', 'PUNC')]))
     '[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
     """
 

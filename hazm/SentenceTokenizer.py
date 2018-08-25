@@ -22,4 +22,5 @@ class SentenceTokenizer(TokenizerI):
 
     def tokenize(self, text):
         text = self.pattern.sub(r'\1\n\n', text)
-        return [sentence.replace('\n', ' ').strip() for sentence in text.split('\n\n') if sentence.strip()]
+        return [sentence.replace('\n', ' ').strip()
+                for sentence in text.split('\n\n') if sentence.strip()]

@@ -37,21 +37,31 @@ class TNewsReader:
                 try:
                     content = open(os.path.join(root, name)).read()
 
-                    # fix xml formating issue
-                    content = re.sub(r'[]', '', content).replace('</TNews>', '') + '</TNews>'
+                    # fix xml formatting issue
+                    content = re.sub(r'[]', '', content)
+                    content = content.replace('</TNews>', '') + '</TNews>'
 
                     elements = minidom.parseString(content)
                     for element in elements.getElementsByTagName('NEWS'):
                         doc = {}
-                        doc['id'] = get_text(element.getElementsByTagName('NEWSID')[0])
-                        doc['url'] = get_text(element.getElementsByTagName('URL')[0])
-                        doc['datetime'] = get_text(element.getElementsByTagName('UTCDATE')[0])
-                        doc['category'] = get_text(element.getElementsByTagName('CATEGORY')[0])
-                        doc['pre-title'] = get_text(element.getElementsByTagName('PRETITLE')[0])
-                        doc['title'] = get_text(element.getElementsByTagName('TITLE')[0])
-                        doc['post-title'] = get_text(element.getElementsByTagName('POSTTITLE')[0])
-                        doc['brief'] = get_text(element.getElementsByTagName('BRIEF')[0])
-                        doc['text'] = get_text(element.getElementsByTagName('DESCRIPTION')[0])
+                        doc['id'] = get_text(
+                            element.getElementsByTagName('NEWSID')[0])
+                        doc['url'] = get_text(
+                            element.getElementsByTagName('URL')[0])
+                        doc['datetime'] = get_text(
+                            element.getElementsByTagName('UTCDATE')[0])
+                        doc['category'] = get_text(
+                            element.getElementsByTagName('CATEGORY')[0])
+                        doc['pre-title'] = get_text(
+                            element.getElementsByTagName('PRETITLE')[0])
+                        doc['title'] = get_text(
+                            element.getElementsByTagName('TITLE')[0])
+                        doc['post-title'] = get_text(
+                            element.getElementsByTagName('POSTTITLE')[0])
+                        doc['brief'] = get_text(
+                            element.getElementsByTagName('BRIEF')[0])
+                        doc['text'] = get_text(
+                            element.getElementsByTagName('DESCRIPTION')[0])
                         yield doc
 
                 except Exception as e:

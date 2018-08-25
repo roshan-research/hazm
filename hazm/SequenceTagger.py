@@ -27,17 +27,21 @@ class SequenceTagger(TaggerI):
         self.model = Model(patterns='\n'.join(patterns), **options)
 
     def train(self, sentences):
-        self.model.train(['\n'.join([' '.join(word) for word in sentence]) for sentence in sentences])
+        sequences = ['\n'.join([' '.join(word) for word in sentence])
+                     for sentence in sentences]
+        self.model.train(sequences)
 
     def save_model(self, filename):
         self.model.save(filename)
 
     def tag_sents(self, sentences):
         sentences = list(sentences)
-        lines = '\n\n'.join(['\n'.join(sentence) for sentence in sentences]).replace(' ', '_')
+        lines = '\n\n'.join(
+            ['\n'.join(sentence) for sentence in sentences]).replace(' ', '_')
         results = self.model.label_sequence(lines).decode('utf8')
         tags = iter(results.strip().split('\n'))
-        return [[(word, next(tags)) for word in sentence] for sentence in sentences]
+        return [[(word, next(tags)) for word in sentence] for sentence in
+                sentences]
 
 
 class IOBTagger(SequenceTagger):
@@ -46,17 +50,22 @@ class IOBTagger(SequenceTagger):
     >>> tagger = IOBTagger(patterns=['*', 'U:word-%x[0,0]', 'U:word-%x[0,1]'])
     >>> tagger.train([[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]])
     >>> tagger.tag_sents([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
-    [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
+    [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP')
+    , ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
     """
 
     def tag_sents(self, sentences):
         sentences = list(sentences)
-        lines = '\n\n'.join(['\n'.join(['\t'.join(word) for word in sentence]) for sentence in sentences]).replace(' ',
-                                                                                                                   '_')
+        lines = '\n\n'.join(
+            ['\n'.join(['\t'.join(word) for word in sentence]) for sentence in
+             sentences]).replace(' ',
+                                 '_')
         results = self.model.label_sequence(lines).decode('utf8')
         tags = iter(results.strip().split('\n'))
-        return [[word + (next(tags),) for word in sentence] for sentence in sentences]
+        return [[word + (next(tags),) for word in sentence] for sentence in
+                sentences]
 
     def evaluate(self, gold):
-        tagged_sents = self.tag_sents(([word[:-1] for word in sentence] for sentence in gold))
+        tagged_sents = self.tag_sents(
+            ([word[:-1] for word in sentence] for sentence in gold))
         return accuracy(sum(gold, []), sum(tagged_sents, []))

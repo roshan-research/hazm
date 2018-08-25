@@ -10,7 +10,7 @@ import re
 import subprocess
 
 
-class WikipediaReader():
+class WikipediaReader:
     """
     interfaces [Persian Wikipedia dump]
     (http://download.wikimedia.org/fawiki/latest/fawiki-latest-pages-articles.xml.bz2)

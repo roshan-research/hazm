@@ -11,12 +11,16 @@ from .Lemmatizer import Lemmatizer
 from .WordTokenizer import WordTokenizer
 from .utils import maketrans
 
-compile_patterns = lambda patterns: [(re.compile(pattern), repl) for pattern, repl in patterns]
+compile_patterns = lambda patterns: [(re.compile(pattern), repl) for
+                                     pattern, repl in patterns]
 
 
 class Normalizer(object):
-    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True,
-                 affix_spacing=True, token_based=False, punctuation_spacing=True):
+    def __init__(self, remove_extra_spaces=True, persian_style=True,
+                 persian_numbers=True, remove_diacritics=True,
+                 affix_spacing=True, token_based=False,
+                 punctuation_spacing=True):
+
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing
         self._token_based = token_based
@@ -32,7 +36,8 @@ class Normalizer(object):
             self.words = lemmatizer.words
             self.verbs = lemmatizer.verbs
             self.tokenizer = WordTokenizer(join_verb_parts=False)
-            self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر', 'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
+            self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر', 'تری', 'ترین', 'گر',
+                             'گری', 'ام', 'ات', 'اش'}
 
         self.character_refinement_patterns = []
 
@@ -53,20 +58,26 @@ class Normalizer(object):
         if remove_diacritics:
             self.character_refinement_patterns.append(
                 ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),
-                # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
+                # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA,
+                # SHADDA, SUKUN
             )
 
-        self.character_refinement_patterns = compile_patterns(self.character_refinement_patterns)
+        self.character_refinement_patterns = compile_patterns(
+            self.character_refinement_patterns)
 
         punc_after, punc_before = r'\.:!،؛؟»\]\)\}', r'«\[\(\{'
         if punctuation_spacing:
             self.punctuation_spacing_patterns = compile_patterns([
-                ('" ([^\n"]+) "', r'"\1"'),  # remove space before and after quotation
+                ('" ([^\n"]+) "', r'"\1"'),
+                # remove space before and after quotation
                 (' ([' + punc_after + '])', r'\1'),  # remove space before
                 ('([' + punc_before + ']) ', r'\1'),  # remove space after
-                ('([' + punc_after[:3] + '])([^ \d' + punc_after + '])', r'\1 \2'),  # put space after . and :
-                ('([' + punc_after[3:] + '])([^ ' + punc_after + '])', r'\1 \2'),  # put space after
-                ('([^ ' + punc_before + '])([' + punc_before + '])', r'\1 \2'),  # put space before
+                ('([' + punc_after[:3] + '])([^ \d' + punc_after + '])',
+                 r'\1 \2'),  # put space after . and :
+                ('([' + punc_after[3:] + '])([^ ' + punc_after + '])',
+                 r'\1 \2'),  # put space after
+                ('([^ ' + punc_before + '])([' + punc_before + '])', r'\1 \2'),
+                # put space before
             ])
 
         if affix_spacing:
@@ -74,9 +85,14 @@ class Normalizer(object):
                 (r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
                 (r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
                 (
-                r'(?<=[^\n\d ' + punc_after + punc_before + ']{2}) (تر(ین?)?|گری?|های?)(?=[ \n' + punc_after + punc_before + ']|$)',
-                r'‌\1'),  # put zwnj before تر, تری, ترین, گر, گری, ها, های
-                (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + punc_after + ']|$)', r'\1‌\2'),
+                    r'(?<=[^\n\d ' +
+                    punc_after +
+                    punc_before +
+                    ']{2}) (تر(ین?)?|گری?|های?)(?=[ \n' +
+                    punc_after + punc_before + ']|$)',
+                    r'‌\1'),  # put zwnj before تر, تری, ترین, گر, گری, ها, های
+                (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + punc_after + ']|$)',
+                 r'\1‌\2'),
                 # join ام, ایم, اش, اند, ای, اید, ات
             ])
 
@@ -180,10 +196,12 @@ class Normalizer(object):
 
             if result:
                 token_pair = result[-1] + '‌' + token
-                if token_pair in self.verbs or token_pair in self.words and self.words[token_pair][0] > 0:
+                if token_pair in self.verbs or token_pair in self.words and \
+                        self.words[token_pair][0] > 0:
                     joined = True
 
-                    if t < len(tokens) - 1 and token + '_' + tokens[t + 1] in self.verbs:
+                    if t < len(tokens) - 1 and token + '_' + tokens[
+                        t + 1] in self.verbs:
                         joined = False
 
                 elif token in self.suffixes and result[-1] in self.words:

@@ -345,19 +345,22 @@ nowiki = re.compile(r'<nowiki>.*?</nowiki>')
 
 
 def ignoreTag(tag):
-    left = re.compile(r'<%s\b.*?>' % tag, re.IGNORECASE | re.DOTALL)  # both <ref> and <reference>
+    left = re.compile(r'<%s\b.*?>' % tag,
+                      re.IGNORECASE | re.DOTALL)  # both <ref> and <reference>
     right = re.compile(r'</\s*%s>' % tag, re.IGNORECASE)
     options.ignored_tag_patterns.append((left, right))
 
 
 # Match selfClosing HTML tags
 selfClosing_tag_patterns = [
-    re.compile(r'<\s*%s\b[^>]*/\s*>' % tag, re.DOTALL | re.IGNORECASE) for tag in selfClosingTags
+    re.compile(r'<\s*%s\b[^>]*/\s*>' % tag, re.DOTALL | re.IGNORECASE)
+    for tag in selfClosingTags
 ]
 
 # Match HTML placeholder tags
 placeholder_tag_patterns = [
-    (re.compile(r'<\s*%s(\s*| [^>]+?)>.*?<\s*/\s*%s\s*>' % (tag, tag), re.DOTALL | re.IGNORECASE),
+    (re.compile(r'<\s*%s(\s*| [^>]+?)>.*?<\s*/\s*%s\s*>' % (tag, tag),
+                re.DOTALL | re.IGNORECASE),
      repl) for tag, repl in placeholder_tags.items()
 ]
 
@@ -484,7 +487,8 @@ class TemplateArg(object):
         paramName = extractor.transform(paramName)
         res = ''
         if paramName in params:
-            res = params[paramName]  # use parameter value specified in template invocation
+            res = params[
+                paramName]  # use parameter value specified in template invocation
         elif self.default:  # use the default value
             defaultValue = self.default.subst(params, extractor, depth + 1)
             res = extractor.transform(defaultValue)
@@ -567,9 +571,11 @@ class Extractor(object):
             out.write('\n')
         else:
             if options.print_revision:
-                header = '<doc id="%s" revid="%s" url="%s" title="%s">\n' % (self.id, self.revid, url, self.title)
+                header = '<doc id="%s" revid="%s" url="%s" title="%s">\n' % (
+                self.id, self.revid, url, self.title)
             else:
-                header = '<doc id="%s" url="%s" title="%s">\n' % (self.id, url, self.title)
+                header = '<doc id="%s" url="%s" title="%s">\n' % (
+                self.id, url, self.title)
             footer = "\n</doc>\n"
             if out == sys.stdout:  # option -a or -o -
                 header = header.encode('utf-8')
@@ -601,7 +607,8 @@ class Extractor(object):
             ns = ''  # Main
             pagename = self.title
         self.magicWords['NAMESPACE'] = ns
-        self.magicWords['NAMESPACENUMBER'] = options.knownNamespaces.get(ns, '0')
+        self.magicWords['NAMESPACENUMBER'] = options.knownNamespaces.get(ns,
+                                                                         '0')
         self.magicWords['PAGENAME'] = pagename
         self.magicWords['FULLPAGENAME'] = self.title
         slash = pagename.rfind('/')
@@ -645,8 +652,9 @@ class Extractor(object):
                 self.recursion_exceeded_2_errs,
                 self.recursion_exceeded_3_errs)
         if any(errs):
-            logging.warn("Template errors in article '%s' (%s): title(%d) recursion(%d, %d, %d)",
-                         self.title, self.id, *errs)
+            logging.warn(
+                "Template errors in article '%s' (%s): title(%d) recursion(%d, %d, %d)",
+                self.title, self.id, *errs)
 
     def transform(self, wikitext):
         """
@@ -657,7 +665,8 @@ class Extractor(object):
         res = ''
         cur = 0
         for m in nowiki.finditer(wikitext, cur):
-            res += self.transform1(wikitext[cur:m.start()]) + wikitext[m.start():m.end()]
+            res += self.transform1(wikitext[cur:m.start()]) + wikitext[
+                                                              m.start():m.end()]
             cur = m.end()
         # leftover
         res += self.transform1(wikitext[cur:])
@@ -756,7 +765,8 @@ class Extractor(object):
 
         # Drop discarded elements
         for tag in options.discardElements:
-            text = dropNested(text, r'<\s*%s\b[^>/]*>' % tag, r'<\s*/\s*%s>' % tag)
+            text = dropNested(text, r'<\s*%s\b[^>/]*>' % tag,
+                              r'<\s*/\s*%s>' % tag)
 
         if not options.toHTML:
             # Turn into text what is left (&amp;nbsp;) and <syntaxhighlight>
@@ -766,7 +776,8 @@ class Extractor(object):
         for pattern, placeholder in placeholder_tag_patterns:
             index = 1
             for match in pattern.finditer(text):
-                text = text.replace(match.group(), '%s_%d' % (placeholder, index))
+                text = text.replace(match.group(),
+                                    '%s_%d' % (placeholder, index))
                 index += 1
 
         text = text.replace('<<', '«').replace('>>', '»')
@@ -779,14 +790,17 @@ class Extractor(object):
         text = dots.sub('...', text)
         text = re.sub(' (,:\.\)\]»)', r'\1', text)
         text = re.sub('(\[\(«) ', r'\1', text)
-        text = re.sub(r'\n\W+?\n', '\n', text, flags=re.U)  # lines with only punctuations
+        text = re.sub(r'\n\W+?\n', '\n', text,
+                      flags=re.U)  # lines with only punctuations
         text = text.replace(',,', ',').replace(',.', '.')
         if options.keep_tables:
             # the following regular expressions are used to remove the wikiml chartacters around table strucutures
             # yet keep the content. The order here is imporant so we remove certain markup like {| and then
             # then the future html attributes such as 'style'. Finally we drop the remaining '|-' that delimits cells.
             text = re.sub(r'!(?:\s)?style=\"[a-z]+:(?:\d+)%;\"', r'', text)
-            text = re.sub(r'!(?:\s)?style="[a-z]+:(?:\d+)%;[a-z]+:(?:#)?(?:[0-9a-z]+)?"', r'', text)
+            text = re.sub(
+                r'!(?:\s)?style="[a-z]+:(?:\d+)%;[a-z]+:(?:#)?(?:[0-9a-z]+)?"',
+                r'', text)
             text = text.replace('|-', '')
             text = text.replace('|', '')
         if options.toHTML:
@@ -997,7 +1011,8 @@ class Extractor(object):
         colon = title.find(':')
         if colon > 1:
             funct = title[:colon]
-            parts[0] = title[colon + 1:].strip()  # side-effect (parts[0] not used later)
+            parts[0] = title[
+                       colon + 1:].strip()  # side-effect (parts[0] not used later)
             # arguments after first are not evaluated
             ret = callParserFunction(funct, parts, self)
             logging.debug('%*s<EXPAND %s %s', self.frame.depth, '', funct, ret)
@@ -1025,7 +1040,8 @@ class Extractor(object):
             logging.debug('%*s<EXPAND %s %s', self.frame.depth, '', title, '')
             return ''
 
-        logging.debug('%*sTEMPLATE %s: %s', self.frame.depth, '', title, template)
+        logging.debug('%*sTEMPLATE %s: %s', self.frame.depth, '', title,
+                      template)
 
         # tplarg          = "{{{" parts "}}}"
         # parts           = [ title *( "|" part ) ]
@@ -1278,7 +1294,8 @@ def findBalanced(text, openDelim=['[['], closeDelim=[']]']):
     """
     openPat = '|'.join([re.escape(x) for x in openDelim])
     # pattern for delimiters expected after each opening delimiter
-    afterPat = {o: re.compile(openPat + '|' + c, re.DOTALL) for o, c in zip(openDelim, closeDelim)}
+    afterPat = {o: re.compile(openPat + '|' + c, re.DOTALL) for o, c in
+                zip(openDelim, closeDelim)}
     stack = []
     start = 0
     cur = 0
@@ -1432,7 +1449,8 @@ def string_pos(args):
 
 
 def string_replace(args):
-    params = functionParams(args, ('source', 'pattern', 'replace', 'count', 'plain'))
+    params = functionParams(args,
+                            ('source', 'pattern', 'replace', 'count', 'plain'))
     source = params.get('source', '')
     pattern = params.get('pattern', '')
     replace = params.get('replace', '')
@@ -1784,7 +1802,9 @@ def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
 
 
 def sharp_iferror(extr, test, then='', Else=None, *args):
-    if re.match('<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"', test):
+    if re.match(
+            '<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"',
+            test):
         return extr.expand(then.strip())
     elif Else is None:
         return test.strip()
@@ -1858,7 +1878,8 @@ parserFunctions = {
 
     '#ifexpr': lambda *args: '',  # not supported
 
-    '#ifexist': lambda extr, title, ifex, ifnex: extr.expand(ifnex),  # assuming title is not present
+    '#ifexist': lambda extr, title, ifex, ifnex: extr.expand(ifnex),
+# assuming title is not present
 
     '#rel2abs': lambda *args: '',  # not supported
 
@@ -1904,7 +1925,8 @@ def callParserFunction(functionName, args, extractor):
         functionName = functionName.lower()
         if functionName == '#invoke':
             module, fun = args[0].strip(), args[1].strip()
-            logging.debug('%*s#invoke %s %s %s', extractor.frame.depth, '', module, fun, args[2:])
+            logging.debug('%*s#invoke %s %s %s', extractor.frame.depth, '',
+                          module, fun, args[2:])
             # special handling of frame
             if len(args) == 2:
                 # find parameters in frame whose title is the one of the original
@@ -1920,10 +1942,12 @@ def callParserFunction(functionName, args, extractor):
                         break
                     frame = frame.prev
             else:
-                params = [extractor.transform(p) for p in args[2:]]  # evaluates them
+                params = [extractor.transform(p) for p in
+                          args[2:]]  # evaluates them
                 params = extractor.templateParams(params)
             ret = sharp_invoke(module, fun, params)
-            logging.debug('%*s<#invoke %s %s %s', extractor.frame.depth, '', module, fun, ret)
+            logging.debug('%*s<#invoke %s %s %s', extractor.frame.depth, '',
+                          module, fun, ret)
             return ret
         if functionName in parserFunctions:
             # branching functions use the extractor to selectively evaluate args
@@ -2394,7 +2418,8 @@ def makeInternalLink(title, label):
     if colon == 0:
         # drop also :File:
         colon2 = title.find(':', colon + 1)
-        if colon2 > 1 and title[colon + 1:colon2] not in options.acceptedNamespaces:
+        if colon2 > 1 and title[
+                          colon + 1:colon2] not in options.acceptedNamespaces:
             return ''
     if options.keepLinks:
         return '<a href="%s">%s</a>' % (quote(title.encode('utf-8')), label)
@@ -2492,7 +2517,8 @@ def makeExternalImage(url, alt=''):
 # match tail after wikilink
 tailRE = re.compile('\w+')
 
-syntaxhighlight = re.compile('&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;', re.DOTALL)
+syntaxhighlight = re.compile(
+    '&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;', re.DOTALL)
 
 # skip level 1, it is page name level
 section = re.compile(r'(==+)\s*(.*?)\s*\1')
@@ -2597,7 +2623,8 @@ def compact(text):
                     # use item count for #-lines
                     listCount[i - 1] += 1
                     bullet = '%d. ' % listCount[i - 1] if n == '#' else '- '
-                    page.append('{0:{1}s}'.format(bullet, len(listLevel)) + line)
+                    page.append(
+                        '{0:{1}s}'.format(bullet, len(listLevel)) + line)
                 elif options.toHTML:
                     page.append(listItem[n] % line)
         elif len(listLevel):
@@ -2665,7 +2692,8 @@ class NextFile(object):
     def _dirname(self):
         char1 = self.dir_index % 26
         char2 = self.dir_index // 26 % 26
-        return os.path.join(self.path_name, '%c%c' % (ord('A') + char2, ord('A') + char1))
+        return os.path.join(self.path_name,
+                            '%c%c' % (ord('A') + char2, ord('A') + char1))
 
     def _filepath(self):
         return '%s/wiki_%02d' % (self._dirname(), self.file_index)
@@ -2757,7 +2785,8 @@ def load_templates(file, output_file=None):
             logging.info("Preprocessed %d pages", page_count)
     if output_file:
         output.close()
-        logging.info("Saved %d templates to '%s'", len(options.templates), output_file)
+        logging.info("Saved %d templates to '%s'", len(options.templates),
+                     output_file)
 
 
 def pages_from(input):
@@ -2799,7 +2828,8 @@ def pages_from(input):
         elif tag == 'redirect':
             redirect = True
         elif tag == 'text':
-            if m.lastindex == 3 and line[m.start(3) - 2] == '/':  # self closing
+            if m.lastindex == 3 and line[
+                m.start(3) - 2] == '/':  # self closing
                 # <text xml:space="preserve" />
                 continue
             inText = True
@@ -2838,7 +2868,8 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
     if input_file == '-':
         input = sys.stdin
     else:
-        input = fileinput.FileInput(input_file, openhook=fileinput.hook_compressed)
+        input = fileinput.FileInput(input_file,
+                                    openhook=fileinput.hook_compressed)
 
     # collect siteinfo
     for line in input:
@@ -2874,7 +2905,8 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
         template_load_start = default_timer()
         if template_file:
             if os.path.exists(template_file):
-                logging.info("Loading template definitions from: %s", template_file)
+                logging.info("Loading template definitions from: %s",
+                             template_file)
                 # can't use with here:
                 file = fileinput.FileInput(template_file,
                                            openhook=fileinput.hook_compressed)
@@ -2883,13 +2915,18 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
             else:
                 if input_file == '-':
                     # can't scan then reset stdin; must error w/ suggestion to specify template_file
-                    raise ValueError("to use templates with stdin dump, must supply explicit template-file")
-                logging.info("Preprocessing '%s' to collect template definitions: this may take some time.", input_file)
+                    raise ValueError(
+                        "to use templates with stdin dump, must supply explicit template-file")
+                logging.info(
+                    "Preprocessing '%s' to collect template definitions: this may take some time.",
+                    input_file)
                 load_templates(input, template_file)
                 input.close()
-                input = fileinput.FileInput(input_file, openhook=fileinput.hook_compressed)
+                input = fileinput.FileInput(input_file,
+                                            openhook=fileinput.hook_compressed)
         template_load_elapsed = default_timer() - template_load_start
-        logging.info("Loaded %d templates in %.1fs", len(options.templates), template_load_elapsed)
+        logging.info("Loaded %d templates in %.1fs", len(options.templates),
+                     template_load_elapsed)
 
     # process pages
     logging.info("Starting page extraction from %s.", input_file)
@@ -2967,8 +3004,9 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
 
     extract_duration = default_timer() - extract_start
     extract_rate = page_num / extract_duration
-    logging.info("Finished %d-process extraction of %d articles in %.1fs (%.1f art/s)",
-                 process_count, page_num, extract_duration, extract_rate)
+    logging.info(
+        "Finished %d-process extraction of %d articles in %.1fs (%.1f art/s)",
+        process_count, page_num, extract_duration, extract_rate)
 
 
 # ----------------------------------------------------------------------
@@ -3036,7 +3074,8 @@ def reduce_process(opts, output_queue, spool_length,
     else:
         output = sys.stdout if PY2 else sys.stdout.buffer
         if file_compress:
-            logging.warn("writing to stdout, so no output compression (use an external tool)")
+            logging.warn(
+                "writing to stdout, so no output compression (use an external tool)")
 
     interval_start = default_timer()
     # FIXME: use a heap
@@ -3050,7 +3089,8 @@ def reduce_process(opts, output_queue, spool_length,
             spool_length.value = len(spool)
             # progress report
             if next_page % report_period == 0:
-                interval_rate = report_period / (default_timer() - interval_start)
+                interval_rate = report_period / (
+                            default_timer() - interval_start)
                 logging.info("Extracted %d articles (%.1f art/s)",
                              next_page, interval_rate)
                 interval_start = default_timer()
@@ -3110,17 +3150,23 @@ def main():
                         help="use or create file containing templates")
     groupP.add_argument("--no-templates", action="store_false",
                         help="Do not expand templates")
-    groupP.add_argument("-r", "--revision", action="store_true", default=options.print_revision,
+    groupP.add_argument("-r", "--revision", action="store_true",
+                        default=options.print_revision,
                         help="Include the document revision id (default=%(default)s)")
-    groupP.add_argument("--min_text_length", type=int, default=options.min_text_length,
+    groupP.add_argument("--min_text_length", type=int,
+                        default=options.min_text_length,
                         help="Minimum expanded text length required to write document (default=%(default)s)")
-    groupP.add_argument("--filter_disambig_pages", action="store_true", default=options.filter_disambig_pages,
+    groupP.add_argument("--filter_disambig_pages", action="store_true",
+                        default=options.filter_disambig_pages,
                         help="Remove pages from output that contain disabmiguation markup (default=%(default)s)")
-    groupP.add_argument("-it", "--ignored_tags", default="", metavar="abbr,b,big",
+    groupP.add_argument("-it", "--ignored_tags", default="",
+                        metavar="abbr,b,big",
                         help="comma separated list of tags that will be dropped, keeping their content")
-    groupP.add_argument("-de", "--discard_elements", default="", metavar="gallery,timeline,noinclude",
+    groupP.add_argument("-de", "--discard_elements", default="",
+                        metavar="gallery,timeline,noinclude",
                         help="comma separated list of elements that will be removed from the article text")
-    groupP.add_argument("--keep_tables", action="store_true", default=options.keep_tables,
+    groupP.add_argument("--keep_tables", action="store_true",
+                        default=options.keep_tables,
                         help="Preserve tables in the output article text (default=%(default)s)")
     default_process_count = max(1, cpu_count() - 1)
     parser.add_argument("--processes", type=int, default=default_process_count,
@@ -3207,7 +3253,8 @@ def main():
                 with open(args.templates) as file:
                     load_templates(file)
 
-        file = fileinput.FileInput(input_file, openhook=fileinput.hook_compressed)
+        file = fileinput.FileInput(input_file,
+                                   openhook=fileinput.hook_compressed)
         for page_data in pages_from(file):
             id, revid, title, ns, page = page_data
             Extractor(id, revid, title, page).extract(sys.stdout)

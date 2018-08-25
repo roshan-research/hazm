@@ -27,8 +27,9 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
 
     def __init__(self, model_filename, path_to_jar, *args, **kwargs):
         self._SEPARATOR = '/'
-        super(stanford.StanfordPOSTagger, self).__init__(model_filename=model_filename, path_to_jar=path_to_jar, *args,
-                                                         **kwargs)
+        super(stanford.StanfordPOSTagger, self).__init__(
+            model_filename=model_filename, path_to_jar=path_to_jar, *args,
+            **kwargs)
 
     def tag(self, tokens):
         return self.tag_sents([tokens])[0]

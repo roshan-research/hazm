@@ -27,8 +27,10 @@ class SentiPersReader:
 
         def element_sentences(element):
             for sentence in element.getElementsByTagName('Sentence'):
-                yield {'text': sentence.childNodes[0].data, 'id': sentence.getAttribute('ID'),
-                       'value': int(sentence.getAttribute('Value')) if comment.getAttribute('Value') else None}
+                yield {'text': sentence.childNodes[0].data,
+                       'id': sentence.getAttribute('ID'),
+                       'value': int(sentence.getAttribute('Value'))
+                       if comment.getAttribute('Value') else None}
 
         for root, dirs, files in os.walk(self._root):
             for filename in sorted(files):
@@ -43,22 +45,29 @@ class SentiPersReader:
                     }
 
                     for child in product.childNodes:
-                        if child.nodeName in {'Voters', 'Performance', 'Capability', 'Production_Quality', 'Ergonomics',
+                        if child.nodeName in {'Voters', 'Performance',
+                                              'Capability',
+                                              'Production_Quality',
+                                              'Ergonomics',
                                               'Purchase_Value'}:
                             value = child.getAttribute('Value')
-                            doc[child.nodeName] = float(value) if '.' in value else int(value)
+                            doc[child.nodeName] = float(
+                                value) if '.' in value else int(value)
 
-                    for comment in itertools.chain(elements.getElementsByTagName('Opinion'),
-                                                   elements.getElementsByTagName('Criticism')):
+                    for comment in itertools.chain(
+                            elements.getElementsByTagName('Opinion'),
+                            elements.getElementsByTagName('Criticism')):
                         doc['comments'].append({
                             'id': comment.getAttribute('ID'),
                             'type': comment.nodeName,
                             'author': comment.getAttribute('Holder').strip(),
-                            'value': int(comment.getAttribute('Value')) if comment.getAttribute('Value') else None,
+                            'value': int(comment.getAttribute(
+                                'Value')) if comment.getAttribute(
+                                'Value') else None,
                             'sentences': list(element_sentences(comment))
                         })
-
-                    # todo: Accessories, Features, Review, Advantages, Tags, Keywords, Index
+                    # todo: Accessories, Features, Review,
+                    # todo: Advantages, Tags, Keywords, Index
 
                     yield doc
 

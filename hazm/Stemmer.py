@@ -26,7 +26,19 @@ class Stemmer(StemmerI):
     """
 
     def __init__(self):
-        self.ends = ['ات', 'ان', 'ترین', 'تر', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', 'ٔ', '‌ا', '‌']
+        self.ends = ['ات',
+                     'ان',
+                     'ترین',
+                     'تر',
+                     'م',
+                     'ت',
+                     'ش',
+                     'یی',
+                     'ی',
+                     'ها',
+                     'ٔ',
+                     '‌ا',
+                     '‌']
 
     def stem(self, word):
         for end in self.ends:
