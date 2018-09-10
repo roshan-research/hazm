@@ -16,29 +16,34 @@ class WordTokenizer(TokenizerI):
 	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
 	"""
 
-	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, seperate_emojis=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_tags=False):
+	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, seperate_emojis=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_hashtags=False):
 		self._join_verb_parts = join_verb_parts
 		self.seperate_emojis = seperate_emojis
 		self.replace_links = replace_links
 		self.replace_IDs = replace_IDs
 		self.replace_emails = replace_emails
 		self.replace_numbers = replace_numbers
-		self.replace_tags = replace_tags
+		self.replace_hashtags = replace_hashtags
 
-		self.pattern = re.compile(r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
+		self.pattern = re.compile(r'([؟!\?]+|[\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
 		self.emoji_pattern = re.compile(u"["
-            							u"\U0001F600-\U0001F64F"  # emoticons
-										u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+            							u"\U0001F600-\U0001F64F"	# emoticons
+										u"\U0001F300-\U0001F5FF"	# symbols & pictographs
+										u"\U0001F4CC\U0001F4CD" 	# pushpin & round pushpin
 										"]", flags= re.UNICODE)
+		self.emoji_repl = r'\g<0> '
 		self.id_pattern = re.compile(r'([^\w\._]+)(@[\w_]+)')
+		self.id_repl = r'\1ID'
 		self.link_pattern = re.compile(r'((https?|ftp):\/\/)?(?<!@)([wW]{3}\.)?(([\w-]+)(\.(\w){2,})+([-\w@:%_\+\/~#?&]+)?)')
+		self.link_repl = r'LINK'
 		self.email_pattern = re.compile(r'[a-zA-Z0-9\._\+-]+@([a-zA-Z0-9-]+\.)+[A-Za-z]{2,}')
-		self.number_int_pattern = re.compile(r'([^\.,\w]+)([\d۱۲۳۴۵۶۷۸۹۰]+)([^\.,\w]+)')
-		self.number_int_repl = lambda m: m.group(1) + '[NUM'+ str(len(m.group(2))) +']' + m.group(3)
-		self.number_float_pattern = re.compile(r'([^,\w]+)([\d۱۲۳۴۵۶۷۸۹۰,]+[\.٫]{1}[\d۱۲۳۴۵۶۷۸۹۰]+)([^,\w]+)')
-		self.number_float_repl = r'\1[NUM.]\3'
-		self.tag_pattern = re.compile(r'#([\w_]+)')
-		self.tag_repl = lambda m:'[TAG] ' + m.group(1).replace('_', ' ')
+		self.email_repl = r'EMAIL'
+		self.number_int_pattern = re.compile(r'([^\.,\w]+)([\d۰-۹]+)([^\.,\w]+)')
+		self.number_int_repl = lambda m: m.group(1) + 'NUM'+ str(len(m.group(2))) + m.group(3)
+		self.number_float_pattern = re.compile(r'([^,\w]+)([\d۰-۹,]+[\.٫]{1}[\d۰-۹]+)([^,\w]+)')
+		self.number_float_repl = r'\1NUMF\3'
+		self.hashtag_pattern = re.compile(r'#([\w_]+)')
+		self.hashtag_repl = lambda m:'TAG ' + m.group(1).replace('_', ' ')
 
 		self.words = {item[0]: (item[1], item[2]) for item in words_list(default_words)}
 
@@ -67,20 +72,24 @@ class WordTokenizer(TokenizerI):
 
 	def tokenize(self, text):
 		if self.seperate_emojis:
-			text = self.emoji_pattern.sub(r' \g<0>', text)
+			text = self.emoji_pattern.sub(self.emoji_repl, text)
 		if self.replace_links:
-			text = self.link_pattern.sub(r'[LINK]', text)
+			text = self.link_pattern.sub(self.link_repl, text)
 		if self.replace_IDs:
-			text = self.id_pattern.sub(r'\1[ID]', text)
+			text = self.id_pattern.sub(self.id_repl, text)
 		if self.replace_emails:
-			text = self.email_pattern.sub(r'[EMAIL]', text)
+			text = self.email_pattern.sub(self.email_repl, text)
+		if self.replace_hashtags:
+			text = self.hashtag_pattern.sub(self.hashtag_repl, text)
 		if self.replace_numbers:
 			text = self.number_int_pattern.sub(self.number_int_repl, text)
 			text = self.number_float_pattern.sub(self.number_float_repl, text)
-		if self.replace_tags:
-			text = self.tag_pattern.sub(self.tag_repl, text)
+		
 		text = self.pattern.sub(r' \1 ', text.replace('\n', ' ').replace('\t', ' '))
 		
+		
+
+
 		tokens = [word for word in text.split(' ') if word]
 		if self._join_verb_parts:
 			tokens = self.join_verb_parts(tokens)
