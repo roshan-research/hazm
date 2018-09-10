@@ -16,9 +16,9 @@ class WordTokenizer(TokenizerI):
 	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
 	"""
 
-	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, seperate_emojis=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_hashtags=False):
+	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, separate_emoji=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_hashtags=False):
 		self._join_verb_parts = join_verb_parts
-		self.seperate_emojis = seperate_emojis
+		self.separate_emoji = separate_emoji
 		self.replace_links = replace_links
 		self.replace_IDs = replace_IDs
 		self.replace_emails = replace_emails
@@ -71,7 +71,7 @@ class WordTokenizer(TokenizerI):
 				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
-		if self.seperate_emojis:
+		if self.separate_emoji:
 			text = self.emoji_pattern.sub(self.emoji_repl, text)
 		if self.replace_links:
 			text = self.link_pattern.sub(self.link_repl, text)
