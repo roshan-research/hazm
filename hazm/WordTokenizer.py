@@ -8,12 +8,37 @@ from nltk.tokenize.api import TokenizerI
 
 class WordTokenizer(TokenizerI):
 	"""
-	>>> tokenizer = WordTokenizer()
-	>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
-	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
+    >>> tokenizer = WordTokenizer()
+    >>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
+    ['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 
-	>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396')
-	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
+    >>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396')
+    ['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
+
+    >>> tokenizer = WordTokenizer(join_verb_parts=False)
+
+    >>> print(' '.join(tokenizer.tokenize('سلام.')))
+    سلام .
+
+    >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_links=True)
+
+    >>> print(' '.join(tokenizer.tokenize('در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP')))
+    در قطر هک شد LINK LINK
+
+    >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_IDs=True, replace_numbers=True)
+
+    >>> print(' '.join(tokenizer.tokenize('زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir')))
+    زلزله NUMF ریشتری در هجدک کرمان ID
+
+    >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
+
+    >>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
+    📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
+
+    >>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
+
+    >>> print(' '.join(tokenizer.tokenize('دیگه میخوام ترک تحصیل کنم 😂😂😂')))
+    دیگه میخوام ترک تحصیل کنم 😂 😂 😂
 	"""
 
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, separate_emoji=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_hashtags=False):
@@ -25,7 +50,7 @@ class WordTokenizer(TokenizerI):
 		self.replace_numbers = replace_numbers
 		self.replace_hashtags = replace_hashtags
 
-		self.pattern = re.compile(r'([؟!\?]+|[\.:]+|[:\.،؛»\]\)\}"«\[\(\{])')
+		self.pattern = re.compile(r'([؟!\?]+|\d[\d\.:/\\]+|[:\.،؛»\]\)\}"«\[\(\{])') # TODO \d
 		self.emoji_pattern = re.compile(u"["
             							u"\U0001F600-\U0001F64F"	# emoticons
 										u"\U0001F300-\U0001F5FF"	# symbols & pictographs
@@ -71,6 +96,7 @@ class WordTokenizer(TokenizerI):
 				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
+
 		if self.separate_emoji:
 			text = self.emoji_pattern.sub(self.emoji_repl, text)
 		if self.replace_links:
@@ -87,9 +113,6 @@ class WordTokenizer(TokenizerI):
 		
 		text = self.pattern.sub(r' \1 ', text.replace('\n', ' ').replace('\t', ' '))
 		
-		
-
-
 		tokens = [word for word in text.split(' ') if word]
 		if self._join_verb_parts:
 			tokens = self.join_verb_parts(tokens)
