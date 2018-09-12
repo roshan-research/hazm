@@ -67,7 +67,9 @@ class WordTokenizer(TokenizerI):
 		self.number_int_repl = lambda m: m.group(1) + 'NUM'+ str(len(m.group(2))) + m.group(3)
 		self.number_float_pattern = re.compile(r'([^,\w]+)([\d۰-۹,]+[\.٫]{1}[\d۰-۹]+)([^,\w]+)')
 		self.number_float_repl = r'\1NUMF\3'
-		self.hashtag_pattern = re.compile(r'#([\w_]+)')
+		self.hashtag_pattern = re.compile(r'\#([\S]+)')
+		# NOTE: python2.7 does not support unicodes with \w  Example: r'\#([\w\_]+)'	
+		
 		self.hashtag_repl = lambda m:'TAG ' + m.group(1).replace('_', ' ')
 
 		self.words = {item[0]: (item[1], item[2]) for item in words_list(default_words)}
