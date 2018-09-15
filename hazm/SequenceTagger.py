@@ -28,6 +28,9 @@ class SequenceTagger(TaggerI):
 	def save_model(self, filename):
 		self.model.save(filename)
 
+	def tag(self, tokens):
+		return self.tag_sents([tokens])[0]
+
 	def tag_sents(self, sentences):
 		sentences = list(sentences)
 		lines = '\n\n'.join(['\n'.join(sentence) for sentence in sentences]).replace(' ', '_')
