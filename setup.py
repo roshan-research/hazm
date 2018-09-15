@@ -19,6 +19,6 @@ setup(
 		'Programming Language :: Python :: 3.6',
 		'License :: OSI Approved :: MIT License',
 	],
-	install_requires=['nltk==3.2.2', 'libwapiti>=0.2.1;platform_system!="Windows"'],
+	install_requires=['nltk==3.3', 'libwapiti>=0.2.1;platform_system!="Windows"'],
 	extras_require={'wapiti': ['libwapiti>=0.2.1']},
 )
