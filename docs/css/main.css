@@ -1,0 +1,180 @@
+@font-face {
+	font-family: IRMitra;
+	font-weight: normal;
+	src: url('../fonts/IRMitra.woff') format('woff');
+}
+@font-face {
+	font-family: IRMitra;
+	font-weight: bold;
+	src: url('../fonts/IRMitraBd.woff') format('woff');
+}
+@font-face {
+  font-family: BMitra;
+  font-weight: normal;
+  src: url('../fonts/BMitra.woff') format('woff');
+}
+
+.container {
+	max-width: 670px;
+}
+
+body {
+	direction: rtl;
+	font-family: IRMitra, Arial;
+	color: #666;
+	font-size: 18px;
+	font-weight: 300;
+	margin: 0px;
+	padding: 0px 0 20px 0px;
+	background: url(../images/body-background.png) #eae6d1;
+}
+pre, code {
+	padding: 8px 20px;
+	direction: ltr;
+	background: #333;
+	font: 14px/22px monospace, Arial;
+	text-shadow: 0px 1px 0px #000;
+}
+code {
+	font-family: serif;
+	color: #efefef !important;
+}
+.highlight .s {
+	font-family: Arial;
+}
+
+h1, h2, h3 {
+	color: #333;
+	font-family: IRMitra;
+	font-weight: bold;
+}
+h2 {
+	font-size: 20px;
+}
+h3 {
+	font-size: 16px;
+}
+p, ul {
+	color: #666;
+	font-size: 18px;
+}
+ul {
+	padding-right: 20px;
+	/*list-style-image: url("../images/bullet.png");*/
+}
+.eng {
+	font-size: .9em;
+	font-family: serif;
+}
+.btn {
+	font-size: 17px;
+	padding: 4px 8px 2px;
+}
+.glyphicon {
+	top: 3px;
+}
+.content .glyphicon {
+  font-size: 90%;
+}
+textarea.form-control {
+	font-size: 85%;
+	margin-bottom: 5px;
+	font-family: Arial;
+}
+
+.header {
+	background: url(../images/background.png) #4276b6;
+	margin-bottom: 20px;
+	box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
+}
+.header h1 {
+	color: #f3f3f3;
+	text-shadow: 0px 2px 0px #235796;
+}
+.header p {
+	color: #d8d8d8;
+	text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
+	font-size: 18px;
+}
+
+.content {
+	padding: 10px 30px 20px;
+	background: #fbfbfb;
+	border-radius: 3px;
+	border: 1px solid #cbcbcb;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+}
+
+.footer {
+	margin-top: 15px;
+}
+.footer p {
+	color: #aaa;
+	font-size: 16px;
+}
+
+.header .container {
+	position: relative;
+}
+.menu {
+	position: absolute;
+	left: 15px;
+	bottom: -14px;
+}
+.menu a {
+	text-decoration: none;
+	border: 1px solid #dba500;
+	background: linear-gradient(#ffe788, #ffce38);
+	border-radius: 2px;
+	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
+	background-color: #FFE788;
+	padding: 3px 7px 1px;
+	margin-right: 4px;
+	font-size: 14px;
+	color: #555;
+	font-weight: bold;
+	display: inline-block;
+	text-align: center;
+}
+.menu a:hover {
+	background: linear-gradient(#ffe788, #ffe788);
+	background-color: #ffeca0;
+}
+
+p {
+	text-align: justify;
+}
+
+/* controls */
+
+.controls button, .controls span {
+	float: right;
+}
+.controls {
+	height: 32px;
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+.controls .btn {
+	margin-left: 8px;
+}
+.loading {
+	display: none;
+	background: url(../images/loading.gif);
+	height: 32px;
+	width: 32px;
+}
+.text-danger {
+	display: none;
+	margin-top: 5px;
+}
+
+/* demo */
+
+div.demo, #tag, #parse {
+	display: none;
+}
+
+.amount {
+	font-family: BMitra;
+}
