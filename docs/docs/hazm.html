@@ -1749,37 +1749,27 @@ also appear inside templates and internal links, e.g.</p>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">(</span><span class="n">join_verb_parts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;سلام.&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;سلام.&#39;</span><span class="p">)))</span>
 <span class="go">سلام .</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">(</span><span class="n">join_verb_parts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace_links</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP&#39;</span><span class="p">)))</span>
 <span class="go">در قطر هک شد LINK LINK</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">(</span><span class="n">join_verb_parts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace_IDs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">replace_numbers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir&#39;</span><span class="p">)))</span>
 <span class="go">زلزله NUMF ریشتری در هجدک کرمان ID</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">(</span><span class="n">join_verb_parts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace_hashtags</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">replace_numbers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separate_emoji</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;📍عرضه بلوک 17 درصدی #های_وب به قیمت&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;📍عرضه بلوک 17 درصدی #های_وب به قیمت&#39;</span><span class="p">)))</span>
 <span class="go">📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">(</span><span class="n">join_verb_parts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">separate_emoji</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;دیگه میخوام ترک تحصیل کنم 😂😂😂&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">&#39;دیگه میخوام ترک تحصیل کنم 😂😂😂&#39;</span><span class="p">)))</span>
 <span class="go">دیگه میخوام ترک تحصیل کنم 😂 😂 😂</span>
 </pre></div>
 </div>
