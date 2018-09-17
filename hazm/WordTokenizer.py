@@ -16,27 +16,22 @@ class WordTokenizer(TokenizerI):
     ['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
 
     >>> tokenizer = WordTokenizer(join_verb_parts=False)
-
     >>> print(' '.join(tokenizer.tokenize('سلام.')))
     سلام .
 
     >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_links=True)
-
     >>> print(' '.join(tokenizer.tokenize('در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP')))
     در قطر هک شد LINK LINK
 
     >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_IDs=True, replace_numbers=True)
-
     >>> print(' '.join(tokenizer.tokenize('زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir')))
     زلزله NUMF ریشتری در هجدک کرمان ID
 
     >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
-
     >>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
     📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
     >>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
-
     >>> print(' '.join(tokenizer.tokenize('دیگه میخوام ترک تحصیل کنم 😂😂😂')))
     دیگه میخوام ترک تحصیل کنم 😂 😂 😂
 	"""
