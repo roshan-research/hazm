@@ -19,3 +19,12 @@ script: python tests.py
 sudo: false
 notifications:
   email: false
+
+deploy:
+  provider: pypi
+  user: nournia
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
+  password:
+    secure: CsfJOlZB9C/bXJCIczqVHAiIx9bVc81TNhETTTH0izmMCJ+q6J/jRozTQjWbfPu1Ubt5T5QK3FurCDNot6xIFEOXgYYHGA1miuRaaLQj+vhwmZZ0ueLrTCf5fx2OjVW1dWehLd56XSQbgB4aCZAfwQ7eSwmf3maZTEfbEWqTulc=
