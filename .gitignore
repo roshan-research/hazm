@@ -4,4 +4,3 @@ corpora
 build
 dist
 *.pyc
-*.txt

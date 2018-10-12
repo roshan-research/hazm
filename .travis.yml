@@ -23,7 +23,7 @@ notifications:
 deploy:
   provider: pypi
   user: nournia
-  distributions: "sdist bdist_wheel"
+  distributions: "sdist bdist_wheel bdist_wininst"
   on:
     tags: true
   password:
