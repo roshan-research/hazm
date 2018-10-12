@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
 	name='hazm',
-	version='0.6.0.0',
+	version='0.6',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
 	author_email='az.nourian@gmail.com',
