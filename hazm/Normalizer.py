@@ -57,7 +57,7 @@ class Normalizer(object):
 				('" ([^\n"]+) "', r'"\1"'),  # remove space before and after quotation
 				(' (['+ punc_after +'])', r'\1'),  # remove space before
 				('(['+ punc_before +']) ', r'\1'),  # remove space after
-				('(['+ punc_after[:3] +'])([^ \d'+ punc_after +'])', r'\1 \2'),  # put space after . and :
+				('(['+ punc_after[:3] +'])([^۰۱۲۳۴۵۶۷۸۹\d][^ '+ punc_after +'])', r'\1 \2'),  # put space after . and :
 				('(['+ punc_after[3:] +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
 				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'),  # put space before
 			])
@@ -113,6 +113,10 @@ class Normalizer(object):
 
 		>>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
 		'نسخه 0.5 در ساعت 22:00 تهران، 1396'
+
+		>>> normalizer.punctuation_spacing('اتریش ٧.٩ میلیون.')
+		'اتریش ٧.٩ میلیون.'
+		
 		"""
 
 		for pattern, repl in self.punctuation_spacing_patterns:
