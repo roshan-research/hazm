@@ -178,3 +178,7 @@ div.demo, #tag, #parse {
 .amount {
 	font-family: BMitra;
 }
+
+a.donate {
+	text-decoration: none;
+}
