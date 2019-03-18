@@ -15,7 +15,7 @@ class Normalizer(object):
 		self._affix_spacing = affix_spacing
 		self._token_based = token_based
 
-		translation_src, translation_dst = ' كي“”', ' کی""'
+		translation_src, translation_dst = ' ىكي“”', ' یکی""'
 		if persian_numbers:
 			translation_src += '0123456789%'
 			translation_dst += '۰۱۲۳۴۵۶۷۸۹٪'
