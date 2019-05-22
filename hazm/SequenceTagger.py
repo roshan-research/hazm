@@ -18,7 +18,10 @@ class SequenceTagger(TaggerI):
 	[[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]
 	"""
 
-	def __init__(self, patterns=[], **options):
+	def __init__(self, patterns=None, **options):
+		if patterns is None:
+			patterns = []
+
 		from wapiti import Model
 		self.model = Model(patterns='\n'.join(patterns), **options)
 

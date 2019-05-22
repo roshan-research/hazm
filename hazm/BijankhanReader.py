@@ -17,7 +17,10 @@ class BijankhanReader():
 	[('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 	"""
 
-	def __init__(self, bijankhan_file, joined_verb_parts=True, pos_map=default_pos_map):
+	def __init__(self, bijankhan_file, joined_verb_parts=True, pos_map=None):
+		if pos_map is None:
+			pos_map = default_pos_map
+
 		self._bijankhan_file = bijankhan_file
 		self._joined_verb_parts = joined_verb_parts
 		self._pos_map = pos_map

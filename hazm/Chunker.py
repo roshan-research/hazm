@@ -30,8 +30,8 @@ class Chunker(IOBTagger, ChunkParserI):
 	'[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'
 	"""
 
-	def train(self, trees):
-		super(Chunker, self).train(map(tree2conlltags, trees))
+	def train(self, sentences):
+		super(Chunker, self).train(map(tree2conlltags, sentences))
 
 	def parse(self, sentence):
 		return next(self.parse_sents([sentence]))
