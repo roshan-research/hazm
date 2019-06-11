@@ -114,8 +114,8 @@ class Normalizer(object):
 		>>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
 		'نسخه 0.5 در ساعت 22:00 تهران، 1396'
 
-		>>> normalizer.punctuation_spacing('اتریش ٧.٩ میلیون.')
-		'اتریش ٧.٩ میلیون.'
+		>>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
+		'اتریش ۷.۹ میلیون.'
 		
 		"""
 
