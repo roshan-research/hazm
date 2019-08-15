@@ -12,8 +12,8 @@ class WordTokenizer(TokenizerI):
 	>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
 	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 
-	>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396')
-	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396']
+	>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
+	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396', '.']
 
 	>>> tokenizer = WordTokenizer(join_verb_parts=False)
 	>>> print(' '.join(tokenizer.tokenize('سلام.')))
@@ -45,11 +45,11 @@ class WordTokenizer(TokenizerI):
 		self.replace_numbers = replace_numbers
 		self.replace_hashtags = replace_hashtags
 
-		self.pattern = re.compile(r'([؟!\?]+|\d[\d\.:/\\]+|[:\.،؛»\]\)\}"«\[\(\{])')  # TODO \d
+		self.pattern = re.compile(r'([؟!\?]+|\d[\d\.:\/\\]+\d|[:\.،؛»\]\)\}"«\[\(\{])')  # TODO \d
 		self.emoji_pattern = re.compile(u"["
 										u"\U0001F600-\U0001F64F"  # emoticons
 										u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-										u"\U0001F4CC\U0001F4CD"  # pushpin & round pushpin
+										u"\U0001F4CC\U0001F4CD"  # other emojis
 										"]", flags=re.UNICODE)
 		self.emoji_repl = r'\g<0> '
 		self.id_pattern = re.compile(r'([^\w\._]+)(@[\w_]+)')
@@ -63,7 +63,7 @@ class WordTokenizer(TokenizerI):
 		self.number_float_pattern = re.compile(r'([^,\w]+)([\d۰-۹,]+[\.٫]{1}[\d۰-۹]+)([^,\w]+)')
 		self.number_float_repl = r'\1NUMF\3'
 		self.hashtag_pattern = re.compile(r'\#([\S]+)')
-		# NOTE: python2.7 does not support unicodes with \w  Example: r'\#([\w\_]+)'
+		# NOTE: python2.7 does not support unicodes with \w
 
 		self.hashtag_repl = lambda m: 'TAG ' + m.group(1).replace('_', ' ')
 
