@@ -15,7 +15,7 @@ class Normalizer(object):
 		self._affix_spacing = affix_spacing
 		self._token_based = token_based
 
-		translation_src, translation_dst = ' كي“”', ' کی""'
+		translation_src, translation_dst = ' ىكي“”', ' یکی""'
 		if persian_numbers:
 			translation_src += '0123456789%'
 			translation_dst += '۰۱۲۳۴۵۶۷۸۹٪'
@@ -57,7 +57,7 @@ class Normalizer(object):
 				('" ([^\n"]+) "', r'"\1"'),  # remove space before and after quotation
 				(' (['+ punc_after +'])', r'\1'),  # remove space before
 				('(['+ punc_before +']) ', r'\1'),  # remove space after
-				('(['+ punc_after[:3] +'])([^ \d'+ punc_after +'])', r'\1 \2'),  # put space after . and :
+				('(['+ punc_after[:3] +'])([^ '+ punc_after +'\d۰۱۲۳۴۵۶۷۸۹])', r'\1 \2'),  # put space after . and :
 				('(['+ punc_after[3:] +'])([^ '+ punc_after +'])', r'\1 \2'),  # put space after
 				('([^ '+ punc_before +'])(['+ punc_before +'])', r'\1 \2'),  # put space before
 			])
@@ -113,6 +113,10 @@ class Normalizer(object):
 
 		>>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
 		'نسخه 0.5 در ساعت 22:00 تهران، 1396'
+
+		>>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
+		'اتریش ۷.۹ میلیون.'
+		
 		"""
 
 		for pattern, repl in self.punctuation_spacing_patterns:

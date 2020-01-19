@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
 	name='hazm',
-	version='0.7.0',
+	version='0.7.1',
 	description='Python library for digesting Persian text.',
 	author='Alireza Nourian',
 	author_email='az.nourian@gmail.com',
@@ -22,8 +22,10 @@ setup(
 		'Programming Language :: Python :: 3.4',
 		'Programming Language :: Python :: 3.5',
 		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: 3.7',
+		'Programming Language :: Python :: 3.8',
 		'License :: OSI Approved :: MIT License',
 	],
-	install_requires=['nltk==3.3', 'libwapiti>=0.2.1;platform_system!="Windows"'],
+	install_requires=['nltk==3.4', 'libwapiti>=0.2.1;platform_system!="Windows"'],
 	extras_require={'wapiti': ['libwapiti>=0.2.1']},
 )

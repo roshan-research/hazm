@@ -12,7 +12,7 @@ Python library for digesting Persian text.
 + Interfaces for Persian corpora
 + [NLTK](http://nltk.org/) compatible
 + Python 2.7, 3.4, 3.5 and 3.6 support
-+ [![Build Status](https://travis-ci.org/sobhe/hazm.png)](https://travis-ci.org/sobhe/hazm)
++ [![Build Status](https://api.travis-ci.org/sobhe/hazm.svg?branch=master)](https://travis-ci.org/sobhe/hazm)
 
 
 ## Usage
