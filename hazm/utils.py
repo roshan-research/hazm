@@ -25,4 +25,4 @@ def words_list(words_file=default_words):
 
 def stopwords_list(stopwords_file=default_stopwords):
 	with codecs.open(stopwords_file, encoding='utf8') as stopwords_file:
-		return list(map(lambda w: w.strip(), stopwords_file))
+		return list(set(map(lambda w: w.strip(), stopwords_file)))
