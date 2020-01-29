@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<PairCorpus>
+	<Pair>
+		<PairId>
+			10001
+		</PairId>
+		<NewsSource1>
+			asrirannews
+		</NewsSource1>
+		<NewsSource2>
+			aftabnewsnews
+		</NewsSource2>
+		<NewsId1>
+			458034
+		</NewsId1>
+		<NewsId2>
+			356246
+		</NewsId2>
+		<Sentence1>
+			24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد
+		</Sentence1>
+		<Sentence2>
+			کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد
+		</Sentence2>
+		<MethodType>
+			title
+		</MethodType>
+		<judge>
+			1
+		</judge>
+	</Pair>
+	<Pair>
+		<PairId>
+			10003
+		</PairId>
+		<NewsSource1>
+			asrirannews
+		</NewsSource1>
+		<NewsSource2>
+			aftabnewsnews
+		</NewsSource2>
+		<NewsId1>
+			458038
+		</NewsId1>
+		<NewsId2>
+			356247
+		</NewsId2>
+		<Sentence1>
+			سقوط هواپیمای مسافربری در جنوب روسیه / مرگ همه 61 سرنشین (+فیلم)
+		</Sentence1>
+		<Sentence2>
+			سقوط هواپیمای مسافربری در روسیه با 61 کشته
+		</Sentence2>
+		<MethodType>
+			title
+		</MethodType>
+		<judge>
+			0
+		</judge>
+	</Pair>
+	<Pair>
+		<PairId>
+			10018
+		</PairId>
+		<NewsSource1>
+			asrirannews
+		</NewsSource1>
+		<NewsSource2>
+			iribnews
+		</NewsSource2>
+		<NewsId1>
+			458069
+		</NewsId1>
+		<NewsId2>
+			1071139
+		</NewsId2>
+		<Sentence1>
+			پیروزی والیبال نشسته بانوان ایران مقابل کانادا
+		</Sentence1>
+		<Sentence2>
+			نخستین پیروزی بانوان ایران رقم خورد
+		</Sentence2>
+		<MethodType>
+			title
+		</MethodType>
+		<judge>
+			-1
+		</judge>
+	</Pair>
+</PairCorpus>
