@@ -62,8 +62,8 @@ class DegarbayanReader():
 			except Exception as e:
 				print('error in reading', filename, e, file=sys.stderr)
 		else:
-  			print('error in reading file', filename, e, file=sys.stderr)
-				raise FileNotFoundError('error in reading file', filename)
+			print('error in reading file', filename, e, file=sys.stderr)
+			raise FileNotFoundError('error in reading file', filename)
 
 	def pairs(self):
 		for pair in self.docs():
