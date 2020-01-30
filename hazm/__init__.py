@@ -11,6 +11,7 @@ from .DadeganReader import DadeganReader
 from .TreebankReader import TreebankReader
 from .WikipediaReader import WikipediaReader
 from .SentiPersReader import SentiPersReader
+from .DegarbayanReader import DegarbayanReader
 from .QuranCorpusReader import QuranCorpusReader
 from .TNewsReader import TNewsReader
 from .Normalizer import Normalizer
