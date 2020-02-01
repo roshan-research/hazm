@@ -13,6 +13,7 @@ modules = {
 	'valency': VerbValencyReader,
 	'treebank': TreebankReader,
 	'sentipers': SentiPersReader,
+	'degarbayan': DegarbayanReader,
 	'tnews': TNewsReader,
 	'quran': QuranCorpusReader,
 	'sentence_tokenizer': SentenceTokenizer,
