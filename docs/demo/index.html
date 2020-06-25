@@ -3,9 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<title>هضم</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/pygment_trac.css">
 	<link rel="stylesheet" href="../css/main.css">
+	<link rel="icon" type="image/png" href="../images/favicon.png" />
 </head>
 <body>
 <div class="header">
@@ -69,16 +70,16 @@ span.info:hover {
 	</div>
 </div>
 <div class="container footer">
-	<p>کاری از <a href="http://www.sobhe.ir">سُبحه</a></p>
+	<p>کاری از <a href="https://www.sobhe.ir">سُبحه</a></p>
 </div>
 
-<link rel="stylesheet" href="http://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen" />
-<script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
-<script type="text/javascript" src="http://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen" />
+<script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
+<script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"> </script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	var server = 'http://api.sobhe.ir:5000/api';
+	var server = 'https://api.sobhe.ir:5000/api';
 
 	var normalize = function(data) {
 		$.post(server + '/normalize', data)
@@ -198,7 +199,7 @@ span.info:hover {
     amplitude.getInstance().logEvent('Hazm Demo');
 </script>
 
-<link rel="stylesheet" href="http://ommidvar.ir/static/css/donate.css">
-<script type="text/javascript" src="http://ommidvar.ir/projects/16/donate.js"></script>
+<link rel="stylesheet" href="../css/ommidvar.css">
+<script type="text/javascript" src="../js/ommidvar.js"></script>
 </body>
 </html>
