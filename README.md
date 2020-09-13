@@ -54,7 +54,7 @@ Python library for digesting Persian text.
 
 
 ## Installation
-The latest stabe verson of Hazm can be installed through `pip`:
+The latest stable version of Hazm can be installed through `pip`:
 
 	pip install hazm
 
