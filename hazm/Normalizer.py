@@ -141,6 +141,8 @@ class Normalizer(object):
 
 		>>> normalizer.affix_spacing('محبوب ترین ها')
 		'محبوب‌ترین‌ها'
+		>>> normalizer.affix_spacing('فرا می‌گیرد')
+		'فرامی‌گیرد'
 		"""
 
 		for pattern, repl in self.affix_spacing_patterns:
