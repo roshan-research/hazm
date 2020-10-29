@@ -68,6 +68,7 @@ class Normalizer(object):
 				(r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
 				(r'(?<=[^\n\d '+ punc_after + punc_before +']{2}) (تر(ین?)?|گری?|های?)(?=[ \n'+ punc_after + punc_before +']|$)', r'‌\1'),  # put zwnj before تر, تری, ترین, گر, گری, ها, های
 				(r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n'+ punc_after +']|$)', r'\1‌\2'),  # join ام, ایم, اش, اند, ای, اید, ات
+				(r'\b(فرو|فرا|ور|وا|بر) +', r'\1'), # Remove spaces after verbal prefixes
 			])
 
 	def normalize(self, text):
@@ -116,7 +117,7 @@ class Normalizer(object):
 
 		>>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
 		'اتریش ۷.۹ میلیون.'
-		
+
 		"""
 
 		for pattern, repl in self.punctuation_spacing_patterns:
