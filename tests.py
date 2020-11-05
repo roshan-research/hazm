@@ -16,6 +16,7 @@ modules = {
 	'degarbayan': DegarbayanReader,
 	'tnews': TNewsReader,
 	'quran': QuranCorpusReader,
+	'miras_text': MirasTextReader,
 	'sentence_tokenizer': SentenceTokenizer,
 	'word_tokenizer': WordTokenizer,
 	'splitter': TokenSplitter,
