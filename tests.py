@@ -42,7 +42,7 @@ class UnicodeOutputChecker(doctest.OutputChecker):
 		try:
 			got = got.decode('unicode-escape')
 			want = want.replace('آ', 'ا')  # decode issue
-		except:
+		except Exception:
 			pass
 
 		if type(want) == unicode:

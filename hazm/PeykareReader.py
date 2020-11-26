@@ -17,7 +17,7 @@ def coarse_pos_e(tags):
 
 	try:
 		return list(set(tags) & {'N', 'V', 'AJ', 'ADV', 'PRO', 'DET', 'P', 'POSTP', 'NUM', 'CONJ', 'PUNC', 'CL', 'INT', 'RES'})[0] + ('e' if 'EZ' in tags else '')
-	except:
+	except Exception:
 		return 'N'
 
 

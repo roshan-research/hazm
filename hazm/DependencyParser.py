@@ -4,10 +4,10 @@ from __future__ import print_function, unicode_literals
 import os, codecs, tempfile
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
-from nltk.parse.malt import MaltParser
+from nltk.parse.malt import MaltParser as NLTKMaltParser
 
 
-class MaltParser(MaltParser):
+class MaltParser(NLTKMaltParser):
 	"""
 	interfaces [MaltParser](http://www.maltparser.org/)
 	"""
