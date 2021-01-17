@@ -67,7 +67,7 @@ class WordTokenizer(TokenizerI):
 
 		self.hashtag_repl = lambda m: 'TAG ' + m.group(1).replace('_', ' ')
 
-		self.words = {item[0]: (item[1], item[2]) for item in words_list(default_words)}
+		self.words = {item[0]: (item[1], item[2]) for item in words_list(words_file)}
 
 		if join_verb_parts:
 			self.after_verbs = set([
