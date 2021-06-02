@@ -1,21 +1,3 @@
-@font-face {
-    font-family: IRMitra;
-    font-weight: normal;
-    src: url('../fonts/IRMitra.woff') format('woff');
-}
-
-@font-face {
-    font-family: IRMitra;
-    font-weight: bold;
-    src: url('../fonts/IRMitraBd.woff') format('woff');
-}
-
-@font-face {
-    font-family: BMitra;
-    font-weight: normal;
-    src: url('../fonts/BMitra.woff') format('woff');
-}
-
 .container {
     max-width: 680px;
 }
@@ -138,26 +120,20 @@ textarea.form-control {
     position: relative;
 }
 
-.menu {
-    position: absolute;
-    left: 15px;
-    bottom: -14px;
+p {
+    text-align: justify;
 }
 
-.menu a {
-    text-decoration: none;
-    border: 1px solid #dba500;
-    background: linear-gradient(#ffe788, #ffce38);
-    border-radius: 2px;
-    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
-    background-color: #FFE788;
-    padding: 3px 7px 1px;
-    margin-right: 4px;
-    font-size: 14px;
-    color: #555;
-    font-weight: bold;
-    display: inline-block;
-    text-align: center;
+/* ----------------------------------------- menu css ------------------------------------*/
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    left: 15px;
+    bottom: -8px;
+    width: 435px;
+    height: 25px;
 }
 
 .menu a:hover {
@@ -165,12 +141,166 @@ textarea.form-control {
     background-color: #ffeca0;
 }
 
-p {
-    text-align: justify;
+.menu > a {
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #545757;
+    font-family: iranyekan-bold;
+    font-size: 12px;
+    background: transparent linear-gradient(180deg, #FCE38E 0%, #FFCF36 100%) 0 0 no-repeat padding-box;
+    box-shadow: 0 1px 0.5px #00000019;
+    border: 1px solid #DAA700;
+    border-radius: 1px;
+}
+
+.item1 {
+    width: 93px;
+}
+
+.item1 span {
+    margin-right: 6px;
+}
+
+.item1 img {
+    width: 11px;
+    height: 14px;
+}
+
+.item2 {
+    width: 110px;
+}
+
+.item2 span {
+    margin-right: 10px;
+}
+
+.item2 img {
+    width: 17px;
+    height: 9px;
+}
+
+.item3 {
+    width: 87px;
+}
+
+.item3 span {
+    margin-right: 7px;
+}
+
+.item3 img {
+    width: 13px;
+    height: 8px;
+    margin-top: 2px;
+}
+
+.item4 {
+    width: 115px;
+}
+
+.item4 span {
+    margin-right: 7px;
+}
+
+.item4 img {
+    width: 16px;
+    height: 11px;
 }
 
 
-/* controls */
+/* ---------------------- banners       ------------------------------ */
+
+.banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    height: 131px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.banner .text {
+    text-align: right;
+    letter-spacing: 0;
+    font-family: iranyekan-bold;
+}
+
+.banner .text p {
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+.banner .text p:last-child {
+    margin-bottom: 0!important;
+}
+
+.banner .text span {
+    font-family: iranyekan-extraBold;
+    font-size: 12px;
+}
+
+.banner .button-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    font-family: iranyekan-bold;
+    border-radius: 5px;
+    background-color: #528EE3;
+    height: 35px;
+    width: 135px;
+    font-size: 11px;
+}
+
+.banner .button-div img {
+    width: 3px;
+    height: 6px;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+/* --- center banner ---*/
+
+.center-banner {
+    margin: 4vw auto;
+    background-image: url("../images/centerBg.svg");
+    border-radius: 7px;
+}
+
+.center-banner .text {
+    margin-right: 24px;
+}
+
+.center-banner .button-div {
+    margin-left: 30px;
+}
+
+
+/* --- bottom banner ---*/
+.bottom-banner {
+    margin: 1.5vw auto;
+    background-image: url("../images/bottomBg.svg");
+    max-width: 680px; /* for set container*/
+    border-radius: 5px;
+}
+
+.bottom-banner .text {
+    margin-right: 55px;
+}
+
+.bottom-banner .button-div {
+    margin-left: 60px;
+}
+/*-------------------------------- controls ---------------------------- */
 
 .controls button,
 .controls span {

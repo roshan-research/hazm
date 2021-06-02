@@ -1,0 +1,81 @@
+/* Note: commented font-face are not used in project but is correct url and other properties. */
+/* use from them, when need to them. */
+
+/*------------------------------ iranYekan fonts ---------------------------------- */
+
+/*@font-face { */
+/*  font-family: iranyekan-thin; */
+/*  font-style: normal; */
+/*  font-weight: 100; */
+/*  src: url('../fonts/iranYekan/IRANYekanThin.ttf') format('truetype'); */
+/*} */
+
+@font-face {
+  font-family: iranyekan-light;
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/iranYekan/IRANYekanLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan-regular;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/iranYekan/IRANYekanRegular.ttf') format('truetype');
+}
+
+/*@font-face { */
+/*  font-family: iranyekan-medium; */
+/*  font-style: normal; */
+/*  font-weight: 500; */
+/*  src: url('../fonts/iranYekan/IRANYekanMedium.ttf') format('truetype'); */
+/*} */
+
+@font-face {
+  font-family: iranyekan-bold;
+  font-style: normal;
+  font-weight: bold;
+  src: url('../fonts/iranYekan/IRANYekanBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan-extraBold;
+  font-style: normal;
+  font-weight: 900;
+  src: url('../fonts/iranYekan/IRANYekanExtraBold.ttf') format('truetype');
+}
+
+
+/*@font-face { */
+/*    font-family: iranyekan-black; */
+/*    font-style: normal; */
+/*    font-weight: 800; */
+/*    src: url('../fonts/iranYekan/IRANYekanBlack.ttf') format('truetype'); */
+/*} */
+
+/*@font-face { */
+/*  font-family: iranyekan-extraBlack; */
+/*  font-style: normal; */
+/*  font-weight: 900; */
+/*  src: url('../fonts/iranYekan/IRANYekanExtraBlack.ttf') format('truetype'); */
+/*} */
+
+/* -------------------------------------------- other fonts -----------------------------------------*/
+
+@font-face {
+  font-family: IRMitra;
+  font-weight: normal;
+  src: url('../fonts/IRMitra.woff') format('woff');
+}
+
+@font-face {
+  font-family: IRMitra;
+  font-weight: bold;
+  src: url('../fonts/IRMitraBd.woff') format('woff');
+}
+
+@font-face {
+  font-family: BMitra;
+  font-weight: normal;
+  src: url('../fonts/BMitra.woff') format('woff');
+}
