@@ -223,12 +223,16 @@ p {
     height: 131px;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    margin: 4vw auto;
+    background-image: url("../images/centerBg.svg");
+    border-radius: 7px;
 }
 
 .banner .text {
     text-align: right;
     letter-spacing: 0;
     font-family: iranyekan-bold;
+    margin-right: 24px;
 }
 
 .banner .text p {
@@ -259,6 +263,7 @@ p {
     height: 35px;
     width: 135px;
     font-size: 11px;
+    margin-left: 30px;
 }
 
 .banner .button-div img {
@@ -268,38 +273,6 @@ p {
     margin-top: 3px;
 }
 
-/* --- center banner ---*/
-
-.center-banner {
-    margin: 4vw auto;
-    background-image: url("../images/centerBg.svg");
-    border-radius: 7px;
-}
-
-.center-banner .text {
-    margin-right: 24px;
-}
-
-.center-banner .button-div {
-    margin-left: 30px;
-}
-
-
-/* --- bottom banner ---*/
-.bottom-banner {
-    margin: 1.5vw auto;
-    background-image: url("../images/bottomBg.svg");
-    max-width: 680px; /* for set container*/
-    border-radius: 5px;
-}
-
-.bottom-banner .text {
-    margin-right: 55px;
-}
-
-.bottom-banner .button-div {
-    margin-left: 60px;
-}
 /*-------------------------------- controls ---------------------------- */
 
 .controls button,
