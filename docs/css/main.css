@@ -221,11 +221,11 @@ p {
     justify-content: space-between;
     padding: 0;
     height: 131px;
+    margin: 4vw auto;
+    border-radius: 7px;
+    background-image: url("../images/centerBg.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    margin: 4vw auto;
-    background-image: url("../images/centerBg.svg");
-    border-radius: 7px;
 }
 
 .banner .text {
