@@ -4,7 +4,7 @@
 
 body {
     direction: rtl;
-    font-family: IRMitra, Arial;
+    font-family: Vazir;
     color: #666;
     font-size: 18px;
     font-weight: 300;
@@ -18,24 +18,18 @@ code {
     padding: 8px 15px;
     direction: ltr;
     background: #333;
-    font: 14px/22px monospace, Arial;
+    font: 14px/22px monospace, Vazir;
     text-shadow: 0px 1px 0px #000;
 }
 
 code {
-    font-family: serif;
     color: #efefef !important;
-}
-
-.highlight .s {
-    font-family: Arial;
 }
 
 h1,
 h2,
 h3 {
     color: #333;
-    font-family: IRMitra;
     font-weight: bold;
 }
 
@@ -60,7 +54,6 @@ ul {
 
 .eng {
     font-size: .9em;
-    font-family: serif;
 }
 
 .btn {
@@ -79,7 +72,6 @@ ul {
 textarea.form-control {
     font-size: 85%;
     margin-bottom: 5px;
-    font-family: Arial;
 }
 
 .header {
@@ -96,7 +88,7 @@ textarea.form-control {
 .header p {
     color: #d8d8d8;
     text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .content {
@@ -150,7 +142,7 @@ p {
     justify-content: center;
     height: 100%;
     color: #545757;
-    font-family: iranyekan-bold;
+    font-weight: bold;
     font-size: 12px;
     background: transparent linear-gradient(180deg, #FCE38E 0%, #FFCF36 100%) 0 0 no-repeat padding-box;
     box-shadow: 0 1px 0.5px #00000019;
@@ -163,12 +155,14 @@ p {
 }
 
 .item1 span {
-    margin-right: 6px;
+    margin-right: 3px;
+    margin-top: 3px;
 }
 
 .item1 img {
-    width: 11px;
-    height: 14px;
+    width: 13px;
+    height: 17px;
+    margin-bottom: 3px;
 }
 
 .item2 {
@@ -176,12 +170,13 @@ p {
 }
 
 .item2 span {
-    margin-right: 10px;
+    margin-right: 8px;
+    margin-top: 2px;
 }
 
 .item2 img {
-    width: 17px;
-    height: 9px;
+    width: 20px;
+    height: 13px;
 }
 
 .item3 {
@@ -189,13 +184,13 @@ p {
 }
 
 .item3 span {
-    margin-right: 7px;
+    margin-right: 4px;
+    margin-top: 3px;
 }
 
 .item3 img {
-    width: 13px;
-    height: 8px;
-    margin-top: 2px;
+    width: 18px;
+    height: 11px;
 }
 
 .item4 {
@@ -203,12 +198,13 @@ p {
 }
 
 .item4 span {
-    margin-right: 7px;
+    margin-right: 6px;
+    margin-top: 3px;
 }
 
 .item4 img {
-    width: 16px;
-    height: 11px;
+    width: 19px;
+    height: 21px;
 }
 
 
@@ -219,6 +215,8 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
+    text-decoration: none!important;
     padding: 0;
     height: 131px;
     margin: 4vw auto;
@@ -231,13 +229,12 @@ p {
 .banner .text {
     text-align: right;
     letter-spacing: 0;
-    font-family: iranyekan-bold;
     margin-right: 24px;
 }
 
 .banner .text p {
     color: #FFFFFF;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .banner .text p:last-child {
@@ -245,32 +242,29 @@ p {
 }
 
 .banner .text span {
-    font-family: iranyekan-extraBold;
-    font-size: 12px;
+    font-weight: bold; /* extra bold */
+    font-size: 13px;
 }
 
 .banner .button-div {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
     letter-spacing: 0;
     color: #FFFFFF;
-    font-family: iranyekan-bold;
     border-radius: 5px;
     background-color: #528EE3;
     height: 35px;
     width: 135px;
-    font-size: 11px;
+    font-size: 12px;
     margin-left: 30px;
 }
 
 .banner .button-div img {
-    width: 3px;
-    height: 6px;
+    width: 4px;
+    height: 12px;
     margin-right: 10px;
-    margin-top: 3px;
+    margin-top: 1px;
 }
 
 /*-------------------------------- controls ---------------------------- */
@@ -309,10 +303,6 @@ div.demo,
 #tag,
 #parse {
     display: none;
-}
-
-.amount {
-    font-family: BMitra;
 }
 
 a.donate {
