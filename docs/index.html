@@ -1,13 +1,15 @@
 <!doctype html>
-<html>
+<html lang="fa-IR">
 <head>
   <meta charset="utf-8">
   <title>هضم</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/pygment_trac.css">
-  <link rel="stylesheet" href="fonts/font_face.css">
-  <link rel="stylesheet" href="css/main.css">
   <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <!-- external css -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- my css -->
+  <link rel="stylesheet" href="fonts/font_face.css">
+  <link rel="stylesheet" href="css/highlight_code.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="header">
@@ -41,7 +43,7 @@
     <li>تحلیل صرفی جمله</li>
     <li>تجزیه نحوی جمله</li>
     <li>واسط استفاده از داده‌های زبان فارسی</li>
-    <li>سازگاری با بسته <a class="eng" href="http://nltk.org/">NLTK</a></li>
+    <li>سازگاری با بسته <a href="http://nltk.org/">NLTK</a></li>
     <li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
     <li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm" style="display: inline-block"><img
         src="https://api.travis-ci.org/sobhe/hazm.svg?branch=master" alt="وضعیت تست"
@@ -132,9 +134,7 @@
     توجه کنید که برچسب‌زن صرفی و تجزیه‌گر نحوی نیاز به مدل‌های آموزش‌دیده دارند. ما این مدل‌ها را هم آماده کرده‌ایم،
     می‌توانید آنها را
     <a href="https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip">دریافت کنید</a>
-    و در پوشه‌ای با عنوان
-    <span class="eng">resources</span>
-    در پروژه خود قرار دهید. البته رویه‌های آموزش و ارزیابی مدل‌ها هم
+    و در پوشه‌ای با عنوان resources در پروژه خود قرار دهید. البته رویه‌های آموزش و ارزیابی مدل‌ها هم
     <a href="https://github.com/sobhe/hazm/blob/master/data.py">جزئی از کد</a>
     هستند.
   </p>
@@ -166,8 +166,10 @@
   <div class="last-change-section">
     <div class="title">آخرین تغییرات</div>
     <div class="sub-title">
-      <a href="https://github.com/sobhe/hazm/compare/v0.5...v0.7"><span class="glyphicon glyphicon-flash"></span> ۲۰
-        مهر ۹۷</a>
+      <a href="https://github.com/sobhe/hazm/compare/v0.5...v0.7">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۲۰ مهر ۹۷</span>
+      </a>
     </div>
     <ul>
       <li>واسط استفاده از داده‌های قرآن، ویکی‌پدیا، پرسیکا، سنتی‌پرس و تی‌نیوز</li>
@@ -178,9 +180,12 @@
       <li>ارتقای ابزار تمیز کردن متن</li>
     </ul>
 
-    <div class="sub-title"><a href="https://github.com/sobhe/hazm/compare/v0.4...v0.5"><span
-        class="glyphicon glyphicon-flash"></span> ۲۹
-      اسفند ۹۳</a></div>
+    <div class="sub-title">
+      <a href="https://github.com/sobhe/hazm/compare/v0.4...v0.5">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۲۹ اسفند ۹۳</span>
+      </a>
+    </div>
     <ul>
       <li>واسط استفاده از برچسب‌زن <a href="https://wapiti.limsi.fr/">Wapiti</a></li>
       <li>آموزش تجزیه‌گر سطحی روی دادگان</li>
@@ -188,38 +193,47 @@
       <li>دقت تجزیه‌گر سطحی: 89.9%</li>
     </ul>
 
-    <div class="sub-title"><a href="https://github.com/sobhe/hazm/compare/v0.3...v0.4"><span
-        class="glyphicon glyphicon-flash"></span> ۲۵
-      آذر ۹۳</a></div>
+    <div class="sub-title">
+      <a href="https://github.com/sobhe/hazm/compare/v0.3...v0.4">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۲۵ آذر ۹۳</span>
+      </a></div>
     <ul>
       <li>تجزیه سطحی مبتنی بر قاعده</li>
       <li>مبدل درخت تجزیه وابستگی به تجزیه سطحی</li>
       <li>واسط استفاده از داده‌های تری‌بنک</li>
       <li>واسط استفاده از داده‌های فرهنگ ظرفیت فعل</li>
     </ul>
-    <div class="sub-title"><a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3"><span
-        class="glyphicon glyphicon-flash"></span> ۶
-      شهریور ۹۳</a></div>
+    <div class="sub-title">
+      <a href="https://github.com/sobhe/hazm/compare/v0.2...v0.3">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۶ شهریور ۹۳</span>
+      </a>
+    </div>
     <ul>
       <li>افزودن کسره اضافه به برچسب‌های صرفی</li>
       <li>آموزش برچسب‌زن صرفی روی پیکره</li>
       <li>واسط استفاده از داده‌های پیکره و دادگان</li>
       <li>دقت تجزیه‌گر نحوی: 85.2%</li>
     </ul>
-    <div class="sub-title"><a href="https://github.com/sobhe/hazm/compare/v0.1...v0.2"><span
-        class="glyphicon glyphicon-flash"></span>۲۱
-      تیر
-      ۹۳</a></div>
+    <div class="sub-title">
+      <a href="https://github.com/sobhe/hazm/compare/v0.1...v0.2">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۲۱ تیر ۹۳</span>
+      </a>
+    </div>
     <ul>
       <li>نسخه جدید فهرست واژه‌های ویراستیار</li>
       <li>جایگزینی علامت نقل قول و ممیز</li>
       <li>سازگاری با نسخه جدید NLTK</li>
       <li>اجرای تست‌ها در پایتون ۲</li>
     </ul>
-    <div class="sub-title"><a href="https://github.com/sobhe/hazm/compare/41843e...v0.1"><span
-        class="glyphicon glyphicon-flash"></span>
-      ۲۳
-      آذر ۹۲</a></div>
+    <div class="sub-title">
+      <a href="https://github.com/sobhe/hazm/compare/41843e...v0.1">
+        <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
+        <span>۲۳ آذر ۹۲</span>
+      </a>
+    </div>
     <ul>
       <li>آموزش برچسب‌زن صرفی روی بی‌جن‌خان</li>
       <li>آموزش تجزیه‌گر نحوی روی دادگان</li>
@@ -330,7 +344,7 @@ amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");</script>
   amplitude.getInstance().logEvent('Hazm');
 </script>
 
-<link rel="stylesheet" href="css/ommidvar.css">
-<script type="text/javascript" src="js/ommidvar.js"></script>
+<link rel="stylesheet" href="css/donation_modal.css">
+<script type="text/javascript" src="js/donation_modal.js"></script>
 </body>
 </html>

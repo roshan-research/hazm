@@ -1,0 +1,54 @@
+div.demo,
+#tag,
+#parse {
+    display: none;
+}
+
+.btn {
+    font-size: 17px;
+    padding: 4px 8px 2px;
+}
+
+.glyphicon {
+    top: 3px;
+}
+
+.content .glyphicon {
+    font-size: 90%;
+}
+
+textarea.form-control {
+    margin-bottom: 5px;
+}
+
+span.info {
+    color: #bbb;
+    cursor: pointer;
+}
+span.info:hover {
+    color: #333;
+}
+
+.loading {
+    display: none;
+    background: url(../images/loading.gif);
+    height: 32px;
+    width: 32px;
+}
+
+/*-------------------------------- controls ---------------------------- */
+
+.controls button,
+.controls span {
+    float: right;
+}
+
+.controls {
+    height: 32px;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.controls .btn {
+    margin-left: 8px;
+}

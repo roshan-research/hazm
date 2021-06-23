@@ -17,13 +17,10 @@ pre {
 p {
     font-size: 1.35vw;
     color: #666666;
-    text-align: right;
-    /*text-align: justify;*/
 }
 
 ul {
     color: #666666;
-    text-align: right;
     font-size: 1.35vw;
     line-height: 1.25vw; /* identical to box height, or 92% */
     margin-bottom: 0;
@@ -34,68 +31,32 @@ ul li {
     margin-bottom: 1.35vw;
 }
 
-.eng {
-    font-size: .9em;
-}
-
-.btn {
-    font-size: 17px;
-    padding: 4px 8px 2px;
-}
-
-.glyphicon {
-    top: 3px;
-}
-
-.content .glyphicon {
-    font-size: 90%;
-}
-
-textarea.form-control {
-    font-size: 85%;
-    margin-bottom: 5px;
-}
-
 /*----------------------------- header  -------------------------------*/
 
 .header {
-    /*background: url(../images/background.png) #4276b6;*/
-    /*margin-bottom: 20px;*/
     position: relative;
     box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
-
     margin-bottom: 2.18vw;
     height: 10.83vw;
     background: #3E71B2;
     padding: 1.93vw 15.42vw 1.72vw 0;
-    /*margin-bottom: 42px;*/
-    /*height: 208px;*/
-    /*padding: 37px 296px 33px 0;*/
 }
 
 .header .logo {
     height: 4.89vw;
     text-shadow: 0 2px 0 #235796;
-    /*font-size: 20px;*/
-
     color: #FFFFFF;
     font-size: 2.92vw;
     font-weight: bold;
     line-height: 4.89vw;
-    /*font-size: 56px;*/
-    /*line-height: 94.3px;*/
     text-align: right;
 }
 
 .header .text {
     color: #FFFFFF;
     text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
-    /*font-size: 14px;*/
-
     font-size: 1.35vw;
     line-height: 2.29vw;
-    /*font-size: 26px;*/
-    /*line-height: 44px;*/
 }
 
 /* ----------------------------------------- header's menu css ------------------------------------*/
@@ -177,7 +138,6 @@ textarea.form-control {
 /*----------------------------- content  -------------------------------*/
 .content {
     width: 70.72vw;
-    /*height: 305.52vw;*/
     background: #FBFBFB;
     border: 0.104vw solid #CCCBCA;
     border-radius: 0.26vw;
@@ -252,6 +212,19 @@ textarea.form-control {
     align-items: center;
     padding-right: 0.78vw;
     margin-bottom: 1.56vw;
+}
+
+.sub-title img {
+    width: 0.88vw;
+    height: 1.51vw;
+}
+
+.sub-title span {
+    margin-right: 1.04vw;
+    font-weight: bold;
+    font-size: 1.25vw;
+    line-height: 2.08vw;
+    color: #337AB7;
 }
 
 .last-change-section ul {
@@ -340,46 +313,4 @@ textarea.form-control {
     width: 0.31vw;
     height: 0.625vw;
     margin-right: 1.45vw;
-}
-
-/*-------------------------------- controls ---------------------------- */
-
-.controls button,
-.controls span {
-    float: right;
-}
-
-.controls {
-    height: 32px;
-    font-size: 17px;
-    margin-bottom: 10px;
-}
-
-.controls .btn {
-    margin-left: 8px;
-}
-
-.loading {
-    display: none;
-    background: url(../images/loading.gif);
-    height: 32px;
-    width: 32px;
-}
-
-.text-danger {
-    display: none;
-    margin-top: 5px;
-}
-
-
-/* demo */
-
-div.demo,
-#tag,
-#parse {
-    display: none;
-}
-
-a.donate {
-    text-decoration: none;
 }
