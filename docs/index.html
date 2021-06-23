@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="fa-IR">
+
+
 <head>
   <meta charset="utf-8">
   <title>هضم</title>
@@ -9,9 +11,12 @@
   <!-- my css -->
   <link rel="stylesheet" href="fonts/font_face.css">
   <link rel="stylesheet" href="css/highlight_code.css">
+  <link rel="stylesheet" href="css/donation_modal.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
+
 <div class="header">
   <div class="logo">هضم</div>
   <span class="text">برای پردازش زبان فارسی</span>
@@ -45,9 +50,11 @@
     <li>واسط استفاده از داده‌های زبان فارسی</li>
     <li>سازگاری با بسته <a href="http://nltk.org/">NLTK</a></li>
     <li>پشتیبانی از پایتون نسخه ۲ و ۳</li>
-    <li>تست مداوم کدها: <a href="https://travis-ci.org/sobhe/hazm" style="display: inline-block"><img
-        src="https://api.travis-ci.org/sobhe/hazm.svg?branch=master" alt="وضعیت تست"
-        style="float: right; margin-bottom: -5px"></a></li>
+    <li>تست مداوم کدها:
+      <a href="https://travis-ci.org/sobhe/hazm" class="test-code">
+        <img src="images/buildTest.svg" alt="وضعیت تست">
+      </a>
+    </li>
   </ul>
 
   <div class="title">استفاده</div>
@@ -122,10 +129,8 @@
 </pre>
   </div>
 
-  <div class="tree-title">درخت وابستگی حاصل:</div>
-  <div id="tree" class="tree">
-    <svg height="0"></svg>
-  </div>
+  <div class="tree-title">درخت برچسب اجزای سخن</div>
+  <img src="images/tree.svg" alt="tree" class="tree">
 
   <div class="title">نصب</div>
   <p class="paragraph-1">هضم، یکی از بسته‌های زبان پایتون است و با این دستور نصب می‌شود:</p>
@@ -258,93 +263,85 @@
   <p class="paragraph-3">کاری از <a href="https://www.roshan-ai.ir">روشن</a></p>
 </div>
 
-<link rel="stylesheet" href="https://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen"/>
-<script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
-<script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"></script>
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
-  data = "1\tزنگ\u200cها\t_\tN\tN\t_\t6\tSBJ\t_\t_\n2\tبرای\t_\tPREP\tPREP\t_\t6\tADV\t_\t_\n3\tکه\t_\tCONJ\tCONJ\t_\t2\tPOSDEP\t_\t_\n4\tبه\t_\tPREP\tPREP\t_\t6\tVPP\t_\t_\n5\tصدا\t_\tN\tN\t_\t4\tPOSDEP\t_\t_\n6\tدرمی\u200cآید\t_\tV\tV\t_\t0\tROOT\t_\t_\n7\t؟\t_\tPUNC\tPUNC\t_\t6\tPUNC\t_\t_\n";
-  drawTree('#tree svg', data);
-</script>
+  (function (e, t) {
+    var n = e.amplitude || {_q: [], _iq: {}};
+    var r = t.createElement("script");
+    r.type = "text/javascript";
+    r.integrity = "sha384-RsEu4WZflrqYcEacpfoGSib3qaSvdYwT4D+DrWqeBuDarSzjwUQR1jO8gDiXZd0E";
+    r.crossOrigin = "anonymous";
+    r.async = true;
+    r.src = "https://cdn.amplitude.com/libs/amplitude-6.2.0-min.gz.js";
+    r.onload = function () {
+      if (!e.amplitude.runQueuedFunctions) {
+        console.log("[Amplitude] Error: could not load SDK")
+      }
+    };
+    var i = t.getElementsByTagName("script")[0];
+    i.parentNode.insertBefore(r, i);
 
-<script type="text/javascript">(function (e, t) {
-  var n = e.amplitude || {_q: [], _iq: {}};
-  var r = t.createElement("script");
-  r.type = "text/javascript";
-  r.integrity = "sha384-RsEu4WZflrqYcEacpfoGSib3qaSvdYwT4D+DrWqeBuDarSzjwUQR1jO8gDiXZd0E";
-  r.crossOrigin = "anonymous";
-  r.async = true;
-  r.src = "https://cdn.amplitude.com/libs/amplitude-6.2.0-min.gz.js";
-  r.onload = function () {
-    if (!e.amplitude.runQueuedFunctions) {
-      console.log("[Amplitude] Error: could not load SDK")
-    }
-  };
-  var i = t.getElementsByTagName("script")[0];
-  i.parentNode.insertBefore(r, i);
-
-  function s(e, t) {
-    e.prototype[t] = function () {
-      this._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
-      return this
-    }
-  }
-
-  var o = function () {
-    this._q = [];
-    return this
-  };
-  var a = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset"];
-  for (var u = 0; u < a.length; u++) {
-    s(o, a[u])
-  }
-  n.Identify = o;
-  var c = function () {
-    this._q = [];
-    return this
-  };
-  var l = ["setProductId", "setQuantity", "setPrice", "setRevenueType", "setEventProperties"];
-  for (var p = 0; p < l.length; p++) {
-    s(c, l[p])
-  }
-  n.Revenue = c;
-  var d = ["init", "logEvent", "logRevenue", "setUserId", "setUserProperties", "setOptOut", "setVersionName", "setDomain", "setDeviceId", "enableTracking", "setGlobalUserProperties", "identify", "clearUserProperties", "setGroup", "logRevenueV2", "regenerateDeviceId", "groupIdentify", "onInit", "logEventWithTimestamp", "logEventWithGroups", "setSessionId", "resetSessionId"];
-
-  function v(e) {
-    function t(t) {
-      e[t] = function () {
-        e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)))
+    function s(e, t) {
+      e.prototype[t] = function () {
+        this._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
+        return this
       }
     }
 
-    for (var n = 0; n < d.length; n++) {
-      t(d[n])
+    var o = function () {
+      this._q = [];
+      return this
+    };
+    var a = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset"];
+    for (var u = 0; u < a.length; u++) {
+      s(o, a[u])
     }
-  }
+    n.Identify = o;
+    var c = function () {
+      this._q = [];
+      return this
+    };
+    var l = ["setProductId", "setQuantity", "setPrice", "setRevenueType", "setEventProperties"];
+    for (var p = 0; p < l.length; p++) {
+      s(c, l[p])
+    }
+    n.Revenue = c;
+    var d = ["init", "logEvent", "logRevenue", "setUserId", "setUserProperties", "setOptOut", "setVersionName", "setDomain", "setDeviceId", "enableTracking", "setGlobalUserProperties", "identify", "clearUserProperties", "setGroup", "logRevenueV2", "regenerateDeviceId", "groupIdentify", "onInit", "logEventWithTimestamp", "logEventWithGroups", "setSessionId", "resetSessionId"];
 
-  v(n);
-  n.getInstance = function (e) {
-    e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase();
-    if (!n._iq.hasOwnProperty(e)) {
-      n._iq[e] = {_q: []};
-      v(n._iq[e])
+    function v(e) {
+      function t(t) {
+        e[t] = function () {
+          e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)))
+        }
+      }
+
+      for (var n = 0; n < d.length; n++) {
+        t(d[n])
+      }
     }
-    return n._iq[e]
-  };
-  e.amplitude = n
-})(window, document);
-amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");</script>
+
+    v(n);
+    n.getInstance = function (e) {
+      e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase();
+      if (!n._iq.hasOwnProperty(e)) {
+        n._iq[e] = {_q: []};
+        v(n._iq[e])
+      }
+      return n._iq[e]
+    };
+    e.amplitude = n
+  })(window, document);
+  amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");</script>
 
 <script type="text/javascript">
   $('#ommidvar-donate').click(function () {
     amplitude.getInstance().logEvent('Hazm Donate');
   });
-
   amplitude.getInstance().logEvent('Hazm');
 </script>
-
-<link rel="stylesheet" href="css/donation_modal.css">
 <script type="text/javascript" src="js/donation_modal.js"></script>
 </body>
 </html>

@@ -159,8 +159,16 @@ ul li {
     padding-right: 1.56vw;
 }
 
+.test-code img {
+    width: 6.77vw;
+    height: 1.51vw;
+}
+
 /* --------- tree section -------- */
 .tree {
+    width: 51.33vw;
+    height: 21.61vw;
+    margin-right: 10.2vw;
     margin-bottom: 5.2vw;
 }
 
