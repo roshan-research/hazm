@@ -6,57 +6,54 @@ body {
     background: url(../images/body-background.png) #eae6d1;
 }
 
-pre {
-    direction: ltr;
-    font-family: monospace, Vazir;
-    font-size: 1.2vw;
-    color: #FFFFFF !important;
-    border-radius: 0.52vw;
-}
-
-p {
-    font-size: 1.35vw;
+p, ul li {
+    font-size: 1.25vw;
     color: #666666;
 }
 
 ul {
-    color: #666666;
-    font-size: 1.35vw;
-    line-height: 1.25vw; /* identical to box height, or 92% */
     margin-bottom: 0;
     padding-right: 0;
 }
 
 ul li {
+    height: 1.25vw;
+    line-height: 1.25vw; /* identical to box height, or 92% */
     margin-bottom: 1.35vw;
+}
+
+pre, code {
+    direction: ltr;
+    font-family: monospace, Vazir;
+    font-size: 1.04vw;
+    color: #FFFFFF!important;
+    margin-bottom: 0;
 }
 
 /*----------------------------- header  -------------------------------*/
 
 .header {
     position: relative;
-    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
     margin-bottom: 2.18vw;
-    height: 10.83vw;
+    height: 10.31vw;
     background: #3E71B2;
-    padding: 1.93vw 15.42vw 1.72vw 0;
+    padding: 1.93vw 15.41vw 1.93vw 0;
 }
 
 .header .logo {
-    height: 4.89vw;
-    text-shadow: 0 2px 0 #235796;
+    height: 4.37vw;
     color: #FFFFFF;
-    font-size: 2.92vw;
+    font-size: 2.6vw;
     font-weight: bold;
-    line-height: 4.89vw;
+    line-height: 4.37vw;
     text-align: right;
 }
 
 .header .text {
     color: #FFFFFF;
     text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
-    font-size: 1.35vw;
-    line-height: 2.29vw;
+    font-size: 1.25vw;
+    line-height: 2.08vw;
 }
 
 /* ----------------------------------------- header's menu css ------------------------------------*/
@@ -65,10 +62,10 @@ ul li {
     flex-direction: row;
     justify-content: space-between;
     position: absolute;
-    width: 46.77vw;
+    width: 42.13vw;
     height: 2.76vw;
-    left: 16.15vw;
-    top: 9.47vw;
+    left: 16.25vw;
+    top: 8.958vw;
 }
 
 .menu a:hover {
@@ -83,42 +80,46 @@ ul li {
     align-items: center;
     justify-content: center;
     height: 100%;
-
-    font-size: 1.35vw;
-    line-height: 2.29vw;
+    font-size: 1.04vw;
+    line-height: 1.77vw;
     text-align: right;
     color: #545757;
     background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
-    border: 0.106vw solid #D9A600;
-    box-shadow: 0 0.106vw 0.053vw #C9C9C9;
-    border-radius: 0.159vw;
+    border: 0.104vw solid #D9A600;
+    box-shadow: 0 0.052vw 0.052vw #C9C9C9;
+    border-radius: 0.156vw;
 }
 
 .menu span {
     margin-right: 0.78vw;
-    height: 2.29vw;
+    height: 1.77vw;
 }
 
 .item1 {
-    width: 11.71vw;
+    width: 10.26vw;
 }
 
 .item1 img {
     width: 1.125vw;
     height: 1.37vw;
+    margin-bottom: 0.2vw;
+}
+
+.item1 span {
+    margin-top: 0.2vw;
 }
 
 .item2 {
-    width: 10.52vw;
+    width: 9.47vw;
 }
 
 .item2 img {
-    width: 1.71vw;
+    width: 1.72vw;
     height: 0.91vw;
 }
 
 .item3 {
-    width: 9.11vw;
+    width: 8.43vw;
 }
 
 .item3 img {
@@ -127,7 +128,7 @@ ul li {
 }
 
 .item4 {
-    width: 12.29vw;
+    width: 10.83vw;
 }
 
 .item4 img {
@@ -142,20 +143,23 @@ ul li {
     border: 0.104vw solid #CCCBCA;
     border-radius: 0.26vw;
     margin: auto;
-    padding: 3.125vw 3.125vw 5.2vw 3.125vw;
+    padding: 3.64vw 3.125vw 3.8vw 3.125vw;
 }
 
 .title {
-    font-size: 1.66vw;
+    font-size: 1.56vw;
     font-weight: bold;
     color: #303030;
-    line-height: 2.81vw;
+    line-height: 2.65vw;
+    height: 2.65vw;
     text-align: right;
     margin-bottom: 0.78vw;
+    display: flex;
+    align-items: center;
 }
 
 .feature-ul {
-    margin-bottom: 5.2vw;
+    margin-bottom: 5.31vw;
     padding-right: 1.56vw;
 }
 
@@ -164,104 +168,58 @@ ul li {
     height: 1.51vw;
 }
 
+/* -------- code sections -------*/
+.highlight-python {
+    margin-bottom: 5.41vw;
+    border-radius: 0.52vw;
+    padding: 1.04vw;
+    background-color: #000000;
+}
+
+.highlight-python pre {
+    background-color: inherit;
+    border: none;
+    line-height: 1.56vw;
+    padding: 1.04vw;
+}
+
+.python-code {
+    padding: 1.04vw;
+    line-height: 1.04vw;
+    background-color: #0F0F10!important;
+}
+
 /* --------- tree section -------- */
+.tree-title {
+    margin-bottom: 3.125vw;
+}
+
 .tree {
     width: 51.33vw;
     height: 21.61vw;
-    margin-right: 10.2vw;
-    margin-bottom: 5.2vw;
-}
-
-.tree-title {
-    font-weight: bold;
-    font-size: 1.66vw;
-    line-height: 2.81vw; /* identical to box height */
-    color: #303030;
-    margin-bottom: 3.125vw;
+    margin: 0 7.08vw 5.2vw auto;
 }
 
 /* -------- paragraph sections ---- */
 
 .paragraph-1 {
     line-height: 1.51vw;
+    margin-bottom: 2.08vw;
 }
 
 .paragraph-2 {
     line-height: 2.08vw;
+    margin: 2.08vw 0;
 }
 
-/* -------- code sections -------*/
-.highlight-python {
-    margin-bottom: 5.2vw;
+.paragraph-2 p:last-child{
+    margin-bottom: 0!important;
 }
 
-.highlight-python pre {
-    padding: 1.04vw;
-    line-height: 1.56vw; /* or 125% */
-    background-color: #000000 !important;
-}
-
-.python-code {
-    padding: 0.98vw 0 1.09vw 1.04vw;
-    line-height: 1.04vw;
-    background-color: #0F0F10 !important;
-}
-
-/* ---------- last-change section ----- */
-.last-change-section {
-    margin-bottom: 5.2vw;
-}
-
-.last-change-section .sub-title {
-    height: 3.125vw;
-    background: #F2F2F2;
-    border-radius: 0.26vw;
-    display: flex;
-    align-items: center;
-    padding-right: 0.78vw;
-    margin-bottom: 1.56vw;
-}
-
-.sub-title img {
-    width: 0.88vw;
-    height: 1.51vw;
-}
-
-.sub-title span {
-    margin-right: 1.04vw;
-    font-weight: bold;
-    font-size: 1.25vw;
+.paragraph-3 {
     line-height: 2.08vw;
-    color: #337AB7;
+    margin-bottom: 5.2vw;
 }
-
-.last-change-section ul {
-    padding-right: 2.6vw;
-}
-
-/* ----------- thank-section ---------------*/
-.thank-section {
-    margin-bottom: 5.83vw;
-}
-
-.thank-section ul {
-    padding-right: 2.6vw;
-}
-
-/*----------------------------- footer  -------------------------------*/
-.footer {
-    margin: 2.08vw 16.19vw 15.72vw auto;
-}
-
-.footer .paragraph-3 {
-    color: #aaa;
-    line-height: 2.29vw;
-}
-
-.footer a {
-    color: #337AB7 !important;
-}
-
 
 /* ---------------------- banners       ------------------------------ */
 
@@ -287,9 +245,7 @@ ul li {
 
 .banner .text p {
     text-align: right;
-    letter-spacing: 0;
     line-height: 2.08vw;
-    font-size: 1.24vw;
     font-weight: bold;
     color: #FFFFFF;
 }
@@ -314,11 +270,81 @@ ul li {
     width: 14.06vw;
     font-size: 1.14vw;
     line-height: 1.92vw;
-    margin-left: 5.3vw;
+    margin-left: 5.2vw;
 }
 
 .banner .button-div img {
-    width: 0.31vw;
+    width: 0.312vw;
     height: 0.625vw;
-    margin-right: 1.45vw;
+    margin-right: 1.46vw;
+}
+
+/* ---------- last-change section ----- */
+.last-change-section {
+    margin-bottom: 5.2vw;
+}
+
+.last-change-section .title {
+    margin-bottom: 0.94vw;
+}
+
+.last-change-section .sub-title {
+    height: 3.125vw;
+    background: #F2F2F2;
+    border-radius: 0.26vw;
+    display: flex;
+    align-items: center;
+    padding-right: 0.78vw;
+    margin-bottom: 1.56vw;
+}
+
+.sub-title a {
+    margin-top: 0.2vw;
+    text-decoration: none!important
+}
+
+.sub-title img {
+    width: 0.88vw;
+    height: 1.51vw;
+}
+
+.sub-title span {
+    font-size: 1.04vw;
+    font-weight: bold;
+    line-height: 1.77vw;
+    margin-right: 1.04vw;
+    color: #337AB7;
+}
+
+.last-change-section ul {
+    padding-right: 2.6vw;
+}
+
+.last-change-section ul:not(:last-child) {
+    margin-bottom: 3.64vw;
+}
+
+/* ----------- thank-section ---------------*/
+.thank-section ul {
+    padding-right: 1.56vw;
+}
+
+.thank-section ul li:last-child{
+    margin-bottom: 0;
+}
+
+/*----------------------------- footer  -------------------------------*/
+.footer {
+    margin: 1.56vw 16.19vw 3.17vw 0;
+}
+
+.footer .p {
+    color: #aaa;
+    font-size: 1.35vw;
+    height: 2.29vw;
+    line-height: 2.29vw;
+}
+
+.footer a {
+    color: #337AB7 !important;
 }
