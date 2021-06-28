@@ -1,9 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     direction: rtl;
     font-family: Vazir;
     color: #666;
-    font-size: 0.93vw;
-    background: url(../images/body-background.png) #eae6d1;
+    font-size: 100%;
+    background: #EAE5D1;
+}
+
+h1, h2 {
+    font-family: Vazir;;
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+h3 {
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 p, ul li {
@@ -348,3 +370,7 @@ pre, code {
 .footer a {
     color: #337AB7 !important;
 }
+
+
+
+/* --------------------------------------------------- mobile version ---------------------------------------------*/
