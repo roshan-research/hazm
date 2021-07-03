@@ -21,6 +21,8 @@
 <div class="header">
   <h1 class="logo">هضم</h1>
   <span class="text">برای پردازش زبان فارسی</span>
+  <img class="menu-icon active" src="images/menu.svg" alt="menu icon">
+  <img class="close-icon" src="images/close.svg" alt="close icon">
   <div class="menu">
     <a href="#" id="ommidvar-donate" class="item1">
       <img src="images/support_icon.svg" alt="support icon">
@@ -41,7 +43,8 @@
   </div>
 </div>
 <div class="content">
-  <h2 class="title">ویژگی‌ها</h2>
+  <h2 class="title title1">ویژگی‌ها</h2>
+
   <ul class="feature-ul">
     <li>تمیز و مرتب کردن متن</li>
     <li>تقطیع جمله‌ها و واژه‌ها</li>
@@ -58,7 +61,7 @@
     </li>
   </ul>
 
-  <h2 class="title">استفاده</h2>
+  <h2 class="title title2">استفاده</h2>
 
   <div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span
       class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
@@ -130,10 +133,13 @@
 </pre>
   </div>
 
-  <div class="title tree-title">درخت برچسب اجزای سخن</div>
-  <img src="images/tree.svg" alt="tree" class="tree">
+  <div class="tree-section">
+    <div class="title title3">درخت برچسب اجزای سخن</div>
+    <img class="tree-web" src="images/tree.svg" alt="tree image">
+    <img class="tree-mobile" src="images/tree_mobile.svg" alt="tree image">
+  </div>
 
-  <h2 class="title">نصب</h2>
+  <h2 class="title title4">نصب</h2>
   <p class="paragraph-1">هضم، یکی از بسته‌های زبان پایتون است و با این دستور نصب می‌شود:</p>
   <pre class="python-code"><code>pip install hazm</code></pre>
   <div class="paragraph-2">
@@ -166,14 +172,14 @@
     </div>
   </a>
 
-  <h2 class="title">اجازه‌نامه</h2>
+  <h2 class="title title5">اجازه‌نامه</h2>
   <p class="paragraph-3">شما می‌توانید مطابق <a href="https://github.com/sobhe/hazm/blob/master/LICENSE">اجازه‌نامه</a>،
     از این محصول در هر نوع پروژه‌ای از جمله تحقیقاتی یا تجاری استفاده کنید. فقط توجه کنید که اجازه‌نامه هضم تنها مربوط
     به کدهای این پروژه است و برای استفاده از مدل‌های آماده شده باید به مجوز داده‌های مورد استفاده در آموزش آنها مراجعه
     کنید؛ که خب هیچ‌کدام اجازه استفاده تجاری را نمی‌دهند :(</p>
 
   <div class="last-change-section">
-    <h2 class="title">آخرین تغییرات</h2>
+    <h2 class="title title6">آخرین تغییرات</h2>
     <div class="sub-title">
       <a href="https://github.com/sobhe/hazm/compare/v0.5...v0.7">
         <img class="flash-icon" src="images/flashIcon.svg" alt="flash_icon">
@@ -253,7 +259,7 @@
   </div>
 
   <div class="thank-section">
-    <h2 class="title">سپاس</h2>
+    <h2 class="title title7">سپاس</h2>
     <ul>
       <li>از مشارکت <a href="https://github.com/mojtaba-khallash">مجتبی خلاش</a> و <a href="https://github.com/imani">محسن
         ایمانی</a></li>
@@ -270,7 +276,7 @@
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
+<!-- My js-->
 <script type="text/javascript">
   (function (e, t) {
     var n = e.amplitude || {_q: [], _iq: {}};
@@ -340,7 +346,6 @@
   })(window, document);
   amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032")
 </script>
-
 <script type="text/javascript">
   $('#ommidvar-donate').click(function () {
     amplitude.getInstance().logEvent('Hazm Donate');
@@ -348,5 +353,17 @@
   amplitude.getInstance().logEvent('Hazm');
 </script>
 <script type="text/javascript" src="js/donation_modal.js"></script>
+<script type="text/javascript">
+  const menu = $(".menu-icon");
+  const close = $(".close-icon");
+  menu.on('click', function () {
+    menu.removeClass('active');
+    close.addClass('active')
+  });
+  close.on('click', function () {
+    close.removeClass('active');
+    menu.addClass('active')
+  })
+</script>
 </body>
 </html>

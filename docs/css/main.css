@@ -22,12 +22,6 @@ h2 {
     margin-top: 0;
 }
 
-h3 {
-    color: #333;
-    font-weight: bold;
-    font-size: 16px;
-}
-
 p, ul li {
     font-size: 1.25vw;
     color: #666666;
@@ -76,6 +70,10 @@ pre, code {
     text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
     font-size: 1.25vw;
     line-height: 2.08vw;
+}
+
+.header .menu-icon, .header .close-icon {
+    display: none;
 }
 
 /* ----------------------------------------- header's menu css ------------------------------------*/
@@ -175,9 +173,20 @@ pre, code {
     line-height: 2.65vw;
     height: 2.65vw;
     text-align: right;
-    margin-bottom: 0.78vw;
     display: flex;
     align-items: center;
+}
+
+.title1, .title2, .title4, .title5, .title7 {
+    margin-bottom: 0.78vw;
+}
+
+.title3 {
+    margin-bottom: 3.125vw;
+}
+
+.title6 {
+    margin-bottom: 0.94vw;
 }
 
 .feature-ul {
@@ -212,14 +221,19 @@ pre, code {
 }
 
 /* --------- tree section -------- */
-.tree-title {
-    margin-bottom: 3.125vw;
+.tree-section{
+    margin-bottom: 5.2vw;
 }
 
-.tree {
+.tree-web {
+    display: inline-block;
     width: 51.33vw;
     height: 21.61vw;
-    margin: 0 7.08vw 5.2vw auto;
+    margin: 0 7.08vw 0 auto;
+}
+
+.tree-mobile {
+    display: none;
 }
 
 /* -------- paragraph sections ---- */
@@ -306,10 +320,6 @@ pre, code {
     margin-bottom: 5.2vw;
 }
 
-.last-change-section .title {
-    margin-bottom: 0.94vw;
-}
-
 .last-change-section .sub-title {
     height: 3.125vw;
     background: #F2F2F2;
@@ -374,3 +384,259 @@ pre, code {
 
 
 /* --------------------------------------------------- mobile version ---------------------------------------------*/
+@media screen and (max-width: 762px){
+    /*body {*/
+        /*background: #E5E0CC;*/
+    /*}*/
+
+    /*p, ul li {*/
+        /*font-size: 18px;*/
+    /*}*/
+
+    /*ul li {*/
+        /*height: auto;*/
+        /*line-height: normal;*/
+        /*margin-bottom: 0;*/
+    /*}*/
+
+    /*pre, code {*/
+        /*font-size: 16px;*/
+    /*}*/
+
+    /*!*----------------------------- header  -------------------------------*!*/
+
+    /*.header {*/
+        /*margin-bottom: 25px;*/
+        /*height: 95px;*/
+        /*padding: 21px 40px 17px 31px;*/
+    /*}*/
+
+    /*.header .logo {*/
+        /*font-size: 22px;*/
+        /*line-height: 37px;*/
+        /*height: 37px;*/
+    /*}*/
+
+    /*.header .text {*/
+        /*font-size: 14px;*/
+        /*line-height: 24px;*/
+        /*height: 24px;*/
+    /*}*/
+
+    /*.header .menu-icon.active {*/
+        /*display: block;*/
+        /*cursor: pointer;*/
+        /*position: absolute;*/
+        /*width: 15px;*/
+        /*height: 8px;*/
+        /*left: 31.5px;*/
+        /*top: 36px;*/
+    /*}*/
+
+    /*.header .close-icon.active {*/
+        /*display: block;*/
+        /*cursor: pointer;*/
+        /*position: absolute;*/
+        /*width: 11.31px;*/
+        /*height: 11.31px;*/
+        /*left: 33.34px;*/
+        /*top: 34.84px;*/
+    /*}*/
+
+    /*!* ----------------------------------------- header's menu css ------------------------------------*!*/
+
+    /*.menu {*/
+        /*display: none;*/
+    /*}*/
+
+    /*!*----------------------------- content  -------------------------------*!*/
+    /*.content {*/
+        /*min-width: 325px;*/
+        /*width: 86%;*/
+        /*!*width: min-content;*!*/
+        /*background: #FFFFFF;*/
+        /*border: 0.5px solid #CECCC5;*/
+        /*border-radius: 10px;*/
+        /*margin: auto;*/
+        /*padding: 30px 25px 60px 25px;*/
+    /*}*/
+
+    /*.title {*/
+        /*font-size: 20px;*/
+        /*line-height: 34px;*/
+        /*height: 34px;*/
+    /*}*/
+
+    /*.title1 {*/
+        /*margin-bottom: 19px;*/
+    /*}*/
+
+    /*.title2 {*/
+        /*margin-bottom: 15px;*/
+    /*}*/
+
+    /*.title3 {*/
+        /*margin-bottom: 45px;*/
+    /*}*/
+
+    /*.title4, .title5 {*/
+        /*margin-bottom: 8px;*/
+    /*}*/
+
+    /*.title6 {*/
+        /*margin-bottom: 18px;*/
+    /*}*/
+
+    /*.title7 {*/
+        /*font-size: 16px;*/
+        /*line-height: 27px;*/
+        /*margin-bottom: 10px;*/
+    /*}*/
+
+    /*.feature-ul {*/
+        /*margin-bottom: 80px;*/
+        /*padding-right: 17px;*/
+    /*}*/
+
+    /*.feature-ul li {*/
+        /*height: 24px;*/
+        /*line-height: 24px;*/
+        /*margin-bottom: 12px;*/
+    /*}*/
+
+    /*.test-code img {*/
+        /*width: 107px;*/
+        /*height: 24px;*/
+    /*}*/
+
+    /*!* -------- code sections -------*!*/
+    /*.highlight-python {*/
+        /*margin-bottom: 80px;*/
+        /*padding: 16px 15px 27px 15px;*/
+        /*background: #0F0F10;*/
+        /*border-radius: 10px;*/
+    /*}*/
+
+    /*.highlight-python pre { !* TODO *!*/
+        /*background-color: inherit;*/
+        /*border: 1px solid #979797;*/
+        /*border-radius: 5px 5px 0 0;*/
+        /*margin: auto;*/
+        /*line-height: 20px;*/
+        /*padding: 15px;*/
+    /*}*/
+
+    /*.python-code {*/
+        /*padding: 13px 0 14px 20px;*/
+        /*border-radius: 10px;*/
+         /*!* width: 73%; TODO: handle width to 73% *!*/
+    /*}*/
+
+    /*.python-code code {*/
+        /*font-size: 16px;*/
+        /*line-height: 20px;*/
+        /*height: 20px;*/
+    /*}*/
+
+    /*!* --------- tree section -------- *!*/
+    /*.tree-section {*/
+        /*direction: ltr;*/
+        /*margin-bottom: 80px;*/
+    /*}*/
+
+    /*.tree-section .title {*/
+        /*direction: rtl;*/
+    /*}*/
+
+    /*.tree-web {*/
+        /*display: none;*/
+    /*}*/
+
+    /*.tree-mobile {*/
+        /*display: inline-block;*/
+        /*!*width: 335.88px;*!*/
+        /*width: 100%; !* TODO *!*/
+        /*height: 182px;*/
+        /*margin-right: 28px;*/
+        /*position: relative;*/
+        /*left: 0;*/
+    /*}*/
+
+    /*!* -------- paragraph sections ---- *!*/
+
+    /*.paragraph-1 {*/
+        /*!*width: 259px; TODO: check with designer*!*/
+        /*width: 93%;*/
+        /*line-height: 29px;*/
+        /*margin-bottom: 24px;*/
+    /*}*/
+
+    /*.paragraph-2 {*/
+        /*!*width: 259px; TODO: check with designer*!*/
+        /*width: 93%;*/
+        /*text-align: justify;*/
+        /*line-height: 29px;*/
+        /*margin: 50px 0 24px 0;*/
+    /*}*/
+
+    /*.paragraph-2 p:last-child{*/
+        /*margin-bottom: 0!important;*/
+    /*}*/
+
+    /*.paragraph-3 {*/
+        /*line-height: 2.08vw;*/
+        /*margin-bottom: 5.2vw;*/
+    /*}*/
+
+    /*!* ---------------------- banners       ------------------------------ *!*/
+
+    /*.banner {*/
+        /*display: block;*/
+        /*cursor: pointer;*/
+        /*text-decoration: none !important;*/
+        /*height: 260px;*/
+        /*margin: 80px auto;*/
+        /*background: #418FE7;*/
+        /*border-radius: 10px;*/
+    /*}*/
+
+    /*.banner .text {*/
+        /*margin-right: 5.2vw;*/
+    /*}*/
+
+    /*.banner .text p {*/
+        /*text-align: right;*/
+        /*line-height: 2.08vw;*/
+        /*font-weight: bold;*/
+        /*color: #FFFFFF;*/
+    /*}*/
+
+    /*.banner .text p:last-child {*/
+        /*margin-bottom: 0 !important;*/
+    /*}*/
+
+    /*.banner .text span {*/
+        /*font-weight: bolder; !* extra bold *!*/
+    /*}*/
+
+    /*.banner .button-div {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*letter-spacing: 0;*/
+        /*color: #FFFFFF;*/
+        /*border-radius: 0.26vw;*/
+        /*background-color: #528EE3;*/
+        /*height: 3.64vw;*/
+        /*width: 14.06vw;*/
+        /*font-size: 1.14vw;*/
+        /*line-height: 1.92vw;*/
+        /*margin-left: 5.2vw;*/
+    /*}*/
+
+    /*.banner .button-div img {*/
+        /*width: 0.312vw;*/
+        /*height: 0.625vw;*/
+        /*margin-right: 1.46vw;*/
+    /*}*/
+}
