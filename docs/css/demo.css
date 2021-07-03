@@ -1,6 +1,19 @@
+body {
+    font-size: 14px;
+}
+
+h1,
+h2,
 h3 {
     color: #333;
     font-weight: bold;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
     font-size: 16px;
 }
 
@@ -31,6 +44,7 @@ span.info {
     color: #bbb;
     cursor: pointer;
 }
+
 span.info:hover {
     color: #333;
 }
