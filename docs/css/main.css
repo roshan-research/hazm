@@ -4,13 +4,17 @@
 
 body {
     direction: rtl;
-    font-family: Vazir;
-    color: #666;
+    font-family: 'Vazir', sans-serif;
     background: #EAE5D1;
 }
 
+a {
+    color: #337AB7;
+    font-family: 'Vazir-Medium', sans-serif;
+}
+
 h1, h2 {
-    font-family: Vazir;;
+    font-family: 'Vazir-Bold', sans-serif;
 }
 
 h1 {
@@ -19,11 +23,6 @@ h1 {
 
 h2 {
     margin-top: 0;
-}
-
-p, ul li {
-    font-size: 1.25vw;
-    color: #666666;
 }
 
 ul {
@@ -37,12 +36,22 @@ ul li {
     margin-bottom: 1.35vw;
 }
 
+p, li {
+    font-family: 'Vazir-Light', sans-serif;
+    font-size: 1.25vw;
+    color: #666666;
+}
+
 pre, code {
     direction: ltr;
-    font-family: monospace, Vazir;
+    font-family: 'Vazir-Code', monospace;
     font-size: 1.04vw;
-    color: #FFFFFF!important;
+    color: #FFFFFF;
     margin-bottom: 0;
+}
+
+.highlight .o, .highlight .n, .highlight .p {
+    color: #FFFFFF;
 }
 
 /*----------------------------- header  -------------------------------*/
@@ -53,20 +62,16 @@ pre, code {
     height: 10.31vw;
     background: #3E71B2;
     padding: 1.93vw 15.41vw 1.93vw 0;
+    color: #FFFFFF;
 }
 
 .header .logo {
     height: 4.37vw;
-    color: #FFFFFF;
     font-size: 2.6vw;
-    font-weight: bold;
     line-height: 4.37vw;
-    text-align: right;
 }
 
 .header .text {
-    color: #FFFFFF;
-    text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
     font-size: 1.25vw;
     line-height: 2.08vw;
 }
@@ -87,26 +92,25 @@ pre, code {
     top: 8.958vw;
 }
 
-.menu a:hover {
-    background: linear-gradient(#ffe788, #ffe788);
-    background-color: #ffeca0;
-}
-
-.menu > a {
+.menu a {
     cursor: pointer;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    font-size: 1.04vw;
     line-height: 1.77vw;
-    text-align: right;
     color: #545757;
     background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
     border: 0.104vw solid #D9A600;
     box-shadow: 0 0.052vw 0.052vw #C9C9C9;
     border-radius: 0.156vw;
+    font-size: 1.04vw;
+}
+
+.menu a:hover {
+    background: linear-gradient(#ffe788, #ffe788);
+    background-color: #ffeca0;
 }
 
 .menu span {
@@ -166,14 +170,12 @@ pre, code {
 }
 
 .title {
+    display: flex;
+    align-items: center;
     font-size: 1.56vw;
-    font-weight: bold;
     color: #303030;
     line-height: 2.65vw;
     height: 2.65vw;
-    text-align: right;
-    display: flex;
-    align-items: center;
 }
 
 .title1, .title2, .title4, .title5, .title7 {
@@ -216,11 +218,11 @@ pre, code {
 .python-code {
     padding: 1.04vw;
     line-height: 1.04vw;
-    background-color: #0F0F10!important;
+    background-color: #0F0F10 !important;
 }
 
 /* --------- tree section -------- */
-.tree-section{
+.tree-section {
     margin-bottom: 5.2vw;
 }
 
@@ -247,8 +249,8 @@ pre, code {
     margin: 2.08vw 0;
 }
 
-.paragraph-2 p:last-child{
-    margin-bottom: 0!important;
+.paragraph-2 p:last-child {
+    margin-bottom: 0 !important;
 }
 
 .paragraph-3 {
@@ -279,9 +281,9 @@ pre, code {
 }
 
 .banner .text p {
+    font-family: 'Vazir-Medium', sans-serif;
     text-align: right;
     line-height: 2.08vw;
-    font-weight: bold;
     color: #FFFFFF;
 }
 
@@ -290,7 +292,7 @@ pre, code {
 }
 
 .banner .text span {
-    font-weight: bolder; /* extra bold */
+    font-family: 'Vazir-Bold', sans-serif;
 }
 
 .banner .button-div {
@@ -303,6 +305,7 @@ pre, code {
     background-color: #528EE3;
     height: 3.64vw;
     width: 14.06vw;
+    font-family: 'Vazir-Bold', sans-serif;
     font-size: 1.14vw;
     line-height: 1.92vw;
     margin-left: 5.2vw;
@@ -331,7 +334,7 @@ pre, code {
 
 .sub-title a {
     margin-top: 0.2vw;
-    text-decoration: none!important
+    text-decoration: none !important
 }
 
 .sub-title img {
@@ -340,11 +343,10 @@ pre, code {
 }
 
 .sub-title span {
+    font-family: 'Vazir-Bold', sans-serif;
     font-size: 1.04vw;
-    font-weight: bold;
     line-height: 1.77vw;
     margin-right: 1.04vw;
-    color: #337AB7;
 }
 
 .last-change-section ul {
@@ -360,7 +362,7 @@ pre, code {
     padding-right: 1.56vw;
 }
 
-.thank-section ul li:last-child{
+.thank-section ul li:last-child {
     margin-bottom: 0;
 }
 
@@ -369,273 +371,226 @@ pre, code {
     margin: 1.56vw 16.19vw 3.17vw 0;
 }
 
-.footer .p {
-    color: #aaa;
+.footer p {
+    font-family: 'Vazir-Medium', sans-serif;
+    color: #ADA99D;
     font-size: 1.35vw;
     height: 2.29vw;
     line-height: 2.29vw;
 }
 
-.footer a {
-    color: #337AB7 !important;
-}
-
-
 
 /* --------------------------------------------------- mobile version ---------------------------------------------*/
-@media screen and (max-width: 762px){
+@media screen and (max-width: 762px) {
     /*body {*/
-        /*background: #E5E0CC;*/
+    /*background: #E5E0CC;*/
     /*}*/
-
     /*p, ul li {*/
-        /*font-size: 18px;*/
+    /*font-size: 18px;*/
     /*}*/
-
     /*ul li {*/
-        /*height: auto;*/
-        /*line-height: normal;*/
-        /*margin-bottom: 0;*/
+    /*height: auto;*/
+    /*line-height: normal;*/
+    /*margin-bottom: 0;*/
     /*}*/
-
     /*pre, code {*/
-        /*font-size: 16px;*/
+    /*font-size: 16px;*/
     /*}*/
-
     /*!*----------------------------- header  -------------------------------*!*/
-
     /*.header {*/
-        /*margin-bottom: 25px;*/
-        /*height: 95px;*/
-        /*padding: 21px 40px 17px 31px;*/
+    /*margin-bottom: 25px;*/
+    /*height: 95px;*/
+    /*padding: 21px 40px 17px 31px;*/
     /*}*/
-
     /*.header .logo {*/
-        /*font-size: 22px;*/
-        /*line-height: 37px;*/
-        /*height: 37px;*/
+    /*font-size: 22px;*/
+    /*line-height: 37px;*/
+    /*height: 37px;*/
     /*}*/
-
     /*.header .text {*/
-        /*font-size: 14px;*/
-        /*line-height: 24px;*/
-        /*height: 24px;*/
+    /*font-size: 14px;*/
+    /*line-height: 24px;*/
+    /*height: 24px;*/
     /*}*/
-
     /*.header .menu-icon.active {*/
-        /*display: block;*/
-        /*cursor: pointer;*/
-        /*position: absolute;*/
-        /*width: 15px;*/
-        /*height: 8px;*/
-        /*left: 31.5px;*/
-        /*top: 36px;*/
+    /*display: block;*/
+    /*cursor: pointer;*/
+    /*position: absolute;*/
+    /*width: 15px;*/
+    /*height: 8px;*/
+    /*left: 31.5px;*/
+    /*top: 36px;*/
     /*}*/
-
     /*.header .close-icon.active {*/
-        /*display: block;*/
-        /*cursor: pointer;*/
-        /*position: absolute;*/
-        /*width: 11.31px;*/
-        /*height: 11.31px;*/
-        /*left: 33.34px;*/
-        /*top: 34.84px;*/
+    /*display: block;*/
+    /*cursor: pointer;*/
+    /*position: absolute;*/
+    /*width: 11.31px;*/
+    /*height: 11.31px;*/
+    /*left: 33.34px;*/
+    /*top: 34.84px;*/
     /*}*/
-
     /*!* ----------------------------------------- header's menu css ------------------------------------*!*/
-
     /*.menu {*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
-
     /*!*----------------------------- content  -------------------------------*!*/
     /*.content {*/
-        /*min-width: 325px;*/
-        /*width: 86%;*/
-        /*!*width: min-content;*!*/
-        /*background: #FFFFFF;*/
-        /*border: 0.5px solid #CECCC5;*/
-        /*border-radius: 10px;*/
-        /*margin: auto;*/
-        /*padding: 30px 25px 60px 25px;*/
+    /*min-width: 325px;*/
+    /*width: 86%;*/
+    /*!*width: min-content;*!*/
+    /*background: #FFFFFF;*/
+    /*border: 0.5px solid #CECCC5;*/
+    /*border-radius: 10px;*/
+    /*margin: auto;*/
+    /*padding: 30px 25px 60px 25px;*/
     /*}*/
-
     /*.title {*/
-        /*font-size: 20px;*/
-        /*line-height: 34px;*/
-        /*height: 34px;*/
+    /*font-size: 20px;*/
+    /*line-height: 34px;*/
+    /*height: 34px;*/
     /*}*/
-
     /*.title1 {*/
-        /*margin-bottom: 19px;*/
+    /*margin-bottom: 19px;*/
     /*}*/
-
     /*.title2 {*/
-        /*margin-bottom: 15px;*/
+    /*margin-bottom: 15px;*/
     /*}*/
-
     /*.title3 {*/
-        /*margin-bottom: 45px;*/
+    /*margin-bottom: 45px;*/
     /*}*/
-
     /*.title4, .title5 {*/
-        /*margin-bottom: 8px;*/
+    /*margin-bottom: 8px;*/
     /*}*/
-
     /*.title6 {*/
-        /*margin-bottom: 18px;*/
+    /*margin-bottom: 18px;*/
     /*}*/
-
     /*.title7 {*/
-        /*font-size: 16px;*/
-        /*line-height: 27px;*/
-        /*margin-bottom: 10px;*/
+    /*font-size: 16px;*/
+    /*line-height: 27px;*/
+    /*margin-bottom: 10px;*/
     /*}*/
-
     /*.feature-ul {*/
-        /*margin-bottom: 80px;*/
-        /*padding-right: 17px;*/
+    /*margin-bottom: 80px;*/
+    /*padding-right: 17px;*/
     /*}*/
-
     /*.feature-ul li {*/
-        /*height: 24px;*/
-        /*line-height: 24px;*/
-        /*margin-bottom: 12px;*/
+    /*height: 24px;*/
+    /*line-height: 24px;*/
+    /*margin-bottom: 12px;*/
     /*}*/
-
     /*.test-code img {*/
-        /*width: 107px;*/
-        /*height: 24px;*/
+    /*width: 107px;*/
+    /*height: 24px;*/
     /*}*/
-
     /*!* -------- code sections -------*!*/
     /*.highlight-python {*/
-        /*margin-bottom: 80px;*/
-        /*padding: 16px 15px 27px 15px;*/
-        /*background: #0F0F10;*/
-        /*border-radius: 10px;*/
+    /*margin-bottom: 80px;*/
+    /*padding: 16px 15px 27px 15px;*/
+    /*background: #0F0F10;*/
+    /*border-radius: 10px;*/
     /*}*/
-
     /*.highlight-python pre { !* TODO *!*/
-        /*background-color: inherit;*/
-        /*border: 1px solid #979797;*/
-        /*border-radius: 5px 5px 0 0;*/
-        /*margin: auto;*/
-        /*line-height: 20px;*/
-        /*padding: 15px;*/
+    /*background-color: inherit;*/
+    /*border: 1px solid #979797;*/
+    /*border-radius: 5px 5px 0 0;*/
+    /*margin: auto;*/
+    /*line-height: 20px;*/
+    /*padding: 15px;*/
     /*}*/
-
     /*.python-code {*/
-        /*padding: 13px 0 14px 20px;*/
-        /*border-radius: 10px;*/
-         /*!* width: 73%; TODO: handle width to 73% *!*/
+    /*padding: 13px 0 14px 20px;*/
+    /*border-radius: 10px;*/
+    /*!* width: 73%; TODO: handle width to 73% *!*/
     /*}*/
-
     /*.python-code code {*/
-        /*font-size: 16px;*/
-        /*line-height: 20px;*/
-        /*height: 20px;*/
+    /*font-size: 16px;*/
+    /*line-height: 20px;*/
+    /*height: 20px;*/
     /*}*/
-
     /*!* --------- tree section -------- *!*/
     /*.tree-section {*/
-        /*direction: ltr;*/
-        /*margin-bottom: 80px;*/
+    /*direction: ltr;*/
+    /*margin-bottom: 80px;*/
     /*}*/
-
     /*.tree-section .title {*/
-        /*direction: rtl;*/
+    /*direction: rtl;*/
     /*}*/
-
     /*.tree-web {*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
-
     /*.tree-mobile {*/
-        /*display: inline-block;*/
-        /*!*width: 335.88px;*!*/
-        /*width: 100%; !* TODO *!*/
-        /*height: 182px;*/
-        /*margin-right: 28px;*/
-        /*position: relative;*/
-        /*left: 0;*/
+    /*display: inline-block;*/
+    /*!*width: 335.88px;*!*/
+    /*width: 100%; !* TODO *!*/
+    /*height: 182px;*/
+    /*margin-right: 28px;*/
+    /*position: relative;*/
+    /*left: 0;*/
     /*}*/
-
     /*!* -------- paragraph sections ---- *!*/
-
     /*.paragraph-1 {*/
-        /*!*width: 259px; TODO: check with designer*!*/
-        /*width: 93%;*/
-        /*line-height: 29px;*/
-        /*margin-bottom: 24px;*/
+    /*!*width: 259px; TODO: check with designer*!*/
+    /*width: 93%;*/
+    /*line-height: 29px;*/
+    /*margin-bottom: 24px;*/
     /*}*/
-
     /*.paragraph-2 {*/
-        /*!*width: 259px; TODO: check with designer*!*/
-        /*width: 93%;*/
-        /*text-align: justify;*/
-        /*line-height: 29px;*/
-        /*margin: 50px 0 24px 0;*/
+    /*!*width: 259px; TODO: check with designer*!*/
+    /*width: 93%;*/
+    /*text-align: justify;*/
+    /*line-height: 29px;*/
+    /*margin: 50px 0 24px 0;*/
     /*}*/
-
     /*.paragraph-2 p:last-child{*/
-        /*margin-bottom: 0!important;*/
+    /*margin-bottom: 0!important;*/
     /*}*/
-
     /*.paragraph-3 {*/
-        /*line-height: 2.08vw;*/
-        /*margin-bottom: 5.2vw;*/
+    /*line-height: 2.08vw;*/
+    /*margin-bottom: 5.2vw;*/
     /*}*/
-
     /*!* ---------------------- banners       ------------------------------ *!*/
-
     /*.banner {*/
-        /*display: block;*/
-        /*cursor: pointer;*/
-        /*text-decoration: none !important;*/
-        /*height: 260px;*/
-        /*margin: 80px auto;*/
-        /*background: #418FE7;*/
-        /*border-radius: 10px;*/
+    /*display: block;*/
+    /*cursor: pointer;*/
+    /*text-decoration: none !important;*/
+    /*height: 260px;*/
+    /*margin: 80px auto;*/
+    /*background: #418FE7;*/
+    /*border-radius: 10px;*/
     /*}*/
-
     /*.banner .text {*/
-        /*margin-right: 5.2vw;*/
+    /*margin-right: 5.2vw;*/
     /*}*/
-
     /*.banner .text p {*/
-        /*text-align: right;*/
-        /*line-height: 2.08vw;*/
-        /*font-weight: bold;*/
-        /*color: #FFFFFF;*/
+    /*text-align: right;*/
+    /*line-height: 2.08vw;*/
+    /*font-weight: bold;*/
+    /*color: #FFFFFF;*/
     /*}*/
-
     /*.banner .text p:last-child {*/
-        /*margin-bottom: 0 !important;*/
+    /*margin-bottom: 0 !important;*/
     /*}*/
-
     /*.banner .text span {*/
-        /*font-weight: bolder; !* extra bold *!*/
+    /*font-weight: bolder; !* extra bold *!*/
     /*}*/
-
     /*.banner .button-div {*/
-        /*display: flex;*/
-        /*align-items: center;*/
-        /*justify-content: center;*/
-        /*letter-spacing: 0;*/
-        /*color: #FFFFFF;*/
-        /*border-radius: 0.26vw;*/
-        /*background-color: #528EE3;*/
-        /*height: 3.64vw;*/
-        /*width: 14.06vw;*/
-        /*font-size: 1.14vw;*/
-        /*line-height: 1.92vw;*/
-        /*margin-left: 5.2vw;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*letter-spacing: 0;*/
+    /*color: #FFFFFF;*/
+    /*border-radius: 0.26vw;*/
+    /*background-color: #528EE3;*/
+    /*height: 3.64vw;*/
+    /*width: 14.06vw;*/
+    /*font-size: 1.14vw;*/
+    /*line-height: 1.92vw;*/
+    /*margin-left: 5.2vw;*/
     /*}*/
-
     /*.banner .button-div img {*/
-        /*width: 0.312vw;*/
-        /*height: 0.625vw;*/
-        /*margin-right: 1.46vw;*/
+    /*width: 0.312vw;*/
+    /*height: 0.625vw;*/
+    /*margin-right: 1.46vw;*/
     /*}*/
 }

@@ -5,16 +5,23 @@ body {
 h1,
 h2,
 h3 {
-    color: #333;
-    font-weight: bold;
+    font-family: 'Vazir-Bold', sans-serif;
 }
 
 h2 {
+    color: #333;
     font-size: 20px;
 }
 
 h3 {
+    color: #333;
     font-size: 16px;
+}
+
+
+.header .logo {
+    cursor: pointer;
+    width: max-content;
 }
 
 div.demo,
