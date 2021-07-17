@@ -59,7 +59,7 @@ $(function() {
         '</div></div></div></div>'
     );
 
-    $('#ommidvar-donate').click(function() {
+    $('.donate-link').click(function() {
         $('#donations-modal').modal();
         $('#donations-modal a.donate').click(function() {
             $('#donations-modal').modal('hide');

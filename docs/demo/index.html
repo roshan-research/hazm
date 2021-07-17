@@ -19,20 +19,20 @@
 		<h1 class="logo">هضم</h1>
 		<span class="text">برای پردازش زبان فارسی</span>
 		<div class="menu">
-			<a href="#" id="ommidvar-donate" class="item1">
-				<img src="../images/support_icon.svg" alt="support icon">
+			<a href="#" class="donate-link item1">
+				<img src="../images/menu/web/support_icon.svg" alt="support icon">
 				<span>حمایت از پروژه</span>
 			</a>
 			<a href="#" class="item2">
-				<img src="../images/demoIcon.svg" alt="demoIcon">
+				<img src="../images/menu/web/demo_icon.svg" alt="demoIcon">
 				<span>اجرای نمونه</span>
 			</a>
 			<a href="https://github.com/sobhe/hazm" class="item3">
-				<img src="../images/gitIcon.svg" alt="git_icon">
+				<img src="../images/menu/web/git_icon.svg" alt="git_icon">
 				<span>گیت هاب</span>
 			</a>
 			<a href="https://www.roshan-ai.ir/jobs/" class="item4">
-				<img src="../images/joinUsIcon.svg" alt="joinUsIcon">
+				<img src="../images/menu/web/join_us_icon.svg" alt="joinUsIcon">
 				<span>فرصت همکاری</span>
 			</a>
 		</div>
@@ -202,7 +202,7 @@
 		$('[data-toggle="tooltip"]').tooltip();
 	});
 
-	$('#ommidvar-donate').click(function() {
+	$('.donate-link').click(function() {
         amplitude.getInstance().logEvent('Hazm Donate');
 	});
 
