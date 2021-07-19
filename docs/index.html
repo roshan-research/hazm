@@ -43,8 +43,8 @@
     </div>
   </div>
 </div>
-<div class="line"></div>
-<div class="mobile-menu">
+<div class="line" style="display: none"></div>
+<div class="mobile-menu" style="display: none">
   <ul class="my-container">
     <li class="item1">
       <a href="demo/">
@@ -397,9 +397,6 @@
     const close = $(".close-icon");
     const mobile_menu = $(".mobile-menu");
     const line = $(".line");
-
-    mobile_menu.hide();
-    line.hide();
 
     menu.on('click', function () {
       menu.removeClass('active');

@@ -680,7 +680,6 @@ pre, code {
     /*----------------------------- content and titles -------------------------------*/
     .content {
         padding: 56px 48px;
-        width: max-content;
         background: #FBFBFB;
         border: 2px solid #CCCBCA;
         border-radius: 5px;

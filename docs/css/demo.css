@@ -1,59 +1,288 @@
+* {
+    box-sizing: border-box;
+}
+
+/* ------------- variables ---------- */
+:root {
+    --mobile-head-right-padding: 40px;
+}
+
+/* ---------------------------------------------------- mobile version ------------------------------------------------------------*/
 body {
+    direction: rtl;
+    font-family: 'Vazir', sans-serif;
     font-size: 14px;
+    color: #666666;
+    background: #E5E0CC
 }
 
-h1,
-h2,
-h3 {
-    font-family: 'Vazir-Bold', sans-serif;
+.my-container {
+    margin-right: auto;
+    margin-left: auto;
 }
 
-h2 {
-    color: #333;
-    font-size: 20px;
+@media screen and (min-width: 100px) {
+    .my-container {
+        max-width: 100%;
+    }
 }
 
-h3 {
-    color: #333;
+@media screen and (min-width: 326px) {
+    .my-container {
+        max-width: 86%;
+    }
+}
+
+ul {
+    margin-bottom: 0;
+    padding-right: 17px;
+}
+
+.demo > div, p, li {
+    font-family: 'Vazir', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: right;
+    color: #666666;
+    word-break: break-word;
+}
+
+label, h3 {
+    font-family: 'Vazir-Medium', sans-serif;
+    color: #303030;
     font-size: 16px;
+    line-height: 27px;
+    height: 27px;
+    margin: 0;
 }
 
+/*----------------------------- header  -------------------------------*/
+.header-container {
+    margin-bottom: 25px;
+    height: 95px;
+    background: #3E71B2;
+}
+
+.header {
+    position: relative;
+    color: #FFFFFF;
+    height: 100%;
+    padding: 21px var(--mobile-head-right-padding) 17px 31px;
+}
 
 .header .logo {
-    cursor: pointer;
+    height: 37px;
     width: max-content;
+    font-family: 'Vazir-Bold', sans-serif;
+    margin: 0;
+    font-size: 22px;
+    line-height: 37px;
+    vertical-align: top;
+    cursor: pointer;
 }
 
-div.demo,
-#tag,
-#parse {
+.header .text {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0;
+    Vertical-align: top;
+}
+
+.header .menu-icon, .header .close-icon {
     display: none;
 }
 
-.btn {
-    font-size: 17px;
-    padding: 4px 8px 2px;
-}
-
-.glyphicon {
-    top: 3px;
-}
-
-.content .glyphicon {
-    font-size: 90%;
-}
-
-textarea.form-control {
-    margin-bottom: 5px;
-}
-
-span.info {
-    color: #bbb;
+.header .menu-icon.active {
+    display: block;
     cursor: pointer;
+    position: absolute;
+    width: 15px;
+    height: 8px;
+    left: 31.5px;
+    top: 36px;
 }
 
-span.info:hover {
-    color: #333;
+.header .close-icon.active {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    width: 11.31px;
+    height: 11.31px;
+    left: 33.34px;
+    top: 34.84px;
+}
+
+/* ------------------------- header's mobile menu --------------------- */
+.line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    top: 94.5px;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    border: 0.5px solid #FFFFFF;
+}
+
+.mobile-menu {
+    display: block;
+    background: #3E71B2;
+    height: 570.5px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 95.5px;
+}
+
+.mobile-menu ul {
+    list-style-type: none;
+    padding: 41.5px var(--mobile-head-right-padding) 0 0;
+}
+
+.mobile-menu ul li {
+    width: max-content;
+}
+
+.mobile-menu ul a {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu .item1 {
+    margin-bottom: 40px;
+}
+
+.mobile-menu .item1 img {
+    width: 31px;
+    height: 16.5px;
+}
+
+.mobile-menu .item2 {
+    margin-bottom: 35px;
+}
+
+.mobile-menu .item2 img {
+    width: 25px;
+    height: 15.49px;
+}
+
+.mobile-menu .item3 {
+    margin-bottom: 44px;
+}
+
+.mobile-menu .item3 img {
+    width: 21.6px;
+    height: 28.5px;
+}
+
+.mobile-menu .item4 img {
+    width: 32px;
+    height: 22px;
+}
+
+.mobile-menu span {
+    font-family: 'Vazir-Medium', sans-serif;
+    font-size: 16px;
+    line-height: 27px;
+    height: 27px;
+    width: max-content;
+}
+
+.mobile-menu .item1 span {
+    margin-right: 22px;
+}
+
+.mobile-menu .item2 span {
+    margin-right: 25px;
+}
+
+.mobile-menu .item3 span {
+    margin-right: 27px;
+}
+
+.mobile-menu .item4 span {
+    margin-right: 22px;
+}
+
+/* ------------------------ header's web menu -------------------------*/
+.menu {
+    display: none;
+}
+
+/*----------------------------- content and titles -------------------------------*/
+.content {
+    background: #FFFFFF;
+    border: 0.5px solid #CECCC5;
+    border-radius: 10px;
+    padding: 30px 25px 65px 25px;
+}
+
+/*----------------------------- query section --------------------------------- */
+#query {
+    margin-bottom: 40px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+textarea {
+    display: block;
+    font-family: 'Vazir-Light', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: right;
+    color: #666666;
+    height: 148px;
+    min-height: 148px;
+    width: 100%;
+    resize: vertical;
+    padding: 11px 10px;
+    margin-bottom: 10px;
+    background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px;
+    outline: none;
+}
+
+/*----------------- query buttons -------------- */
+.controls {
+    display: flex;
+    align-items: center;
+}
+
+.my-btn {
+    font-size: 16px;
+    line-height: 27px;
+    text-align: right;
+    color: #FFFFFF;
+    font-family: 'Vazir-Medium', sans-serif;
+    padding: 4px 11px;
+    border-radius: 5px;
+    border: 1px solid #979797;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.my-btn:hover {
+    color: #e6e6e6;
+}
+
+.blue-btn {
+    background: #337AB7;
+}
+
+.green-btn {
+    background: #5CB85C;
+}
+
+.red-btn {
+    background: #D9534F;
 }
 
 .loading {
@@ -63,19 +292,459 @@ span.info:hover {
     width: 32px;
 }
 
-/*-------------------------------- controls ---------------------------- */
-
-.controls button,
-.controls span {
-    float: right;
+/*---------- show-text-section ---- */
+.demo, #tag, #parse {
+    display: none;
 }
 
-.controls {
-    height: 32px;
-    font-size: 17px;
-    margin-bottom: 10px;
+.added-data { /* TODO */
+    margin-bottom: 36px;
 }
 
-.controls .btn {
-    margin-left: 8px;
+.demo h3 {
+    height: 33px;
+    padding: 3px 10px;
+    background: #F2F2F2;
+    border-radius: 5px;
+}
+
+.demo > div {
+    padding: 0 10px;
+}
+
+#parsed > div {
+    margin-top: 40px;
+}
+
+.has-text h3 {
+    margin-bottom: 3px;
+}
+
+.has-li h3 {
+    margin-bottom: 7px;
+}
+
+.demo li {
+    margin-bottom: 5px;
+}
+
+.green-title {
+    color: #5CB85C;
+}
+
+.red-title {
+    color: #D9534F;
+}
+
+.glyphicon {
+    top: 3px;
+}
+
+/*#corrected h3:after {TODO*/
+    /*content:"\2b";*/
+    /*font-size: 90%;*/
+/*}*/
+
+.content .glyphicon {
+    font-size: 90%;
+}
+
+.info {
+    color: #bbb;
+    cursor: pointer;
+}
+
+.info:hover {
+    color: #333;
+}
+
+/* -------- show-tree-section -------*/
+
+
+/*----------------------------- footer  -------------------------------*/
+.footer {
+    padding: 20px 5px 41px 0;
+}
+
+.footer a {
+    font-family: 'Vazir-Bold', sans-serif;
+    color: #2F79B9;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------- web version ----------------------------------------------------------------*/
+
+@media screen and (min-width: 992px) {
+    /* font-size and other size are 0.8 final size in 1920 */
+    body {
+        background: #EAE5D1;
+    }
+
+    ul {
+        padding-right: 18px;
+    }
+
+    .demo > div, p, li {
+        font-size: 19px;
+    }
+
+    label, h3 {
+        font-family: 'Vazir-Bold', sans-serif;
+        font-size: 19px;
+        line-height: 32px;
+        height: 32px;
+    }
+
+    .my-container {
+        max-width: 95%;
+    }
+
+    /*----------------------------- header  -------------------------------*/
+    .header-container {
+        height: 158px;
+        margin-bottom: 33px;
+    }
+
+    .header {
+        height: 100%;
+        padding: 29px 12px 18px 0;
+    }
+
+    .header .logo {
+        height: 67px;
+        line-height: 67px;
+        font-size: 40px;
+    }
+
+    .header .text {
+        font-size: 19px;
+        line-height: 32px;
+    }
+
+    .header .menu-icon, .header .close-icon {
+        display: none;
+    }
+
+    .header .menu-icon.active, .header .close-icon.active {
+        display: none;
+    }
+
+    /* ------------------------ header's mobile menu -------------------------*/
+    .line {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    /* ------------------------ header's web menu -------------------------*/
+    .menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: absolute;
+        left: 31px;
+        top: 137px;
+    }
+
+    .menu a {
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #545757;
+        background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
+        border: 1.6px solid #D9A600;
+        border-radius: 2.4px;
+        padding: 5.6px 9.6px 5.6px 16px;
+    }
+
+    .menu a:not(:first-child) {
+        margin-right: 16px;
+    }
+
+    .menu a:hover {
+        background: linear-gradient(#ffe788, #ffe788);
+        background-color: #ffeca0;
+    }
+
+    .menu span {
+        width: max-content;
+        font-size: 16px;
+        line-height: 27px;
+        height: 27px;
+    }
+
+    .menu img {
+        width: 31px;
+        height: 31px;
+    }
+
+    .item1 span {
+        margin-right: 4.8px;
+    }
+
+    .item2 span {
+        margin-right: 13.6px;
+    }
+
+    .item3 span {
+        margin-right: 9.6px;
+    }
+
+    .item4 span {
+        margin-right: 12px;
+    }
+
+    /*----------------------------- content and titles -------------------------------*/
+    .content {
+        padding: 68px 48px 112px 48px;
+        background: #FBFBFB;
+        border: 2px solid #CCCBCA;
+        border-radius: 5px;
+    }
+
+    /*----------------------------- query section --------------------------------- */
+    #query {
+        margin-bottom: 80px;
+    }
+
+    label {
+        margin-bottom: 17px;
+        font-weight: 700;
+    }
+
+    textarea {
+        font-size: 19px;
+        padding: 16px 14px;
+        margin-bottom: 12px;
+    }
+
+    /*----------------- query buttons -------------- */
+    .my-btn {
+        font-size: 19px;
+        line-height: 32px;
+        padding: 6px 12px;
+        border-radius: 5.6px;
+        margin-left: 12px;
+    }
+
+    .loading {
+        height: 34px;
+        width: 34px;
+    }
+
+    /*---------- show-text-section ---- */
+    .added-data { /* TODO */
+        margin-bottom: 56px;
+    }
+
+    .demo h3 {
+        height: 48px;
+        padding: 8px 16px;
+        margin-bottom: 17px;
+    }
+
+    .demo > div {
+        padding: 0;
+    }
+
+    .demo li {
+        margin-bottom: 17px;
+    }
+
+    #parsed > div {
+        margin-top: 80px;
+    }
+
+    /*----------------------------- footer  -------------------------------*/
+    .footer {
+        padding: 16px 24px 56px 0;
+    }
+
+    .footer p {
+        font-family: 'Vazir-Medium', sans-serif;
+        font-size: 21px;
+        line-height: 35px;
+        color: #ADA99D;
+    }
+
+    .footer a {
+        font-family: 'Vazir-Medium', sans-serif;
+        color: #337AB7;
+    }
+}
+
+@media screen and (min-width: 1110px) {
+    .my-container {
+        max-width: 80%;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .my-container {
+        max-width: 70%;
+    }
+}
+
+@media screen and (min-width: 1550px) {
+    body {
+        font-size: 24px;
+    }
+
+    ul {
+        padding-right: 22px; /* TODO */
+    }
+
+    .demo > div, p, li {
+        font-size: 24px;
+    }
+
+    label, h3 {
+        font-size: 24px;
+        line-height: 40px;
+        height: 40px;
+    }
+
+    /*----------------------------- header  -------------------------------*/
+    .header-container {
+        height: 198px;
+        margin-bottom: 42px;
+    }
+
+    .header {
+        height: 100%;
+        padding: 37px 15px 23px 0;
+    }
+
+    .header .logo {
+        height: 84px;
+        line-height: 84px;
+        font-size: 50px;
+    }
+
+    .header .text {
+        font-size: 24px;
+        line-height: 40px;
+    }
+
+    /* ------------------------ header's menu css -------------------------*/
+    .menu {
+        left: 31px;
+        top: 172px;
+    }
+
+    .menu a {
+        border: 2px solid #D9A600;
+        border-radius: 3px;
+        padding: 7px 12px 7px 20px;
+    }
+
+    .menu a:not(:first-child) {
+        margin-right: 20px;
+    }
+
+    .menu span {
+        font-size: 20px;
+        line-height: 34px;
+        height: 34px;
+    }
+
+    .menu img {
+        width: 39px;
+        height: 39px;
+    }
+
+    .item1 span {
+        margin-right: 6px;
+    }
+
+    .item2 span {
+        margin-right: 17px;
+    }
+
+    .item3 span {
+        margin-right: 12px;
+    }
+
+    .item4 span {
+        margin-right: 15px;
+    }
+
+    /*----------------------------- content and titles -------------------------------*/
+    .content {
+        padding: 85px 60px 140px 60px;
+    }
+
+    /*----------------------------- query section --------------------------------- */
+    #query {
+        margin-bottom: 100px;
+    }
+
+    label {
+        margin-bottom: 21px;
+    }
+
+    textarea {
+        font-size: 24px;
+        padding: 20px 18px;
+        margin-bottom: 15px;
+    }
+
+    /*----------------- query buttons -------------- */
+    .my-btn {
+        font-size: 24px;
+        line-height: 40px;
+        padding: 8px 14px;
+        border-radius: 7px;
+        margin-left: 15px;
+    }
+
+    .loading {
+        height: 42px;
+        width: 42px;
+    }
+
+    /*---------- show-text-section ---- */
+    .added-data {
+        margin-bottom: 70px;
+    }
+
+    .demo h3 {
+        height: 60px;
+        padding: 10px 20px;
+        margin-bottom: 21px;
+    }
+
+    .demo > div {
+        padding: 0;
+    }
+
+    .demo li {
+        margin-bottom: 21px;
+    }
+
+    #parsed > div {
+        margin-top: 100px;
+    }
+
+    /*----------------------------- footer  -------------------------------*/
+    .footer {
+        padding: 20px 30px 70px 0;
+    }
+
+    .footer p {
+        font-size: 26px;
+        line-height: 44px;
+        height: 44px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+
+    .my-container {
+        max-width: 1358px;
+    }
 }
