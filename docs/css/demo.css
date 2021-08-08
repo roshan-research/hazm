@@ -221,10 +221,6 @@ label, h3 {
 }
 
 /*----------------------------- query section --------------------------------- */
-#query {
-    margin-bottom: 40px;
-}
-
 label {
     display: block;
     margin-bottom: 10px;
@@ -293,12 +289,12 @@ textarea {
 }
 
 /*---------- show-text-section ---- */
-.demo, #tag, #parse {
-    display: none;
+.analyze-section {
+    margin-top: 40px;
 }
 
-.added-data { /* TODO */
-    margin-bottom: 36px;
+.added-data:not(:first-child) {
+    margin-top: 36px;
 }
 
 .demo h3 {
@@ -310,10 +306,6 @@ textarea {
 
 .demo > div {
     padding: 0 10px;
-}
-
-#parsed > div {
-    margin-top: 40px;
 }
 
 .has-text h3 {
@@ -358,7 +350,48 @@ textarea {
     color: #333;
 }
 
-/* -------- show-tree-section -------*/
+/* --------- tree section -------- */
+.tree {
+    margin-top: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tree svg {
+    overflow: visible!important;
+    margin: auto;
+    display: block;
+}
+
+.word {
+    fill: #303030;
+    font-size: 16px;
+}
+
+.word.w0 {
+    fill: #BEBEBE;
+}
+
+.dependency {
+    fill: #9E9E9E;
+    font-size: 14px;
+}
+
+.edge, .arrow {
+    stroke: #CCCCCC;
+    stroke-width: 1.5;
+}
+
+.tag {
+    display: none;
+}
+
+.dependency.active {
+    fill: #3276b1;
+}
+.word.active, .edge.active, .arrow.active {
+    stroke: #3276b1 !important;
+}
 
 
 /*----------------------------- footer  -------------------------------*/
@@ -507,10 +540,6 @@ textarea {
     }
 
     /*----------------------------- query section --------------------------------- */
-    #query {
-        margin-bottom: 80px;
-    }
-
     label {
         margin-bottom: 17px;
         font-weight: 700;
@@ -537,8 +566,12 @@ textarea {
     }
 
     /*---------- show-text-section ---- */
-    .added-data { /* TODO */
-        margin-bottom: 56px;
+    .analyze-section {
+        margin-top: 80px;
+    }
+
+    .added-data:not(:first-child) {
+        margin-top: 56px;
     }
 
     .demo h3 {
@@ -555,8 +588,9 @@ textarea {
         margin-bottom: 17px;
     }
 
-    #parsed > div {
-        margin-top: 80px;
+    /* --------- tree section -------- */
+    .tree {
+        margin-top: 60px;
     }
 
     /*----------------------------- footer  -------------------------------*/
@@ -679,10 +713,6 @@ textarea {
     }
 
     /*----------------------------- query section --------------------------------- */
-    #query {
-        margin-bottom: 100px;
-    }
-
     label {
         margin-bottom: 21px;
     }
@@ -708,8 +738,12 @@ textarea {
     }
 
     /*---------- show-text-section ---- */
-    .added-data {
-        margin-bottom: 70px;
+    .analyze-section {
+        margin-top: 100px;
+    }
+
+    .added-data:not(:first-child) {
+        margin-top: 70px;
     }
 
     .demo h3 {
@@ -726,8 +760,9 @@ textarea {
         margin-bottom: 21px;
     }
 
-    #parsed > div {
-        margin-top: 100px;
+    /* --------- tree section -------- */
+    .tree {
+        margin-top: 80px;
     }
 
     /*----------------------------- footer  -------------------------------*/

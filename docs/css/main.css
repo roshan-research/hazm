@@ -320,23 +320,18 @@ pre, code {
     margin-bottom: 80px;
 }
 
-.tree-section .tree-container {
-    display: flex;
-    justify-content: end;
-    overflow-x: auto;
-    padding-bottom: 40px;
-}
-
-.tree-container .svg_wrapper {
-    display: flex;
-    justify-content: end;
-    width: max-content;
-    height: max-content;
-}
-
 .tree {
+    padding-bottom: 28px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tree svg {
     height: 182px;
     width: auto;
+    display: block;
+    margin: auto;
+    overflow: visible!important;
 }
 
 .edge, .arrow {
@@ -347,7 +342,6 @@ pre, code {
 .word {
     fill: #303030;
     cursor: default;
-    margin-right: 90px;
     font-size: 16px;
 }
 
@@ -358,7 +352,6 @@ pre, code {
 .dependency {
     fill: #D8D8D8;
     font-size: 14px;
-    line-height: 24px;
 }
 
 .word.w0.active {
@@ -580,16 +573,6 @@ pre, code {
     font-family: 'Vazir-Medium', sans-serif;
     font-size: 14px;
     line-height: 24px;
-}
-
-@media screen and (min-width: 563px){ /* for make responsive tree */
-    .tree-section .tree-container {
-        justify-content: center;
-    }
-
-    .tree-container .svg_wrapper {
-        justify-content: center;
-    }
 }
 
 @media screen and (min-width: 850px){ /* for make responsive banner */
@@ -835,21 +818,17 @@ pre, code {
     }
 
     /* --------- tree section -------- */
-    .tree {
-        display: inline-block;
+    .tree svg {
         width: 788px;
-        max-width: 100%;
         height: auto;
     }
 
     .word {
-        font-size: 20px;
-        line-height: 35px;
+        font-size: 18px;
     }
 
     .dependency {
         font-size: 16px;
-        line-height: 27px;
     }
 
     /* -------- paragraph sections ---- */
@@ -1085,7 +1064,7 @@ pre, code {
         margin-bottom: 100px;
     }
 
-    .tree {
+    .tree svg {
         width: 986px;
     }
 

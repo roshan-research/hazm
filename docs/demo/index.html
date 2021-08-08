@@ -80,45 +80,47 @@
     <textarea id="textarea">در می‌زند و دوباره وارد ميشود . همه مي گویند قدمش پربرکت است .</textarea>
     <div class="controls">
       <button id="process" class="my-btn blue-btn">پردازش</button>
-      <button id="tag" class="my-btn green-btn">تحلیل صرفی</button>
-      <button id="parse" class="my-btn red-btn">تجزیه نحوی</button>
+      <button id="tag" class="my-btn green-btn" style="display: none">تحلیل صرفی</button>
+      <button id="parse" class="my-btn red-btn" style="display: none">تجزیه نحوی</button>
       <span class="loading"></span>
     </div>
   </div>
-  <div class="demo has-text" id="normalized">
-    <h3>متن تمیز</h3>
-    <div></div>
-  </div>
-  <div class="demo has-text" id="corrected">
-    <h3>
-      متن اصلاح‌شده
-      <span class="info glyphicon glyphicon-plus-sign"
-            data-toggle="tooltip"
-            data-placement="left"
-            title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید.">
+  <div class="analyze-section" style="display: none">
+    <div class="demo has-text" id="normalized">
+      <h3>متن تمیز</h3>
+      <div></div>
+    </div>
+    <div class="demo has-text" id="corrected">
+      <h3>
+        متن اصلاح‌شده
+        <span class="info glyphicon glyphicon-plus-sign"
+              data-toggle="tooltip"
+              data-placement="left"
+              title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید.">
         </span>
-    </h3>
-    <div></div>
-  </div>
-  <div class="demo has-li" id="tokenized">
-    <h3>واژه‌های متن</h3>
-    <div></div>
-  </div>
-  <div class="demo has-li" id="lemmatized">
-    <h3>ریشه واژه‌ها</h3>
-    <div></div>
-  </div>
-  <div class="demo has-li" id="tagged">
-    <h3 class="green-title">تحلیل صرفی</h3>
-    <div></div>
-  </div>
-  <div class="demo has-li" id="chunked">
-    <h3 class="red-title">تجزیه سطحی</h3>
-    <div></div>
-  </div>
-  <div class="demo has-li" id="parsed">
-    <h3 class="red-title">تجزیه نحوی</h3>
-    <div></div>
+      </h3>
+      <div></div>
+    </div>
+    <div class="demo has-li" id="tokenized">
+      <h3>واژه‌های متن</h3>
+      <div></div>
+    </div>
+    <div class="demo has-li" id="lemmatized">
+      <h3>ریشه واژه‌ها</h3>
+      <div></div>
+    </div>
+    <div class="demo has-li" id="tagged">
+      <h3 class="green-title">تحلیل صرفی</h3>
+      <div></div>
+    </div>
+    <div class="demo has-li" id="chunked">
+      <h3 class="red-title">تجزیه سطحی</h3>
+      <div></div>
+    </div>
+    <div class="demo has-li" id="parsed">
+      <h3 class="red-title">تجزیه نحوی</h3>
+      <div></div>
+    </div>
   </div>
 </div>
 
@@ -130,13 +132,13 @@
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://www.sobhe.ir/dependency-parse-tree/tree.css" type="text/css" media="screen"/>
 <script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/d3.js"></script>
 <script type="text/javascript" src="https://www.sobhe.ir/dependency-parse-tree/dependency-tree.js"></script>
 
 <!-- My Js-->
 <script type="text/javascript">
   var server = 'https://hazm.sobhe.ir/api';
+  var analyze_section = $(".analyze-section");
   var normalized = $('#normalized');
   var lemmatized = $('#lemmatized');
   var corrected = $('#corrected');
@@ -148,6 +150,7 @@
   var normalize = function (data) {
     $.post(server + '/normalize', data)
         .done(function (normalized_text) {
+          analyze_section.show();
           normalized.show().find('div').text(normalized_text);
           normalized.addClass('added-data');
           tokenize({'normalized_text': normalized_text});
@@ -246,8 +249,11 @@
 
   $('#process').click(function () {
     $('.demo, #tag, #parse').hide();
-    normalize({'text': $('#query textarea').val()});
-    showLoading();
+    var text = $('#query textarea').val();
+    if (text) {
+      normalize({text});
+      showLoading();
+    }
   });
   $('#tag').click(function () {
     tag({'tokenized_text': $(this).attr('tokenized_text')});

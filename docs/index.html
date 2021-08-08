@@ -167,9 +167,8 @@
 
   <div class="tree-section">
     <h2 class="title title3">درخت برچسب اجزای سخن</h2>
-    <div class="tree-container">
-      <div class="svg_wrapper">
-        <svg class=" tree" id="tree" xmlns="http://www.w3.org/2000/svg" viewBox="30 30 450 180" preserveAspectRatio="none">
+      <div class="tree">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="30 30 450 180" preserveAspectRatio="none">
           <text class="word w0" x="460" y="203.1949159194239" text-anchor="middle">ریشه</text>
           <text class="word w1" x="400" y="203.1949159194239" text-anchor="middle">زنگ&zwnj;ها</text>
           <text class="word w2" x="340" y="203.1949159194239" text-anchor="middle">برای</text>
@@ -247,7 +246,6 @@
                 stroke-width="1.5"></path>
         </svg>
       </div>
-    </div>
   </div>
 
   <h2 class="title title4">نصب</h2>
@@ -397,7 +395,7 @@
   $(document).ready(function () {
     $('.word, .dependency, .edge, .arrow').addClass('active');
 
-    $("#tree").children()
+    $(".tree svg").children()
         .on('mouseover', function () {
           $('.word, .dependency, .edge, .arrow').removeClass('active');
           var el_type = $(this).attr("class").trim().split(' ')[0];
