@@ -54,7 +54,7 @@ class WordTokenizer(TokenizerI):
 		self.emoji_repl = r'\g<0> '
 		self.id_pattern = re.compile(r'(?<![\w\._])(@[\w_]+)')
 		self.id_repl = r' ID '
-		self.link_pattern = re.compile(r'((https?|ftp):\/\/)?(?<!@)(([\w-]+\.)+((?![\d۰-۹])\w)+)[-\w@:%_\.\+\/~#?=&]*')
+		self.link_pattern = re.compile(r'((https?|ftp):\/\/)?(?<!@)(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})[-\w@:%_\.\+\/~#?=&]*')
 		self.link_repl = r' LINK '
 		self.email_pattern = re.compile(r'[a-zA-Z0-9\._\+-]+@([a-zA-Z0-9-]+\.)+[A-Za-z]{2,}')
 		self.email_repl = r' EMAIL '
