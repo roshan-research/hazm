@@ -1,6 +1,11 @@
 * {
     box-sizing: border-box;
 }
+
+.inline-block{
+    display: inline-block;
+}
+
 /* ------------- variables ---------- */
 :root {
     --mobile-head-right-padding: 40px;
@@ -133,7 +138,7 @@ pre, code {
 }
 
 /* ------------------------- header's mobile menu --------------------- */
-.line {
+.separator-line {
     position: absolute;
     width: 100%;
     height: 2px;
@@ -294,18 +299,24 @@ pre, code {
 /* -------- code sections -------*/
 .highlight-python {
     margin-bottom: 80px;
-    padding: 16px 15px 27px 15px;
     background: #0F0F10;
     border-radius: 10px;
+    padding: 16px 15px 27px 15px;
 }
 
-.highlight-python pre {
-    background-color: inherit;
-    border: 1px solid #979797;
-    border-radius: 5px 5px 0 0;
-    margin: auto;
-    line-height: 20px;
+.highlight-python .lines {
     padding: 15px;
+    border: 1px solid #979797;
+    border-radius: 5px;
+    font-family: 'Vazir-Code', monospace;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    direction: ltr;
+}
+
+.has-break {
+    margin-bottom: 24px;
 }
 
 .python-code {
@@ -314,7 +325,6 @@ pre, code {
     line-height: 20px;
     background-color: #0F0F10 !important;
 }
-
 /* --------- tree section -------- */
 .tree-section {
     margin-bottom: 80px;
@@ -687,7 +697,7 @@ pre, code {
     }
 
     /* ------------------------ header's mobile menu -------------------------*/
-    .line {
+    .separator-line {
         display: none;
     }
 
@@ -799,16 +809,14 @@ pre, code {
 
     /* -------- code sections -------*/
     .highlight-python {
-        margin-bottom: 80px;
-        border-radius: 8px;
-        padding: 16px;
-        background-color: #000000;
+        margin-bottom: 65px;
+        padding: 16px 14px;
     }
 
-    .highlight-python pre {
+    .highlight-python .lines {
+        padding: 16px 22px;
+        border-radius: 7px;
         line-height: 24px;
-        padding: 16px;
-        border-radius: 4px 4px 0 0;
     }
 
     .python-code {
@@ -1042,15 +1050,14 @@ pre, code {
 
     /* -------- code sections -------*/
     .highlight-python {
-        margin-bottom: 100px;
-        border-radius: 10px;
-        padding: 20px;
+        margin-bottom: 81px;
+        padding: 20px 18px;
     }
 
-    .highlight-python pre {
+    .highlight-python .lines {
+        padding: 20px 27px;
+        border-radius: 8px;
         line-height: 30px;
-        padding: 20px;
-        border-radius: 5px 5px 0 0;
     }
 
     .python-code {

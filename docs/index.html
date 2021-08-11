@@ -43,7 +43,7 @@
     </div>
   </div>
 </div>
-<div class="line" style="display: none"></div>
+<div class="separator-line" style="display: none"></div>
 <div class="mobile-menu" style="display: none">
   <ul class="my-container">
     <li class="item1">
@@ -95,157 +95,287 @@
 
   <h2 class="title title2">استفاده</h2>
 
-  <div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span
-      class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span
-        class="kn">import</span> <span class="o">*</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span
-        class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span
-        class="n">normalize</span><span class="p">(</span><span class="s">'اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند'</span><span
-        class="p">)</span>
-<span class="s">'اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند'</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s">'ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟'</span><span
-        class="p">)</span>
-<span class="p">[</span><span class="s">'ما هم برای وصل کردن آمدیم!'</span><span class="p">,</span> <span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span
-        class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ولی برای پردازش، جدا بهتر نیست؟'</span><span
-        class="p">)</span>
-<span class="p">[</span><span class="s">'ولی'</span><span class="p">,</span> <span class="s">'برای'</span><span
-        class="p">,</span> <span class="s">'پردازش'</span><span class="p">,</span> <span class="s">'،'</span><span
-        class="p">,</span> <span class="s">'جدا'</span><span class="p">,</span> <span class="s">'بهتر'</span><span
-        class="p">,</span> <span class="s">'نیست'</span><span class="p">,</span> <span class="s">'؟'</span><span
-        class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span
-        class="n">Stemmer</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span
-        class="n">stem</span><span class="p">(</span><span class="s">'کتاب‌ها'</span><span class="p">)</span>
-<span class="s">'کتاب'</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span
-        class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span
-        class="n">lemmatize</span><span class="p">(</span><span class="s">'می‌روم'</span><span class="p">)</span>
-<span class="s">'رفت#رو'</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span
-        class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span
-        class="s">'resources/postagger.model'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span
-        class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s">'ما بسیار کتاب می‌خوانیم'</span><span
-        class="p">))</span>
-<span class="p">[(</span><span class="s">'ما'</span><span class="p">,</span> <span class="s">'PRO'</span><span
-        class="p">),</span> <span class="p">(</span><span class="s">'بسیار'</span><span class="p">,</span> <span
-        class="s">'ADV'</span><span class="p">),</span> <span class="p">(</span><span class="s">'کتاب'</span><span
-        class="p">,</span> <span class="s">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s">'می‌خوانیم'</span><span
-        class="p">,</span> <span class="s">'V'</span><span class="p">)]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">chunker</span> <span class="o">=</span> <span
-        class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span
-        class="s">'resources/chunker.model'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagger</span><span
-        class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span
-        class="p">(</span><span class="s">'کتاب خواندن را دوست داریم'</span><span class="p">))</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tree2brackets</span><span class="p">(</span><span
-        class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span
-        class="n">tagged</span><span class="p">))</span>
-<span class="s">'[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span
-        class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">tagger</span><span
-        class="p">,</span> <span class="n">lemmatizer</span><span class="o">=</span><span
-        class="n">lemmatizer</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span
-        class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span
-        class="s">'زنگ‌ها برای که به صدا درمی‌آید؟'</span><span class="p">))</span>
-<span class="o">&lt;</span><span class="n">DependencyGraph</span> <span class="k">with</span> <span class="mi">8</span> <span
-        class="n">nodes</span><span class="o">&gt;</span>
-</pre>
+  <div class="highlight highlight-python">
+    <div class="lines">
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span class="kn">from&nbsp;</span>
+        <span class="nn">__future__&nbsp;</span>
+        <span class="kn">import&nbsp;</span>
+        <span>unicode_literals</span>
+      </div>
+      <div class="line has-break">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span class="kn">from&nbsp;</span>
+        <span class="nn">hazm&nbsp;</span>
+        <span class="kn">import&nbsp;</span>
+        <span>*</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span>normalizer&nbsp;</span>
+        <span>=&nbsp;</span>
+        <span>Normalizer</span>
+        <span>()</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>normalizer</span><span>.</span>
+        <span>normalize</span>
+        <span>('</span>
+        <span class="s inline-block">اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند</span>
+        <span>')</span>
+      </div>
+      <div class="line has-break">
+        <span class="s">'اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند'</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span>sent_tokenize</span>
+        <span>('</span>
+        <span class="s inline-block">ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟</span>
+        <span>')</span>
+      </div>
+      <div class="line">
+        <span>[</span>
+        <span class="s inline-block">'ما هم برای وصل کردن آمدیم!'</span>
+        <span>,</span>
+        <span class="s inline-block">'ولی برای پردازش، جدا بهتر نیست؟'</span>
+        <span>]</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>word_tokenize</span>
+        <span>('</span>
+        <span class="s">ولی برای پردازش، جدا بهتر نیست؟</span>
+        <span>')</span>
+      </div>
+      <div class="line has-break">
+        <span>[</span>
+        <span class="s">'ولی'</span>
+        <span>,&nbsp;</span>
+        <span class="s">'برای'</span>
+        <span>,&nbsp;</span>
+        <span class="s">'پردازش'</span>
+        <span>،&nbsp;</span>
+        <span class="s">'،'</span>
+        <span>،&nbsp;</span>
+        <span class="s">'جدا'</span>
+        <span>,&nbsp;</span>
+        <span class="s">'بهتر'</span>
+        <span>,&nbsp;</span>
+        <span class="s">'نیست'</span>
+        <span>,&nbsp;</span>
+        <span class="s">'؟'</span>
+        <span>]</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span>stemmer&nbsp;</span>
+        <span>=&nbsp;</span>
+        <span>Stemmer</span>
+        <span>()</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span>stemmer</span>
+        <span>.</span>
+        <span>stem</span>
+        <span>(</span>
+        <span class="s">'کتاب&zwnj;ها'</span>
+        <span>)</span>
+      </div>
+      <div class="line">
+        <span class="s">'کتاب'</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer&nbsp;</span>
+        <span>=&nbsp;</span><span>Lemmatizer</span><span>()</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer</span><span>.</span>
+        <span>lemmatize</span><span>(</span><span class="s">'می&zwnj;روم'</span>
+        <span>)</span>
+      </div>
+      <div class="line has-break">
+        <span class="s">'رفت#رو'</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span>
+        <span>tagger&nbsp;</span>
+        <span>=&nbsp;</span>
+        <span>POSTagger</span>
+        <span>(</span>
+        <span>model</span>
+        <span>=</span>
+        <span class="s inline-block">'resources/postagger.model'</span>
+        <span>)</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>tagger</span><span>.</span>
+        <span>tag</span><span>(</span><span>word_tokenize</span>
+        <span>(</span>
+        <span class="s inline-block">'ما بسیار کتاب می‌خوانیم'</span>
+        <span>))</span>
+      </div>
+      <div class="line has-break">
+        <span>[</span>
+        <div class="inline-block">
+          <span>(</span>
+          <span class="s">'ما'</span>
+          <span>,</span>
+          <span class="s">'PRO'</span>
+          <span>),</span>
+          <span>(</span>
+          <span class="s">'بسیار'</span>
+          <span>,</span>
+          <span class="s">'ADV'</span>
+          <span>),</span>
+        </div>
+        <div class="inline-block">
+          <span>(</span>
+          <span class="s">'کتاب'</span>
+          <span>,</span>
+          <span class="s">'N'</span>
+          <span>),</span>
+        </div>
+        <div class="inline-block">
+          <span>(</span>
+          <span class="s">'می خوانیم'</span>
+          <span>,</span>
+          <span class="s">'V'</span>
+          <span>)</span>
+        </div>
+        <span>]</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>chunker&nbsp;</span>
+        <span>=&nbsp;</span><span>Chunker</span><span>(</span>
+        <span>model</span><span>=</span>
+        <span class="s inline-block">'resources/chunker.model'</span>
+        <span>)</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>tagged&nbsp;</span><span>=&nbsp;</span>
+        <span>tagger</span><span>.</span><span>tag</span>
+        <span>(</span><span>word_tokenize</span>
+        <span>(</span>
+        <span class="s inline-block">'کتاب خواندن را دوست داریم'</span>
+        <span>))</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>tree2brackets</span><span>(</span>
+        <span>chunker</span><span>.</span><span>parse</span>
+        <span>(</span><span>tagged</span><span>))</span>
+      </div>
+      <div class="line has-break">
+        <span class="s">'</span>
+        <span class="s inline-block">[کتاب خواندن NP]&nbsp;</span>
+        <span class="s inline-block">[را POSTP]&nbsp;</span>
+        <span class="s inline-block">[دوست داریم VP]</span>
+        <span class="s">'</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>parser&nbsp;</span><span>=&nbsp;</span>
+        <span>DependencyParser</span><span>(</span><span>tagger&nbsp;</span>
+        <span>=&nbsp;</span><span>tagger</span><span>,</span>
+        <span>lemmatizer</span><span>=</span><span>lemmatizer</span>
+        <span>)</span>
+      </div>
+      <div class="line">
+        <span>&gt;&gt;&gt;&nbsp;</span><span>parser</span><span>.</span>
+        <span>parse</span><span>(</span><span>word_tokenize</span>
+        <span>(</span>
+        <span class="s inline-block">'زنگ‌ها برای که به صدا درمی‌آید؟'</span>
+        <span>))</span>
+      </div>
+      <div class="line">
+        <span>&lt;</span><span>DependencyGraph&nbsp;</span>
+        <span class="k">with&nbsp;</span><span class="mi">8&nbsp;</span><span>nodes</span>
+        <span>&gt;</span>
+      </div>
+    </div>
   </div>
 
   <div class="tree-section">
     <h2 class="title title3">درخت برچسب اجزای سخن</h2>
-      <div class="tree">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="30 30 450 180" preserveAspectRatio="none">
-          <text class="word w0" x="460" y="203.1949159194239" text-anchor="middle">ریشه</text>
-          <text class="word w1" x="400" y="203.1949159194239" text-anchor="middle">زنگ&zwnj;ها</text>
-          <text class="word w2" x="340" y="203.1949159194239" text-anchor="middle">برای</text>
-          <text class="word w3" x="280" y="203.1949159194239" text-anchor="middle">که</text>
-          <text class="word w4" x="220" y="203.1949159194239" text-anchor="middle">به</text>
-          <text class="word w5" x="160" y="203.1949159194239" text-anchor="middle">صدا</text>
-          <text class="word w6" x="100" y="203.1949159194239" text-anchor="middle">درمی&zwnj;آید</text>
-          <text class="word w7" x="40" y="203.1949159194239" text-anchor="middle">؟</text>
+    <div class="tree">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="30 30 450 180" preserveAspectRatio="none">
+        <text class="word w0" x="460" y="203.1949159194239" text-anchor="middle">ریشه</text>
+        <text class="word w1" x="400" y="203.1949159194239" text-anchor="middle">زنگ&zwnj;ها</text>
+        <text class="word w2" x="340" y="203.1949159194239" text-anchor="middle">برای</text>
+        <text class="word w3" x="280" y="203.1949159194239" text-anchor="middle">که</text>
+        <text class="word w4" x="220" y="203.1949159194239" text-anchor="middle">به</text>
+        <text class="word w5" x="160" y="203.1949159194239" text-anchor="middle">صدا</text>
+        <text class="word w6" x="100" y="203.1949159194239" text-anchor="middle">درمی&zwnj;آید</text>
+        <text class="word w7" x="40" y="203.1949159194239" text-anchor="middle">؟</text>
 
-          <path class="edge w0 w6" d="M100,187.1949159194239 C190,4 370,4 460,187.1949159194239" fill="none"
-                stroke="black" stroke-width="1.5"></path>
-          <path class="edge w1 w6"
-                d="M400,187.1949159194239 C325,63.93759059859204 175,63.93759059859204 100,187.1949159194239"
-                fill="none"
-                stroke="black" stroke-width="1.5"></path>
-          <path class="edge w2 w6"
-                d="M340,187.1949159194239 C280,112.94817536100314 160,112.94817536100314 100,187.1949159194239"
-                fill="none" stroke="black" stroke-width="1.5"></path>
-          <path class="edge w3 w2"
-                d="M280,187.1949159194239 C295,175.1949159194239 325,175.1949159194239 340,187.1949159194239"
-                fill="none"
-                stroke="black" stroke-width="1.5"></path>
-          <path class="edge w4 w6"
-                d="M220,187.1949159194239 C190,150.37289338757893 130,150.37289338757893 100,187.1949159194239"
-                fill="none" stroke="black" stroke-width="1.5"></path>
-          <path class="edge w5 w4"
-                d="M160,187.1949159194239 C175,175.1949159194239 205,175.1949159194239 220,187.1949159194239"
-                fill="none"
-                stroke="black" stroke-width="1.5"></path>
-          <path class="edge w6 w7"
-                d="M40,187.1949159194239 C55,175.1949159194239 85,175.1949159194239 100,187.1949159194239" fill="none"
-                stroke="black" stroke-width="1.5"></path>
+        <path class="edge w0 w6" d="M100,187.1949159194239 C190,4 370,4 460,187.1949159194239" fill="none"
+              stroke="black" stroke-width="1.5"></path>
+        <path class="edge w1 w6"
+              d="M400,187.1949159194239 C325,63.93759059859204 175,63.93759059859204 100,187.1949159194239"
+              fill="none"
+              stroke="black" stroke-width="1.5"></path>
+        <path class="edge w2 w6"
+              d="M340,187.1949159194239 C280,112.94817536100314 160,112.94817536100314 100,187.1949159194239"
+              fill="none" stroke="black" stroke-width="1.5"></path>
+        <path class="edge w3 w2"
+              d="M280,187.1949159194239 C295,175.1949159194239 325,175.1949159194239 340,187.1949159194239"
+              fill="none"
+              stroke="black" stroke-width="1.5"></path>
+        <path class="edge w4 w6"
+              d="M220,187.1949159194239 C190,150.37289338757893 130,150.37289338757893 100,187.1949159194239"
+              fill="none" stroke="black" stroke-width="1.5"></path>
+        <path class="edge w5 w4"
+              d="M160,187.1949159194239 C175,175.1949159194239 205,175.1949159194239 220,187.1949159194239"
+              fill="none"
+              stroke="black" stroke-width="1.5"></path>
+        <path class="edge w6 w7"
+              d="M40,187.1949159194239 C55,175.1949159194239 85,175.1949159194239 100,187.1949159194239" fill="none"
+              stroke="black" stroke-width="1.5"></path>
 
-          <text class="dependency w0 w6" x="280" y="42.79872897985597" text-anchor="middle" font-size="90%">ریشه جمله
-          </text>
-          <text class="dependency w1 w6" x="250" y="87.7519219288" text-anchor="middle" font-size="90%">فاعل</text>
-          <text class="dependency w2 w6" x="220" y="124.50986050060834" text-anchor="middle" font-size="90%">قید</text>
-          <text class="dependency w3 w2" x="310" y="171.1949159194239" text-anchor="middle" font-size="90%">وابسته پسین
-          </text>
-          <text class="dependency w4 w6" x="160" y="152.57839902054016" text-anchor="middle" font-size="90%">مفعول حرف
-            اضافه&zwnj;ای
-          </text>
-          <text class="dependency w5 w4" x="190" y="171.1949159194239" text-anchor="middle" font-size="90%">وابسته پسین
-          </text>
-          <text class="dependency w6 w7" x="70" y="171.1949159194239" text-anchor="middle" font-size="90%">علائم نگارشی
-          </text>
+        <text class="dependency w0 w6" x="280" y="42.79872897985597" text-anchor="middle" font-size="90%">ریشه جمله
+        </text>
+        <text class="dependency w1 w6" x="250" y="87.7519219288" text-anchor="middle" font-size="90%">فاعل</text>
+        <text class="dependency w2 w6" x="220" y="124.50986050060834" text-anchor="middle" font-size="90%">قید</text>
+        <text class="dependency w3 w2" x="310" y="171.1949159194239" text-anchor="middle" font-size="90%">وابسته پسین
+        </text>
+        <text class="dependency w4 w6" x="160" y="152.57839902054016" text-anchor="middle" font-size="90%">مفعول حرف
+          اضافه&zwnj;ای
+        </text>
+        <text class="dependency w5 w4" x="190" y="171.1949159194239" text-anchor="middle" font-size="90%">وابسته پسین
+        </text>
+        <text class="dependency w6 w7" x="70" y="171.1949159194239" text-anchor="middle" font-size="90%">علائم نگارشی
+        </text>
 
-          <path class="arrow w0 w6"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(280, 49.79872897985597) rotate(-90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w1 w6"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(250, 94.7519219288) rotate(90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w2 w6"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(220, 131.50986050060834) rotate(90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w3 w2"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(310, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w4 w6"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(160, 159.57839902054016) rotate(90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w5 w4"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(190, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-          <path class="arrow w6 w7"
-                d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
-                transform="translate(70, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
-                stroke-width="1.5"></path>
-        </svg>
-      </div>
+        <path class="arrow w0 w6"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(280, 49.79872897985597) rotate(-90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w1 w6"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(250, 94.7519219288) rotate(90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w2 w6"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(220, 131.50986050060834) rotate(90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w3 w2"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(310, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w4 w6"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(160, 159.57839902054016) rotate(90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w5 w4"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(190, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+        <path class="arrow w6 w7"
+              d="M0,-1.471415478191356L1.6990442448471226,1.471415478191356 -1.6990442448471226,1.471415478191356Z"
+              transform="translate(70, 178.1949159194239) rotate(-90)" fill="none" stroke="black"
+              stroke-width="1.5"></path>
+      </svg>
+    </div>
   </div>
 
   <h2 class="title title4">نصب</h2>
@@ -496,20 +626,20 @@
     const menu = $(".menu-icon");
     const close = $(".close-icon");
     const mobile_menu = $(".mobile-menu");
-    const line = $(".line");
+    const separator_line = $(".separator-line");
 
     menu.on('click', function () {
       menu.removeClass('active');
       close.addClass('active');
       mobile_menu.show();
-      line.show()
+      separator_line.show()
     });
 
     close.on('click', function () {
       close.removeClass('active');
       menu.addClass('active');
       mobile_menu.hide();
-      line.hide()
+      separator_line.hide()
     })
   });
 </script>
