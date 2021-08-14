@@ -296,18 +296,12 @@ pre, code {
     height: 24px;
 }
 
-/* -------- code sections -------*/
-.highlight-python {
+/* -------- code-section -------*/
+.code-section {
     margin-bottom: 80px;
     background: #0F0F10;
     border-radius: 10px;
     padding: 16px 15px 27px 15px;
-}
-
-.highlight-python .lines {
-    padding: 15px;
-    border: 1px solid #979797;
-    border-radius: 5px;
     font-family: 'Vazir-Code', monospace;
     font-size: 16px;
     line-height: 20px;
@@ -315,16 +309,76 @@ pre, code {
     direction: ltr;
 }
 
+.code-web {
+    display: none;
+}
+
+.code-mobile {
+    display: block;
+}
+
+.code-mobile > div {
+    border: 1px solid #979797;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.write-wrapper {
+    padding: 15px;
+}
+
 .has-break {
     margin-bottom: 24px;
 }
 
+.result-wrapper{
+    line-height: 19px;
+    color: #2A2B2D;
+}
+
+.result-wrapper .toggle {
+    height: 35px;
+    background: #FFE385;
+    border: 1px solid #979797;
+    margin: 0 -1px -1px -1px;
+    padding: 8px 30px 9px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggle .text {
+    height: 17px;
+}
+
+.toggle img {
+    width: 8px;
+    height: 4px;
+    margin-top: 4px;
+}
+
+.toggle .close-path {
+    display: none;
+}
+
+.result-wrapper .response {
+    display: none;
+    padding: 8px 20px 11px 15px;
+    background: #FFF6D9;
+    border: 1px solid #979797;
+    margin: 0 -1px -1px -1px;
+}
+
+/* -------- python-code section -------*/
 .python-code {
     padding: 13px 0 14px 20px;
     border-radius: 10px;
     line-height: 20px;
     background-color: #0F0F10 !important;
 }
+
 /* --------- tree section -------- */
 .tree-section {
     margin-bottom: 80px;
@@ -807,18 +861,25 @@ pre, code {
         border-radius: 2.4px;
     }
 
-    /* -------- code sections -------*/
-    .highlight-python {
+    /* -------- code-section --------*/
+    .code-section {
         margin-bottom: 65px;
         padding: 16px 14px;
-    }
-
-    .highlight-python .lines {
-        padding: 16px 22px;
-        border-radius: 7px;
         line-height: 24px;
     }
 
+    .code-web {
+        display: block;
+        padding: 16px 22px;
+        border: 1px solid #979797;
+        border-radius: 5px;
+    }
+
+    .code-mobile{
+        display: none;
+    }
+
+    /* -------- python-code section -------*/
     .python-code {
         padding: 16px;
         line-height: 16px;
@@ -1048,18 +1109,19 @@ pre, code {
         border-radius: 3px;
     }
 
-    /* -------- code sections -------*/
-    .highlight-python {
+    /* -------- code-section --------*/
+    .code-section {
         margin-bottom: 81px;
         padding: 20px 18px;
-    }
-
-    .highlight-python .lines {
-        padding: 20px 27px;
-        border-radius: 8px;
         line-height: 30px;
     }
 
+    .code-web {
+        padding: 20px 27px;
+        border-radius: 8px;
+    }
+
+    /* -------- python-code section -------*/
     .python-code {
         padding: 20px;
         line-height: 20px;

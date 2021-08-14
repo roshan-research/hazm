@@ -95,58 +95,333 @@
 
   <h2 class="title title2">استفاده</h2>
 
-  <div class="highlight highlight-python">
-    <div class="lines">
-      <div class="line">
+  <div class="highlight code-section">
+    <div class="code-mobile">
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;</span>
+            <span class="kn">from</span>
+            <span class="nn">__future__</span>
+            <span class="kn">import</span>
+            <span>unicode_literals</span>
+          </div>
+          <div class="has-break">
+            <span>&gt;&gt;&gt;</span>
+            <span class="kn">from</span>
+            <span class="nn">hazm</span>
+            <span class="kn">import</span>
+            <span>*</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;</span>
+            <span>normalizer</span>
+            <span>=</span>
+            <span>Normalizer()</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>normalizer.normalize</span>
+            <span>('</span>
+            <span
+                class="s inline-block">اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند</span>
+            <span>')</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>'اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند'</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <span>&gt;&gt;&gt;</span>
+          <span>sent_tokenize</span>
+          <span>('</span>
+          <span class="s inline-block">ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟</span>
+          <span>')</span>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>[</span>
+            <span class="inline-block">'ما هم برای وصل کردن آمدیم!'</span>
+            <span>,</span>
+            <span class="inline-block">'ولی برای پردازش، جدا بهتر نیست؟'</span>
+            <span>]</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <span>&gt;&gt;&gt;&nbsp;</span><span>word_tokenize</span>
+          <span>('</span>
+          <span class="s">ولی برای پردازش، جدا بهتر نیست؟</span>
+          <span>')</span>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>[</span>
+            <span>'ولی',</span>
+            <span>'برای',</span>
+            <span>'پردازش'،</span>
+            <span>'،'،</span>
+            <span>'جدا',</span>
+            <span>'بهتر',</span>
+            <span>'نیست',</span>
+            <span>'؟'</span>
+            <span>]</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;</span>
+            <span>stemmer</span>
+            <span>=</span>
+            <span>Stemmer()</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;</span>
+            <span>stemmer.stem</span>
+            <span>(</span>
+            <span class="s">'کتاب ها'</span>
+            <span>)</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>'کتاب'</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer</span>
+            <span>=&nbsp;</span><span>Lemmatizer()</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer.lemmatize</span>
+            <span>(</span>
+            <span class="s">'می روم'</span>
+            <span>)</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>'رفت#رو'</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;</span>
+            <span>tagger</span>
+            <span>=</span>
+            <span>POSTagger</span>
+            <span>(</span>
+            <span>model</span>
+            <span>=</span>
+            <span class="s">'resources/postagger.model'</span>
+            <span>)</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>tagger.tag</span>
+            <span>(</span>
+            <span>word_tokenize(</span>
+            <span class="s inline-block">'ما بسیار کتاب می‌خوانیم'</span>
+            <span>))</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>[</span>
+            <div class="inline-block">
+              <span>(</span>
+              <span>'ما',</span>
+              <span>'PRO'</span>
+              <span>),</span>
+              <span>(</span>
+              <span>'بسیار',</span>
+              <span>'ADV'</span>
+              <span>),</span>
+            </div>
+            <div class="inline-block">
+              <span>(</span>
+              <span>'کتاب'</span>
+              <span>,</span>
+              <span>'N'</span>
+              <span>),</span>
+            </div>
+            <div class="inline-block">
+              <span>(</span>
+              <span>'می خوانیم',</span>
+              <span>'V'</span>
+              <span>)</span>
+            </div>
+            <span>]</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>chunker</span>
+            <span>=&nbsp;</span><span>Chunker</span><span>(</span>
+            <span>model</span><span>=</span>
+            <span class="s">'resources/chunker.model'</span>
+            <span>)</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>tagged&nbsp;</span><span>=</span>
+            <span>tagger.tag</span>
+            <span>(&nbsp;</span><span>word_tokenize(</span>
+            <span class="s inline-block">'کتاب خواندن را دوست داریم'</span>
+            <span>))</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>tree2brackets</span><span>(</span>
+            <span>chunker.parse</span>
+            <span>(</span><span>tagged</span><span>))</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span class="inline-block">'[کتاب خواندن NP]</span>
+            <span class="inline-block">[را POSTP]</span>
+            <span class="inline-block">[دوست داریم VP]'</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="write-wrapper">
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>parser&nbsp;</span><span>=&nbsp;</span>
+            <span>DependencyParser&nbsp;</span><span>(</span><span>tagger</span>
+            <span>=&nbsp;</span><span>tagger,</span>
+            <span>lemmatizer&nbsp;</span><span>=&nbsp;</span><span>lemmatizer</span>
+            <span>)</span>
+          </div>
+          <div>
+            <span>&gt;&gt;&gt;&nbsp;</span><span>parser.parse</span>
+            <span>(&nbsp;</span>
+            <span>word_tokenize(</span>
+            <span class="s inline-block">'زنگ‌ها برای که به صدا درمی‌آید؟'</span>
+            <span>))</span>
+          </div>
+        </div>
+        <div class="result-wrapper">
+          <div class="toggle">
+            <span class="text">result</span>
+            <img class="open-path" src="images/code/openPath.svg" alt="open path">
+            <img class="close-path" src="images/code/closePath.svg" alt="close path">
+          </div>
+          <div class="response">
+            <span>&lt;</span><span>DependencyGraph</span>
+            <span class="k">with&nbsp;</span><span class="mi">8&nbsp;</span><span>nodes</span>
+            <span>&gt;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="code-web">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span class="kn">from</span>
         <span class="nn">__future__</span>
         <span class="kn">import</span>
         <span>unicode_literals</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span>&gt;&gt;&gt;</span>
         <span class="kn">from</span>
         <span class="nn">hazm</span>
         <span class="kn">import</span>
         <span>*</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span>normalizer</span>
         <span>=</span>
         <span>Normalizer()</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>normalizer.normalize</span>
         <span>('</span>
         <span class="s inline-block">اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند</span>
         <span>')</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span class="s">'اصلاح نویسه&zwnj;ها و استفاده از نیم&zwnj;فاصله پردازش را آسان می&zwnj;کند'</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span>sent_tokenize</span>
         <span>('</span>
         <span class="s inline-block">ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟</span>
         <span>')</span>
       </div>
-      <div class="line">
+      <div>
         <span>[</span>
         <span class="s inline-block">'ما هم برای وصل کردن آمدیم!'</span>
         <span>,</span>
         <span class="s inline-block">'ولی برای پردازش، جدا بهتر نیست؟'</span>
         <span>]</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>word_tokenize</span>
         <span>('</span>
         <span class="s">ولی برای پردازش، جدا بهتر نیست؟</span>
         <span>')</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span>[</span>
         <span class="s">'ولی',</span>
         <span class="s">'برای',</span>
@@ -158,36 +433,36 @@
         <span class="s">'؟'</span>
         <span>]</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span>stemmer</span>
         <span>=</span>
         <span>Stemmer()</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span>stemmer.stem</span>
         <span>(</span>
-        <span class="s">'کتاب&zwnj;ها'</span>
+        <span class="s">'کتاب ها'</span>
         <span>)</span>
       </div>
-      <div class="line">
+      <div>
         <span class="s">'کتاب'</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer</span>
         <span>=&nbsp;</span><span>Lemmatizer()</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>lemmatizer.lemmatize</span>
         <span>(</span>
         <span class="s">'می روم'</span>
         <span>)</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span class="s">'رفت#رو'</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;</span>
         <span>tagger</span>
         <span>=</span>
@@ -198,14 +473,14 @@
         <span class="s">'resources/postagger.model'</span>
         <span>)</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>tagger.tag</span>
         <span>(</span>
         <span>word_tokenize(</span>
         <span class="s inline-block">'ما بسیار کتاب می‌خوانیم'</span>
         <span>))</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span>[</span>
         <div class="inline-block">
           <span>(</span>
@@ -232,45 +507,45 @@
         </div>
         <span>]</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>chunker</span>
         <span>=&nbsp;</span><span>Chunker</span><span>(</span>
         <span>model</span><span>=</span>
         <span class="s">'resources/chunker.model'</span>
         <span>)</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>tagged</span><span>=</span>
         <span>tagger.tag</span>
         <span>(&nbsp;</span><span>word_tokenize(</span>
         <span class="s inline-block">'کتاب خواندن را دوست داریم'</span>
         <span>))</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>tree2brackets</span><span>(</span>
         <span>chunker.parse</span>
         <span>(</span><span>tagged</span><span>))</span>
       </div>
-      <div class="line has-break">
+      <div class="has-break">
         <span class="s inline-block">'[کتاب خواندن NP]</span>
         <span class="s inline-block">[را POSTP]</span>
         <span class="s inline-block">[دوست داریم VP]'</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>parser</span><span>=&nbsp;</span>
         <span>DependencyParser&nbsp;</span><span>(</span><span>tagger</span>
         <span>=&nbsp;</span><span>tagger,</span>
         <span>lemmatizer&nbsp;</span><span>=&nbsp;</span><span>lemmatizer</span>
         <span>)</span>
       </div>
-      <div class="line">
+      <div>
         <span>&gt;&gt;&gt;&nbsp;</span><span>parser.parse</span>
         <span>(&nbsp;</span>
         <span>word_tokenize(</span>
         <span class="s inline-block">'زنگ‌ها برای که به صدا درمی‌آید؟'</span>
         <span>))</span>
       </div>
-      <div class="line">
+      <div>
         <span>&lt;</span><span>DependencyGraph</span>
         <span class="k">with</span><span class="mi">8</span><span>nodes</span>
         <span>&gt;</span>
@@ -625,6 +900,18 @@
       separator_line.hide()
     })
   });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".toggle").click(function () {
+      var active_img = $(this).children().filter(".active");
+      var hidden_img = $(this).children().filter("img:not(.active)");
+      var response_el = $(this).siblings();
+      active_img.toggle();
+      hidden_img.toggle();
+      response_el.toggle();
+    })
+  })
 </script>
 </body>
 </html>
