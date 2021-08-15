@@ -35,6 +35,7 @@ class Normalizer(object):
 				(r' {2,}', ' '),  # remove extra spaces
 				(r'\n\n{2,}', '\n\n'),  # remove extra newlines
 				(r'[ـ\r]', ''),  # remove keshide, carriage returns
+                (r'\u200c{2,}', r'\u200c'), # remove extra ZWNJs
 			])
 
 		if persian_style:
