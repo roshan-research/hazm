@@ -34,6 +34,7 @@ class Normalizer(object):
 			self.character_refinement_patterns.extend([
 				(r' {2,}', ' '),  # remove extra spaces
 				(r'\n{3,}', '\n\n'),  # remove extra newlines
+                (r'\u200c{2,}',r'\u200c'), # remove extra ZWNJs
 				(r'[ـ\r]', ''),  # remove keshide, carriage returns
 			])
 
