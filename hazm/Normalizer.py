@@ -32,8 +32,8 @@ class Normalizer(object):
 
 		if remove_extra_spaces:
 			self.character_refinement_patterns.extend([
-				(r' +', ' '),  # remove extra spaces
-				(r'\n\n+', '\n\n'),  # remove extra newlines
+				(r' {2,}', ' '),  # remove extra spaces
+				(r'\n\n{2,}', '\n\n'),  # remove extra newlines
 				(r'[ـ\r]', ''),  # remove keshide, carriage returns
 			])
 
