@@ -11,10 +11,7 @@ python:
 
 install:
   - pip install .
-  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip
-  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-stanford.zip
-  - unzip resources-0.5.zip -d resources
-  - unzip resources-stanford.zip -d resources
+  - python -m hazm download-resources all
 
 script: python tests.py
 

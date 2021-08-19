@@ -1,7 +1,7 @@
 
 import codecs
 from os import path
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
@@ -13,7 +13,7 @@ setup(
 	url='http://www.sobhe.ir/hazm/',
 	long_description=codecs.open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8').read(),
 	long_description_content_type='text/markdown',
-	packages=['hazm'],
+	packages=find_packages(),
 	package_data={'hazm': ['data/*.dat']},
 	classifiers=[
 		'Topic :: Text Processing',
@@ -26,6 +26,10 @@ setup(
 		'Programming Language :: Python :: 3.8',
 		'License :: OSI Approved :: MIT License',
 	],
-	install_requires=['nltk==3.4', 'libwapiti>=0.2.1;platform_system!="Windows"'],
+	install_requires=['nltk==3.4',
+					  'click',
+					  'PyGithub',
+					  'libwapiti>=0.2.1;platform_system!="Windows"'],
 	extras_require={'wapiti': ['libwapiti>=0.2.1']},
+	entry_points={'console_scripts': ['hazm = hazm.cli:setup_cli']},
 )

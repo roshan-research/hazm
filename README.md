@@ -62,7 +62,10 @@ But for testing or using Hazm with the latest updates you may use:
 
 	pip install https://github.com/sobhe/hazm/archive/master.zip --upgrade
 
-We have also trained [tagger and parser models](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip). You may put these models in the `resources` folder of your project.
+We have also trained [tagger and parser models](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip).
+To download these models in the `resources` folder of your project you may use:
+
+    python -m hazm download-resources
 
 
 ## Extensions
