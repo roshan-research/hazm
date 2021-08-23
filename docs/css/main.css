@@ -2,20 +2,21 @@
     box-sizing: border-box;
 }
 
-.inline-block{
+.inline-block {
     display: inline-block;
 }
 
 /* ------------- variables ---------- */
 :root {
-    --mobile-head-right-padding: 40px;
+    --mobile-head-right-padding: 15px;
+    --web-head-right-padding: 20px;
 }
 
 /* ---------------------------------------------------- mobile version ------------------------------------------------------------*/
 body {
     direction: rtl;
     font-family: 'Vazir', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     background: #E5E0CC
 }
 
@@ -37,7 +38,7 @@ body {
 }
 
 a {
-    color: #2F79B9;
+    color: #337AB7;
     font-family: 'Vazir-Medium', sans-serif;
 }
 
@@ -55,18 +56,16 @@ h2 {
 
 ul {
     margin-bottom: 0;
-    padding-right: 17px;
+    padding-right: 26px;
 }
 
 ul li {
-    height: auto;
-    line-height: normal;
+    line-height: 35px;
+    height: 35px;
 }
 
 p, li {
     font-family: 'Vazir-Light', sans-serif;
-    font-size: 18px;
-    color: #666666;
 }
 
 p {
@@ -76,7 +75,6 @@ p {
 pre, code {
     direction: ltr;
     font-family: 'Vazir-Code', monospace;
-    font-size: 16px;
     color: #FFFFFF;
     margin-bottom: 0;
 }
@@ -96,21 +94,19 @@ pre, code {
     position: relative;
     color: #FFFFFF;
     height: 100%;
-    padding: 21px var(--mobile-head-right-padding) 17px 31px;
+    padding: 19px var(--mobile-head-right-padding);
 }
 
 .header .logo {
     height: 37px;
     font-size: 22px;
     line-height: 37px;
-    vertical-align: top;
 }
 
 .header .text {
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0;
-    Vertical-align: top;
 }
 
 .header .menu-icon, .header .close-icon {
@@ -121,10 +117,10 @@ pre, code {
     display: block;
     cursor: pointer;
     position: absolute;
-    width: 15px;
+    width: 18px;
     height: 8px;
-    left: 31.5px;
-    top: 36px;
+    left: var(--mobile-head-right-padding);
+    top: 44px;
 }
 
 .header .close-icon.active {
@@ -133,8 +129,8 @@ pre, code {
     position: absolute;
     width: 11.31px;
     height: 11.31px;
-    left: 33.34px;
-    top: 34.84px;
+    left: calc(var(--mobile-head-right-padding) + 3px);
+    top: 42px;
 }
 
 /* ------------------------- header's mobile menu --------------------- */
@@ -152,9 +148,9 @@ pre, code {
 .mobile-menu {
     display: block;
     background: #3E71B2;
-    height: 570.5px;
+    height: 100%;
+    width: 100%;
     position: absolute;
-    left: 0;
     right: 0;
     top: 95.5px;
 }
@@ -210,7 +206,6 @@ pre, code {
 
 .mobile-menu span {
     font-family: 'Vazir-Medium', sans-serif;
-    font-size: 16px;
     line-height: 27px;
     height: 27px;
     width: max-content;
@@ -242,7 +237,7 @@ pre, code {
     background: #FFFFFF;
     border: 0.5px solid #CECCC5;
     border-radius: 10px;
-    padding: 30px 25px 60px 25px;
+    padding: 40px 25px;
 }
 
 .title {
@@ -250,50 +245,48 @@ pre, code {
     align-items: center;
     color: #303030;
     font-size: 20px;
-    line-height: 34px;
-    height: 34px;
+    line-height: 35px;
+    height: 35px;
 }
 
 .title1 {
-    margin-bottom: 19px;
-}
-
-.title2 {
     margin-bottom: 15px;
 }
 
-.title3 {
-    margin-bottom: 45px;
+.title2 {
+    margin-bottom: 14px;
 }
 
-.title4, .title5 {
+.title3 {
+    margin-bottom: 44px;
+}
+
+.title4 {
+    margin-bottom: 15px;
+}
+
+.title5 {
     margin-bottom: 8px;
 }
 
 .title6 {
-    margin-bottom: 18px;
+    margin-bottom: 24px;
 }
 
 .title7 {
-    font-size: 16px;
-    line-height: 27px;
-    margin-bottom: 10px;
+    font-size: 22px;
+    margin-bottom: 16px;
 }
 
 /*---------- feature section ---- */
 .feature-ul {
-    margin-bottom: 80px;
-    padding-right: 17px;
-}
-
-.feature-ul li {
-    line-height: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 50px;
+    padding-right: 22px;
 }
 
 .test-code img {
     border-radius: 3px;
-    height: 24px;
+    height: 23px;
 }
 
 /* -------- code-section -------*/
@@ -303,7 +296,6 @@ pre, code {
     border-radius: 10px;
     padding: 16px 15px 27px 15px;
     font-family: 'Vazir-Code', monospace;
-    font-size: 16px;
     line-height: 20px;
     color: #FFFFFF;
     direction: ltr;
@@ -320,8 +312,11 @@ pre, code {
 .code-mobile > div {
     border: 1px solid #979797;
     border-radius: 5px;
-    margin-bottom: 25px;
     overflow: hidden;
+}
+
+.code-mobile > div:not(:last-child) {
+    margin-bottom: 25px;
 }
 
 .write-wrapper {
@@ -332,7 +327,7 @@ pre, code {
     margin-bottom: 24px;
 }
 
-.result-wrapper{
+.result-wrapper {
     line-height: 19px;
     color: #2A2B2D;
 }
@@ -373,7 +368,7 @@ pre, code {
 
 /* -------- python-code section -------*/
 .python-code {
-    padding: 13px 0 14px 20px;
+    padding: 15px 0 15px 20px;
     border-radius: 10px;
     line-height: 20px;
     background-color: #0F0F10 !important;
@@ -381,7 +376,7 @@ pre, code {
 
 /* --------- tree section -------- */
 .tree-section {
-    margin-bottom: 80px;
+    margin-bottom: 65px;
 }
 
 .tree {
@@ -395,11 +390,18 @@ pre, code {
     width: auto;
     display: block;
     margin: auto;
-    overflow: visible!important;
+    overflow: visible !important;
 }
 
 .edge, .arrow {
     stroke: #D8D8D8;
+}
+
+.edge {
+    stroke-width: 0.9;
+}
+
+.arrow {
     stroke-width: 1.5;
 }
 
@@ -416,58 +418,59 @@ pre, code {
 .dependency {
     fill: #D8D8D8;
     font-size: 14px;
+    font-family: 'Vazir-Light', sans-serif;
 }
 
 .word.w0.active {
-    fill: #9E9E9E!important;
+    fill: #9E9E9E !important;
 }
 
 .edge.w0.active, .arrow.w0.active {
-    stroke: #666666!important;
+    stroke: #666666 !important;
 }
 
 .dependency.w0.active {
-    fill: #666666!important;
+    fill: #666666 !important;
 }
 
 .edge.w1.active, .arrow.w1.active {
-    stroke: #FF4B4B!important;
+    stroke: #FF4B4B !important;
 }
 
 .dependency.w1.active {
-    fill: #FF4B4B!important;
+    fill: #FF4B4B !important;
 }
 
 .edge.w2.active, .arrow.w2.active {
-    stroke: #2FAAE0!important;
+    stroke: #2FAAE0 !important;
 }
 
 .dependency.w2.active {
-    fill: #2FAAE0!important;
+    fill: #2FAAE0 !important;
 }
 
 .edge.w3.active, .arrow.w3.active {
-    stroke: #3ABC40!important;
+    stroke: #3ABC40 !important;
 }
 
 .dependency.w3.active {
-    fill: #3ABC40!important;
+    fill: #3ABC40 !important;
 }
 
 .edge.w4.active, .arrow.w4.active {
-    stroke: #FF9329!important;
+    stroke: #FF9329 !important;
 }
 
 .dependency.w4.active {
-    fill: #FF9329!important;
+    fill: #FF9329 !important;
 }
 
 .edge.w5.active, .arrow.w5.active {
-    stroke: #3ABC40!important;
+    stroke: #3ABC40 !important;
 }
 
 .dependency.w5.active {
-    fill: #3ABC40!important;
+    fill: #3ABC40 !important;
 }
 
 .arrow.w6.active {
@@ -479,34 +482,45 @@ pre, code {
 }
 
 .edge.w7.active {
-    stroke: #DF6FFD!important;
+    stroke: #DF6FFD !important;
 }
-/* -------- paragraph sections ---- */
 
+/* -------- paragraph sections ---- */
 .paragraph-1 {
-    width: 93%;
-    line-height: 29px;
-    margin-bottom: 24px;
+    width: 95%;
+    line-height: 26px;
+    margin-bottom: 15px;
 }
 
 .paragraph-2 {
-    width: 93%;
+    width: 95%;
     text-align: justify;
-    line-height: 29px;
-    margin: 50px 0 24px 0;
+    line-height: 26px;
+    margin-top: 15px;
+    margin-bottom: 60px
 }
 
-.paragraph-2 p:last-child {
-    margin-bottom: 0 !important;
+.paragraph-2 p {
+    margin-bottom: 0
 }
 
 .paragraph-3 {
-    margin-bottom: 80px;
+    width: 95%;
+    text-align: justify;
+    line-height: 26px;
+    margin-bottom: 5px
+}
+
+.paragraph-3 p {
+    margin-bottom: 0
+}
+
+.paragraph-4 {
+    margin-bottom: 60px;
     line-height: 29px;
 }
 
 /* --------------------------- banners ------------------------------ */
-
 .banner {
     display: flex;
     flex-direction: column;
@@ -517,9 +531,8 @@ pre, code {
     text-decoration: none !important;
     background: #418FE7;
     border-radius: 10px;
-    font-size: 16px;
     line-height: 27px;
-    margin: 80px auto;
+    margin: 90px auto 70px auto;
     position: relative;
     overflow-x: hidden;
 }
@@ -533,8 +546,6 @@ pre, code {
 .banner .text p {
     font-family: 'Vazir-Medium', sans-serif;
     text-align: right;
-    font-size: 16px;
-    line-height: 27px;
     color: #FFFFFF;
 }
 
@@ -550,16 +561,16 @@ pre, code {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255, 0.2);
+    background: rgba(255, 255, 255, 0.2);
     letter-spacing: 0;
     color: #FFFFFF;
     font-family: 'Vazir-Bold', sans-serif;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 25px;
-    padding: 9px 58px 10px 40px;
+    padding: 9px 58px 9px 40px;
 }
 
-.banner .button-div span{
+.banner .button-div span {
     width: max-content;
 }
 
@@ -578,7 +589,7 @@ pre, code {
     width: 134px;
     height: 60.13px;
     left: -30px;
-    top: 29px;
+    top: 39px;
 }
 
 .banner-mob-right-shape {
@@ -586,11 +597,12 @@ pre, code {
     width: 45px;
     height: 45px;
     right: 3.73vw;
-    top: 48%;
+    top: 125px;
 }
+
 /* ---------- last-change section ----- */
 .last-change-section {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 .last-change-section .sub-title {
@@ -598,39 +610,42 @@ pre, code {
     align-items: center;
     background: #F2F2F2;
     border-radius: 5px;
-    margin-bottom: 7px;
-    padding: 3px 10px 3px 0;
+    margin-bottom: 15px;
+    padding: 12px 20px 12px 0;
 }
 
 .sub-title a {
-    color: #337AB7;
     text-decoration: none !important
 }
 
 .sub-title img {
-    width: 11px;
-    height: 19px;
+    width: 13px;
+    height: 25px;
 }
 
 .sub-title span {
     font-family: 'Vazir-Bold', sans-serif;
-    font-size: 16px;
     line-height: 27px;
-    margin-right: 9px;
+    height: 27px;
+    margin-right: 17px;
 }
 
 .last-change-section ul:not(:last-child) {
-    margin-bottom: 30px;
+    margin-bottom: 51px;
+}
+
+.last-change-section ul li:not(:last-child) {
+    margin-bottom: 5px;
 }
 
 /* ----------- thank-section ---------------*/
-.thank-section ul li:last-child {
-    margin-bottom: 0;
+.thank-section ul li:not(:last-child) {
+    margin-bottom: 5px;
 }
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 20px 5px 41px 0;
+    padding: 10px 5px 25px 0;
 }
 
 .footer p {
@@ -639,37 +654,48 @@ pre, code {
     line-height: 24px;
 }
 
-@media screen and (min-width: 850px){ /* for make responsive banner */
+.footer p a {
+    color: #2F79B9;
+}
+
+@media screen and (min-width: 700px) {
+    .tree {
+        padding-bottom: 0;
+    }
+
+    .tree svg {
+        width: 80%;
+        height: auto;
+    }
+
+    .word {
+        font-size: 14px;
+    }
+
+    .dependency {
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width: 850px) {
+    /* for make responsive banner */
     .banner {
         flex-direction: row;
         background: linear-gradient(135deg, #1C64D7 0%, #4695E9 100%);
-        height: 208px;
+        height: 200px;
     }
 
     .banner .text {
-        margin-right: 5.2vw;
+        margin-right: 55px;
         margin-top: 0;
         margin-bottom: 0;
     }
 
-    .banner .text p {
-        font-size: 19px;
-        line-height: 32px;
-    }
-
     .banner .button-div {
-        font-size: 17.6px;
-        line-height: 29.6px;
-        border-radius: 4px;
-        margin-left: 5.2vw;
+        border-radius: 8px;
+        margin-left: 54px;
         margin-bottom: 0;
-        padding: 12.8px 54.4px 13.6px 32.8px;
-    }
-
-    .banner .button-div img {
-        width: 4.8px;
-        height: 9.6px;
-        margin-right: 17.6px;
+        padding: 12px 44px 11px 32px;
     }
 
     .banner .banner-web-shapes {
@@ -688,32 +714,13 @@ pre, code {
         display: none;
     }
 }
+
 /* ---------------------------------------------------- web version ----------------------------------------------------------------*/
 
-@media screen and (min-width: 992px){ /* font-size and other size are 0.8 sizes in 1550px */
+@media screen and (min-width: 992px) {
+    /* font-size and other size are 0.8 sizes in 1550px */
     body {
         background: #EAE5D1;
-    }
-
-    a {
-        color: #337AB7;
-    }
-
-    ul {
-        padding-right: 24px;
-    }
-
-    ul li {
-        line-height: 19px;
-        margin-bottom: 21px;
-    }
-
-    p, li {
-        font-size: 19px;
-    }
-
-    pre, code {
-        font-size: 16px;
     }
 
     .my-container {
@@ -722,24 +729,25 @@ pre, code {
 
     /*----------------------------- header  -------------------------------*/
     .header-container {
-        height: 158px;
-        margin-bottom: 33px;
+        height: 140px;
+        margin-bottom: 36px;
     }
 
     .header {
         height: 100%;
-        padding: 29px 12px 18px 0;
+        padding: 24px var(--web-head-right-padding) 38px var(--web-head-right-padding);
     }
 
     .header .logo {
-        height: 67px;
-        line-height: 67px;
-        font-size: 40px;
+        font-size: 30px;
+        line-height: 51px;
+        height: 51px;
     }
 
     .header .text {
-        font-size: 19px;
-        line-height: 32px;
+        font-size: 16px;
+        line-height: 27px;
+        height: 27px;
     }
 
     .header .menu-icon, .header .close-icon {
@@ -760,14 +768,13 @@ pre, code {
     }
 
     /* ------------------------ header's web menu -------------------------*/
-
     .menu {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         position: absolute;
-        left: 31px;
-        top: 137px;
+        left: var(--web-head-right-padding);
+        top: 116px;
     }
 
     .menu a {
@@ -778,13 +785,14 @@ pre, code {
         justify-content: center;
         color: #545757;
         background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
-        border: 1.6px solid #D9A600;
-        border-radius: 2.4px;
-        padding: 5.6px 9.6px 5.6px 16px;
+        border: 1px solid #D9A600;
+        box-shadow: 0 1px 1px #C9C9C9;
+        border-radius: 3px;
+        padding: 2px 8px 3px 15px;
     }
 
     .menu a:not(:first-child) {
-        margin-right: 16px;
+        margin-right: 12px;
     }
 
     .menu a:hover {
@@ -795,167 +803,121 @@ pre, code {
     .menu span {
         width: max-content;
         font-size: 16px;
-        line-height: 27px;
-        height: 27px;
+        line-height: 35px;
+        height: 35px;
+        margin-right: 8px;
     }
 
     .menu img {
-        width: 31px;
-        height: 31px;
-    }
-
-
-    .item1 span {
-        margin-right: 4.8px;
-    }
-
-    .item2 span {
-        margin-right: 13.6px;
-    }
-
-    .item3 span {
-        margin-right: 9.6px;
-    }
-
-    .item4 span {
-        margin-right: 12px;
+        width: 30px;
+        height: 30px;
     }
 
     /*----------------------------- content and titles -------------------------------*/
     .content {
-        padding: 56px 48px;
         background: #FBFBFB;
+        padding: 40px;
         border: 2px solid #CCCBCA;
         border-radius: 5px;
     }
 
     .title {
-        height: 41px;
-        font-size: 24px;
-        line-height: 41px;
+        font-size: 22px;
     }
 
-    .title1, .title2, .title4, .title5, .title7 {
-        margin-bottom: 12px;
+    .title1 {
+        margin-bottom: 15px;
+    }
+
+    .title2 {
+        margin-bottom: 24px;
     }
 
     .title3 {
-        margin-bottom: 48px;
+        margin-bottom: 81px;
     }
 
-    .title6 {
+    .title4 {
         margin-bottom: 14px;
     }
 
-    /*---------- feature section ---- */
-    .feature-ul {
-        margin-bottom: 82px;
+    .title5 {
+        margin-bottom: 16px;
     }
 
-    .feature-ul li {
-        margin-bottom: 21px;
+    .title6 {
+        margin-bottom: 24px;
     }
 
-    .test-code img {
-        height: 23px;
-        border-radius: 2.4px;
+    .title7 {
+        margin-bottom: 19px;
     }
 
     /* -------- code-section --------*/
     .code-section {
-        margin-bottom: 65px;
-        padding: 16px 14px;
-        line-height: 24px;
+        padding: 20px 18px;
+        line-height: 30px;
     }
 
     .code-web {
         display: block;
-        padding: 16px 22px;
+        padding: 20px 27px 27px 27px;
         border: 1px solid #979797;
-        border-radius: 5px;
-    }
-
-    .code-mobile{
-        display: none;
-    }
-
-    /* -------- python-code section -------*/
-    .python-code {
-        padding: 16px;
-        line-height: 16px;
         border-radius: 8px;
     }
 
+    .code-mobile {
+        display: none;
+    }
+
     /* --------- tree section -------- */
+    .tree-section {
+        margin-bottom: 87px;
+    }
+
     .tree svg {
         width: 788px;
         height: auto;
     }
 
     .word {
-        font-size: 18px;
+        font-size: 12px;
     }
 
     .dependency {
-        font-size: 16px;
+        font-size: 8px;
     }
-
     /* -------- paragraph sections ---- */
-
     .paragraph-1 {
-        line-height: 23px;
-        margin-bottom: 32px;
+        line-height: 35px;
     }
 
     .paragraph-2 {
-        line-height: 32px;
-        margin: 32px 0;
+        line-height: 35px;
     }
 
     .paragraph-3 {
-        line-height: 32px;
+        line-height: 35px;
+        margin-bottom: 15px;
+    }
+
+    .paragraph-4 {
+        line-height: 35px;
         margin-bottom: 80px;
     }
 
-    /* --------------------------- banners ------------------------------ */
-
-    .banner .text {
-        margin-right: 80px;
-    }
-
-    .banner .button-div {
-        margin-left: 80px;
-    }
-
     /* ---------- last-change section ----- */
-
-    .last-change-section .sub-title {
-        border-radius: 4px;
-        margin-bottom: 24px;
-        padding: 6.4px 16px 9px 0;
-    }
-
-    .sub-title img {
-        width: 13.6px;
-        height: 23.2px;
-    }
-
-    .sub-title span {
-        margin-right: 16px;
-    }
-
-    .last-change-section ul:not(:last-child) {
-        margin-bottom: 56px;
+    .last-change-section {
+        margin-bottom: 56px
     }
 
     /*----------------------------- footer  -------------------------------*/
     .footer {
-        padding: 16px 24px 56px 0;
+        padding: 10px 20px 25px 0;
     }
 
-    .footer p {
-        font-size: 21px;
-        line-height: 35px;
+    .footer a {
+        color: #337AB7;
     }
 }
 
@@ -971,256 +933,21 @@ pre, code {
     }
 }
 
-@media screen and (min-width: 1550px){
-    body {
-        background: #EAE5D1;
-    }
-
-    a {
-        color: #337AB7;
-    }
-
-    ul {
-        padding-right: 30px;
-    }
-
-    ul li {
-        line-height: 24px;
-        margin-bottom: 26px;
-    }
-
-    p, li {
-        font-size: 24px;
-    }
-
-    pre, code {
-        font-size: 20px;
-    }
-
-    /*----------------------------- header  -------------------------------*/
-    .header-container {
-        height: 198px;
-        margin-bottom: 42px;
-    }
-
-    .header {
-        height: 100%;
-        padding: 37px 15px 23px 0;
-    }
-
-    .header .logo {
-        height: 84px;
-        line-height: 84px;
-        font-size: 50px;
-    }
-
-    .header .text {
-        font-size: 24px;
-        line-height: 40px;
-    }
-
-    .header .menu-icon, .header .close-icon {
-        display: none;
-    }
-
-    .header .menu-icon.active, .header .close-icon.active {
-        display: none;
-    }
-
-    /* ------------------------ header's menu css -------------------------*/
-
-    .menu {
-        left: 31px;
-        top: 172px;
-    }
-
-    .menu a {
-        border: 2px solid #D9A600;
-        border-radius: 3px;
-        padding: 7px 12px 7px 20px;
-    }
-
-    .menu a:not(:first-child) {
-        margin-right: 20px;
-    }
-
-    .menu span {
-        font-size: 20px;
-        line-height: 34px;
-        height: 34px;
-    }
-
-    .menu img {
-        width: 39px;
-        height: 39px;
-    }
-
-
-    .item1 span {
-        margin-right: 6px;
-    }
-
-    .item2 span {
-        margin-right: 17px;
-    }
-
-    .item3 span {
-        margin-right: 12px;
-    }
-
-    .item4 span {
-        margin-right: 15px;
-    }
-
-    /*----------------------------- content and titles -------------------------------*/
-    .content {
-        padding: 70px 60px;
-    }
-
-    .title {
-        height: 51px;
-        font-size: 30px;
-        line-height: 51px;
-    }
-
-    .title1, .title2, .title4, .title5, .title7 {
-        margin-bottom: 15px;
-    }
-
-    .title3 {
-        margin-bottom: 60px;
-    }
-
-    .title6 {
-        margin-bottom: 18px;
-    }
-
-    /*---------- feature section ---- */
-    .feature-ul {
-        margin-bottom: 103px;
-    }
-
-    .feature-ul li {
-        margin-bottom: 26px;
-    }
-
-    .test-code img {
-        height: 29px;
-        border-radius: 3px;
-    }
-
-    /* -------- code-section --------*/
-    .code-section {
-        margin-bottom: 81px;
-        padding: 20px 18px;
-        line-height: 30px;
-    }
-
-    .code-web {
-        padding: 20px 27px;
-        border-radius: 8px;
-    }
-
-    /* -------- python-code section -------*/
-    .python-code {
-        padding: 20px;
-        line-height: 20px;
-        border-radius: 10px;
-    }
-
-    /* --------- tree section -------- */
-    .tree-section {
-        margin-bottom: 100px;
-    }
-
+@media screen and (min-width: 1550px) {
     .tree svg {
         width: 986px;
     }
 
-    /* -------- paragraph sections ---- */
-
-    .paragraph-1 {
-        line-height: 29px;
-        margin-bottom: 40px;
+    .word {
+        font-size: 10px;
     }
 
-    .paragraph-2 {
-        line-height: 40px;
-        margin: 40px 0;
-    }
-
-    .paragraph-3 {
-        line-height: 40px;
-        margin-bottom: 100px;
-    }
-
-    /* --------------------------- banners ------------------------------ */
-
-    .banner {
-        height: 260px;
-        margin: 100px auto;
-    }
-
-    .banner .text {
-        margin-right: 100px;
-    }
-
-    .banner .text p {
-        line-height: 40px;
-    }
-
-    .banner .button-div {
-        font-size: 22px;
-        line-height: 37px;
-        margin-left: 100px;
-        border-radius: 5px;
-    }
-
-    .banner .button-div img {
-        width: 6px;
-        height: 12px;
-        margin-right: 22px;
-    }
-
-    /* ---------- last-change section ----- */
-    .last-change-section {
-        margin-bottom: 100px;
-    }
-
-    .last-change-section .sub-title {
-        border-radius: 5px;
-        margin-bottom: 30px;
-        padding: 8px 20px 11px 0;
-    }
-
-    .sub-title img {
-        width: 17px;
-        height: 29px;
-    }
-
-    .sub-title span {
-        font-size: 20px;
-        line-height: 34px;
-        margin-right: 20px;
-    }
-
-    .last-change-section ul:not(:last-child) {
-        margin-bottom: 70px;
-    }
-
-    /*----------------------------- footer  -------------------------------*/
-
-    .footer {
-        padding: 20px 30px 70px 0;
-    }
-
-    .footer p {
-        font-size: 26px;
-        line-height: 44px;
+    .dependency {
+        font-size: 6px;
     }
 }
 
-@media screen and (min-width: 1920px){
+@media screen and (min-width: 1920px) {
 
     .my-container {
         max-width: 1358px;

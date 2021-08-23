@@ -4,14 +4,15 @@
 
 /* ------------- variables ---------- */
 :root {
-    --mobile-head-right-padding: 40px;
+    --mobile-head-right-padding: 15px;
+    --web-head-right-padding: 20px;
 }
 
 /* ---------------------------------------------------- mobile version ------------------------------------------------------------*/
 body {
     direction: rtl;
     font-family: 'Vazir', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #666666;
     background: #E5E0CC
 }
@@ -33,27 +34,31 @@ body {
     }
 }
 
+h1 {
+    font-family: 'Vazir-Bold', sans-serif;
+}
+
+h1, h3 {
+    margin: 0;
+}
+
+label, h3 {
+    font-family: 'Vazir-Medium', sans-serif;
+    font-weight: 500; /* for override bootstrap label's font-weight, should be this line*/
+    color: #303030;
+    line-height: 27px;
+    height: 27px;
+}
+
 ul {
     margin-bottom: 0;
     padding-right: 17px;
 }
 
 .demo > div, p, li {
-    font-family: 'Vazir', sans-serif;
     font-size: 14px;
     line-height: 24px;
-    text-align: right;
-    color: #666666;
     word-break: break-word;
-}
-
-label, h3 {
-    font-family: 'Vazir-Medium', sans-serif;
-    color: #303030;
-    font-size: 16px;
-    line-height: 27px;
-    height: 27px;
-    margin: 0;
 }
 
 /*----------------------------- header  -------------------------------*/
@@ -67,25 +72,19 @@ label, h3 {
     position: relative;
     color: #FFFFFF;
     height: 100%;
-    padding: 21px var(--mobile-head-right-padding) 17px 31px;
+    padding: 19px var(--mobile-head-right-padding);
 }
 
 .header .logo {
     height: 37px;
-    width: max-content;
-    font-family: 'Vazir-Bold', sans-serif;
-    margin: 0;
     font-size: 22px;
     line-height: 37px;
-    vertical-align: top;
-    cursor: pointer;
 }
 
 .header .text {
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0;
-    Vertical-align: top;
 }
 
 .header .menu-icon, .header .close-icon {
@@ -96,10 +95,10 @@ label, h3 {
     display: block;
     cursor: pointer;
     position: absolute;
-    width: 15px;
+    width: 18px;
     height: 8px;
-    left: 31.5px;
-    top: 36px;
+    left: var(--mobile-head-right-padding);
+    top: 44px;
 }
 
 .header .close-icon.active {
@@ -108,8 +107,8 @@ label, h3 {
     position: absolute;
     width: 11.31px;
     height: 11.31px;
-    left: 33.34px;
-    top: 34.84px;
+    left: calc(var(--mobile-head-right-padding) + 3px);
+    top: 42px;
 }
 
 /* ------------------------- header's mobile menu --------------------- */
@@ -127,9 +126,9 @@ label, h3 {
 .mobile-menu {
     display: block;
     background: #3E71B2;
-    height: 570.5px;
+    height: 100%;
+    width: 100%;
     position: absolute;
-    left: 0;
     right: 0;
     top: 95.5px;
 }
@@ -185,7 +184,6 @@ label, h3 {
 
 .mobile-menu span {
     font-family: 'Vazir-Medium', sans-serif;
-    font-size: 16px;
     line-height: 27px;
     height: 27px;
     width: max-content;
@@ -224,7 +222,6 @@ label, h3 {
 label {
     display: block;
     margin-bottom: 10px;
-    font-weight: 500;
 }
 
 textarea {
@@ -375,10 +372,18 @@ textarea {
 .dependency {
     fill: #9E9E9E;
     font-size: 14px;
+    font-family: 'Vazir-Light', sans-serif;
 }
 
 .edge, .arrow {
     stroke: #CCCCCC;
+}
+
+.edge {
+    stroke-width: 0.9;
+}
+
+.arrow {
     stroke-width: 1.5;
 }
 
@@ -396,19 +401,24 @@ textarea {
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 20px 5px 41px 0;
+    padding: 10px 5px 25px 0;
 }
 
-.footer a {
-    font-family: 'Vazir-Bold', sans-serif;
+.footer p {
+    font-family: 'Vazir-Medium', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.footer p a {
     color: #2F79B9;
+    font-family: 'Vazir-Medium', sans-serif;
     text-decoration: none;
 }
 
 /* ---------------------------------------------------- web version ----------------------------------------------------------------*/
 
 @media screen and (min-width: 992px) {
-    /* font-size and other size are 0.8 final size in 1920 */
     body {
         background: #EAE5D1;
     }
@@ -434,24 +444,25 @@ textarea {
 
     /*----------------------------- header  -------------------------------*/
     .header-container {
-        height: 158px;
-        margin-bottom: 33px;
+        height: 140px;
+        margin-bottom: 36px;
     }
 
     .header {
         height: 100%;
-        padding: 29px 12px 18px 0;
+        padding: 24px var(--web-head-right-padding) 38px var(--web-head-right-padding);
     }
 
     .header .logo {
-        height: 67px;
-        line-height: 67px;
-        font-size: 40px;
+        font-size: 30px;
+        line-height: 51px;
+        height: 51px;
     }
 
     .header .text {
-        font-size: 19px;
-        line-height: 32px;
+        font-size: 16px;
+        line-height: 27px;
+        height: 27px;
     }
 
     .header .menu-icon, .header .close-icon {
@@ -477,8 +488,8 @@ textarea {
         flex-direction: row;
         justify-content: space-between;
         position: absolute;
-        left: 31px;
-        top: 137px;
+        left: var(--web-head-right-padding);
+        top: 116px;
     }
 
     .menu a {
@@ -489,13 +500,14 @@ textarea {
         justify-content: center;
         color: #545757;
         background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
-        border: 1.6px solid #D9A600;
-        border-radius: 2.4px;
-        padding: 5.6px 9.6px 5.6px 16px;
+        border: 1px solid #D9A600;
+        box-shadow: 0 1px 1px #C9C9C9;
+        border-radius: 3px;
+        padding: 2px 8px 3px 15px;
     }
 
     .menu a:not(:first-child) {
-        margin-right: 16px;
+        margin-right: 12px;
     }
 
     .menu a:hover {
@@ -506,29 +518,14 @@ textarea {
     .menu span {
         width: max-content;
         font-size: 16px;
-        line-height: 27px;
-        height: 27px;
+        line-height: 35px;
+        height: 35px;
+        margin-right: 8px;
     }
 
     .menu img {
-        width: 31px;
-        height: 31px;
-    }
-
-    .item1 span {
-        margin-right: 4.8px;
-    }
-
-    .item2 span {
-        margin-right: 13.6px;
-    }
-
-    .item3 span {
-        margin-right: 9.6px;
-    }
-
-    .item4 span {
-        margin-right: 12px;
+        width: 30px;
+        height: 30px;
     }
 
     /*----------------------------- content and titles -------------------------------*/
@@ -542,7 +539,6 @@ textarea {
     /*----------------------------- query section --------------------------------- */
     label {
         margin-bottom: 17px;
-        font-weight: 700;
     }
 
     textarea {
@@ -563,178 +559,6 @@ textarea {
     .loading {
         height: 34px;
         width: 34px;
-    }
-
-    /*---------- show-text-section ---- */
-    .analyze-section {
-        margin-top: 80px;
-    }
-
-    .added-data:not(:first-child) {
-        margin-top: 56px;
-    }
-
-    .demo h3 {
-        height: 48px;
-        padding: 8px 16px;
-        margin-bottom: 17px;
-    }
-
-    .demo > div {
-        padding: 0;
-    }
-
-    .demo li {
-        margin-bottom: 17px;
-    }
-
-    /* --------- tree section -------- */
-    .tree {
-        margin-top: 60px;
-    }
-
-    /*----------------------------- footer  -------------------------------*/
-    .footer {
-        padding: 16px 24px 56px 0;
-    }
-
-    .footer p {
-        font-family: 'Vazir-Medium', sans-serif;
-        font-size: 21px;
-        line-height: 35px;
-        color: #ADA99D;
-    }
-
-    .footer a {
-        font-family: 'Vazir-Medium', sans-serif;
-        color: #337AB7;
-    }
-}
-
-@media screen and (min-width: 1110px) {
-    .my-container {
-        max-width: 80%;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .my-container {
-        max-width: 70%;
-    }
-}
-
-@media screen and (min-width: 1550px) {
-    body {
-        font-size: 24px;
-    }
-
-    ul {
-        padding-right: 22px; /* TODO */
-    }
-
-    .demo > div, p, li {
-        font-size: 24px;
-    }
-
-    label, h3 {
-        font-size: 24px;
-        line-height: 40px;
-        height: 40px;
-    }
-
-    /*----------------------------- header  -------------------------------*/
-    .header-container {
-        height: 198px;
-        margin-bottom: 42px;
-    }
-
-    .header {
-        height: 100%;
-        padding: 37px 15px 23px 0;
-    }
-
-    .header .logo {
-        height: 84px;
-        line-height: 84px;
-        font-size: 50px;
-    }
-
-    .header .text {
-        font-size: 24px;
-        line-height: 40px;
-    }
-
-    /* ------------------------ header's menu css -------------------------*/
-    .menu {
-        left: 31px;
-        top: 172px;
-    }
-
-    .menu a {
-        border: 2px solid #D9A600;
-        border-radius: 3px;
-        padding: 7px 12px 7px 20px;
-    }
-
-    .menu a:not(:first-child) {
-        margin-right: 20px;
-    }
-
-    .menu span {
-        font-size: 20px;
-        line-height: 34px;
-        height: 34px;
-    }
-
-    .menu img {
-        width: 39px;
-        height: 39px;
-    }
-
-    .item1 span {
-        margin-right: 6px;
-    }
-
-    .item2 span {
-        margin-right: 17px;
-    }
-
-    .item3 span {
-        margin-right: 12px;
-    }
-
-    .item4 span {
-        margin-right: 15px;
-    }
-
-    /*----------------------------- content and titles -------------------------------*/
-    .content {
-        padding: 85px 60px 140px 60px;
-    }
-
-    /*----------------------------- query section --------------------------------- */
-    label {
-        margin-bottom: 21px;
-    }
-
-    textarea {
-        font-size: 24px;
-        padding: 20px 18px;
-        margin-bottom: 15px;
-    }
-
-    /*----------------- query buttons -------------- */
-    .my-btn {
-        font-size: 24px;
-        line-height: 40px;
-        padding: 8px 14px;
-        border-radius: 7px;
-        margin-left: 15px;
-    }
-
-    .loading {
-        height: 42px;
-        width: 42px;
     }
 
     /*---------- show-text-section ---- */
@@ -767,13 +591,48 @@ textarea {
 
     /*----------------------------- footer  -------------------------------*/
     .footer {
-        padding: 20px 30px 70px 0;
+        padding: 10px 20px 25px 0;
     }
 
     .footer p {
-        font-size: 26px;
-        line-height: 44px;
-        height: 44px;
+        color: #ADA99D;
+    }
+
+    .footer a {
+        color: #337AB7;
+    }
+}
+
+@media screen and (min-width: 1110px) {
+    .my-container {
+        max-width: 80%;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .my-container {
+        max-width: 70%;
+    }
+}
+
+@media screen and (min-width: 1550px) {
+    /*----------------------------- content and titles -------------------------------*/
+    .content {
+        padding: 85px 60px 140px 60px;
+    }
+
+    /*----------------- query buttons -------------- */
+    .my-btn {
+        font-size: 24px;
+        line-height: 40px;
+        padding: 8px 14px;
+        border-radius: 7px;
+        margin-left: 15px;
+    }
+
+    .loading {
+        height: 42px;
+        width: 42px;
     }
 }
 
