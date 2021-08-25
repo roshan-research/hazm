@@ -39,7 +39,6 @@ body {
 
 a {
     color: #337AB7;
-    font-family: 'Vazir-Medium', sans-serif;
 }
 
 h1, h2 {
@@ -64,11 +63,8 @@ ul li {
     height: 35px;
 }
 
-p, li {
-    font-family: 'Vazir-Light', sans-serif;
-}
-
 p {
+    font-family: 'Vazir-Light', sans-serif;
     text-align: justify;
 }
 
@@ -99,6 +95,7 @@ pre, code {
 
 .header .logo {
     height: 37px;
+    width: max-content;
     font-size: 22px;
     line-height: 37px;
 }
@@ -127,10 +124,10 @@ pre, code {
     display: block;
     cursor: pointer;
     position: absolute;
-    width: 11.31px;
-    height: 11.31px;
+    width: 13px;
+    height: 13px;
     left: calc(var(--mobile-head-right-padding) + 3px);
-    top: 42px;
+    top: 41px;
 }
 
 /* ------------------------- header's mobile menu --------------------- */
@@ -157,11 +154,12 @@ pre, code {
 
 .mobile-menu ul {
     list-style-type: none;
-    padding: 41.5px var(--mobile-head-right-padding) 0 0;
+    padding: 43px var(--mobile-head-right-padding) 0 0;
 }
 
 .mobile-menu ul li {
     width: max-content;
+    margin-bottom: 36px;
 }
 
 .mobile-menu ul a {
@@ -169,62 +167,18 @@ pre, code {
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-.mobile-menu .item1 {
-    margin-bottom: 40px;
-}
-
-.mobile-menu .item1 img {
-    width: 31px;
-    height: 16.5px;
-}
-
-.mobile-menu .item2 {
-    margin-bottom: 35px;
-}
-
-.mobile-menu .item2 img {
-    width: 25px;
-    height: 15.49px;
-}
-
-.mobile-menu .item3 {
-    margin-bottom: 44px;
-}
-
-.mobile-menu .item3 img {
-    width: 21.6px;
-    height: 28.5px;
-}
-
-.mobile-menu .item4 img {
-    width: 32px;
-    height: 22px;
+.mobile-menu img {
+    width: 30px;
+    height: 30px;
 }
 
 .mobile-menu span {
-    font-family: 'Vazir-Medium', sans-serif;
+    font-family: 'Vazir-Light', sans-serif;
     line-height: 27px;
     height: 27px;
-    width: max-content;
-}
-
-.mobile-menu .item1 span {
-    margin-right: 22px;
-}
-
-.mobile-menu .item2 span {
-    margin-right: 25px;
-}
-
-.mobile-menu .item3 span {
-    margin-right: 27px;
-}
-
-.mobile-menu .item4 span {
-    margin-right: 22px;
+    margin-right: 21px;
 }
 
 /* ------------------------ header's web menu -------------------------*/
@@ -282,6 +236,11 @@ pre, code {
 .feature-ul {
     margin-bottom: 50px;
     padding-right: 22px;
+    font-family: 'Vazir-Light', sans-serif;
+}
+
+.feature-ul a {
+    font-family: 'Vazir-Medium', sans-serif;
 }
 
 .test-code img {
@@ -393,22 +352,23 @@ pre, code {
     overflow: visible !important;
 }
 
-.edge, .arrow {
-    stroke: #D8D8D8;
-}
-
 .edge {
-    stroke-width: 0.9;
+    stroke: #D8D8D8;
+    stroke-width: 0.5;
 }
 
 .arrow {
-    stroke-width: 1.5;
+    fill: #D8D8D8;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
 }
 
 .word {
     fill: #303030;
-    cursor: default;
     font-size: 16px;
+    height: 27px;
+    line-height: 27px;
+    letter-spacing: 0;
 }
 
 .word.w0 {
@@ -417,56 +377,83 @@ pre, code {
 
 .dependency {
     fill: #D8D8D8;
-    font-size: 14px;
     font-family: 'Vazir-Light', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    height: 24px;
+    letter-spacing: 0;
 }
 
 .word.w0.active {
     fill: #9E9E9E !important;
 }
 
-.edge.w0.active, .arrow.w0.active {
+.edge.w0.active {
     stroke: #666666 !important;
+}
+
+.arrow.w0.active {
+    fill: #666666 !important;
 }
 
 .dependency.w0.active {
     fill: #666666 !important;
 }
 
-.edge.w1.active, .arrow.w1.active {
+.edge.w1.active {
     stroke: #FF4B4B !important;
+}
+
+.arrow.w1.active {
+    fill: #FF4B4B !important;
 }
 
 .dependency.w1.active {
     fill: #FF4B4B !important;
 }
 
-.edge.w2.active, .arrow.w2.active {
+.edge.w2.active {
     stroke: #2FAAE0 !important;
+}
+
+.arrow.w2.active {
+    fill: #2FAAE0 !important;
 }
 
 .dependency.w2.active {
     fill: #2FAAE0 !important;
 }
 
-.edge.w3.active, .arrow.w3.active {
+.edge.w3.active {
     stroke: #3ABC40 !important;
+}
+
+.arrow.w3.active {
+    fill: #3ABC40 !important;
 }
 
 .dependency.w3.active {
     fill: #3ABC40 !important;
 }
 
-.edge.w4.active, .arrow.w4.active {
+.edge.w4.active {
     stroke: #FF9329 !important;
+}
+
+.arrow.w4.active {
+    fill: #FF9329 !important;
 }
 
 .dependency.w4.active {
     fill: #FF9329 !important;
 }
 
-.edge.w5.active, .arrow.w5.active {
+.edge.w5.active {
     stroke: #3ABC40 !important;
+}
+
+.arrow.w5.active {
+    fill: #3ABC40 !important;
 }
 
 .dependency.w5.active {
@@ -474,7 +461,7 @@ pre, code {
 }
 
 .arrow.w6.active {
-    stroke: #DF6FFD; /* should not have important sign */
+    fill: #DF6FFD; /* should not have important sign */
 }
 
 .dependency.w6.active {
@@ -518,6 +505,10 @@ pre, code {
 .paragraph-4 {
     margin-bottom: 60px;
     line-height: 29px;
+}
+
+.paragraph-2 a, .paragraph-3 a, .paragraph-4 a {
+    font-family: 'Vazir-Medium', sans-serif;
 }
 
 /* --------------------------- banners ------------------------------ */
@@ -615,7 +606,7 @@ pre, code {
 }
 
 .sub-title a {
-    text-decoration: none !important
+    text-decoration: none !important;
 }
 
 .sub-title img {
@@ -634,6 +625,10 @@ pre, code {
     margin-bottom: 51px;
 }
 
+.last-change-section ul li {
+    font-family: 'Vazir-Light', sans-serif;
+}
+
 .last-change-section ul li:not(:last-child) {
     margin-bottom: 5px;
 }
@@ -641,6 +636,14 @@ pre, code {
 /* ----------- thank-section ---------------*/
 .thank-section ul li:not(:last-child) {
     margin-bottom: 5px;
+}
+
+.thank-section ul li {
+    font-family: 'Vazir-Light', sans-serif;
+}
+
+.thank-section a {
+    font-family: 'Vazir-Medium', sans-serif;
 }
 
 /*----------------------------- footer  -------------------------------*/
@@ -656,6 +659,7 @@ pre, code {
 
 .footer p a {
     color: #2F79B9;
+    text-decoration: none;
 }
 
 @media screen and (min-width: 700px) {
