@@ -648,16 +648,13 @@ pre, code {
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 10px 5px 25px 0;
-}
-
-.footer p {
-    font-family: 'Vazir-Medium', sans-serif;
+    padding: 10px 5px 25px 10px;
     font-size: 14px;
     line-height: 24px;
 }
 
-.footer p a {
+.footer a {
+    font-family: 'Vazir-Bold', sans-serif;
     color: #2F79B9;
     text-decoration: none;
 }
@@ -917,10 +914,16 @@ pre, code {
 
     /*----------------------------- footer  -------------------------------*/
     .footer {
-        padding: 10px 20px 25px 0;
+        padding: 10px 20px 25px 10px;
+    }
+
+    .footer span {
+        font-family: 'Vazir-Medium', sans-serif;
+        color: #ADA99D;
     }
 
     .footer a {
+        font-family: 'Vazir-Medium', sans-serif;
         color: #337AB7;
     }
 }

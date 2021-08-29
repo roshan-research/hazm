@@ -202,7 +202,6 @@ textarea {
 
 .my-btn {
     line-height: 27px;
-    height: 35px;
     color: #FFFFFF;
     font-family: 'Vazir-Medium', sans-serif;
     padding: 4px 11px;
@@ -246,7 +245,7 @@ textarea {
 
 .demo h3 {
     font-family: 'Vazir-Medium', sans-serif;
-    color: #303030;
+    color: #337AB7;
     font-size: 16px !important;
     line-height: 27px;
     padding: 3px 10px;
@@ -263,6 +262,7 @@ textarea {
 }
 
 .demo > div {
+    line-height: 21px;
     padding: 0 10px;
     word-break: break-word;
 }
@@ -273,6 +273,7 @@ textarea {
 
 .demo li {
     margin-bottom: 6px;
+    line-height: 21px;
     word-break: break-word;
 }
 
@@ -326,7 +327,6 @@ textarea {
 .dependency {
     fill: #9E9E9E;
     font-size: 14px;
-    font-family: 'Vazir-Light', sans-serif;
 }
 
 .edge, .arrow {
@@ -348,15 +348,12 @@ textarea {
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 7px 6px 25px 6px;
-}
-
-.footer p {
+    padding: 10px 5px 25px 5px;
     font-size: 14px;
     line-height: 24px;
 }
 
-.footer p a {
+.footer a {
     color: #2F79B9;
     font-family: 'Vazir-Bold', sans-serif;
     text-decoration: none;
@@ -461,7 +458,7 @@ textarea {
 
     /*----------------------------- content and titles -------------------------------*/
     .content {
-        padding: 85px 60px 140px 60px;
+        padding: 53px 40px 100px 40px;
         background: #FBFBFB;
         border: 2px solid #CCCBCA;
         border-radius: 5px;
@@ -469,34 +466,32 @@ textarea {
 
     /*----------------------------- query section --------------------------------- */
     label {
-        margin-bottom: 21px;
+        font-size: 20px;
+        line-height: 35px;
         font-family: 'Vazir-Bold', sans-serif;
+        margin-bottom: 15px;
     }
 
     textarea {
-        font-size: 19px;
-        padding: 16px 14px;
-        margin-bottom: 12px;
+        padding: 12px 18px;
+        margin-bottom: 15px;
     }
 
     /*----------------- query buttons -------------- */
     .my-btn {
-        font-size: 24px;
-        line-height: 40px;
-        height: 56px;
-        padding: 8px 14px;
+        padding: 7px 16px 6px 16px;
         border-radius: 7px;
         margin-left: 15px;
     }
 
     .loading {
-        height: 56px;
-        width: 56px;
+        height: 40px;
+        width: 40px;
     }
 
     /*---------- show-text-section ---- */
     .analyze-section {
-        margin-top: 100px;
+        margin-top: 91px;
     }
 
     .added-data:not(:first-child) {
@@ -504,23 +499,26 @@ textarea {
     }
 
     .demo h3 {
-        height: 60px;
-        padding: 10px 20px;
-        margin-bottom: 21px;
+        font-family: 'Vazir-Bold', sans-serif;
+        padding: 12px 24px 11px 24px;
+    }
+
+    .has-text h3 {
+        margin-bottom: 15px;
+    }
+
+    .has-li h3 {
+        margin-bottom: 20px;
     }
 
     .demo > div {
-        padding: 0;
-        font-size: 19px;
-    }
-
-    .demo > ul {
-        padding-right: 22px;
+        line-height: 25px;
+        padding: 0 24px;
     }
 
     .demo li {
-        margin-bottom: 21px;
-        font-size: 19px;
+        margin-bottom: 15px;
+        line-height: 25px;
     }
 
     /* --------- tree section -------- */
@@ -528,16 +526,34 @@ textarea {
         margin-top: 80px;
     }
 
-    /*----------------------------- footer  -------------------------------*/
-    .footer {
-        padding: 10px 20px 25px 0;
+    .edge.w0 {
+        stroke: #666666;
     }
 
-    .footer p {
+    .edge {
+        stroke-width: 0.5;
+    }
+
+    .edge, .arrow {
+        stroke: #9E9E9E;
+    }
+
+    .dependency {
+        font-family: 'Vazir-Light', sans-serif;
+    }
+
+    /*----------------------------- footer  -------------------------------*/
+    .footer {
+        padding: 10px 20px 65px 10px;
+    }
+
+    .footer span {
+        font-family: 'Vazir-Medium', sans-serif;
         color: #ADA99D;
     }
 
     .footer a {
+        font-family: 'Vazir-Medium', sans-serif;
         color: #337AB7;
     }
 }
