@@ -103,19 +103,19 @@
     </div>
     <div class="demo has-li" id="tokenized">
       <h3>واژه‌های متن</h3>
-      <div></div>
+      <div><ul></ul></div>
     </div>
     <div class="demo has-li" id="lemmatized">
       <h3>ریشه واژه‌ها</h3>
-      <div></div>
+      <div><ul></ul></div>
     </div>
     <div class="demo has-li" id="tagged">
       <h3 class="green-title">تحلیل صرفی</h3>
-      <div></div>
+      <div><ul></ul></div>
     </div>
     <div class="demo has-li" id="chunked">
       <h3 class="red-title">تجزیه سطحی</h3>
-      <div></div>
+      <div><ul></ul></div>
     </div>
     <div class="demo has-li" id="parsed">
       <h3 class="red-title">تجزیه نحوی</h3>
@@ -170,9 +170,9 @@
           lemmatize({'tokenized_text': tokenized_text});
           $('#tag').attr('tokenized_text', tokenized_text).show();
           sentences = $.parseJSON(tokenized_text);
-          tokenized.show().find('div').empty();
+          tokenized.show().find('ul').empty();
           for (s in sentences) {
-            $('#tokenized div').append('<li>' + sentences[s].join(' ') + '</li>');
+            $('#tokenized ul').append('<li>' + sentences[s].join(' ') + '</li>');
           }
           tokenized.addClass('added-data')
         })
@@ -182,9 +182,9 @@
     $.post(server + '/lemmatize', data)
         .done(function (lemmatized_text) {
           sentences = $.parseJSON(lemmatized_text);
-          lemmatized.show().find('div').empty();
+          lemmatized.show().find('ul').empty();
           for (s in sentences) {
-            $('#lemmatized div').append('<li>' + sentences[s].join(' ') + '</li>');
+            $('#lemmatized ul').append('<li>' + sentences[s].join(' ') + '</li>');
           }
           lemmatized.addClass('added-data')
         });
@@ -196,12 +196,12 @@
           $('#tag').hide();
           $('#parse').attr('tagged_text', tagged_text).show();
           sentences = $.parseJSON(tagged_text);
-          tagged.show().find('div').empty();
+          tagged.show().find('ul').empty();
           for (s in sentences) {
             sentence = $.map(sentences[s], function (word) {
               return word.join('/');
             });
-            $('#tagged div').append('<li>' + sentence.join(' ') + '</li>');
+            $('#tagged ul').append('<li>' + sentence.join(' ') + '</li>');
           }
           tagged.addClass('added-data')
         })
@@ -211,9 +211,9 @@
     $.post(server + '/chunk', data)
         .done(function (chunked_text) {
           sentences = $.parseJSON(chunked_text);
-          chunked.show().find('div').empty();
+          chunked.show().find('ul').empty();
           for (s in sentences) {
-            $('#chunked div').append('<li>' + sentences[s] + '</li>');
+            $('#chunked ul').append('<li>' + sentences[s] + '</li>');
           }
           chunked.addClass('added-data')
         });

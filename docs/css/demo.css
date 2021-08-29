@@ -42,23 +42,8 @@ h1, h3 {
     margin: 0;
 }
 
-label, h3 {
-    font-family: 'Vazir-Medium', sans-serif;
-    font-weight: 500; /* for override bootstrap label's font-weight, should be this line*/
-    color: #303030;
-    line-height: 27px;
-    height: 27px;
-}
-
 ul {
     margin-bottom: 0;
-    padding-right: 17px;
-}
-
-.demo > div, p, li {
-    font-size: 14px;
-    line-height: 24px;
-    word-break: break-word;
 }
 
 /*----------------------------- header  -------------------------------*/
@@ -178,20 +163,23 @@ ul {
     background: #FFFFFF;
     border: 0.5px solid #CECCC5;
     border-radius: 10px;
-    padding: 30px 25px 65px 25px;
+    padding: 35px 25px 84px 25px;
 }
 
 /*----------------------------- query section --------------------------------- */
 label {
     display: block;
     margin-bottom: 10px;
+    font-family: 'Vazir-Medium', sans-serif;
+    font-weight: 500; /* for override bootstrap label's font-weight, should be this line*/
+    color: #303030;
+    line-height: 27px;
 }
 
 textarea {
     display: block;
     font-family: 'Vazir-Light', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
+    line-height: 25px;
     text-align: right;
     color: #666666;
     height: 148px;
@@ -213,9 +201,8 @@ textarea {
 }
 
 .my-btn {
-    font-size: 16px;
     line-height: 27px;
-    text-align: right;
+    height: 35px;
     color: #FFFFFF;
     font-family: 'Vazir-Medium', sans-serif;
     padding: 4px 11px;
@@ -243,9 +230,9 @@ textarea {
 
 .loading {
     display: none;
-    background: url(../images/loading.gif);
-    height: 32px;
-    width: 32px;
+    background: url(../images/loading.gif) no-repeat center;
+    height: 35px;
+    width: 35px;
 }
 
 /*---------- show-text-section ---- */
@@ -258,26 +245,35 @@ textarea {
 }
 
 .demo h3 {
-    height: max-content;
+    font-family: 'Vazir-Medium', sans-serif;
+    color: #303030;
+    font-size: 16px !important;
+    line-height: 27px;
     padding: 3px 10px;
     background: #F2F2F2;
     border-radius: 5px;
 }
 
-.demo > div {
-    padding: 0 10px;
-}
-
 .has-text h3 {
-    margin-bottom: 3px;
+    margin-bottom: 6px;
 }
 
 .has-li h3 {
-    margin-bottom: 7px;
+    margin-bottom: 8px;
+}
+
+.demo > div {
+    padding: 0 10px;
+    word-break: break-word;
+}
+
+.demo > div ul {
+    padding-right: 21px;
 }
 
 .demo li {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    word-break: break-word;
 }
 
 .green-title {
@@ -291,11 +287,6 @@ textarea {
 .glyphicon {
     top: 3px;
 }
-
-/*#corrected h3:after {TODO*/
-    /*content:"\2b";*/
-    /*font-size: 90%;*/
-/*}*/
 
 .content .glyphicon {
     font-size: 90%;
@@ -312,13 +303,13 @@ textarea {
 
 /* --------- tree section -------- */
 .tree {
-    margin-top: 20px;
+    margin-top: 60px;
     overflow-x: auto;
     overflow-y: hidden;
 }
 
 .tree svg {
-    overflow: visible!important;
+    overflow: visible !important;
     margin: auto;
     display: block;
 }
@@ -342,39 +333,32 @@ textarea {
     stroke: #CCCCCC;
 }
 
-.edge {
-    stroke-width: 0.9;
-}
-
-.arrow {
-    stroke-width: 1.5;
-}
-
 .tag {
     display: none;
 }
 
-.dependency.active {
+.dependency.active, .word.active {
     fill: #3276b1;
 }
-.word.active, .edge.active, .arrow.active {
+
+.edge.active, .arrow.active {
     stroke: #3276b1 !important;
 }
 
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 10px 5px 25px 0;
+    padding: 7px 6px 25px 6px;
 }
 
 .footer p {
-    font-family: 'Vazir-Medium', sans-serif;
     font-size: 14px;
     line-height: 24px;
 }
 
 .footer p a {
     color: #2F79B9;
+    font-family: 'Vazir-Bold', sans-serif;
     text-decoration: none;
 }
 
@@ -383,21 +367,6 @@ textarea {
 @media screen and (min-width: 992px) {
     body {
         background: #EAE5D1;
-    }
-
-    ul {
-        padding-right: 18px;
-    }
-
-    .demo > div, p, li {
-        font-size: 19px;
-    }
-
-    label, h3 {
-        font-family: 'Vazir-Bold', sans-serif;
-        font-size: 19px;
-        line-height: 32px;
-        height: 32px;
     }
 
     .my-container {
@@ -492,7 +461,7 @@ textarea {
 
     /*----------------------------- content and titles -------------------------------*/
     .content {
-        padding: 68px 48px 112px 48px;
+        padding: 85px 60px 140px 60px;
         background: #FBFBFB;
         border: 2px solid #CCCBCA;
         border-radius: 5px;
@@ -500,7 +469,8 @@ textarea {
 
     /*----------------------------- query section --------------------------------- */
     label {
-        margin-bottom: 17px;
+        margin-bottom: 21px;
+        font-family: 'Vazir-Bold', sans-serif;
     }
 
     textarea {
@@ -511,16 +481,17 @@ textarea {
 
     /*----------------- query buttons -------------- */
     .my-btn {
-        font-size: 19px;
-        line-height: 32px;
-        padding: 6px 12px;
-        border-radius: 5.6px;
-        margin-left: 12px;
+        font-size: 24px;
+        line-height: 40px;
+        height: 56px;
+        padding: 8px 14px;
+        border-radius: 7px;
+        margin-left: 15px;
     }
 
     .loading {
-        height: 34px;
-        width: 34px;
+        height: 56px;
+        width: 56px;
     }
 
     /*---------- show-text-section ---- */
@@ -540,10 +511,16 @@ textarea {
 
     .demo > div {
         padding: 0;
+        font-size: 19px;
+    }
+
+    .demo > ul {
+        padding-right: 22px;
     }
 
     .demo li {
         margin-bottom: 21px;
+        font-size: 19px;
     }
 
     /* --------- tree section -------- */
@@ -574,27 +551,6 @@ textarea {
 @media screen and (min-width: 1280px) {
     .my-container {
         max-width: 70%;
-    }
-}
-
-@media screen and (min-width: 1550px) {
-    /*----------------------------- content and titles -------------------------------*/
-    .content {
-        padding: 85px 60px 140px 60px;
-    }
-
-    /*----------------- query buttons -------------- */
-    .my-btn {
-        font-size: 24px;
-        line-height: 40px;
-        padding: 8px 14px;
-        border-radius: 7px;
-        margin-left: 15px;
-    }
-
-    .loading {
-        height: 42px;
-        width: 42px;
     }
 }
 
