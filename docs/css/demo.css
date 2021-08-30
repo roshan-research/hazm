@@ -30,7 +30,7 @@ body {
 
 @media screen and (min-width: 326px) {
     .my-container {
-        max-width: 86%;
+        max-width: 87%;
     }
 }
 
@@ -163,7 +163,7 @@ ul {
     background: #FFFFFF;
     border: 0.5px solid #CECCC5;
     border-radius: 10px;
-    padding: 35px 25px 84px 25px;
+    padding: 29px 26px 61px 26px;
 }
 
 /*----------------------------- query section --------------------------------- */
@@ -187,7 +187,6 @@ textarea {
     width: 100%;
     resize: vertical;
     padding: 11px 10px;
-    margin-bottom: 10px;
     background: #FFFFFF;
     border: 1px solid #CDCDCD;
     border-radius: 5px;
@@ -198,6 +197,7 @@ textarea {
 .controls {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .my-btn {
@@ -209,6 +209,7 @@ textarea {
     border: 1px solid #979797;
     cursor: pointer;
     margin-left: 10px;
+    margin-top: 10px;
 }
 
 .my-btn:hover {
@@ -236,11 +237,11 @@ textarea {
 
 /*---------- show-text-section ---- */
 .analyze-section {
-    margin-top: 40px;
+    margin-top: 36px;
 }
 
 .added-data:not(:first-child) {
-    margin-top: 36px;
+    margin-top: 40px;
 }
 
 .demo h3 {
@@ -248,17 +249,10 @@ textarea {
     color: #337AB7;
     font-size: 16px !important;
     line-height: 27px;
-    padding: 3px 10px;
+    padding: 6px 10px 7px 10px;
     background: #F2F2F2;
     border-radius: 5px;
-}
-
-.has-text h3 {
-    margin-bottom: 6px;
-}
-
-.has-li h3 {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .demo > div {
@@ -272,7 +266,7 @@ textarea {
 }
 
 .demo li {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     line-height: 21px;
     word-break: break-word;
 }
@@ -285,21 +279,12 @@ textarea {
     color: #D9534F;
 }
 
-.glyphicon {
-    top: 3px;
-}
-
-.content .glyphicon {
-    font-size: 90%;
-}
-
-.info {
-    color: #bbb;
+.plus_icon {
     cursor: pointer;
-}
-
-.info:hover {
-    color: #333;
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
+    margin-top: 1px;
 }
 
 /* --------- tree section -------- */
@@ -501,14 +486,7 @@ textarea {
     .demo h3 {
         font-family: 'Vazir-Bold', sans-serif;
         padding: 12px 24px 11px 24px;
-    }
-
-    .has-text h3 {
         margin-bottom: 15px;
-    }
-
-    .has-li h3 {
-        margin-bottom: 20px;
     }
 
     .demo > div {
