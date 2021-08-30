@@ -33,7 +33,7 @@ body {
 
 @media screen and (min-width: 326px) {
     .my-container {
-        max-width: 86%;
+        max-width: 87%;
     }
 }
 
@@ -60,7 +60,6 @@ ul {
 
 ul li {
     line-height: 35px;
-    height: 35px;
 }
 
 p {
@@ -660,21 +659,9 @@ pre, code {
 }
 
 @media screen and (min-width: 700px) {
-    .tree {
-        padding-bottom: 0;
-    }
-
     .tree svg {
-        width: 80%;
         height: auto;
-    }
-
-    .word {
-        font-size: 14px;
-    }
-
-    .dependency {
-        font-size: 10px;
+        width: 600px;
     }
 }
 
@@ -725,7 +712,7 @@ pre, code {
     }
 
     .my-container {
-        max-width: 95%;
+        max-width: 910px;
     }
 
     /*----------------------------- header  -------------------------------*/
@@ -876,18 +863,10 @@ pre, code {
         margin-bottom: 87px;
     }
 
-    .tree svg {
-        width: 788px;
-        height: auto;
+    .tree {
+        padding-bottom: 0;
     }
 
-    .word {
-        font-size: 12px;
-    }
-
-    .dependency {
-        font-size: 8px;
-    }
     /* -------- paragraph sections ---- */
     .paragraph-1 {
         line-height: 35px;
@@ -925,38 +904,5 @@ pre, code {
     .footer a {
         font-family: 'Vazir-Medium', sans-serif;
         color: #337AB7;
-    }
-}
-
-@media screen and (min-width: 1110px) {
-    .my-container {
-        max-width: 80%;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .my-container {
-        max-width: 70%;
-    }
-}
-
-@media screen and (min-width: 1550px) {
-    .tree svg {
-        width: 986px;
-    }
-
-    .word {
-        font-size: 10px;
-    }
-
-    .dependency {
-        font-size: 6px;
-    }
-}
-
-@media screen and (min-width: 1920px) {
-
-    .my-container {
-        max-width: 1358px;
     }
 }

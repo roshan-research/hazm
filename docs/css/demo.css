@@ -352,7 +352,7 @@ textarea {
     }
 
     .my-container {
-        max-width: 95%;
+        max-width: 910px;
     }
 
     /*----------------------------- header  -------------------------------*/
@@ -533,24 +533,5 @@ textarea {
     .footer a {
         font-family: 'Vazir-Medium', sans-serif;
         color: #337AB7;
-    }
-}
-
-@media screen and (min-width: 1110px) {
-    .my-container {
-        max-width: 80%;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .my-container {
-        max-width: 70%;
-    }
-}
-
-@media screen and (min-width: 1920px) {
-
-    .my-container {
-        max-width: 1358px;
     }
 }
