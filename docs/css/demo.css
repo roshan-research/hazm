@@ -112,6 +112,8 @@ ul {
     mix-blend-mode: normal;
     opacity: 0.5;
     border: 0.5px solid #FFFFFF;
+    background: #D8D8D8;
+    z-index: 1;
 }
 
 .mobile-menu {
@@ -206,7 +208,7 @@ textarea {
     font-family: 'Vazir-Medium', sans-serif;
     padding: 4px 11px;
     border-radius: 5px;
-    border: 1px solid #979797;
+    border: none;
     cursor: pointer;
     margin-left: 10px;
     margin-top: 10px;

@@ -139,6 +139,8 @@ pre, code {
     mix-blend-mode: normal;
     opacity: 0.5;
     border: 0.5px solid #FFFFFF;
+    background: #D8D8D8;
+    z-index: 1;
 }
 
 .mobile-menu {
@@ -328,8 +330,13 @@ pre, code {
 .python-code {
     padding: 15px 0 15px 20px;
     border-radius: 10px;
-    line-height: 20px;
     background-color: #0F0F10 !important;
+}
+
+.python-code code {
+    font-size: 16px;
+    line-height: 20px;
+    height: 20px;
 }
 
 /* --------- tree section -------- */
@@ -680,6 +687,7 @@ pre, code {
     }
 
     .banner .button-div {
+        font-family: 'Vazir-Medium', sans-serif;
         border-radius: 8px;
         margin-left: 54px;
         margin-bottom: 0;
