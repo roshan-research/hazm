@@ -24,19 +24,19 @@
     <img class="menu-icon active" src="../images/menu/mobile/menu.svg" alt="menu icon">
     <img class="close-icon" src="../images/menu/mobile/close.svg" alt="close icon">
     <div class="menu">
-      <a href="#" class="donate-link item1">
+      <a href="#" class="donate-link">
         <img src="../images/menu/web/support_icon.svg" alt="support icon">
         <span>حمایت از پروژه</span>
       </a>
-      <a href="#" class="item2">
+      <a href="#">
         <img src="../images/menu/web/demo_icon.svg" alt="demoIcon">
         <span>اجرای نمونه</span>
       </a>
-      <a href="https://github.com/sobhe/hazm" class="item3">
+      <a href="https://github.com/sobhe/hazm">
         <img src="../images/menu/web/git_icon.svg" alt="git_icon">
         <span>گیت هاب</span>
       </a>
-      <a href="https://www.roshan-ai.ir/jobs/" class="item4">
+      <a href="https://www.roshan-ai.ir/jobs/">
         <img src="../images/menu/web/join_us_icon.svg" alt="joinUsIcon">
         <span>فرصت همکاری</span>
       </a>
@@ -46,25 +46,25 @@
 <div class="line" style="display: none"></div>
 <div class="mobile-menu" style="display: none">
   <ul class="my-container">
-    <li class="item1">
+    <li>
       <a href="#">
         <img src="../images/menu/mobile/demo_icon.svg" alt="demoIcon">
         <span>اجرای نمونه</span>
       </a>
     </li>
-    <li class="item2">
+    <li>
       <a href="https://github.com/sobhe/hazm">
         <img src="../images/menu/mobile/git_icon.svg" alt="git_icon">
         <span>گیت هاب</span>
       </a>
     </li>
-    <li class="item3">
+    <li>
       <a href="#" class="donate-link">
         <img src="../images/menu/mobile/support_icon.svg" alt="support icon">
         <span>حمایت از پروژه</span>
       </a>
     </li>
-    <li class="item4">
+    <li>
       <a href="https://www.roshan-ai.ir/jobs/">
         <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon">
         <span>فرصت همکاری</span>
@@ -86,38 +86,49 @@
     </div>
   </div>
   <div class="analyze-section" style="display: none">
-    <div class="demo has-text" id="normalized">
+    <div class="demo" id="normalized">
       <h3>متن تمیز</h3>
       <div></div>
     </div>
-    <div class="demo has-text" id="corrected">
+    <div class="demo" id="corrected">
       <h3>
         متن اصلاح‌شده
-        <span class="info glyphicon glyphicon-plus-sign"
-              data-toggle="tooltip"
-              data-placement="left"
-              title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید.">
-        </span>
+        <img
+            class="plus_icon"
+            src="../images/add.png"
+            alt="add_png"
+            data-toggle="tooltip"
+            data-placement="auto"
+            title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید."
+        />
       </h3>
       <div></div>
     </div>
-    <div class="demo has-li" id="tokenized">
+    <div class="demo" id="tokenized">
       <h3>واژه‌های متن</h3>
-      <div></div>
+      <div>
+        <ul></ul>
+      </div>
     </div>
-    <div class="demo has-li" id="lemmatized">
+    <div class="demo" id="lemmatized">
       <h3>ریشه واژه‌ها</h3>
-      <div></div>
+      <div>
+        <ul></ul>
+      </div>
     </div>
-    <div class="demo has-li" id="tagged">
+    <div class="demo" id="tagged">
       <h3 class="green-title">تحلیل صرفی</h3>
-      <div></div>
+      <div>
+        <ul></ul>
+      </div>
     </div>
-    <div class="demo has-li" id="chunked">
+    <div class="demo" id="chunked">
       <h3 class="red-title">تجزیه سطحی</h3>
-      <div></div>
+      <div>
+        <ul></ul>
+      </div>
     </div>
-    <div class="demo has-li" id="parsed">
+    <div class="demo" id="parsed">
       <h3 class="red-title">تجزیه نحوی</h3>
       <div></div>
     </div>
@@ -125,9 +136,10 @@
 </div>
 
 <!------------------------- footer section -------------------------->
-<div class="footer my-container">
-  <p>کاری از <a href="https://www.roshan-ai.ir">روشن</a></p>
-</div>
+<p class="footer my-container">
+  <span>کاری از </span>
+  <a href="https://www.roshan-ai.ir">روشن</a>
+</p>
 
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -170,9 +182,9 @@
           lemmatize({'tokenized_text': tokenized_text});
           $('#tag').attr('tokenized_text', tokenized_text).show();
           sentences = $.parseJSON(tokenized_text);
-          tokenized.show().find('div').empty();
+          tokenized.show().find('ul').empty();
           for (s in sentences) {
-            $('#tokenized div').append('<li>' + sentences[s].join(' ') + '</li>');
+            $('#tokenized ul').append('<li>' + sentences[s].join(' ') + '</li>');
           }
           tokenized.addClass('added-data')
         })
@@ -182,9 +194,9 @@
     $.post(server + '/lemmatize', data)
         .done(function (lemmatized_text) {
           sentences = $.parseJSON(lemmatized_text);
-          lemmatized.show().find('div').empty();
+          lemmatized.show().find('ul').empty();
           for (s in sentences) {
-            $('#lemmatized div').append('<li>' + sentences[s].join(' ') + '</li>');
+            $('#lemmatized ul').append('<li>' + sentences[s].join(' ') + '</li>');
           }
           lemmatized.addClass('added-data')
         });
@@ -196,12 +208,12 @@
           $('#tag').hide();
           $('#parse').attr('tagged_text', tagged_text).show();
           sentences = $.parseJSON(tagged_text);
-          tagged.show().find('div').empty();
+          tagged.show().find('ul').empty();
           for (s in sentences) {
             sentence = $.map(sentences[s], function (word) {
               return word.join('/');
             });
-            $('#tagged div').append('<li>' + sentence.join(' ') + '</li>');
+            $('#tagged ul').append('<li>' + sentence.join(' ') + '</li>');
           }
           tagged.addClass('added-data')
         })
@@ -211,9 +223,9 @@
     $.post(server + '/chunk', data)
         .done(function (chunked_text) {
           sentences = $.parseJSON(chunked_text);
-          chunked.show().find('div').empty();
+          chunked.show().find('ul').empty();
           for (s in sentences) {
-            $('#chunked div').append('<li>' + sentences[s] + '</li>');
+            $('#chunked ul').append('<li>' + sentences[s] + '</li>');
           }
           chunked.addClass('added-data')
         });

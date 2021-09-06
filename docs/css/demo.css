@@ -4,14 +4,15 @@
 
 /* ------------- variables ---------- */
 :root {
-    --mobile-head-right-padding: 40px;
+    --mobile-head-right-padding: 15px;
+    --web-head-right-padding: 20px;
 }
 
 /* ---------------------------------------------------- mobile version ------------------------------------------------------------*/
 body {
     direction: rtl;
     font-family: 'Vazir', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #666666;
     background: #E5E0CC
 }
@@ -29,31 +30,20 @@ body {
 
 @media screen and (min-width: 326px) {
     .my-container {
-        max-width: 86%;
+        max-width: 87%;
     }
+}
+
+h1 {
+    font-family: 'Vazir-Bold', sans-serif;
+}
+
+h1, h3 {
+    margin: 0;
 }
 
 ul {
     margin-bottom: 0;
-    padding-right: 17px;
-}
-
-.demo > div, p, li {
-    font-family: 'Vazir', sans-serif;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: right;
-    color: #666666;
-    word-break: break-word;
-}
-
-label, h3 {
-    font-family: 'Vazir-Medium', sans-serif;
-    color: #303030;
-    font-size: 16px;
-    line-height: 27px;
-    height: 27px;
-    margin: 0;
 }
 
 /*----------------------------- header  -------------------------------*/
@@ -67,25 +57,25 @@ label, h3 {
     position: relative;
     color: #FFFFFF;
     height: 100%;
-    padding: 21px var(--mobile-head-right-padding) 17px 31px;
+    padding: 19px var(--mobile-head-right-padding);
 }
 
 .header .logo {
     height: 37px;
     width: max-content;
-    font-family: 'Vazir-Bold', sans-serif;
-    margin: 0;
+    cursor: pointer;
     font-size: 22px;
     line-height: 37px;
-    vertical-align: top;
-    cursor: pointer;
+}
+
+.header .logo:hover {
+    opacity: 0.8;
 }
 
 .header .text {
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0;
-    Vertical-align: top;
 }
 
 .header .menu-icon, .header .close-icon {
@@ -96,20 +86,20 @@ label, h3 {
     display: block;
     cursor: pointer;
     position: absolute;
-    width: 15px;
+    width: 18px;
     height: 8px;
-    left: 31.5px;
-    top: 36px;
+    left: var(--mobile-head-right-padding);
+    top: 44px;
 }
 
 .header .close-icon.active {
     display: block;
     cursor: pointer;
     position: absolute;
-    width: 11.31px;
-    height: 11.31px;
-    left: 33.34px;
-    top: 34.84px;
+    width: 13px;
+    height: 13px;
+    left: calc(var(--mobile-head-right-padding) + 3px);
+    top: 41px;
 }
 
 /* ------------------------- header's mobile menu --------------------- */
@@ -122,25 +112,28 @@ label, h3 {
     mix-blend-mode: normal;
     opacity: 0.5;
     border: 0.5px solid #FFFFFF;
+    background: #D8D8D8;
+    z-index: 1;
 }
 
 .mobile-menu {
     display: block;
     background: #3E71B2;
-    height: 570.5px;
+    height: 100%;
+    width: 100%;
     position: absolute;
-    left: 0;
     right: 0;
     top: 95.5px;
 }
 
 .mobile-menu ul {
     list-style-type: none;
-    padding: 41.5px var(--mobile-head-right-padding) 0 0;
+    padding: 43px var(--mobile-head-right-padding) 0 0;
 }
 
 .mobile-menu ul li {
     width: max-content;
+    margin-bottom: 36px;
 }
 
 .mobile-menu ul a {
@@ -148,63 +141,18 @@ label, h3 {
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-.mobile-menu .item1 {
-    margin-bottom: 40px;
-}
-
-.mobile-menu .item1 img {
-    width: 31px;
-    height: 16.5px;
-}
-
-.mobile-menu .item2 {
-    margin-bottom: 35px;
-}
-
-.mobile-menu .item2 img {
-    width: 25px;
-    height: 15.49px;
-}
-
-.mobile-menu .item3 {
-    margin-bottom: 44px;
-}
-
-.mobile-menu .item3 img {
-    width: 21.6px;
-    height: 28.5px;
-}
-
-.mobile-menu .item4 img {
-    width: 32px;
-    height: 22px;
+.mobile-menu img {
+    width: 30px;
+    height: 30px;
 }
 
 .mobile-menu span {
-    font-family: 'Vazir-Medium', sans-serif;
-    font-size: 16px;
+    font-family: 'Vazir-Light', sans-serif;
     line-height: 27px;
     height: 27px;
-    width: max-content;
-}
-
-.mobile-menu .item1 span {
-    margin-right: 22px;
-}
-
-.mobile-menu .item2 span {
-    margin-right: 25px;
-}
-
-.mobile-menu .item3 span {
-    margin-right: 27px;
-}
-
-.mobile-menu .item4 span {
-    margin-right: 22px;
+    margin-right: 21px;
 }
 
 /* ------------------------ header's web menu -------------------------*/
@@ -217,21 +165,23 @@ label, h3 {
     background: #FFFFFF;
     border: 0.5px solid #CECCC5;
     border-radius: 10px;
-    padding: 30px 25px 65px 25px;
+    padding: 29px 26px 61px 26px;
 }
 
 /*----------------------------- query section --------------------------------- */
 label {
     display: block;
     margin-bottom: 10px;
-    font-weight: 500;
+    font-family: 'Vazir-Medium', sans-serif;
+    font-weight: 500; /* for override bootstrap label's font-weight, should be this line*/
+    color: #303030;
+    line-height: 27px;
 }
 
 textarea {
     display: block;
     font-family: 'Vazir-Light', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
+    line-height: 25px;
     text-align: right;
     color: #666666;
     height: 148px;
@@ -239,7 +189,6 @@ textarea {
     width: 100%;
     resize: vertical;
     padding: 11px 10px;
-    margin-bottom: 10px;
     background: #FFFFFF;
     border: 1px solid #CDCDCD;
     border-radius: 5px;
@@ -250,19 +199,19 @@ textarea {
 .controls {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .my-btn {
-    font-size: 16px;
     line-height: 27px;
-    text-align: right;
     color: #FFFFFF;
     font-family: 'Vazir-Medium', sans-serif;
     padding: 4px 11px;
     border-radius: 5px;
-    border: 1px solid #979797;
+    border: none;
     cursor: pointer;
     margin-left: 10px;
+    margin-top: 10px;
 }
 
 .my-btn:hover {
@@ -283,41 +232,45 @@ textarea {
 
 .loading {
     display: none;
-    background: url(../images/loading.gif);
-    height: 32px;
-    width: 32px;
+    background: url(../images/loading.gif) no-repeat center;
+    height: 35px;
+    width: 35px;
 }
 
 /*---------- show-text-section ---- */
 .analyze-section {
-    margin-top: 40px;
-}
-
-.added-data:not(:first-child) {
     margin-top: 36px;
 }
 
+.added-data:not(:first-child) {
+    margin-top: 40px;
+}
+
 .demo h3 {
-    height: 33px;
-    padding: 3px 10px;
+    font-family: 'Vazir-Medium', sans-serif;
+    color: #337AB7;
+    font-size: 16px !important;
+    line-height: 27px;
+    padding: 6px 10px 7px 10px;
     background: #F2F2F2;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .demo > div {
+    line-height: 21px;
     padding: 0 10px;
+    word-break: break-word;
 }
 
-.has-text h3 {
-    margin-bottom: 3px;
-}
-
-.has-li h3 {
-    margin-bottom: 7px;
+.demo > div ul {
+    padding-right: 21px;
 }
 
 .demo li {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    line-height: 21px;
+    word-break: break-word;
 }
 
 .green-title {
@@ -328,37 +281,23 @@ textarea {
     color: #D9534F;
 }
 
-.glyphicon {
-    top: 3px;
-}
-
-/*#corrected h3:after {TODO*/
-    /*content:"\2b";*/
-    /*font-size: 90%;*/
-/*}*/
-
-.content .glyphicon {
-    font-size: 90%;
-}
-
-.info {
-    color: #bbb;
+.plus_icon {
     cursor: pointer;
-}
-
-.info:hover {
-    color: #333;
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
+    margin-top: 1px;
 }
 
 /* --------- tree section -------- */
 .tree {
-    margin-top: 20px;
+    margin-top: 60px;
     overflow-x: auto;
     overflow-y: hidden;
 }
 
 .tree svg {
-    overflow: visible!important;
+    overflow: visible !important;
     margin: auto;
     display: block;
 }
@@ -379,79 +318,66 @@ textarea {
 
 .edge, .arrow {
     stroke: #CCCCCC;
-    stroke-width: 1.5;
 }
 
 .tag {
     display: none;
 }
 
-.dependency.active {
+.dependency.active, .word.active {
     fill: #3276b1;
 }
-.word.active, .edge.active, .arrow.active {
+
+.edge.active, .arrow.active {
     stroke: #3276b1 !important;
 }
 
 
 /*----------------------------- footer  -------------------------------*/
 .footer {
-    padding: 20px 5px 41px 0;
+    padding: 10px 5px 25px 5px;
+    font-size: 14px;
+    line-height: 24px;
 }
 
 .footer a {
-    font-family: 'Vazir-Bold', sans-serif;
     color: #2F79B9;
+    font-family: 'Vazir-Bold', sans-serif;
     text-decoration: none;
 }
 
 /* ---------------------------------------------------- web version ----------------------------------------------------------------*/
 
 @media screen and (min-width: 992px) {
-    /* font-size and other size are 0.8 final size in 1920 */
     body {
         background: #EAE5D1;
     }
 
-    ul {
-        padding-right: 18px;
-    }
-
-    .demo > div, p, li {
-        font-size: 19px;
-    }
-
-    label, h3 {
-        font-family: 'Vazir-Bold', sans-serif;
-        font-size: 19px;
-        line-height: 32px;
-        height: 32px;
-    }
-
     .my-container {
-        max-width: 95%;
+        max-width: 910px;
     }
 
     /*----------------------------- header  -------------------------------*/
     .header-container {
-        height: 158px;
-        margin-bottom: 33px;
+        height: 140px;
+        margin-bottom: 36px;
     }
 
     .header {
         height: 100%;
-        padding: 29px 12px 18px 0;
+        padding: 24px var(--web-head-right-padding) 38px var(--web-head-right-padding);
     }
 
     .header .logo {
-        height: 67px;
-        line-height: 67px;
-        font-size: 40px;
+        font-size: 30px;
+        line-height: 51px;
+        height: 51px;
     }
 
     .header .text {
-        font-size: 19px;
-        line-height: 32px;
+        font-size: 16px;
+        line-height: 27px;
+        height: 27px;
     }
 
     .header .menu-icon, .header .close-icon {
@@ -477,8 +403,8 @@ textarea {
         flex-direction: row;
         justify-content: space-between;
         position: absolute;
-        left: 31px;
-        top: 137px;
+        left: var(--web-head-right-padding);
+        top: 116px;
     }
 
     .menu a {
@@ -489,13 +415,14 @@ textarea {
         justify-content: center;
         color: #545757;
         background: linear-gradient(180deg, #FFE385 0%, #FFCF36 100%);
-        border: 1.6px solid #D9A600;
-        border-radius: 2.4px;
-        padding: 5.6px 9.6px 5.6px 16px;
+        border: 1px solid #D9A600;
+        box-shadow: 0 1px 1px #C9C9C9;
+        border-radius: 3px;
+        padding: 2px 8px 3px 15px;
     }
 
     .menu a:not(:first-child) {
-        margin-right: 16px;
+        margin-right: 12px;
     }
 
     .menu a:hover {
@@ -506,34 +433,19 @@ textarea {
     .menu span {
         width: max-content;
         font-size: 16px;
-        line-height: 27px;
-        height: 27px;
+        line-height: 35px;
+        height: 35px;
+        margin-right: 8px;
     }
 
     .menu img {
-        width: 31px;
-        height: 31px;
-    }
-
-    .item1 span {
-        margin-right: 4.8px;
-    }
-
-    .item2 span {
-        margin-right: 13.6px;
-    }
-
-    .item3 span {
-        margin-right: 9.6px;
-    }
-
-    .item4 span {
-        margin-right: 12px;
+        width: 30px;
+        height: 30px;
     }
 
     /*----------------------------- content and titles -------------------------------*/
     .content {
-        padding: 68px 48px 112px 48px;
+        padding: 53px 40px 100px 40px;
         background: #FBFBFB;
         border: 2px solid #CCCBCA;
         border-radius: 5px;
@@ -541,205 +453,32 @@ textarea {
 
     /*----------------------------- query section --------------------------------- */
     label {
-        margin-bottom: 17px;
-        font-weight: 700;
-    }
-
-    textarea {
-        font-size: 19px;
-        padding: 16px 14px;
-        margin-bottom: 12px;
-    }
-
-    /*----------------- query buttons -------------- */
-    .my-btn {
-        font-size: 19px;
-        line-height: 32px;
-        padding: 6px 12px;
-        border-radius: 5.6px;
-        margin-left: 12px;
-    }
-
-    .loading {
-        height: 34px;
-        width: 34px;
-    }
-
-    /*---------- show-text-section ---- */
-    .analyze-section {
-        margin-top: 80px;
-    }
-
-    .added-data:not(:first-child) {
-        margin-top: 56px;
-    }
-
-    .demo h3 {
-        height: 48px;
-        padding: 8px 16px;
-        margin-bottom: 17px;
-    }
-
-    .demo > div {
-        padding: 0;
-    }
-
-    .demo li {
-        margin-bottom: 17px;
-    }
-
-    /* --------- tree section -------- */
-    .tree {
-        margin-top: 60px;
-    }
-
-    /*----------------------------- footer  -------------------------------*/
-    .footer {
-        padding: 16px 24px 56px 0;
-    }
-
-    .footer p {
-        font-family: 'Vazir-Medium', sans-serif;
-        font-size: 21px;
-        line-height: 35px;
-        color: #ADA99D;
-    }
-
-    .footer a {
-        font-family: 'Vazir-Medium', sans-serif;
-        color: #337AB7;
-    }
-}
-
-@media screen and (min-width: 1110px) {
-    .my-container {
-        max-width: 80%;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .my-container {
-        max-width: 70%;
-    }
-}
-
-@media screen and (min-width: 1550px) {
-    body {
-        font-size: 24px;
-    }
-
-    ul {
-        padding-right: 22px; /* TODO */
-    }
-
-    .demo > div, p, li {
-        font-size: 24px;
-    }
-
-    label, h3 {
-        font-size: 24px;
-        line-height: 40px;
-        height: 40px;
-    }
-
-    /*----------------------------- header  -------------------------------*/
-    .header-container {
-        height: 198px;
-        margin-bottom: 42px;
-    }
-
-    .header {
-        height: 100%;
-        padding: 37px 15px 23px 0;
-    }
-
-    .header .logo {
-        height: 84px;
-        line-height: 84px;
-        font-size: 50px;
-    }
-
-    .header .text {
-        font-size: 24px;
-        line-height: 40px;
-    }
-
-    /* ------------------------ header's menu css -------------------------*/
-    .menu {
-        left: 31px;
-        top: 172px;
-    }
-
-    .menu a {
-        border: 2px solid #D9A600;
-        border-radius: 3px;
-        padding: 7px 12px 7px 20px;
-    }
-
-    .menu a:not(:first-child) {
-        margin-right: 20px;
-    }
-
-    .menu span {
         font-size: 20px;
-        line-height: 34px;
-        height: 34px;
-    }
-
-    .menu img {
-        width: 39px;
-        height: 39px;
-    }
-
-    .item1 span {
-        margin-right: 6px;
-    }
-
-    .item2 span {
-        margin-right: 17px;
-    }
-
-    .item3 span {
-        margin-right: 12px;
-    }
-
-    .item4 span {
-        margin-right: 15px;
-    }
-
-    /*----------------------------- content and titles -------------------------------*/
-    .content {
-        padding: 85px 60px 140px 60px;
-    }
-
-    /*----------------------------- query section --------------------------------- */
-    label {
-        margin-bottom: 21px;
+        line-height: 35px;
+        font-family: 'Vazir-Bold', sans-serif;
+        margin-bottom: 15px;
     }
 
     textarea {
-        font-size: 24px;
-        padding: 20px 18px;
+        padding: 12px 18px;
         margin-bottom: 15px;
     }
 
     /*----------------- query buttons -------------- */
     .my-btn {
-        font-size: 24px;
-        line-height: 40px;
-        padding: 8px 14px;
+        padding: 7px 16px 6px 16px;
         border-radius: 7px;
         margin-left: 15px;
     }
 
     .loading {
-        height: 42px;
-        width: 42px;
+        height: 40px;
+        width: 40px;
     }
 
     /*---------- show-text-section ---- */
     .analyze-section {
-        margin-top: 100px;
+        margin-top: 91px;
     }
 
     .added-data:not(:first-child) {
@@ -747,17 +486,19 @@ textarea {
     }
 
     .demo h3 {
-        height: 60px;
-        padding: 10px 20px;
-        margin-bottom: 21px;
+        font-family: 'Vazir-Bold', sans-serif;
+        padding: 12px 24px 11px 24px;
+        margin-bottom: 15px;
     }
 
     .demo > div {
-        padding: 0;
+        line-height: 25px;
+        padding: 0 24px;
     }
 
     .demo li {
-        margin-bottom: 21px;
+        margin-bottom: 15px;
+        line-height: 25px;
     }
 
     /* --------- tree section -------- */
@@ -765,21 +506,34 @@ textarea {
         margin-top: 80px;
     }
 
+    .edge.w0 {
+        stroke: #666666;
+    }
+
+    .edge {
+        stroke-width: 0.5;
+    }
+
+    .edge, .arrow {
+        stroke: #9E9E9E;
+    }
+
+    .dependency {
+        font-family: 'Vazir-Light', sans-serif;
+    }
+
     /*----------------------------- footer  -------------------------------*/
     .footer {
-        padding: 20px 30px 70px 0;
+        padding: 10px 20px 65px 10px;
     }
 
-    .footer p {
-        font-size: 26px;
-        line-height: 44px;
-        height: 44px;
+    .footer span {
+        font-family: 'Vazir-Medium', sans-serif;
+        color: #ADA99D;
     }
-}
 
-@media screen and (min-width: 1920px) {
-
-    .my-container {
-        max-width: 1358px;
+    .footer a {
+        font-family: 'Vazir-Medium', sans-serif;
+        color: #337AB7;
     }
 }
