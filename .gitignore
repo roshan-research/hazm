@@ -4,3 +4,4 @@ corpora
 build
 dist
 *.pyc
+hazm.egg-info
