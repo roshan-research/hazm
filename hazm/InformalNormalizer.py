@@ -160,8 +160,6 @@ class InformalNormalizer(Normalizer):
 					)
 				FoundEarly = True
 
-			if word.endswith("‌") or word.endswith("‎"):
-				word = word[:-1]
 			if not FoundEarly:
 				for endWord in endWordsList:
 					if word.endswith(endWord):
@@ -231,92 +229,25 @@ class InformalNormalizer(Normalizer):
 
 			collectionOfVerbList = []
 
+			endVerbList = ["یم", "دم", "دیم", "ید", "دی", "دید", "ند", "دن", "دند", "ین", "دین", "ست", "م", "ی", "ه", "د", "ن"]
 
-			if word.endswith("یم"):
-				collectionOfVerbList.append({
-					"word" : word[:-2],
-					"suffix" : "یم"
-				})
-			if word.endswith("دم"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "دم"
-				})
-			if word.endswith("دیم"):
-				collectionOfVerbList.append({
-					"word": word[:-3],
-					"suffix": "دیم"
-				})
-			if word.endswith("ید"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "ید"
-				})
-			if word.endswith("دی"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "دی"
-				})
-			if word.endswith("دید"):
-				collectionOfVerbList.append({
-					"word": word[:-3],
-					"suffix": "دید"
-				})
-			if word.endswith("ند"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "ند"
-				})
-			if word.endswith("دن"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "دن"
-				})
-			if word.endswith("دند"):
-				collectionOfVerbList.append({
-					"word": word[:-3],
-					"suffix": "دند"
-				})
-			if word.endswith("ین"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "ید"
-				})
-			if word.endswith("دین"):
-				collectionOfVerbList.append({
-					"word": word[:-3],
-					"suffix": "دین"
-				})
-			if word.endswith("ست"):
-				collectionOfVerbList.append({
-					"word": word[:-2],
-					"suffix": "ست"
-				})
-			if word.endswith("م"):
-				collectionOfVerbList.append({
-					"word": word[:-1],
-					"suffix": "م"
-				})
-			if word.endswith("ی"):
-				collectionOfVerbList.append({
-					"word": word[:-1],
-					"suffix": "ی"
-				})
-			if word.endswith("ه"):
-				collectionOfVerbList.append({
-					"word": word[:-1],
-					"suffix": "د"
-				})
-			if word.endswith("د"):
-				collectionOfVerbList.append({
-					"word": word[:-1],
-					"suffix": "د"
-				})
-			if word.endswith("ن"):
-				collectionOfVerbList.append({
-					"word": word[:-1],
-					"suffix": "ن"
-				})
+			for endVerb in endVerbList:
+				if word.endswith(endVerb):
+					if endVerb == "ین":
+						collectionOfVerbList.append({
+							"word": word[:-2],
+							"suffix": "ید"
+						})
+					elif endVerb == "ه":
+						collectionOfVerbList.append({
+							"word": word[:-1],
+							"suffix": "د"
+						})
+					else:
+						collectionOfVerbList.append({
+							"word": word[:-1 * len(endVerb)],
+							"suffix": endVerb
+						})
 			collectionOfVerbList.append({
 				"word": word,
 				"suffix": ""
