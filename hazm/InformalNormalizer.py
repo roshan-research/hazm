@@ -19,6 +19,9 @@ class InformalNormalizer(Normalizer):
 		self.stemmer = Stemmer()
 		super(InformalNormalizer, self).__init__(**kargs)
 
+		self.sent_tokenizer = SentenceTokenizer()
+		self.word_tokenizer = WordTokenizer()
+
 		with codecs.open(verb_file, encoding='utf8') as vf:
 			self.pastVerbs = {}
 			self.presentVerbs = {}
@@ -239,10 +242,21 @@ class InformalNormalizer(Normalizer):
 							"suffix": "ید"
 						})
 					elif endVerb == "ه":
-						collectionOfVerbList.append({
-							"word": word[:-1],
-							"suffix": "د"
-						})
+						if len(word) > 1:
+							if word[-2] != "د":
+								collectionOfVerbList.append({
+									"word": word[:-1],
+									"suffix": "د"
+								})
+							collectionOfVerbList.append({
+								"word": word[:-1],
+								"suffix": "ه"
+							})
+						else:
+							collectionOfVerbList.append({
+								"word": word[:-1],
+								"suffix": "ه"
+							})
 					else:
 						collectionOfVerbList.append({
 							"word": word[:-1 * len(endVerb)],
@@ -414,12 +428,14 @@ class InformalNormalizer(Normalizer):
 				"سراتو": ["سراتو"],
 				"فالو": ["فالو"],
 				"هرجا": ["هرجا"],
-				"نشده": ["نشده"],
 				"میدان": ["میدان"],
 				"کفا": ["کفا"],
 				"ویا": ["و یا"],
 				"نشد": ["نشد"],
-				"شو": ["شو", "اش را"],
+				"شو": ["شو"],
+				"مشیا": ["مشیا"],
+				"پلاسما": ["پلاسما"],
+				"فیلیمو": ["فیلیمو"],
 				"پاشو": ["پاشو"],
 				"میر": ["میر"],
 				"بارم": ["بار هم", "بارم"],
@@ -434,8 +450,19 @@ class InformalNormalizer(Normalizer):
 				"نده": ["نده"],
 				"شهرو": ["شهرو"],
 				"شیرو": ["شیرو"],
-				"نمانده": ["نمانده"],
-				"ندیده": ["ندیده"],
+				"نگذاشته": ["نگذاشته"],
+				"نگرفته": ["نگرفته"],
+				"نمیشناخته": ["نمی‌شناخته"],
+				"نمی‌شناخته": ["نمی‌شناخته"],
+				"بشین": ["بشین"],
+				"میخواسته": ["می‌خواسته"],
+				"می‌خواسته": ["می‌خواسته"],
+				"نمیخواسته": ["نمی‌خواسته"],
+				"نمی‌خواسته": ["نمی‌خواسته"],
+				"میتوانسته": ["می‌توانسته"],
+				"می‌توانسته": ["می‌توانسته"],
+				"میرفته": ["می‌رفته"],
+				"می‌رفته": ["می‌رفته"],
 				"نشین": ["نشین"],
 				"انا": ["انا"],
 				"خونی": ["خونی"],
@@ -459,14 +486,11 @@ class InformalNormalizer(Normalizer):
 				"بیا": ["بیا"],
 				"نیا": ["نیا"],
 				"میاد": ["می‌آید"],
-				"نکرده": ["نکرده"],
 				"نشدی": ["نشدی"],
 				"بخواند": ["بخواند"],
 				"سیا": ["سیا"],
 				"میدید": ["می‌دید"],
 				"می‌دید": ["می‌دید"],
-				"میداده": ["می‌داده"],
-				"می‌داده": ["می‌داده"],
 				"وا": ["وا"],
 				"برگشته": ["برگشته"],
 				"میخواست": ["می‌خواست"],
@@ -498,11 +522,17 @@ class InformalNormalizer(Normalizer):
 		return possibleWords
 
 	def normalize(self, text):
+		"""
+		>>> normalizer = InformalNormalizer()
+		>>> normalizer.normalize('بابا یه شغل مناسب واسه بچه هام پیدا کردن که به جایی برنمیخوره !')
+		[[['بابا'], ['یک'], ['شغل'], ['مناسب'], ['برای'], ['بچه'], ['هایم'], ['پیدا'], ['کردن'], ['که'], ['به'], ['جایی'], ['برنمی\u200cخورد', 'برنمی\u200cخوره'], ['!']]]
+		>>> normalizer = InformalNormalizer()
+		>>> normalizer.normalize('اجازه بدیم همسرمون در جمع خانواده‌اش احساس آزادی کنه و فکر نکنه که ما دائم هواسمون بهش هست .')
+		[[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
+		"""
 
-		sent_tokenizer = SentenceTokenizer()
-		word_tokenizer = WordTokenizer()
 		text = super(InformalNormalizer, self).normalize(text)
-		sents = [word_tokenizer.tokenize(sentence) for sentence in sent_tokenizer.tokenize(text)]
+		sents = [self.word_tokenizer.tokenize(sentence) for sentence in self.sent_tokenizer.tokenize(text)]
 
 		return [[self.normalized_word(word) for word in sent] for sent in sents]
 
