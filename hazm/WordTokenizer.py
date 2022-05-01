@@ -133,6 +133,9 @@ class WordTokenizer(TokenizerI):
 		['خسته', 'شدید']
 		"""
 
+		if len(tokens) == 1:
+			return tokens
+
 		result = ['']
 		for token in reversed(tokens):
 			if token in self.before_verbs or (result[-1] in self.after_verbs and token in self.verbe):

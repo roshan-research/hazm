@@ -238,7 +238,7 @@ class InformalNormalizer(Normalizer):
 
 			collectionOfVerbList = []
 
-			endVerbList = ["یم", "دم", "دیم", "ید", "دی", "دید", "ند", "دن", "دند", "ین", "دین", "ست", "ستم", "ستی", "ستیم", "ستید", "ستند", "م", "ی", "ه", "د", "ن"]
+			endVerbList = ["یم", "دم", "دیم", "ید", "دی", "دید", "ند", "دن", "دند", "ین", "دین", "ست", "ستم", "ستی", "ستیم", "ستید", "ستند", "ستن", "م", "ی", "ه", "د", "ن"]
 
 			for endVerb in endVerbList:
 				if word.endswith(endVerb):
@@ -246,6 +246,11 @@ class InformalNormalizer(Normalizer):
 						collectionOfVerbList.append({
 							"word": word[:-2],
 							"suffix": "ید"
+						})
+					elif endVerb == "ستن":
+						collectionOfVerbList.append({
+							"word": word[:-3],
+							"suffix": "ستند"
 						})
 					elif endVerb == "ن":
 						collectionOfVerbList.append({
@@ -348,12 +353,24 @@ class InformalNormalizer(Normalizer):
 				if mainWord.startswith("‌") or mainWord.startswith("‎"):
 					mainWord = mainWord[1:]
 
+				mainWord2 = None
+				if mainWord.startswith("ا"):
+					mainWord2 = "آ" + mainWord[1:]
+
 				if mainWord in self.pastVerbs:
 					collectionOfVerbList[i]["word"] = self.pastVerbs[mainWord]
 					collectionOfRealVerbList.append(collectionOfVerbList[i])
 				if mainWord in self.presentVerbs:
 					collectionOfVerbList[i]["word"] = self.presentVerbs[mainWord]
 					collectionOfRealVerbList.append(collectionOfVerbList[i])
+
+				if mainWord2 != None and not (collectionOfVerbList[i]["preffix"] == "بربی" or collectionOfVerbList[i]["preffix"] == "بی"):
+					if mainWord2 in self.pastVerbs:
+						collectionOfVerbList[i]["word"] = self.pastVerbs[mainWord2]
+						collectionOfRealVerbList.append(collectionOfVerbList[i])
+					if mainWord2 in self.presentVerbs:
+						collectionOfVerbList[i]["word"] = self.presentVerbs[mainWord2]
+						collectionOfRealVerbList.append(collectionOfVerbList[i])
 
 			for i in range(len(collectionOfRealVerbList)):
 				preffix = collectionOfRealVerbList[i]["preffix"]
@@ -469,10 +486,59 @@ class InformalNormalizer(Normalizer):
 			straightForwardDic = {
 				"ب": ["به"],
 				"ک": ["که"],
+				"آن": ["آن"],
+				"می‌آید": ["می‌آید"],
+				"میاید": ["می‌آید"],
+				"می‌آیم": ["می‌آیم"],
+				"میایم": ["می‌آیم"],
+				"نمی‌آید": ["نمی‌آید"],
+				"نمیاید": ["نمی‌آید"],
+				"نمی‌آیم": ["نمی‌آیم"],
+				"نمیایم": ["نمی‌آیم"],
+				"برمی‌آید": ["برمی‌آید"],
+				"برمیاید": ["برمی‌آید"],
+				"برمی‌آیم": ["برمی‌آیم"],
+				"برمیایم": ["برمی‌آیم"],
+				"برنمی‌آید": ["برنمی‌آید"],
+				"برنمیاید": ["برنمی‌آید"],
+				"برنمی‌آیم": ["برنمی‌آیم"],
+				"برنمیایم": ["برنمی‌آیم"],
+				"منظوره": ["منظوره"],
+				"بدن": ["بدن"],
+				"میا": ["میا"],
+				"نیس": ["نیست"],
+				"فک": ["فکر"],
+				"برام": ["برایم"],
+				"آ": ["آ"],
+				"آی": ["آی"],
+				"این": ["این"],
+				"است": ["است"],
+				"ان": ["ان"],
+				"اند": ["اند"],
+				"میان": ["میان"],
+				"گردن": ["گردن"],
+				"اینهمه": ["اینهمه"],
+				"آنهمه": ["آنهمه"],
+				"الیه": ["الیه"],
+				"غرغره": ["غرغره"],
+				"لیله": ["لیله"],
+				"بزرگانه": ["بزرگانه"],
+				"پرستانه": ["پرستانه"],
+				"ام": ["ام"],
+				"بادی": ["بادی"],
+				"نان": ["نان"],
+				"باورم": ["باورم"],
+				"اوه": ["اوه"],
+				"چقد": ["چقدر"],
+				"چو": ["چون"],
+				"هس": ["هست"],
+				"اومدند": ["آمدند"],
 				"ش": ["اش"],
 				"بش": ["بهش"],
+                "ازت": ["از تو"],
 				"رو": ["را", "رو"],
 				"پایتون": ["پایتون"],
+                "اردن": ["اردن"],
 				"دست": ["دست"],
 				"دستی": ["دستی"],
 				"دستم": ["دستم"],
@@ -511,6 +577,8 @@ class InformalNormalizer(Normalizer):
 				"بشین": ["بشین"],
 				"هارو": ["ها را"],
 				"مارو": ["ما را"],
+				"میاومد": ["می‌آمد"],
+				"می‌اومد": ["می‌آمد"],
 				"میخواسته": ["می‌خواسته"],
 				"می‌خواسته": ["می‌خواسته"],
 				"نمیخواسته": ["نمی‌خواسته"],
