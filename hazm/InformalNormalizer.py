@@ -316,6 +316,7 @@ class InformalNormalizer(Normalizer):
 							"preffix": "",
 							"suffix": collectionOfVerbList[i]["suffix"]
 						})
+
 					if newMainWord != "":
 						collectionOfVerbList[i]["word"] = newMainWord
 				elif mainWord.startswith("نمی"):
@@ -332,6 +333,7 @@ class InformalNormalizer(Normalizer):
 						"preffix": "",
 						"suffix": collectionOfVerbList[i]["suffix"]
 					})
+
 				elif mainWord.startswith("بی"):
 					collectionOfVerbList[i]["preffix"] = "بی"
 					collectionOfVerbList[i]["word"] = mainWord[2:]
@@ -346,6 +348,7 @@ class InformalNormalizer(Normalizer):
 
 			for i in range(len(collectionOfVerbList2)):
 				collectionOfVerbList.append(collectionOfVerbList2[i])
+
 
 			collectionOfRealVerbList = []
 			for i in range(len(collectionOfVerbList)):
