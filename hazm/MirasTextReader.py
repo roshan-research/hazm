@@ -9,7 +9,7 @@ class MirasTextReader():
 	interfaces [MirasText Corpus](https://github.com/miras-tech/MirasText) that you must download and extract it.
 
 	>>> miras_text = MirasTextReader(filename='corpora/MirasText.txt')
-	>>> next(miras_text.texts())[:42]
+	>>> next(miras_text.texts())[:42]  # first 42 characters of fitst text
 	'ایرانی‌ها چقدر از اینترنت استفاده می‌کنند؟'
 	"""
 
