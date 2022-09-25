@@ -1,0 +1,10 @@
+hazm
+====
+
+.. toctree::
+   :maxdepth: 4
+
+   data
+   hazm
+   setup
+   tests

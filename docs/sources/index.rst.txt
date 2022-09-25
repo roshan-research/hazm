@@ -1,0 +1,28 @@
+Hazm
+====
+
+Python library for digesting Persian text.
+
++ Text cleaning
++ Sentence and word tokenizer
++ Word lemmatizer
++ POS tagger
++ Shallow parser
++ Dependency parser
++ Interfaces for Persian corpora
++ `NLTK <http://nltk.org/>`_ compatible
++ Python 2.7, 3.4, 3.5 and 3.6 support
++ |build-status|
+
+:Version: 0.7.0
+
+.. toctree::
+   :maxdepth: 4
+
+   data
+   hazm
+   tests
+
+.. |build-status| image:: https://img.shields.io/travis/sobhe/hazm.svg?style=flat
+        :alt: build status
+        :target: https://travis-ci.org/sobhe/hazm
