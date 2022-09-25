@@ -1,3 +1,9 @@
+# coding: utf-8
+
+"""این ماژول شامل توابعی برای استخراج متن به‌شکل تمیز از دیتابیس خام ویکی‌پدیا است.
+"""
+
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -220,10 +226,8 @@ def keepPage(ns, page):
                 return False
     return True
 
-
 def get_url(uid):
     return "%s?curid=%s" % (options.urlbase, uid)
-
 
 # =========================================================================
 #
@@ -267,6 +271,7 @@ placeholder_tags = {'math': 'formula', 'code': 'codice'}
 
 
 def normalizeTitle(title):
+    
     """Normalize title"""
     # remove leading/trailing whitespace and underscores
     title = title.strip(' _')
@@ -303,7 +308,6 @@ def normalizeTitle(title):
         title = ucfirst(title)
     return title
 
-
 def unescape(text):
     """
     Removes HTML or XML character references and entities from a text string.
@@ -327,7 +331,6 @@ def unescape(text):
             return text  # leave as is
 
     return re.sub("&#?(\w+);", fixup, text)
-
 
 # Match HTML comments
 # The buggy template {{Template:T}} has a comment terminating with just "->"
@@ -399,7 +402,6 @@ class Template(list):
         tpl.append(TemplateText(body[start:]))  # leftover
         return tpl
 
-
     def subst(self, params, extractor, depth=0):
         # We perform parameter substitutions recursively.
         # We also limit the maximum number of iterations to avoid too long or
@@ -467,7 +469,6 @@ class TemplateArg(object):
         else:
             return '{{{%s}}}' % self.name
 
-
     def subst(self, params, extractor, depth):
         """
         Substitute value for this argument from dict :param params:
@@ -487,7 +488,6 @@ class TemplateArg(object):
         # logging.debug('subst arg %d %s -> %s' % (depth, paramName, res))
         return res
 
-
 class Frame(object):
 
     def __init__(self, title='', args=[], prev=None):
@@ -496,14 +496,11 @@ class Frame(object):
         self.prev = prev
         self.depth = prev.depth + 1 if prev else 0
 
-
     def push(self, title, args):
         return Frame(title, args, self)
 
-
     def pop(self):
         return self.prev
-
 
     def __str__(self):
         res = ''
@@ -644,7 +641,6 @@ class Extractor(object):
             logging.warn("Template errors in article '%s' (%s): title(%d) recursion(%d, %d, %d)",
                          self.title, self.id, *errs)
 
-
     def transform(self, wikitext):
         """
         Transforms wiki markup.
@@ -660,7 +656,6 @@ class Extractor(object):
         res += self.transform1(wikitext[cur:])
         return res
 
-
     def transform1(self, text):
         """Transform text not containing <nowiki>"""
         if options.expand_templates:
@@ -670,7 +665,6 @@ class Extractor(object):
         else:
             # Drop transclusions (template, parser functions)
             return dropNested(text, r'{{', r'}}')
-
 
     def wiki2text(self, text):
         #
@@ -726,7 +720,6 @@ class Extractor(object):
             cur = m.end()
         text = res + unescape(text[cur:])
         return text
-
 
     def clean(self, text):
         """
@@ -793,7 +786,6 @@ class Extractor(object):
             text = cgi.escape(text)
         return text
 
-
     # ----------------------------------------------------------------------
     # Expand templates
 
@@ -843,7 +835,6 @@ class Extractor(object):
         res += wikitext[cur:]
         # logging.debug('%*sexpand> %s', self.frame.depth, '', res)
         return res
-
 
     def templateParams(self, parameters):
         """
@@ -912,7 +903,6 @@ class Extractor(object):
                 templateParams[str(unnamedParameterCounter)] = param
         # logging.debug('%*stemplateParams> %s', self.frame.length, '', '|'.join(templateParams.values()))
         return templateParams
-
 
     def expandTemplate(self, body):
         """Expands template invocation.
@@ -1084,7 +1074,6 @@ class Extractor(object):
         logging.debug('%*s<EXPAND %s %s', self.frame.depth, '', title, value)
         return value
 
-
 # ----------------------------------------------------------------------
 # parameter handling
 
@@ -1160,7 +1149,6 @@ def splitParts(paramsList):
 
     # logging.debug('splitParts %s %s\nparams: %s', sep, paramsList, text_type(parameters))
     return parameters
-
 
 def findMatchingBraces(text, ldelim=0):
     """
@@ -1271,7 +1259,6 @@ def findMatchingBraces(text, ldelim=0):
                 # unmatched ]] are discarded
                 cur = end
 
-
 def findBalanced(text, openDelim=['[['], closeDelim=[']]']):
     """
     Assuming that text contains a properly balanced expression using
@@ -1312,7 +1299,6 @@ def findBalanced(text, openDelim=['[['], closeDelim=[']]']):
                 start = next.end()
                 startSet = False
         cur = next.end()
-
 
 # ----------------------------------------------------------------------
 # Modules
@@ -1362,7 +1348,6 @@ def if_empty(*rest):
             return arg
     return ''
 
-
 # ----------------------------------------------------------------------
 # String module emulation
 # https://en.wikipedia.org/wiki/Module:String
@@ -1386,7 +1371,6 @@ def functionParams(args, vars):
         params[var] = value
     return params
 
-
 def string_sub(args):
     params = functionParams(args, ('s', 'i', 'j'))
     s = params.get('s', '')
@@ -1397,7 +1381,6 @@ def string_sub(args):
     if j == 0: j = len(s)
     return s[i:j]
 
-
 def string_sublength(args):
     params = functionParams(args, ('s', 'i', 'len'))
     s = params.get('s', '')
@@ -1405,12 +1388,10 @@ def string_sublength(args):
     len = int(params.get('len', 1) or 1)
     return s[i:i+len]
 
-
 def string_len(args):
     params = functionParams(args, ('s'))
     s = params.get('s', '')
     return len(s)
-
 
 def string_find(args):
     params = functionParams(args, ('source', 'target', 'start', 'plain'))
@@ -1425,7 +1406,6 @@ def string_find(args):
     else:
         return (re.compile(pattern).search(source, start) or -1) + 1
 
-
 def string_pos(args):
     params = functionParams(args, ('target', 'pos'))
     target = params.get('target', '')
@@ -1433,7 +1413,6 @@ def string_pos(args):
     if pos > 0:
         pos -= 1 # The first character has an index value of 1
     return target[pos]
-
 
 def string_replace(args):
     params = functionParams(args, ('source', 'pattern', 'replace', 'count', 'plain'))
@@ -1450,13 +1429,11 @@ def string_replace(args):
     else:
         return re.compile(pattern).sub(replace, source, count)
 
-
 def string_rep(args):
     params = functionParams(args, ('s'))
     source = params.get('source', '')
     count = int(params.get('count', '1'))
     return source * count
-
 
 # ----------------------------------------------------------------------
 # Module:Roman
@@ -1522,7 +1499,6 @@ modules = {
 
 # ----------------------------------------------------------------------
 # variables
-
 
 class MagicWords(object):
     """
@@ -1640,13 +1616,10 @@ class MagicWords(object):
         '__DISAMBIG__'
     )
 
-
 magicWordsRE = re.compile('|'.join(MagicWords.switches))
-
 
 # ----------------------------------------------------------------------
 # parser functions utilities
-
 
 def ucfirst(string):
     """:return: a string with just its first character uppercase
@@ -1657,7 +1630,6 @@ def ucfirst(string):
     else:
         return ''
 
-
 def lcfirst(string):
     """:return: a string with its first character lowercase"""
     if string:
@@ -1667,7 +1639,6 @@ def lcfirst(string):
             return string.lower()
     else:
         return ''
-
 
 def fullyQualifiedTemplateTitle(templateTitle):
     """
@@ -1701,10 +1672,8 @@ def fullyQualifiedTemplateTitle(templateTitle):
     else:
         return ''  # caller may log as error
 
-
 def normalizeNamespace(ns):
     return ucfirst(ns)
-
 
 # ----------------------------------------------------------------------
 # Parser functions
@@ -1736,12 +1705,9 @@ class Infix:
     def __call__(self, value1, value2):
         return self.function(value1, value2)
 
-
 ROUND = Infix(lambda x, y: round(x, y))
 
-
 from math import floor, ceil, pi, e, trunc, exp, log as ln, sin, cos, tan, asin, acos, atan
-
 
 def sharp_expr(extr, expr):
     """Tries converting a lua expr into a Python expr."""
@@ -1755,7 +1721,6 @@ def sharp_expr(extr, expr):
     except:
         return '<span class="error">%s</span>' % expr
 
-
 def sharp_if(extr, testValue, valueIfTrue, valueIfFalse=None, *args):
     # In theory, we should evaluate the first argument here,
     # but it was evaluated while evaluating part[0] in expandTemplate().
@@ -1768,7 +1733,6 @@ def sharp_if(extr, testValue, valueIfTrue, valueIfFalse=None, *args):
     elif valueIfFalse:
         return extr.expand(valueIfFalse.strip()) # eval
     return ""
-
 
 def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
     rvalue = rvalue.strip()
@@ -1787,7 +1751,6 @@ def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
                 return extr.expand(valueIfFalse.strip())
     return ""
 
-
 def sharp_iferror(extr, test, then='', Else=None, *args):
     if re.match('<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"', test):
         return extr.expand(then.strip())
@@ -1795,7 +1758,6 @@ def sharp_iferror(extr, test, then='', Else=None, *args):
         return test.strip()
     else:
         return extr.expand(Else.strip())
-
 
 def sharp_switch(extr, primary, *params):
     # FIXME: we don't support numeric expressions in primary
@@ -1840,7 +1802,6 @@ def sharp_switch(extr, primary, *params):
         return default
     return ''
 
-
 # Extension Scribunto: https://www.mediawiki.org/wiki/Extension:Scribunto
 def sharp_invoke(module, function, args):
     functions = modules.get(module)
@@ -1849,7 +1810,6 @@ def sharp_invoke(module, function, args):
         if funct:
             return text_type(funct(args))
     return ''
-
 
 parserFunctions = {
 
@@ -1893,7 +1853,6 @@ parserFunctions = {
 
 }
 
-
 def callParserFunction(functionName, args, extractor):
     """
     Parser functions have similar syntax as templates, except that
@@ -1936,7 +1895,6 @@ def callParserFunction(functionName, args, extractor):
     except:
         return ""  # FIXME: fix errors
     return ""
-
 
 # ----------------------------------------------------------------------
 # Expand using WikiMedia API
@@ -2475,7 +2433,6 @@ def replaceExternalLinks(text):
 
     return s + text[cur:]
 
-
 def makeExternalLink(url, anchor):
     """Function applied to wikiLinks"""
     if options.keepLinks:
@@ -2489,7 +2446,6 @@ def makeExternalImage(url, alt=''):
         return '<img src="%s" alt="%s">' % (url, alt)
     else:
         return alt
-
 
 # ----------------------------------------------------------------------
 
@@ -2632,7 +2588,6 @@ def compact(text):
                 page.append(line)
     return page
 
-
 def handle_unicode(entity):
     numeric_code = int(entity[2:-1])
     if numeric_code >= 0x10000: return ''
@@ -2641,7 +2596,6 @@ def handle_unicode(entity):
 
 # ------------------------------------------------------------------------------
 # Output
-
 
 class NextFile(object):
     """
@@ -2673,7 +2627,6 @@ class NextFile(object):
 
     def _filepath(self):
         return '%s/wiki_%02d' % (self._dirname(), self.file_index)
-
 
 class OutputSplitter(object):
     """
@@ -2709,7 +2662,6 @@ class OutputSplitter(object):
             return bz2.BZ2File(filename + '.bz2', 'w')
         else:
             return open(filename, 'wb')
-
 
 # ----------------------------------------------------------------------
 # READER
@@ -2761,7 +2713,6 @@ def load_templates(file, output_file=None):
     if output_file:
         output.close()
         logging.info("Saved %d templates to '%s'", len(options.templates), output_file)
-
 
 def pages_from(input):
     """
@@ -2825,7 +2776,6 @@ def pages_from(input):
             revid = None
             title = None
             page = []
-
 
 def process_dump(input_file, template_file, out_file, file_size, file_compress,
                  process_count):
@@ -2977,7 +2927,6 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
 # ----------------------------------------------------------------------
 # Multiprocess support
 
-
 def extract_process(opts, i, jobs_queue, output_queue):
     """Pull tuples of raw page content, do CPU/regex-heavy fixup, push finished text
     :param i: process id.
@@ -3013,7 +2962,6 @@ def extract_process(opts, i, jobs_queue, output_queue):
             logging.debug('Quit extractor')
             break
     out.close()
-
 
 report_period = 10000           # progress report period
 def reduce_process(opts, output_queue, spool_length,
@@ -3072,7 +3020,6 @@ def reduce_process(opts, output_queue, spool_length,
                               next_page, next_page == page_num)
     if output != sys.stdout:
         output.close()
-
 
 # ----------------------------------------------------------------------
 
