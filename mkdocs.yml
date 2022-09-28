@@ -42,7 +42,7 @@ theme:
 plugins:
   - autorefs
   - mkdocstrings:
-      custom_templates: templates
+      custom_templates: documentation/templates
       default_handler: python
       handlers:
         python:
