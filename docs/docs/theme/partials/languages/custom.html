@@ -1,0 +1,13 @@
+<!-- Import translations for language and fallback -->
+{% import "partials/languages/fa.html" as language %}
+{% import "partials/languages/en.html" as fallback %} 
+
+<!-- Define custom translations -->
+{% macro override(key) %}{{ {
+  "top.title": "برو اولِ صفحه",
+}[key] }}{% endmacro %}
+
+<!-- Re-export translations -->
+{% macro t(key) %}{{
+  override(key) or language.t(key) or fallback.t(key)
+}}{% endmacro %}
