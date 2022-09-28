@@ -1,147 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://kokabi1365.github.io/</loc>
+         <loc>https://sobhe.github.io/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/in-other-languages/</loc>
+         <loc>https://sobhe.github.io/content/in-other-languages/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/utils/</loc>
+         <loc>https://sobhe.github.io/content/utils/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/</loc>
+         <loc>https://sobhe.github.io/content/modules/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/Chunker/</loc>
+         <loc>https://sobhe.github.io/content/modules/Chunker/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/DependencyParser/</loc>
+         <loc>https://sobhe.github.io/content/modules/DependencyParser/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/InformalNormalizer/</loc>
+         <loc>https://sobhe.github.io/content/modules/InformalNormalizer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/Lemmatizer/</loc>
+         <loc>https://sobhe.github.io/content/modules/Lemmatizer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/Normalizer/</loc>
+         <loc>https://sobhe.github.io/content/modules/Normalizer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/POSTagger/</loc>
+         <loc>https://sobhe.github.io/content/modules/POSTagger/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/SentenceTokenizer/</loc>
+         <loc>https://sobhe.github.io/content/modules/SentenceTokenizer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/SequenceTagger/</loc>
+         <loc>https://sobhe.github.io/content/modules/SequenceTagger/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/Stemmer/</loc>
+         <loc>https://sobhe.github.io/content/modules/Stemmer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/TokenSplitter/</loc>
+         <loc>https://sobhe.github.io/content/modules/TokenSplitter/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/modules/WordTokenizer/</loc>
+         <loc>https://sobhe.github.io/content/modules/WordTokenizer/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/</loc>
+         <loc>https://sobhe.github.io/content/readers/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/BijankhanReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/BijankhanReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/DadeganReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/DadeganReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/DegarbayanReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/DegarbayanReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/HamshahriReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/HamshahriReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/MirasTextReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/MirasTextReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/PersicaReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/PersicaReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/PeykareReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/PeykareReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/QuranCorpusReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/QuranCorpusReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/SentiPersReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/SentiPersReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/TNewsReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/TNewsReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/TreebankReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/TreebankReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/VerbValencyReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/VerbValencyReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kokabi1365.github.io/content/readers/WikipediaReader/</loc>
+         <loc>https://sobhe.github.io/content/readers/WikipediaReader/</loc>
          <lastmod>2022-09-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
