@@ -407,14 +407,14 @@
 <a class="headerlink" href="#hazm.TNewsReader.TNewsReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ تی‌نیوز است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -425,7 +425,7 @@
 </td>
 <td><p>مسیر فولدر حاوی فایل‌های پیکره.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
@@ -449,17 +449,17 @@
 <li>موضوع (category)، </li>
 <li>تاریخ و زمان انتشار (datetime).</li>
 </ul>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tnews</span> <span class="o">=</span> <span class="n">TNewsReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/tnews'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">tnews</span><span class="o">.</span><span class="n">docs</span><span class="p">())[</span><span class="s1">'id'</span><span class="p">]</span>
 <span class="go">'14092303482300013653'</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -482,7 +482,7 @@
 <p>این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
 ‍<a class="autorefs autorefs-internal" href="#hazm.TNewsReader.TNewsReader.docs">docs()</a> و دریافت مقدار پراپرتی
 <code>text</code> نیز می‌توانید همین کار را انجام دهید.            </p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tnews</span> <span class="o">=</span> <span class="n">TNewsReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/tnews'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">tnews</span><span class="o">.</span><span class="n">texts</span><span class="p">())</span>
 <span class="go">''</span>

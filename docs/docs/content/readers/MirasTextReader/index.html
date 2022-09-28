@@ -408,14 +408,14 @@
 <a class="headerlink" href="#hazm.MirasTextReader.MirasTextReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ میراث است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -426,7 +426,7 @@
 </td>
 <td><p>مسیر فایلِ پیکره.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
@@ -438,12 +438,12 @@
 <a class="headerlink" href="#hazm.MirasTextReader.MirasTextReader.docs" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>خبرها را برمی‌گرداند.           </p>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -466,17 +466,17 @@
 <p>این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
 ‍<a class="autorefs autorefs-internal" href="#hazm.MirasTextReader.MirasTextReader.docs">docs()</a> و دریافت مقدار
 پراپرتی <code>text</code> نیز می‌توانید همین کار را انجام دهید.         </p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">miras_text</span> <span class="o">=</span> <span class="n">MirasTextReader</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">'corpora/MirasText.txt'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">miras_text</span><span class="o">.</span><span class="n">texts</span><span class="p">())[:</span><span class="mi">42</span><span class="p">]</span>  <span class="c1"># first 42 characters of fitst text</span>
 <span class="go">'ایرانی‌ها چقدر از اینترنت استفاده می‌کنند؟'</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

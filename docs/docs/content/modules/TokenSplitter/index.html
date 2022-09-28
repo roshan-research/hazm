@@ -408,7 +408,7 @@
 برمی‌گرداند؛ مثلاً «داستان‌سرا» هم می‌توان به <code>['داستان', 'سرا']</code> تجزیه
 شود و هم می‌تواند به <code>['داستان‌سرا',]</code> شکسته شود؛ پس هر دو را
 برمی‌گرداند: <code>[('داستان', 'سرا'), ('داستان‌سرا',)]</code>.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">splitter</span> <span class="o">=</span> <span class="n">TokenSplitter</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">splitter</span><span class="o">.</span><span class="n">split_token_words</span><span class="p">(</span><span class="s1">'صداوسیماجمهوری'</span><span class="p">)</span>
 <span class="go">[('صداوسیما', 'جمهوری')]</span>
@@ -421,14 +421,14 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">splitter</span><span class="o">.</span><span class="n">split_token_words</span><span class="p">(</span><span class="s1">'دستان‌سرا'</span><span class="p">)</span>
 <span class="go">[('دستان', 'سرا')]</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -439,17 +439,17 @@
 </td>
 <td><p>توکنی که باید پردازش شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

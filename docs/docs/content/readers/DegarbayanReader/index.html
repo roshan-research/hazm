@@ -414,14 +414,14 @@
 <a class="headerlink" href="#hazm.DegarbayanReader.DegarbayanReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ دگربیان است.    </p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -432,7 +432,7 @@
 </td>
 <td><p>مسیر فولدر حاوی فایل‌های پیکره</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -478,12 +478,12 @@
 <a class="headerlink" href="#hazm.DegarbayanReader.DegarbayanReader.docs" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>اسناد موجود در پیکره را برمی‌گرداند.</p>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -503,17 +503,17 @@
 <a class="headerlink" href="#hazm.DegarbayanReader.DegarbayanReader.pairs" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>متن‌های دگربیان را در قالب یک <code>(متن اصلی، شکل دگربیان، برچسب)</code> برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">degarbayan</span> <span class="o">=</span> <span class="n">DegarbayanReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/degarbayan'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">degarbayan</span><span class="o">.</span><span class="n">pairs</span><span class="p">())</span>
 <span class="go">('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

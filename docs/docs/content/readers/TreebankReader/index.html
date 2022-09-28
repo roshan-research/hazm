@@ -296,13 +296,13 @@
 <nav aria-label="TreebankReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.chunked_trees">
-    chunked_trees()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.docs">
+    docs()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.docs">
-    docs()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.trees">
+    trees()
   </a>
 </li>
 <li class="md-nav__item">
@@ -311,8 +311,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.trees">
-    trees()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.chunked_trees">
+    chunked_trees()
   </a>
 </li>
 </ul>
@@ -388,13 +388,13 @@
 <nav aria-label="TreebankReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.chunked_trees">
-    chunked_trees()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.docs">
+    docs()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.docs">
-    docs()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.trees">
+    trees()
   </a>
 </li>
 <li class="md-nav__item">
@@ -403,8 +403,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.trees">
-    trees()
+<a class="md-nav__link" href="#hazm.TreebankReader.TreebankReader.chunked_trees">
+    chunked_trees()
   </a>
 </li>
 </ul>
@@ -438,14 +438,14 @@
 <a class="headerlink" href="#hazm.TreebankReader.TreebankReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ تری‌بانک است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -456,7 +456,7 @@
 </td>
 <td><p>مسیر فولدر حاوی فایل‌های پیکره</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -493,48 +493,17 @@
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.chunked_trees">
-<code class="highlight language-python"><span class="n">chunked_trees</span><span class="p">()</span></code>
-<a class="headerlink" href="#hazm.TreebankReader.TreebankReader.chunked_trees" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>ساختار درختی را به شکل تقطیع شده برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">.Chunker</span> <span class="kn">import</span> <span class="n">tree2brackets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">treebank</span> <span class="o">=</span> <span class="n">TreebankReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/treebank'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree2brackets</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">treebank</span><span class="o">.</span><span class="n">chunked_trees</span><span class="p">()))</span>
-<span class="go">'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'</span>
-</code></pre></div>
-<p><strong>Yields:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>درخت تقطیع شدهٔ بعدی.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.docs">
 <code class="highlight language-python"><span class="n">docs</span><span class="p">()</span></code>
 <a class="headerlink" href="#hazm.TreebankReader.TreebankReader.docs" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>اسناد موجود در پیکره را برمی‌گرداند.</p>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -549,22 +518,58 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.trees">
+<code class="highlight language-python"><span class="n">trees</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.TreebankReader.TreebankReader.trees" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>ساختارهای درختی موجود در پیکره را برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">treebank</span> <span class="o">=</span> <span class="n">TreebankReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/treebank'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">treebank</span><span class="o">.</span><span class="n">trees</span><span class="p">()))</span>
+<span class="go">(S</span>
+<span class="go">(VPS</span>
+<span class="go">        (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))</span>
+<span class="go">        (VPC</span>
+<span class="go">        (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))</span>
+<span class="go">        (V است/V)))</span>
+<span class="go">(PUNC ./PUNC))</span>
+</code></pre></div>
+<p><strong>خروجی تدریجی:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>ساختار درختی بعدی.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.sents">
 <code class="highlight language-python"><span class="n">sents</span><span class="p">()</span></code>
 <a class="headerlink" href="#hazm.TreebankReader.TreebankReader.sents" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>جملات را به شکل مجموعه‌ای از <code>(توکن،برچسب)</code>ها برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">treebank</span> <span class="o">=</span> <span class="n">TreebankReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/treebank'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">treebank</span><span class="o">.</span><span class="n">sents</span><span class="p">())</span>
 <span class="go">[('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -579,28 +584,23 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.trees">
-<code class="highlight language-python"><span class="n">trees</span><span class="p">()</span></code>
-<a class="headerlink" href="#hazm.TreebankReader.TreebankReader.trees" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.TreebankReader.TreebankReader.chunked_trees">
+<code class="highlight language-python"><span class="n">chunked_trees</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.TreebankReader.TreebankReader.chunked_trees" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>ساختارهای درختی موجود در پیکره را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">treebank</span> <span class="o">=</span> <span class="n">TreebankReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/treebank'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">treebank</span><span class="o">.</span><span class="n">trees</span><span class="p">()))</span>
-<span class="go">(S</span>
-<span class="go">(VPS</span>
-<span class="go">        (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))</span>
-<span class="go">        (VPC</span>
-<span class="go">        (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))</span>
-<span class="go">        (V است/V)))</span>
-<span class="go">(PUNC ./PUNC))</span>
+<p>ساختار درختی را به شکل تقطیع شده برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">.Chunker</span> <span class="kn">import</span> <span class="n">tree2brackets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">treebank</span> <span class="o">=</span> <span class="n">TreebankReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/treebank'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree2brackets</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">treebank</span><span class="o">.</span><span class="n">chunked_trees</span><span class="p">()))</span>
+<span class="go">'[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -608,7 +608,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>ساختار درختی بعدی.</p></td>
+<td><p>درخت تقطیع شدهٔ بعدی.</p></td>
 </tr>
 </tbody>
 </table>
@@ -623,18 +623,18 @@
 <a class="headerlink" href="#hazm.TreebankReader.coarse_pos_e" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">coarse_pos_e</span><span class="p">([</span><span class="s1">'Nasp---'</span><span class="p">,</span> <span class="s1">'pers'</span><span class="p">,</span> <span class="s1">'prop'</span><span class="p">])</span>
 <span class="go">'N'</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -644,17 +644,17 @@
 </td>
 <td><p>لیست برچسب‌های ریز.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

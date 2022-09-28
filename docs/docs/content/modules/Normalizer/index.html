@@ -172,8 +172,8 @@
 <nav aria-label="Normalizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
-    affix_spacing()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.normalize">
+    normalize()
   </a>
 </li>
 <li class="md-nav__item">
@@ -182,13 +182,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.normalize">
-    normalize()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
+    punctuation_spacing()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
-    punctuation_spacing()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
+    affix_spacing()
   </a>
 </li>
 <li class="md-nav__item">
@@ -388,8 +388,8 @@
 <nav aria-label="Normalizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
-    affix_spacing()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.normalize">
+    normalize()
   </a>
 </li>
 <li class="md-nav__item">
@@ -398,13 +398,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.normalize">
-    normalize()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
+    punctuation_spacing()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
-    punctuation_spacing()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
+    affix_spacing()
   </a>
 </li>
 <li class="md-nav__item">
@@ -437,16 +437,16 @@
 <a class="headerlink" href="#hazm.Normalizer.Normalizer" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code>object</code></p>
+        کلاس(های) پایه: <code>object</code></p>
 <p>این کلاس شامل توابعی برای نرمال‌سازی متن است. </p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -524,12 +524,186 @@
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.normalize">
+<code class="highlight language-python"><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.normalize" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>متن را نرمال‌سازی می‌کند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s1">'اِعلام کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»'</span><span class="p">)</span>
+<span class="go">'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر…»'</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>متنی که باید نرمال‌سازی شود.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>متنِ نرمال‌سازی‌شده.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.character_refinement">
+<code class="highlight language-python"><span class="n">character_refinement</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.character_refinement" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>حروف متن را به حروف استاندارد فارسی تبدیل می‌کند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'اصلاح كاف و ياي عربي'</span><span class="p">)</span>
+<span class="go">'اصلاح کاف و یای عربی'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'عراق سال 2012 قراردادی به ارزش "4.2 میلیارد دلار" برای خرید تجهیزات نظامی با روسیه امضا  کرد.'</span><span class="p">)</span>
+<span class="go">'عراق سال ۲۰۱۲ قراردادی به ارزش «۴٫۲ میلیارد دلار» برای خرید تجهیزات نظامی با روسیه امضا کرد.'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'رمــــان'</span><span class="p">)</span>
+<span class="go">'رمان'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'بُشقابِ مَن را بِگیر'</span><span class="p">)</span>
+<span class="go">'بشقاب من را بگیر'</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>متنی که باید حروف آن استانداردسازی شود.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>متنی با حروف استاندارد فارسی.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.punctuation_spacing">
+<code class="highlight language-python"><span class="n">punctuation_spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.punctuation_spacing" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند. </p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اصلاح ( پرانتزها ) در متن .'</span><span class="p">)</span>
+<span class="go">'اصلاح (پرانتزها) در متن.'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'نسخه 0.5 در ساعت 22:00 تهران،1396'</span><span class="p">)</span>
+<span class="go">'نسخه 0.5 در ساعت 22:00 تهران، 1396'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اتریش ۷.۹ میلیون.'</span><span class="p">)</span>
+<span class="go">'اتریش ۷.۹ میلیون.'</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.affix_spacing">
 <code class="highlight language-python"><span class="n">affix_spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Normalizer.Normalizer.affix_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>فاصله‌گذاری‌های اشتباه را در پسوندها و پیشوندها اصلاح می‌کند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'خانه ی پدری'</span><span class="p">)</span>
 <span class="go">'خانه‌ی پدری'</span>
@@ -546,14 +720,14 @@
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'محبوب ترین ها'</span><span class="p">)</span>
 <span class="go">'محبوب‌ترین‌ها'</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -564,17 +738,17 @@
 </td>
 <td><p>متنی که باید فاصله‌گذاری‌های اشتباهِ آن در پسوندها و پیشوندها اصلاح شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -589,187 +763,13 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.character_refinement">
-<code class="highlight language-python"><span class="n">character_refinement</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.character_refinement" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>حروف متن را به حروف استاندارد فارسی تبدیل می‌کند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'اصلاح كاف و ياي عربي'</span><span class="p">)</span>
-<span class="go">'اصلاح کاف و یای عربی'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'عراق سال 2012 قراردادی به ارزش "4.2 میلیارد دلار" برای خرید تجهیزات نظامی با روسیه امضا  کرد.'</span><span class="p">)</span>
-<span class="go">'عراق سال ۲۰۱۲ قراردادی به ارزش «۴٫۲ میلیارد دلار» برای خرید تجهیزات نظامی با روسیه امضا کرد.'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'رمــــان'</span><span class="p">)</span>
-<span class="go">'رمان'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'بُشقابِ مَن را بِگیر'</span><span class="p">)</span>
-<span class="go">'بشقاب من را بگیر'</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید حروف آن استانداردسازی شود.</p></td>
-<td>
-<em>required</em>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی با حروف استاندارد فارسی.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.normalize">
-<code class="highlight language-python"><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.normalize" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>متن را نرمال‌سازی می‌کند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s1">'اِعلام کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»'</span><span class="p">)</span>
-<span class="go">'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر…»'</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید نرمال‌سازی شود.</p></td>
-<td>
-<em>required</em>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنِ نرمال‌سازی‌شده.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.punctuation_spacing">
-<code class="highlight language-python"><span class="n">punctuation_spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.punctuation_spacing" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند. </p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اصلاح ( پرانتزها ) در متن .'</span><span class="p">)</span>
-<span class="go">'اصلاح (پرانتزها) در متن.'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'نسخه 0.5 در ساعت 22:00 تهران،1396'</span><span class="p">)</span>
-<span class="go">'نسخه 0.5 در ساعت 22:00 تهران، 1396'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اتریش ۷.۹ میلیون.'</span><span class="p">)</span>
-<span class="go">'اتریش ۷.۹ میلیون.'</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.</p></td>
-<td>
-<em>required</em>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.token_spacing">
 <code class="highlight language-python"><span class="n">token_spacing</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Normalizer.Normalizer.token_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.</p>
 <p><br/>در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛ <code>برای مثال:</code>['زمین', 'لرزه', 'ای']<code>تبدیل می‌شود به:</code>['زمین‌لرزه‌ای'].</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="n">token_based</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'کتاب'</span><span class="p">,</span> <span class="s1">'ها'</span><span class="p">])</span>
 <span class="go">['کتاب‌ها']</span>
@@ -789,14 +789,14 @@
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'زمین'</span><span class="p">,</span> <span class="s1">'لرزه'</span><span class="p">,</span> <span class="s1">'ای'</span><span class="p">])</span>
 <span class="go">['زمین‌لرزه‌ای']</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -807,17 +807,17 @@
 </td>
 <td><p>توکن‌هایی که باید نرمال‌سازی شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

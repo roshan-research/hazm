@@ -202,6 +202,11 @@
 <nav aria-label="SequenceTagger" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.train">
+    train()
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.save_model">
     save_model()
   </a>
@@ -214,11 +219,6 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.tag_sents">
     tag_sents()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.train">
-    train()
   </a>
 </li>
 </ul>
@@ -383,6 +383,11 @@
 <nav aria-label="SequenceTagger" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.train">
+    train()
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.save_model">
     save_model()
   </a>
@@ -395,11 +400,6 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.tag_sents">
     tag_sents()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SequenceTagger.SequenceTagger.train">
-    train()
   </a>
 </li>
 </ul>
@@ -427,16 +427,16 @@
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code><span title="nltk.tag.api.TaggerI">TaggerI</span></code></p>
+        کلاس(های) پایه: <code><span title="nltk.tag.api.TaggerI">TaggerI</span></code></p>
 <p>این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک wrapper برای کتابخانهٔ <a href="https://wapiti.limsi.fr/">Wapiti</a> است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -464,24 +464,60 @@
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.SequenceTagger.SequenceTagger.train">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.train" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد. </p>
+<p>هر جمله، لیستی از <code>(توکن، برچسب)</code>هاست.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">train</span><span class="p">([[(</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'به'</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)]])</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sentences</code></td>
+<td>
+<code>List[List[Tuple[str, str]]]</code>
+</td>
+<td><p>جملاتی که مدل از روی آن‌ها آموزش می‌بیند.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.SequenceTagger.SequenceTagger.save_model">
 <code class="highlight language-python"><span class="n">save_model</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.save_model" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>مدل تهیه‌شده توسط تابع <a class="autorefs autorefs-internal" href="#hazm.SequenceTagger.SequenceTagger.train">train()</a> را ذخیره می‌کند. </p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">train</span><span class="p">([[(</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'به'</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">'resources/test.model'</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -492,7 +528,7 @@
 </td>
 <td><p>نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
@@ -505,19 +541,19 @@
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.tag" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از <code>(توکن، برچسب)</code>ها برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">([</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'به'</span><span class="p">,</span> <span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">])</span>
 <span class="go">[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -528,17 +564,17 @@
 </td>
 <td><p>لیستی از توکن‌های یک جمله که باید برچسب‌گذاری شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -560,19 +596,19 @@
 <p>جملات را در قالب لیستی از توکن‌ها دریافت می‌کند 
 و در خروجی، لیستی از لیستی از <code>(توکن، برچسب)</code>ها برمی‌گرداند. </p>
 <p>هر لیست از <code>(توکن، برچسب)</code>ها مربوط به یک جمله است.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">tag_sents</span><span class="p">([[</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'به'</span><span class="p">,</span> <span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">]])</span>
 <span class="go">[[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -583,17 +619,17 @@
 </td>
 <td><p>لیستی از جملات که باید برچسب‌گذاری شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -603,42 +639,6 @@
 </td>
 <td><p>لیستی از لیستی از <code>(توکن، برچسب)</code>ها. </p>
 <p>هر لیست از <code>(توکن،برچسب)</code>ها مربوط به یک جمله است.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.SequenceTagger.SequenceTagger.train">
-<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.train" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد. </p>
-<p>هر جمله، لیستی از <code>(توکن، برچسب)</code>هاست.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">train</span><span class="p">([[(</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'به'</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)]])</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>sentences</code></td>
-<td>
-<code>List[List[Tuple[str, str]]]</code>
-</td>
-<td><p>جملاتی که مدل از روی آن‌ها آموزش می‌بیند.</p></td>
-<td>
-<em>required</em>
-</td>
 </tr>
 </tbody>
 </table>

@@ -256,8 +256,8 @@
 <nav aria-label="DadeganReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.chunked_trees">
-    chunked_trees()
+<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.trees">
+    trees()
   </a>
 </li>
 <li class="md-nav__item">
@@ -266,8 +266,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.trees">
-    trees()
+<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.chunked_trees">
+    chunked_trees()
   </a>
 </li>
 </ul>
@@ -383,8 +383,8 @@
 <nav aria-label="DadeganReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.chunked_trees">
-    chunked_trees()
+<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.trees">
+    trees()
   </a>
 </li>
 <li class="md-nav__item">
@@ -393,8 +393,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.trees">
-    trees()
+<a class="md-nav__link" href="#hazm.DadeganReader.DadeganReader.chunked_trees">
+    chunked_trees()
   </a>
 </li>
 </ul>
@@ -428,14 +428,14 @@
 <a class="headerlink" href="#hazm.DadeganReader.DadeganReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ PerDT است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -445,7 +445,7 @@
 </td>
 <td><p>مسیر فایلِ پیکره.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -454,29 +454,24 @@
 </td>
 <td><p>دیکشنری مبدل برچسب‌های ریز به درشت.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.DadeganReader.DadeganReader.chunked_trees">
-<code class="highlight language-python"><span class="n">chunked_trees</span><span class="p">()</span></code>
-<a class="headerlink" href="#hazm.DadeganReader.DadeganReader.chunked_trees" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.DadeganReader.DadeganReader.trees">
+<code class="highlight language-python"><span class="n">trees</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.DadeganReader.DadeganReader.trees" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>درخت وابستگی‌های جملات را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm.Chunker</span> <span class="kn">import</span> <span class="n">tree2brackets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree2brackets</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">dadegan</span><span class="o">.</span><span class="n">chunked_trees</span><span class="p">()))</span>
-<span class="go">'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'</span>
-</code></pre></div>
-<p><strong>Yields:</strong></p>
+<p>ساختار درختی جملات را برمی‌گرداند.</p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -484,7 +479,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>درخت وابستگی‌های جملهٔ بعدی.</p></td>
+<td><p>ساختار درختی جملهٔ بعدی.</p></td>
 </tr>
 </tbody>
 </table>
@@ -497,17 +492,17 @@
 <div class="doc doc-contents">
 <p>لیستی از جملات را برمی‌گرداند. </p>
 <p>هر جمله لیستی از <code>(توکن، برچسب)</code>ها است.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">dadegan</span> <span class="o">=</span> <span class="n">DadeganReader</span><span class="p">(</span><span class="n">conll_file</span><span class="o">=</span><span class="s1">'corpora/dadegan.conll'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">dadegan</span><span class="o">.</span><span class="n">sents</span><span class="p">())</span>
 <span class="go">[('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -522,17 +517,22 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.DadeganReader.DadeganReader.trees">
-<code class="highlight language-python"><span class="n">trees</span><span class="p">()</span></code>
-<a class="headerlink" href="#hazm.DadeganReader.DadeganReader.trees" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.DadeganReader.DadeganReader.chunked_trees">
+<code class="highlight language-python"><span class="n">chunked_trees</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.DadeganReader.DadeganReader.chunked_trees" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>ساختار درختی جملات را برمی‌گرداند.</p>
-<p><strong>Yields:</strong></p>
+<p>درخت وابستگی‌های جملات را برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm.Chunker</span> <span class="kn">import</span> <span class="n">tree2brackets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree2brackets</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">dadegan</span><span class="o">.</span><span class="n">chunked_trees</span><span class="p">()))</span>
+<span class="go">'[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'</span>
+</code></pre></div>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -540,7 +540,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>ساختار درختی جملهٔ بعدی.</p></td>
+<td><p>درخت وابستگی‌های جملهٔ بعدی.</p></td>
 </tr>
 </tbody>
 </table>
@@ -555,7 +555,7 @@
 <a class="headerlink" href="#hazm.DadeganReader.coarse_pos_e" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">coarse_pos_e</span><span class="p">([</span><span class="s1">'N'</span><span class="p">,</span> <span class="s1">'IANM'</span><span class="p">])</span>
 <span class="go">'N'</span>
 </code></pre></div>

@@ -408,14 +408,14 @@
 <a class="headerlink" href="#hazm.QuranCorpusReader.QuranCorpusReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ Quranic Arabic است. </p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -426,7 +426,7 @@
 </td>
 <td><p>مسیر فایلِ پیکره</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
@@ -439,7 +439,7 @@
 <div class="doc doc-contents">
 <p>اجزای متن قرآن را به‌همراه اطلاعات نحوی‌شان برمی‌گرداند. </p>
 <p>یک جزء لزوماً یک کلمه نیست؛ مثلاً واژهٔ «الرحمن» از دو جزء «ال» و «رحمن» تشکیل شده است.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">parts</span><span class="o">=</span><span class="n">QuranCorpusReader</span><span class="p">(</span><span class="n">quran_file</span><span class="o">=</span><span class="s1">'corpora\quranic-corpus-morphology.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span>
@@ -448,12 +448,12 @@
 <span class="go">{'loc': (1, 1, 1, 2), 'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}</span>
 <span class="go">{'loc': (1, 1, 2, 1), 'text': 'ٱللَّهِ', 'tag': 'PN', 'lem': 'ٱللَّه', 'root': 'اله'}</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -473,17 +473,17 @@
 <a class="headerlink" href="#hazm.QuranCorpusReader.QuranCorpusReader.words" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>اطلاعات صرفی کلمات قرآن را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">=</span><span class="n">QuranCorpusReader</span><span class="p">(</span><span class="n">quran_file</span><span class="o">=</span><span class="s1">'corpora\quranic-corpus-morphology.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">words</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
 <span class="go">('1.1.1', 'بِسْمِ', 'ٱسْم', 'سمو', 'P-N', [{'text': 'بِ', 'tag': 'P'}, {'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}])</span>
 </code></pre></div>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

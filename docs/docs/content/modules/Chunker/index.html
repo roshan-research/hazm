@@ -212,8 +212,8 @@
 <nav aria-label="Chunker" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
-    evaluate()
+<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
+    train()
   </a>
 </li>
 <li class="md-nav__item">
@@ -227,8 +227,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
-    train()
+<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
+    evaluate()
   </a>
 </li>
 </ul>
@@ -388,8 +388,8 @@
 <nav aria-label="Chunker" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
-    evaluate()
+<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
+    train()
   </a>
 </li>
 <li class="md-nav__item">
@@ -403,8 +403,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
-    train()
+<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
+    evaluate()
   </a>
 </li>
 </ul>
@@ -437,52 +437,35 @@
 <a class="headerlink" href="#hazm.Chunker.Chunker" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code><span title="hazm.SequenceTagger.IOBTagger">IOBTagger</span></code>, <code><span title="nltk.chunk.ChunkParserI">ChunkParserI</span></code></p>
+        کلاس(های) پایه: <code><span title="hazm.SequenceTagger.IOBTagger">IOBTagger</span></code>, <code><span title="nltk.chunk.ChunkParserI">ChunkParserI</span></code></p>
 <p>این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است.</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.evaluate">
-<code class="highlight language-python"><span class="n">evaluate</span><span class="p">(</span><span class="n">gold</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.evaluate" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.train">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Chunker.Chunker.train" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>دقت مدل را ارزیابی می‌کند.</p>
-<p><strong>Parameters:</strong></p>
+<p>از روی درخت ورودی، مدل را آموزش می‌دهد.</p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>gold</code></td>
+<td><code>trees</code></td>
 <td>
 <code>List[Tree]</code>
 </td>
-<td><p>دادهٔ مرجع برای ارزیابی دقت مدل.</p></td>
+<td><p>لیستی از درخت‌ها برای آموزش مدل.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>ChunkScore</code>
-</td>
-<td><p>دقت تشخیص.</p></td>
 </tr>
 </tbody>
 </table>
@@ -494,7 +477,7 @@
 <a class="headerlink" href="#hazm.Chunker.Chunker.parse" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...] دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/chunker.model'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">=</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">([(</span><span class="s1">'نامه'</span><span class="p">,</span> <span class="s1">'Ne'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ایشان'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'را'</span><span class="p">,</span> <span class="s1">'POSTP'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'دریافت'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'داشتم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)])</span>
 <span class="go">'(S</span>
@@ -503,14 +486,14 @@
 <span class="go">  (VP دریافت/N داشتم/V)</span>
 <span class="go">  ./PUNC)'</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -521,17 +504,17 @@
 </td>
 <td><p>جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -561,14 +544,14 @@
 <a class="headerlink" href="#hazm.Chunker.Chunker.parse_sents" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -579,17 +562,17 @@
 </td>
 <td><p>جملات ورودی.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -604,31 +587,48 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.train">
-<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.train" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.evaluate">
+<code class="highlight language-python"><span class="n">evaluate</span><span class="p">(</span><span class="n">gold</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Chunker.Chunker.evaluate" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>از روی درخت ورودی، مدل را آموزش می‌دهد.</p>
-<p><strong>Parameters:</strong></p>
+<p>دقت مدل را ارزیابی می‌کند.</p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>trees</code></td>
+<td><code>gold</code></td>
 <td>
 <code>List[Tree]</code>
 </td>
-<td><p>لیستی از درخت‌ها برای آموزش مدل.</p></td>
+<td><p>دادهٔ مرجع برای ارزیابی دقت مدل.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ChunkScore</code>
+</td>
+<td><p>دقت تشخیص.</p></td>
 </tr>
 </tbody>
 </table>
@@ -643,7 +643,7 @@
 <a class="headerlink" href="#hazm.Chunker.tree2brackets" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>خروجی درختی تابع <a class="autorefs autorefs-internal" href="#hazm.Chunker.Chunker.parse">parse()</a> را به یک ساختار کروشه‌ای تبدیل می‌کند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/chunker.model'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">=</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">([(</span><span class="s1">'نامه'</span><span class="p">,</span> <span class="s1">'Ne'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ایشان'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'را'</span><span class="p">,</span> <span class="s1">'POSTP'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'دریافت'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'داشتم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)])</span>
 <span class="go">'(S</span>
@@ -655,14 +655,14 @@
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">brackets</span> <span class="o">=</span> <span class="n">tee2brackets</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 <span class="go">'[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -673,17 +673,17 @@
 </td>
 <td><p>ساختار درختی حاصل از پردزاش تابع parse()</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>

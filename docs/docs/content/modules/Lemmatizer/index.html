@@ -187,13 +187,13 @@
 <nav aria-label="Lemmatizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.conjugations">
-    conjugations()
+<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.lemmatize">
+    lemmatize()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.lemmatize">
-    lemmatize()
+<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.conjugations">
+    conjugations()
   </a>
 </li>
 </ul>
@@ -373,13 +373,13 @@
 <nav aria-label="Lemmatizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.conjugations">
-    conjugations()
+<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.lemmatize">
+    lemmatize()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.lemmatize">
-    lemmatize()
+<a class="md-nav__link" href="#hazm.Lemmatizer.Lemmatizer.conjugations">
+    conjugations()
   </a>
 </li>
 </ul>
@@ -413,16 +413,16 @@
 <a class="headerlink" href="#hazm.Lemmatizer.Lemmatizer" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code>object</code></p>
+        کلاس(های) پایه: <code>object</code></p>
 <p>این کلاس شامل توابعی برای ریشه‌یابی کلمات است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -466,61 +466,6 @@
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Lemmatizer.Lemmatizer.conjugations">
-<code class="highlight language-python"><span class="n">conjugations</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Lemmatizer.Lemmatizer.conjugations" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>صورت‌های صرفی فعل را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">conjugations</span><span class="p">(</span><span class="s1">'خورد#خور'</span><span class="p">)</span>
-<span class="go">['خوردم', 'خوردی', 'خورد', 'خوردیم', 'خوردید', 'خوردند', 'نخوردم', 'نخوردی', 'نخورد', 'نخوردیم', 'نخوردید', 'نخوردند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خوردم', 'می‌خوردی', 'می‌خورد', 'می‌خوردیم', 'می‌خوردید', 'می‌خوردند', 'نمی‌خوردم', 'نمی‌خوردی', 'نمی‌خورد', 'نمی‌خوردیم', 'نمی‌خوردید', 'نمی‌خوردند', 'خورده‌ام', 'خورده‌ای', 'خورده', 'خورده‌ایم', 'خورده‌اید', 'خورده‌اند', 'نخورده‌ام', 'نخورده‌ای', 'نخورده', 'نخورده‌ایم', 'نخورده‌اید', 'نخورده‌اند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خورم', 'می‌خوری', 'می‌خورد', 'می‌خوریم', 'می‌خورید', 'می‌خورند', 'نمی‌خورم', 'نمی‌خوری', 'نمی‌خورد', 'نمی‌خوریم', 'نمی‌خورید', 'نمی‌خورند', 'بخورم', 'بخوری', 'بخورد', 'بخوریم', 'بخورید', 'بخورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'بخور', 'نخور']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">conjugations</span><span class="p">(</span><span class="s1">'آورد#آور'</span><span class="p">)</span>
-<span class="go">['آوردم', 'آوردی', 'آورد', 'آوردیم', 'آوردید', 'آوردند', 'نیاوردم', 'نیاوردی', 'نیاورد', 'نیاوردیم', 'نیاوردید', 'نیاوردند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آوردم', 'می‌آوردی', 'می‌آورد', 'می‌آوردیم', 'می‌آوردید', 'می‌آوردند', 'نمی‌آوردم', 'نمی‌آوردی', 'نمی‌آورد', 'نمی‌آوردیم', 'نمی‌آوردید', 'نمی‌آوردند', 'آورده‌ام', 'آورده‌ای', 'آورده', 'آورده‌ایم', 'آورده‌اید', 'آورده‌اند', 'نیاورده‌ام', 'نیاورده‌ای', 'نیاورده', 'نیاورده‌ایم', 'نیاورده‌اید', 'نیاورده‌اند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آورم', 'می‌آوری', 'می‌آورد', 'می‌آوریم', 'می‌آورید', 'می‌آورند', 'نمی‌آورم', 'نمی‌آوری', 'نمی‌آورد', 'نمی‌آوریم', 'نمی‌آورید', 'نمی‌آورند', 'بیاورم', 'بیاوری', 'بیاورد', 'بیاوریم', 'بیاورید', 'بیاورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'بیاور', 'نیاور']</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>verb</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>فعلی که باید صرف شود.</p></td>
-<td>
-<em>required</em>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>لیستِ صورت‌های صرفی فعل.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.Lemmatizer.Lemmatizer.lemmatize">
 <code class="highlight language-python"><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Lemmatizer.Lemmatizer.lemmatize" title="Permanent link">¶</a></h3>
@@ -530,7 +475,7 @@
 است که می‌تواند روی ریشه‌یابی کلمات اثر بگذارد؛ مثلاً واژهٔ «اجتماعی» در
 جایگاه صفت (او یک فرد اجتماعی است)، ریشه‌اش همان «اجتماعی» می‌شود ولی
 همین واژه در جایگاه اسم (اجتماعی از مردم)، ریشه‌اش می‌شود «اجتماع».</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s1">'کتاب‌ها'</span><span class="p">)</span>
 <span class="go">'کتاب'</span>
@@ -547,14 +492,14 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s1">'اجتماعی'</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">'AJ'</span><span class="p">)</span>
 <span class="go">'اجتماعی'</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -565,7 +510,7 @@
 </td>
 <td><p>کلمه‌ای که باید پردازش شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -580,12 +525,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -594,6 +539,61 @@
 <code>str</code>
 </td>
 <td><p>ریشهٔ کلمه</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Lemmatizer.Lemmatizer.conjugations">
+<code class="highlight language-python"><span class="n">conjugations</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Lemmatizer.Lemmatizer.conjugations" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>صورت‌های صرفی فعل را برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">conjugations</span><span class="p">(</span><span class="s1">'خورد#خور'</span><span class="p">)</span>
+<span class="go">['خوردم', 'خوردی', 'خورد', 'خوردیم', 'خوردید', 'خوردند', 'نخوردم', 'نخوردی', 'نخورد', 'نخوردیم', 'نخوردید', 'نخوردند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خوردم', 'می‌خوردی', 'می‌خورد', 'می‌خوردیم', 'می‌خوردید', 'می‌خوردند', 'نمی‌خوردم', 'نمی‌خوردی', 'نمی‌خورد', 'نمی‌خوردیم', 'نمی‌خوردید', 'نمی‌خوردند', 'خورده‌ام', 'خورده‌ای', 'خورده', 'خورده‌ایم', 'خورده‌اید', 'خورده‌اند', 'نخورده‌ام', 'نخورده‌ای', 'نخورده', 'نخورده‌ایم', 'نخورده‌اید', 'نخورده‌اند', 'خورم', 'خوری', 'خورد', 'خوریم', 'خورید', 'خورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'می‌خورم', 'می‌خوری', 'می‌خورد', 'می‌خوریم', 'می‌خورید', 'می‌خورند', 'نمی‌خورم', 'نمی‌خوری', 'نمی‌خورد', 'نمی‌خوریم', 'نمی‌خورید', 'نمی‌خورند', 'بخورم', 'بخوری', 'بخورد', 'بخوریم', 'بخورید', 'بخورند', 'نخورم', 'نخوری', 'نخورد', 'نخوریم', 'نخورید', 'نخورند', 'بخور', 'نخور']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">conjugations</span><span class="p">(</span><span class="s1">'آورد#آور'</span><span class="p">)</span>
+<span class="go">['آوردم', 'آوردی', 'آورد', 'آوردیم', 'آوردید', 'آوردند', 'نیاوردم', 'نیاوردی', 'نیاورد', 'نیاوردیم', 'نیاوردید', 'نیاوردند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آوردم', 'می‌آوردی', 'می‌آورد', 'می‌آوردیم', 'می‌آوردید', 'می‌آوردند', 'نمی‌آوردم', 'نمی‌آوردی', 'نمی‌آورد', 'نمی‌آوردیم', 'نمی‌آوردید', 'نمی‌آوردند', 'آورده‌ام', 'آورده‌ای', 'آورده', 'آورده‌ایم', 'آورده‌اید', 'آورده‌اند', 'نیاورده‌ام', 'نیاورده‌ای', 'نیاورده', 'نیاورده‌ایم', 'نیاورده‌اید', 'نیاورده‌اند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آورم', 'می‌آوری', 'می‌آورد', 'می‌آوریم', 'می‌آورید', 'می‌آورند', 'نمی‌آورم', 'نمی‌آوری', 'نمی‌آورد', 'نمی‌آوریم', 'نمی‌آورید', 'نمی‌آورند', 'بیاورم', 'بیاوری', 'بیاورد', 'بیاوریم', 'بیاورید', 'بیاورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'بیاور', 'نیاور']</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>verb</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>فعلی که باید صرف شود.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>List[str]</code>
+</td>
+<td><p>لیستِ صورت‌های صرفی فعل.</p></td>
 </tr>
 </tbody>
 </table>

@@ -221,13 +221,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.utils.stopwords_list">
-    stopwords_list()
+<a class="md-nav__link" href="#hazm.utils.words_list">
+    words_list()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.utils.words_list">
-    words_list()
+<a class="md-nav__link" href="#hazm.utils.stopwords_list">
+    stopwords_list()
   </a>
 </li>
 </ul>
@@ -358,13 +358,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.utils.stopwords_list">
-    stopwords_list()
+<a class="md-nav__link" href="#hazm.utils.words_list">
+    words_list()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.utils.words_list">
-    words_list()
+<a class="md-nav__link" href="#hazm.utils.stopwords_list">
+    stopwords_list()
   </a>
 </li>
 </ul>
@@ -384,77 +384,24 @@
 <p>این ماژول شامل کلاس‌ها و توابع کمکی است.</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="hazm.utils.stopwords_list">
-<code class="highlight language-python"><span class="n">stopwords_list</span><span class="p">(</span><span class="n">stopwords_file</span><span class="o">=</span><span class="n">default_stopwords</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.utils.stopwords_list" title="Permanent link">¶</a></h2>
-<div class="doc doc-contents">
-<p>لیست ایست‌واژه‌ها را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm.utils</span> <span class="kn">import</span> <span class="n">stopwords_list</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stopwords_list</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]</span>
-<span class="go">['محسوب', 'اول', 'بسیار', 'طول']</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>stopwords_file</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>مسیر فایل حاوی ایست‌واژه‌ها.</p></td>
-<td>
-<code>default_stopwords</code>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>فهرست ایست‌واژه‌ها.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
 <h2 class="doc doc-heading" id="hazm.utils.words_list">
 <code class="highlight language-python"><span class="n">words_list</span><span class="p">(</span><span class="n">words_file</span><span class="o">=</span><span class="n">default_words</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.utils.words_list" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>لیست کلمات را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm.utils</span> <span class="kn">import</span> <span class="n">words_list</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">words_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">('آب', 549005877, ('N', 'AJ')) #(id, word, (tag1, tag2, ...))</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -470,12 +417,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -484,6 +431,59 @@
 <code>Tuple[str, str, Tuple[str, str]]</code>
 </td>
 <td><p>فهرست کلمات.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="hazm.utils.stopwords_list">
+<code class="highlight language-python"><span class="n">stopwords_list</span><span class="p">(</span><span class="n">stopwords_file</span><span class="o">=</span><span class="n">default_stopwords</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.utils.stopwords_list" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents">
+<p>لیست ایست‌واژه‌ها را برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm.utils</span> <span class="kn">import</span> <span class="n">stopwords_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stopwords_list</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="go">['محسوب', 'اول', 'بسیار', 'طول']</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stopwords_file</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل حاوی ایست‌واژه‌ها.</p></td>
+<td>
+<code>default_stopwords</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>List[str]</code>
+</td>
+<td><p>فهرست ایست‌واژه‌ها.</p></td>
 </tr>
 </tbody>
 </table>

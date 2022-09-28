@@ -197,13 +197,13 @@
 <nav aria-label="WordTokenizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts">
-    join_verb_parts()
+<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.tokenize">
+    tokenize()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.tokenize">
-    tokenize()
+<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts">
+    join_verb_parts()
   </a>
 </li>
 </ul>
@@ -373,13 +373,13 @@
 <nav aria-label="WordTokenizer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts">
-    join_verb_parts()
+<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.tokenize">
+    tokenize()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.tokenize">
-    tokenize()
+<a class="md-nav__link" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts">
+    join_verb_parts()
   </a>
 </li>
 </ul>
@@ -408,16 +408,16 @@
 <a class="headerlink" href="#hazm.WordTokenizer.WordTokenizer" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code><span title="nltk.tokenize.api.TokenizerI">TokenizerI</span></code></p>
+        کلاس(های) پایه: <code><span title="nltk.tokenize.api.TokenizerI">TokenizerI</span></code></p>
 <p>این کلاس شامل توابعی برای استخراج کلماتِ متن است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -521,73 +521,12 @@
 </table>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.WordTokenizer.WordTokenizer.join_verb_parts">
-<code class="highlight language-python"><span class="n">join_verb_parts</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>افعال چندبخشی را به هم می‌چسباند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'خواهد'</span><span class="p">,</span> <span class="s1">'رفت'</span><span class="p">])</span>
-<span class="go">['خواهد_رفت']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'رفته'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
-<span class="go">['رفته_است']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'گفته'</span><span class="p">,</span> <span class="s1">'شده'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
-<span class="go">['گفته_شده_است']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'گفته'</span><span class="p">,</span> <span class="s1">'خواهد'</span><span class="p">,</span> <span class="s1">'شد'</span><span class="p">])</span>
-<span class="go">['گفته_خواهد_شد']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'خسته'</span><span class="p">,</span> <span class="s1">'شدید'</span><span class="p">])</span>
-<span class="go">['خسته', 'شدید']</span>
-</code></pre></div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>tokens</code></td>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>لیست کلمات یک فعل چندبخشی.</p></td>
-<td>
-<em>required</em>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.WordTokenizer.WordTokenizer.tokenize">
 <code class="highlight language-python"><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.WordTokenizer.WordTokenizer.tokenize" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>توکن‌های متن را استخراج می‌کند.</p>
-<p><strong>Examples:</strong></p>
+<p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">'این جمله (خیلی) پیچیده نیست!!!'</span><span class="p">)</span>
 <span class="go">['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']</span>
@@ -615,14 +554,14 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s1">'دیگه میخوام ترک تحصیل کنم 😂😂😂'</span><span class="p">)))</span>
 <span class="go">دیگه میخوام ترک تحصیل کنم 😂 😂 😂</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -633,17 +572,17 @@
 </td>
 <td><p>متنی که باید توکن‌های آن استخراج شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -652,6 +591,67 @@
 <code>List[str]</code>
 </td>
 <td><p>لیست توکن‌های استخراج‌شده.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.WordTokenizer.WordTokenizer.join_verb_parts">
+<code class="highlight language-python"><span class="n">join_verb_parts</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.WordTokenizer.WordTokenizer.join_verb_parts" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>افعال چندبخشی را به هم می‌چسباند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'خواهد'</span><span class="p">,</span> <span class="s1">'رفت'</span><span class="p">])</span>
+<span class="go">['خواهد_رفت']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'رفته'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
+<span class="go">['رفته_است']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'گفته'</span><span class="p">,</span> <span class="s1">'شده'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
+<span class="go">['گفته_شده_است']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'گفته'</span><span class="p">,</span> <span class="s1">'خواهد'</span><span class="p">,</span> <span class="s1">'شد'</span><span class="p">])</span>
+<span class="go">['گفته_خواهد_شد']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span><span class="o">.</span><span class="n">join_verb_parts</span><span class="p">([</span><span class="s1">'خسته'</span><span class="p">,</span> <span class="s1">'شدید'</span><span class="p">])</span>
+<span class="go">['خسته', 'شدید']</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tokens</code></td>
+<td>
+<code>List[str]</code>
+</td>
+<td><p>لیست کلمات یک فعل چندبخشی.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>List[str]</code>
+</td>
+<td><p>لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.</p></td>
 </tr>
 </tbody>
 </table>

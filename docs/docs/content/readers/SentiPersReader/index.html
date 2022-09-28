@@ -286,13 +286,13 @@
 <nav aria-label="SentiPersReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.comments">
-    comments()
+<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.docs">
+    docs()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.docs">
-    docs()
+<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.comments">
+    comments()
   </a>
 </li>
 </ul>
@@ -373,13 +373,13 @@
 <nav aria-label="SentiPersReader" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.comments">
-    comments()
+<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.docs">
+    docs()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.docs">
-    docs()
+<a class="md-nav__link" href="#hazm.SentiPersReader.SentiPersReader.comments">
+    comments()
   </a>
 </li>
 </ul>
@@ -408,14 +408,14 @@
 <a class="headerlink" href="#hazm.SentiPersReader.SentiPersReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p>این کلاس شامل توابعی برای خواندن پیکرهٔ سِنتی‌پِرِس است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -426,42 +426,12 @@
 </td>
 <td><p>مسیر فولدر حاوی فایل‌های پیکره</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
 <div class="doc doc-children">
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.SentiPersReader.SentiPersReader.comments">
-<code class="highlight language-python"><span class="n">comments</span><span class="p">()</span></code>
-<a class="headerlink" href="#hazm.SentiPersReader.SentiPersReader.comments" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>نظرات مربوط به متن را برمی‌گرداند.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentipers</span> <span class="o">=</span> <span class="n">SentiPersReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/sentipers'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">sentipers</span><span class="o">.</span><span class="n">comments</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">'بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .'</span>
-</code></pre></div>
-<p><strong>Yields:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>نظر بعدی.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.SentiPersReader.SentiPersReader.docs">
 <code class="highlight language-python"><span class="n">docs</span><span class="p">()</span></code>
@@ -482,12 +452,12 @@
 <li>ارزش (value)</li>
 <li>جملات (sentences)</li>
 </ul>
-<p><strong>Yields:</strong></p>
+<p><strong>خروجی تدریجی:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -496,6 +466,36 @@
 <code>Dict</code>
 </td>
 <td><p>متن بعدی.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.SentiPersReader.SentiPersReader.comments">
+<code class="highlight language-python"><span class="n">comments</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.SentiPersReader.SentiPersReader.comments" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>نظرات مربوط به متن را برمی‌گرداند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentipers</span> <span class="o">=</span> <span class="n">SentiPersReader</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">'corpora/sentipers'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">sentipers</span><span class="o">.</span><span class="n">comments</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">'بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .'</span>
+</code></pre></div>
+<p><strong>خروجی تدریجی:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>نظر بعدی.</p></td>
 </tr>
 </tbody>
 </table>

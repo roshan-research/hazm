@@ -216,11 +216,6 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DependencyParser.DependencyParser">
-    DependencyParser
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.DependencyParser.MaltParser">
     MaltParser
   </a>
@@ -238,6 +233,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.DependencyParser.DependencyParser">
+    DependencyParser
+  </a>
 </li>
 </ul>
 </nav>
@@ -372,11 +372,6 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.DependencyParser.DependencyParser">
-    DependencyParser
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.DependencyParser.MaltParser">
     MaltParser
   </a>
@@ -395,6 +390,11 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.DependencyParser.DependencyParser">
+    DependencyParser
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -412,38 +412,21 @@
 <p>این ماژول شامل کلاس‌ها و توابعی برای شناساییِ وابستگی‌های دستوری متن است.</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-class">
-<h2 class="doc doc-heading" id="hazm.DependencyParser.DependencyParser">
-<code>DependencyParser</code>
-<a class="headerlink" href="#hazm.DependencyParser.DependencyParser" title="Permanent link">¶</a></h2>
-<div class="doc doc-contents">
-<p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser" title="hazm.DependencyParser.MaltParser">MaltParser</a></code></p>
-<p>این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.</p>
-<p>این کلاس تمام توابع خود را از کلاس <a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser">MaltParser</a> به ارث می‌برد.</p>
-<p><strong>Examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">POSTagger</span><span class="p">,</span> <span class="n">Lemmatizer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/postagger.model'</span><span class="p">),</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">Lemmatizer</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">([</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'به'</span><span class="p">,</span> <span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'رفته بودم'</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">])</span><span class="o">.</span><span class="n">tree</span><span class="p">()</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
-<span class="go">(رفته_بودم من (به مدرسه) .)</span>
-</code></pre></div>
-</div>
-</div>
-<div class="doc doc-object doc-class">
 <h2 class="doc doc-heading" id="hazm.DependencyParser.MaltParser">
 <code>MaltParser</code>
 <a class="headerlink" href="#hazm.DependencyParser.MaltParser" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser" title="hazm.DependencyParser.MaltParser">MaltParser</a></code></p>
+        کلاس(های) پایه: <code><a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser" title="hazm.DependencyParser.MaltParser">MaltParser</a></code></p>
 <p>این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -454,7 +437,7 @@
 </td>
 <td><p>نام تابع <code>POS Tagger</code>.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -464,7 +447,7 @@
 </td>
 <td><p>نام کلاس ریشه‌یاب.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -496,14 +479,14 @@
 <a class="headerlink" href="#hazm.DependencyParser.MaltParser.parse_sents" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>گراف وابستگی را برمی‌گرداند.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -514,7 +497,7 @@
 </td>
 <td><p>جملاتی که باید گراف وابستگی آن‌ها استخراج شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -529,12 +512,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -554,14 +537,14 @@
 <a class="headerlink" href="#hazm.DependencyParser.MaltParser.parse_tagged_sents" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>پارامترها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
 </tr>
 </thead>
 <tbody>
@@ -572,7 +555,7 @@
 </td>
 <td><p>جملاتی که باید گراف وابستگی‌های آن استخراج شود.</p></td>
 <td>
-<em>required</em>
+<span class="required-parameter">اجباری</span>
 </td>
 </tr>
 <tr>
@@ -587,12 +570,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Raises:</strong></p>
+<p><strong>استثناها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -604,12 +587,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><strong>خروجی‌ها:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Description</th>
+<th>نوع</th>
+<th>توضیحات</th>
 </tr>
 </thead>
 <tbody>
@@ -624,6 +607,23 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="hazm.DependencyParser.DependencyParser">
+<code>DependencyParser</code>
+<a class="headerlink" href="#hazm.DependencyParser.DependencyParser" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents">
+<p class="doc doc-class-bases">
+        کلاس(های) پایه: <code><a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser" title="hazm.DependencyParser.MaltParser">MaltParser</a></code></p>
+<p>این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.</p>
+<p>این کلاس تمام توابع خود را از کلاس <a class="autorefs autorefs-internal" href="#hazm.DependencyParser.MaltParser">MaltParser</a> به ارث می‌برد.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="n">POSTagger</span><span class="p">,</span> <span class="n">Lemmatizer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/postagger.model'</span><span class="p">),</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">Lemmatizer</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">([</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'به'</span><span class="p">,</span> <span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'رفته بودم'</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">])</span><span class="o">.</span><span class="n">tree</span><span class="p">()</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+<span class="go">(رفته_بودم من (به مدرسه) .)</span>
+</code></pre></div>
 </div>
 </div>
 </div>
