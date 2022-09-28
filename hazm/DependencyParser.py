@@ -1,29 +1,57 @@
 # coding: utf-8
 
+"""این ماژول شامل کلاس‌ها و توابعی برای شناساییِ وابستگی‌های دستوری متن است. 
+"""
+
 from __future__ import print_function, unicode_literals
 import os, codecs, tempfile
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
 from nltk.parse.malt import MaltParser
 
-
 class MaltParser(MaltParser):
-	"""
-	interfaces [MaltParser](http://www.maltparser.org/)
+	"""این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.
+	
+	Args:
+		tagger (str): نام تابع `POS Tagger`.
+		lemmatizer (str): نام کلاس ریشه‌یاب.
+		working_dir (str, optional): محل ذخیره‌سازی `maltparser‍`.
+		model_file (str, optional): آدرس مدلِ از پیش آموزش دیده با پسوند `mco`.
 	"""
 
-	def __init__(self, tagger, lemmatizer, working_dir='resources', model_file='langModel.mco'):
+	def __init__(self, tagger, lemmatizer, working_dir='resources', model_file='langModel.mco'):			
 		self.tagger = tagger
 		self.working_dir = working_dir
 		self.mco = model_file
 		self._malt_bin = os.path.join(working_dir, 'malt.jar')
 		self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: '_'
-
+	
 	def parse_sents(self, sentences, verbose=False):
+		"""گراف وابستگی را برمی‌گرداند.
+
+		Args:
+			sentences (str): جملاتی که باید گراف وابستگی آن‌ها استخراج شود.
+			verbose (bool, optional): اگر `True` باشد وابستگی‌های بیشتری را برمی‌گرداند.
+
+		Returns:
+			(str): گراف وابستگی.
+		"""		
 		tagged_sentences = self.tagger.tag_sents(sentences)
 		return self.parse_tagged_sents(tagged_sentences, verbose)
 
 	def parse_tagged_sents(self, sentences, verbose=False):
+		"""گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
+
+		Args:
+			sentences (str): جملاتی که باید گراف وابستگی‌های آن استخراج شود.
+			verbose (bool, optional): اگر `True` باشد وابستگی‌های بیشتری را برمی‌گرداند..
+
+		Raises:
+			Exception: در صورت بروز خطا یک اکسپشن عمومی صادر می‌شود.
+
+		Returns:
+			(str): گراف وابستگی جملات.
+		"""		
 		input_file = tempfile.NamedTemporaryFile(prefix='malt_input.conll', dir=self.working_dir, delete=False)
 		output_file = tempfile.NamedTemporaryFile(prefix='malt_output.conll', dir=self.working_dir, delete=False)
 
@@ -94,9 +122,13 @@ class TurboParser(ParserI):
 
 
 class DependencyParser(MaltParser):
-	"""
-	>>> from hazm import POSTagger, Lemmatizer
-	>>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())
-	>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
-	(رفته_بودم من (به مدرسه) .)
-	"""
+	""" این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.
+
+	این کلاس تمام توابع خود را از کلاس [MaltParser][hazm.DependencyParser.MaltParser] به ارث می‌برد.
+	
+	Examples:
+		>>> from hazm import POSTagger, Lemmatizer
+		>>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())
+		>>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
+		(رفته_بودم من (به مدرسه) .)
+		"""

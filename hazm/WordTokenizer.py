@@ -1,5 +1,10 @@
 # coding: utf-8
 
+"""این ماژول شامل کلاس‌ها و توابعی برای استخراج کلماتِ متن است. 
+
+برای استخراج جملات، از تابع [SentenceTokenizer()][hazm.SentenceTokenizer] استفاده کنید.
+"""
+
 from __future__ import unicode_literals
 import re, codecs
 from .utils import words_list, default_words, default_verbs
@@ -7,33 +12,26 @@ from nltk.tokenize.api import TokenizerI
 
 
 class WordTokenizer(TokenizerI):
-	"""
-	>>> tokenizer = WordTokenizer()
-	>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
-	['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
+	"""این کلاس شامل توابعی برای استخراج کلماتِ متن است.
 
-	>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
-	['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396', '.']
+	Args:
+		words_file (str, optional): مسیر فایل حاوی لیست کلمات.
+			هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
+			این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
+			ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
 
-	>>> tokenizer = WordTokenizer(join_verb_parts=False)
-	>>> print(' '.join(tokenizer.tokenize('سلام.')))
-	سلام .
+		verbs_file (str, optional): مسیر فایل حاوی افعال. 
+			هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
+			این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
+			ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
 
-	>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_links=True)
-	>>> print(' '.join(tokenizer.tokenize('در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP')))
-	در قطر هک شد LINK LINK
-
-	>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_IDs=True, replace_numbers=True)
-	>>> print(' '.join(tokenizer.tokenize('زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir')))
-	زلزله NUMF ریشتری در هجدک کرمان ID
-
-	>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
-	>>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
-	📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
-
-	>>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
-	>>> print(' '.join(tokenizer.tokenize('دیگه میخوام ترک تحصیل کنم 😂😂😂')))
-	دیگه میخوام ترک تحصیل کنم 😂 😂 😂
+		join_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
+		separate_emoji (bool, optional): اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
+		replace_links (bool, optional): اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
+		replace_IDs (bool, optional): اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
+		replace_emails (bool, optional): اگر `True` باشد آدرس‌های ایمیل را با کلمهٔ `EMAIL‍` جایگزین می‌کند.
+		replace_numbers (bool, optional): اگر `True` باشد اعداد اعشاری را با`NUMF` و اعداد صحیح را با` NUM` جایگزین می‌کند. در اعداد غیراعشاری، تعداد ارقام نیز جلوی `NUM` می‌آید.
+		replace_hashtags (bool, optional): اگر `True` باشد علامت `#` را با `TAG` جایگزین می‌کند.
 	"""
 
 	def __init__(self, words_file=default_words, verbs_file=default_verbs, join_verb_parts=True, separate_emoji=False, replace_links=False, replace_IDs=False, replace_emails=False, replace_numbers=False, replace_hashtags=False):
@@ -96,6 +94,42 @@ class WordTokenizer(TokenizerI):
 				self.verbe = set([bon +'ه' for bon in self.bons] + ['ن'+ bon +'ه' for bon in self.bons])
 
 	def tokenize(self, text):
+		"""توکن‌های متن را استخراج می‌کند.
+
+		Examples:
+			>>> tokenizer = WordTokenizer()
+			>>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
+			['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
+
+			>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
+			['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396', '.']
+
+			>>> tokenizer = WordTokenizer(join_verb_parts=False)
+			>>> print(' '.join(tokenizer.tokenize('سلام.')))
+			سلام .
+
+			>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_links=True)
+			>>> print(' '.join(tokenizer.tokenize('در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP')))
+			در قطر هک شد LINK LINK
+
+			>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_IDs=True, replace_numbers=True)
+			>>> print(' '.join(tokenizer.tokenize('زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir')))
+			زلزله NUMF ریشتری در هجدک کرمان ID
+
+			>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
+			>>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
+			📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
+
+			>>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
+			>>> print(' '.join(tokenizer.tokenize('دیگه میخوام ترک تحصیل کنم 😂😂😂')))
+			دیگه میخوام ترک تحصیل کنم 😂 😂 😂
+
+		Args:
+			text (str): متنی که باید توکن‌های آن استخراج شود.
+
+		Returns:
+			(List[str]): لیست توکن‌های استخراج‌شده.
+		"""		
 
 		if self.separate_emoji:
 			text = self.emoji_pattern.sub(self.emoji_repl, text)
@@ -119,19 +153,27 @@ class WordTokenizer(TokenizerI):
 		return tokens
 
 	def join_verb_parts(self, tokens):
-		"""
-		>>> tokenizer = WordTokenizer()
-		>>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
-		['خواهد_رفت']
-		>>> tokenizer.join_verb_parts(['رفته', 'است'])
-		['رفته_است']
-		>>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
-		['گفته_شده_است']
-		>>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
-		['گفته_خواهد_شد']
-		>>> tokenizer.join_verb_parts(['خسته', 'شدید'])
-		['خسته', 'شدید']
-		"""
+		"""افعال چندبخشی را به هم می‌چسباند.
+
+		Examples:
+			>>> tokenizer = WordTokenizer()
+			>>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
+			['خواهد_رفت']
+			>>> tokenizer.join_verb_parts(['رفته', 'است'])
+			['رفته_است']
+			>>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
+			['گفته_شده_است']
+			>>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
+			['گفته_خواهد_شد']
+			>>> tokenizer.join_verb_parts(['خسته', 'شدید'])
+			['خسته', 'شدید']
+
+		Args:
+			tokens (List[str]): لیست کلمات یک فعل چندبخشی.
+
+		Returns:
+			(List[str]): لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
+		"""		
 
 		result = ['']
 		for token in reversed(tokens):
