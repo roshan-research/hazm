@@ -1,6 +1,8 @@
 # coding: utf-8
 
-"""این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست.
+"""این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت برچسب‌زنی در نسخهٔ حاضر ۹۷.۱ درصد [^1] است.**
+[^1]: 
+	این عدد با انتشار هر نسخه بروزرسانی می‌شود.
 """
 
 from __future__ import unicode_literals
@@ -9,9 +11,9 @@ from .SequenceTagger import SequenceTagger
 
 
 class POSTagger(SequenceTagger):
-	"""این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها و جملات است.
-
-	این کلاس تمام توابع خود را از کلاس [SequenceTagger][hazm.SequenceTagger.SequenceTagger] به ارث می‌برد.
+	"""این کلاس‌ها شامل توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت برچسب‌زنی در نسخهٔ حاضر ۹۷.۱ درصد [^1] است.** این کلاس تمام توابع خود را از کلاس [SequenceTagger][hazm.SequenceTagger.SequenceTagger] به ارث می‌برد.
+	[^1]: 
+		این عدد با انتشار هر نسخه بروزرسانی می‌شود.
 	"""
 
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
