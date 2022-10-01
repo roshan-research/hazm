@@ -19,10 +19,23 @@ copyright: |
 theme:
   name: material
   custom_dir: documentation/theme
+  favicon: assets/favicon.png
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: تغییر به حالت شب
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: تغییر به حالت روز
   logo: assets/logo.svg
   font:
     code: Fira Code
-  favicon: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
   language: custom
