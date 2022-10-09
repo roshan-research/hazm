@@ -97,8 +97,8 @@ class TNewsReader():
             >>> next(tnews.texts())
             ''
 
-		Yields:
-			(str): متن خبر بعدی.
+        Yields:
+            (str): متن خبر بعدی.
 		"""
         for doc in self.docs():
             yield doc['text']
