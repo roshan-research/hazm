@@ -1,0 +1,32 @@
+name: update docs
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+jobs:            
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Install python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+      
+      - name: Install requirements packages
+        run: pip install -r requirements.txt
+      
+      - name: Build docs
+        run: mkdocs build --clean
+      
+      - name: Push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add docs/docs -f
+          git commit -m "Update doc"
+          git push

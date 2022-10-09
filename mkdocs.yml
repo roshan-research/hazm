@@ -2,12 +2,15 @@
 site_name: هضم | کتابخانهٔ پردازش زبان فارسی
 site_description: کتابخانه‌ای پایتونی برای پردازش زبان فارسی
 site_author: روشن
-site_url: https://www.roshan-ai.ir/docs/hazm
-
-repo_name: hazm/hazm
+site_url: https://sobhe.github.io
 repo_url: https://github.com/sobhe/hazm
-edit_uri: blob/master/docs/
-site_dir: site
+
+remote_branch: master
+repo_name: hazm
+edit_uri: edit/master/documentation
+
+docs_dir: documentation
+site_dir: docs/docs
 
 copyright: |
   کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/sobhe/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
@@ -15,11 +18,24 @@ copyright: |
 
 theme:
   name: material
-  custom_dir: docs/theme
+  custom_dir: documentation/theme
+  favicon: assets/favicon.png
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: تغییر به حالت شب
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: تغییر به حالت روز
   logo: assets/logo.svg
   font:
     code: Fira Code
-  favicon: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
   language: custom
@@ -37,10 +53,9 @@ theme:
     - content.code.annotate
 
 plugins:
-  - tooltips
   - autorefs
   - mkdocstrings:
-      custom_templates: templates
+      custom_templates: documentation/templates
       default_handler: python
       handlers:
         python:

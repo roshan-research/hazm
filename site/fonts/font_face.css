@@ -1,0 +1,60 @@
+/* Note: commented font-face are not used in project but is correct url and other properties. */
+/* use from them, when need to them. */
+
+/*https://github.com/rastikerdar/vazir-font*/
+
+/*نازک Vazir-Thin.ttf*/
+/*سبک Vazir-Light.ttf*/
+/*معمولی Vazir.ttf*/
+/*متوسط Vazir-Medium.ttf*/
+/*ضخیم Vazir-Bold.ttf*/
+/*سیاه Vazir-Black.ttf*/
+
+@font-face {
+    font-family: Vazir;
+    src: url("vazir/Vazir-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Bold;
+    src: url("vazir/Vazir-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Black;
+    src: url("vazir/Vazir-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Medium;
+    src: url("vazir/Vazir-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Light;
+    src: url("vazir/Vazir-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Thin;
+    src: url("vazir/Vazir-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir-Code;
+    src: url("vazir/Vazir-Code.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}

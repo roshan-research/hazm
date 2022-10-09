@@ -1,0 +1,101 @@
+#donations-modal .modal-dialog {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#donations-modal li {
+    list-style: none;
+    padding: 10px 20px 0;
+}
+
+#donations-modal a {
+    display: block;
+    color: #473e5f;
+    border-bottom: 2px solid #3f808c;
+    padding-bottom: 10px;
+}
+
+#donations-modal a:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#donations-modal a:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+#donations-modal a:hover {
+    color: #3a1848;
+    background: #fad7aa;
+}
+
+#donations-modal .message {
+    display: inline;
+}
+
+#donations-modal .amount {
+    font-size: 90%;
+    padding-top: 2px;
+    padding-right: 10px;
+    float: left;
+}
+
+#donations-modal .amount .glyphicon {
+    top: 1px;
+    font-size: 50%;
+}
+
+#pay-modal form {
+    margin: 0;
+}
+
+#pay-modal label {
+    width: 34px;
+}
+
+#pay-modal [name="user"] {
+    width: 150px;
+}
+
+#pay-modal [name="description"] {
+    width: calc(100% - 40px);
+}
+
+#pay-modal [name="user"] {
+    width: 150px;
+}
+
+#pay-modal input.amount {
+    width: 40px;
+    padding-right: 5px;
+    padding-left: 5px;
+    direction: ltr;
+}
+
+#pay-modal .form-control {
+    font-size: 17px;
+    border-color: #eee;
+    display: inline-block;
+    padding: 6px 10px 2px;
+}
+
+#pay-modal .btn {
+    font-size: 17px;
+    padding: 4px 8px 2px;
+}
+
+#pay-modal label {
+    margin-bottom: 2px;
+    font-size: 90%;
+}
+
+#pay-modal form span {
+    display: inline-block;
+    line-height: 20px;
+    padding: 2px 3px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 4px;
+}
