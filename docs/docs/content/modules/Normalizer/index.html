@@ -779,7 +779,8 @@
 <a class="headerlink" href="#hazm.Normalizer.Normalizer.token_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.</p>
-<p><br/>در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛ <code>برای مثال:</code>['زمین', 'لرزه', 'ای']<code>تبدیل می‌شود به:</code>['زمین‌لرزه‌ای'].</p>
+<p>در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
+برای مثال: <code>['زمین', 'لرزه', 'ای']</code> تبدیل می‌شود به: <code>['زمین‌لرزه‌ای']</code></p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="n">token_based</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'کتاب'</span><span class="p">,</span> <span class="s1">'ها'</span><span class="p">])</span>
@@ -800,46 +801,12 @@
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'زمین'</span><span class="p">,</span> <span class="s1">'لرزه'</span><span class="p">,</span> <span class="s1">'ای'</span><span class="p">])</span>
 <span class="go">['زمین‌لرزه‌ای']</span>
 </code></pre></div>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>tokens</code></td>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>توکن‌هایی که باید نرمال‌سازی شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>List[str]</code>
-</td>
-<td><p>لیستی از توکن‌های نرمال‌سازی شده به شکل <code>[token1, token2, ...]</code>.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="highlight"><pre><span></span><code>    Args:
+            tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
+
+    Returns:
+            (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
+</code></pre></div>
 </div>
 </div>
 </div>
