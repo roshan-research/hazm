@@ -13,137 +13,137 @@ docs_dir: documentation
 site_dir: docs/docs
 
 copyright: |
-  کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/sobhe/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
-  <a href="#__consent">تغییر تنظیمات کوکی</a>
+    کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/sobhe/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+    <a href="#__consent">تغییر تنظیمات کوکی</a>
 
 theme:
-  name: material
-  custom_dir: documentation/theme
-  favicon: assets/favicon.png
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: تغییر به حالت شب
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: تغییر به حالت روز
-  logo: assets/logo.svg
-  font:
-    code: Fira Code
-  icon:
-    repo: fontawesome/brands/github
-  language: custom
-  features:
-    - navigation.instant
-    - navigation.tracking
-    - navigation.tabs.sticky
-    - navigation.indexes
-    - navigation.prune
-    - navigation.top
-    - search.suggest
-    - search.highlight
-    - search.share
-    - content.tooltips
-    - content.code.annotate
+    name: material
+    custom_dir: documentation/theme
+    favicon: assets/favicon.png
+    palette:
+        - scheme: default
+          primary: indigo
+          accent: indigo
+          toggle:
+              icon: material/brightness-7
+              name: تغییر به حالت شب
+        - scheme: slate
+          primary: indigo
+          accent: indigo
+          toggle:
+              icon: material/brightness-4
+              name: تغییر به حالت روز
+    logo: assets/logo.svg
+    font:
+        code: Fira Code
+    icon:
+        repo: fontawesome/brands/github
+    language: custom
+    features:
+        - navigation.instant
+        - navigation.tracking
+        - navigation.tabs.sticky
+        - navigation.indexes
+        - navigation.prune
+        - navigation.top
+        - search.suggest
+        - search.highlight
+        - search.share
+        - content.tooltips
+        - content.code.annotate
 
 plugins:
-  - autorefs
-  - mkdocstrings:
-      custom_templates: documentation/templates
-      default_handler: python
-      handlers:
-        python:
-          options:
-            show_source: false
-  - search
-  - tags
-  - glightbox
+    - autorefs
+    - mkdocstrings:
+          custom_templates: documentation/templates
+          default_handler: python
+          handlers:
+              python:
+                  options:
+                      show_source: false
+    - search
+    - tags
+    - glightbox
 
 extra_css:
-  - hint.min.css
-  - custom-style.css
+    - hint.min.css
+    - custom-style.css
 
 nav:
-  - معرفی و نصب: index.md
-  - کلاس‌ها و توابع:    
-    - content/modules/index.md
-    - content/modules/Normalizer.md
-    - content/modules/InformalNormalizer.md
-    - content/modules/Stemmer.md
-    - content/modules/Lemmatizer.md
-    - content/modules/SentenceTokenizer.md
-    - content/modules/WordTokenizer.md
-    - content/modules/SequenceTagger.md
-    - content/modules/TokenSplitter.md
-    - content/modules/Chunker.md
-    - content/modules/POSTagger.md
-    - content/modules/DependencyParser.md
-    - content/utils.md   
-    - پیکره‌خوان‌ها:
-      - content/readers/index.md    
-      - content/readers/MirasTextReader.md
-      - content/readers/BijankhanReader.md
-      - content/readers/DadeganReader.md
-      - content/readers/DegarbayanReader.md
-      - content/readers/HamshahriReader.md
-      - content/readers/PersicaReader.md
-      - content/readers/PeykareReader.md   
-      - content/readers/QuranCorpusReader.md
-      - content/readers/SentiPersReader.md
-      - content/readers/TNewsReader.md
-      - content/readers/TreebankReader.md
-      - content/readers/VerbValencyReader.md
-      - content/readers/WikipediaReader.md    
-  - سایر بخش‌ها: 
-    - هضم در زبان‌های دیگر: content/in-other-languages.md
+    - معرفی و نصب: index.md
+    - کلاس‌ها و توابع:
+          - content/modules/index.md
+          - content/modules/Normalizer.md
+          - content/modules/InformalNormalizer.md
+          - content/modules/Stemmer.md
+          - content/modules/Lemmatizer.md
+          - content/modules/SentenceTokenizer.md
+          - content/modules/WordTokenizer.md
+          - content/modules/SequenceTagger.md
+          - content/modules/TokenSplitter.md
+          - content/modules/Chunker.md
+          - content/modules/POSTagger.md
+          - content/modules/DependencyParser.md
+          - content/utils.md
+          - پیکره‌خوان‌ها:
+                - content/readers/index.md
+                - content/readers/MirasTextReader.md
+                - content/readers/BijankhanReader.md
+                - content/readers/DadeganReader.md
+                - content/readers/DegarbayanReader.md
+                - content/readers/HamshahriReader.md
+                - content/readers/PersicaReader.md
+                - content/readers/PeykareReader.md
+                - content/readers/QuranCorpusReader.md
+                - content/readers/SentiPersReader.md
+                - content/readers/TNewsReader.md
+                - content/readers/TreebankReader.md
+                - content/readers/VerbValencyReader.md
+                - content/readers/WikipediaReader.md
+    - سایر بخش‌ها:
+          - هضم در زبان‌های دیگر: content/in-other-languages.md
 
 extra:
-  repo_url: https://github.com/sobhe/hazm
-  consent:
-    title: درخواست استفاده از کوکی
-    description: >-
-      با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود بخشیم.
-      <br>
-      سپاس از همکاری شما. ❤️
+    repo_url: https://github.com/sobhe/hazm
+    consent:
+        title: درخواست استفاده از کوکی
+        description: >-
+            با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود بخشیم.
+            <br>
+            سپاس از همکاری شما. ❤️
 
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/sobhe
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/sobhe
 
 extra_javascript:
-  - https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js
+    - https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js
 
 markdown_extensions:
-  - markdown.extensions.abbr
-  - markdown.extensions.admonition
-  - markdown.extensions.footnotes
-  - markdown.extensions.tables
-  - markdown.extensions.attr_list
-  - markdown.extensions.def_list
-  - markdown.extensions.md_in_html
-  - markdown.extensions.toc:
-      permalink: true
+    - markdown.extensions.abbr
+    - markdown.extensions.admonition
+    - markdown.extensions.footnotes
+    - markdown.extensions.tables
+    - markdown.extensions.attr_list
+    - markdown.extensions.def_list
+    - markdown.extensions.md_in_html
+    - markdown.extensions.toc:
+          permalink: true
 
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.magiclink
-  - pymdownx.keys
-  - pymdownx.details
-  - pymdownx.highlight
-  - pymdownx.b64
-  - pymdownx.inlinehilite
-  - pymdownx.mark
-  - pymdownx.smartsymbols
-  - pymdownx.striphtml
-  - pymdownx.tabbed
-  - pymdownx.tilde
-  - pymdownx.arithmatex
-  - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.magiclink
+    - pymdownx.keys
+    - pymdownx.details
+    - pymdownx.highlight
+    - pymdownx.b64
+    - pymdownx.inlinehilite
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.striphtml
+    - pymdownx.tabbed
+    - pymdownx.tilde
+    - pymdownx.arithmatex
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
