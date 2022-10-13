@@ -18,7 +18,7 @@ Python library for digesting Persian text.
 
 The `Chunker` and `Lemmatizer` as surface analyzers have a precision of about 89.9% and `POSTagger` and `DependencyParser` as morphological taggers have a precision near 97.1%.
 
-| **Module name**      | **Precision**  |
+|**Module name**       |**Precision**   |
 |----------------------|----------------|
 | **Lemmatizer**       | 89.9%          |
 | **Chunker**          | 89.9%          |
