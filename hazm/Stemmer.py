@@ -41,20 +41,28 @@ class Stemmer(StemmerI):
 			'اندیشه'
 
 			>>> stemmer.stem('خانۀ')
-			'خانه'	
+			'خانه'
+
+			>>> stemmer.stem('محبوب‌ترین‌ها')
+			'محبوب'
 
 		Args:
 			word (str): کلمه‌ای که باید ریشهٔ آن پیدا شود.
 
 		Returns:
 			(str): ریشهٔ کلمه.
-		"""		
-		
-		for end in self.ends:
-			if word.endswith(end):
-				word = word[:-len(end)]
+		"""
 
 		if word.endswith('ۀ'):
 			word = word[:-1] + 'ه'
 
+		else:
+			
+			iteration=len(self.ends)
+			while(iteration):
+				for end in self.ends:
+					if word.endswith(end):
+						word = word[:-len(end)]
+				iteration-=1			
+		
 		return word
