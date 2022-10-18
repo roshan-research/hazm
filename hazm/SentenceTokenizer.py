@@ -17,7 +17,7 @@ class SentenceTokenizer(TokenizerI):
 	def __init__(self):
 		self.pattern = re.compile(r'([!\.\?⸮؟]+)[ \n]+')
 
-	def tokenize(self, text)-> List[str]:
+	def tokenize(self, text):
 		"""متن ورودی را به جملات سازندهٔ آن می‌شِکند.
 
 		Examples:
