@@ -7,12 +7,13 @@ supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
 
 class WordEmbedding:
-    def __init__(self, model_type, model=None):
+    def __init__(self, model_type, model_path=None):
         if model_type not in supported_embeddings:
             raise KeyError(f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}')
-        if model:
-            self.model = model       
+        if model_path:
+            self.model = self.load_model(model_path)       
         self.model_type = model_type    
+
 
     def load_model(self, model_file):
         if self.model_type == 'fasttext':
@@ -50,16 +51,31 @@ class WordEmbedding:
         return self.model.similarity(word1, word2)
     
 
+
     def get_vocab(self):
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        return self.model.get_words(include_freq=True)
+        if self.model_type == 'fasttext':
+            return self.model.get_words(include_freq=False)
+        else:
+            return self.model.index_to_key
+        
     
 
     def nearest_words(self, word, topn):
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        return self.model.get_nearest_neighbors(word, topn)
+        if self.model_type == 'fasttext':
+            return self.model.get_nearest_neighbors(word, 10)
+        else:
+            return self.model.most_similar(word, topn=topn)
+    
+
+    def get_normal_vector(self, word):
+        if not self.model:
+            raise AttributeError('Model must not be None! Please load model first.')
+        
+        return self.model.get_vector(key=word, norm=True)
 
     
 
