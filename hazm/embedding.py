@@ -19,7 +19,7 @@ class WordEmbedding:
             raise KeyError(f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}')
         self.model_type = model_type
         if model_path:
-            self.model = self.load_model(model_path)           
+            self.load_model(model_path)           
 
 
     def load_model(self, model_file):
