@@ -62,11 +62,11 @@ class WordEmbedding:
         
     
 
-    def nearest_words(self, word, topn):
+    def nearest_words(self, word, topn=10):
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
         if self.model_type == 'fasttext':
-            return self.model.get_nearest_neighbors(word, 10)
+            return self.model.get_nearest_neighbors(word, topn)
         else:
             return self.model.most_similar(word, topn=topn)
     
