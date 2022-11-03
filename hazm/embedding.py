@@ -7,7 +7,7 @@ supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
 
 class WordEmbedding:
-    """ .این کلاس شامل توابعی مرتبط با تبدیل کلمه به بردار اعداد یا همان امبدینگ است
+    """ .این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد یا همان امبدینگ است
 
     Args:
 		model_type (str): باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر
@@ -26,12 +26,14 @@ class WordEmbedding:
         """فایل امبدینگ را بارگذاری می‌کند
 
 		Examples:
-			>>> wordEmbedding = WordEmbedding()
-			>>> wordEmbedding.load_model('fasttext')
+			>>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+			>>> wordEmbedding.load_model('fasttext_embedding_path')
 
-			>>> wordEmbedding.load_model('keyedvector')
+            >>> wordEmbedding = WordEmbedding(model_type = 'keyedvector')
+			>>> wordEmbedding.load_model('keyedvector_embedding_path')
 
-			>>> wordEmbedding.load_model('glove')
+            >>> wordEmbedding = WordEmbedding(model_type = 'glove')
+			>>> wordEmbedding.load_model('glove_embedding_path')
 
 		Args:
 			model_file (str): مسیر فایل امبدینگ
@@ -61,31 +63,42 @@ class WordEmbedding:
         return self.model[word]
     
 
-    # def doesnt_match(self, txt):
-    #     ''' کلمه‌ نامرتبط را پیدا می‌کند
+    def doesnt_match(self, txt):
+        ''' کلمه‌ نامرتبط را پیدا می‌کند
 
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'model_path')
+            >>> wordEmbedding.doesnt_match('سلام درود خداحافظ پنجره')
+            'پنجره'
 
-    #     Args:
-    #         txt (str): متنی شامل کلمات 
+        Args:
+            txt (str): متنی شامل کلمات 
 
-	# 	Returns:
-	# 		(str): کلمه نامرتبط با سایر کلمات در متن
-    #     '''
-    #     if not self.model:
-    #         raise AttributeError('Model must not be None! Please load model first.')
-    #     return self.model.doesnt_match(word_tokenize(txt))
+		Returns:
+			(str): کلمه نامرتبط با سایر کلمات در متن
+        '''
+        if not self.model:
+            raise AttributeError('Model must not be None! Please load model first.')
+        return self.model.doesnt_match(word_tokenize(txt))
 
     
     def similarity(self, word1, word2):
-        ''' میزان شباهت دو کلمه را با عددی بین ۰ تا ۱ گزارش می‌کند
+        ''' میزان شباهت دو کلمه را با عددی بین ۱- تا ۱ گزارش می‌کند
         
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'model_path')
+            >>> wordEmbedding.similarity('ایران', 'آلمان')
+            0.42917365
+
+            >>> wordEmbedding.similarity('ایران', 'پنجره')
+            -0.050690148
 
         Args:
             word1 (str): کلمه اول
             word2 (str): کلمه دوم
 
         Returns:
-            (List[str]): میزان شباهت دو کلمه
+            (numpy.float32): میزان شباهت دو کلمه
         '''
 
         if not self.model:
@@ -97,9 +110,13 @@ class WordEmbedding:
     def get_vocab(self):
         ''' تمامی کلمات موجود در امبدینگ را گزارش می‌دهد
         
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'model_path')
+            >>> wordEmbedding.get_vocab()
+            ['در', 'به', 'از', 'که', 'این', 'the', 'می', ...]
 
         Returns:
-            (): تمام کلمات موجود در امبدینگ
+            (list[str]): تمام کلمات موجود در امبدینگ
         '''
 
         if not self.model:
@@ -114,13 +131,17 @@ class WordEmbedding:
     def nearest_words(self, word, topn):
         ''' مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد
         
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'model_path')
+            >>> wordEmbedding.nearest_words('ایران', topn = 5)
+            [('کشور', 0.6297125220298767), ('کشورمان', 0.6277097463607788), ('آمریکا', 0.6062831878662109), ('روسیه', 0.5703828930854797), ('ایرانی', 0.541590690612793)]
+
         Args:
             word (str): کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم
             topn (int): تعداد کلمات مرتبط با ورودی قبلی
 
-
         Returns:
-            (list[str]): لیستی حاوی کلمات مرتبط با کلمه ورودی
+            (list[tuple]):  لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان
         '''
         
         if not self.model:
@@ -132,13 +153,18 @@ class WordEmbedding:
     
 
     def get_normal_vector(self, word):
-        ''' مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد
+        ''' بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.
         
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'model_path')
+            >>> wordEmbedding.get_normal_vector('سرباز')
+            [ 7.71598741e-02,  4.07299027e-02,  3.12963873e-02, ..., -3.78610939e-02, -9.01247039e-02,  8.66614655e-02]     
+
         Args:
-            word (str): کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم
+            word (str): کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم
 
         Returns:
-            (list[str]): لیستی حاوی کلمات مرتبط با کلمه ورودی
+            (numpy.ndarray(float32)): لیستی حاوی کلمات مرتبط با کلمه ورودی
         '''
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
@@ -147,9 +173,7 @@ class WordEmbedding:
 
 
 
-if __name__ == '__main__':
-    embedding = WordEmbedding(model_type='keyedvector', model_path='/home/sobhe/baaz/myWord2vec/resources/downloading/skipgram/model.txt')
-    print(type(embedding.get_vocab()))
+
 
 
 
