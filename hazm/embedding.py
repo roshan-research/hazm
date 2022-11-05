@@ -1,5 +1,5 @@
-#from . import word_tokenize
-from gensim.models import KeyedVectors
+from . import word_tokenize
+from gensim.models import KeyedVectors, doc2vec
 from gensim.scripts.glove2word2vec import glove2word2vec
 import fasttext, os
 
@@ -173,7 +173,52 @@ class WordEmbedding:
 
 
 
+class SentEmbedding:
 
+        def __init__(self, model_path=None):
+            if model_path:
+                self.load_model(model_path)
+
+        def load_model(self, model):
+            self.model = doc2vec.load(model)
+
+        def __getitem__(self, sent):
+            if not self.model:
+                raise AttributeError('Model must not be None! Please load model first.')
+            return self.sent_to_vec(sent)
+
+        def sent_to_vec(self, sent):
+            if not self.model:
+                raise AttributeError('Model must not be None! Please load model first.')
+            else:
+                tokenized_sent = word_tokenize(sent)
+                return self.model.infer_vector(tokenized_sent)
+
+        def nearest_sent(self, sent, topn=10):
+            None
+
+        def similarity(self, sent1, sent2):
+            if not self.model:
+                raise AttributeError('Model must not be None! Please load model first.')
+            else:
+                tokenized_sent1 = word_tokenize(sent1)
+                tokenized_sent2 = word_tokenize(sent2)
+                return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
+
+        def get_vocab(self):
+            if not self.model:
+                raise AttributeError('Model must not be None! Please load model first.')
+            else:
+                return self.model.wv.index_to_key
+
+        
+        
+
+
+        
+
+
+    
 
 
 
