@@ -173,7 +173,7 @@ class WordEmbedding:
 
 
 
-class SentEmbedding:
+class SentenceEmbedding:
 
         def __init__(self, model_path=None):
             if model_path:
