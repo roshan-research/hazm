@@ -1,7 +1,7 @@
 from . import word_tokenize
-from gensim.models import KeyedVectors, doc2vec
+from gensim.models import KeyedVectors, doc2vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
-import fasttext, os
+import os
 
 supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
@@ -41,7 +41,7 @@ class WordEmbedding:
         """
 
         if self.model_type == 'fasttext':
-            self.model = fasttext.load_model(model_file)
+            self.model = fasttext.load_facebook_model(model_file).wv
         elif self.model_type == 'keyedvector':
             if model_file.endswith('bin'):
                 self.model = KeyedVectors.load_word2vec_format(model_file, binary=True)
@@ -121,10 +121,7 @@ class WordEmbedding:
 
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        if self.model_type == 'fasttext':
-            return self.model.get_words(include_freq=False)
-        else:
-            return self.model.index_to_key
+        return self.model.index_to_key
         
     
 
@@ -146,10 +143,7 @@ class WordEmbedding:
         
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        if self.model_type == 'fasttext':
-            return self.model.get_nearest_neighbors(word, topn)
-        else:
-            return self.model.most_similar(word, topn=topn)
+        return self.model.most_similar(word, topn=topn)
     
 
     def get_normal_vector(self, word):
