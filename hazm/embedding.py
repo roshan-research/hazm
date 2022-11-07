@@ -163,7 +163,7 @@ class WordEmbedding:
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
         
-        return self.model.get_vector(key=word, norm=True)
+        return self.model.get_vector(word, norm=True)
 
 
 
