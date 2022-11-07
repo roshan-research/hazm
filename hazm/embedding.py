@@ -168,44 +168,36 @@ class WordEmbedding:
 
 
 class SentenceEmbedding:
-
-        def __init__(self, model_path=None):
-            if model_path:
-                self.load_model(model_path)
-
-
-        def load_model(self, model_path):
-            self.model = doc2vec.load(model_path)
+    def __init__(self, model_path=None):
+        if model_path:
+            self.load_model(model_path)
 
 
-        def __getitem__(self, sent):
-            if not self.model:
-                raise AttributeError('Model must not be None! Please load model first.')
-            return self.sent_to_vec(sent)
+    def load_model(self, model_path):
+        self.model = doc2vec.load(model_path)
 
 
-        def sent_to_vec(self, sent):
-            if not self.model:
-                raise AttributeError('Model must not be None! Please load model first.')
-            else:
-                tokenized_sent = word_tokenize(sent)
-                return self.model.infer_vector(tokenized_sent)
+    def __getitem__(self, sent):
+        if not self.model:
+            raise AttributeError('Model must not be None! Please load model first.')
+        return self.get_sentence_vector(sent)
 
 
-        def similarity(self, sent1, sent2):
-            if not self.model:
-                raise AttributeError('Model must not be None! Please load model first.')
-            else:
-                tokenized_sent1 = word_tokenize(sent1)
-                tokenized_sent2 = word_tokenize(sent2)
-                return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
+    def get_sentence_vector(self, sent):
+        if not self.model:
+            raise AttributeError('Model must not be None! Please load model first.')
+        else:
+            tokenized_sent = word_tokenize(sent)
+            return self.model.infer_vector(tokenized_sent)
 
 
-        
-        
-
-
-        
+    def similarity(self, sent1, sent2):
+        if not self.model:
+            raise AttributeError('Model must not be None! Please load model first.')
+        else:
+            tokenized_sent1 = word_tokenize(sent1)
+            tokenized_sent2 = word_tokenize(sent2)
+            return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
 
 
     
