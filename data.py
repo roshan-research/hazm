@@ -252,17 +252,20 @@ def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='reso
 	print(tagger.evaluate(test))
 
 
+class MyCorpus:
 
-
+    def __init__(self, data_path):
+        self.data_path = data_path
+    
+    def __iter__(self):
+        corpus_path = datapath(self.data_path)
+        normalizer = Normalizer()
+        for i, list_of_words in enumerate(open(corpus_path)):
+            yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
 
 
 def train_sent2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
-	def tagged_document():
-		corpus_path = datapath(dataset_path)
-		normalizer = Normalizer()
-		for i, list_of_words in enumerate(open(corpus_path)):
-			yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
-	doc = list(tagged_document())
+	doc = MyCorpus(dataset_path)
 	model = Doc2Vec(min_count=min_count,
          window=windows,
          vector_size=vector_size,
