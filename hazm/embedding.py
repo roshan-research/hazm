@@ -7,7 +7,7 @@ supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
 
 class WordEmbedding:
-    """ .این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است
+    """.این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است
 
     Args:
 		model_type (str): باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر
@@ -24,7 +24,7 @@ class WordEmbedding:
 
 
     def load_model(self, model_path):
-        """فایل امبدینگ را بارگذاری می‌کند
+        """.فایل امبدینگ را بارگذاری می‌کند
 
 		Examples:
 			>>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
@@ -59,7 +59,7 @@ class WordEmbedding:
     
 
     def doesnt_match(self, txt):
-        ''' کلمه‌ نامرتبط را پیدا می‌کند
+        '''.کلمه‌ نامرتبط را پیدا می‌کند
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
@@ -79,7 +79,7 @@ class WordEmbedding:
 
     
     def similarity(self, word1, word2):
-        ''' میزان شباهت دو کلمه را گزارش می‌کند
+        '''.میزان شباهت دو کلمه را گزارش می‌کند
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
@@ -103,7 +103,7 @@ class WordEmbedding:
     
 
     def get_vocab(self):
-        ''' تمامی کلمات موجود در امبدینگ را گزارش می‌دهد
+        '''.تمامی کلمات موجود در امبدینگ را گزارش می‌دهد
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
@@ -124,7 +124,7 @@ class WordEmbedding:
     
 
     def nearest_words(self, word, topn):
-        ''' مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد
+        '''.مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
@@ -147,7 +147,7 @@ class WordEmbedding:
     
 
     def get_normal_vector(self, word):
-        ''' بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.
+        '''.بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
@@ -183,7 +183,7 @@ class SentEmbedding:
 
 
         def load_model(self, model_path):
-            '''فایل امبدینگ را بارگذاری می‌کند
+            '''.فایل امبدینگ را بارگذاری می‌کند
 
             Examples:
                 >>> sentEmbedding = SentEmbedding()
@@ -204,7 +204,7 @@ class SentEmbedding:
 
 
         def get_sentence_vector(self, sent):
-            ''' جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد
+            '''.جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد
 
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
@@ -226,7 +226,7 @@ class SentEmbedding:
 
 
         def similarity(self, sent1, sent2):
-            ''' میزان شباهت دو جمله را گزارش می‌دهد
+            '''.میزان شباهت دو جمله را گزارش می‌دهد
             
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
