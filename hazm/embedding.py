@@ -1,5 +1,5 @@
 from . import word_tokenize
-from gensim.models import KeyedVectors, doc2vec
+from gensim.models import KeyedVectors, doc2vec, Doc2Vec
 from gensim.scripts.glove2word2vec import glove2word2vec
 import fasttext, os
 
@@ -194,7 +194,7 @@ class SentEmbedding:
             
             '''            
 
-            self.model = doc2vec.load(model_path)
+            self.model = Doc2Vec.load(model_path)
 
 
         def __getitem__(self, sent):
@@ -233,7 +233,7 @@ class SentEmbedding:
                 >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر حیوانات درنده است')
                 0.6848713
 
-                >>> wordEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
+                >>> sentEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
                 0.2699288
 
             Args:
@@ -252,12 +252,3 @@ class SentEmbedding:
                 return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
 
 
-
-
-
-        
-
-
-
-        
-        
