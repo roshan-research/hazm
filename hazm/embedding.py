@@ -250,5 +250,3 @@ class SentEmbedding:
                 tokenized_sent1 = word_tokenize(sent1)
                 tokenized_sent2 = word_tokenize(sent2)
                 return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
-
-
