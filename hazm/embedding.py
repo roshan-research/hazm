@@ -1,5 +1,5 @@
 from . import word_tokenize
-from gensim.models import KeyedVectors, doc2vec, Doc2Vec
+from gensim.models import KeyedVectors, Doc2Vec
 from gensim.scripts.glove2word2vec import glove2word2vec
 import fasttext, os
 
