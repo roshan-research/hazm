@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals
 import codecs, subprocess, random
+import multiprocessing
 from collections import Counter
 from itertools import islice
 from nltk.tag import untag
@@ -10,6 +11,12 @@ from hazm import *
 from hazm.Chunker import tree2brackets
 from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
 from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
+from gensim.models import FastText
+from gensim.utils import simple_preprocess
+from gensim.test.utils import datapath
+from hazm import Normalizer
+
 
 
 def create_words_file(dic_file='resources/persian.dic', output='hazm/data/words.dat'):
@@ -245,3 +252,56 @@ def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='reso
 
 	tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
 	print(tagger.evaluate(test))
+
+
+class MyCorpus_sent:
+
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        corpus_path = datapath(self.data_path)
+        normalizer = Normalizer()
+        for i, list_of_words in enumerate(open(corpus_path)):
+            yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
+
+
+class MyCorpus_word:
+
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        corpus_path = datapath(self.data_path)
+        normalizer = Normalizer()
+        for line in open(corpus_path):
+            yield simple_preprocess(normalizer.normalize(line))
+
+
+def train_sent2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+	doc = MyCorpus_sent(dataset_path)
+	model = Doc2Vec(min_count=min_count,
+         window=windows,
+         vector_size=vector_size,
+         workers=workers,
+        )
+	model.build_vocab(doc)
+	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+	model.save(dest_path)
+	if return_model:
+		return model
+
+
+def train_word2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+	doc = MyCorpus_word(dataset_path)
+	model = FastText(min_count=min_count,
+         window=windows,
+         vector_size=vector_size,
+         workers=workers,
+        )
+	model.build_vocab(doc)
+	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+	model.save(dest_path)
+	if return_model:
+		return model
+
