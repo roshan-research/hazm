@@ -254,7 +254,7 @@ def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='reso
 	print(tagger.evaluate(test))
 
 
-class MyCorpus_sent:
+class SentenceEmbeddingCorpus:
 
     def __init__(self, data_path):
         self.data_path = data_path
@@ -266,7 +266,23 @@ class MyCorpus_sent:
             yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
 
 
-class MyCorpus_word:
+def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+	doc = SentenceEmbeddingCorpus(dataset_path)
+	model = Doc2Vec(min_count=min_count,
+         window=windows,
+         vector_size=vector_size,
+         workers=workers,
+        )
+	model.build_vocab(doc)
+	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+	model.save(model_file)
+	if return_model:
+		return model
+	else:
+		print('Model trained.')
+
+
+class WordEmbeddingCorpus:
 
     def __init__(self, data_path):
         self.data_path = data_path
@@ -278,22 +294,8 @@ class MyCorpus_word:
             yield simple_preprocess(normalizer.normalize(line))
 
 
-def train_sent2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
-	doc = MyCorpus_sent(dataset_path)
-	model = Doc2Vec(min_count=min_count,
-         window=windows,
-         vector_size=vector_size,
-         workers=workers,
-        )
-	model.build_vocab(doc)
-	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
-	model.save(dest_path)
-	if return_model:
-		return model
-
-
-def train_word2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
-	doc = MyCorpus_word(dataset_path)
+def train_word_embedding(dataset_path, dest_path='word_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+	doc = WordEmbeddingCorpus(dataset_path)
 	model = FastText(min_count=min_count,
          window=windows,
          vector_size=vector_size,
@@ -304,4 +306,6 @@ def train_word2vec_embedding(dataset_path, dest_path='sent2vec_embedding.model',
 	model.save(dest_path)
 	if return_model:
 		return model
+	else:
+		print('Model trained.s')
 
