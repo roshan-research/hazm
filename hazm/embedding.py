@@ -31,7 +31,7 @@ class WordEmbedding:
 			>>> wordEmbedding.load_model('resources/cc.fa.300.bin')
 
 		Args:
-			model_file (str): مسیر فایل امبدینگ
+			model_path (str): مسیر فایل امبدینگ
         
         """
 
@@ -172,7 +172,6 @@ class SentEmbedding:
         ''' .این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است
 
         Args:
-            model_type (str): باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر
             model_path (str, optional): مسیر فایل امبدینگ
         '''
 
@@ -190,7 +189,7 @@ class SentEmbedding:
                 >>> sentEmbedding.load_model('sent2vec_model_path')
 
             Args:
-                model_file (str): مسیر فایل امبدینگ
+                model_path (str): مسیر فایل امبدینگ
             
             '''            
 
@@ -215,7 +214,7 @@ class SentEmbedding:
                 sent (str): جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم
 
             Returns:
-                (numpy.ndarray(float32)): لیست بردار نرمال‌شده‌ مرتبط با جمله ورودی
+                (numpy.ndarray(float32)): لیست بردار مرتبط با جمله ورودی
             '''
 
             if not self.model:
@@ -231,10 +230,10 @@ class SentEmbedding:
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
                 >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر حیوانات درنده است')
-                0.6848713
+                0.8748713
 
                 >>> sentEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
-                0.2699288
+                0.2379288
 
             Args:
                 sent1 (str): جمله اول
