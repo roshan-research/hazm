@@ -49,7 +49,9 @@ class Normalizer(object):
 				(r' {2,}', ' '),  # remove extra spaces
 				(r'\n{3,}', '\n\n'),  # remove extra newlines
                 (r'\u200c{2,}', '\u200c'), # remove extra ZWNJs
-				(r'[ـ\r]', ''),  # remove keshide, carriage returns
+				(r'\u200c{1,} ', ' '), # remove unneded ZWNJs before space
+				(r' \u200c{1,}', ' '), # remove unneded ZWNJs after space
+				(r'[ـ\r]', ''),  # remove keshide, carriage returns				
 			])
 
 		if persian_style:

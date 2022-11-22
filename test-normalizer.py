@@ -2,7 +2,7 @@ from hazm import *
 
 # Testing normalizer
 
-normalizer = Normalizer()
+normalizer = Normalizer(affix_spacing=True)
 
 worked_as_expected = []
 
