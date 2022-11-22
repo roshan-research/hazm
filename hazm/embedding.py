@@ -1,7 +1,7 @@
 from . import word_tokenize
-from gensim.models import KeyedVectors, Doc2Vec
+from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
-import fasttext, os
+import os
 
 supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
@@ -20,7 +20,7 @@ class WordEmbedding:
             raise KeyError(f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}')
         self.model_type = model_type
         if model_path:
-            self.model = self.load_model(model_path)           
+            self.load_model(model_path)           
 
 
     def load_model(self, model_path):
@@ -36,7 +36,7 @@ class WordEmbedding:
         """
 
         if self.model_type == 'fasttext':
-            self.model = fasttext.load_model(model_path)
+            self.model = fasttext.load_facebook_model(model_path).wv
         elif self.model_type == 'keyedvector':
             if model_path.endswith('bin'):
                 self.model = KeyedVectors.load_word2vec_format(model_path, binary=True)
@@ -116,10 +116,7 @@ class WordEmbedding:
 
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        if self.model_type == 'fasttext':
-            return self.model.get_words(include_freq=False)
-        else:
-            return self.model.index_to_key
+        return self.model.index_to_key
         
     
 
@@ -140,10 +137,7 @@ class WordEmbedding:
         
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        if self.model_type == 'fasttext':
-            return self.model.get_nearest_neighbors(word, 10)
-        else:
-            return self.model.most_similar(word, topn=topn)
+        return self.model.most_similar(word, topn=topn)
     
 
     def get_normal_vector(self, word):
@@ -164,7 +158,7 @@ class WordEmbedding:
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
         
-        return self.model.get_vector(key=word, norm=True)
+        return self.model.get_vector(word=word, norm=True)
 
 
 
