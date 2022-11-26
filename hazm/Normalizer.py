@@ -104,7 +104,8 @@ class Normalizer(object):
                  punc_after + ']|$)', r'\1‌\2'),
 
                 (r'(ن?می)'+f'({past_roots()})', r'\1‌\2'),
-                (r'(ن?می)'+f'({present_roots()})', r'\1‌\2'),               
+                (r'(ن?می)'+f'({present_roots()})', r'\1‌\2'),
+                ('(ه)(ها)', r'\1‌\2')              
             
             ])
 
