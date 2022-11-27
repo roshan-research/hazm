@@ -1,19 +1,12 @@
 from hazm import *
 
-# Testing normalizer
+normalizer = Normalizer()
 
-normalizer = Normalizer(affix_spacing=True)
+output = []
 
-worked_as_expected = []
+with open("input.txt", encoding='utf-8') as file:
+    while (sentence := file.readline().rstrip()):
+        output.append(normalizer.normalize(sentence))
 
-with open("normalizer-test-cases.txt", encoding='utf-8') as file:
-    while (line := file.readline().rstrip()):
-        splitted = line.split('#')
-        input = splitted[0]
-        expected = splitted[1]
-        normal = normalizer.normalize(input)
-        if normal == expected:
-            worked_as_expected.append(line)
-
-with open("worked_as_expected.txt", "w", encoding="utf-8") as outfile:
-    outfile.write("\n".join(worked_as_expected))
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("\n".join(output))
