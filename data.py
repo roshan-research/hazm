@@ -266,7 +266,8 @@ class SentenceEmbeddingCorpus:
             yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
 
 
-def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, return_model=False):
+	workers = 1 if workers == 0 else workers
 	doc = SentenceEmbeddingCorpus(dataset_path)
 	model = Doc2Vec(min_count=min_count,
          window=windows,
@@ -294,7 +295,8 @@ class WordEmbeddingCorpus:
             yield simple_preprocess(normalizer.normalize(line))
 
 
-def train_word_embedding(dataset_path, dest_path='word_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=100, epochs=10, return_model=False):
+def train_word_embedding(dataset_path, dest_path='word_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=200, epochs=10, return_model=False):
+	workers = 1 if workers == 0 else workers
 	doc = WordEmbeddingCorpus(dataset_path)
 	model = FastText(min_count=min_count,
          window=windows,

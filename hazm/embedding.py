@@ -1,4 +1,4 @@
-from . import word_tokenize
+from hazm import word_tokenize
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
 import os
@@ -58,24 +58,24 @@ class WordEmbedding:
         return self.model[word]
     
 
-    def doesnt_match(self, txt):
+    def doesnt_match(self, words):
         '''.کلمه‌ نامرتبط را پیدا می‌کند
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
-            >>> wordEmbedding.doesnt_match('سلام درود خداحافظ پنجره')
+            >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
 
         Args:
-            txt (str): متنی شامل کلمات 
+            words (list[str]): لیستی از کلمات مورد نظر
 
 		Returns:
-			(str): کلمه نامرتبط با سایر کلمات در متن
+			(str): کلمه نامرتبط با سایر کلمات در لیست
         '''
 
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        return self.model.doesnt_match(word_tokenize(txt))
+        return self.model.doesnt_match(words)
 
     
     def similarity(self, word1, word2):
@@ -94,12 +94,12 @@ class WordEmbedding:
             word2 (str): کلمه دوم
 
         Returns:
-            (numpy.float32): میزان شباهت دو کلمه
+            (float): میزان شباهت دو کلمه
         '''
 
         if not self.model:
             raise AttributeError('Model must not be None! Please load model first.')
-        return self.model.similarity(word1, word2)
+        return float(str(self.model.similarity(word1, word2)))
     
 
     def get_vocab(self):
@@ -120,7 +120,7 @@ class WordEmbedding:
         
     
 
-    def nearest_words(self, word, topn):
+    def nearest_words(self, word, topn=5):
         '''.مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد
         
         Examples:
@@ -234,7 +234,7 @@ class SentEmbedding:
                 sent2 (str): جمله دوم
 
             Returns:
-                (numpy.float32): میزان شباهت دو جمله
+                (float): میزان شباهت دو جمله
             '''
 
             if not self.model:
@@ -242,4 +242,7 @@ class SentEmbedding:
             else:
                 tokenized_sent1 = word_tokenize(sent1)
                 tokenized_sent2 = word_tokenize(sent2)
-                return self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)
+                return float(str(self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)))
+            
+            
+            
