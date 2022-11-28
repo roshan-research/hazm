@@ -88,9 +88,9 @@ class Normalizer(object):
                  r'\1 \2'),  # put space after
                 ('([^ ' + punc_before + '])([' + punc_before + '])',
                  r'\1 \2'),  # put space before
-                ('(\d)([^\d\s.٫/])',r'\1 \2'),
-                ('([^\d\s.٫/])(\d)',r'\1 \2')
-            ])        
+                ('(\d)([^\d\s.٫/])', r'\1 \2'),
+                ('([^\d\s.٫/])(\d)', r'\1 \2')
+            ])
 
         if affix_spacing:
             self.affix_spacing_patterns = compile_patterns([
@@ -103,10 +103,15 @@ class Normalizer(object):
                 (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + \
                  punc_after + ']|$)', r'\1‌\2'),
 
-                (r'(ن?می)'+f'({past_roots()})', r'\1‌\2'),
-                (r'(ن?می)'+f'({present_roots()})', r'\1‌\2'),
-                ('(ه)(ها)', r'\1‌\2')              
-            
+                # (r'(^| )(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
+                (r'(^| )(ن?می)'+f'({past_roots()})', r'\2‌\3'),
+
+                # (r'(^| )(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r'\2‌\3\4'),
+                (r'(^| )(ن?می)' + f'({present_roots()})'+'([^\dA-Za-z]+)', r'\2‌\3\4'),
+
+                # شنبهها => شنبه‌ها
+                ('(ه)(ها)', r'\1‌\2')
+
             ])
 
     def normalize(self, text):

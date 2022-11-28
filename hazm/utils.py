@@ -67,21 +67,23 @@ def verbs_list():
         return list
 
 
+def past_roots():
+    roots = ""
+    for verb in verbs_list():
+        split = verb.split("#")
+        roots += split[0]+'|'
+
+    return roots[:-1]
+
+
 def present_roots():
     roots = ""
     for verb in verbs_list():
         split = verb.split("#")
         roots += split[1]+'|'
-    
+
     return roots[:-1]
 
-def past_roots():
-    roots = ""
-    for verb in verbs_list():
-        split = verb.split("#")
-        roots += split[1]+'|'
-    
-    return roots[:-1]
 
 """
 def generate_all_verb_forms(ri, rii):
