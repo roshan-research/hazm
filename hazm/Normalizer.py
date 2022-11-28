@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 import re
 from .Lemmatizer import Lemmatizer
 from .WordTokenizer import WordTokenizer
-from .utils import maketrans
+from .utils import maketrans, past_roots, present_roots
 
 
 def compile_patterns(patterns): return [
@@ -100,6 +100,25 @@ class Normalizer(object):
                 # join ام, ایم, اش, اند, ای, اید, ات
                 (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + \
                  punc_after + ']|$)', r'\1‌\2'),
+
+                # In the beggining of the line
+                # (r'(^)(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
+                (r'(^)(ن?می)'+f'({past_roots()})', r'\2‌\3'),
+
+                # In the middle of the string
+                # (r'( )(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r' \2‌\3'),
+                (r'( )(ن?می)'+f'({past_roots()})', r' \2‌\3'),
+
+                # In the beggining of the line
+                # (r'(^)(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r'\2‌\3\4'),
+                (r'(^)(ن?می)' + f'({present_roots()})' + \
+                 '([^\dA-Za-z]+)', r'\2‌\3\4'),
+
+                # In the middle of the string
+                # (r'( )(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r' \2‌\3\4'),
+                (r'( )(ن?می)' + f'({present_roots()})' + \
+                 '([^\dA-Za-z]+)', r' \2‌\3\4'),
+
 
                 # شنبهها => شنبه‌ها
                 ('(ه)(ها)', r'\1‌\2')
