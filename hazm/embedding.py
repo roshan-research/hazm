@@ -1,3 +1,7 @@
+# coding: utf-8
+
+
+from __future__ import unicode_literals
 from hazm import word_tokenize
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
