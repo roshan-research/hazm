@@ -88,6 +88,8 @@ class Normalizer(object):
                  r'\1 \2'),  # put space after
                 ('([^ ' + punc_before + '])([' + punc_before + '])',
                  r'\1 \2'),  # put space before
+                ('(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])', r'\1 \2'),
+                ('([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)', r'\1 \2'),
             ])
 
         if affix_spacing:
