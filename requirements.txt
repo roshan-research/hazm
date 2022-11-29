@@ -4,3 +4,4 @@ mkdocstrings==0.19.0
 mkdocs-material==8.4.1
 mkdocs-glightbox==0.2.0
 pymdown-extensions==9.5
+gensim==4.2.0
