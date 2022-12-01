@@ -79,6 +79,7 @@ nav:
           - content/modules/Lemmatizer.md
           - content/modules/SentenceTokenizer.md
           - content/modules/WordTokenizer.md
+          - content/modules/Embedding.md
           - content/modules/SequenceTagger.md
           - content/modules/TokenSplitter.md
           - content/modules/Chunker.md

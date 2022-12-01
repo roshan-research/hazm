@@ -13,5 +13,6 @@
 - [SequenceTagger](SequenceTagger.md)
 - [SentenceTokenizer](SentenceTokenizer.md)
 - [WordTokenizer](WordTokenizer.md)
+- [Embedding](Embedding.md)
 - [TokenSplitter](TokenSplitter.md)
 - [DependencyParser](DependencyParser.md)
