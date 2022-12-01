@@ -7,10 +7,10 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="کتابخانه‌ای پایتونی برای پردازش زبان فارسی" name="description"/>
 <meta content="روشن" name="author"/>
-<link href="https://sobhe.github.io/content/modules/Chunker/" rel="canonical"/>
+<link href="https://sobhe.github.io/content/modules/Embedding/" rel="canonical"/>
 <link href="../../../assets/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Chunker - هضم | کتابخانهٔ پردازش زبان فارسی</title>
+<title>Embedding - هضم | کتابخانهٔ پردازش زبان فارسی</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -27,7 +27,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#hazm.Chunker">
+<a class="md-skip" href="#hazm.Embedding">
           پرش به محتویات
         </a>
 </div>
@@ -51,7 +51,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Chunker
+              Embedding
             
           </span>
 </div>
@@ -186,10 +186,91 @@
         WordTokenizer
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../Embedding/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Embedding
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Embedding
       </a>
+<nav aria-label="فهرست موضوعات" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding">
+    hazm.Embedding
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding">
+    WordEmbedding
+  </a>
+<nav aria-label="WordEmbedding" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.load_model">
+    load_model()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.doesnt_match">
+    doesnt_match()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.similarity">
+    similarity()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.get_vocab">
+    get_vocab()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.nearest_words">
+    nearest_words()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.get_normal_vector">
+    get_normal_vector()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding">
+    SentEmbedding
+  </a>
+<nav aria-label="SentEmbedding" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.load_model">
+    load_model()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.get_sentence_vector">
+    get_sentence_vector()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.similarity">
+    similarity()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../SequenceTagger/">
@@ -201,62 +282,10 @@
         TokenSplitter
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Chunker
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Chunker/">
         Chunker
       </a>
-<nav aria-label="فهرست موضوعات" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      فهرست موضوعات
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker">
-    hazm.Chunker
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker">
-    Chunker
-  </a>
-<nav aria-label="Chunker" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
-    train()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.parse">
-    parse()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.parse_sents">
-    parse_sents()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
-    evaluate()
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.tree2brackets">
-    tree2brackets()
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../POSTagger/">
@@ -393,43 +422,72 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker">
-    hazm.Chunker
+<a class="md-nav__link" href="#hazm.Embedding">
+    hazm.Embedding
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker">
-    Chunker
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding">
+    WordEmbedding
   </a>
-<nav aria-label="Chunker" class="md-nav">
+<nav aria-label="WordEmbedding" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.train">
-    train()
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.load_model">
+    load_model()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.parse">
-    parse()
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.doesnt_match">
+    doesnt_match()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.parse_sents">
-    parse_sents()
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.similarity">
+    similarity()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.Chunker.evaluate">
-    evaluate()
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.get_vocab">
+    get_vocab()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.nearest_words">
+    nearest_words()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.get_normal_vector">
+    get_normal_vector()
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Chunker.tree2brackets">
-    tree2brackets()
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding">
+    SentEmbedding
   </a>
+<nav aria-label="SentEmbedding" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.load_model">
+    load_model()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.get_sentence_vector">
+    get_sentence_vector()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.similarity">
+    similarity()
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -438,83 +496,55 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/sobhe/hazm/edit/master/documentation/content/modules/Chunker.md" title="این صفحه را ویرایش کنید">
+<a class="md-content__button md-icon" href="https://github.com/sobhe/hazm/edit/master/documentation/content/modules/Embedding.md" title="این صفحه را ویرایش کنید">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
-<h1>Chunker</h1>
-<div class="admonition note">
-<p class="admonition-title">برچسب‌های تولیدشده</p>
-<p>برای آشنایی با برچسب‌های تولیدشده توسط این ماژول می‌توانید <a href="../../Parsing-By-Chunks.pdf">این مقاله</a> را مطالعه کنید. البته برخی از برچسب‌های عنوان‌شده در مقاله هنوز پیاده‌سازی نشده؛ ولی در نسخهٔ بعدی که به زودی منتشر خواهد شد این برچسب‌ها اضافه می‌شود.</p>
-</div>
+<h1>Embedding</h1>
 <div class="doc doc-object doc-module">
-<a id="hazm.Chunker"></a>
+<a id="hazm.Embedding"></a>
 <div class="doc doc-contents first">
-<p>این ماژول شامل کلاس‌ها و توابعی برای تجزیهٔ متن به عبارات اسمی، فعلی و حرف اضافه‌ای است. <strong>میزان دقت تجزیه‌گر سطحی در نسخهٔ حاضر ۸۹.۹ درصد <sup id="hazm.Chunker--fnref:1"><a class="footnote-ref" href="#hazm.Chunker--fn:1">1</a></sup> است.</strong></p>
-<div class="footnote">
-<hr/>
-<ol>
-<li id="hazm.Chunker--fn:1">
-<div class="highlight"><pre><span></span><code>این عدد با انتشار هر نسخه بروزرسانی می‌شود.
-</code></pre></div>
-<p><a class="footnote-backref" href="#hazm.Chunker--fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
-</li>
-</ol>
-</div>
 <div class="doc doc-children">
 <div class="doc doc-object doc-class">
-<h2 class="doc doc-heading" id="hazm.Chunker.Chunker">
-<code>Chunker</code>
-<a class="headerlink" href="#hazm.Chunker.Chunker" title="Permanent link">¶</a></h2>
+<h2 class="doc doc-heading" id="hazm.Embedding.WordEmbedding">
+<code>WordEmbedding</code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
-<p class="doc doc-class-bases">
-        کلاس(های) پایه: <code><span title="hazm.SequenceTagger.IOBTagger">IOBTagger</span></code>, <code><span title="nltk.chunk.ChunkParserI">ChunkParserI</span></code></p>
-<p>این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است.</p>
+<p>.این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است</p>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_type</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>model_path (str, optional): مسیر فایل امبدینگ
+</code></pre></div>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.train">
-<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.train" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.load_model">
+<code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.load_model" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>از روی درخت ورودی، مدل را آموزش می‌دهد.</p>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>trees</code></td>
-<td>
-<code>List[Tree]</code>
-</td>
-<td><p>لیستی از درخت‌ها برای آموزش مدل.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.parse">
-<code class="highlight language-python"><span class="n">parse</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.parse" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...] دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.</p>
+<p>.فایل امبدینگ را بارگذاری می‌کند</p>
 <p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/chunker.model'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">=</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">([(</span><span class="s1">'نامه'</span><span class="p">,</span> <span class="s1">'Ne'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ایشان'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'را'</span><span class="p">,</span> <span class="s1">'POSTP'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'دریافت'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'داشتم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)])</span>
-<span class="go">'(S</span>
-<span class="go">  (NP نامه/Ne ایشان/PRO)</span>
-<span class="go">  (POSTP را/POSTP)</span>
-<span class="go">  (VP دریافت/N داشتم/V)</span>
-<span class="go">  ./PUNC)'</span>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'fasttext'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -528,162 +558,29 @@
 </thead>
 <tbody>
 <tr>
-<td><code>sentence</code></td>
-<td>
-<code>List[Tuple[str,str]</code>
-</td>
-<td><p>جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+<td><code>model_path</code></td>
 <td>
 <code>str</code>
 </td>
-<td><p>ساختار درختی حاصل از تقطیع.                      </p></td>
-</tr>
-<tr>
-<td>
-</td>
-<td><p>برای تبدیل این ساختار درختی به یک ساختار کروشه‌ای و قابل‌درک‌تر</p></td>
-</tr>
-<tr>
-<td>
-</td>
-<td><p>می‌توانید از تابع <code>tree2brackets()</code> استفاده کنید.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.parse_sents">
-<code class="highlight language-python"><span class="n">parse_sents</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.parse_sents" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.</p>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>sentences</code></td>
-<td>
-<code>List[List[Tuple(str, str)]]</code>
-</td>
-<td><p>جملات ورودی.</p></td>
+<td><p>مسیر فایل امبدینگ</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>خروجی تدریجی:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>Iterator[str]</code>
-</td>
-<td><p>یک <code>Iterator</code> از جملات تقطیع شده.</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Chunker.Chunker.evaluate">
-<code class="highlight language-python"><span class="n">evaluate</span><span class="p">(</span><span class="n">gold</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.Chunker.evaluate" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.doesnt_match">
+<code class="highlight language-python"><span class="n">doesnt_match</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.doesnt_match" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>دقت مدل را ارزیابی می‌کند.</p>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>gold</code></td>
-<td>
-<code>List[Tree]</code>
-</td>
-<td><p>دادهٔ مرجع برای ارزیابی دقت مدل.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>ChunkScore</code>
-</td>
-<td><p>دقت تشخیص.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="hazm.Chunker.tree2brackets">
-<code class="highlight language-python"><span class="n">tree2brackets</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Chunker.tree2brackets" title="Permanent link">¶</a></h2>
-<div class="doc doc-contents">
-<p>خروجی درختی تابع <a class="autorefs autorefs-internal" href="#hazm.Chunker.Chunker.parse">parse()</a> را به یک ساختار کروشه‌ای تبدیل می‌کند.</p>
+<p>.کلمه‌ نامرتبط را پیدا می‌کند</p>
 <p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'resources/chunker.model'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">=</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">([(</span><span class="s1">'نامه'</span><span class="p">,</span> <span class="s1">'Ne'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ایشان'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'را'</span><span class="p">,</span> <span class="s1">'POSTP'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'دریافت'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'داشتم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)])</span>
-<span class="go">'(S</span>
-<span class="go">  (NP نامه/Ne ایشان/PRO)</span>
-<span class="go">  (POSTP را/POSTP)</span>
-<span class="go">   (VP دریافت/N داشتم/V)</span>
-<span class="go">   ./PUNC)'</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">brackets</span> <span class="o">=</span> <span class="n">tee2brackets</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="go">'[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'</span>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">'سلام'</span> <span class="p">,</span><span class="s1">'درود'</span> <span class="p">,</span><span class="s1">'خداحافظ'</span> <span class="p">,</span><span class="s1">'پنجره'</span><span class="p">])</span>
+<span class="go">'پنجره'</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -697,11 +594,62 @@
 </thead>
 <tbody>
 <tr>
-<td><code>tree</code></td>
+<td><code>words</code></td>
+<td>
+<code>list[str]</code>
+</td>
+<td><p>لیستی از کلمات مورد نظر</p>
+<p>Returns:
+        (str): کلمه نامرتبط با سایر کلمات در لیست</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.similarity">
+<code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.similarity" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.میزان شباهت دو کلمه را گزارش می‌کند</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="s1">'آلمان'</span><span class="p">)</span>
+<span class="go">0.44988164</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="s1">'پنجره'</span><span class="p">)</span>
+<span class="go">0.08837362</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word1</code></td>
 <td>
 <code>str</code>
 </td>
-<td><p>ساختار درختی حاصل از پردزاش تابع parse()</p></td>
+<td><p>کلمه اول</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>word2</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>کلمه دوم</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -719,12 +667,348 @@
 <tbody>
 <tr>
 <td>
-<code>str</code>
+<code>float</code>
 </td>
-<td><p>رشته‌ای از کروشه‌ها که در هر کروشه جزئی از متن به همراه نوع آن جای گرفته است.</p></td>
+<td><p>میزان شباهت دو کلمه</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.get_vocab">
+<code class="highlight language-python"><span class="n">get_vocab</span><span class="p">()</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.get_vocab" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.تمامی کلمات موجود در امبدینگ را گزارش می‌دهد</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocab</span><span class="p">()</span>
+<span class="go">['،', 'در', '.', 'و', ...]</span>
+</code></pre></div>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>list[str]</code>
+</td>
+<td><p>تمام کلمات موجود در امبدینگ</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.nearest_words">
+<code class="highlight language-python"><span class="n">nearest_words</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.nearest_words" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">nearest_words</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>topn</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>تعداد کلمات مرتبط با ورودی قبلی</p></td>
+<td>
+<code>5</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>list[tuple]</code>
+</td>
+<td><p>لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.get_normal_vector">
+<code class="highlight language-python"><span class="n">get_normal_vector</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.get_normal_vector" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_normal_vector</span><span class="p">(</span><span class="s1">'سرباز'</span><span class="p">)</span>
+<span class="go">array([ 8.99544358e-03,  2.76231226e-02, -1.06164828e-01, ..., -9.45233554e-02, -7.59726465e-02, -8.96625668e-02], dtype=float32)</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>numpy.<span title="numpy.ndarray">ndarray</span>(float32)</code>
+</td>
+<td><p>لیست بردار نرمال‌شده‌ مرتبط با کلمه ورودی</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="hazm.Embedding.SentEmbedding">
+<code>SentEmbedding</code>
+<a class="headerlink" href="#hazm.Embedding.SentEmbedding" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents">
+<p>.این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است</p>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل امبدینگ</p></td>
+<td>
+<code>None</code>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.SentEmbedding.load_model">
+<code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.SentEmbedding.load_model" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.فایل امبدینگ را بارگذاری می‌کند</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">'sent2vec_model_path'</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل امبدینگ</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.SentEmbedding.get_sentence_vector">
+<code class="highlight language-python"><span class="n">get_sentence_vector</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.SentEmbedding.get_sentence_vector" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">(</span><span class="n">sent_embedding_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">get_sentence_vector</span><span class="p">(</span><span class="s1">'این متن به برداری متناظر با خودش تبدیل خواهد شد'</span><span class="p">)</span>
+<span class="go">array([-0.28460968,  0.04566888, -0.00979532, ..., -0.4701098 , -0.3010612 , -0.18577948], dtype=float32)</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sent</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>numpy.<span title="numpy.ndarray">ndarray</span>(float32)</code>
+</td>
+<td><p>لیست بردار مرتبط با جمله ورودی</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.SentEmbedding.similarity">
+<code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">sent1</span><span class="p">,</span> <span class="n">sent2</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.SentEmbedding.similarity" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>.میزان شباهت دو جمله را گزارش می‌دهد</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">(</span><span class="n">sent_embedding_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'شیر حیوانی وحشی است'</span><span class="p">,</span> <span class="s1">'پلنگ از دیگر حیوانات درنده است'</span><span class="p">)</span>
+<span class="go">0.8748713</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'هضم یک محصول پردازش متن فارسی است'</span><span class="p">,</span> <span class="s1">'شیر حیوانی وحشی است'</span><span class="p">)</span>
+<span class="go">0.2379288</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sent1</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>جمله اول</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>sent2</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>جمله دوم</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>float</code>
+</td>
+<td><p>میزان شباهت دو جمله</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -740,7 +1024,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="قبلی: TokenSplitter" class="md-footer__link md-footer__link--prev" href="../TokenSplitter/" rel="prev">
+<a aria-label="قبلی: WordTokenizer" class="md-footer__link md-footer__link--prev" href="../WordTokenizer/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -749,17 +1033,17 @@
 <span class="md-footer__direction">
                 قبلی
               </span>
-              TokenSplitter
+              WordTokenizer
             </div>
 </div>
 </a>
-<a aria-label="بعدی: POSTagger" class="md-footer__link md-footer__link--next" href="../POSTagger/" rel="next">
+<a aria-label="بعدی: SequenceTagger" class="md-footer__link md-footer__link--next" href="../SequenceTagger/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 بعدی
               </span>
-              POSTagger
+              SequenceTagger
             </div>
 </div>
 <div class="md-footer__button md-icon">
