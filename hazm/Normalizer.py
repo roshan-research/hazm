@@ -7,11 +7,13 @@ from __future__ import unicode_literals
 import re
 from .Lemmatizer import Lemmatizer
 from .WordTokenizer import WordTokenizer
-from .utils import maketrans, past_roots, present_roots
+from .utils import maketrans, past_roots, present_roots, nouns_list
 
 
 def compile_patterns(patterns): return [
     (re.compile(pattern), repl) for pattern, repl in patterns]
+
+nouns = nouns_list()
 
 
 class Normalizer(object):
@@ -56,6 +58,9 @@ class Normalizer(object):
                 (r'\u200c{1,} ', ' '),  # remove unneded ZWNJs before space
                 (r' \u200c{1,}', ' '),  # remove unneded ZWNJs after space
                 (r'[ـ\r]', ''),  # remove keshide, carriage returns
+
+                # remove more than two repition of persian characters, for example سسسسلاممممم will be converted to سسلامم
+                (r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}', r'\1\1'),
             ])
 
         if persian_style:
@@ -70,6 +75,10 @@ class Normalizer(object):
                 # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
                 ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),
             )
+
+        for word in nouns:
+            pattern = '+'.join(word)+'+'            
+            self.character_refinement_patterns.append((r'\b'+pattern+r'\b', f'{word}'))
 
         self.character_refinement_patterns = compile_patterns(
             self.character_refinement_patterns)
@@ -140,6 +149,7 @@ class Normalizer(object):
         Returns:
                 (str): متنِ نرمال‌سازی‌شده.
         """
+
         text = self.character_refinement(text)
         if self._affix_spacing:
             text = self.affix_spacing(text)
