@@ -70,8 +70,8 @@ class WordEmbedding:
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
 
-            >>> wordEmbedding.doesnt_match(['بستنی' ,'پلنگ' ,'شیر'])
-            'بستنی'
+            >>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
+            'ساعت'
 
         Args:
             words (list[str]): لیستی از کلمات مورد نظر.
