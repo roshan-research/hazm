@@ -28,9 +28,11 @@ class Normalizer(object):
     """
 
     def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
+        #self.lemmatizer= Lemmatizer()
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing
         self._token_based = token_based
+        
 
         translation_src, translation_dst = ' ىكي“”', ' یکی""'
         if persian_numbers:
@@ -102,9 +104,9 @@ class Normalizer(object):
                 # join ام, ایم, اش, اند, ای, اید, ات
                 (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + \
                  punc_after + ']|$)', r'\1‌\2'),
-
+                 
                 # In the beggining of the line
-                # (r'(^)(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
+                 # (r'(^)(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
                 (r'(^)(ن?می)'+f'({past_roots()})', r'\2‌\3'),
 
                 # In the middle of the string
@@ -120,7 +122,6 @@ class Normalizer(object):
                 # (r'( )(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r' \2‌\3\4'),
                 (r'( )(ن?می)' + f'({present_roots()})' + \
                  '([^\dA-Za-z]+)', r' \2‌\3\4'),
-
 
                 # شنبهها => شنبه‌ها
                 ('(ه)(ها)', r'\1‌\2')
@@ -139,6 +140,15 @@ class Normalizer(object):
 
         Returns:
                 (str): متنِ نرمال‌سازی‌شده.
+        """
+
+        """
+        matches = re.findall(r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]', text)
+        for m in matches:            
+            r=m.replace("می","می‌")            
+            if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):                
+                text = text.replace(m,r)
+            
         """
         text = self.character_refinement(text)
         if self._affix_spacing:
@@ -293,3 +303,5 @@ Examples:
                 result.append(token)
 
         return result
+
+
