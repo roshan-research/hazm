@@ -3,7 +3,7 @@ import time, re
 
 st = time.process_time()
 
-#normalizer = Normalizer().normalize("میدانم میخواهم مینویسم میرفت")
+#normalizer = Normalizer().normalize("میدانستم")
 
 normalizer = Normalizer()
 
