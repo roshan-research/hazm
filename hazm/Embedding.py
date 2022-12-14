@@ -2,7 +2,7 @@
 '''
 این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
 '''
-
+from . import word_tokenize
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
 import os
@@ -157,9 +157,9 @@ class WordEmbedding:
 
 
 class SentEmbedding:
-        ''' .این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است
+        ''' این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است.
         Args:
-            model_path (str, optional): مسیر فایل امبدینگ
+            model_path (str, optional): مسیر فایل امبدینگ.
         '''
 
 
@@ -169,7 +169,7 @@ class SentEmbedding:
 
 
         def load_model(self, model_path):
-            '''.فایل امبدینگ را بارگذاری می‌کند
+            '''فایل امبدینگ را بارگذاری می‌کند.
             Examples:
                 >>> sentEmbedding = SentEmbedding()
                 >>> sentEmbedding.load_model('sent2vec_model_path')
@@ -188,15 +188,15 @@ class SentEmbedding:
 
 
         def get_sentence_vector(self, sent):
-            '''.جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد
+            '''جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد.
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
                 >>> sentEmbedding.get_sentence_vector('این متن به برداری متناظر با خودش تبدیل خواهد شد')
                 array([-0.28460968,  0.04566888, -0.00979532, ..., -0.4701098 , -0.3010612 , -0.18577948], dtype=float32)
             Args:
-                sent (str): جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم
+                sent (str): جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم.
             Returns:
-                (numpy.ndarray(float32)): لیست بردار مرتبط با جمله ورودی
+                (numpy.ndarray(float32)): لیست بردار مرتبط با جمله ورودی.
             '''
 
             if not self.model:
@@ -207,19 +207,19 @@ class SentEmbedding:
 
 
         def similarity(self, sent1, sent2):
-            '''.میزان شباهت دو جمله را گزارش می‌دهد
+            '''میزان شباهت دو جمله را گزارش می‌دهد.
             
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
-                >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر حیوانات درنده است')
+                >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر جانوران درنده است')
                 0.8748713
                 >>> sentEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
                 0.2379288
             Args:
-                sent1 (str): جمله اول
-                sent2 (str): جمله دوم
+                sent1 (str): جمله اولی که قصد مقایسه آن را داریم.
+                sent2 (str): جمله دومی که قصد مقایسه آن را داریم.
             Returns:
-                (float): میزان شباهت دو جمله
+                (float): میزان شباهت دو جمله.
             '''
 
             if not self.model:
@@ -230,4 +230,4 @@ class SentEmbedding:
                 return float(str(self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)))
             
             
-            
+     
