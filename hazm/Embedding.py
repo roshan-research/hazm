@@ -1,4 +1,8 @@
-from hazm import word_tokenize
+# coding: utf-8
+'''
+این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
+'''
+
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
 import os
@@ -7,10 +11,10 @@ supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
 
 class WordEmbedding:
-    """.این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است
+    """این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است.
     Args:
-		model_type (str): باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر
-        model_path (str, optional): مسیر فایل امبدینگ
+		model_type (str): نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر ['fasttext', 'keyedvector', 'glove'] باشد.
+        model_path (str, optional): مسیر فایل امبدینگ.
     """
 
 
@@ -23,12 +27,12 @@ class WordEmbedding:
 
 
     def load_model(self, model_path):
-        """.فایل امبدینگ را بارگذاری می‌کند
+        """فایل امبدینگ را بارگذاری می‌کند.
 		Examples:
 			>>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
 			>>> wordEmbedding.load_model('resources/cc.fa.300.bin')
 		Args:
-			model_path (str): مسیر فایل امبدینگ
+			model_path (str): مسیر فایل امبدینگ.
         
         """
 
@@ -56,15 +60,17 @@ class WordEmbedding:
     
 
     def doesnt_match(self, words):
-        '''.کلمه‌ نامرتبط را پیدا می‌کند
+        '''کلمه‌ نامرتبط را پیدا می‌کند.
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
+            >>> wordEmbedding.doesnt_match(['بستنی' ,'پلنگ' ,'شیر'])
+            'بستنی'
         Args:
-            words (list[str]): لیستی از کلمات مورد نظر
+            words (list[str]): لیستی از کلمات مورد نظر.
 		Returns:
-			(str): کلمه نامرتبط با سایر کلمات در لیست
+			(str): کلمه نامرتبط با سایر کلمات در لیست.
         '''
 
         if not self.model:
@@ -85,7 +91,7 @@ class WordEmbedding:
             word1 (str): کلمه اول
             word2 (str): کلمه دوم
         Returns:
-            (float): میزان شباهت دو کلمه
+            (float): میزان شباهت دو کلمه.
         '''
 
         if not self.model:
@@ -101,7 +107,7 @@ class WordEmbedding:
             >>> wordEmbedding.get_vocab()
             ['،', 'در', '.', 'و', ...]
         Returns:
-            (list[str]): تمام کلمات موجود در امبدینگ
+            (list[str]): تمام کلمات موجود در امبدینگ.
         '''
 
         if not self.model:
@@ -117,11 +123,12 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
             [('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]
+        
         Args:
-            word (str): کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم
-            topn (int): تعداد کلمات مرتبط با ورودی قبلی
+            word (str): کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم.
+            topn (int): تعداد کلمات مرتبط با ورودی قبلی.
         Returns:
-            (list[tuple]):  لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان
+            (list[tuple]):  لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان.
         '''
         
         if not self.model:
@@ -130,16 +137,16 @@ class WordEmbedding:
     
 
     def get_normal_vector(self, word):
-        '''.بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.
+        '''بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.get_normal_vector('سرباز')
             array([ 8.99544358e-03,  2.76231226e-02, -1.06164828e-01, ..., -9.45233554e-02, -7.59726465e-02, -8.96625668e-02], dtype=float32)
         Args:
-            word (str): کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم
+            word (str): کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم.
         Returns:
-            (numpy.ndarray(float32)): لیست بردار نرمال‌شده‌ مرتبط با کلمه ورودی
+            (numpy.ndarray(float32)): لیست بردار نرمال‌شده‌ مرتبط با کلمه ورودی.
         '''
 
         if not self.model:
@@ -221,5 +228,6 @@ class SentEmbedding:
                 tokenized_sent1 = word_tokenize(sent1)
                 tokenized_sent2 = word_tokenize(sent2)
                 return float(str(self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)))
+            
             
             
