@@ -65,8 +65,8 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
-            >>> wordEmbedding.doesnt_match(['بستنی' ,'پلنگ' ,'شیر'])
-            'بستنی'
+            >>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
+            'ساعت'
         Args:
             words (list[str]): لیستی از کلمات مورد نظر.
 		Returns:
@@ -225,9 +225,8 @@ class SentEmbedding:
             if not self.model:
                 raise AttributeError('Model must not be None! Please load model first.')
             else:
-                tokenized_sent1 = word_tokenize(sent1)
-                tokenized_sent2 = word_tokenize(sent2)
-                return float(str(self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)))
+                return float(str(self.model.similarity_unseen_docs(word_tokenize(sent1), word_tokenize(sent2))))
             
             
      
+   
