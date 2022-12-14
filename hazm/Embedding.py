@@ -8,7 +8,6 @@ supported_embeddings = ['fasttext', 'keyedvector', 'glove']
 
 class WordEmbedding:
     """.این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است
-
     Args:
 		model_type (str): باشد ['fasttext', 'keyedvector', 'glove']  نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر
         model_path (str, optional): مسیر فایل امبدینگ
@@ -25,11 +24,9 @@ class WordEmbedding:
 
     def load_model(self, model_path):
         """.فایل امبدینگ را بارگذاری می‌کند
-
 		Examples:
 			>>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
 			>>> wordEmbedding.load_model('resources/cc.fa.300.bin')
-
 		Args:
 			model_path (str): مسیر فایل امبدینگ
         
@@ -60,15 +57,12 @@ class WordEmbedding:
 
     def doesnt_match(self, words):
         '''.کلمه‌ نامرتبط را پیدا می‌کند
-
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
-
         Args:
             words (list[str]): لیستی از کلمات مورد نظر
-
 		Returns:
 			(str): کلمه نامرتبط با سایر کلمات در لیست
         '''
@@ -85,14 +79,11 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.similarity('ایران', 'آلمان')
             0.44988164
-
             >>> wordEmbedding.similarity('ایران', 'پنجره')
             0.08837362
-
         Args:
             word1 (str): کلمه اول
             word2 (str): کلمه دوم
-
         Returns:
             (float): میزان شباهت دو کلمه
         '''
@@ -109,7 +100,6 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.get_vocab()
             ['،', 'در', '.', 'و', ...]
-
         Returns:
             (list[str]): تمام کلمات موجود در امبدینگ
         '''
@@ -130,7 +120,6 @@ class WordEmbedding:
         Args:
             word (str): کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم
             topn (int): تعداد کلمات مرتبط با ورودی قبلی
-
         Returns:
             (list[tuple]):  لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان
         '''
@@ -147,10 +136,8 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.get_normal_vector('سرباز')
             array([ 8.99544358e-03,  2.76231226e-02, -1.06164828e-01, ..., -9.45233554e-02, -7.59726465e-02, -8.96625668e-02], dtype=float32)
-
         Args:
             word (str): کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم
-
         Returns:
             (numpy.ndarray(float32)): لیست بردار نرمال‌شده‌ مرتبط با کلمه ورودی
         '''
@@ -164,7 +151,6 @@ class WordEmbedding:
 
 class SentEmbedding:
         ''' .این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است
-
         Args:
             model_path (str, optional): مسیر فایل امبدینگ
         '''
@@ -177,11 +163,9 @@ class SentEmbedding:
 
         def load_model(self, model_path):
             '''.فایل امبدینگ را بارگذاری می‌کند
-
             Examples:
                 >>> sentEmbedding = SentEmbedding()
                 >>> sentEmbedding.load_model('sent2vec_model_path')
-
             Args:
                 model_path (str): مسیر فایل امبدینگ
             
@@ -198,15 +182,12 @@ class SentEmbedding:
 
         def get_sentence_vector(self, sent):
             '''.جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد
-
             Examples:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
                 >>> sentEmbedding.get_sentence_vector('این متن به برداری متناظر با خودش تبدیل خواهد شد')
                 array([-0.28460968,  0.04566888, -0.00979532, ..., -0.4701098 , -0.3010612 , -0.18577948], dtype=float32)
-
             Args:
                 sent (str): جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم
-
             Returns:
                 (numpy.ndarray(float32)): لیست بردار مرتبط با جمله ورودی
             '''
@@ -225,14 +206,11 @@ class SentEmbedding:
                 >>> sentEmbedding = SentEmbedding(sent_embedding_file)
                 >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر حیوانات درنده است')
                 0.8748713
-
                 >>> sentEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
                 0.2379288
-
             Args:
                 sent1 (str): جمله اول
                 sent2 (str): جمله دوم
-
             Returns:
                 (float): میزان شباهت دو جمله
             '''
@@ -243,6 +221,5 @@ class SentEmbedding:
                 tokenized_sent1 = word_tokenize(sent1)
                 tokenized_sent2 = word_tokenize(sent2)
                 return float(str(self.model.similarity_unseen_docs(tokenized_sent1, tokenized_sent2)))
-            
             
             
