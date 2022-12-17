@@ -510,7 +510,7 @@
 <code>WordEmbedding</code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
-<p>این کلاس شامل توابعی مرتبط با تبدیل کلمه به برداری از اعداد، یا همان امبدینگ کلمه است.</p>
+<p>این کلاس شامل توابعی برای تبدیل کلمه به برداری از اعداد است.</p>
 <p><strong>پارامترها:</strong></p>
 <table>
 <thead>
@@ -527,22 +527,30 @@
 <td>
 <code>str</code>
 </td>
-<td><p>نام امبدینگ مورد نیاز که می‌تواند یکی از مقادیر ['fasttext', 'keyedvector', 'glove'] باشد.</p></td>
+<td><p>نوع امبدینگ که می‌تواند یکی از مقادیر ‍<code>fasttext</code>, <code>keyedvector</code>, <code>glove</code> باشد.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
 </tr>
+<tr>
+<td><code>model_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل امبدینگ.</p></td>
+<td>
+<code>None</code>
+</td>
+</tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>model_path (str, optional): مسیر فایل امبدینگ.
-</code></pre></div>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.load_model">
 <code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.load_model" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>فایل امبدینگ را بارگذاری می‌کند.</p>
+<p>فایل امبدینگ را بارگزاری می‌کند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'fasttext'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
@@ -577,7 +585,7 @@
 <code class="highlight language-python"><span class="n">doesnt_match</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.doesnt_match" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>کلمه‌ نامرتبط را پیدا می‌کند.</p>
+<p>لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">'سلام'</span> <span class="p">,</span><span class="s1">'درود'</span> <span class="p">,</span><span class="s1">'خداحافظ'</span> <span class="p">,</span><span class="s1">'پنجره'</span><span class="p">])</span>
@@ -601,12 +609,27 @@
 <td>
 <code>list[str]</code>
 </td>
-<td><p>لیستی از کلمات مورد نظر.
-Returns:
-        (str): کلمه نامرتبط با سایر کلمات در لیست.</p></td>
+<td><p>لیست کلمات.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
+</tr>
+</tbody>
+</table>
+<p><strong>خروجی‌ها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نوع</th>
+<th>توضیحات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>str</code>
+</td>
+<td><p>کلمهٔ نامرتبط.</p></td>
 </tr>
 </tbody>
 </table>
@@ -617,7 +640,7 @@ Returns:
 <code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.similarity" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>.میزان شباهت دو کلمه را گزارش می‌کند</p>
+<p>میزان شباهت دو کلمه را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="s1">'آلمان'</span><span class="p">)</span>
@@ -641,7 +664,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>کلمه اول</p></td>
+<td><p>کلمهٔ اول</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -651,7 +674,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>کلمه دوم</p></td>
+<td><p>کلمهٔ دوم</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -682,7 +705,7 @@ Returns:
 <code class="highlight language-python"><span class="n">get_vocab</span><span class="p">()</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.get_vocab" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>.تمامی کلمات موجود در امبدینگ را گزارش می‌دهد</p>
+<p>لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocab</span><span class="p">()</span>
@@ -701,7 +724,7 @@ Returns:
 <td>
 <code>list[str]</code>
 </td>
-<td><p>تمام کلمات موجود در امبدینگ.</p></td>
+<td><p>لیست کلمات موجود در فایل امبدینگ.</p></td>
 </tr>
 </tbody>
 </table>
@@ -712,7 +735,7 @@ Returns:
 <code class="highlight language-python"><span class="n">nearest_words</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.nearest_words" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>.مرتبط‌ترین کلمات را با کلمه ورودی گزارش می‌دهد</p>
+<p>کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">nearest_words</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
@@ -734,7 +757,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>کلمه‌ای که می‌خواهیم کلمات مرتبط با آن را بدانیم.</p></td>
+<td><p>کلمه‌ای که می‌خواهید واژگان مرتبط با آن را بدانید.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -744,7 +767,7 @@ Returns:
 <td>
 <code>int</code>
 </td>
-<td><p>تعداد کلمات مرتبط با ورودی قبلی.</p></td>
+<td><p>تعداد کلمات مرتبطی که می‌خواهید برگردانده شود.</p></td>
 <td>
 <code>5</code>
 </td>
@@ -764,7 +787,7 @@ Returns:
 <td>
 <code>list[tuple]</code>
 </td>
-<td><p>لیستی حاوی کلمات مرتبط با کلمه ورودی و میزان شباهتشان.</p></td>
+<td><p>لیستی از تاپل‌های [<code>کلمهٔ مرتبط</code>, <code>میزان ارتباط</code>].</p></td>
 </tr>
 </tbody>
 </table>
@@ -775,7 +798,7 @@ Returns:
 <code class="highlight language-python"><span class="n">get_normal_vector</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.WordEmbedding.get_normal_vector" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>بردار امبدینگ نرمال‌شده کلمه ورودی را گزارش می‌دهد.</p>
+<p>بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_normal_vector</span><span class="p">(</span><span class="s1">'سرباز'</span><span class="p">)</span>
@@ -797,7 +820,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>کلمه‌ای که می‌خواهیم بردار نرمال متناظر با آن را بدانیم.</p></td>
+<td><p>کلمه‌ای که می‌خواهید بردار متناظر با آن را بدانید.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -817,7 +840,7 @@ Returns:
 <td>
 <code>numpy.<span title="numpy.ndarray">ndarray</span>(float32)</code>
 </td>
-<td><p>لیست بردار نرمال‌شده‌ مرتبط با کلمه ورودی.</p></td>
+<td><p>لیست بردار نرمالایزشدهٔ مرتبط با کلمهٔ ورودی.</p></td>
 </tr>
 </tbody>
 </table>
@@ -831,7 +854,7 @@ Returns:
 <code>SentEmbedding</code>
 <a class="headerlink" href="#hazm.Embedding.SentEmbedding" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
-<p>این کلاس شامل توابعی مرتبط با تبدیل جمله به برداری از اعداد، یا همان امبدینگ جمله است.</p>
+<p>این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.</p>
 <p><strong>پارامترها:</strong></p>
 <table>
 <thead>
@@ -882,7 +905,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>مسیر فایل امبدینگ</p></td>
+<td><p>مسیر فایل امبدینگ.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -896,7 +919,7 @@ Returns:
 <code class="highlight language-python"><span class="n">get_sentence_vector</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.SentEmbedding.get_sentence_vector" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>جمله مورد نظر را دریافت و بردار امبدینگ متناظر با آن را گزارش می‌دهد.</p>
+<p>جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">(</span><span class="n">sent_embedding_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">get_sentence_vector</span><span class="p">(</span><span class="s1">'این متن به برداری متناظر با خودش تبدیل خواهد شد'</span><span class="p">)</span>
@@ -918,7 +941,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>جمله‌ای که می‌خواهیم بردار مرتبط با آن را بدانیم.</p></td>
+<td><p>جمله‌ای که می‌خواهید بردار امبیدنگ آن را دریافت کنید.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -938,7 +961,7 @@ Returns:
 <td>
 <code>numpy.<span title="numpy.ndarray">ndarray</span>(float32)</code>
 </td>
-<td><p>لیست بردار مرتبط با جمله ورودی.</p></td>
+<td><p>لیست بردار مرتبط با جملهٔ ورودی.</p></td>
 </tr>
 </tbody>
 </table>
@@ -949,7 +972,7 @@ Returns:
 <code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">sent1</span><span class="p">,</span> <span class="n">sent2</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Embedding.SentEmbedding.similarity" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>میزان شباهت دو جمله را گزارش می‌دهد.</p>
+<p>میزان شباهت دو جمله را برمی‌گرداند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">(</span><span class="n">sent_embedding_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">'شیر حیوانی وحشی است'</span><span class="p">,</span> <span class="s1">'پلنگ از دیگر جانوران درنده است'</span><span class="p">)</span>
@@ -973,7 +996,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>جمله اولی که قصد مقایسه آن را داریم.</p></td>
+<td><p>جملهٔ اول.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -983,7 +1006,7 @@ Returns:
 <td>
 <code>str</code>
 </td>
-<td><p>جمله دومی که قصد مقایسه آن را داریم.</p></td>
+<td><p>جملهٔ دوم.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -1003,7 +1026,7 @@ Returns:
 <td>
 <code>float</code>
 </td>
-<td><p>میزان شباهت دو جمله.</p></td>
+<td><p>میزان شباهت دو جمله که عددی بین <code>0</code> و<code>1</code> است.</p></td>
 </tr>
 </tbody>
 </table>
