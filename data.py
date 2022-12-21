@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from __future__ import print_function, unicode_literals
+import fasttext
 import codecs, subprocess, random
 import multiprocessing
 from collections import Counter
@@ -267,8 +268,11 @@ class SentenceEmbeddingCorpus:
 
 
 def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, return_model=False):
+
 	workers = 1 if workers == 0 else workers
+
 	doc = SentenceEmbeddingCorpus(dataset_path)
+
 	model = Doc2Vec(min_count=min_count,
          window=windows,
          vector_size=vector_size,
@@ -276,36 +280,27 @@ def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min
         )
 	model.build_vocab(doc)
 	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+
 	model.save(model_file)
+	
 	if return_model:
 		return model
 	else:
 		print('Model trained.')
 
 
-class WordEmbeddingCorpus:
+def train_word_embedding(dataset_path, dest_path='word_embedding.model', workers=multiprocessing.cpu_count()-1, vector_size=200, epochs=10, return_model=False):
 
-    def __init__(self, data_path):
-        self.data_path = data_path
-
-    def __iter__(self):
-        corpus_path = datapath(self.data_path)
-        normalizer = Normalizer()
-        for line in open(corpus_path):
-            yield simple_preprocess(normalizer.normalize(line))
-
-
-def train_word_embedding(dataset_path, dest_path='word_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=200, epochs=10, return_model=False):
 	workers = 1 if workers == 0 else workers
-	doc = WordEmbeddingCorpus(dataset_path)
-	model = FastText(min_count=min_count,
-         window=windows,
-         vector_size=vector_size,
-         workers=workers,
-        )
-	model.build_vocab(doc)
-	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
-	model.save(dest_path)
+
+	model = fasttext.train_unsupervised(dataset_path, 
+	model = 'skipgram', 
+	dim = vector_size , 
+	epoch = epochs, 
+	thread = workers) 
+
+	model.save_model(dest_path)
+
 	if return_model:
 		return model
 	else:
