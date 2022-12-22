@@ -28,16 +28,16 @@ class Normalizer(object):
     """
 
     def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
-        self.lemmatizer= Lemmatizer()
+        self.lemmatizer = Lemmatizer()
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing
         self._token_based = token_based
-        
 
-        translation_src, translation_dst = ' ىكي“”', ' یکی""'
+        translation_src = 'ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” '
+        translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
         if persian_numbers:
-            translation_src += '0123456789%'
-            translation_dst += '۰۱۲۳۴۵۶۷۸۹٪'
+            translation_src += '0123456789%٠١٢٣٤٥٦٧٨٩'
+            translation_dst += '۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹'
         self.translations = maketrans(translation_src, translation_dst)
 
         if self._token_based:
@@ -69,8 +69,8 @@ class Normalizer(object):
 
         if remove_diacritics:
             self.character_refinement_patterns.append(
-                # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
-                ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),
+                # Remove almoast all arabic unicode superscript and subscript characters in the ranges of 00600-06FF, 08A0-08FF, FB50-FDFF, and FE70-FEFF
+                ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652\u0605\u0653\u0654\u0655\u0656\u0657\u0658\u0659\u065A\u065B\u065C\u065D\u065E\u065F\u0670\u0610\u0611\u0612\u0613\u0614\u0615\u0616\u0618\u0619\u061A\u061E\u06D4\u06D6\u06D7\u06D8\u06D9\u06DA\u06DB\u06DC\u06DD\u06DE\u06DF\u06E0\u06E1\u06E2\u06E3\u06E4\u06E5\u06E6\u06E7\u06E8\u06E9\u06EA\u06EB\u06EC\u06ED\u06FD\u06FE\u08AD\u08D4\u08D5\u08D6\u08D7\u08D8\u08D9\u08DA\u08DB\u08DC\u08DD\u08DE\u08DF\u08E0\u08E1\u08E2\u08E3\u08E4\u08E5\u08E6\u08E7\u08E8\u08E9\u08EA\u08EB\u08EC\u08ED\u08EE\u08EF\u08F0\u08F1\u08F2\u08F3\u08F4\u08F5\u08F6\u08F7\u08F8\u08F9\u08FA\u08FB\u08FC\u08FD\u08FE\u08FF\uFBB2\uFBB3\uFBB4\uFBB5\uFBB6\uFBB7\uFBB8\uFBB9\uFBBA\uFBBB\uFBBC\uFBBD\uFBBE\uFBBF\uFBC0\uFBC1\uFC5E\uFC5F\uFC60\uFC61\uFC62\uFC63\uFCF2\uFCF3\uFCF4\uFD3E\uFD3F\uFE70\uFE71\uFE72\uFE76\uFE77\uFE78\uFE79\uFE7A\uFE7B\uFE7C\uFE7D\uFE7E\uFE7F\uFDFA\uFDFB]', ''),
             )
 
         self.character_refinement_patterns = compile_patterns(
@@ -103,7 +103,7 @@ class Normalizer(object):
                  ']{2}) (تر(ین?)?|گری?|های?)(?=[ \n' + punc_after + punc_before + ']|$)', r'‌\1'),
                 # join ام, ایم, اش, اند, ای, اید, ات
                 (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + \
-                 punc_after + ']|$)', r'\1‌\2'),                
+                 punc_after + ']|$)', r'\1‌\2'),
 
                 # شنبهها => شنبه‌ها
                 ('(ه)(ها)', r'\1‌\2')
@@ -124,13 +124,27 @@ class Normalizer(object):
                 (str): متنِ نرمال‌سازی‌شده.
         """
 
+        text = re.sub(r'﷽', 'بسم الله الرحمن الرحیم', text)
+        text = re.sub(r'﷼', 'ریال', text)
+        text = re.sub(r'(ﷰ|ﷹ)', 'صلی', text)
+        text = re.sub(r'ﷱ', 'قلی', text)
+        text = re.sub(r'ﷲ', 'الله', text)
+        text = re.sub(r'ﷳ', 'اکبر', text)
+        text = re.sub(r'ﷴ', 'محمد', text)
+        text = re.sub(r'ﷵ', 'صلعم', text)
+        text = re.sub(r'ﷶ', 'رسول', text)
+        text = re.sub(r'ﷷ', 'علیه', text)
+        text = re.sub(r'ﷸ', 'وسلم', text)
+        text = re.sub(r'ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ', 'لا', text)
+
         if "می" in text:
-            matches = re.findall(r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
+            matches = re.findall(
+                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
             for m in matches:
-                r=m.replace("می","می‌")
-                if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):                
-                    text = text.replace(m,r)            
-        
+                r = m.replace("می", "می‌")
+                if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):
+                    text = text.replace(m, r)
+
         text = self.character_refinement(text)
         if self._affix_spacing:
             text = self.affix_spacing(text)
@@ -284,5 +298,3 @@ Examples:
                 result.append(token)
 
         return result
-
-
