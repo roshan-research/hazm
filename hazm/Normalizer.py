@@ -18,13 +18,13 @@ class Normalizer(object):
     """این کلاس شامل توابعی برای نرمال‌سازی متن است. 
 
     Args:
-            remove_extra_spaces (bool, optional): اگر `True‍` باشد فواصل اضافهٔ متن را حذف می‌کند.
-            persian_style (bool, optional): اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
-            persian_numbers (bool, optional): اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
-            remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
-            affix_spacing (bool, optional): اگر `True` باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.
-            token_based (bool, optional): اگر `True‍` باشد متن به‌شکل توکن‌به‌توکن نرمالایز می‌شود نه یکجا.
-            punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
+        remove_extra_spaces (bool, optional): اگر `True‍` باشد فواصل اضافهٔ متن را حذف می‌کند.
+        persian_style (bool, optional): اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
+        persian_numbers (bool, optional): اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
+        remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
+        affix_spacing (bool, optional): اگر `True` باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.
+        token_based (bool, optional): اگر `True‍` باشد متن به‌شکل توکن‌به‌توکن نرمالایز می‌شود نه یکجا.
+        punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
     """
 
     def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
@@ -35,15 +35,16 @@ class Normalizer(object):
 
         translation_src = 'ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” '
         translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
+
         if persian_numbers:
             translation_src += '0123456789%٠١٢٣٤٥٦٧٨٩'
             translation_dst += '۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹'
+
         self.translations = maketrans(translation_src, translation_dst)
 
         if self._token_based:
-            lemmatizer = Lemmatizer()
-            self.words = lemmatizer.words
-            self.verbs = lemmatizer.verbs
+            self.words = self.lemmatizer.words
+            self.verbs = self.lemmatizer.verbs
             self.tokenizer = WordTokenizer(join_verb_parts=False)
             self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر',
                              'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
@@ -90,7 +91,9 @@ class Normalizer(object):
                  r'\1 \2'),  # put space after
                 ('([^ ' + punc_before + '])([' + punc_before + '])',
                  r'\1 \2'),  # put space before
+                # put space after number; e.g., به طول ۹متر -> به طول ۹ متر
                 ('(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])', r'\1 \2'),
+                # put space after number; e.g., به طول۹ -> به طول ۹
                 ('([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)', r'\1 \2'),
             ])
 
@@ -113,29 +116,33 @@ class Normalizer(object):
         """متن را نرمال‌سازی می‌کند.
 
         Examples:
-                >>> normalizer = Normalizer()
-                >>> normalizer.normalize('اِعلام کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
-                'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر…»'
+            >>> normalizer = Normalizer()
+            >>> normalizer.normalize('اِعلام کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
+            'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر…»'
 
         Args:
-                text (str): متنی که باید نرمال‌سازی شود.
+            text (str): متنی که باید نرمال‌سازی شود.
 
         Returns:
-                (str): متنِ نرمال‌سازی‌شده.
+            (str): متنِ نرمال‌سازی‌شده.
         """
 
-        text = re.sub(r'﷽', 'بسم الله الرحمن الرحیم', text)
-        text = re.sub(r'﷼', 'ریال', text)
-        text = re.sub(r'(ﷰ|ﷹ)', 'صلی', text)
-        text = re.sub(r'ﷱ', 'قلی', text)
-        text = re.sub(r'ﷲ', 'الله', text)
-        text = re.sub(r'ﷳ', 'اکبر', text)
-        text = re.sub(r'ﷴ', 'محمد', text)
-        text = re.sub(r'ﷵ', 'صلعم', text)
-        text = re.sub(r'ﷶ', 'رسول', text)
-        text = re.sub(r'ﷷ', 'علیه', text)
-        text = re.sub(r'ﷸ', 'وسلم', text)
-        text = re.sub(r'ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ', 'لا', text)
+        replacements = [
+            ('﷽', 'بسم الله الرحمن الرحیم'),
+            ('﷼', 'ریال'),
+            ('(ﷰ|ﷹ)', 'صلی'),
+            ('ﷲ', 'الله'),
+            ('ﷳ', 'اکبر'),
+            ('ﷴ', 'محمد'),
+            ('ﷵ', 'صلعم'),
+            ('ﷶ', 'رسول'),
+            ('ﷷ', 'علیه'),
+            ('ﷸ', 'وسلم'),
+            ('ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ', 'لا'),
+        ]
+
+        for old, new in replacements:
+            text = re.sub(old, new, text)
 
         if "می" in text:
             matches = re.findall(
@@ -162,24 +169,24 @@ class Normalizer(object):
         """حروف متن را به حروف استاندارد فارسی تبدیل می‌کند.
 
         Examples:
-                >>> normalizer = Normalizer()
-                >>> normalizer.character_refinement('اصلاح كاف و ياي عربي')
-                'اصلاح کاف و یای عربی'
+            >>> normalizer = Normalizer()
+            >>> normalizer.character_refinement('اصلاح كاف و ياي عربي')
+            'اصلاح کاف و یای عربی'
 
-                >>> normalizer.character_refinement('عراق سال 2012 قراردادی به ارزش "4.2 میلیارد دلار" برای خرید تجهیزات نظامی با روسیه امضا  کرد.')
-                'عراق سال ۲۰۱۲ قراردادی به ارزش «۴٫۲ میلیارد دلار» برای خرید تجهیزات نظامی با روسیه امضا کرد.'
+            >>> normalizer.character_refinement('عراق سال 2012 قراردادی به ارزش "4.2 میلیارد دلار" برای خرید تجهیزات نظامی با روسیه امضا  کرد.')
+            'عراق سال ۲۰۱۲ قراردادی به ارزش «۴٫۲ میلیارد دلار» برای خرید تجهیزات نظامی با روسیه امضا کرد.'
 
-                >>> normalizer.character_refinement('رمــــان')
-                'رمان'
+            >>> normalizer.character_refinement('رمــــان')
+            'رمان'
 
-                >>> normalizer.character_refinement('بُشقابِ مَن را بِگیر')
-                'بشقاب من را بگیر'
+            >>> normalizer.character_refinement('بُشقابِ مَن را بِگیر')
+            'بشقاب من را بگیر'
 
         Args:
-                text (str): متنی که باید حروف آن استانداردسازی شود.
+            text (str): متنی که باید حروف آن استانداردسازی شود.
 
         Returns:
-                (str): متنی با حروف استاندارد فارسی.
+            (str): متنی با حروف استاندارد فارسی.
         """
 
         text = text.translate(self.translations)
@@ -191,21 +198,21 @@ class Normalizer(object):
         """فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند. 
 
         Examples:
-                >>> normalizer = Normalizer()
-                >>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
-                'اصلاح (پرانتزها) در متن.'
+            >>> normalizer = Normalizer()
+            >>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
+            'اصلاح (پرانتزها) در متن.'
 
-                >>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
-                'نسخه 0.5 در ساعت 22:00 تهران، 1396'
+            >>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
+            'نسخه 0.5 در ساعت 22:00 تهران، 1396'
 
-                >>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
-                'اتریش ۷.۹ میلیون.'
+            >>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
+            'اتریش ۷.۹ میلیون.'
 
         Args:
-                text (str): متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.
+            text (str): متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.
 
         Returns:
-                (str): متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.
+            (str): متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.
         """
 
         for pattern, repl in self.punctuation_spacing_patterns:
@@ -216,27 +223,27 @@ class Normalizer(object):
         """فاصله‌گذاری‌های اشتباه را در پسوندها و پیشوندها اصلاح می‌کند.
 
         Examples:
-                >>> normalizer = Normalizer()
-                >>> normalizer.affix_spacing('خانه ی پدری')
-                'خانه‌ی پدری'
+            >>> normalizer = Normalizer()
+            >>> normalizer.affix_spacing('خانه ی پدری')
+            'خانه‌ی پدری'
 
-                >>> normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.')
-                'فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.'
+            >>> normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.')
+            'فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.'
 
-                >>> normalizer.affix_spacing('می روم')
-                'می‌روم'
+            >>> normalizer.affix_spacing('می روم')
+            'می‌روم'
 
-                >>> normalizer.affix_spacing('حرفه ای')
-                'حرفه‌ای'
+            >>> normalizer.affix_spacing('حرفه ای')
+            'حرفه‌ای'
 
-                >>> normalizer.affix_spacing('محبوب ترین ها')
-                'محبوب‌ترین‌ها'
+            >>> normalizer.affix_spacing('محبوب ترین ها')
+            'محبوب‌ترین‌ها'
 
         Args:
-                text (str): متنی که باید فاصله‌گذاری‌های اشتباهِ آن در پسوندها و پیشوندها اصلاح شود.
+            text (str): متنی که باید فاصله‌گذاری‌های اشتباهِ آن در پسوندها و پیشوندها اصلاح شود.
 
         Returns:
-                (str): متنی با فاصله‌گذاری صحیحِ پیشوندها و پسوندها.
+            (str): متنی با فاصله‌گذاری صحیحِ پیشوندها و پسوندها.
         """
 
         for pattern, repl in self.affix_spacing_patterns:
@@ -246,34 +253,34 @@ class Normalizer(object):
     def token_spacing(self, tokens):
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
 
-در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
-برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
+        در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
+        برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
 
-Examples:
-                >>> normalizer = Normalizer(token_based=True)
-                >>> normalizer.token_spacing(['کتاب', 'ها'])
-                ['کتاب‌ها']
+        Examples:
+            >>> normalizer = Normalizer(token_based=True)
+            >>> normalizer.token_spacing(['کتاب', 'ها'])
+            ['کتاب‌ها']
 
-                >>> normalizer.token_spacing(['او', 'می', 'رود'])
-                ['او', 'می‌رود']
+            >>> normalizer.token_spacing(['او', 'می', 'رود'])
+            ['او', 'می‌رود']
 
-                >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
-                ['ماه', 'می', 'سال', 'جدید']
+            >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
+            ['ماه', 'می', 'سال', 'جدید']
 
-                >>> normalizer.token_spacing(['اخلال', 'گر'])
-                ['اخلال‌گر']
+            >>> normalizer.token_spacing(['اخلال', 'گر'])
+            ['اخلال‌گر']
 
-                >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
-                ['پرداخت', 'شده', 'است']
+            >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+            ['پرداخت', 'شده', 'است']
 
-                >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
-                ['زمین‌لرزه‌ای']
+            >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
+            ['زمین‌لرزه‌ای']
 
         Args:
-                tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
+            tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
 
         Returns:
-                (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
+            (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         """
 
         result = []
