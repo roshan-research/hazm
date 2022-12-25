@@ -287,22 +287,3 @@ def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min
 		return model
 	else:
 		print('Model trained.')
-
-
-def train_word_embedding(dataset_path, dest_path='word_embedding.model', workers=multiprocessing.cpu_count()-1, vector_size=200, epochs=10, return_model=False):
-
-	workers = 1 if workers == 0 else workers
-
-	model = fasttext.train_unsupervised(dataset_path, 
-	model = 'skipgram', 
-	dim = vector_size , 
-	epoch = epochs, 
-	thread = workers) 
-
-	model.save_model(dest_path)
-
-	if return_model:
-		return model
-	else:
-		print('Model trained.s')
-
