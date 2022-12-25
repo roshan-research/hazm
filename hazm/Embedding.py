@@ -2,9 +2,11 @@
 '''
 این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
 '''
-from . import word_tokenize
+from . import word_tokenize, Normalizer
 import multiprocessing
 import warnings
+from gensim.test.utils import datapath
+from gensim.models.doc2vec import TaggedDocument
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
 import os
@@ -69,7 +71,7 @@ class WordEmbedding:
         
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.train(dataset_path = 'fasttext_model', worker = 4, vector_size = 300, epochs = 30, fasttext_type = 'cbow', dest_path = 'fasttext_model')
+            >>> wordEmbedding.train(dataset_path = 'dataset.txt', worker = 4, vector_size = 300, epochs = 30, fasttext_type = 'cbow', dest_path = 'fasttext_model')
         
         Args:
             dataset_path (str): مسیر فایل متنی.
@@ -80,19 +82,18 @@ class WordEmbedding:
             dest_path ('str', optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
         
         """
-        
+
         if self.model_type is not 'fasttext':
             self.model = 'fasttext'
             warnings.warn(
                 f'this function is for training fasttext models only and {self.model_type} is not supported')
 
+        fasttext_model_types = ['cbow', 'skipgram']
         if(fasttext_type not in fasttext_model_types):
             raise KeyError(
                 f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}')
 
         workers = 1 if workers == 0 else workers
-
-        fasttext_model_types = ['cbow', 'skipgram']
         
         model = fasttext.train_unsupervised(dataset_path, 
                                             model = fasttext_type, 
@@ -104,6 +105,8 @@ class WordEmbedding:
 
         if dest_path is not None:
             model.save_model(dest_path)
+
+        print('Model trained.')
 
     def doesnt_match(self, words):
         '''لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.
@@ -238,6 +241,39 @@ class SentEmbedding:
                 'Model must not be None! Please load model first.')
         return self.get_sentence_vector(sent)
 
+    def train(dataset_path, min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, dest_path=None):
+        """ یک فایل امبدینگ doc2vec ترین می‌کند.
+        
+        Examples:
+            >>> sentEmbedding = SentEmbedding()
+            >>> sentEmbedding.train(dataset_path = 'dataset.txt', min_count = 10, worker = 6, windows = 3, vector_size = 250, epochs = 35, dest_path = 'doc2vec_model')
+        
+        Args:
+            dataset_path (str): مسیر فایل متنی.
+            min_count (int, optional): مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
+            worker (int, optional): تعداد هسته درگیر برای ترین مدل.
+            wondows (int, optional): طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
+            vector_size (int, optional): طول وکتور خروجی به ازای هر جمله.
+            epochs (int, optional): تعداد تکرار ترین بر روی کل دیتا.
+            dest_path ('str', optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
+        
+        """
+        workers = 1 if workers == 0 else workers
+
+        doc = SentenceEmbeddingCorpus(dataset_path)
+
+        model = Doc2Vec(min_count=min_count,
+                        window=windows,
+                        vector_size=vector_size,
+                        workers=workers)
+        model.build_vocab(doc)
+        model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+
+        if dest_path is not None:
+            model.save(dest_path)
+        
+        print('Model trained.')
+
     def get_sentence_vector(self, sent):
         '''جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
 
@@ -283,3 +319,15 @@ class SentEmbedding:
                 'Model must not be None! Please load model first.')
         else:
             return float(str(self.model.similarity_unseen_docs(word_tokenize(sent1), word_tokenize(sent2))))
+
+
+class SentenceEmbeddingCorpus:
+
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        corpus_path = datapath(self.data_path)
+        normalizer = Normalizer()
+        for i, list_of_words in enumerate(open(corpus_path)):
+            yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
