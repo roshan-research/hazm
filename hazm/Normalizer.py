@@ -27,11 +27,12 @@ class Normalizer(object):
         punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
     """
 
-    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
+    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True, unicodes_replacement=True):
         self.lemmatizer = Lemmatizer()
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing
         self._token_based = token_based
+        self._unicodes_replacement = unicodes_replacement
 
         translation_src = 'ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” '
         translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
@@ -127,6 +128,68 @@ class Normalizer(object):
             (str): متنِ نرمال‌سازی‌شده.
         """
 
+        '''if "می" in text:
+            matches = re.findall(
+                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+[مید]', text)
+            for m in matches:
+                r = m.replace("می", "می‌")
+                if r in self.lemmatizer.verbs:
+                    text = text.replace(m, r)'''
+
+        '''if "می" in text:
+            matches = re.findall(
+                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
+            for m in matches:
+                r = m.replace("می", "می‌")
+                if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):
+                    text = text.replace(m, r)'''
+
+        text = self.character_refinement(text)
+        if self._affix_spacing:
+            text = self.affix_spacing(text)
+
+        if self._token_based:
+            tokens = self.tokenizer.tokenize(text.translate(self.translations))
+            text = ' '.join(self.token_spacing(tokens))
+
+        if self._punctuation_spacing:
+            text = self.punctuation_spacing(text)
+
+        if self._unicodes_replacement:
+            text = self.unicodes_replacement(text)
+
+        return text
+
+    def unicodes_replacement(self, text):
+        """برخی از کاراکترهای خاص یونیکد را با معادلِ نرمال آن جایگزین می‌کند. غالباً این کار فقط در مواردی صورت می‌گیرد که یک کلمه در قالب یک کاراکتر یونیکد تعریف شده است.
+
+        **فهرست این کاراکترها و نسخهٔ جایگزین آن:**
+
+        |کاراکتر|نسخهٔ جایگزین|
+        |--------|------------------|
+        |﷽|بسم الله الرحمن الرحیم|
+        |﷼|ریال|
+        |ﷰ، ﷹ|صلی|
+        |ﷲ|الله|
+        |ﷳ|اکبر|
+        |ﷴ|محمد|
+        |ﷵ|صلعم|
+        |ﷶ|رسول|
+        |ﷷ|علیه|
+        |ﷸ|وسلم|
+        |ﻵ، ﻶ، ﻷ، ﻸ، ﻹ، ﻺ، ﻻ، ﻼ|لا|
+
+        Examples:
+            >>> normalizer = Normalizer()
+            >>> normalizer.unicodes_replacement('حضرت ﷴ صلوات الله علیه)')
+            'حضرت محمد صلوات الله علیه'
+
+        Args:
+            text (str): متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.
+
+        Returns:
+            (str): متنی که برخی از کاراکترهای یونیکد آن با شکل استاندارد جایگزین شده است.
+        """
         replacements = [
             ('﷽', 'بسم الله الرحمن الرحیم'),
             ('﷼', 'ریال'),
@@ -143,25 +206,6 @@ class Normalizer(object):
 
         for old, new in replacements:
             text = re.sub(old, new, text)
-
-        if "می" in text:
-            matches = re.findall(
-                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
-            for m in matches:
-                r = m.replace("می", "می‌")
-                if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):
-                    text = text.replace(m, r)
-
-        text = self.character_refinement(text)
-        if self._affix_spacing:
-            text = self.affix_spacing(text)
-
-        if self._token_based:
-            tokens = self.tokenizer.tokenize(text.translate(self.translations))
-            text = ' '.join(self.token_spacing(tokens))
-
-        if self._punctuation_spacing:
-            text = self.punctuation_spacing(text)
 
         return text
 
