@@ -112,6 +112,8 @@ class Normalizer(object):
                 # شنبهها => شنبه‌ها
                 ('(ه)(ها)', r'\1‌\2')
             ])
+            self.is_verb = re.compile(r'^.+#.+$')
+            self.joint_mi = re.compile(r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+')
 
     def normalize(self, text):
         """متن را نرمال‌سازی می‌کند.
@@ -127,14 +129,6 @@ class Normalizer(object):
         Returns:
             (str): متنِ نرمال‌سازی‌شده.
         """
-
-        if "می" in text:
-            matches = re.findall(
-                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
-            for m in matches:
-                r = m.replace("می", "می‌")
-                if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):
-                    text = text.replace(m, r)
 
         text = self.character_refinement(text)
         if self._affix_spacing:
@@ -284,6 +278,13 @@ class Normalizer(object):
 
         for pattern, repl in self.affix_spacing_patterns:
             text = pattern.sub(repl, text)
+        
+        matches = re.findall(self.joint_mi, text)
+        for m in matches:
+            r = re.sub("^می", "می‌", m)
+            if re.match(self.is_verb , self.lemmatizer.lemmatize(r)):
+                text = text.replace(m, r)
+
         return text
 
     def token_spacing(self, tokens):
