@@ -128,21 +128,13 @@ class Normalizer(object):
             (str): متنِ نرمال‌سازی‌شده.
         """
 
-        '''if "می" in text:
-            matches = re.findall(
-                r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+[مید]', text)
-            for m in matches:
-                r = m.replace("می", "می‌")
-                if r in self.lemmatizer.verbs:
-                    text = text.replace(m, r)'''
-
-        '''if "می" in text:
+        if "می" in text:
             matches = re.findall(
                 r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
             for m in matches:
                 r = m.replace("می", "می‌")
                 if re.match('^.+#.+$', self.lemmatizer.lemmatize(r)):
-                    text = text.replace(m, r)'''
+                    text = text.replace(m, r)
 
         text = self.character_refinement(text)
         if self._affix_spacing:
