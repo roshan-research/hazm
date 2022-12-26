@@ -60,12 +60,6 @@ class WordEmbedding:
             raise KeyError(
                 f'{self.model_type} not supported! Please choose from {supported_embeddings}')
 
-    def __getitem__(self, word):
-        if not self.model:
-            raise AttributeError(
-                'Model must not be None! Please load model first.')
-        return self.model[word]
-
     def train(self, dataset_path, workers=multiprocessing.cpu_count()-1, vector_size=200, epochs=10, fasttext_type='skipgram', dest_path=None):
         """ یک فایل امبدینگ از نوع fasttext ترین می‌کند.
         
@@ -78,8 +72,8 @@ class WordEmbedding:
             worker (int, optional): تعداد هسته درگیر برای ترین مدل.
             vector_size (int, optional): طول وکتور خروجی به ازای هر کلمه.
             epochs (int, optional): تعداد تکرار ترین بر روی کل دیتا.
-            fasttext_type ('str', optional): نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
-            dest_path ('str', optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
+            fasttext_type (str, optional): نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
+            dest_path (str, optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
         
         """
 
@@ -103,10 +97,18 @@ class WordEmbedding:
         
         self.model = model.wv
 
+        print('Model trained.')
+
         if dest_path is not None:
             model.save_model(dest_path)
+            print('Model saved.')
 
-        print('Model trained.')
+
+    def __getitem__(self, word):
+        if not self.model:
+            raise AttributeError(
+                'Model must not be None! Please load model first.')
+        return self.model[word]
 
     def doesnt_match(self, words):
         '''لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.
@@ -176,7 +178,7 @@ class WordEmbedding:
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
-            [('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]
+            [('ايران', 0.657148540019989'), (جمهوری', 0.6470394134521484'), (آمریکا', 0.635792076587677'), (اسلامی', 0.6354473233222961'), (کشور', 0.6339613795280457')]
 
         Args:
             word (str): کلمه‌ای که می‌خواهید واژگان مرتبط با آن را بدانید.
@@ -235,13 +237,7 @@ class SentEmbedding:
 
         self.model = Doc2Vec.load(model_path)
 
-    def __getitem__(self, sent):
-        if not self.model:
-            raise AttributeError(
-                'Model must not be None! Please load model first.')
-        return self.get_sentence_vector(sent)
-
-    def train(dataset_path, min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, dest_path=None):
+    def train(self, dataset_path, min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, dest_path=None):
         """ یک فایل امبدینگ doc2vec ترین می‌کند.
         
         Examples:
@@ -255,7 +251,7 @@ class SentEmbedding:
             wondows (int, optional): طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
             vector_size (int, optional): طول وکتور خروجی به ازای هر جمله.
             epochs (int, optional): تعداد تکرار ترین بر روی کل دیتا.
-            dest_path ('str', optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
+            dest_path (str, optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
         
         """
         workers = 1 if workers == 0 else workers
@@ -269,10 +265,19 @@ class SentEmbedding:
         model.build_vocab(doc)
         model.train(doc, total_examples=model.corpus_count, epochs=epochs)
 
+        self.model = model
+
+        print('Model trained.')
+
         if dest_path is not None:
             model.save(dest_path)
+            print('Model saved.')
         
-        print('Model trained.')
+    def __getitem__(self, sent):
+        if not self.model:
+            raise AttributeError(
+                'Model must not be None! Please load model first.')
+        return self.get_sentence_vector(sent)
 
     def get_sentence_vector(self, sent):
         '''جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
