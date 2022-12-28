@@ -49,6 +49,7 @@ class Normalizer(object):
             self.tokenizer = WordTokenizer(join_verb_parts=False)
             self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر',
                              'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
+            self.repeated_chars_pattern = re.compile(r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}')
 
         self.character_refinement_patterns = []
 
@@ -136,7 +137,8 @@ class Normalizer(object):
 
         if self._token_based:
             tokens = self.tokenizer.tokenize(text.translate(self.translations))
-            text = ' '.join(self.token_spacing(tokens))
+            tokens = self.token_spacing(tokens)
+            text = ' '.join(self.repeated_chars(tokens))
 
         if self._punctuation_spacing:
             text = self.punctuation_spacing(text)
@@ -341,4 +343,22 @@ class Normalizer(object):
             else:
                 result.append(token)
 
+        return result
+    
+
+    def repeated_chars(self, tokens):
+        result = []
+        for token in tokens:
+            if token not in self.words:
+                refined_unichar = re.sub(self.redundant_chars_pattern, r'\1', token)
+                refined_bichar = re.sub(self.redundant_chars_pattern, r'\1\1', token)
+                
+                if (refined_unichar in self.words) != (refined_bichar in self.words):
+                    
+                    if refined_unichar in self.words:
+                        token = refined_unichar
+                    else:
+                        token = refined_bichar
+            result.append(token)
+        
         return result
