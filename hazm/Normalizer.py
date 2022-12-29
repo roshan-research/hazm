@@ -350,15 +350,12 @@ class Normalizer(object):
         result = []
         for token in tokens:
             if token not in self.words:
-                refined_unichar = re.sub(self.redundant_chars_pattern, r'\1', token)
-                refined_bichar = re.sub(self.redundant_chars_pattern, r'\1\1', token)
+                refined_unichar = re.sub(self.repeated_chars_pattern, r'\1', token)
+                refined_bichar = re.sub(self.repeated_chars_pattern, r'\1\1', token)
                 
-                if (refined_unichar in self.words) != (refined_bichar in self.words):
+                if (refined_unichar in self.words) != (refined_bichar in self.words):                    
+                    token = refined_unichar if refined_unichar in self.words else refined_bichar
                     
-                    if refined_unichar in self.words:
-                        token = refined_unichar
-                    else:
-                        token = refined_bichar
             result.append(token)
         
         return result
