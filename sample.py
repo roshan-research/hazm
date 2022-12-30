@@ -3,9 +3,7 @@ import time, re
 
 st = time.process_time()
 
-#normalizer = Normalizer(unicodes_replacement=True).normalize("خفت می‌کنما‌کافیه")
-
-w=word_tokenize("نگاه کرد")
+#normalizer = Normalizer().normalize("سلامممم رو برسون")
 
 normalizer = Normalizer()
 
