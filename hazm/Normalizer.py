@@ -151,8 +151,7 @@ class Normalizer(object):
 
         if self._token_based:
             tokens = self.tokenizer.tokenize(text.translate(self.translations))
-            tokens = self.token_spacing(tokens)
-            text = ' '.join(self.repeated_chars(tokens))
+            text = ' '.join(self.token_spacing(tokens))
 
         if self._punctuation_spacing:
             text = self.punctuation_spacing(text)
