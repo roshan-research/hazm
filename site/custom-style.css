@@ -53,6 +53,11 @@ pre {
     font-size: 1.3em;
 }
 
+/* Avoid breaking parameters name, etc. in table cells. */
+.doc-contents td code {
+    word-break: normal !important;
+}
+
 .linenos + .code code {
     font-size: 0.6539em;
 }
