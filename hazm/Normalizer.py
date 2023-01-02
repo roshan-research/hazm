@@ -6,9 +6,8 @@
 from __future__ import unicode_literals
 import re
 from .Lemmatizer import Lemmatizer
-from .WordTokenizer import WordTokenizer
-from .utils import maketrans, past_roots, present_roots
-
+from .utils import maketrans
+from flashtext import KeywordProcessor
 
 def compile_patterns(patterns): return [
     (re.compile(pattern), repl) for pattern, repl in patterns]
@@ -23,17 +22,15 @@ class Normalizer(object):
         persian_numbers (bool, optional): اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
         remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
         affix_spacing (bool, optional): اگر `True` باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.
-        token_based (bool, optional): اگر `True‍` باشد متن به‌شکل توکن‌به‌توکن نرمالایز می‌شود نه یکجا.
         punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
     """
 
-    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True, unicodes_replacement=True, remove_redundant_chars=True):
-        self.lemmatizer = Lemmatizer()        
+    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, punctuation_spacing=True, unicodes_replacement=True, remove_redundant_chars=True, seperate_mi=True):               
         self._punctuation_spacing = punctuation_spacing
-        self._affix_spacing = affix_spacing
-        self._token_based = token_based
+        self._affix_spacing = affix_spacing        
         self._unicodes_replacement = unicodes_replacement
         self._remove_redundant_chars=remove_redundant_chars
+        self._seperate_mi=seperate_mi       
 
         translation_src = 'ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” '
         translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
@@ -42,21 +39,22 @@ class Normalizer(object):
             translation_src += '0123456789%٠١٢٣٤٥٦٧٨٩'
             translation_dst += '۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹'
 
-        self.translations = maketrans(translation_src, translation_dst)
+        self.translations = maketrans(translation_src, translation_dst)   
 
-        if self._token_based:
-            self.words = self.lemmatizer.words
-            self.verbs = self.lemmatizer.verbs
-            self.tokenizer = WordTokenizer(join_verb_parts=False)
-            self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر',
-                             'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
-
-        if self.remove_redundant_chars:
-            self.tokenizer = WordTokenizer(join_verb_parts=False)
-            self.words = self.lemmatizer.words
-            self.redundant_chars_pattern = re.compile(r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{1,}')
+        if self._seperate_mi:                              
+            self.verbs = Lemmatizer().verbs
+            self.keyword_processor = KeywordProcessor()
+            for correct in self.verbs:
+                if 'می' not in correct: continue                           
+                wrong = correct.replace('\u200c','')
+                self.keyword_processor.add_keyword(wrong, correct)
 
         self.character_refinement_patterns = []
+
+        if self._remove_redundant_chars:            
+            self.character_refinement_patterns.append(
+                (r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}',r'\1\1')
+            )
 
         if remove_extra_spaces:
             self.character_refinement_patterns.extend([
@@ -118,7 +116,7 @@ class Normalizer(object):
                 # شنبهها => شنبه‌ها
                 ('(ه)(ها)', r'\1‌\2')
             ])
-            self.is_verb = re.compile(r'^.+#.+$')
+            
             self.joint_mi = re.compile(r'ن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+')
 
     def normalize(self, text):
@@ -137,21 +135,12 @@ class Normalizer(object):
         """
 
         text = self.character_refinement(text)
+
         if self._affix_spacing:
             text = self.affix_spacing(text)
-
         
-        tokens = list(set(self.tokenizer.tokenize(text.translate(self.translations))))
-
-        for token in tokens:
-            if re.search(self.redundant_chars_pattern,token):
-                no_redundant=self.remove_redundant_chars(token)
-                if token!=no_redundant:
-                    text = text.replace(token,no_redundant)     
-
-        if self._token_based:
-            tokens = self.tokenizer.tokenize(text.translate(self.translations))
-            text = ' '.join(self.token_spacing(tokens))
+        if self._seperate_mi:
+            text = self.keyword_processor.replace_keywords(text)              
 
         if self._punctuation_spacing:
             text = self.punctuation_spacing(text)
@@ -161,19 +150,6 @@ class Normalizer(object):
 
         return text
 
-    def remove_redundant_chars(self, word):
-        result = word
-
-        if len(set(word))==len(word): return word
-        if word in self.words: return word
-        
-        refined_unichar = re.sub(self.redundant_chars_pattern, r'\1', word)
-        refined_bichar = re.sub(self.redundant_chars_pattern, r'\1\1', word)
-        
-        if (refined_unichar in self.words) != (refined_bichar in self.words):                    
-            return refined_unichar if refined_unichar in self.words else refined_bichar
-                
-        return word
 
     def unicodes_replacement(self, text):
         """برخی از کاراکترهای خاص یونیکد را با معادلِ نرمال آن جایگزین می‌کند. غالباً این کار فقط در مواردی صورت می‌گیرد که یک کلمه در قالب یک کاراکتر یونیکد تعریف شده است.
@@ -307,12 +283,6 @@ class Normalizer(object):
 
         for pattern, repl in self.affix_spacing_patterns:
             text = pattern.sub(repl, text)
-        
-        matches = re.findall(self.joint_mi, text)
-        for m in matches:
-            r = re.sub("^می", "می‌", m)
-            if re.match(self.is_verb , self.lemmatizer.lemmatize(r)):
-                text = text.replace(m, r)
 
         return text
 
@@ -323,7 +293,7 @@ class Normalizer(object):
         برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
 
         Examples:
-            >>> normalizer = Normalizer(token_based=True)
+            >>> normalizer = Normalizer()
             >>> normalizer.token_spacing(['کتاب', 'ها'])
             ['کتاب‌ها']
 
@@ -349,6 +319,9 @@ class Normalizer(object):
             (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         """
 
+        suffixes = {'ی', 'ای', 'ها', 'های', 'تر',
+                             'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
+
         result = []
         for t, token in enumerate(tokens):
             joined = False
@@ -361,7 +334,7 @@ class Normalizer(object):
                     if t < len(tokens)-1 and token+'_'+tokens[t+1] in self.verbs:
                         joined = False
 
-                elif token in self.suffixes and result[-1] in self.words:
+                elif token in suffixes and result[-1] in self.words:
                     joined = True
 
             if joined:
