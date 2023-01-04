@@ -2,7 +2,11 @@
 '''
 این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
 '''
-from . import word_tokenize
+from . import word_tokenize, Normalizer
+import multiprocessing
+import warnings
+from gensim.test.utils import datapath
+from gensim.models.doc2vec import TaggedDocument
 from gensim.models import KeyedVectors, Doc2Vec, fasttext
 from gensim.scripts.glove2word2vec import glove2word2vec
 import os
@@ -55,6 +59,50 @@ class WordEmbedding:
         else:
             raise KeyError(
                 f'{self.model_type} not supported! Please choose from {supported_embeddings}')
+
+    def train(self, dataset_path, workers=multiprocessing.cpu_count()-1, vector_size=200, epochs=10, fasttext_type='skipgram', dest_path=None):
+        """ یک فایل امبدینگ از نوع fasttext ترین می‌کند.
+        
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.train(dataset_path = 'dataset.txt', worker = 4, vector_size = 300, epochs = 30, fasttext_type = 'cbow', dest_path = 'fasttext_model')
+        
+        Args:
+            dataset_path (str): مسیر فایل متنی.
+            worker (int, optional): تعداد هسته درگیر برای ترین مدل.
+            vector_size (int, optional): طول وکتور خروجی به ازای هر کلمه.
+            epochs (int, optional): تعداد تکرار ترین بر روی کل دیتا.
+            fasttext_type (str, optional): نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
+            dest_path (str, optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
+        
+        """
+
+        if self.model_type is not 'fasttext':
+            self.model = 'fasttext'
+            warnings.warn(
+                f'this function is for training fasttext models only and {self.model_type} is not supported')
+
+        fasttext_model_types = ['cbow', 'skipgram']
+        if(fasttext_type not in fasttext_model_types):
+            raise KeyError(
+                f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}')
+
+        workers = 1 if workers == 0 else workers
+        
+        model = fasttext.train_unsupervised(dataset_path, 
+                                            model = fasttext_type, 
+                                            dim = vector_size, 
+                                            epoch = epochs, 
+                                            thread = workers)
+        
+        self.model = model.wv
+
+        print('Model trained.')
+
+        if dest_path is not None:
+            model.save_model(dest_path)
+            print('Model saved.')
+
 
     def __getitem__(self, word):
         if not self.model:
@@ -130,7 +178,7 @@ class WordEmbedding:
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
-            [('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]
+            [('ايران', 0.657148540019989'), (جمهوری', 0.6470394134521484'), (آمریکا', 0.635792076587677'), (اسلامی', 0.6354473233222961'), (کشور', 0.6339613795280457')]
 
         Args:
             word (str): کلمه‌ای که می‌خواهید واژگان مرتبط با آن را بدانید.
@@ -189,6 +237,42 @@ class SentEmbedding:
 
         self.model = Doc2Vec.load(model_path)
 
+    def train(self, dataset_path, min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, dest_path=None):
+        """ یک فایل امبدینگ doc2vec ترین می‌کند.
+        
+        Examples:
+            >>> sentEmbedding = SentEmbedding()
+            >>> sentEmbedding.train(dataset_path = 'dataset.txt', min_count = 10, worker = 6, windows = 3, vector_size = 250, epochs = 35, dest_path = 'doc2vec_model')
+        
+        Args:
+            dataset_path (str): مسیر فایل متنی.
+            min_count (int, optional): مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
+            worker (int, optional): تعداد هسته درگیر برای ترین مدل.
+            wondows (int, optional): طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
+            vector_size (int, optional): طول وکتور خروجی به ازای هر جمله.
+            epochs (int, optional): تعداد تکرار ترین بر روی کل دیتا.
+            dest_path (str, optional): مسیر مورد نظر برای ذخیره فایل امبدینگ.
+        
+        """
+        workers = 1 if workers == 0 else workers
+
+        doc = SentenceEmbeddingCorpus(dataset_path)
+
+        model = Doc2Vec(min_count=min_count,
+                        window=windows,
+                        vector_size=vector_size,
+                        workers=workers)
+        model.build_vocab(doc)
+        model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+
+        self.model = model
+
+        print('Model trained.')
+
+        if dest_path is not None:
+            model.save(dest_path)
+            print('Model saved.')
+        
     def __getitem__(self, sent):
         if not self.model:
             raise AttributeError(
@@ -240,3 +324,15 @@ class SentEmbedding:
                 'Model must not be None! Please load model first.')
         else:
             return float(str(self.model.similarity_unseen_docs(word_tokenize(sent1), word_tokenize(sent2))))
+
+
+class SentenceEmbeddingCorpus:
+
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        corpus_path = datapath(self.data_path)
+        normalizer = Normalizer()
+        for i, list_of_words in enumerate(open(corpus_path)):
+            yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])

@@ -11,10 +11,6 @@ from hazm import *
 from hazm.Chunker import tree2brackets
 from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
 from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-from gensim.models import FastText
-from gensim.utils import simple_preprocess
-from gensim.test.utils import datapath
 from hazm import Normalizer
 
 
@@ -252,62 +248,3 @@ def train_stanford_postagger(peykare_root='corpora/peykare', path_to_model='reso
 
 	tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
 	print(tagger.evaluate(test))
-
-
-class SentenceEmbeddingCorpus:
-
-    def __init__(self, data_path):
-        self.data_path = data_path
-
-    def __iter__(self):
-        corpus_path = datapath(self.data_path)
-        normalizer = Normalizer()
-        for i, list_of_words in enumerate(open(corpus_path)):
-            yield TaggedDocument(word_tokenize(normalizer.normalize(list_of_words)), [i])
-
-
-def train_sentence_embedding(dataset_path, model_file='sent_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=300, epochs=10, return_model=False):
-	workers = 1 if workers == 0 else workers
-	doc = SentenceEmbeddingCorpus(dataset_path)
-	model = Doc2Vec(min_count=min_count,
-         window=windows,
-         vector_size=vector_size,
-         workers=workers,
-        )
-	model.build_vocab(doc)
-	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
-	model.save(model_file)
-	if return_model:
-		return model
-	else:
-		print('Model trained.')
-
-
-class WordEmbeddingCorpus:
-
-    def __init__(self, data_path):
-        self.data_path = data_path
-
-    def __iter__(self):
-        corpus_path = datapath(self.data_path)
-        normalizer = Normalizer()
-        for line in open(corpus_path):
-            yield simple_preprocess(normalizer.normalize(line))
-
-
-def train_word_embedding(dataset_path, dest_path='word_embedding.model',min_count=5, workers=multiprocessing.cpu_count()-1, windows=5, vector_size=200, epochs=10, return_model=False):
-	workers = 1 if workers == 0 else workers
-	doc = WordEmbeddingCorpus(dataset_path)
-	model = FastText(min_count=min_count,
-         window=windows,
-         vector_size=vector_size,
-         workers=workers,
-        )
-	model.build_vocab(doc)
-	model.train(doc, total_examples=model.corpus_count, epochs=epochs)
-	model.save(dest_path)
-	if return_model:
-		return model
-	else:
-		print('Model trained.s')
-
