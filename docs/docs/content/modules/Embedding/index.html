@@ -218,6 +218,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.train">
+    train()
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.doesnt_match">
     doesnt_match()
   </a>
@@ -254,6 +259,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.load_model">
     load_model()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.train">
+    train()
   </a>
 </li>
 <li class="md-nav__item">
@@ -438,6 +448,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.train">
+    train()
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.Embedding.WordEmbedding.doesnt_match">
     doesnt_match()
   </a>
@@ -474,6 +489,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.load_model">
     load_model()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hazm.Embedding.SentEmbedding.train">
+    train()
   </a>
 </li>
 <li class="md-nav__item">
@@ -574,6 +594,91 @@
 <td><p>مسیر فایل امبدینگ.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.WordEmbedding.train">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fasttext_type</span><span class="o">=</span><span class="s1">'skipgram'</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.WordEmbedding.train" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>یک فایل امبدینگ از نوع fasttext ترین می‌کند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'fasttext'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="s1">'dataset.txt'</span><span class="p">,</span> <span class="n">worker</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">fasttext_type</span> <span class="o">=</span> <span class="s1">'cbow'</span><span class="p">,</span> <span class="n">dest_path</span> <span class="o">=</span> <span class="s1">'fasttext_model'</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataset_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل متنی.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>worker</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>تعداد هسته درگیر برای ترین مدل.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>vector_size</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>طول وکتور خروجی به ازای هر کلمه.</p></td>
+<td>
+<code>200</code>
+</td>
+</tr>
+<tr>
+<td><code>epochs</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>تعداد تکرار ترین بر روی کل دیتا.</p></td>
+<td>
+<code>10</code>
+</td>
+</tr>
+<tr>
+<td><code>fasttext_type</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.</p></td>
+<td>
+<code>'skipgram'</code>
+</td>
+</tr>
+<tr>
+<td><code>dest_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر مورد نظر برای ذخیره فایل امبدینگ.</p></td>
+<td>
+<code>None</code>
 </td>
 </tr>
 </tbody>
@@ -739,7 +844,7 @@
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">'model_type'</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">'resources/cc.fa.300.bin'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">nearest_words</span><span class="p">(</span><span class="s1">'ایران'</span><span class="p">,</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
-<span class="go">[('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]</span>
+<span class="go">[('ايران', 0.657148540019989'), (جمهوری', 0.6470394134521484'), (آمریکا', 0.635792076587677'), (اسلامی', 0.6354473233222961'), (کشور', 0.6339613795280457')]</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -908,6 +1013,101 @@
 <td><p>مسیر فایل امبدینگ.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="hazm.Embedding.SentEmbedding.train">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Embedding.SentEmbedding.train" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>یک فایل امبدینگ doc2vec ترین می‌کند.</p>
+<p><strong>مثال‌ها:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="s1">'dataset.txt'</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">worker</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">windows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">35</span><span class="p">,</span> <span class="n">dest_path</span> <span class="o">=</span> <span class="s1">'doc2vec_model'</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>پارامترها:</strong></p>
+<table>
+<thead>
+<tr>
+<th>نام</th>
+<th>نوع</th>
+<th>توضیحات</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataset_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر فایل متنی.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>min_count</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.</p></td>
+<td>
+<code>5</code>
+</td>
+</tr>
+<tr>
+<td><code>worker</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>تعداد هسته درگیر برای ترین مدل.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>wondows</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.</p></td>
+<td>
+<span class="required-parameter">اجباری</span>
+</td>
+</tr>
+<tr>
+<td><code>vector_size</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>طول وکتور خروجی به ازای هر جمله.</p></td>
+<td>
+<code>300</code>
+</td>
+</tr>
+<tr>
+<td><code>epochs</code></td>
+<td>
+<code>int</code>
+</td>
+<td><p>تعداد تکرار ترین بر روی کل دیتا.</p></td>
+<td>
+<code>10</code>
+</td>
+</tr>
+<tr>
+<td><code>dest_path</code></td>
+<td>
+<code>str</code>
+</td>
+<td><p>مسیر مورد نظر برای ذخیره فایل امبدینگ.</p></td>
+<td>
+<code>None</code>
 </td>
 </tr>
 </tbody>
