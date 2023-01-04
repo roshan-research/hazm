@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 import re
 from .Lemmatizer import Lemmatizer
 from .utils import maketrans
-from flashtext import KeywordProcessor
 
 def compile_patterns(patterns): return [
     (re.compile(pattern), repl) for pattern, repl in patterns]
@@ -25,12 +24,11 @@ class Normalizer(object):
         punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
     """
 
-    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, punctuation_spacing=True, unicodes_replacement=True, remove_redundant_chars=True, seperate_mi=True):               
+    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, punctuation_spacing=True, unicodes_replacement=True, remove_redundant_chars=True):               
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing        
         self._unicodes_replacement = unicodes_replacement
-        self._remove_redundant_chars=remove_redundant_chars
-        self._seperate_mi=seperate_mi       
+        self._remove_redundant_chars=remove_redundant_chars             
 
         translation_src = 'ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” '
         translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
@@ -39,15 +37,7 @@ class Normalizer(object):
             translation_src += '0123456789%٠١٢٣٤٥٦٧٨٩'
             translation_dst += '۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹'
 
-        self.translations = maketrans(translation_src, translation_dst)   
-
-        if self._seperate_mi:                              
-            self.verbs = Lemmatizer().verbs
-            self.keyword_processor = KeywordProcessor()
-            for correct in self.verbs:
-                if 'می' not in correct: continue                           
-                wrong = correct.replace('\u200c','')
-                self.keyword_processor.add_keyword(wrong, correct)
+        self.translations = maketrans(translation_src, translation_dst)
 
         self.character_refinement_patterns = []
 
@@ -103,6 +93,7 @@ class Normalizer(object):
             ])
 
         if affix_spacing:
+            self.verbs = Lemmatizer().verbs
             self.affix_spacing_patterns = compile_patterns([
                 (r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
                 (r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
@@ -138,9 +129,6 @@ class Normalizer(object):
 
         if self._affix_spacing:
             text = self.affix_spacing(text)
-        
-        if self._seperate_mi:
-            text = self.keyword_processor.replace_keywords(text)              
 
         if self._punctuation_spacing:
             text = self.punctuation_spacing(text)
@@ -283,6 +271,12 @@ class Normalizer(object):
 
         for pattern, repl in self.affix_spacing_patterns:
             text = pattern.sub(repl, text)
+
+        matches = re.findall(self.joint_mi, text)
+        for m in matches:
+            r = re.sub("^(ن?می)", r'\1‌', m)            
+            if r in self.verbs:
+                text = text.replace(m, r)
 
         return text
 
