@@ -1,6 +1,6 @@
 from hazm import *
 
-#normalizer = Normalizer().normalize("میفهمی")
+#normalizer = Normalizer().normalize('﷽')
 
 normalizer = Normalizer()
 
