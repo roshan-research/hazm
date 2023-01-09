@@ -28,10 +28,9 @@ class Lemmatizer(object):
 			می‌شود. هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
 			این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
 			ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
-		joined_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با کاراکتر زیرخط به هم می‌چسباند.
 	"""	
 
-	def __init__(self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True):			
+	def __init__(self, words_file=default_words, verbs_file=default_verbs):			
 		self.verbs = {}
 		self.stemmer = Stemmer()
 
@@ -43,14 +42,6 @@ class Lemmatizer(object):
 			for verb in tokenizer.verbs:
 				for tense in self.conjugations(verb):
 					self.verbs[tense] = verb
-			if joined_verb_parts:
-				for verb in tokenizer.verbs:
-					bon = verb.split('#')[0]
-					for after_verb in tokenizer.after_verbs:
-						self.verbs[bon + 'ه_' + after_verb] = verb
-						self.verbs['ن' + bon + 'ه_' + after_verb] = verb
-					for before_verb in tokenizer.before_verbs:
-						self.verbs[before_verb + '_' + bon] = verb
 
 	def lemmatize(self, word, pos=''):		
 		"""ریشهٔ کلمه را پیدا می‌کند. 

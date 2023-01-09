@@ -15,7 +15,7 @@ class Normalizer(object):
     Args:
         remove_extra_spaces (bool, optional): اگر `True‍` باشد فواصل اضافهٔ متن را حذف می‌کند.
         remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
-        remove_redundant_chars (bool, optional): اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
+        remove_specials_chars (bool, optional): اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
         decrease_repeated_chars (bool, optional): اگر `True` باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.
         affix_spacing (bool, optional): اگر `True` باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.
         punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
@@ -25,10 +25,10 @@ class Normalizer(object):
         seperate_mi (bool, optional): اگر `True` باشد پیشوند «می» و «نمی» را در افعال جدا می‌کند.
     """
 
-    def __init__(self, remove_extra_spaces=True, remove_diacritics=True, remove_redundant_chars=True, decrease_repeated_chars=True, affix_spacing=True, punctuation_spacing=True, persian_style=True, persian_numbers=True, unicodes_replacement=True, seperate_mi=True):
+    def __init__(self, remove_extra_spaces=True, remove_diacritics=True, remove_specials_chars=True, decrease_repeated_chars=True, affix_spacing=True, punctuation_spacing=True, persian_style=True, persian_numbers=True, unicodes_replacement=True, seperate_mi=True):
         self._remove_extra_spaces = remove_extra_spaces
         self._remove_diacritics = remove_diacritics
-        self._remove_redundant_chars = remove_redundant_chars
+        self._remove_specials_chars = remove_specials_chars
         self._decrease_repeated_chars = decrease_repeated_chars
         self._affix_spacing = affix_spacing
         self._punctuation_spacing = punctuation_spacing
@@ -72,8 +72,8 @@ class Normalizer(object):
                 ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),
             ]
 
-        if self._remove_redundant_chars:
-            self.redundant_chars_patterns = [
+        if self._remove_specials_chars:
+            self.specials_chars_patterns = [
                 # Remove almoast all arabic unicode superscript and subscript characters in the ranges of 00600-06FF, 08A0-08FF, FB50-FDFF, and FE70-FEFF
                 ('[\u0605\u0653\u0654\u0655\u0656\u0657\u0658\u0659\u065A\u065B\u065C\u065D\u065E\u065F\u0670\u0610\u0611\u0612\u0613\u0614\u0615\u0616\u0618\u0619\u061A\u061E\u06D4\u06D6\u06D7\u06D8\u06D9\u06DA\u06DB\u06DC\u06DD\u06DE\u06DF\u06E0\u06E1\u06E2\u06E3\u06E4\u06E5\u06E6\u06E7\u06E8\u06E9\u06EA\u06EB\u06EC\u06ED\u06FD\u06FE\u08AD\u08D4\u08D5\u08D6\u08D7\u08D8\u08D9\u08DA\u08DB\u08DC\u08DD\u08DE\u08DF\u08E0\u08E1\u08E2\u08E3\u08E4\u08E5\u08E6\u08E7\u08E8\u08E9\u08EA\u08EB\u08EC\u08ED\u08EE\u08EF\u08F0\u08F1\u08F2\u08F3\u08F4\u08F5\u08F6\u08F7\u08F8\u08F9\u08FA\u08FB\u08FC\u08FD\u08FE\u08FF\uFBB2\uFBB3\uFBB4\uFBB5\uFBB6\uFBB7\uFBB8\uFBB9\uFBBA\uFBBB\uFBBC\uFBBD\uFBBE\uFBBF\uFBC0\uFBC1\uFC5E\uFC5F\uFC60\uFC61\uFC62\uFC63\uFCF2\uFCF3\uFCF4\uFD3E\uFD3F\uFE70\uFE71\uFE72\uFE76\uFE77\uFE78\uFE79\uFE7A\uFE7B\uFE7C\uFE7D\uFE7E\uFE7F\uFDFA\uFDFB]', ''),
             ]
@@ -174,8 +174,8 @@ class Normalizer(object):
         if self._unicodes_replacement:
             text = self.unicodes_replacement(text)
 
-        if self._remove_redundant_chars:
-            text = self.remove_redundant_chars(text)
+        if self._remove_specials_chars:
+            text = self.remove_specials_chars(text)
 
         if self._decrease_repeated_chars:
             text = self.decrease_repeated_chars(text)
@@ -217,12 +217,12 @@ class Normalizer(object):
         """
         return regex_replace(self.diacritics_patterns, text)
 
-    def remove_redundant_chars(self, text):
+    def remove_specials_chars(self, text):
         """برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
 
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.remove_redundant_chars('پیامبر اکرم ﷺ')
+            >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
             'پیامبر اکرم'
         Args:
             text (str): متنی که باید کاراکترها و نشانه‌های اضافهٔ آن حذف شود.
@@ -230,7 +230,7 @@ class Normalizer(object):
         Returns:
             (str): متنی بدون کاراکترها و نشانه‌های اضافه.
         """
-        return regex_replace(self.redundant_chars_patterns, text)
+        return regex_replace(self.specials_chars_patterns, text)
 
     def decrease_repeated_chars(self, text):
         """تکرارهای زائد حروف فارسی را به دو تکرار کاهش می‌دهد. حالا چرا فقط دو تکرار؟ 
