@@ -1,6 +1,6 @@
 from hazm import *
 
-#normalizer = Normalizer().normalize('﷽')
+#normalizer = Normalizer().decrease_repeated_chars('سلامممممم')
 
 normalizer = Normalizer()
 
