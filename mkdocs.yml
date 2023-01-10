@@ -10,7 +10,7 @@ repo_name: hazm
 edit_uri: edit/master/documentation
 
 docs_dir: documentation
-site_dir: docs/docs
+site_dir: site/docs
 
 copyright: |
     کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/sobhe/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;

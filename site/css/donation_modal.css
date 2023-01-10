@@ -55,15 +55,15 @@
     width: 34px;
 }
 
-#pay-modal [name="user"] {
+#pay-modal [name=user] {
     width: 150px;
 }
 
-#pay-modal [name="description"] {
+#pay-modal [name=description] {
     width: calc(100% - 40px);
 }
 
-#pay-modal [name="user"] {
+#pay-modal [name=user] {
     width: 150px;
 }
 
@@ -76,7 +76,7 @@
 
 #pay-modal .form-control {
     font-size: 17px;
-    border-color: #eee;
+    border-color: #EEE;
     display: inline-block;
     padding: 6px 10px 2px;
 }
