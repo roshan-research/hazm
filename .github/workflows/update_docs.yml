@@ -27,6 +27,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docs/docs -f
+          git add site/docs -f
           git commit -m "Update doc"
           git push
