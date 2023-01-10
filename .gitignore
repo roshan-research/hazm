@@ -5,5 +5,5 @@ build
 dist
 *.pyc
 hazm.egg-info
-site/docs
+docs/docs
 sample.py
