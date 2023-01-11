@@ -119,3 +119,13 @@ table:not(.highlighttable) td {
 table:not(.highlighttable) tr {
     border-bottom: 1px solid #dddddd;
 }
+
+/* Max width for docstring sections tables. */
+.doc .md-typeset__table,
+.doc .md-typeset__table table {
+  display: table !important;
+  width: 100%;
+}
+.doc .md-typeset__table tr {
+  display: table-row;
+}
