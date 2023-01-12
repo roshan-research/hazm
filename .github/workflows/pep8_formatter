@@ -1,0 +1,35 @@
+name: Format all code based on pep-8 with black formatter
+
+on:
+  workflow_dispatch:
+    push:
+      branches:
+        - master
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:        
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CI: ""
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+        
+    - name: Install black formatter
+      run: pip install black
+        
+    - name: Format all codes
+      run: black .
+        
+    - name: Push back changes          
+      uses: mikeal/publish-to-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        BRANCH_NAME: 'main'
