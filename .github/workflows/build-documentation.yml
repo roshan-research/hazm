@@ -1,4 +1,4 @@
-name: Build documentation with mkdocs
+name: Build and publish documentation with mkdocs
 on:
   workflow_dispatch:
   push:
