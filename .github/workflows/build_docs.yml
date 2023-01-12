@@ -23,10 +23,9 @@ jobs:
       - name: Build docs
         run: mkdocs build --clean
       
-      - name: Push changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add docs/docs -f
-          git commit -m "Update doc"
-          git push
+      - name: Push back changes          
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update documentation based on the latest code changes"
+          commit_user_name: "documentation-bot"
+          commit_user_email: "documentation-bot@users.noreply.github.com"
