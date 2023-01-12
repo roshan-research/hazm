@@ -27,4 +27,4 @@ jobs:
       uses: mikeal/publish-to-github-action@master
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        BRANCH_NAME: 'main'
+        BRANCH_NAME: 'master'
