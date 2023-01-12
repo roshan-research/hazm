@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:        
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CI: ""
 
     steps:
     - uses: actions/checkout@v3
@@ -28,7 +25,8 @@ jobs:
       run: black .
         
     - name: Push back changes          
-      uses: mikeal/publish-to-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        BRANCH_NAME: 'master'
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Automatic changes: refactor code based on pep-8"
+        commit_user_name: "pep8 formatter bot"
+        commit_user_email: pep8-formatter-bot@users.noreply.github.com
