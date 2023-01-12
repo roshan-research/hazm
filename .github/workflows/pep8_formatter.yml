@@ -1,11 +1,11 @@
-name: Format all code based on pep-8 with black formatter
+name: Format all code based on pep-8
 
 on:
   workflow_dispatch:
-    push:
-      branches:
-        - master
-        - main
+  push:
+    branches:
+      - master
+      - main
 
 jobs:
   build:
