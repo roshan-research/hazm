@@ -34,7 +34,7 @@ modules = {
 class UnicodeOutputChecker(doctest.OutputChecker):
     def check_output(self, want, got, optionflags):
         try:
-            want, got = eval(want), eval(got)
+            want, got = eval(want),   eval(got)
         except:
             pass
 
@@ -45,7 +45,7 @@ class UnicodeOutputChecker(doctest.OutputChecker):
             pass
 
         if type(want) == unicode:
-            want = want.replace("٫", ".")  # eval issue
+            want = want.replace("٫",   ".")  # eval issue
 
         return want == got
 
@@ -71,5 +71,6 @@ if __name__ == "__main__":
         if not runner.run(suite).wasSuccessful():
             failure = True
 
+            
     if failure:
         exit(1)
