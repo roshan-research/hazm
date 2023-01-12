@@ -1,4 +1,4 @@
-name: update docs
+name: Build documentation with mkdocs
 on:
   workflow_dispatch:
   push:
