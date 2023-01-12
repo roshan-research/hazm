@@ -10,12 +10,12 @@ from .WordTokenizer import WordTokenizer
 from .utils import maketrans, past_roots, present_roots
 
 
-def compile_patterns(patterns): return [
-    (re.compile(pattern), repl) for pattern, repl in patterns]
+def compile_patterns(patterns):
+    return [(re.compile(pattern), repl) for pattern, repl in patterns]
 
 
 class Normalizer(object):
-    """این کلاس شامل توابعی برای نرمال‌سازی متن است. 
+    """این کلاس شامل توابعی برای نرمال‌سازی متن است.
 
     Args:
             remove_extra_spaces (bool, optional): اگر `True‍` باشد فواصل اضافهٔ متن را حذف می‌کند.
@@ -27,15 +27,24 @@ class Normalizer(object):
             punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
     """
 
-    def __init__(self, remove_extra_spaces=True, persian_style=True, persian_numbers=True, remove_diacritics=True, affix_spacing=True, token_based=False, punctuation_spacing=True):
+    def __init__(
+        self,
+        remove_extra_spaces=True,
+        persian_style=True,
+        persian_numbers=True,
+        remove_diacritics=True,
+        affix_spacing=True,
+        token_based=False,
+        punctuation_spacing=True,
+    ):
         self._punctuation_spacing = punctuation_spacing
         self._affix_spacing = affix_spacing
         self._token_based = token_based
 
-        translation_src, translation_dst = ' ىكي“”', ' یکی""'
+        translation_src, translation_dst = " ىكي“”", ' یکی""'
         if persian_numbers:
-            translation_src += '0123456789%'
-            translation_dst += '۰۱۲۳۴۵۶۷۸۹٪'
+            translation_src += "0123456789%"
+            translation_dst += "۰۱۲۳۴۵۶۷۸۹٪"
         self.translations = maketrans(translation_src, translation_dst)
 
         if self._token_based:
@@ -43,88 +52,127 @@ class Normalizer(object):
             self.words = lemmatizer.words
             self.verbs = lemmatizer.verbs
             self.tokenizer = WordTokenizer(join_verb_parts=False)
-            self.suffixes = {'ی', 'ای', 'ها', 'های', 'تر',
-                             'تری', 'ترین', 'گر', 'گری', 'ام', 'ات', 'اش'}
+            self.suffixes = {
+                "ی",
+                "ای",
+                "ها",
+                "های",
+                "تر",
+                "تری",
+                "ترین",
+                "گر",
+                "گری",
+                "ام",
+                "ات",
+                "اش",
+            }
 
         self.character_refinement_patterns = []
 
         if remove_extra_spaces:
-            self.character_refinement_patterns.extend([
-                (r' {2,}', ' '),  # remove extra spaces
-                (r'\n{3,}', '\n\n'),  # remove extra newlines
-                (r'\u200c{2,}', '\u200c'),  # remove extra ZWNJs
-                (r'\u200c{1,} ', ' '),  # remove unneded ZWNJs before space
-                (r' \u200c{1,}', ' '),  # remove unneded ZWNJs after space
-                (r'[ـ\r]', ''),  # remove keshide, carriage returns
-            ])
+            self.character_refinement_patterns.extend(
+                [
+                    (r" {2,}", " "),  # remove extra spaces
+                    (r"\n{3,}", "\n\n"),  # remove extra newlines
+                    (r"\u200c{2,}", "\u200c"),  # remove extra ZWNJs
+                    (r"\u200c{1,} ", " "),  # remove unneded ZWNJs before space
+                    (r" \u200c{1,}", " "),  # remove unneded ZWNJs after space
+                    (r"[ـ\r]", ""),  # remove keshide, carriage returns
+                ]
+            )
 
         if persian_style:
-            self.character_refinement_patterns.extend([
-                ('"([^\n"]+)"', r'«\1»'),  # replace quotation with gyoome
-                ('([\d+])\.([\d+])', r'\1٫\2'),  # replace dot with momayez
-                (r' ?\.\.\.', ' …'),  # replace 3 dots
-            ])
+            self.character_refinement_patterns.extend(
+                [
+                    ('"([^\n"]+)"', r"«\1»"),  # replace quotation with gyoome
+                    ("([\d+])\.([\d+])", r"\1٫\2"),  # replace dot with momayez
+                    (r" ?\.\.\.", " …"),  # replace 3 dots
+                ]
+            )
 
         if remove_diacritics:
             self.character_refinement_patterns.append(
                 # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
-                ('[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]', ''),
+                ("[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]", ""),
             )
 
         self.character_refinement_patterns = compile_patterns(
-            self.character_refinement_patterns)
+            self.character_refinement_patterns
+        )
 
-        punc_after, punc_before = r'\.:!،؛؟»\]\)\}', r'«\[\(\{'
+        punc_after, punc_before = r"\.:!،؛؟»\]\)\}", r"«\[\(\{"
         if punctuation_spacing:
-            self.punctuation_spacing_patterns = compile_patterns([
-                # remove space before and after quotation
-                ('" ([^\n"]+) "', r'"\1"'),
-                (' ([' + punc_after + '])', r'\1'),  # remove space before
-                ('([' + punc_before + ']) ', r'\1'),  # remove space after
-                # put space after . and :
-                ('([' + punc_after[:3] + '])([^ ' + \
-                 punc_after + '\d۰۱۲۳۴۵۶۷۸۹])', r'\1 \2'),
-                ('([' + punc_after[3:] + '])([^ ' + punc_after + '])',
-                 r'\1 \2'),  # put space after
-                ('([^ ' + punc_before + '])([' + punc_before + '])',
-                 r'\1 \2'),  # put space before
-                ('(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])', r'\1 \2'),
-                ('([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)', r'\1 \2'),
-            ])
+            self.punctuation_spacing_patterns = compile_patterns(
+                [
+                    # remove space before and after quotation
+                    ('" ([^\n"]+) "', r'"\1"'),
+                    (" ([" + punc_after + "])", r"\1"),  # remove space before
+                    ("([" + punc_before + "]) ", r"\1"),  # remove space after
+                    # put space after . and :
+                    (
+                        "(["
+                        + punc_after[:3]
+                        + "])([^ "
+                        + punc_after
+                        + "\d۰۱۲۳۴۵۶۷۸۹])",
+                        r"\1 \2",
+                    ),
+                    (
+                        "([" + punc_after[3:] + "])([^ " + punc_after + "])",
+                        r"\1 \2",
+                    ),  # put space after
+                    (
+                        "([^ " + punc_before + "])([" + punc_before + "])",
+                        r"\1 \2",
+                    ),  # put space before
+                    ("(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])", r"\1 \2"),
+                    ("([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)", r"\1 \2"),
+                ]
+            )
 
         if affix_spacing:
-            self.affix_spacing_patterns = compile_patterns([
-                (r'([^ ]ه) ی ', r'\1‌ی '),  # fix ی space
-                (r'(^| )(ن?می) ', r'\1\2‌'),  # put zwnj after می, نمی
-                # put zwnj before تر, تری, ترین, گر, گری, ها, های
-                (r'(?<=[^\n\d ' + punc_after + punc_before + \
-                 ']{2}) (تر(ین?)?|گری?|های?)(?=[ \n' + punc_after + punc_before + ']|$)', r'‌\1'),
-                # join ام, ایم, اش, اند, ای, اید, ات
-                (r'([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n' + \
-                 punc_after + ']|$)', r'\1‌\2'),
-
-                # In the beggining of the line
-                # (r'(^)(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
-                (r'(^)(ن?می)'+f'({past_roots()})', r'\2‌\3'),
-
-                # In the middle of the string
-                # (r'( )(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r' \2‌\3'),
-                (r'( )(ن?می)'+f'({past_roots()})', r' \2‌\3'),
-
-                # In the beggining of the line
-                # (r'(^)(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r'\2‌\3\4'),
-                (r'(^)(ن?می)' + f'({present_roots()})' + \
-                 '([^\dA-Za-z]+)', r'\2‌\3\4'),
-
-                # In the middle of the string
-                # (r'( )(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r' \2‌\3\4'),
-                (r'( )(ن?می)' + f'({present_roots()})' + \
-                 '([^\dA-Za-z]+)', r' \2‌\3\4'),
-
-
-                # شنبهها => شنبه‌ها
-                ('(ه)(ها)', r'\1‌\2')
-            ])
+            self.affix_spacing_patterns = compile_patterns(
+                [
+                    (r"([^ ]ه) ی ", r"\1‌ی "),  # fix ی space
+                    (r"(^| )(ن?می) ", r"\1\2‌"),  # put zwnj after می, نمی
+                    # put zwnj before تر, تری, ترین, گر, گری, ها, های
+                    (
+                        r"(?<=[^\n\d "
+                        + punc_after
+                        + punc_before
+                        + "]{2}) (تر(ین?)?|گری?|های?)(?=[ \n"
+                        + punc_after
+                        + punc_before
+                        + "]|$)",
+                        r"‌\1",
+                    ),
+                    # join ام, ایم, اش, اند, ای, اید, ات
+                    (
+                        r"([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n" + punc_after + "]|$)",
+                        r"\1‌\2",
+                    ),
+                    # In the beggining of the line
+                    # (r'(^)(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r'\2‌\3'),
+                    (r"(^)(ن?می)" + f"({past_roots()})", r"\2‌\3"),
+                    # In the middle of the string
+                    # (r'( )(ن?می)'+f'(دانست|خواند|دید|بقیهٔ بن‌های ماضی)', r' \2‌\3'),
+                    (r"( )(ن?می)" + f"({past_roots()})", r" \2‌\3"),
+                    # In the beggining of the line
+                    # (r'(^)(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r'\2‌\3\4'),
+                    (
+                        r"(^)(ن?می)" + f"({present_roots()})" + "([^\dA-Za-z]+)",
+                        r"\2‌\3\4",
+                    ),
+                    # In the middle of the string
+                    # (r'( )(ن?می)'+f'(دان|خوان|بین|بقیهٔ بن‌های مضارع)' + '([^\dA-Za-z]+)', r' \2‌\3\4'),
+                    (
+                        r"( )(ن?می)" + f"({present_roots()})" + "([^\dA-Za-z]+)",
+                        r" \2‌\3\4",
+                    ),
+                    # شنبهها => شنبه‌ها
+                    ("(ه)(ها)", r"\1‌\2"),
+                ]
+            )
 
     def normalize(self, text):
         """متن را نرمال‌سازی می‌کند.
@@ -146,7 +194,7 @@ class Normalizer(object):
 
         if self._token_based:
             tokens = self.tokenizer.tokenize(text.translate(self.translations))
-            text = ' '.join(self.token_spacing(tokens))
+            text = " ".join(self.token_spacing(tokens))
 
         if self._punctuation_spacing:
             text = self.punctuation_spacing(text)
@@ -183,7 +231,7 @@ class Normalizer(object):
         return text
 
     def punctuation_spacing(self, text):
-        """فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند. 
+        """فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند.
 
         Examples:
                 >>> normalizer = Normalizer()
@@ -241,34 +289,34 @@ class Normalizer(object):
     def token_spacing(self, tokens):
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
 
-در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
-برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
+        در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
+        برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
 
-Examples:
-                >>> normalizer = Normalizer(token_based=True)
-                >>> normalizer.token_spacing(['کتاب', 'ها'])
-                ['کتاب‌ها']
+        Examples:
+                        >>> normalizer = Normalizer(token_based=True)
+                        >>> normalizer.token_spacing(['کتاب', 'ها'])
+                        ['کتاب‌ها']
 
-                >>> normalizer.token_spacing(['او', 'می', 'رود'])
-                ['او', 'می‌رود']
+                        >>> normalizer.token_spacing(['او', 'می', 'رود'])
+                        ['او', 'می‌رود']
 
-                >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
-                ['ماه', 'می', 'سال', 'جدید']
+                        >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
+                        ['ماه', 'می', 'سال', 'جدید']
 
-                >>> normalizer.token_spacing(['اخلال', 'گر'])
-                ['اخلال‌گر']
+                        >>> normalizer.token_spacing(['اخلال', 'گر'])
+                        ['اخلال‌گر']
 
-                >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
-                ['پرداخت', 'شده', 'است']
+                        >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+                        ['پرداخت', 'شده', 'است']
 
-                >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
-                ['زمین‌لرزه‌ای']
+                        >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
+                        ['زمین‌لرزه‌ای']
 
-        Args:
-                tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
+                Args:
+                        tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
 
-        Returns:
-                (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
+                Returns:
+                        (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         """
 
         result = []
@@ -276,11 +324,18 @@ Examples:
             joined = False
 
             if result:
-                token_pair = result[-1]+'‌'+token
-                if token_pair in self.verbs or token_pair in self.words and self.words[token_pair][0] > 0:
+                token_pair = result[-1] + "‌" + token
+                if (
+                    token_pair in self.verbs
+                    or token_pair in self.words
+                    and self.words[token_pair][0] > 0
+                ):
                     joined = True
 
-                    if t < len(tokens)-1 and token+'_'+tokens[t+1] in self.verbs:
+                    if (
+                        t < len(tokens) - 1
+                        and token + "_" + tokens[t + 1] in self.verbs
+                    ):
                         joined = False
 
                 elif token in self.suffixes and result[-1] in self.words:

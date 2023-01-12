@@ -15,54 +15,68 @@ from nltk.stem.api import StemmerI
 
 
 class Stemmer(StemmerI):
-	"""این کلاس شامل توابعی برای ریشه‌یابی کلمات است.
-	"""	
-	def __init__(self):
-		self.ends = ['ات', 'ان', 'ترین', 'تر', 'م', 'ت', 'ش', 'یی', 'ی', 'ها', 'ٔ', '‌ا', '‌']
+    """این کلاس شامل توابعی برای ریشه‌یابی کلمات است."""
 
-	def stem(self, word):
-		"""ریشهٔ کلمه را پیدا می‌کند. 
+    def __init__(self):
+        self.ends = [
+            "ات",
+            "ان",
+            "ترین",
+            "تر",
+            "م",
+            "ت",
+            "ش",
+            "یی",
+            "ی",
+            "ها",
+            "ٔ",
+            "‌ا",
+            "‌",
+        ]
 
-		Examples:
-			>>> stemmer = Stemmer()
-			>>> stemmer.stem('کتابی')
-			'کتاب'
+    def stem(self, word):
+        """ریشهٔ کلمه را پیدا می‌کند.
 
-			>>> stemmer.stem('کتاب‌ها')
-			'کتاب'
+        Examples:
+                >>> stemmer = Stemmer()
+                >>> stemmer.stem('کتابی')
+                'کتاب'
 
-			>>> stemmer.stem('کتاب‌هایی')
-			'کتاب'
+                >>> stemmer.stem('کتاب‌ها')
+                'کتاب'
 
-			>>> stemmer.stem('کتابهایشان')
-			'کتاب'
+                >>> stemmer.stem('کتاب‌هایی')
+                'کتاب'
 
-			>>> stemmer.stem('اندیشه‌اش')
-			'اندیشه'
+                >>> stemmer.stem('کتابهایشان')
+                'کتاب'
 
-			>>> stemmer.stem('خانۀ')
-			'خانه'
+                >>> stemmer.stem('اندیشه‌اش')
+                'اندیشه'
 
-			>>> stemmer.stem('محبوب‌ترین‌ها')
-			'محبوب'
+                >>> stemmer.stem('خانۀ')
+                'خانه'
 
-		Args:
-			word (str): کلمه‌ای که باید ریشهٔ آن پیدا شود.
+                >>> stemmer.stem('محبوب‌ترین‌ها')
+                'محبوب'
 
-		Returns:
-			(str): ریشهٔ کلمه.
-		"""
+        Args:
+                word (str): کلمه‌ای که باید ریشهٔ آن پیدا شود.
 
-		if word.endswith('ۀ'):
-			word = word[:-1] + 'ه'
+        Returns:
+                (str): ریشهٔ کلمه.
+        """
 
-		else:
-			
-			iteration=len(self.ends)
-			while(iteration):
-				for end in self.ends:
-					if word.endswith(end):
-						word = word[:-len(end)]
-				iteration-=1			
-		
-		return word
+        if word.endswith("ۀ"):
+            word = word[:-1] + "ه"
+
+        else:
+
+            iteration = len(self.ends)
+            while iteration:
+                for end in self.ends:
+                    if word.endswith(end):
+                        word = word[: -len(end)]
+                iteration -= 1
+
+        return word
