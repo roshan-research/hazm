@@ -1,11 +1,6 @@
 name: Format all code based on pep-8
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
-      - main
+on: [workflow_dispatch, push]
 
 jobs:
   build:
