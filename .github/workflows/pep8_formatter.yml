@@ -25,8 +25,8 @@ jobs:
       run: black .
         
     - name: Push back changes          
-    - uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Automatic changes: refactor code based on pep-8"
         commit_user_name: "pep8 formatter bot"
-        commit_user_email: pep8-formatter-bot@users.noreply.github.com
+        commit_user_email: "pep8-formatter-bot@users.noreply.github.com"
