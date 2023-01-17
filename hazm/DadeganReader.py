@@ -11,11 +11,30 @@ from nltk.parse import DependencyGraph
 from nltk.tree import Tree
 
 
-def coarse_pos_e(tags):
+def coarse_pos_u(tags, word):
+    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained universal pos tags) تبدیل می‌کند.
+
+    Examples:
+            >>> coarse_pos_e(['N', 'IANM'], 'امروز')
+            'NOUN'
+    """
+
+    map = {'N': 'NOUN', 'V': 'VERB', 'ADJ': 'ADJ', 'ADV': 'ADV', 'PR': 'PRON', 'PREM': 'DET', 'PREP': 'ADP',
+           'POSTP': 'ADP', 'PRENUM': 'NUM', 'CONJ': 'CCONJ', 'PUNC': 'PUNCT', 'SUBR': 'SCONJ', 'IDEN': 'PROPN',
+           'POSTNUM': 'NUM', 'PSUS': 'INTJ', 'PART': 'PART', 'ADR': 'INTJ'}
+    pos_mapped = map.get(tags[0], 'X')
+    if pos_mapped == 'PART' and word == 'را':
+        return 'ADP'
+    if pos_mapped == 'PART' and word in ['خوب', 'آخر']:
+        return 'ADP'
+    return pos_mapped
+
+
+def coarse_pos_e(tags, word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
-            >>> coarse_pos_e(['N', 'IANM'])
+            >>> coarse_pos_e(['N', 'IANM'], 'امروز')
             'N'
     """
 
@@ -50,9 +69,14 @@ class DadeganReader:
             pos_map(str,optionl): دیکشنری مبدل برچسب‌های ریز به درشت.
     """
 
-    def __init__(self, conll_file, pos_map=coarse_pos_e):
+    def __init__(self, conll_file, pos_map=coarse_pos_e, universal_pos=False):
         self._conll_file = conll_file
-        self._pos_map = pos_map if pos_map else lambda tags: ",".join(tags)
+        if pos_map is None:
+            self._pos_map = lambda tags: ','.join(tags)
+        elif universal_pos:
+            self._pos_map = coarse_pos_u
+        else:
+            self._pos_map = coarse_pos_e
 
     def _sentences(self):
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
@@ -93,7 +117,7 @@ class DadeganReader:
                 if "ezafe" in node["feats"]:
                     node["mtag"].append("EZ")
 
-                node["mtag"] = self._pos_map(node["mtag"])
+                node["mtag"] = self._pos_map(node["mtag"], node["word"])
 
             yield tree
 
