@@ -40,7 +40,7 @@ class TokenSplitter:
                 token (str): توکنی که باید پردازش شود.
 
         Returns:
-                ([List[Tuple[str,str]]]): لیستی از `[(توکن, توکن), (توکن, توکن), ...]`ها.
+                ([List[Tuple[str,str]]]): <dir-rtl>لیستی از `[(توکن, توکن), (توکن, توکن), …]`ها.</dir-rtl>
         """
 
         candidates = []
