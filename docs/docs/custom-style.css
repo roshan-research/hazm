@@ -129,3 +129,7 @@ table:not(.highlighttable) tr {
 .doc .md-typeset__table tr {
   display: table-row;
 }
+
+dir-rtl * {
+    direction: rtl !important;
+}
