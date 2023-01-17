@@ -19,14 +19,30 @@ def coarse_pos_u(tags, word):
             'NOUN'
     """
 
-    map = {'N': 'NOUN', 'V': 'VERB', 'ADJ': 'ADJ', 'ADV': 'ADV', 'PR': 'PRON', 'PREM': 'DET', 'PREP': 'ADP',
-           'POSTP': 'ADP', 'PRENUM': 'NUM', 'CONJ': 'CCONJ', 'PUNC': 'PUNCT', 'SUBR': 'SCONJ', 'IDEN': 'PROPN',
-           'POSTNUM': 'NUM', 'PSUS': 'INTJ', 'PART': 'PART', 'ADR': 'INTJ'}
-    pos_mapped = map.get(tags[0], 'X')
-    if pos_mapped == 'PART' and word == 'را':
-        return 'ADP'
-    if pos_mapped == 'PART' and word in ['خوب', 'آخر']:
-        return 'ADP'
+    map = {
+        "N": "NOUN",
+        "V": "VERB",
+        "ADJ": "ADJ",
+        "ADV": "ADV",
+        "PR": "PRON",
+        "PREM": "DET",
+        "PREP": "ADP",
+        "POSTP": "ADP",
+        "PRENUM": "NUM",
+        "CONJ": "CCONJ",
+        "PUNC": "PUNCT",
+        "SUBR": "SCONJ",
+        "IDEN": "PROPN",
+        "POSTNUM": "NUM",
+        "PSUS": "INTJ",
+        "PART": "PART",
+        "ADR": "INTJ",
+    }
+    pos_mapped = map.get(tags[0], "X")
+    if pos_mapped == "PART" and word == "را":
+        return "ADP"
+    if pos_mapped == "PART" and word in ["خوب", "آخر"]:
+        return "ADP"
     return pos_mapped
 
 
@@ -72,7 +88,7 @@ class DadeganReader:
     def __init__(self, conll_file, pos_map=coarse_pos_e, universal_pos=False):
         self._conll_file = conll_file
         if pos_map is None:
-            self._pos_map = lambda tags: ','.join(tags)
+            self._pos_map = lambda tags: ",".join(tags)
         elif universal_pos:
             self._pos_map = coarse_pos_u
         else:

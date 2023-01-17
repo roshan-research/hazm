@@ -33,27 +33,129 @@ def coarse_pos_u(tags, word):
             (List[str]): لیست برچسب‌های درشت جهانی.
     """
 
-    map_pos_to_upos = {'N': 'NOUN', 'V': 'VERB', 'AJ': 'ADJ', 'ADV': 'ADV', 'PRO': 'PRON', 'DET': 'DET', 'P': 'ADP',
-                       'POSTP': 'ADP','NUM': 'NUM', 'CONJ': 'CCONJ', 'PUNC': 'PUNCT', 'CL': 'NOUN', 'INT': 'INTJ', 'RES': 'NOUN'}
-    sconj_list = {'که', 'تا', 'گرچه', 'اگرچه', 'چرا', 'زیرا', 'اگر', 'چون', 'چراکه', 'هرچند', 'وگرنه', 'چنانچه', 'والا'
-                  , 'هرچه', 'ولو', 'مگر', 'پس', 'چو', 'چه', 'بنابراین', 'وقتی', 'والّا', 'انگاری', 'هرچندكه', 'درنتيجه', 
-                  'اگه','ازآنجاكه','گر', 'وگر', 'وقتيكه', 'تااينكه', 'زمانيكه'}
-    num_adj_list = {'نخست', 'دوم', 'اول', 'پنجم', 'آخر', 'يازدهم', 'نهم', 'چهارم', 'ششم', 'پانزدهم', 'دوازدهم', 'هشتم',
-                    'صدم', 'هفتم', 'هفدهم', 'آخرين', 'سيزدهم', 'يكم', 'بيستم', 'ويكم', 'دوسوم', 'شانزدهم', 'هجدهم', 'چهاردهم', 
-                    'ششصدم', 'ميليونيم', 'وهفتم', 'يازدهمين', 'هيجدهمين', 'واپسين', 'چهلم', 'هزارم', 'وپنجم', 'هيجدهم', 'ميلياردم'
-                     , 'ميليونيوم', 'تريليونيوم','چهارپنجم', 'دهگانه', 'ميليونم', 'اوّل', 'سوّم'}
+    map_pos_to_upos = {
+        "N": "NOUN",
+        "V": "VERB",
+        "AJ": "ADJ",
+        "ADV": "ADV",
+        "PRO": "PRON",
+        "DET": "DET",
+        "P": "ADP",
+        "POSTP": "ADP",
+        "NUM": "NUM",
+        "CONJ": "CCONJ",
+        "PUNC": "PUNCT",
+        "CL": "NOUN",
+        "INT": "INTJ",
+        "RES": "NOUN",
+    }
+    sconj_list = {
+        "که",
+        "تا",
+        "گرچه",
+        "اگرچه",
+        "چرا",
+        "زیرا",
+        "اگر",
+        "چون",
+        "چراکه",
+        "هرچند",
+        "وگرنه",
+        "چنانچه",
+        "والا",
+        "هرچه",
+        "ولو",
+        "مگر",
+        "پس",
+        "چو",
+        "چه",
+        "بنابراین",
+        "وقتی",
+        "والّا",
+        "انگاری",
+        "هرچندكه",
+        "درنتيجه",
+        "اگه",
+        "ازآنجاكه",
+        "گر",
+        "وگر",
+        "وقتيكه",
+        "تااينكه",
+        "زمانيكه",
+    }
+    num_adj_list = {
+        "نخست",
+        "دوم",
+        "اول",
+        "پنجم",
+        "آخر",
+        "يازدهم",
+        "نهم",
+        "چهارم",
+        "ششم",
+        "پانزدهم",
+        "دوازدهم",
+        "هشتم",
+        "صدم",
+        "هفتم",
+        "هفدهم",
+        "آخرين",
+        "سيزدهم",
+        "يكم",
+        "بيستم",
+        "ويكم",
+        "دوسوم",
+        "شانزدهم",
+        "هجدهم",
+        "چهاردهم",
+        "ششصدم",
+        "ميليونيم",
+        "وهفتم",
+        "يازدهمين",
+        "هيجدهمين",
+        "واپسين",
+        "چهلم",
+        "هزارم",
+        "وپنجم",
+        "هيجدهم",
+        "ميلياردم",
+        "ميليونيوم",
+        "تريليونيوم",
+        "چهارپنجم",
+        "دهگانه",
+        "ميليونم",
+        "اوّل",
+        "سوّم",
+    }
     try:
         old_pos = list(
-            set(tags) & {'N', 'V', 'AJ', 'ADV', 'PRO', 'DET', 'P', 'POSTP', 'NUM', 'CONJ', 'PUNC', 'CL', 'INT', 'RES'})[0]
-        if old_pos == 'CONJ' and word in sconj_list:
-            return 'SCONJ'
-        if old_pos == 'NUM' and word in num_adj_list:
-            return 'ADJ'
+            set(tags)
+            & {
+                "N",
+                "V",
+                "AJ",
+                "ADV",
+                "PRO",
+                "DET",
+                "P",
+                "POSTP",
+                "NUM",
+                "CONJ",
+                "PUNC",
+                "CL",
+                "INT",
+                "RES",
+            }
+        )[0]
+        if old_pos == "CONJ" and word in sconj_list:
+            return "SCONJ"
+        if old_pos == "NUM" and word in num_adj_list:
+            return "ADJ"
         return map_pos_to_upos[old_pos]
     except:
-        return 'NOUN'
-    
-    
+        return "NOUN"
+
+
 def coarse_pos_e(tags, word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
@@ -134,10 +236,12 @@ class PeykareReader:
             pos_map (str): دیکشنری مبدل برچسب‌های ریز به درشت.
     """
 
-    def __init__(self, root, joined_verb_parts=True, pos_map=coarse_pos_e, universal_pos=False):
+    def __init__(
+        self, root, joined_verb_parts=True, pos_map=coarse_pos_e, universal_pos=False
+    ):
         self._root = root
         if pos_map is None:
-            self._pos_map = lambda tags: ','.join(tags)
+            self._pos_map = lambda tags: ",".join(tags)
         elif universal_pos:
             self._pos_map = coarse_pos_u
         else:
