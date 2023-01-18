@@ -6,6 +6,7 @@
 from __future__ import unicode_literals
 import re
 from .Lemmatizer import Lemmatizer
+from .WordTokenizer import WordTokenizer
 from .utils import maketrans, regex_replace
 
 
@@ -48,6 +49,23 @@ class Normalizer(object):
         self._persian_number = persian_numbers
         self._unicodes_replacement = unicodes_replacement
         self._seperate_mi = seperate_mi
+
+        self.tokenizer = WordTokenizer()
+        self.words = self.tokenizer.words
+        self.suffixes = {
+            "ی",
+            "ای",
+            "ها",
+            "های",
+            "تر",
+            "تری",
+            "ترین",
+            "گر",
+            "گری",
+            "ام",
+            "ات",
+            "اش",
+        }
 
         self.translation_src = "ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” "
         self.translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
@@ -201,6 +219,16 @@ class Normalizer(object):
 
         if self._remove_diacritics:
             text = self.remove_diacritics(text)
+
+        lines = text.split("\n")
+        result = []
+        for line in lines:
+            tokens = self.tokenizer.tokenize(line)
+            spaced_tokens = self.token_spacing(tokens)
+            line = " ".join(spaced_tokens)
+            result.append(line)
+
+        text = "\n".join(result)      
 
         if self._affix_spacing:
             text = self.affix_spacing(text)
@@ -429,3 +457,57 @@ class Normalizer(object):
                 text = re.sub(r"\b%s\b" % m, r, text)
 
         return text
+
+    def token_spacing(self, tokens):
+        """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
+        در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
+        برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
+        Examples:
+                        >>> normalizer = Normalizer(token_based=True)
+                        >>> normalizer.token_spacing(['کتاب', 'ها'])
+                        ['کتاب‌ها']
+                        >>> normalizer.token_spacing(['او', 'می', 'رود'])
+                        ['او', 'می‌رود']
+                        >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
+                        ['ماه', 'می', 'سال', 'جدید']
+                        >>> normalizer.token_spacing(['اخلال', 'گر'])
+                        ['اخلال‌گر']
+                        >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+                        ['پرداخت', 'شده', 'است']
+                        >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
+                        ['زمین‌لرزه‌ای']
+                Args:
+                        tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
+                Returns:
+                        (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
+        """
+
+        result = []
+        for t, token in enumerate(tokens):
+            joined = False
+
+            if result:
+                token_pair = result[-1] + "‌" + token
+                if (
+                    token_pair in self.verbs
+                    or token_pair in self.words
+                    and self.words[token_pair][0] > 0
+                ):
+                    joined = True
+
+                    if (
+                        t < len(tokens) - 1
+                        and token + "_" + tokens[t + 1] in self.verbs
+                    ):
+                        joined = False
+
+                elif token in self.suffixes and result[-1] in self.words:
+                    joined = True
+
+            if joined:
+                result.pop()
+                result.append(token_pair)
+            else:
+                result.append(token)
+
+        return result
