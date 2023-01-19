@@ -28,31 +28,38 @@ class Normalizer(object):
 
     def __init__(
         self,
-        remove_extra_spaces=True,
+        correct_spacing = True,        
         remove_diacritics=True,
         remove_specials_chars=True,
         decrease_repeated_chars=True,
-        affix_spacing=True,
-        punctuation_spacing=True,
         persian_style=True,
         persian_numbers=True,
         unicodes_replacement=True,
         seperate_mi=True,
     ):
-        self._remove_extra_spaces = remove_extra_spaces
+        self._correct_spacing = correct_spacing
         self._remove_diacritics = remove_diacritics
         self._remove_specials_chars = remove_specials_chars
-        self._decrease_repeated_chars = decrease_repeated_chars
-        self._affix_spacing = affix_spacing
-        self._punctuation_spacing = punctuation_spacing
+        self._decrease_repeated_chars = decrease_repeated_chars        
         self._persian_style = persian_style
         self._persian_number = persian_numbers
         self._unicodes_replacement = unicodes_replacement
         self._seperate_mi = seperate_mi
 
-        self.tokenizer = WordTokenizer()
-        self.words = self.tokenizer.words
-        self.suffixes = {
+        self.translation_src = "ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” "
+        self.translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
+
+        if self._correct_spacing or sel._decrease_repeated_chars:
+            self.tokenizer = WordTokenizer()
+            self.words = self.tokenizer.words
+
+        if self._persian_number:
+            self.number_translation_src = "0123456789%٠١٢٣٤٥٦٧٨٩"
+            self.number_translation_dst = "۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹"
+
+        if self._correct_spacing:
+
+            self.suffixes = {
             "ی",
             "ای",
             "ها",
@@ -65,16 +72,8 @@ class Normalizer(object):
             "ام",
             "ات",
             "اش",
-        }
+            }
 
-        self.translation_src = "ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” "
-        self.translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
-
-        if self._persian_number:
-            self.number_translation_src = "0123456789%٠١٢٣٤٥٦٧٨٩"
-            self.number_translation_dst = "۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹"
-
-        if self._remove_extra_spaces:
             self.extra_space_patterns = [
                 (r" {2,}", " "),  # remove extra spaces
                 (r"\n{3,}", "\n\n"),  # remove extra newlines
@@ -84,37 +83,8 @@ class Normalizer(object):
                 (r"[ـ\r]", ""),  # remove keshide, carriage returns
             ]
 
-        if self._persian_style:
-            self.persian_style_patterns = [
-                ('"([^\n"]+)"', r"«\1»"),  # replace quotation with gyoome
-                ("([\d+])\.([\d+])", r"\1٫\2"),  # replace dot with momayez
-                (r" ?\.\.\.", " …"),  # replace 3 dots
-            ]
-
-        if self._decrease_repeated_chars:
-            self.repeated_chars_patterns = [
-                (r"([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}", r"\1\1")
-            ]
-
-        if self._remove_diacritics:
-            self.diacritics_patterns = [
-                # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
-                ("[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]", ""),
-            ]
-
-        if self._remove_specials_chars:
-            self.specials_chars_patterns = [
-                # Remove almoast all arabic unicode superscript and subscript characters in the ranges of 00600-06FF, 08A0-08FF, FB50-FDFF, and FE70-FEFF
-                (
-                    "[\u0605\u0653\u0654\u0655\u0656\u0657\u0658\u0659\u065A\u065B\u065C\u065D\u065E\u065F\u0670\u0610\u0611\u0612\u0613\u0614\u0615\u0616\u0618\u0619\u061A\u061E\u06D4\u06D6\u06D7\u06D8\u06D9\u06DA\u06DB\u06DC\u06DD\u06DE\u06DF\u06E0\u06E1\u06E2\u06E3\u06E4\u06E5\u06E6\u06E7\u06E8\u06E9\u06EA\u06EB\u06EC\u06ED\u06FD\u06FE\u08AD\u08D4\u08D5\u08D6\u08D7\u08D8\u08D9\u08DA\u08DB\u08DC\u08DD\u08DE\u08DF\u08E0\u08E1\u08E2\u08E3\u08E4\u08E5\u08E6\u08E7\u08E8\u08E9\u08EA\u08EB\u08EC\u08ED\u08EE\u08EF\u08F0\u08F1\u08F2\u08F3\u08F4\u08F5\u08F6\u08F7\u08F8\u08F9\u08FA\u08FB\u08FC\u08FD\u08FE\u08FF\uFBB2\uFBB3\uFBB4\uFBB5\uFBB6\uFBB7\uFBB8\uFBB9\uFBBA\uFBBB\uFBBC\uFBBD\uFBBE\uFBBF\uFBC0\uFBC1\uFC5E\uFC5F\uFC60\uFC61\uFC62\uFC63\uFCF2\uFCF3\uFCF4\uFD3E\uFD3F\uFE70\uFE71\uFE72\uFE76\uFE77\uFE78\uFE79\uFE7A\uFE7B\uFE7C\uFE7D\uFE7E\uFE7F\uFDFA\uFDFB]",
-                    "",
-                ),
-            ]
-
-        if self._affix_spacing or self._punctuation_spacing:
             punc_after, punc_before = r"\.:!،؛؟»\]\)\}", r"«\[\(\{"
 
-        if self._punctuation_spacing:
             self.punctuation_spacing_patterns = [
                 # remove space before and after quotation
                 ('" ([^\n"]+) "', r'"\1"'),
@@ -143,7 +113,6 @@ class Normalizer(object):
                 ("([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)", r"\1 \2"),
             ]
 
-        if self._affix_spacing:
             self.affix_spacing_patterns = [
                 (r"([^ ]ه) ی ", r"\1‌ی "),  # fix ی space
                 (r"(^| )(ن?می) ", r"\1\2‌"),  # put zwnj after می, نمی
@@ -168,12 +137,38 @@ class Normalizer(object):
                 # شنبهها => شنبه‌ها
                 ("(ه)(ها)", r"\1‌\2"),
             ]
+            
+
+        if self._persian_style:
+            self.persian_style_patterns = [
+                ('"([^\n"]+)"', r"«\1»"),  # replace quotation with gyoome
+                ("([\d+])\.([\d+])", r"\1٫\2"),  # replace dot with momayez
+                (r" ?\.\.\.", " …"),  # replace 3 dots
+            ]
+
+        if self._decrease_repeated_chars:
+            self.more_than_two_repeat_pattern = r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}'
+            self.repeated_chars_pattern = r"[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"+self.more_than_two_repeat_pattern+ "[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"         
+
+
+        if self._remove_diacritics:
+            self.diacritics_patterns = [
+                # remove FATHATAN, DAMMATAN, KASRATAN, FATHA, DAMMA, KASRA, SHADDA, SUKUN
+                ("[\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652]", ""),
+            ]
+
+        if self._remove_specials_chars:
+            self.specials_chars_patterns = [
+                # Remove almoast all arabic unicode superscript and subscript characters in the ranges of 00600-06FF, 08A0-08FF, FB50-FDFF, and FE70-FEFF
+                (
+                    "[\u0605\u0653\u0654\u0655\u0656\u0657\u0658\u0659\u065A\u065B\u065C\u065D\u065E\u065F\u0670\u0610\u0611\u0612\u0613\u0614\u0615\u0616\u0618\u0619\u061A\u061E\u06D4\u06D6\u06D7\u06D8\u06D9\u06DA\u06DB\u06DC\u06DD\u06DE\u06DF\u06E0\u06E1\u06E2\u06E3\u06E4\u06E5\u06E6\u06E7\u06E8\u06E9\u06EA\u06EB\u06EC\u06ED\u06FD\u06FE\u08AD\u08D4\u08D5\u08D6\u08D7\u08D8\u08D9\u08DA\u08DB\u08DC\u08DD\u08DE\u08DF\u08E0\u08E1\u08E2\u08E3\u08E4\u08E5\u08E6\u08E7\u08E8\u08E9\u08EA\u08EB\u08EC\u08ED\u08EE\u08EF\u08F0\u08F1\u08F2\u08F3\u08F4\u08F5\u08F6\u08F7\u08F8\u08F9\u08FA\u08FB\u08FC\u08FD\u08FE\u08FF\uFBB2\uFBB3\uFBB4\uFBB5\uFBB6\uFBB7\uFBB8\uFBB9\uFBBA\uFBBB\uFBBC\uFBBD\uFBBE\uFBBF\uFBC0\uFBC1\uFC5E\uFC5F\uFC60\uFC61\uFC62\uFC63\uFCF2\uFCF3\uFCF4\uFD3E\uFD3F\uFE70\uFE71\uFE72\uFE76\uFE77\uFE78\uFE79\uFE7A\uFE7B\uFE7C\uFE7D\uFE7E\uFE7F\uFDFA\uFDFB]",
+                    "",
+                ),
+            ]            
 
         if self._seperate_mi:
             self.verbs = Lemmatizer().verbs
-            self.joint_mi_patterns = (
-                r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+"
-            )
+            self.joint_mi_patterns = r'\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+'
 
         if self._unicodes_replacement:
             self.replacements = [
@@ -206,10 +201,7 @@ class Normalizer(object):
         """
 
         translations = maketrans(self.translation_src, self.translation_dst)
-        text = text.translate(translations)
-
-        if self._remove_extra_spaces:
-            text = self.remove_extra_spaces(text)
+        text = text.translate(translations)        
 
         if self._persian_style:
             text = self.persian_style(text)
@@ -220,21 +212,8 @@ class Normalizer(object):
         if self._remove_diacritics:
             text = self.remove_diacritics(text)
 
-        lines = text.split("\n")
-        result = []
-        for line in lines:
-            tokens = self.tokenizer.tokenize(line)
-            spaced_tokens = self.token_spacing(tokens)
-            line = " ".join(spaced_tokens)
-            result.append(line)
-
-        text = "\n".join(result)
-
-        if self._affix_spacing:
-            text = self.affix_spacing(text)
-
-        if self._punctuation_spacing:
-            text = self.punctuation_spacing(text)
+        if self._correct_spacing:
+            text = self.correct_spacing(text)           
 
         if self._unicodes_replacement:
             text = self.unicodes_replacement(text)
@@ -250,21 +229,24 @@ class Normalizer(object):
 
         return text
 
-    def remove_extra_spaces(self, text):
-        """فواصل اضافه را حذف و کشــــــــیدگی حروف را برطرف می‌کند.
+    def correct_spacing(self, text):
+        text = regex_replace(self.extra_space_patterns, text)
 
-        Examples:
-            >>> normalizer = Normalizer()
-            >>> normalizer.remove_extra_spaces('ســـــلام     به همه')
-            'سلام به همه'
+        lines = text.split("\n")
+        result = []
+        for line in lines:
+            tokens = self.tokenizer.tokenize(line)
+            spaced_tokens = self.token_spacing(tokens)
+            line = " ".join(spaced_tokens)
+            result.append(line)
 
-        Args:
-            text (str): متنی که باید فواصل اضافه و کشیدگی حروف در آن برطرف شود.
+        text = "\n".join(result)
 
-        Returns:
-            (str): متنی بدون فواصل اضافه و بدون کشیدگی حروف.
-        """
-        return regex_replace(self.extra_space_patterns, text)
+        text = regex_replace(self.affix_spacing_patterns, text)
+        text = regex_replace(self.punctuation_spacing_patterns, text)
+
+        return text
+
 
     def remove_diacritics(self, text):
         """اِعراب را از متن حذف می‌کند.
@@ -314,57 +296,20 @@ class Normalizer(object):
         Returns:
             (str): متنی با حداقل تکرار حروف.
         """
-        return regex_replace(self.repeated_chars_patterns, text)
 
-    def affix_spacing(self, text):
-        """فاصله‌گذاری‌های اشتباه را در پسوندها و پیشوندها اصلاح می‌کند.
+        matches = re.findall(self.repeated_chars_pattern, text)
+        for m in matches:
+            if m not in self.words:
+                no_repeat = re.sub(self.more_than_two_repeat_pattern, r'\1', m)
+                two_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1\1",m)
 
-        Examples:
-            >>> normalizer = Normalizer()
-            >>> normalizer.affix_spacing('خانه ی پدری')
-            'خانه‌ی پدری'
+                if (no_repeat in self.words) != (two_repeat in self.words):                    
+                    r = no_repeat if no_repeat in self.words else two_repeat
+                    text = text.replace(m, r)                    
+                else:
+                    text = text.replace(m,two_repeat)
 
-            >>> normalizer.affix_spacing('فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.')
-            'فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.'
-
-            >>> normalizer.affix_spacing('می روم')
-            'می‌روم'
-
-            >>> normalizer.affix_spacing('حرفه ای')
-            'حرفه‌ای'
-
-            >>> normalizer.affix_spacing('محبوب ترین ها')
-            'محبوب‌ترین‌ها'
-
-        Args:
-            text (str): متنی که باید فاصله‌گذاری‌های اشتباهِ آن در پسوندها و پیشوندها اصلاح شود.
-
-        Returns:
-            (str): متنی با فاصله‌گذاری صحیحِ پیشوندها و پسوندها.
-        """
-        return regex_replace(self.affix_spacing_patterns, text)
-
-    def punctuation_spacing(self, text):
-        """فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند.
-
-        Examples:
-            >>> normalizer = Normalizer()
-            >>> normalizer.punctuation_spacing('اصلاح ( پرانتزها ) در متن .')
-            'اصلاح (پرانتزها) در متن.'
-
-            >>> normalizer.punctuation_spacing('نسخه 0.5 در ساعت 22:00 تهران،1396')
-            'نسخه 0.5 در ساعت 22:00 تهران، 1396'
-
-            >>> normalizer.punctuation_spacing('اتریش ۷.۹ میلیون.')
-            'اتریش ۷.۹ میلیون.'
-
-        Args:
-            text (str): متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.
-
-        Returns:
-            (str): متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.
-        """
-        return regex_replace(self.punctuation_spacing_patterns, text)
+        return text
 
     def persian_style(self, text):
         """برخی از حروف و نشانه‌ها را با حروف و نشانه‌های فارسی جایگزین می‌کند.
@@ -450,7 +395,7 @@ class Normalizer(object):
         Returns:
             (str): متنی با «می» و «نمی» جدا شده.
         """
-        matches = re.findall(self.joint_mi_patterns, text)
+        matches = re.findall(r'\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
         for m in matches:
             r = re.sub("^(ن?می)", r"\1‌", m)
             if r in self.verbs:
