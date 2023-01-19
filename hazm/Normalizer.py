@@ -228,7 +228,7 @@ class Normalizer(object):
             line = " ".join(spaced_tokens)
             result.append(line)
 
-        text = "\n".join(result)      
+        text = "\n".join(result)
 
         if self._affix_spacing:
             text = self.affix_spacing(text)
@@ -454,7 +454,7 @@ class Normalizer(object):
         for m in matches:
             r = re.sub("^(ن?می)", r"\1‌", m)
             if r in self.verbs:
-                text = re.sub(r"\b%s\b" % m, r, text)
+                text = text.replace(m, r)
 
         return text
 
