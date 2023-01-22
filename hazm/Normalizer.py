@@ -28,7 +28,7 @@ class Normalizer(object):
 
     def __init__(
         self,
-        correct_spacing = True,        
+        correct_spacing=True,
         remove_diacritics=True,
         remove_specials_chars=True,
         decrease_repeated_chars=True,
@@ -40,7 +40,7 @@ class Normalizer(object):
         self._correct_spacing = correct_spacing
         self._remove_diacritics = remove_diacritics
         self._remove_specials_chars = remove_specials_chars
-        self._decrease_repeated_chars = decrease_repeated_chars        
+        self._decrease_repeated_chars = decrease_repeated_chars
         self._persian_style = persian_style
         self._persian_number = persian_numbers
         self._unicodes_replacement = unicodes_replacement
@@ -60,18 +60,18 @@ class Normalizer(object):
         if self._correct_spacing:
 
             self.suffixes = {
-            "ی",
-            "ای",
-            "ها",
-            "های",
-            "تر",
-            "تری",
-            "ترین",
-            "گر",
-            "گری",
-            "ام",
-            "ات",
-            "اش",
+                "ی",
+                "ای",
+                "ها",
+                "های",
+                "تر",
+                "تری",
+                "ترین",
+                "گر",
+                "گری",
+                "ام",
+                "ات",
+                "اش",
             }
 
             self.extra_space_patterns = [
@@ -137,7 +137,6 @@ class Normalizer(object):
                 # شنبهها => شنبه‌ها
                 ("(ه)(ها)", r"\1‌\2"),
             ]
-            
 
         if self._persian_style:
             self.persian_style_patterns = [
@@ -147,9 +146,14 @@ class Normalizer(object):
             ]
 
         if self._decrease_repeated_chars:
-            self.more_than_two_repeat_pattern = r'([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}'
-            self.repeated_chars_pattern = r"[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"+self.more_than_two_repeat_pattern+ "[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"         
-
+            self.more_than_two_repeat_pattern = (
+                r"([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])\1{2,}"
+            )
+            self.repeated_chars_pattern = (
+                r"[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"
+                + self.more_than_two_repeat_pattern
+                + "[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*"
+            )
 
         if self._remove_diacritics:
             self.diacritics_patterns = [
@@ -164,11 +168,13 @@ class Normalizer(object):
                     "[\u0605\u0653\u0654\u0655\u0656\u0657\u0658\u0659\u065A\u065B\u065C\u065D\u065E\u065F\u0670\u0610\u0611\u0612\u0613\u0614\u0615\u0616\u0618\u0619\u061A\u061E\u06D4\u06D6\u06D7\u06D8\u06D9\u06DA\u06DB\u06DC\u06DD\u06DE\u06DF\u06E0\u06E1\u06E2\u06E3\u06E4\u06E5\u06E6\u06E7\u06E8\u06E9\u06EA\u06EB\u06EC\u06ED\u06FD\u06FE\u08AD\u08D4\u08D5\u08D6\u08D7\u08D8\u08D9\u08DA\u08DB\u08DC\u08DD\u08DE\u08DF\u08E0\u08E1\u08E2\u08E3\u08E4\u08E5\u08E6\u08E7\u08E8\u08E9\u08EA\u08EB\u08EC\u08ED\u08EE\u08EF\u08F0\u08F1\u08F2\u08F3\u08F4\u08F5\u08F6\u08F7\u08F8\u08F9\u08FA\u08FB\u08FC\u08FD\u08FE\u08FF\uFBB2\uFBB3\uFBB4\uFBB5\uFBB6\uFBB7\uFBB8\uFBB9\uFBBA\uFBBB\uFBBC\uFBBD\uFBBE\uFBBF\uFBC0\uFBC1\uFC5E\uFC5F\uFC60\uFC61\uFC62\uFC63\uFCF2\uFCF3\uFCF4\uFD3E\uFD3F\uFE70\uFE71\uFE72\uFE76\uFE77\uFE78\uFE79\uFE7A\uFE7B\uFE7C\uFE7D\uFE7E\uFE7F\uFDFA\uFDFB]",
                     "",
                 ),
-            ]            
+            ]
 
         if self._seperate_mi:
             self.verbs = Lemmatizer().verbs
-            self.joint_mi_patterns = r'\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+'
+            self.joint_mi_patterns = (
+                r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+"
+            )
 
         if self._unicodes_replacement:
             self.replacements = [
@@ -201,7 +207,7 @@ class Normalizer(object):
         """
 
         translations = maketrans(self.translation_src, self.translation_dst)
-        text = text.translate(translations)        
+        text = text.translate(translations)
 
         if self._persian_style:
             text = self.persian_style(text)
@@ -213,7 +219,7 @@ class Normalizer(object):
             text = self.remove_diacritics(text)
 
         if self._correct_spacing:
-            text = self.correct_spacing(text)           
+            text = self.correct_spacing(text)
 
         if self._unicodes_replacement:
             text = self.unicodes_replacement(text)
@@ -246,7 +252,6 @@ class Normalizer(object):
         text = regex_replace(self.punctuation_spacing_patterns, text)
 
         return text
-
 
     def remove_diacritics(self, text):
         """اِعراب را از متن حذف می‌کند.
@@ -297,17 +302,21 @@ class Normalizer(object):
             (str): متنی با حداقل تکرار حروف.
         """
 
-        matches = re.findall(self.repeated_chars_pattern, text)
-        for m in matches:
-            if m not in self.words:
-                no_repeat = re.sub(self.more_than_two_repeat_pattern, r'\1', m)
-                two_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1\1",m)
+        matches = re.finditer(self.repeated_chars_pattern, text)
 
-                if (no_repeat in self.words) != (two_repeat in self.words):                    
+        for m in matches:
+            word = m.group()
+            if word not in self.words:
+                no_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1", word)
+                two_repeat = re.sub(
+                    self.more_than_two_repeat_pattern, r"\1\1", word
+                )
+
+                if (no_repeat in self.words) != (two_repeat in self.words):
                     r = no_repeat if no_repeat in self.words else two_repeat
-                    text = text.replace(m, r)                    
+                    text = text.replace(word, r)
                 else:
-                    text = text.replace(m,two_repeat)
+                    text = text.replace(word, two_repeat)
 
         return text
 
@@ -395,7 +404,9 @@ class Normalizer(object):
         Returns:
             (str): متنی با «می» و «نمی» جدا شده.
         """
-        matches = re.findall(r'\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+', text)
+        matches = re.findall(
+            r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", text
+        )
         for m in matches:
             r = re.sub("^(ن?می)", r"\1‌", m)
             if r in self.verbs:
