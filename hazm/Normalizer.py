@@ -50,7 +50,7 @@ class Normalizer(object):
         self.translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
 
         if self._correct_spacing or sel._decrease_repeated_chars:
-            self.tokenizer = WordTokenizer()
+            self.tokenizer = WordTokenizer(join_verb_parts=False)
             self.words = self.tokenizer.words
 
         if self._persian_number:
@@ -171,7 +171,7 @@ class Normalizer(object):
             ]
 
         if self._seperate_mi:
-            self.verbs = Lemmatizer().verbs
+            self.verbs = Lemmatizer(joined_verb_parts=False).verbs
             self.joint_mi_patterns = (
                 r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+"
             )
