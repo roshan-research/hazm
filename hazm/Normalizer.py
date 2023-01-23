@@ -14,12 +14,10 @@ class Normalizer(object):
     """این کلاس شامل توابعی برای نرمال‌سازی متن است.
 
     Args:
-        remove_extra_spaces (bool, optional): اگر `True‍` باشد فواصل اضافهٔ متن را حذف می‌کند.
+        correct_spacing (bool, optional): اگر `True‍` فاصله‌گذاری‌ها را در متن، نشانه‌های سجاوندی و پیشوندها و پسوندها اصلاح می‌کند.
         remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
         remove_specials_chars (bool, optional): اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
         decrease_repeated_chars (bool, optional): اگر `True` باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.
-        affix_spacing (bool, optional): اگر `True` باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.
-        punctuation_spacing (bool, optional): اگر `True` باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.
         persian_style (bool, optional): اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
         persian_numbers (bool, optional): اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
         unicodes_replacement (bool, optional): اگر `True` باشد برخی از کاراکترهای یونیکد را با معادل نرمال‌شدهٔ آن جایگزین می‌کند.
@@ -285,21 +283,17 @@ class Normalizer(object):
         return regex_replace(self.specials_chars_patterns, text)
 
     def decrease_repeated_chars(self, text):
-        """تکرارهای زائد حروف فارسی را به دو تکرار کاهش می‌دهد. حالا چرا فقط دو تکرار؟
-        چون تشخیصِ تکرارهای زائد کار دشواری است و به  معنا و ساختار جمله گره خورده است؛
-        به عنوان مثال در جملهٔ «سلامم دوستان»، تکرار در واژهٔ سلام غیرضروری است
-        ولی در جملهٔ «سلامم را برسان» خیر! بنابراین فعلاً به کاهش تکرارها به دو تکرار بسنده کرده‌ایم.
-        در این حالت لااقل مطمئن هستیم که آسیبی به معنای متن نمی‌رسد.
+        """تکرارهای زائد حروف را در کلماتی مثل سلامممممم حذف می‌کند و در مواردی که نمی‌تواند تشخیص دهد دست کم به دو تکرار کاهش می‌دهد.
 
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.decrease_repeated_chars('سلامممم سلامممممم سلامم')
-            'سلامم سلامم سلامم'
+            >>> normalizer.decrease_repeated_chars('سلامممم به همه')
+            'سلام به همه'
         Args:
-            text (str): متنی که باید تکرارهای اضافهٔ حروف آن کاهش یابد.
+            text (str): متنی که باید تکرارهای زائد آن حذف شود.
 
         Returns:
-            (str): متنی با حداقل تکرار حروف.
+            (str): متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
         """
 
         matches = re.finditer(self.repeated_chars_pattern, text)
@@ -307,7 +301,9 @@ class Normalizer(object):
         for m in matches:
             word = m.group()
             if word not in self.words:
-                no_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1", word)
+                no_repeat = re.sub(
+                    self.more_than_two_repeat_pattern, r"\1", word
+                )
                 two_repeat = re.sub(
                     self.more_than_two_repeat_pattern, r"\1\1", word
                 )
