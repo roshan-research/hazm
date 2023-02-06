@@ -6,4 +6,3 @@ dist
 *.pyc
 hazm.egg-info
 docs/docs
-sample.py

@@ -6,7 +6,8 @@
 """
 
 from __future__ import unicode_literals
-import re, codecs
+import re
+import codecs
 from .utils import words_list, default_words, default_verbs
 from nltk.tokenize.api import TokenizerI
 
@@ -38,7 +39,7 @@ class WordTokenizer(TokenizerI):
         self,
         words_file=default_words,
         verbs_file=default_verbs,
-        join_verb_parts=True,
+        join_verb_parts=False,
         separate_emoji=False,
         replace_links=False,
         replace_IDs=False,
@@ -93,6 +94,7 @@ class WordTokenizer(TokenizerI):
         self.hashtag_repl = lambda m: "TAG " + m.group(1).replace("_", " ")
 
         self.words = {item[0]: (item[1], item[2]) for item in words_list(words_file)}
+
 
         if join_verb_parts:
             self.after_verbs = set(
@@ -293,7 +295,9 @@ class WordTokenizer(TokenizerI):
             text = self.number_int_pattern.sub(self.number_int_repl, text)
             text = self.number_float_pattern.sub(self.number_float_repl, text)
 
-        text = self.pattern.sub(r" \1 ", text.replace("\n", " ").replace("\t", " "))
+        text = self.pattern.sub(
+            r" \1 ", text.replace("\n", " ").replace("\t", " ")
+        )
 
         tokens = [word for word in text.split(" ") if word]
         if self._join_verb_parts:
@@ -304,23 +308,21 @@ class WordTokenizer(TokenizerI):
         """افعال چندبخشی را به هم می‌چسباند.
 
         Examples:
-                >>> tokenizer = WordTokenizer()
-                >>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
-                ['خواهد_رفت']
-                >>> tokenizer.join_verb_parts(['رفته', 'است'])
-                ['رفته_است']
-                >>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
-                ['گفته_شده_است']
-                >>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
-                ['گفته_خواهد_شد']
-                >>> tokenizer.join_verb_parts(['خسته', 'شدید'])
-                ['خسته', 'شدید']
-
+            >>> tokenizer = WordTokenizer()
+            >>> tokenizer.join_verb_parts(['خواهد', 'رفت'])
+            ['خواهد_رفت']
+            >>> tokenizer.join_verb_parts(['رفته', 'است'])
+            ['رفته_است']
+            >>> tokenizer.join_verb_parts(['گفته', 'شده', 'است'])
+            ['گفته_شده_است']
+            >>> tokenizer.join_verb_parts(['گفته', 'خواهد', 'شد'])
+            ['گفته_خواهد_شد']
+            >>> tokenizer.join_verb_parts(['خسته', 'شدید'])
+            ['خسته', 'شدید']
         Args:
-                tokens (List[str]): لیست کلمات یک فعل چندبخشی.
-
+            tokens (List[str]): لیست کلمات یک فعل چندبخشی.
         Returns:
-                (List[str]): لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
+            (List[str]): لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
         """
 
         result = [""]
