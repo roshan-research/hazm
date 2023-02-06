@@ -1,0 +1,31 @@
+name: Build and publish documentation with mkdocs
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+jobs:            
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Install python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+      
+      - name: Install requirements packages
+        run: pip install -r requirements.txt
+      
+      - name: Build docs
+        run: mkdocs build --clean
+      
+      - name: Push back changes          
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update documentation based on the latest changes"
+          commit_user_name: "documentation-bot"
+          commit_user_email: "documentation-bot@users.noreply.github.com"

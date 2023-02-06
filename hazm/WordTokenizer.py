@@ -27,7 +27,6 @@ class WordTokenizer(TokenizerI):
                     ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
 
             join_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
-
             separate_emoji (bool, optional): اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
             replace_links (bool, optional): اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
             replace_IDs (bool, optional): اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
@@ -40,21 +39,21 @@ class WordTokenizer(TokenizerI):
         self,
         words_file=default_words,
         verbs_file=default_verbs,
+        join_verb_parts=False,
         separate_emoji=False,
         replace_links=False,
         replace_IDs=False,
         replace_emails=False,
         replace_numbers=False,
         replace_hashtags=False,
-        join_verb_parts=True,
     ):
+        self._join_verb_parts = join_verb_parts
         self.separate_emoji = separate_emoji
         self.replace_links = replace_links
         self.replace_IDs = replace_IDs
         self.replace_emails = replace_emails
         self.replace_numbers = replace_numbers
         self.replace_hashtags = replace_hashtags
-        self._join_verb_parts = join_verb_parts
 
         self.pattern = re.compile(
             r'([؟!\?]+|\d[\d\.:\/\\]+\d|[:\.،؛»\]\)\}"«\[\(\{])'
@@ -94,9 +93,8 @@ class WordTokenizer(TokenizerI):
 
         self.hashtag_repl = lambda m: "TAG " + m.group(1).replace("_", " ")
 
-        self.words = {
-            item[0]: (item[1], item[2]) for item in words_list(words_file)
-        }
+        self.words = {item[0]: (item[1], item[2]) for item in words_list(words_file)}
+
 
         if join_verb_parts:
             self.after_verbs = set(
@@ -249,7 +247,7 @@ class WordTokenizer(TokenizerI):
         """توکن‌های متن را استخراج می‌کند.
 
         Examples:
-                >>> tokenizer = WordTokenizer(join_verb_parts=False)
+                >>> tokenizer = WordTokenizer()
                 >>> tokenizer.tokenize('این جمله (خیلی) پیچیده نیست!!!')
                 ['این', 'جمله', '(', 'خیلی', ')', 'پیچیده', 'نیست', '!!!']
 
@@ -308,6 +306,7 @@ class WordTokenizer(TokenizerI):
 
     def join_verb_parts(self, tokens):
         """افعال چندبخشی را به هم می‌چسباند.
+
         Examples:
             >>> tokenizer = WordTokenizer()
             >>> tokenizer.join_verb_parts(['خواهد', 'رفت'])

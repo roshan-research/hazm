@@ -13,70 +13,70 @@ from __future__ import print_function
 import codecs
 
 
-class PersicaReader():
-	"""این کلاس شامل توابعی برای خواندن پیکرهٔ پرسیکا است.	
-	
-	Args:
-		csv_file (str): مسیر فایلِ پیکره با پسوند csv.	
-	"""
+class PersicaReader:
+    """این کلاس شامل توابعی برای خواندن پیکرهٔ پرسیکا است.
 
-	def __init__(self, csv_file):
-		self._csv_file = csv_file
+    Args:
+            csv_file (str): مسیر فایلِ پیکره با پسوند csv.
+    """
 
-	def docs(self):
-		"""خبرها را برمی‌گرداند. 
-		
-		هر خبر، شی‌ای متشکل از این پارامتر است: 
-		
-		- شناسه (`id`)
-		- عنوان (`title`)
-		- متن (`text`)
-		- تاریخ (`date`)
-		- زمان (`time`)
-		- دستهٔ اصلی (`category`)
-		- دستهٔ فرعی (`category2`) 
+    def __init__(self, csv_file):
+        self._csv_file = csv_file
 
-		Examples:
-			>>> persica = PersicaReader('corpora/persica.csv')
-			>>> next(persica.docs())['id']
-			843656
+    def docs(self):
+        """خبرها را برمی‌گرداند.
 
-		Yields:
-			(Dict): خبر بعدی.
-		"""		
-		lines = []
-		for line in codecs.open(self._csv_file, encoding='utf-8-sig'):
-			line = line.strip()
-			if line:
-				if line.endswith(','):
-					lines.append(line[:-1])
-				else:
-					lines.append(line)
-					yield {
-						'id': int(lines[0]),
-						'title': lines[1],
-						'text': lines[2],
-						'date': lines[3],
-						'time': lines[4],
-						'category': lines[5],
-						'category2': lines[6],
-					}
-					lines = []
+        هر خبر، شی‌ای متشکل از این پارامتر است:
 
-	def texts(self):
-		"""فقط متن خبرها را برمی‌گرداند. 
+        - شناسه (`id`)
+        - عنوان (`title`)
+        - متن (`text`)
+        - تاریخ (`date`)
+        - زمان (`time`)
+        - دستهٔ اصلی (`category`)
+        - دستهٔ فرعی (`category2`)
 
-		این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
-		‍[docs()][hazm.PersicaReader.PersicaReader.docs] و دریافت مقدار پراپرتی
-		`text` نیز می‌توانید همین کار را انجام دهید.         
+        Examples:
+                >>> persica = PersicaReader('corpora/persica.csv')
+                >>> next(persica.docs())['id']
+                843656
 
-		Examples:
-			>>> persica = PersicaReader('corpora/persica.csv')
-			>>> next(persica.texts())
-			''
+        Yields:
+                (Dict): خبر بعدی.
+        """
+        lines = []
+        for line in codecs.open(self._csv_file, encoding="utf-8-sig"):
+            line = line.strip()
+            if line:
+                if line.endswith(","):
+                    lines.append(line[:-1])
+                else:
+                    lines.append(line)
+                    yield {
+                        "id": int(lines[0]),
+                        "title": lines[1],
+                        "text": lines[2],
+                        "date": lines[3],
+                        "time": lines[4],
+                        "category": lines[5],
+                        "category2": lines[6],
+                    }
+                    lines = []
 
-		Yields:
-			(str): متنِ خبر بعدی.
-		"""	
-		for doc in self.docs():
-			yield doc['text']
+    def texts(self):
+        """فقط متن خبرها را برمی‌گرداند.
+
+        این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
+        ‍[docs()][hazm.PersicaReader.PersicaReader.docs] و دریافت مقدار پراپرتی
+        `text` نیز می‌توانید همین کار را انجام دهید.
+
+        Examples:
+                >>> persica = PersicaReader('corpora/persica.csv')
+                >>> next(persica.texts())
+                ''
+
+        Yields:
+                (str): متنِ خبر بعدی.
+        """
+        for doc in self.docs():
+            yield doc["text"]

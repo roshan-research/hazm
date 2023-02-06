@@ -484,7 +484,7 @@
 <code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.train" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد. </p>
+<p>لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.</p>
 <p>هر جمله، لیستی از <code>(توکن، برچسب)</code>هاست.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
@@ -520,7 +520,7 @@
 <code class="highlight language-python"><span class="n">save_model</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.save_model" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>مدل تهیه‌شده توسط تابع <a class="autorefs autorefs-internal" href="#hazm.SequenceTagger.SequenceTagger.train">train()</a> را ذخیره می‌کند. </p>
+<p>مدل تهیه‌شده توسط تابع <a class="autorefs autorefs-internal" href="#hazm.SequenceTagger.SequenceTagger.train">train()</a> را ذخیره می‌کند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span><span class="o">.</span><span class="n">train</span><span class="p">([[(</span><span class="s1">'من'</span><span class="p">,</span> <span class="s1">'PRO'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'به'</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'مدرسه'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'رفته_بودم'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'PUNC'</span><span class="p">)]])</span>
@@ -609,8 +609,8 @@
 <code class="highlight language-python"><span class="n">tag_sents</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.SequenceTagger.SequenceTagger.tag_sents" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>جملات را در قالب لیستی از توکن‌ها دریافت می‌کند 
-و در خروجی، لیستی از لیستی از <code>(توکن، برچسب)</code>ها برمی‌گرداند. </p>
+<p>جملات را در قالب لیستی از توکن‌ها دریافت می‌کند
+و در خروجی، لیستی از لیستی از <code>(توکن، برچسب)</code>ها برمی‌گرداند.</p>
 <p>هر لیست از <code>(توکن، برچسب)</code>ها مربوط به یک جمله است.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tagger</span> <span class="o">=</span> <span class="n">SequenceTagger</span><span class="p">(</span><span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">'u:word-</span><span class="si">%x</span><span class="s1">[0,0]'</span><span class="p">])</span>
@@ -653,7 +653,7 @@
 <td>
 <code>List[List[Tuple[str, str]]]</code>
 </td>
-<td><p>لیستی از لیستی از <code>(توکن، برچسب)</code>ها. </p>
+<td><p>لیستی از لیستی از <code>(توکن، برچسب)</code>ها.</p>
 <p>هر لیست از <code>(توکن،برچسب)</code>ها مربوط به یک جمله است.</p></td>
 </tr>
 </tbody>

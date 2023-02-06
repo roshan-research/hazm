@@ -426,7 +426,7 @@
 <code>WikipediaReader</code>
 <a class="headerlink" href="#hazm.WikipediaReader.WikipediaReader" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents">
-<p>این کلاس شامل توابعی برای خواندن پیکرهٔ ویکی‌پدیا است.  </p>
+<p>این کلاس شامل توابعی برای خواندن پیکرهٔ ویکی‌پدیا است.</p>
 <p><strong>پارامترها:</strong></p>
 <table>
 <thead>
@@ -466,18 +466,18 @@
 <code class="highlight language-python"><span class="n">docs</span><span class="p">()</span></code>
 <a class="headerlink" href="#hazm.WikipediaReader.WikipediaReader.docs" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>مقالات را برمی‌گرداند. </p>
-<p>هر مقاله، شی‌ای متشکل از چند پارامتر است: </p>
+<p>مقالات را برمی‌گرداند.</p>
+<p>هر مقاله، شی‌ای متشکل از چند پارامتر است:</p>
 <ul>
-<li>شناسه (id)، </li>
-<li>عنوان (title)، </li>
-<li>متن (text)، </li>
-<li>نسخهٔ وب (date)، </li>
+<li>شناسه (id)،</li>
+<li>عنوان (title)،</li>
+<li>متن (text)،</li>
+<li>نسخهٔ وب (date)،</li>
 <li>آدرس صفحه (url).</li>
 </ul>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wikipedia</span> <span class="o">=</span> <span class="n">WikipediaReader</span><span class="p">(</span><span class="s1">'corpora/wikipedia.csv'</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">wikipedia</span><span class="o">.</span><span class="n">docs</span><span class="p">())[</span><span class="s1">'id'</span><span class="p">]</span>                        
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">wikipedia</span><span class="o">.</span><span class="n">docs</span><span class="p">())[</span><span class="s1">'id'</span><span class="p">]</span>
 </code></pre></div>
 <p><strong>خروجی تدریجی:</strong></p>
 <table>
@@ -503,10 +503,10 @@
 <code class="highlight language-python"><span class="n">texts</span><span class="p">()</span></code>
 <a class="headerlink" href="#hazm.WikipediaReader.WikipediaReader.texts" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>فقط متن مقالات را برمی‌گرداند. </p>
+<p>فقط متن مقالات را برمی‌گرداند.</p>
 <p>این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
 ‍<a class="autorefs autorefs-internal" href="#hazm.WikipediaReader.WikipediaReader.docs">docs()</a> و دریافت مقدار
-پراپرتی <code>text</code> نیز می‌توانید همین کار را انجام دهید.            </p>
+پراپرتی <code>text</code> نیز می‌توانید همین کار را انجام دهید.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wikipedia</span> <span class="o">=</span> <span class="n">WikipediaReader</span><span class="p">(</span><span class="s1">'corpora/wikipedia.csv'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">wikipedia</span><span class="o">.</span><span class="n">texts</span><span class="p">())[:</span><span class="mi">30</span><span class="p">]</span>

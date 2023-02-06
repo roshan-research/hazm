@@ -19,31 +19,41 @@ import codecs
 from collections import namedtuple
 
 
-Verb = namedtuple('Verb', ('past_light_verb', 'present_light_verb', 'prefix', 'nonverbal_element', 'preposition', 'valency'))
+Verb = namedtuple(
+    "Verb",
+    (
+        "past_light_verb",
+        "present_light_verb",
+        "prefix",
+        "nonverbal_element",
+        "preposition",
+        "valency",
+    ),
+)
 
 
-class VerbValencyReader():
-	"""این کلاس شامل توابعی برای خواندن پیکرهٔ ظرفیت نحوی افعال فارسی است.
+class VerbValencyReader:
+    """این کلاس شامل توابعی برای خواندن پیکرهٔ ظرفیت نحوی افعال فارسی است.
 
-	Args:
-		valency_file(str, optional): مسیر فایلِ پیکره.
-	"""
+    Args:
+            valency_file(str, optional): مسیر فایلِ پیکره.
+    """
 
-	def __init__(self, valency_file='corpora/valency.txt'):
-		self._valency_file = valency_file
+    def __init__(self, valency_file="corpora/valency.txt"):
+        self._valency_file = valency_file
 
-	def verbs(self):
-		"""افعال پیکره را برمی‌گرداند.
+    def verbs(self):
+        """افعال پیکره را برمی‌گرداند.
 
-		Yields:
-			(str): فعل بعدی.
-		"""		
-		with codecs.open(self._valency_file, encoding='utf-8') as valency_file:
-			for line in valency_file:
-				if 'بن ماضی' in line:
-					continue
+        Yields:
+                (str): فعل بعدی.
+        """
+        with codecs.open(self._valency_file, encoding="utf-8") as valency_file:
+            for line in valency_file:
+                if "بن ماضی" in line:
+                    continue
 
-				line = line.strip().replace('-\t', '\t')
-				parts = line.split('\t')
-				if len(parts) == 6:
-					yield Verb(*parts)
+                line = line.strip().replace("-\t", "\t")
+                parts = line.split("\t")
+                if len(parts) == 6:
+                    yield Verb(*parts)

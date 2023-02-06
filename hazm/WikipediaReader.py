@@ -12,67 +12,81 @@ from __future__ import unicode_literals, print_function
 import os, re, subprocess
 
 
-class WikipediaReader():
-	"""این کلاس شامل توابعی برای خواندن پیکرهٔ ویکی‌پدیا است. 	
+class WikipediaReader:
+    """این کلاس شامل توابعی برای خواندن پیکرهٔ ویکی‌پدیا است.
 
-	Args:
-		fawiki_dump (str): مسیر فولدر حاوی فایل‌های پیکره.
-		n_jobs (int, optional): تعداد هسته‌های پردازنده برای پردازش موازی.
-	"""
+    Args:
+            fawiki_dump (str): مسیر فولدر حاوی فایل‌های پیکره.
+            n_jobs (int, optional): تعداد هسته‌های پردازنده برای پردازش موازی.
+    """
 
-	def __init__(self, fawiki_dump, n_jobs=2):	
-		self.fawiki_dump = fawiki_dump
-		self.wiki_extractor = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'WikiExtractor.py')
-		self.n_jobs = n_jobs
+    def __init__(self, fawiki_dump, n_jobs=2):
+        self.fawiki_dump = fawiki_dump
+        self.wiki_extractor = os.path.join(
+            os.path.abspath(os.path.dirname(__file__)), "WikiExtractor.py"
+        )
+        self.n_jobs = n_jobs
 
-	def docs(self):
-		"""مقالات را برمی‌گرداند. 
+    def docs(self):
+        """مقالات را برمی‌گرداند.
 
-		هر مقاله، شی‌ای متشکل از چند پارامتر است: 
+        هر مقاله، شی‌ای متشکل از چند پارامتر است:
 
-		- شناسه (id)، 
-		- عنوان (title)، 
-		- متن (text)، 
-		- نسخهٔ وب (date)، 
-		- آدرس صفحه (url).
-		
-		Examples:
-			>>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
-			>>> next(wikipedia.docs())['id']			
+        - شناسه (id)،
+        - عنوان (title)،
+        - متن (text)،
+        - نسخهٔ وب (date)،
+        - آدرس صفحه (url).
 
-		Yields:
-			(Dict): مقالهٔ بعدی.
-		"""
-		proc = subprocess.Popen(['python', self.wiki_extractor, '--no-templates', '--processes', str(self.n_jobs), '--output', '-', self.fawiki_dump], stdout=subprocess.PIPE)
-		doc_pattern = re.compile(r'<doc id="(\d+)" url="([^\"]+)" title="([^\"]+)">')
+        Examples:
+                >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
+                >>> next(wikipedia.docs())['id']
 
-		doc = []
-		for line in iter(proc.stdout.readline, b''):
-			line = line.strip().decode('utf8')
-			if line:
-				doc.append(line)
+        Yields:
+                (Dict): مقالهٔ بعدی.
+        """
+        proc = subprocess.Popen(
+            [
+                "python",
+                self.wiki_extractor,
+                "--no-templates",
+                "--processes",
+                str(self.n_jobs),
+                "--output",
+                "-",
+                self.fawiki_dump,
+            ],
+            stdout=subprocess.PIPE,
+        )
+        doc_pattern = re.compile(r'<doc id="(\d+)" url="([^\"]+)" title="([^\"]+)">')
 
-			if line == '</doc>':
-				del doc[1]
-				id, url, title = doc_pattern.match(doc[0]).groups()
-				html = '\n'.join(doc[1:-1])
+        doc = []
+        for line in iter(proc.stdout.readline, b""):
+            line = line.strip().decode("utf8")
+            if line:
+                doc.append(line)
 
-				yield {'id': id, 'url': url, 'title': title, 'html': html, 'text': html}
-				doc = []
+            if line == "</doc>":
+                del doc[1]
+                id, url, title = doc_pattern.match(doc[0]).groups()
+                html = "\n".join(doc[1:-1])
 
-	def texts(self):
-		"""فقط متن مقالات را برمی‌گرداند. 
-		
-		این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
-		‍[docs()][hazm.WikipediaReader.WikipediaReader.docs] و دریافت مقدار
-		پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.            
+                yield {"id": id, "url": url, "title": title, "html": html, "text": html}
+                doc = []
 
-		Examples:
-			>>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
-			>>> next(wikipedia.texts())[:30]
+    def texts(self):
+        """فقط متن مقالات را برمی‌گرداند.
 
-		Yields:
-			(str): متنِ مقالهٔ بعدی.
-		"""		
-		for doc in self.docs():
-			yield doc['text']
+        این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
+        ‍[docs()][hazm.WikipediaReader.WikipediaReader.docs] و دریافت مقدار
+        پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
+
+        Examples:
+                >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
+                >>> next(wikipedia.texts())[:30]
+
+        Yields:
+                (str): متنِ مقالهٔ بعدی.
+        """
+        for doc in self.docs():
+            yield doc["text"]

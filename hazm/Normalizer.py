@@ -56,7 +56,6 @@ class Normalizer(object):
             self.number_translation_dst = "۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹"
 
         if self._correct_spacing:
-
             self.suffixes = {
                 "ی",
                 "ای",
@@ -189,6 +188,7 @@ class Normalizer(object):
                 ("ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ", "لا"),
             ]
 
+
     def normalize(self, text):
         """متن را نرمال‌سازی می‌کند.
 
@@ -206,6 +206,7 @@ class Normalizer(object):
 
         translations = maketrans(self.translation_src, self.translation_dst)
         text = text.translate(translations)
+
 
         if self._persian_style:
             text = self.persian_style(text)
@@ -430,6 +431,7 @@ class Normalizer(object):
                         ['زمین‌لرزه‌ای']
                 Args:
                         tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
+
                 Returns:
                         (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         """

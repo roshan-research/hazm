@@ -53,6 +53,11 @@ pre {
     font-size: 1.3em;
 }
 
+/* Avoid breaking parameters name, etc. in table cells. */
+.doc-contents td code {
+    word-break: normal !important;
+}
+
 .linenos + .code code {
     font-size: 0.6539em;
 }
@@ -113,4 +118,18 @@ table:not(.highlighttable) td {
 
 table:not(.highlighttable) tr {
     border-bottom: 1px solid #dddddd;
+}
+
+/* Max width for docstring sections tables. */
+.doc .md-typeset__table,
+.doc .md-typeset__table table {
+  display: table !important;
+  width: 100%;
+}
+.doc .md-typeset__table tr {
+  display: table-row;
+}
+
+dir-rtl * {
+    direction: rtl !important;
 }
