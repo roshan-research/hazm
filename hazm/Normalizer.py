@@ -89,11 +89,7 @@ class Normalizer(object):
                 ("([" + punc_before + "]) ", r"\1"),  # remove space after
                 # put space after . and :
                 (
-                    "(["
-                    + punc_after[:3]
-                    + "])([^ "
-                    + punc_after
-                    + "\d۰۱۲۳۴۵۶۷۸۹])",
+                    "([" + punc_after[:3] + "])([^ " + punc_after + "\d۰۱۲۳۴۵۶۷۸۹])",
                     r"\1 \2",
                 ),
                 (
@@ -126,9 +122,7 @@ class Normalizer(object):
                 ),
                 # join ام, ایم, اش, اند, ای, اید, ات
                 (
-                    r"([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n"
-                    + punc_after
-                    + "]|$)",
+                    r"([^ ]ه) (ا(م|یم|ش|ند|ی|ید|ت))(?=[ \n" + punc_after + "]|$)",
                     r"\1‌\2",
                 ),
                 # شنبهها => شنبه‌ها
@@ -169,9 +163,7 @@ class Normalizer(object):
 
         if self._seperate_mi:
             self.verbs = Lemmatizer(joined_verb_parts=False).verbs
-            self.joint_mi_patterns = (
-                r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+"
-            )
+            self.joint_mi_patterns = r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+"
 
         if self._unicodes_replacement:
             self.replacements = [
@@ -187,7 +179,6 @@ class Normalizer(object):
                 ("ﷸ", "وسلم"),
                 ("ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ", "لا"),
             ]
-
 
     def normalize(self, text):
         """متن را نرمال‌سازی می‌کند.
@@ -206,7 +197,6 @@ class Normalizer(object):
 
         translations = maketrans(self.translation_src, self.translation_dst)
         text = text.translate(translations)
-
 
         if self._persian_style:
             text = self.persian_style(text)
@@ -302,12 +292,8 @@ class Normalizer(object):
         for m in matches:
             word = m.group()
             if word not in self.words:
-                no_repeat = re.sub(
-                    self.more_than_two_repeat_pattern, r"\1", word
-                )
-                two_repeat = re.sub(
-                    self.more_than_two_repeat_pattern, r"\1\1", word
-                )
+                no_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1", word)
+                two_repeat = re.sub(self.more_than_two_repeat_pattern, r"\1\1", word)
 
                 if (no_repeat in self.words) != (two_repeat in self.words):
                     r = no_repeat if no_repeat in self.words else two_repeat
@@ -401,9 +387,7 @@ class Normalizer(object):
         Returns:
             (str): متنی با «می» و «نمی» جدا شده.
         """
-        matches = re.findall(
-            r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", text
-        )
+        matches = re.findall(r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", text)
         for m in matches:
             r = re.sub("^(ن?می)", r"\1‌", m)
             if r in self.verbs:

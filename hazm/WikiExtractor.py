@@ -225,6 +225,7 @@ templateKeys = set(["10", "828"])
 # Regex for identifying disambig pages
 filter_disambig_page_pattern = re.compile("{{disambig(uation)?(\|[^}]*)?}}")
 
+
 ##
 # page filtering logic -- remove templates, undesired xml namespaces, and disambiguation pages
 def keepPage(ns, page):
@@ -284,7 +285,6 @@ placeholder_tags = {"math": "formula", "code": "codice"}
 
 
 def normalizeTitle(title):
-
     """Normalize title"""
     # remove leading/trailing whitespace and underscores
     title = title.strip(" _")
@@ -3224,7 +3224,6 @@ minFileSize = 200 * 1024
 
 
 def main():
-
     parser = argparse.ArgumentParser(
         prog=os.path.basename(sys.argv[0]),
         formatter_class=argparse.RawDescriptionHelpFormatter,

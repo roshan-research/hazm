@@ -87,10 +87,12 @@ def present_roots():
 
     return roots[:-1]
 
+
 def regex_replace(patterns, text):
-        for pattern, repl in patterns:
-            text = re.sub(pattern, repl, text)
-        return text
+    for pattern, repl in patterns:
+        text = re.sub(pattern, repl, text)
+    return text
+
 
 """
 def generate_all_verb_forms(ri, rii):

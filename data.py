@@ -65,7 +65,6 @@ def evaluate_lemmatizer(
 
 
 def evaluate_normalizer(tnews_root="corpora/tnews"):
-
     tnews = TNewsReader(root=tnews_root)
     normalizer = Normalizer(
         persian_style=False,
@@ -137,7 +136,6 @@ def train_postagger(
     sents_limit=None,
     pos_map=peykare_coarse_pos_e,
 ):
-
     tagger = POSTagger(
         type="crf",
         algo="rprop",
@@ -185,7 +183,6 @@ def train_chunker(
     test_file="corpora/test.conll",
     model_file="resources/chunker.model",
 ):
-
     tagger = POSTagger(model="resources/postagger.model")
     chunker = Chunker(
         type="crf",
@@ -208,7 +205,7 @@ def train_chunker(
 
     def retag_trees(trees, sents):
         for tree, sentence in zip(trees, tagger.tag_sents(map(untag, sents))):
-            for (n, word) in zip(tree.treepositions("leaves"), sentence):
+            for n, word in zip(tree.treepositions("leaves"), sentence):
                 tree[n] = word
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
@@ -233,7 +230,6 @@ def train_maltparser(
     memory_min="-Xms7g",
     memory_max="-Xmx8g",
 ):
-
     lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/postagger.model")
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
@@ -309,7 +305,6 @@ def train_turboparser(
     test_file="corpora/test.conll",
     model_file="resources/turboparser.model",
 ):
-
     lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/postagger.model")
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)

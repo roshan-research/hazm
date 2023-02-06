@@ -71,7 +71,6 @@ class Stemmer(StemmerI):
             word = word[:-1] + "ه"
 
         else:
-
             iteration = len(self.ends)
             while iteration:
                 for end in self.ends:

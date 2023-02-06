@@ -277,7 +277,6 @@ class InformalNormalizer(Normalizer):
             return returnList
 
         def analyzeVerbWord(word):
-
             if word in self.pastVerbs:
                 word = self.pastVerbs[word]
                 return [word]

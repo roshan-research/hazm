@@ -52,7 +52,6 @@ class TNewsReader:
 
         for root, dirs, files in os.walk(self._root):
             for name in sorted(files):
-
                 try:
                     content = open(os.path.join(root, name)).read()
 

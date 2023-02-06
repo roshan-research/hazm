@@ -95,7 +95,6 @@ class WordTokenizer(TokenizerI):
 
         self.words = {item[0]: (item[1], item[2]) for item in words_list(words_file)}
 
-
         if join_verb_parts:
             self.after_verbs = set(
                 [
@@ -295,9 +294,7 @@ class WordTokenizer(TokenizerI):
             text = self.number_int_pattern.sub(self.number_int_repl, text)
             text = self.number_float_pattern.sub(self.number_float_repl, text)
 
-        text = self.pattern.sub(
-            r" \1 ", text.replace("\n", " ").replace("\t", " ")
-        )
+        text = self.pattern.sub(r" \1 ", text.replace("\n", " ").replace("\t", " "))
 
         tokens = [word for word in text.split(" ") if word]
         if self._join_verb_parts:
