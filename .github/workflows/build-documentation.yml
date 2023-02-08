@@ -1,10 +1,9 @@
 name: Build and publish documentation with mkdocs
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-      - main
+  release:
+    types: [published]
+    
 jobs:            
   update-docs:
     runs-on: ubuntu-latest
