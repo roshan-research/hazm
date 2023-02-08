@@ -1,6 +1,5 @@
 Hazm
 ====
-
 Python library for digesting Persian text.
 
 + Text cleaning
