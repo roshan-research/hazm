@@ -3,7 +3,7 @@ name: Sync dev branch
 on:
   push:
     branches:
-      - ${{ github.event.repository.default_branch }}
+      - master
 
 jobs:
   sync-branch:
