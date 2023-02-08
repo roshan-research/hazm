@@ -16,4 +16,4 @@ jobs:
         with:
           branch: dev
           token: ${{ secrets.GITHUB_TOKEN }}
-          force: false
+          force: true
