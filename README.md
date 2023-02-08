@@ -84,4 +84,4 @@ Note: These are not official versions of hazm, not uptodate on functionality and
 ## Thanks
 
 + to constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
-+ to [Virastyar](http://virastyar.ir/) project for persian word list
++ to [Virastyar](http://virastyar.ir/) project for persian word list.
