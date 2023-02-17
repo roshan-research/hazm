@@ -25,11 +25,11 @@ class DegarbayanReader:
     Args:
         root (str): مسیر فولدر حاوی فایل‌های پیکره
         corpus_file (str, optional): فایل اطلاعات پیکره.
-                در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
+            در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
         judge_type (str, optional): این پارامتر دارای دو مقدار `three_class` و `two_class` است.
-                در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
-                ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
-                `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
+            در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
+            ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
+            `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
         version (float, optional): شمارهٔ نسخهٔ پیکره
     
     """
