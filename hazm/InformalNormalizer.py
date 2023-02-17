@@ -1,6 +1,7 @@
 # coding: utf-8
 
 """این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
+
 """
 
 from __future__ import unicode_literals
@@ -15,13 +16,13 @@ from .SentenceTokenizer import *
 
 class InformalNormalizer(Normalizer):
     """این کلاس شامل توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
-
+    
     Args:
-            verb_file (str, optional): فایل حاوی افعال محاوره‌ای.
-            word_file (str, optional): فایل حاوی کلمات محاوره‌ای.
-            seperation_flag (bool, optional): اگر `True` باشد و در بخشی از متن به فاصله نیاز بود آن فاصله درج می‌شود.
-            **kargs: پارامترهای نامدارِ اختیاری
-
+        verb_file (str, optional): فایل حاوی افعال محاوره‌ای.
+        word_file (str, optional): فایل حاوی کلمات محاوره‌ای.
+        seperation_flag (bool, optional): اگر `True` باشد و در بخشی از متن به فاصله نیاز بود آن فاصله درج می‌شود.
+        **kargs: پارامترهای نامدارِ اختیاری
+    
     """
 
     def __init__(
@@ -95,17 +96,18 @@ class InformalNormalizer(Normalizer):
 
     def split_token_words(self, token):
         """هرجایی در متن فاصله نیاز بود قرار می‌دهد.
-
+        
         متأسفانه در برخی از متن‌ها، به بهانهٔ صرفه‌جویی در زمان یا از سرِ تنبلی،
         فاصله‌گذاری‌ها درست رعایت نمی‌شود. مثلاً جملهٔ «تو را دوست دارم.» به این
         شکل نوشته می‌شود: «تورادوست دارم.» این تابع فواصل ضروری را در متن
         ایجاد می‌کند و آن را به شکل صحیح برمی‌گرداند.
-
+        
         Args:
-                token (str): توکنی که باید فاصله‌گذاری شود.
-
+            token (str): توکنی که باید فاصله‌گذاری شود.
+        
         Returns:
-                (str): توکنی با فاصله‌گذاری صحیح.
+            (str): توکنی با فاصله‌گذاری صحیح.
+        
         """
 
         def shekan(token):
@@ -141,21 +143,21 @@ class InformalNormalizer(Normalizer):
 
     def normalized_word(self, word):
         """اشکال مختلف نرمالایزشدهٔ کلمه را برمی‌گرداند.
-
+        
         Examples:
-                >>> normalizer = InformalNormalizer()
-                >>> normalizer.normalized_word('می‌رم')
-                ['می‌روم', 'می‌رم']
-
-                >>> normalizer = InformalNormalizer(seperation_flag=True)
-                >>> normalizer.normalized_word('صداوسیماجمهوری')
-                ['صداوسیما جمهوری', 'صداوسیماجمهوری']
-
+            >>> normalizer = InformalNormalizer()
+            >>> normalizer.normalized_word('می‌رم')
+            ['می‌روم', 'می‌رم']
+            >>> normalizer = InformalNormalizer(seperation_flag=True)
+            >>> normalizer.normalized_word('صداوسیماجمهوری')
+            ['صداوسیما جمهوری', 'صداوسیماجمهوری']
+        
         Args:
-                word(str): کلمه‌ای که باید نرمال‌سازی شود.
-
+            word(str): کلمه‌ای که باید نرمال‌سازی شود.
+        
         Returns:
-                (List[str]): اشکال نرمالایزشدهٔ کلمه.
+            (List[str]): اشکال نرمالایزشدهٔ کلمه.
+        
         """
 
         def analyzeWord(word):
@@ -656,22 +658,21 @@ class InformalNormalizer(Normalizer):
 
     def normalize(self, text):
         """متن محاوره‌ای را به متن فارسی معیار تبدیل می‌کند.
-
+        
         Examples:
-                >>> normalizer = InformalNormalizer()
-                >>> normalizer.normalize('بابا یه شغل مناسب واسه بچه هام پیدا کردن که به جایی برنمیخوره !')
-                [[['بابا'], ['یک'], ['شغل'], ['مناسب'], ['برای'], ['بچه'], ['هایم'], ['پیدا'], ['کردن'], ['که'], ['به'], ['جایی'], ['برنمی\u200cخورد', 'برنمی\u200cخوره'], ['!']]]
-
-                >>> normalizer = InformalNormalizer()
-                >>> normalizer.normalize('اجازه بدیم همسرمون در جمع خانواده‌اش احساس آزادی کنه و فکر نکنه که ما دائم هواسمون بهش هست .')
-                [[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
-
+            >>> normalizer = InformalNormalizer()
+            >>> normalizer.normalize('بابا یه شغل مناسب واسه بچه هام پیدا کردن که به جایی برنمیخوره !')
+            [[['بابا'], ['یک'], ['شغل'], ['مناسب'], ['برای'], ['بچه'], ['هایم'], ['پیدا'], ['کردن'], ['که'], ['به'], ['جایی'], ['برنمی\u200cخورد', 'برنمی\u200cخوره'], ['!']]]
+            >>> normalizer = InformalNormalizer()
+            >>> normalizer.normalize('اجازه بدیم همسرمون در جمع خانواده‌اش احساس آزادی کنه و فکر نکنه که ما دائم هواسمون بهش هست .')
+            [[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
+        
         Args:
-                text (str): متن محاوره‌ای که باید تبدیل به متن فارسی معیار شود.
-
+            text (str): متن محاوره‌ای که باید تبدیل به متن فارسی معیار شود.
+        
         Returns:
-                (List[List[List[str]]]): متن فارسی معیار.
-
+            (List[List[List[str]]]): متن فارسی معیار.
+        
         """
 
         text = super(InformalNormalizer, self).normalize(text)
@@ -684,12 +685,13 @@ class InformalNormalizer(Normalizer):
 
     def informal_conjugations(self, verb):
         """صورت‌های صرفی فعل را در شکل محاوره‌ای تولید می‌کند.
-
+        
         Args:
-                verb (str): فعلی که باید صرف شود.
-
+            verb (str): فعلی که باید صرف شود.
+        
         Returns:
-                (List[str]): صورت‌های صرفی فعل.
+            (List[str]): صورت‌های صرفی فعل.
+        
         """
         ends = ["م", "ی", "", "یم", "ین", "ن"]
         present_simples = [verb + end for end in ends]

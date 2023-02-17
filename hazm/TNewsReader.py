@@ -1,6 +1,7 @@
 # coding: utf-8
 
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تی‌نیوز است.
+
 """
 
 from __future__ import print_function
@@ -12,9 +13,10 @@ from xml.dom import minidom
 
 class TNewsReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ تی‌نیوز است.
-
+    
     Args:
         root (str): مسیر فولدر حاوی فایل‌های پیکره.
+    
     """
 
     def __init__(self, root):
@@ -23,9 +25,9 @@ class TNewsReader:
 
     def docs(self):
         """خبرها را در قالب یک `iterator` برمی‌گرداند.
-
+        
         هر خبر، شی‌ای متشکل از چند پارامتر است:
-
+        
         - شناسه (id)،
         - عنوان (title)،
         - پیش از عنوان (pre-title)،
@@ -35,14 +37,15 @@ class TNewsReader:
         - آدرس (url)،
         - موضوع (category)،
         - تاریخ و زمان انتشار (datetime).
-
+        
         Examples:
-                        >>> tnews = TNewsReader(root='corpora/tnews')
-                        >>> next(tnews.docs())['id']
-                        '14092303482300013653'
-
+            >>> tnews = TNewsReader(root='corpora/tnews')
+            >>> next(tnews.docs())['id']
+            '14092303482300013653'
+        
         Yields:
             (Dict): خبر بعدی.
+        
         """
 
         def get_text(element):
@@ -96,18 +99,19 @@ class TNewsReader:
 
     def texts(self):
         """فقط متن خبرها را برمی‌گرداند.
-
+        
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
         ‍[docs()][hazm.TNewsReader.TNewsReader.docs] و دریافت مقدار پراپرتی
         `text` نیز می‌توانید همین کار را انجام دهید.
-
+        
         Examples:
             >>> tnews = TNewsReader(root='corpora/tnews')
             >>> next(tnews.texts())
             ''
-
+        
         Yields:
             (str): متن خبر بعدی.
+        
         """
         for doc in self.docs():
             yield doc["text"]

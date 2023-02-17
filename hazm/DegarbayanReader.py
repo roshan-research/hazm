@@ -1,14 +1,17 @@
 # coding: utf-8
 
-"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ دِگَربیان است. 
+"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ دِگَربیان است.
 
 [پیکرهٔ
-دگربیان](https://www.peykaregan.ir/dataset/%D9%BE%DB%8C%DA%A9%D8%B1%D9%87-%D8%AF%DA%AF%D8%B1%D8%A8%DB%8C%D8%A7%D9%86) حاوی
-۱۵۲۳ نمونه است که به عنوان نمونه‌های دگربیان نشانه‌گذاری شده‌اند. جملات و عبارات
+دگربیان](https://www.peykaregan.ir/dataset/%D9%BE%DB%8C%DA%A9%D8%B1%D9%87-
+%D8%AF%DA%AF%D8%B1%D8%A8%DB%8C%D8%A7%D9%86) حاوی
+۱۵۲۳ نمونه است که به عنوان نمونه‌های دگربیان نشانه‌گذاری شده‌اند. جملات و
+عبارات
 دگربیان، بیانی متفاوت از مفهومی یکسان هستند. داده‌های این پیکره از خبرگزاری‌ها
 جمع‌آورده شده و در سه دسته‌بندی «دگربیان»، «تقریباً دگربیان» و «نامرتبط» ارائه
 می‌شوند. این داده‌ها با استفاده از همکاری جمعی در پیام‌رسان تلگرام نشانه‌گذاری
 شده است.
+
 """
 
 from __future__ import unicode_literals, print_function
@@ -18,20 +21,17 @@ from xml.dom import minidom
 
 class DegarbayanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ دگربیان است.
-
+    
     Args:
-
-            root (str): مسیر فولدر حاوی فایل‌های پیکره
-
-            corpus_file (str, optional): فایل اطلاعات پیکره.
-                    در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
-
-            judge_type (str, optional): این پارامتر دارای دو مقدار `three_class` و `two_class` است.
-                    در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
-                    ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
-                    `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
-
-            version (float, optional): شمارهٔ نسخهٔ پیکره
+        root (str): مسیر فولدر حاوی فایل‌های پیکره
+        corpus_file (str, optional): فایل اطلاعات پیکره.
+                در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
+        judge_type (str, optional): این پارامتر دارای دو مقدار `three_class` و `two_class` است.
+                در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
+                ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
+                `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
+        version (float, optional): شمارهٔ نسخهٔ پیکره
+    
     """
 
     def __init__(
@@ -45,9 +45,10 @@ class DegarbayanReader:
 
     def docs(self):
         """اسناد موجود در پیکره را برمی‌گرداند.
-
+        
         Yields:
-                (Dict): سند بعدی.
+            (Dict): سند بعدی.
+        
         """
 
         def judge_number_to_text(judge):
@@ -119,14 +120,15 @@ class DegarbayanReader:
 
     def pairs(self):
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
-
+        
         Examples:
-                >>> degarbayan = DegarbayanReader(root='corpora/degarbayan')
-                >>> next(degarbayan.pairs())
-                ('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')
-
+            >>> degarbayan = DegarbayanReader(root='corpora/degarbayan')
+            >>> next(degarbayan.pairs())
+            ('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')
+        
         Yields:
-                (Tuple(str,str,str)): `متن دگربیان بعدی در قالب یک `(متن اصلی، شکل دگربیان، برچسب).
+            (Tuple(str,str,str)): `متن دگربیان بعدی در قالب یک `(متن اصلی، شکل دگربیان، برچسب).
+        
         """
         for pair in self.docs():
             yield pair["sentence1"], pair["sentence2"], pair["judge"]

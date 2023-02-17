@@ -1,12 +1,14 @@
 # coding: utf-8
 
-"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ بی‌جن‌خان است. 
+"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ بی‌جن‌خان است.
 
 [پیکرهٔ
-بی‌جن‌خان](https://www.peykaregan.ir/dataset/%D9%BE%DB%8C%DA%A9%D8%B1%D9%87-%D8%A8%DB%8C%E2%80%8C%D8%AC%D9%86%E2%80%8C%D8%AE%D8%A7%D9%86) مجموعه‌ای
+بی‌جن‌خان](https://www.peykaregan.ir/dataset/%D9%BE%DB%8C%DA%A9%D8%B1%D9%87-
+%D8%A8%DB%8C%E2%80%8C%D8%AC%D9%86%E2%80%8C%D8%AE%D8%A7%D9%86) مجموعه‌ای
 است از متون فارسی شامل بیش از ۲ میلیون و ۶۰۰ هزار کلمه که با ۵۵۰ نوع برچسب POS
 برچسب‌گذاری شده‌اند. این پیکره که در پژوهشکدهٔ پردازش هوشمند علائم تهیه شده است
 همچنین شامل بیش از ۴۳۰۰ تگ موضوعی چون سیاسی، تاریخی و ... برای متون است.
+
 """
 
 from __future__ import unicode_literals
@@ -60,11 +62,12 @@ default_pos_map = {
 
 class BijankhanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ بی‌جن‌خان است.
-
+    
     Args:
-            bijankhan_file (str): مسیر فایلِ پیکره.
-            joined_verb_parts (bool, optional): اگر `True‍` باشد افعال چندبخشی را با _ به‌هم می‌چسباند.
-            pos_map (str, optional): دیکشنری مبدل برچسب‌های ریز به درشت.
+        bijankhan_file (str): مسیر فایلِ پیکره.
+        joined_verb_parts (bool, optional): اگر `True‍` باشد افعال چندبخشی را با _ به‌هم می‌چسباند.
+        pos_map (str, optional): دیکشنری مبدل برچسب‌های ریز به درشت.
+    
     """
 
     def __init__(self, bijankhan_file, joined_verb_parts=True, pos_map=default_pos_map):
@@ -75,9 +78,10 @@ class BijankhanReader:
 
     def _sentences(self):
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
-
+        
         Yields:
-                (str): جملهٔ بعدی.
+            (str): جملهٔ بعدی.
+        
         """
         sentence = []
         for line in codecs.open(self._bijankhan_file, encoding="utf-8"):
@@ -94,14 +98,15 @@ class BijankhanReader:
 
     def sents(self):
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
-
+        
         Examples:
-                >>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
-                >>> next(bijankhan.sents())
-                [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
-
+            >>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
+            >>> next(bijankhan.sents())
+            [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
+        
         Yields:
-                (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
+            (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
+        
         """
         map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))
 

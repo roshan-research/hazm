@@ -3,12 +3,15 @@
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ همشهری است.
 
 [پیکرهٔ
-همشهری](https://www.peykaregan.ir/dataset/%D9%85%D8%AC%D9%85%D9%88%D8%B9%D9%87-%D9%87%D9%85%D8%B4%D9%87%D8%B1%DB%8C) حاوی
-۳۱۸ هزار خبر از روزنامه همشهری از سال‌های ۱۳۷۵ تا ۱۳۸۶ است. این داده‌ها با crawl
+همشهری](https://www.peykaregan.ir/dataset/%D9%85%D8%AC%D9%85%D9%88%D8%B9%D9%87-
+%D9%87%D9%85%D8%B4%D9%87%D8%B1%DB%8C) حاوی
+۳۱۸ هزار خبر از روزنامه همشهری از سال‌های ۱۳۷۵ تا ۱۳۸۶ است. این داده‌ها با
+crawl
 کردن وب‌سایت همشهری و گذر از چندمرحله پیش‌پردازش و برچسب‌زنی تهیه شده است. همهٔ
 این خبرها دارای برچسب CAT بوده و رده‌بندی موضوعی آن مشخص است. این پیکره توسط
 گروه تحقیقاتی پایکاه دادهٔ دانشگاه تهران و با حمایت مرکز تحقیقات مخابرات ایران
 تهیه شده است.
+
 """
 
 from __future__ import print_function
@@ -18,9 +21,10 @@ from xml.dom import minidom
 
 class HamshahriReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ همشهری است.
-
+    
     Args:
-            root (str): مسیر فولدرِ حاوی فایل‌های پیکرهٔ همشهری.
+        root (str): مسیر فولدرِ حاوی فایل‌های پیکرهٔ همشهری.
+    
     """
 
     def __init__(self, root):
@@ -77,22 +81,23 @@ class HamshahriReader:
 
     def docs(self):
         """خبرها را برمی‌گرداند.
-
+        
         هر خبر، شی‌ای متشکل از این پارامتر است:
-
+        
         - شناسه (`id`)
         - عنوان (`title`)
         - متن (`text`)
         - شماره (`issue`)
         - موضوعات (`categories`)
-
+        
         Examples:
-                >>> hamshahri = HamshahriReader(root='corpora/hamshahri')
-                >>> next(hamshahri.docs())['id']
-                'HAM2-750403-001'
-
+            >>> hamshahri = HamshahriReader(root='corpora/hamshahri')
+            >>> next(hamshahri.docs())['id']
+            'HAM2-750403-001'
+        
         Yields:
-                (Dict): خبر بعدی.
+            (Dict): خبر بعدی.
+        
         """
 
         for root, dirs, files in os.walk(self._root):
@@ -142,13 +147,14 @@ class HamshahriReader:
 
     def texts(self):
         """فقط متن خبرها را در قالب یک برمی‌گرداند.
-
+        
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
         ‍[docs()][hazm.HamshahriReader.HamshahriReader.docs] و دریافت مقدار
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
-
+        
         Yields:
-                (str): متنِ خبر بعدی.
+            (str): متنِ خبر بعدی.
+        
         """
         for doc in self.docs():
             yield doc["text"]

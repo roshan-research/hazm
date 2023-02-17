@@ -3,6 +3,7 @@
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تری‌بانک است.
 
 پیکرهٔ تری‌بانک حاوی هزاران جملهٔ برچسب‌خورده با اطلاعات نحوی و ساخت‌واژی است.
+
 """
 
 from __future__ import unicode_literals, print_function
@@ -14,16 +15,17 @@ from .WordTokenizer import WordTokenizer
 
 def coarse_pos_e(tags):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
-
+    
     Examples:
-            >>> coarse_pos_e(['Nasp---', 'pers', 'prop'])
-            'N'
-
+        >>> coarse_pos_e(['Nasp---', 'pers', 'prop'])
+        'N'
+    
     Args:
-            tags(List[str]): لیست برچسب‌های ریز.
-
+        tags(List[str]): لیست برچسب‌های ریز.
+    
     Returns:
-            (List[str]): لیست برچسب‌های درشت.
+        (List[str]): لیست برچسب‌های درشت.
+    
     """
 
     map = {
@@ -61,12 +63,13 @@ def coarse_pos_e(tags):
 
 class TreebankReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ تری‌بانک است.
-
+    
     Args:
-            root (str): مسیر فولدر حاوی فایل‌های پیکره
-            pos_map (str, optional): دیکشنری مبدل برچسب‌های ریز به درشت.
-            join_clitics (bool, optional): اگر `True‍` باشد واژه‌بست‌ها را به کلمهٔ مادر می‌چسباند.
-            join_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با _ به هم می‌چسباند.
+        root (str): مسیر فولدر حاوی فایل‌های پیکره
+        pos_map (str, optional): دیکشنری مبدل برچسب‌های ریز به درشت.
+        join_clitics (bool, optional): اگر `True‍` باشد واژه‌بست‌ها را به کلمهٔ مادر می‌چسباند.
+        join_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با _ به هم می‌چسباند.
+    
     """
 
     def __init__(
@@ -80,9 +83,10 @@ class TreebankReader:
 
     def docs(self):
         """اسناد موجود در پیکره را برمی‌گرداند.
-
+        
         Yields:
-                (str): سند بعدی.
+            (str): سند بعدی.
+        
         """
         for root, dirs, files in os.walk(self._root):
             for name in sorted(files):
@@ -97,20 +101,21 @@ class TreebankReader:
 
     def trees(self):
         """ساختارهای درختی موجود در پیکره را برمی‌گرداند.
-
+        
         Examples:
-                >>> treebank = TreebankReader(root='corpora/treebank')
-                >>> print(next(treebank.trees()))
-                (S
-                (VPS
-                        (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
-                        (VPC
-                        (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
-                        (V است/V)))
-                (PUNC ./PUNC))
-
+            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> print(next(treebank.trees()))
+            (S
+            (VPS
+                    (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
+                    (VPC
+                    (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
+                    (V است/V)))
+            (PUNC ./PUNC))
+        
         Yields:
-                (str): ساختار درختی بعدی.
+            (str): ساختار درختی بعدی.
+        
         """
 
         def traverse(node):
@@ -228,29 +233,31 @@ class TreebankReader:
 
     def sents(self):
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
-
+        
         Examples:
-                >>> treebank = TreebankReader(root='corpora/treebank')
-                >>> next(treebank.sents())
-                [('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
-
+            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> next(treebank.sents())
+            [('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
+        
         Yields:
-                (List[Tuple[str,str]]): جملهٔ بعدی.
+            (List[Tuple[str,str]]): جملهٔ بعدی.
+        
         """
         for tree in self.trees():
             yield tree.leaves()
 
     def chunked_trees(self):
         """ساختار درختی را به شکل تقطیع شده برمی‌گرداند.
-
+        
         Examples:
-                >>> from .Chunker import tree2brackets
-                >>> treebank = TreebankReader(root='corpora/treebank')
-                >>> tree2brackets(next(treebank.chunked_trees()))
-                '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
-
+            >>> from .Chunker import tree2brackets
+            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> tree2brackets(next(treebank.chunked_trees()))
+            '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
+        
         Yields:
-                (str): درخت تقطیع شدهٔ بعدی.
+            (str): درخت تقطیع شدهٔ بعدی.
+        
         """
         collapse = lambda node, label: Tree(
             label, [Tree(pos[1], [pos[0]]) for pos in node.pos()]
