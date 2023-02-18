@@ -1,6 +1,8 @@
 # coding: utf-8
 
-"""این ماژول شامل توابعی برای استخراج متن به‌شکل تمیز از دیتابیس خام ویکی‌پدیا است.
+"""این ماژول شامل توابعی برای استخراج متن به‌شکل تمیز از دیتابیس خام ویکی‌پدیا
+است.
+
 """
 
 
@@ -45,15 +47,15 @@ Extracts and cleans text from a Wikipedia database dump and stores output in a
 number of files of similar size in a given directory.
 Each file will contain several documents in the format:
 
-    <doc id="" revid="" url="" title="">
-        ...
-        </doc>
+<doc id="" revid="" url="" title="">
+...
+</doc>
 
 If the program is invoked with the --json flag, then each file will
 contain several documents formatted as json ojects, one per line, with
 the following structure
 
-    {"id": "", "revid": "", "url":"", "title": "", "text": "..."}
+{"id": "", "revid": "", "url":"", "title": "", "text": "..."}
 
 Template expansion requires preprocesssng first the whole dump and
 collecting template definitions.
@@ -285,7 +287,9 @@ placeholder_tags = {"math": "formula", "code": "codice"}
 
 
 def normalizeTitle(title):
-    """Normalize title"""
+    """Normalize title
+    
+    """
     # remove leading/trailing whitespace and underscores
     title = title.strip(" _")
     # replace sequences of whitespace and underscore chars with a single space
@@ -325,9 +329,10 @@ def normalizeTitle(title):
 def unescape(text):
     """
     Removes HTML or XML character references and entities from a text string.
-
+    
     :param text The HTML (or XML) source text.
     :return The plain text, as a Unicode string, if necessary.
+    
     """
 
     def fixup(m):
@@ -409,6 +414,7 @@ dots = re.compile(r"\.{4,}")
 class Template(list):
     """
     A Template is a list of TemplateText or TemplateArgs
+    
     """
 
     @classmethod
@@ -455,7 +461,9 @@ class Template(list):
 
 
 class TemplateText(text_type):
-    """Fixed text of template"""
+    """Fixed text of template
+    
+    """
 
     def subst(self, params, extractor, depth):
         return self
@@ -465,11 +473,13 @@ class TemplateArg(object):
     """
     parameter to a template.
     Has a name and a default value, both of which are Templates.
+    
     """
 
     def __init__(self, parameter):
         """
         :param parameter: the parts of a tplarg.
+        
         """
         # the parameter name itself might contain templates, e.g.:
         #   appointe{{#if:{{{appointer14|}}}|r|d}}14|
@@ -498,6 +508,7 @@ class TemplateArg(object):
         Substitute value for this argument from dict :param params:
         Use :param extractor: to evaluate expressions for name and default.
         Limit substitution to the maximun :param depth:.
+        
         """
         # the parameter name itself might contain templates, e.g.:
         # appointe{{#if:{{{appointer14|}}}|r|d}}14|
@@ -547,6 +558,7 @@ substWords = "subst:|safesubst:"
 class Extractor(object):
     """
     An extraction task on a article.
+    
     """
 
     def __init__(self, id, revid, title, lines):
@@ -554,6 +566,7 @@ class Extractor(object):
         :param id: id of page.
         :param title: tutle of page.
         :param lines: a list of lines.
+        
         """
         self.id = id
         self.revid = revid
@@ -570,6 +583,7 @@ class Extractor(object):
         """
         :param out: a memory file
         :param text: the text of the page
+        
         """
         url = get_url(self.id)
         if options.write_json:
@@ -616,6 +630,7 @@ class Extractor(object):
     def extract(self, out):
         """
         :param out: a memory file.
+        
         """
         # logging.info('%s\t%s', self.id, self.title)
 
@@ -690,6 +705,7 @@ class Extractor(object):
         """
         Transforms wiki markup.
         @see https://www.mediawiki.org/wiki/Help:Formatting
+        
         """
         # look for matching <nowiki>...</nowiki>
         res = ""
@@ -705,7 +721,9 @@ class Extractor(object):
         return res
 
     def transform1(self, text):
-        """Transform text not containing <nowiki>"""
+        """Transform text not containing <nowiki>
+        
+        """
         if options.expand_templates:
             # expand templates
             # See: http://www.mediawiki.org/wiki/Help:Templates
@@ -772,6 +790,7 @@ class Extractor(object):
     def clean(self, text):
         """
         Removes irrelevant parts from :param: text.
+        
         """
 
         # Collect spans
@@ -852,13 +871,13 @@ class Extractor(object):
     def expand(self, wikitext):
         """
         :param wikitext: the text to be expanded.
-
+        
         Templates are frequently nested. Occasionally, parsing mistakes may
         cause template insertion to enter an infinite loop, for instance when
         trying to instantiate Template:Country
-
+        
         {{country_{{{1}}}|{{{2}}}|{{{2}}}|size={{{size|}}}|name={{{name|}}}}}
-
+        
         which is repeatedly trying to insert template 'country_', which is
         again resolved to Template:Country. The straightforward solution of
         keeping track of templates that were already inserted for the current
@@ -866,7 +885,7 @@ class Extractor(object):
         more than once, with different parameters in different parts of the
         article.  Therefore, we limit the number of iterations of nested
         template inclusion.
-
+        
         """
         # Test template expansion at:
         # https://en.wikipedia.org/wiki/Special:ExpandTemplates
@@ -893,6 +912,7 @@ class Extractor(object):
         """
         Build a dictionary with positional or name key to expanded parameters.
         :param parameters: the parts[1:] of a template, i.e. all except the title.
+        
         """
         templateParams = {}
 
@@ -964,29 +984,30 @@ class Extractor(object):
     def expandTemplate(self, body):
         """Expands template invocation.
         :param body: the parts of a template.
-
+        
         :see http://meta.wikimedia.org/wiki/Help:Expansion for an explanation
         of the process.
-
+        
         See in particular: Expansion of names and values
         http://meta.wikimedia.org/wiki/Help:Expansion#Expansion_of_names_and_values
-
+        
         For most parser functions all names and values are expanded,
         regardless of what is relevant for the result. The branching functions
         (#if, #ifeq, #iferror, #ifexist, #ifexpr, #switch) are exceptions.
-
+        
         All names in a template call are expanded, and the titles of the
         tplargs in the template body, after which it is determined which
         values must be expanded, and for which tplargs in the template body
         the first part (default) [sic in the original doc page].
-
+        
         In the case of a tplarg, any parts beyond the first are never
         expanded.  The possible name and the value of the first part is
         expanded if the title does not match a name in the template call.
-
+        
         :see code for braceSubstitution at
-        https://doc.wikimedia.org/mediawiki-core/master/php/html/Parser_8php_source.html#3397:
-
+        https://doc.wikimedia.org/mediawiki-
+        core/master/php/html/Parser_8php_source.html#3397:
+        
         """
 
         # template        = "{{" parts "}}"
@@ -1087,7 +1108,7 @@ class Extractor(object):
         # part-value      = wikitext-L3
         # wikitext-L3     = literal / template / tplarg / link / comment /
         #                   line-eating-comment / unclosed-comment /
-        #           	    xmlish-element / *wikitext-L3
+        #                   xmlish-element / *wikitext-L3
 
         # A tplarg may contain other parameters as well as templates, e.g.:
         #   {{{text|{{{quote|{{{1|{{error|Error: No text given}}}}}}}}}}}
@@ -1141,28 +1162,29 @@ class Extractor(object):
 def splitParts(paramsList):
     """
     :param paramsList: the parts of a template or tplarg.
-
+    
     Split template parameters at the separator "|".
     separator "=".
-
+    
     Template parameters often contain URLs, internal links, text or even
     template expressions, since we evaluate templates outside in.
     This is required for cases like:
-      {{#if: {{{1}}} | {{lc:{{{1}}} | "parameter missing"}}
+    {{#if: {{{1}}} | {{lc:{{{1}}} | "parameter missing"}}
     Parameters are separated by "|" symbols. However, we
     cannot simply split the string on "|" symbols, since these
     also appear inside templates and internal links, e.g.
-
-     {{if:|
-      |{{#if:the president|
-           |{{#if:|
-               [[Category:Hatnote templates|A{{PAGENAME}}]]
-            }}
-       }}
-     }}
-
+    
+    {{if:|
+    |{{#if:the president|
+    |{{#if:|
+    [[Category:Hatnote templates|A{{PAGENAME}}]]
+    }}
+    }}
+    }}
+    
     We split parts at the "|" symbols that are not inside any pair
     {{{...}}}, {{...}}, [[...]], {|...|}.
+    
     """
 
     # Must consider '[' as normal in expansion of Template:EMedicine2:
@@ -1214,6 +1236,7 @@ def splitParts(paramsList):
 def findMatchingBraces(text, ldelim=0):
     """
     :param ldelim: number of braces to match. 0 means match [[]], {{}} and {{{}}}.
+    
     """
     # Parsing is done with respect to pairs of double braces {{..}} delimiting
     # a template, and pairs of triple braces {{{..}}} delimiting a tplarg.
@@ -1328,6 +1351,7 @@ def findBalanced(text, openDelim=["[["], closeDelim=["]]"]):
     :param closeDelim: as closing delimiters.
     :return: an iterator producing pairs (start, end) of start and end
     positions in text containing a balanced expression.
+    
     """
     openPat = "|".join([re.escape(x) for x in openDelim])
     # pattern for delimiters expected after each opening delimiter
@@ -1376,39 +1400,46 @@ def findBalanced(text, openDelim=["[["], closeDelim=["]]"]):
 def if_empty(*rest):
     """
     This implements If_empty from English Wikipedia module:
-
-       <title>Module:If empty</title>
-       <ns>828</ns>
-       <text>local p = {}
-
+    
+    <title>Module:If empty</title>
+    <ns>828</ns>
+    <text>local p = {}
+    
     function p.main(frame)
-            local args = require('Module:Arguments').getArgs(frame, {wrappers = 'Template:If empty', removeBlanks = false})
-
-            -- For backwards compatibility reasons, the first 8 parameters can be unset instead of being blank,
-            -- even though there's really no legitimate use case for this. At some point, this will be removed.
-            local lowestNil = math.huge
-            for i = 8,1,-1 do
-                    if args[i] == nil then
-                            args[i] = ''
-                            lowestNil = i
-                    end
-            end
-
-            for k,v in ipairs(args) do
-                    if v ~= '' then
-                            if lowestNil &lt; k then
-                                    -- If any uses of this template depend on the behavior above, add them to a tracking category.
-                                    -- This is a rather fragile, convoluted, hacky way to do it, but it ensures that this module's output won't be modified
-                                    -- by it.
-                                    frame:extensionTag('ref', '[[Category:Instances of Template:If_empty missing arguments]]', {group = 'TrackingCategory'})
-                                    frame:extensionTag('references', '', {group = 'TrackingCategory'})
-                            end
-                            return v
-                    end
-            end
+    local args = require('Module:Arguments').getArgs(frame, {wrappers =
+    'Template:If empty', removeBlanks = false})
+    
+    -- For backwards compatibility reasons, the first 8 parameters can be unset
+    instead of being blank,
+    -- even though there's really no legitimate use case for this. At some point,
+    this will be removed.
+    local lowestNil = math.huge
+    for i = 8,1,-1 do
+    if args[i] == nil then
+    args[i] = ''
+    lowestNil = i
     end
-
+    end
+    
+    for k,v in ipairs(args) do
+    if v ~= '' then
+    if lowestNil &lt; k then
+    -- If any uses of this template depend on the behavior above, add them to a
+    tracking category.
+    -- This is a rather fragile, convoluted, hacky way to do it, but it ensures
+    that this module's output won't be modified
+    -- by it.
+    frame:extensionTag('ref', '[[Category:Instances of Template:If_empty missing
+    arguments]]', {group = 'TrackingCategory'})
+    frame:extensionTag('references', '', {group = 'TrackingCategory'})
+    end
+    return v
+    end
+    end
+    end
+    
     return p   </text>
+    
     """
     for arg in rest:
         if arg:
@@ -1426,6 +1457,7 @@ def functionParams(args, vars):
     Build a dictionary of var/value from :param: args.
     Parameters can be either named or unnamed. In the latter case, their
     name is taken fron :param: vars.
+    
     """
     params = {}
     index = 1
@@ -1523,7 +1555,9 @@ def string_rep(args):
 
 
 def roman_main(args):
-    """Convert first arg to roman numeral if <= 5000 else :return: second arg."""
+    """Convert first arg to roman numeral if <= 5000 else :return: second arg.
+    
+    """
     num = int(float(args.get("1")))
 
     # Return a message for numbers too big to be expressed in Roman numerals.
@@ -1531,7 +1565,9 @@ def roman_main(args):
         return args.get("2", "N/A")
 
     def toRoman(n, romanNumeralMap):
-        """convert integer to Roman numeral"""
+        """convert integer to Roman numeral
+        
+        """
         result = ""
         for integer, numeral in romanNumeralMap:
             while n >= integer:
@@ -1585,8 +1621,10 @@ modules = {
 class MagicWords(object):
     """
     One copy in each Extractor.
-
-    @see https://doc.wikimedia.org/mediawiki-core/master/php/MagicWord_8php_source.html
+    
+    @see https://doc.wikimedia.org/mediawiki-
+    core/master/php/MagicWord_8php_source.html
+    
     """
 
     names = [
@@ -1709,6 +1747,7 @@ magicWordsRE = re.compile("|".join(MagicWords.switches))
 def ucfirst(string):
     """:return: a string with just its first character uppercase
     We can't use title() since it coverts all words.
+    
     """
     if string:
         return string[0].upper() + string[1:]
@@ -1717,7 +1756,9 @@ def ucfirst(string):
 
 
 def lcfirst(string):
-    """:return: a string with its first character lowercase"""
+    """:return: a string with its first character lowercase
+    
+    """
     if string:
         if len(string) > 1:
             return string[0].lower() + string[1:]
@@ -1731,6 +1772,7 @@ def fullyQualifiedTemplateTitle(templateTitle):
     """
     Determine the namespace of the page being included through the template
     mechanism
+    
     """
     if templateTitle.startswith(":"):
         # Leading colon by itself implies main namespace, so strip this colon
@@ -1773,7 +1815,8 @@ def normalizeNamespace(ns):
 class Infix:
     """Infix operators.
     The calling sequence for the infix is:
-      x |op| y
+    x |op| y
+    
     """
 
     def __init__(self, function):
@@ -1815,7 +1858,9 @@ from math import (
 
 
 def sharp_expr(extr, expr):
-    """Tries converting a lua expr into a Python expr."""
+    """Tries converting a lua expr into a Python expr.
+    
+    """
     try:
         expr = extr.expand(expr)
         expr = re.sub("(?<![!<>])=", "==", expr)  # negative lookbehind
@@ -1956,9 +2001,10 @@ def callParserFunction(functionName, args, extractor):
     Parser functions have similar syntax as templates, except that
     the first argument is everything after the first colon.
     :return: the result of the invocation, None in case of failure.
-
+    
     :param: args not yet expanded (see branching functions).
     https://www.mediawiki.org/wiki/Help:Extension:ParserFunctions
+    
     """
 
     try:
@@ -2021,7 +2067,9 @@ reIncludeonly = re.compile(r"<includeonly>|</includeonly>", re.DOTALL)
 def define_template(title, page):
     """
     Adds a template defined in the :param page:.
-    @see https://en.wikipedia.org/wiki/Help:Template#Noinclude.2C_includeonly.2C_and_onlyinclude
+    @see https://en.wikipedia.org/wiki/Help:Template#Noinclude.2C_includeonly.2C_an
+    d_onlyinclude
+    
     """
     # title = normalizeTitle(title)
 
@@ -2075,6 +2123,7 @@ def define_template(title, page):
 def dropNested(text, openDelim, closeDelim):
     """
     A matching function for nested expressions, e.g. namespaces and tables.
+    
     """
     openRE = re.compile(openDelim, re.IGNORECASE)
     closeRE = re.compile(closeDelim, re.IGNORECASE)
@@ -2128,6 +2177,7 @@ def dropNested(text, openDelim, closeDelim):
 def dropSpans(spans, text):
     """
     Drop from text the blocks identified in :param spans:, possibly nested.
+    
     """
     spans.sort()
     res = ""
@@ -2152,10 +2202,11 @@ def replaceInternalLinks(text):
     """
     Replaces internal links of the form:
     [[title |...|label]]trail
-
+    
     with title concatenated with trail, when present, e.g. 's' for plural.
-
+    
     See https://www.mediawiki.org/wiki/Help:Links#Internal_links
+    
     """
     # call this after removal of external links, so we need not worry about
     # triple closing ]]].
@@ -2286,7 +2337,7 @@ def replaceInternalLinks(text):
 #                 if '%' in m.group(1):
 #                     m.group(1) = rawurldecode(m.group(1))
 #                 trail = ""
-#             else:		# Invalid form; output directly
+#             else:        # Invalid form; output directly
 #                 s += prefix + '[[' + line
 #                 continue
 
@@ -2319,7 +2370,7 @@ def replaceInternalLinks(text):
 #         ns = nt.getNamespace()
 #         iw = nt.getInterwiki()
 
-#         if might_be_img {	# if this is actually an invalid link
+#         if might_be_img {    # if this is actually an invalid link
 #             if (ns == NS_FILE and noforce) { # but might be an image
 #                 found = False
 #                 while True:
@@ -2542,6 +2593,7 @@ def replaceExternalLinks(text):
     """
     https://www.mediawiki.org/wiki/Help:Links#External_links
     [URL anchor text]
+    
     """
     s = ""
     cur = 0
@@ -2576,7 +2628,9 @@ def replaceExternalLinks(text):
 
 
 def makeExternalLink(url, anchor):
-    """Function applied to wikiLinks"""
+    """Function applied to wikiLinks
+    
+    """
     if options.keepLinks:
         return '<a href="%s">%s</a>' % (quote(url.encode("utf-8")), anchor)
     else:
@@ -2615,6 +2669,7 @@ listItem = {
 def compact(text):
     """Deal with headers, lists, empty sections, residuals of tables.
     :param text: convert to HTML.
+    
     """
 
     page = []  # list of paragraph
@@ -2754,6 +2809,7 @@ def handle_unicode(entity):
 class NextFile(object):
     """
     Synchronous generation of next available file name.
+    
     """
 
     filesPerDir = 100
@@ -2788,14 +2844,16 @@ class NextFile(object):
 class OutputSplitter(object):
     """
     File-like object, that splits output to multiple files of a given max size.
+    
     """
 
     def __init__(self, nextFile, max_file_size=0, compress=True):
         """
         :param nextFile: a NextFile object from which to obtain filenames
-            to use.
+        to use.
         :param max_file_size: the maximum size of each file.
         :para compress: whether to write data with bzip compression.
+        
         """
         self.nextFile = nextFile
         self.compress = compress
@@ -2833,6 +2891,7 @@ def load_templates(file, output_file=None):
     """
     Load templates from :param file:.
     :param output_file: file where to save templates and modules.
+    
     """
     options.templatePrefix = options.templateNamespace + ":"
     options.modulePrefix = options.moduleNamespace + ":"
@@ -2879,6 +2938,7 @@ def pages_from(input):
     """
     Scans input extracting pages.
     :return: (id, revid, title, namespace key, page), page is a list of lines.
+    
     """
     # we collect individual lines, since str.join() is significantly faster
     # than concatenation
@@ -2947,9 +3007,11 @@ def process_dump(
     :param input_file: name of the wikipedia dump file; '-' to read from stdin
     :param template_file: optional file with template definitions.
     :param out_file: directory where to store extracted data, or '-' for stdout
-    :param file_size: max size of each extracted file, or None for no max (one file)
+    :param file_size: max size of each extracted file, or None for no max (one
+    file)
     :param file_compress: whether to compress files with bzip.
     :param process_count: number of extraction processes to spawn.
+    
     """
 
     if input_file == "-":
@@ -3113,10 +3175,12 @@ def process_dump(
 
 
 def extract_process(opts, i, jobs_queue, output_queue):
-    """Pull tuples of raw page content, do CPU/regex-heavy fixup, push finished text
+    """Pull tuples of raw page content, do CPU/regex-heavy fixup, push finished
+    text
     :param i: process id.
     :param jobs_queue: where to get jobs.
     :param output_queue: where to queue extracted text for output.
+    
     """
 
     global options
@@ -3161,6 +3225,7 @@ def reduce_process(
     :param out_file: filename where to print.
     :param file_size: max file size.
     :param file_compress: whether to compress output.
+    
     """
 
     global options

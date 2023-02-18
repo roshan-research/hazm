@@ -14,15 +14,18 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
         
     - name: Install black formatter
       run: pip install black
         
-    - name: Format all codes
+    - name: Format all codes with black formatter
       run: black .
+      
+    - name: Format docstrings with a custom formatter
+      run: python format_docstrings.py
         
     - name: Push back changes          
       uses: stefanzweifel/git-auto-commit-action@v4
