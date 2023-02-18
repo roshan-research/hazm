@@ -320,6 +320,9 @@ class WordTokenizer(TokenizerI):
             (List[str]): لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
         
         """
+        
+        if len(tokens) == 1:
+            return tokens
 
         result = [""]
         for token in reversed(tokens):
