@@ -40,7 +40,7 @@ class WordTokenizer(TokenizerI):
         self,
         words_file=default_words,
         verbs_file=default_verbs,
-        join_verb_parts=False,
+        join_verb_parts=True,
         separate_emoji=False,
         replace_links=False,
         replace_IDs=False,
