@@ -16,13 +16,13 @@ from .SentenceTokenizer import *
 
 class InformalNormalizer(Normalizer):
     """این کلاس شامل توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
-
+    
     Args:
         verb_file (str, optional): فایل حاوی افعال محاوره‌ای.
         word_file (str, optional): فایل حاوی کلمات محاوره‌ای.
         seperation_flag (bool, optional): اگر `True` باشد و در بخشی از متن به فاصله نیاز بود آن فاصله درج می‌شود.
         **kargs: پارامترهای نامدارِ اختیاری
-
+    
     """
 
     def __init__(
@@ -79,9 +79,7 @@ class InformalNormalizer(Normalizer):
         with codecs.open(verb_file, encoding="utf8") as vf:
             self.iverb_map = {}
             for f, i, flag in map(lambda x: x.strip().split(" ", 2), vf):
-                self.iverb_map.update(
-                    informal_to_formal_conjucation(i, f, flag)
-                )
+                self.iverb_map.update(informal_to_formal_conjucation(i, f, flag))
 
         with codecs.open(word_file, encoding="utf8") as wf:
             self.iword_map = dict(map(lambda x: x.strip().split(" ", 1), wf))
@@ -98,27 +96,25 @@ class InformalNormalizer(Normalizer):
 
     def split_token_words(self, token):
         """هرجایی در متن فاصله نیاز بود قرار می‌دهد.
-
+        
         متأسفانه در برخی از متن‌ها، به بهانهٔ صرفه‌جویی در زمان یا از سرِ تنبلی،
         فاصله‌گذاری‌ها درست رعایت نمی‌شود. مثلاً جملهٔ «تو را دوست دارم.» به این
         شکل نوشته می‌شود: «تورادوست دارم.» این تابع فواصل ضروری را در متن
         ایجاد می‌کند و آن را به شکل صحیح برمی‌گرداند.
-
+        
         Args:
             token (str): توکنی که باید فاصله‌گذاری شود.
-
+        
         Returns:
             (str): توکنی با فاصله‌گذاری صحیح.
-
+        
         """
 
         def shekan(token):
             res = [""]
             for i in token:
                 res[-1] += i
-                if i in set(
-                    ["ا", "د", "ذ", "ر", "ز", "ژ", "و"] + list(NUMBERS)
-                ):
+                if i in set(["ا", "د", "ذ", "ر", "ز", "ژ", "و"] + list(NUMBERS)):
                     res.append("")
             while "" in res:
                 res.remove("")
@@ -147,7 +143,7 @@ class InformalNormalizer(Normalizer):
 
     def normalized_word(self, word):
         """اشکال مختلف نرمالایزشدهٔ کلمه را برمی‌گرداند.
-
+        
         Examples:
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalized_word('می‌رم')
@@ -155,13 +151,13 @@ class InformalNormalizer(Normalizer):
             >>> normalizer = InformalNormalizer(seperation_flag=True)
             >>> normalizer.normalized_word('صداوسیماجمهوری')
             ['صداوسیما جمهوری', 'صداوسیماجمهوری']
-
+        
         Args:
             word(str): کلمه‌ای که باید نرمال‌سازی شود.
-
+        
         Returns:
             (List[str]): اشکال نرمالایزشدهٔ کلمه.
-
+        
         """
 
         def analyzeWord(word):
@@ -216,9 +212,7 @@ class InformalNormalizer(Normalizer):
 
             if word in self.lemmatizer.words or word in self.iword_map:
                 if word in self.lemmatizer.words:
-                    collectionOfWordAndSuffix.append(
-                        {"word": word, "suffix": []}
-                    )
+                    collectionOfWordAndSuffix.append({"word": word, "suffix": []})
                 if word in self.iword_map:
                     collectionOfWordAndSuffix.append(
                         {"word": self.iword_map[word], "suffix": []}
@@ -264,23 +258,19 @@ class InformalNormalizer(Normalizer):
                                     collectionOfWordAndSuffix.append(
                                         {
                                             "word": sliceWord,
-                                            "suffix": [endWord]
-                                            + midWordEndWordList,
+                                            "suffix": [endWord] + midWordEndWordList,
                                         }
                                     )
                                 if sliceWord in self.iword_map:
                                     collectionOfWordAndSuffix.append(
                                         {
                                             "word": self.iword_map[sliceWord],
-                                            "suffix": [endWord]
-                                            + midWordEndWordList,
+                                            "suffix": [endWord] + midWordEndWordList,
                                         }
                                     )
 
             for i in range(len(collectionOfWordAndSuffix)):
-                newPossibelWordList = appendSuffixToWord(
-                    collectionOfWordAndSuffix[i]
-                )
+                newPossibelWordList = appendSuffixToWord(collectionOfWordAndSuffix[i])
                 for j in range(len(newPossibelWordList)):
                     newPossibelWord = newPossibelWordList[j]
                     if newPossibelWord not in returnList:
@@ -335,20 +325,14 @@ class InformalNormalizer(Normalizer):
             for endVerb in endVerbList:
                 if word.endswith(endVerb):
                     if endVerb == "ین":
-                        collectionOfVerbList.append(
-                            {"word": word[:-2], "suffix": "ید"}
-                        )
+                        collectionOfVerbList.append({"word": word[:-2], "suffix": "ید"})
                     elif endVerb == "ستن":
                         collectionOfVerbList.append(
                             {"word": word[:-3], "suffix": "ستند"}
                         )
                     elif endVerb == "ن":
-                        collectionOfVerbList.append(
-                            {"word": word[:-1], "suffix": "ن"}
-                        )
-                        collectionOfVerbList.append(
-                            {"word": word[:-1], "suffix": "ند"}
-                        )
+                        collectionOfVerbList.append({"word": word[:-1], "suffix": "ن"})
+                        collectionOfVerbList.append({"word": word[:-1], "suffix": "ند"})
                     elif endVerb == "ه":
                         if len(word) > 1:
                             if word[-2] != "د":
@@ -452,28 +436,18 @@ class InformalNormalizer(Normalizer):
                     collectionOfVerbList[i]["word"] = self.pastVerbs[mainWord]
                     collectionOfRealVerbList.append(collectionOfVerbList[i])
                 if mainWord in self.presentVerbs:
-                    collectionOfVerbList[i]["word"] = self.presentVerbs[
-                        mainWord
-                    ]
+                    collectionOfVerbList[i]["word"] = self.presentVerbs[mainWord]
                     collectionOfRealVerbList.append(collectionOfVerbList[i])
                 if mainWord2 != None and not (
                     collectionOfVerbList[i]["preffix"] == "بربی"
                     or collectionOfVerbList[i]["preffix"] == "بی"
                 ):
                     if mainWord2 in self.pastVerbs:
-                        collectionOfVerbList[i]["word"] = self.pastVerbs[
-                            mainWord2
-                        ]
-                        collectionOfRealVerbList.append(
-                            collectionOfVerbList[i]
-                        )
+                        collectionOfVerbList[i]["word"] = self.pastVerbs[mainWord2]
+                        collectionOfRealVerbList.append(collectionOfVerbList[i])
                     if mainWord2 in self.presentVerbs:
-                        collectionOfVerbList[i]["word"] = self.presentVerbs[
-                            mainWord2
-                        ]
-                        collectionOfRealVerbList.append(
-                            collectionOfVerbList[i]
-                        )
+                        collectionOfVerbList[i]["word"] = self.presentVerbs[mainWord2]
+                        collectionOfRealVerbList.append(collectionOfVerbList[i])
 
             for i in range(len(collectionOfRealVerbList)):
                 preffix = collectionOfRealVerbList[i]["preffix"]
@@ -566,24 +540,15 @@ class InformalNormalizer(Normalizer):
                     except:
                         None
                     returnWord += "ها"
-                elif (
-                    suffixList[i] == "و"
-                    and suffixList[len(suffixList) - 1] == "و"
-                ):
+                elif suffixList[i] == "و" and suffixList[len(suffixList) - 1] == "و":
                     returnWord2 = returnWord
                     returnWord2 += " و"
                     returnWord += " را"
 
-                elif (
-                    suffixList[i] == "رو"
-                    and suffixList[len(suffixList) - 1] == "رو"
-                ):
+                elif suffixList[i] == "رو" and suffixList[len(suffixList) - 1] == "رو":
                     returnWord += " را"
 
-                elif (
-                    suffixList[i] == "ه"
-                    and suffixList[len(suffixList) - 1] == "ه"
-                ):
+                elif suffixList[i] == "ه" and suffixList[len(suffixList) - 1] == "ه":
                     returnWord2 = returnWord
                     returnWord2 += "ه"
                     returnWord3 = returnWord
@@ -765,7 +730,7 @@ class InformalNormalizer(Normalizer):
 
     def normalize(self, text):
         """متن محاوره‌ای را به متن فارسی معیار تبدیل می‌کند.
-
+        
         Examples:
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalize('بابا یه شغل مناسب واسه بچه هام پیدا کردن که به جایی برنمیخوره !')
@@ -773,13 +738,13 @@ class InformalNormalizer(Normalizer):
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalize('اجازه بدیم همسرمون در جمع خانواده‌اش احساس آزادی کنه و فکر نکنه که ما دائم هواسمون بهش هست .')
             [[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
-
+        
         Args:
             text (str): متن محاوره‌ای که باید تبدیل به متن فارسی معیار شود.
-
+        
         Returns:
             (List[List[List[str]]]): متن فارسی معیار.
-
+        
         """
 
         text = super(InformalNormalizer, self).normalize(text)
@@ -788,19 +753,17 @@ class InformalNormalizer(Normalizer):
             for sentence in self.sent_tokenizer.tokenize(text)
         ]
 
-        return [
-            [self.normalized_word(word) for word in sent] for sent in sents
-        ]
+        return [[self.normalized_word(word) for word in sent] for sent in sents]
 
     def informal_conjugations(self, verb):
         """صورت‌های صرفی فعل را در شکل محاوره‌ای تولید می‌کند.
-
+        
         Args:
             verb (str): فعلی که باید صرف شود.
-
+        
         Returns:
             (List[str]): صورت‌های صرفی فعل.
-
+        
         """
         ends = ["م", "ی", "", "یم", "ین", "ن"]
         present_simples = [verb + end for end in ends]
@@ -812,8 +775,7 @@ class InformalNormalizer(Normalizer):
         present_imperfects = ["می‌" + item for item in present_simples]
         present_not_imperfects = ["ن" + item for item in present_imperfects]
         present_subjunctives = [
-            item if item.startswith("ب") else "ب" + item
-            for item in present_simples
+            item if item.startswith("ب") else "ب" + item for item in present_simples
         ]
         present_not_subjunctives = ["ن" + item for item in present_simples]
         return (
@@ -847,9 +809,7 @@ class InformalLemmatizer(Lemmatizer):
 
         with codecs.open(informal_verbs, encoding="utf8") as vf:
             for f, i, flag in map(lambda x: x.strip().split(" ", 2), vf):
-                self.verbs.update(
-                    dict(map(lambda x: (x, f), self.iconjugations(i)))
-                )
+                self.verbs.update(dict(map(lambda x: (x, f), self.iconjugations(i))))
 
         with codecs.open(informal_words, encoding="utf8") as wf:
             self.words.update(map(lambda x: x.strip().split(" ", 1)[0], wf))
@@ -865,8 +825,7 @@ class InformalLemmatizer(Lemmatizer):
         present_imperfects = ["می‌" + item for item in present_simples]
         present_not_imperfects = ["ن" + item for item in present_imperfects]
         present_subjunctives = [
-            item if item.startswith("ب") else "ب" + item
-            for item in present_simples
+            item if item.startswith("ب") else "ب" + item for item in present_simples
         ]
         present_not_subjunctives = ["ن" + item for item in present_simples]
         return (
