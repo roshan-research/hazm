@@ -14,6 +14,9 @@ Python library for digesting Persian text.
 + Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8 support
 + [![Build Status](https://api.travis-ci.org/sobhe/hazm.svg?branch=master)](https://travis-ci.org/sobhe/hazm)
 
+## Documentation
+Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
+
 ## Precisions
 
 The `Chunker` and `Lemmatizer` as surface analyzers have a precision of 89.9%. Also, `POSTagger` and `DependencyParser` as morphological taggers, have a precision of 97.1%.
