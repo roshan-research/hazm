@@ -1,6 +1,5 @@
 Hazm
 ====
-
 Python library for digesting Persian text.
 
 + Text cleaning
@@ -12,7 +11,7 @@ Python library for digesting Persian text.
 + Interfaces for Persian corpora
 + [NLTK](http://nltk.org/) compatible
 + Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8 support
-+ [![Build Status](https://api.travis-ci.org/sobhe/hazm.svg?branch=master)](https://travis-ci.org/sobhe/hazm)
++ ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/tests.yml?branch=master)
 
 ## Documentation
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
