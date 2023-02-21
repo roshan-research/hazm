@@ -1,5 +1,7 @@
-Hazm ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/tests.yml?branch=master)
+Hazm
 ====
+![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/tests.yml?branch=master)
+
 Python library for digesting Persian text.
 + Text cleaning
 + Sentence and word tokenizer
