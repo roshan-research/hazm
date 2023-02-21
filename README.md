@@ -88,3 +88,7 @@ Note: These are not official versions of hazm, not uptodate on functionality and
 
 + to constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
 + to [Virastyar](http://virastyar.ir/) project for persian word list.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=roshan-research/hazm&type=Date)](https://star-history.com/#roshan-research/hazm&Date)
