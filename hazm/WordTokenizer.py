@@ -57,7 +57,7 @@ class WordTokenizer(TokenizerI):
         self.replace_hashtags = replace_hashtags
 
         self.pattern = re.compile(
-            r'([؟!\?]+|\d[\d\.:\/\\]+\d|[:\.،؛»\]\)\}"«\[\(\{])'
+            r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{/\\])'
         )  # TODO \d
         self.emoji_pattern = re.compile(
             "["
