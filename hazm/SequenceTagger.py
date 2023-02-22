@@ -41,6 +41,9 @@ class SequenceTagger(TaggerI):
             ["\n".join([" ".join(word) for word in sentence]) for sentence in sentences]
         )
 
+    def tag(self, tokens):
+	    return self.tag_sents([tokens])[0]
+
     def save_model(self, filename):
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
         را ذخیره می‌کند.
