@@ -56,9 +56,7 @@ class WordTokenizer(TokenizerI):
         self.replace_numbers = replace_numbers
         self.replace_hashtags = replace_hashtags
 
-        self.pattern = re.compile(
-            r'([؟!\?]+|\d[\d\.:\/\\]+\d|[:\.،؛»\]\)\}"«\[\(\{])'
-        )  # TODO \d
+        self.pattern = re.compile(r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{/\\])')  # TODO \d
         self.emoji_pattern = re.compile(
             "["
             "\U0001F600-\U0001F64F"  # emoticons
