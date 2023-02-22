@@ -7,14 +7,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
 
     steps:
     - uses: actions/checkout@v3
     
-    - name: Set up Python 3.10
+    - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
+        python-version: ${{ matrix.python-versions }}
         
     - name: Install prerequisites
       run: |
