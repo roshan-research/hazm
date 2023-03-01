@@ -19,7 +19,7 @@ def tree2brackets(tree):
     Examples:
         >>> chunker = Chunker(model='resources/chunker.model')
         >>> tree=chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')])
-        >>> print(tree)        
+        >>> print(tree)
         (S
           (NP نامه/Ne ایشان/PRO)
           (POSTP را/POSTP)

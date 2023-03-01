@@ -270,11 +270,11 @@ class WordTokenizer(TokenizerI):
             (List[str]): لیست توکن‌های استخراج‌شده.
         
         """
-        #>>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
-        #['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396', '.']
-        #>>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
-        #>>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
-        #📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
+        # >>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
+        # ['نسخه', '0.5', 'در', 'ساعت', '22:00', 'تهران', '،', '1396', '.']
+        # >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_hashtags=True, replace_numbers=True, separate_emoji=True)
+        # >>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
+        # 📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
         if self.separate_emoji:
             text = self.emoji_pattern.sub(self.emoji_repl, text)

@@ -437,7 +437,7 @@ class Normalizer(object):
             (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         
         """
-        #>>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+        # >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
         #    ['پرداخت', 'شده', 'است']
 
         result = []

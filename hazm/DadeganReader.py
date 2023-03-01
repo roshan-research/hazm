@@ -49,7 +49,7 @@ def coarse_pos_u(tags, word):
     return pos_mapped
 
 
-def coarse_pos_e(tags,word):
+def coarse_pos_e(tags, word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
     
     Examples:

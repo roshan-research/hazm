@@ -45,8 +45,8 @@ class TokenSplitter:
         
         """
 
-        #>>> splitter.split_token_words('شهرموشها')
-        #[('شهر', 'موشها')]
+        # >>> splitter.split_token_words('شهرموشها')
+        # [('شهر', 'موشها')]
 
         candidates = []
         if "‌" in token:

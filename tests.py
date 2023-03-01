@@ -26,8 +26,8 @@ modules = {
     "tnews": TNewsReader,
     "quran": QuranCorpusReader,
     "miras_text": MirasTextReader,
-    #"tagger": SequenceTagger,
-    #"treebank": TreebankReader,
+    # "tagger": SequenceTagger,
+    # "treebank": TreebankReader,
 }
 
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
                 doctest.DocTestSuite(inspect.getmodule(object), checker=checker)
             )
 
-    #if not utils.PY2 and all_modules:
+    # if not utils.PY2 and all_modules:
     #    suites.append(doctest.DocFileSuite("README.md"))
 
     failure = False

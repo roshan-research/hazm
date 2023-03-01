@@ -157,9 +157,9 @@ class InformalNormalizer(Normalizer):
         
         """
 
-        #>>> normalizer = InformalNormalizer(seperation_flag=True)
-        #>>> normalizer.normalized_word('صداوسیماجمهوری')
-        #['صداوسیما جمهوری', 'صداوسیماجمهوری']
+        # >>> normalizer = InformalNormalizer(seperation_flag=True)
+        # >>> normalizer.normalized_word('صداوسیماجمهوری')
+        # ['صداوسیما جمهوری', 'صداوسیماجمهوری']
 
         def analyzeWord(word):
             endWordsList = [
