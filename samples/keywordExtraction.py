@@ -1,4 +1,3 @@
-
 from hazm import Embedding, Normalizer, sent_tokenize, word_tokenize, POSTagger
 import nltk
 import numpy as np
@@ -23,9 +22,10 @@ def tokenize(text):
     normalizer = Normalizer()
     return [word_tokenize(sent) for sent in sent_tokenize(normalizer(text))]
 
-def posTagger(tokenize_text ,pos_model_path = 'pos'):
+def posTagger(text ,pos_model_path = 'POStagger.model'):
+    tokens = tokenize(text)
     tagger = POSTagger(pos_model_path)
-    return tagger.tag(tokenize_text)
+    return tagger.tag_sents(tokens)
 
 def extractGrammer(tagged_text, grammer):
     keyphrase_candidate = set()
@@ -45,12 +45,36 @@ def extractCandidates(tagged_text, grammers = grammers):
         all_candidates.update(tagged_text(tagged_text, grammer))
     return np.array(list(all_candidates))
     
+def text2vec(candidates, sent2vec_model_path = 'sent2vec.model'):
+    sent2vec_model = Embedding.SentEmbedding(sent2vec_model_path)
+    candidate_vector = [[sent2vec_model[candidate] for candidate in candidates]]
+    text_vector = sent2vec_model[' '.join(candidates)]
+    return candidate_vector, text_vector
+
+
+def vectorSimilarity(candidates_vector, text_vector, norm=True):
+    candidate_sim_text = cosine_similarity(candidates_vector, text_vector.reshape(1,-1))
+    candidate_sim_candidate = cosine_similarity(candidates_vector)
+    if(norm):
+        return 
+    return candidate_sim_text, candidate_sim_candidate
+
+def extractKeyword(candidates, keyword_num):
+    candidates_vector, text_vector = text2vec(candidates)
+    candidate_sim_text_norm, candidate_sim_candidate_norm = vectorSimilarity()
+
+
 
 
 def embedRank(text, keyword_num):
-    tokens = tokenize(text)
-    token_tag = posTagger(tokens)
+    token_tag = posTagger(text)
     candidates = extractCandidates(token_tag)
+    return extractKeyword(candidates, keyword_num)
+    
+
+
+
+
 
 
     
