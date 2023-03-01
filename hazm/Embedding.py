@@ -25,7 +25,7 @@ class WordEmbedding:
     """
 
     def __init__(self, model_type, model_path=None):
-        if model_type not in supported_embeddings:
+        if model_type != supported_embeddings:
             raise KeyError(
                 f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
             )
@@ -88,14 +88,14 @@ class WordEmbedding:
         
         """
 
-        if self.model_type is not "fasttext":
+        if self.model_type != "fasttext":
             self.model = "fasttext"
             warnings.warn(
                 f"this function is for training fasttext models only and {self.model_type} is not supported"
             )
 
         fasttext_model_types = ["cbow", "skipgram"]
-        if fasttext_type not in fasttext_model_types:
+        if fasttext_type != fasttext_model_types:
             raise KeyError(
                 f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}'
             )
@@ -114,7 +114,7 @@ class WordEmbedding:
 
         print("Model trained.")
 
-        if dest_path is not None:
+        if dest_path != None:
             model.save_model(dest_path)
             print("Model saved.")
 
@@ -297,7 +297,7 @@ class SentEmbedding:
 
         print("Model trained.")
 
-        if dest_path is not None:
+        if dest_path != None:
             model.save(dest_path)
             print("Model saved.")
 
