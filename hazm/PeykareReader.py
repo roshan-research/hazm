@@ -24,17 +24,19 @@ from .WordTokenizer import WordTokenizer
 
 
 def coarse_pos_u(tags, word):
-    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained universal pos tags) تبدیل می‌کند.
-
+    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
+    universal pos tags) تبدیل می‌کند.
+    
     Examples:
-            >>> coarse_pos_u(['N','COM','SING'], 'الجزیره')
-            'NOUN'
-
+        >>> coarse_pos_u(['N','COM','SING'], 'الجزیره')
+        'NOUN'
+    
     Args:
-            tags (List[str]): لیست برچسب‌های ریز.
-
+        tags (List[str]): لیست برچسب‌های ریز.
+    
     Returns:
-            (List[str]): لیست برچسب‌های درشت جهانی.
+        (List[str]): لیست برچسب‌های درشت جهانی.
+    
     """
 
     map_pos_to_upos = {

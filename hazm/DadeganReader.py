@@ -13,11 +13,13 @@ from nltk.tree import Tree
 
 
 def coarse_pos_u(tags, word):
-    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained universal pos tags) تبدیل می‌کند.
-
+    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
+    universal pos tags) تبدیل می‌کند.
+    
     Examples:
-            >>> coarse_pos_e(['N', 'IANM'], 'امروز')
-            'NOUN'
+        >>> coarse_pos_e(['N', 'IANM'], 'امروز')
+        'NOUN'
+    
     """
 
     map = {
