@@ -106,8 +106,8 @@ class TNewsReader:
         
         Examples:
             >>> tnews = TNewsReader(root='corpora/tnews')
-            >>> next(tnews.texts())
-            ''
+            >>> next(tnews.texts()).startswith('به گزارش ”  شبکه اطلاع رسانی اینترنتی بوتیا  ” به نقل از ارگ نیوز')
+            True
         
         Yields:
             (str): متن خبر بعدی.

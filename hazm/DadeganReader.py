@@ -18,7 +18,7 @@ def coarse_pos_u(tags, word):
     
     Examples:
         >>> coarse_pos_e(['N', 'IANM'], 'امروز')
-        'NOUN'
+        'N'
     
     """
 
@@ -49,11 +49,11 @@ def coarse_pos_u(tags, word):
     return pos_mapped
 
 
-def coarse_pos_e(tags, word):
+def coarse_pos_e(tags,word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
     
     Examples:
-        >>> coarse_pos_e(['N', 'IANM'])
+        >>> coarse_pos_e(['N', 'IANM'],'امروز')
         'N'
     
     """
@@ -166,6 +166,7 @@ class DadeganReader:
         
         Examples:
             >>> from hazm.Chunker import tree2brackets
+            >>> dadegan = DadeganReader(conll_file='corpora/dadegan.conll')
             >>> tree2brackets(next(dadegan.chunked_trees()))
             '[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
         

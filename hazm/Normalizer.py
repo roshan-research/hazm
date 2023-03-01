@@ -49,7 +49,7 @@ class Normalizer(object):
         self.translation_src = "ؠػػؽؾؿكيٮٯٷٸٹٺٻټٽٿڀځٵٶٷٸٹٺٻټٽٿڀځڂڅڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨڪګڬڭڮڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿہۂۃۄۅۆۇۈۉۊۋۏۍێېۑےۓەۮۯۺۻۼۿݐݑݒݓݔݕݖݗݘݙݚݛݜݝݞݟݠݡݢݣݤݥݦݧݨݩݪݫݬݭݮݯݰݱݲݳݴݵݶݷݸݹݺݻݼݽݾݿࢠࢡࢢࢣࢤࢥࢦࢧࢨࢩࢪࢫࢮࢯࢰࢱࢬࢲࢳࢴࢶࢷࢸࢹࢺࢻࢼࢽﭐﭑﭒﭓﭔﭕﭖﭗﭘﭙﭚﭛﭜﭝﭞﭟﭠﭡﭢﭣﭤﭥﭦﭧﭨﭩﭮﭯﭰﭱﭲﭳﭴﭵﭶﭷﭸﭹﭺﭻﭼﭽﭾﭿﮀﮁﮂﮃﮄﮅﮆﮇﮈﮉﮊﮋﮌﮍﮎﮏﮐﮑﮒﮓﮔﮕﮖﮗﮘﮙﮚﮛﮜﮝﮞﮟﮠﮡﮢﮣﮤﮥﮦﮧﮨﮩﮪﮫﮬﮭﮮﮯﮰﮱﺀﺁﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎﺏﺐﺑﺒﺕﺖﺗﺘﺙﺚﺛﺜﺝﺞﺟﺠﺡﺢﺣﺤﺥﺦﺧﺨﺩﺪﺫﺬﺭﺮﺯﺰﺱﺲﺳﺴﺵﺶﺷﺸﺹﺺﺻﺼﺽﺾﺿﻀﻁﻂﻃﻄﻅﻆﻇﻈﻉﻊﻋﻌﻍﻎﻏﻐﻑﻒﻓﻔﻕﻖﻗﻘﻙﻚﻛﻜﻝﻞﻟﻠﻡﻢﻣﻤﻥﻦﻧﻨﻩﻪﻫﻬﻭﻮﻯﻰﻱﻲﻳﻴىكي“” "
         self.translation_dst = 'یککیییکیبقویتتبتتتبحاوویتتبتتتبحححچدددددددددررررررررسسسصصطعففففففققکککککگگگگگللللنننننهچهههوووووووووییییییهدرشضغهبببببببححددرسعععففکککممنننلررسححسرحاایییووییحسسکببجطفقلمییرودصگویزعکبپتریفقنااببببپپپپببببتتتتتتتتتتتتففففححححححححچچچچچچچچددددددددژژررککککگگگگگگگگگگگگننننننههههههههههییییءاااووااییییااببببتتتتثثثثججججححححخخخخددذذررززسسسسششششصصصصضضضضططططظظظظععععغغغغففففققققککککللللممممننننههههوویییییییکی"" '
 
-        if self._correct_spacing or sel._decrease_repeated_chars:
+        if self._correct_spacing or self._decrease_repeated_chars:
             self.tokenizer = WordTokenizer(join_verb_parts=False)
             self.words = self.tokenizer.words
 
@@ -187,8 +187,8 @@ class Normalizer(object):
         
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.normalize('اِعلام کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
-            'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر…»'
+            >>> normalizer.normalize('اِعلاممممم کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
+            'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر …»'
         
         Args:
             text (str): متنی که باید نرمال‌سازی شود.
@@ -269,7 +269,7 @@ class Normalizer(object):
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
-            'پیامبر اکرم'
+            'پیامبر اکرم '
         
         Args:
             text (str): متنی که باید کاراکترها و نشانه‌های اضافهٔ آن حذف شود.
@@ -373,8 +373,8 @@ class Normalizer(object):
         
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.unicodes_replacement('حضرت ﷴ صلوات الله علیه)')
-            'حضرت محمد صلوات الله علیه'
+            >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
+            'پیامبر اکرم '
         
         Args:
             text (str): متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.
@@ -418,7 +418,7 @@ class Normalizer(object):
         برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
         
         Examples:
-            >>> normalizer = Normalizer(token_based=True)
+            >>> normalizer = Normalizer()
             >>> normalizer.token_spacing(['کتاب', 'ها'])
             ['کتاب‌ها']
             >>> normalizer.token_spacing(['او', 'می', 'رود'])
@@ -427,8 +427,6 @@ class Normalizer(object):
             ['ماه', 'می', 'سال', 'جدید']
             >>> normalizer.token_spacing(['اخلال', 'گر'])
             ['اخلال‌گر']
-            >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
-            ['پرداخت', 'شده', 'است']
             >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
             ['زمین‌لرزه‌ای']
         
@@ -439,6 +437,8 @@ class Normalizer(object):
             (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
         
         """
+        #>>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
+        #    ['پرداخت', 'شده', 'است']
 
         result = []
         for t, token in enumerate(tokens):
