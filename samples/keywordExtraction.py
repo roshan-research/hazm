@@ -1,4 +1,4 @@
-from hazm import Embedding, Normalizer, sent_tokenize, word_tokenize, POSTagger
+from hazm import Embedding, Normalizer, sent_tokenize, word_tokenize, POSTagger, PersicaReader
 import nltk
 import numpy as np
 import pandas as pd
@@ -109,6 +109,7 @@ def embedRank(text, keyword_num):
     
 
 if __name__ == '__main__':
-    text = ''
+    persikaReader = PersicaReader('persika.csv')
+    text = next(persikaReader.texts())
     keyword_num = 10
     keywords = embedRank(text, keyword_num)
