@@ -13,3 +13,5 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           issue-label: needs-reply
+          days-before-close: 30
+          close-message: "این ایشو از آنجایی که پیگیری آن نیازمند ارائه اطلاعات بیشتر بوده و ۳۰ روز است که به آن پاسخی داده نشده، به صورت خودکار بسته می‌شود."
