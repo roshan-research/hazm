@@ -19,13 +19,18 @@ NP:
 """
 ]
 
+normalizer = Normalizer()
+
 def tokenize(text):
     normalizer = Normalizer()
-    return [word_tokenize(sent) for sent in sent_tokenize(normalizer(text))]
+    return [word_tokenize(sent) for sent in sent_tokenize(normalizer.normalize(text))]
 
-def posTagger(text ,pos_model_path = 'POStagger.model'):
+def posTagger(text ,pos_model_path = 'POStagger.model', posTaggerModel=None):
     tokens = tokenize(text)
-    tagger = POSTagger(pos_model_path)
+    if posTaggerModel is None:
+        tagger = POSTagger(pos_model_path)
+    else:
+        tagger = posTaggerModel
     return tagger.tag_sents(tokens)
 
 def extractGrammer(tagged_text, grammer):
@@ -42,19 +47,22 @@ def extractGrammer(tagged_text, grammer):
 def extractCandidates(tagged_text, grammers = grammers):
     all_candidates = set()
     for grammer in grammers:
-        all_candidates.update(tagged_text(tagged_text, grammer))
+        all_candidates.update(extractGrammer(tagged_text, grammer))
     return np.array(list(all_candidates))
     
-def text2vec(candidates, sent2vec_model_path = 'sent2vec.model'):
-    sent2vec_model = Embedding.SentEmbedding(sent2vec_model_path)
+def text2vec(candidates, sent2vec_model_path = 'sent2vec.model', sent2vecModel=None):
+    if sent2vecModel is None:
+        sent2vec_model = Embedding.SentEmbedding(sent2vec_model_path)
+    else:
+        sent2vec_model = sent2vecModel
     candidate_vector = [[sent2vec_model[candidate] for candidate in candidates]]
     text_vector = sent2vec_model[' '.join(candidates)]
     return candidate_vector, text_vector
 
 
 def vectorSimilarity(candidates_vector, text_vector, norm=True):
-    candidate_sim_text = cosine_similarity(candidates_vector, text_vector.reshape(1,-1))
-    candidate_sim_candidate = cosine_similarity(candidates_vector)
+    candidate_sim_text = cosine_similarity(candidates_vector[0], text_vector.reshape(1,-1))
+    candidate_sim_candidate = cosine_similarity(candidates_vector[0])
     if(norm):
         candidates_sim_text_norm = candidate_sim_text / np.max(candidate_sim_text)
         candidates_sim_text_norm = 0.5 + (candidates_sim_text_norm - np.average(candidates_sim_text_norm)) / np.std(candidates_sim_text_norm)
@@ -77,14 +85,13 @@ def embedRankExtraction(all_candidates, candidate_sim_text, candidate_sim_candid
     selected_candidates.append(best_candidate)
     unselected_candidates.remove(best_candidate)
 
-
     for i in range(N-1):
         selected_vec = np.array(selected_candidates)
         unselected_vec = np.array(unselected_candidates)
         
         unselected_candidate_sim_text = candidate_sim_text[unselected_vec, :]
         
-        dist_between = candidate_sim_text[unselected_vec][:, selected_vec]
+        dist_between = candidate_sim_candidate[unselected_vec][:, selected_vec]
         
         if dist_between.ndim == 1:
             dist_between = dist_between[:, np.newaxis]
@@ -96,16 +103,17 @@ def embedRankExtraction(all_candidates, candidate_sim_text, candidate_sim_candid
     return all_candidates[selected_candidates].tolist()
 
 
-def extractKeyword(candidates, keyword_num=5):
-    candidates_vector, text_vector = text2vec(candidates)
+def extractKeyword(candidates, keyword_num=5, sent2vecModel=None):
+    candidates_vector, text_vector = text2vec(candidates, sent2vecModel=sent2vecModel)
     candidate_sim_text_norm, candidate_sim_candidate_norm = vectorSimilarity(candidates_vector, text_vector)
     return embedRankExtraction(candidates, candidate_sim_text_norm, candidate_sim_candidate_norm, keyword_num)
 
 
-def embedRank(text, keyword_num):
-    token_tag = posTagger(text)
+def embedRank(text, keyword_num, sent2vecModel=None, posTaggerModel=None):
+    token_tag = posTagger(text, posTaggerModel=posTaggerModel)
     candidates = extractCandidates(token_tag)
-    return extractKeyword(candidates, keyword_num)
+    return extractKeyword(candidates, keyword_num, sent2vecModel=sent2vecModel)
+
     
 
 if __name__ == '__main__':
