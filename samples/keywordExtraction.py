@@ -56,14 +56,19 @@ def vectorSimilarity(candidates_vector, text_vector, norm=True):
     candidate_sim_text = cosine_similarity(candidates_vector, text_vector.reshape(1,-1))
     candidate_sim_candidate = cosine_similarity(candidates_vector)
     if(norm):
-        return 
+        candidates_sim_text_norm = candidate_sim_text / np.max(candidate_sim_text)
+        candidates_sim_text_norm = 0.5 + (candidates_sim_text_norm - np.average(candidates_sim_text_norm)) / np.std(candidates_sim_text_norm)
+        np.fill_diagonal(candidate_sim_candidate, np.NaN)
+        candidate_sim_candidate_norm = candidate_sim_candidate / np.nanmax(candidate_sim_candidate, axis=0)
+        candidate_sim_candidate_norm = 0.5 + (candidate_sim_candidate_norm - np.nanmean(candidate_sim_candidate_norm, axis=0)) / np.nanstd(candidate_sim_candidate_norm, axis=0)
+        return candidates_sim_text_norm, candidate_sim_candidate_norm
     return candidate_sim_text, candidate_sim_candidate
 
-def extractKeyword(candidates, keyword_num):
+
+def extractKeyword(candidates, keyword_num=5):
     candidates_vector, text_vector = text2vec(candidates)
     candidate_sim_text_norm, candidate_sim_candidate_norm = vectorSimilarity()
-
-
+    return 
 
 
 def embedRank(text, keyword_num):
@@ -76,11 +81,6 @@ def embedRank(text, keyword_num):
 
 
 
-
-    
-    
-
-    
 
 
 
