@@ -23,7 +23,144 @@ from .Normalizer import Normalizer
 from .WordTokenizer import WordTokenizer
 
 
-def coarse_pos_e(tags):
+def coarse_pos_u(tags, word):
+    """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained universal pos tags) تبدیل می‌کند.
+
+    Examples:
+            >>> coarse_pos_u(['N','COM','SING'], 'الجزیره')
+            'NOUN'
+
+    Args:
+            tags (List[str]): لیست برچسب‌های ریز.
+
+    Returns:
+            (List[str]): لیست برچسب‌های درشت جهانی.
+    """
+
+    map_pos_to_upos = {
+        "N": "NOUN",
+        "V": "VERB",
+        "AJ": "ADJ",
+        "ADV": "ADV",
+        "PRO": "PRON",
+        "DET": "DET",
+        "P": "ADP",
+        "POSTP": "ADP",
+        "NUM": "NUM",
+        "CONJ": "CCONJ",
+        "PUNC": "PUNCT",
+        "CL": "NOUN",
+        "INT": "INTJ",
+        "RES": "NOUN",
+    }
+    sconj_list = {
+        "که",
+        "تا",
+        "گرچه",
+        "اگرچه",
+        "چرا",
+        "زیرا",
+        "اگر",
+        "چون",
+        "چراکه",
+        "هرچند",
+        "وگرنه",
+        "چنانچه",
+        "والا",
+        "هرچه",
+        "ولو",
+        "مگر",
+        "پس",
+        "چو",
+        "چه",
+        "بنابراین",
+        "وقتی",
+        "والّا",
+        "انگاری",
+        "هرچندكه",
+        "درنتيجه",
+        "اگه",
+        "ازآنجاكه",
+        "گر",
+        "وگر",
+        "وقتيكه",
+        "تااينكه",
+        "زمانيكه",
+    }
+    num_adj_list = {
+        "نخست",
+        "دوم",
+        "اول",
+        "پنجم",
+        "آخر",
+        "يازدهم",
+        "نهم",
+        "چهارم",
+        "ششم",
+        "پانزدهم",
+        "دوازدهم",
+        "هشتم",
+        "صدم",
+        "هفتم",
+        "هفدهم",
+        "آخرين",
+        "سيزدهم",
+        "يكم",
+        "بيستم",
+        "ويكم",
+        "دوسوم",
+        "شانزدهم",
+        "هجدهم",
+        "چهاردهم",
+        "ششصدم",
+        "ميليونيم",
+        "وهفتم",
+        "يازدهمين",
+        "هيجدهمين",
+        "واپسين",
+        "چهلم",
+        "هزارم",
+        "وپنجم",
+        "هيجدهم",
+        "ميلياردم",
+        "ميليونيوم",
+        "تريليونيوم",
+        "چهارپنجم",
+        "دهگانه",
+        "ميليونم",
+        "اوّل",
+        "سوّم",
+    }
+    try:
+        old_pos = list(
+            set(tags)
+            & {
+                "N",
+                "V",
+                "AJ",
+                "ADV",
+                "PRO",
+                "DET",
+                "P",
+                "POSTP",
+                "NUM",
+                "CONJ",
+                "PUNC",
+                "CL",
+                "INT",
+                "RES",
+            }
+        )[0]
+        if old_pos == "CONJ" and word in sconj_list:
+            return "SCONJ"
+        if old_pos == "NUM" and word in num_adj_list:
+            return "ADJ"
+        return map_pos_to_upos[old_pos]
+    except:
+        return "NOUN"
+
+
+def coarse_pos_e(tags, word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
     
     Examples:
@@ -107,9 +244,16 @@ class PeykareReader:
     
     """
 
-    def __init__(self, root, joined_verb_parts=True, pos_map=coarse_pos_e):
+    def __init__(
+        self, root, joined_verb_parts=True, pos_map=coarse_pos_e, universal_pos=False
+    ):
         self._root = root
-        self._pos_map = pos_map if pos_map else lambda tags: ",".join(tags)
+        if pos_map is None:
+            self._pos_map = lambda tags: ",".join(tags)
+        elif universal_pos:
+            self._pos_map = coarse_pos_u
+        else:
+            self._pos_map = coarse_pos_e
         self._joined_verb_parts = joined_verb_parts
         self._normalizer = Normalizer(punctuation_spacing=False, affix_spacing=False)
 
@@ -174,7 +318,7 @@ class PeykareReader:
             (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن، برچسب)`ها.
         
         """
-        map_pos = lambda item: (item[0], self._pos_map(item[1].split(",")))
+        map_pos = lambda item: (item[0], self._pos_map(item[1].split(","), item[0]))
 
         for document in self.docs():
             for sentence in self.doc_to_sents(document):
