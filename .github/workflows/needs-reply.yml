@@ -2,7 +2,7 @@ name: Close old issues that need reply
 
 on:
   schedule:
-    - cron: "0 0 1 * *" # Run every month
+    - cron: "0 0 0 * *" # Run 00:00 every month
 
 jobs:
   build:
@@ -13,5 +13,5 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           issue-label: needs-reply
-          days-before-close: 30
+          days-before-close: 180
           close-message: "این ایشو از آنجایی که پیگیری آن نیازمند ارائه اطلاعات بیشتر بوده و ۳۰ روز است که به آن پاسخی داده نشده، به صورت خودکار بسته می‌شود."
