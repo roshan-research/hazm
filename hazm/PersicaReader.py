@@ -78,8 +78,8 @@ class PersicaReader:
         
         Examples:
             >>> persica = PersicaReader('corpora/persica.csv')
-            >>> next(persica.texts())
-            ''
+            >>> next(persica.texts()).startswith('وزير علوم در جمع استادان نمونه كشور گفت')
+            True
         
         Yields:
             (str): متنِ خبر بعدی.

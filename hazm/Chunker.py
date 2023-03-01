@@ -19,12 +19,13 @@ def tree2brackets(tree):
     Examples:
         >>> chunker = Chunker(model='resources/chunker.model')
         >>> tree=chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')])
-        '(S
+        >>> print(tree)        
+        (S
           (NP نامه/Ne ایشان/PRO)
           (POSTP را/POSTP)
-           (VP دریافت/N داشتم/V)
-           ./PUNC)'
-        >>> brackets = tee2brackets(tree)
+          (VP دریافت/N داشتم/V)
+          ./PUNC)
+        >>> tree2brackets(tree)
         '[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'
     
     Args:
@@ -72,11 +73,12 @@ class Chunker(IOBTagger, ChunkParserI):
         Examples:
             >>> chunker = Chunker(model='resources/chunker.model')
             >>> tree=chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')])
-            '(S
+            >>> print(tree)
+            (S
               (NP نامه/Ne ایشان/PRO)
               (POSTP را/POSTP)
               (VP دریافت/N داشتم/V)
-              ./PUNC)'
+              ./PUNC)
         
         Args:
             sentence (List[Tuple[str,str]): جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.

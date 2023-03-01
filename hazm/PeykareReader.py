@@ -166,7 +166,7 @@ def coarse_pos_e(tags, word):
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
     
     Examples:
-        >>> coarse_pos_e(['N','COM','SING'])
+        >>> coarse_pos_e(['N','COM','SING'],'الجزیره')
         'N'
     
     Args:
@@ -257,7 +257,7 @@ class PeykareReader:
         else:
             self._pos_map = coarse_pos_e
         self._joined_verb_parts = joined_verb_parts
-        self._normalizer = Normalizer(punctuation_spacing=False, affix_spacing=False)
+        self._normalizer = Normalizer(correct_spacing=False)
 
     def docs(self):
         """اسناد را به شکل متن خام برمی‌گرداند.
@@ -312,14 +312,14 @@ class PeykareReader:
             >>> peykare = PeykareReader(root='corpora/peykare')
             >>> next(peykare.sents())
             [('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
-            >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
-            >>> next(peykare.sents())
-            [('دیرزمانی', 'N,COM,SING,TIME,YA'), ('از', 'P'), ('راه‌اندازی', 'N,COM,SING,EZ'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبر', 'N,COM,SING,EZ'), ('الجزیره', 'N,PR,SING'), ('نمی‌گذرد', 'V,PRES,NEG,3'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET,DEMO'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبری', 'AJ,SIM,EZ'), ('عربی', 'N,PR,SING'), ('بسیار', 'ADV,INTSF,SIM'), ('سریع', 'ADV,GENR,SIM'), ('توانسته', 'V,PASTP'), ('در', 'P'), ('میان', 'N,COM,SING,EZ'), ('شبکه‌های', 'N,COM,PL,EZ'), ('عظیم', 'AJ,SIM,EZ'), ('خبری', 'AJ,SIM'), ('و', 'CONJ'), ('بنگاه‌های', 'N,COM,PL,EZ'), ('چندرسانه‌ای', 'AJ,SIM,EZ'), ('دنیا', 'N,COM,SING'), ('خودی', 'N,COM,SING,YA'), ('نشان', 'N,COM,SING'), ('دهد', 'V,SUB,POS,3'), ('.', 'PUNC')]
         
         Yields:
             (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن، برچسب)`ها.
         
         """
+        #>>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
+        #    >>> next(peykare.sents())
+        #    [('دیرزمانی', 'N,COM,SING,TIME,YA'), ('از', 'P'), ('راه‌اندازی', 'N,COM,SING,EZ'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبر', 'N,COM,SING,EZ'), ('الجزیره', 'N,PR,SING'), ('نمی‌گذرد', 'V,PRES,NEG,3'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET,DEMO'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبری', 'AJ,SIM,EZ'), ('عربی', 'N,PR,SING'), ('بسیار', 'ADV,INTSF,SIM'), ('سریع', 'ADV,GENR,SIM'), ('توانسته', 'V,PASTP'), ('در', 'P'), ('میان', 'N,COM,SING,EZ'), ('شبکه‌های', 'N,COM,PL,EZ'), ('عظیم', 'AJ,SIM,EZ'), ('خبری', 'AJ,SIM'), ('و', 'CONJ'), ('بنگاه‌های', 'N,COM,PL,EZ'), ('چندرسانه‌ای', 'AJ,SIM,EZ'), ('دنیا', 'N,COM,SING'), ('خودی', 'N,COM,SING,YA'), ('نشان', 'N,COM,SING'), ('دهد', 'V,SUB,POS,3'), ('.', 'PUNC')]
         map_pos = lambda item: (item[0], self._pos_map(item[1].split(","), item[0]))
 
         for document in self.docs():

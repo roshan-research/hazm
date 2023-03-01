@@ -94,7 +94,7 @@ class TreebankReader:
                     with codecs.open(
                         os.path.join(root, name), encoding="utf8"
                     ) as treebank_file:
-                        raw = re.sub(r"\n *", "", treebank_file.read())
+                        raw = re.sub(r"\n *", "", treebank_file.read())                        
                         yield minidom.parseString(raw.encode("utf8"))
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
@@ -157,13 +157,14 @@ class TreebankReader:
             if not len(node.childNodes):
                 return
             first = node.childNodes[0]
-            if first.tagName == "w":
+            
+            if first.nodeName == "w":                             
                 pos = extract_tags(first)
                 return Tree(
-                    node.tagName,
+                    node.nodeName,
                     [
                         (
-                            first.childNodes[0].data.replace("می ", "می‌"),
+                            #first.childNodes[0].data.replace("می ", "می‌"),
                             self._pos_map(pos),
                         )
                     ],
@@ -229,6 +230,7 @@ class TreebankReader:
 
         for doc in self.docs():
             for S in doc.getElementsByTagName("S"):
+                ss=traverse(S)
                 yield traverse(S)
 
     def sents(self):

@@ -74,7 +74,7 @@ class BijankhanReader:
         self._bijankhan_file = bijankhan_file
         self._joined_verb_parts = joined_verb_parts
         self._pos_map = pos_map
-        self._normalizer = Normalizer(punctuation_spacing=False)
+        self._normalizer = Normalizer(correct_spacing=False)
 
     def _sentences(self):
         """جملات پیکره را به شکل متن خام برمی‌گرداند.

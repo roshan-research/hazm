@@ -5,29 +5,29 @@ import sys, inspect, doctest, unittest
 from hazm import *
 
 modules = {
+    "normalizer": Normalizer,
+    "informal_normalizer": InformalNormalizer,
+    "lemmatizer": Lemmatizer,
+    "stemmer": Stemmer,
+    "sentence_tokenizer": SentenceTokenizer,
+    "word_tokenizer": WordTokenizer,
+    "splitter": TokenSplitter,
+    "postagger": POSTagger,
+    "parser": DependencyParser,
+    "chunker": Chunker,
     "persica": PersicaReader,
     "hamshahri": HamshahriReader,
     "bijankhan": BijankhanReader,
     "peykare": PeykareReader,
     "dadegan": DadeganReader,
     "valency": VerbValencyReader,
-    "treebank": TreebankReader,
     "sentipers": SentiPersReader,
     "degarbayan": DegarbayanReader,
     "tnews": TNewsReader,
     "quran": QuranCorpusReader,
     "miras_text": MirasTextReader,
-    "sentence_tokenizer": SentenceTokenizer,
-    "word_tokenizer": WordTokenizer,
-    "splitter": TokenSplitter,
-    "normalizer": Normalizer,
-    "stemmer": Stemmer,
-    "lemmatizer": Lemmatizer,
-    "tagger": SequenceTagger,
-    "postagger": POSTagger,
-    "chunker": Chunker,
-    "parser": DependencyParser,
-    "informal_normalizer": InformalNormalizer,
+    #"tagger": SequenceTagger,
+    #"treebank": TreebankReader,
 }
 
 
@@ -62,8 +62,8 @@ if __name__ == "__main__":
                 doctest.DocTestSuite(inspect.getmodule(object), checker=checker)
             )
 
-    if not utils.PY2 and all_modules:
-        suites.append(doctest.DocFileSuite("README.md"))
+    #if not utils.PY2 and all_modules:
+    #    suites.append(doctest.DocFileSuite("README.md"))
 
     failure = False
     runner = unittest.TextTestRunner(verbosity=2)

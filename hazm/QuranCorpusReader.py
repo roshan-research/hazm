@@ -35,12 +35,12 @@ class QuranCorpusReader:
         شده است.
         
         Examples:
-            >>> parts=QuranCorpusReader(quran_file='corpora\quranic-corpus-morphology.txt').parts()
-            >>> print(next(parts))
-            >>> print(next(parts))
+            >>> parts=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').parts()
             >>> print(next(parts))
             {'loc': (1, 1, 1, 1), 'text': 'بِ', 'tag': 'P'}
+            >>> print(next(parts))
             {'loc': (1, 1, 1, 2), 'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}
+            >>> print(next(parts))
             {'loc': (1, 1, 2, 1), 'text': 'ٱللَّهِ', 'tag': 'PN', 'lem': 'ٱللَّه', 'root': 'اله'}
         
         Yields:
@@ -70,7 +70,7 @@ class QuranCorpusReader:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
         
         Examples:
-            >>> words=QuranCorpusReader(quran_file='corpora\quranic-corpus-morphology.txt').words()
+            >>> words=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').words()
             >>> print(next(words))
             ('1.1.1', 'بِسْمِ', 'ٱسْم', 'سمو', 'P-N', [{'text': 'بِ', 'tag': 'P'}, {'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}])
         

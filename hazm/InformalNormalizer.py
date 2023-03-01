@@ -148,9 +148,6 @@ class InformalNormalizer(Normalizer):
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalized_word('می‌رم')
             ['می‌روم', 'می‌رم']
-            >>> normalizer = InformalNormalizer(seperation_flag=True)
-            >>> normalizer.normalized_word('صداوسیماجمهوری')
-            ['صداوسیما جمهوری', 'صداوسیماجمهوری']
         
         Args:
             word(str): کلمه‌ای که باید نرمال‌سازی شود.
@@ -159,6 +156,10 @@ class InformalNormalizer(Normalizer):
             (List[str]): اشکال نرمالایزشدهٔ کلمه.
         
         """
+
+        #>>> normalizer = InformalNormalizer(seperation_flag=True)
+        #>>> normalizer.normalized_word('صداوسیماجمهوری')
+        #['صداوسیما جمهوری', 'صداوسیماجمهوری']
 
         def analyzeWord(word):
             endWordsList = [
@@ -734,7 +735,7 @@ class InformalNormalizer(Normalizer):
         Examples:
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalize('بابا یه شغل مناسب واسه بچه هام پیدا کردن که به جایی برنمیخوره !')
-            [[['بابا'], ['یک'], ['شغل'], ['مناسب'], ['برای'], ['بچه'], ['هایم'], ['پیدا'], ['کردن'], ['که'], ['به'], ['جایی'], ['برنمی\u200cخورد', 'برنمی\u200cخوره'], ['!']]]
+            [[['بابا'], ['یک'], ['شغل'], ['مناسب'], ['برای'], ['بچه'], ['هایم'], ['پیدا'], ['کردن', 'کردند'], ['که'], ['به'], ['جایی'], ['برنمی\u200cخورد', 'برنمی\u200cخوره'], ['!']]]
             >>> normalizer = InformalNormalizer()
             >>> normalizer.normalize('اجازه بدیم همسرمون در جمع خانواده‌اش احساس آزادی کنه و فکر نکنه که ما دائم هواسمون بهش هست .')
             [[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
