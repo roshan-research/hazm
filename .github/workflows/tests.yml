@@ -27,14 +27,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Get latest Python versions
-      id: python_versions
-      uses: jwodder/latest-python-versions@v1
-      with:
-        count: 5
-    - name: Set up Python ${{ matrix.python-versions }}
+      id: python-versions
+      uses: actions/python-versions@v1
+      with:        
+        major-versions-count: 5
+
+    - name: Set up matrix for Python versions
+      run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) | select(. != '3.11'), ',') }}, 2.7"
+      id: set-matrix
+    
+    - name: Run tests  
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-versions }}
+        python-version: ${{ fromJson(steps.set-matrix.outputs.matrix) }}
         
     - name: Install prerequisites
       run: |
