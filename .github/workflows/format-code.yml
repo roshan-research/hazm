@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.py'
 
 jobs:
   build:
@@ -30,6 +32,6 @@ jobs:
     - name: Push back changes          
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: "Refactor code based on pep-8"
+        commit_message: "Format code"
         commit_user_name: "formatter-bot"
         commit_user_email: "formatter-bot@users.noreply.github.com"
