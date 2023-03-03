@@ -17,12 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-versions: [ '3.7', '3.8', '3.9', '3.10' ]
-        #python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
-
-    steps:
+        python-version: ${{ steps.python-versions.outputs.python_versions }}
+          
+    steps:    
     - uses: actions/checkout@v3
-    
+    - name: Get latest 5 Python versions
+      id: python-versions
+      uses: actions/python-versions@main
+      with:
+        include-version: 2.7
+        exclude-version: 2.7, 3.11
+        count: 5        
     - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
