@@ -1,3 +1,4 @@
+name: Run tests
 on:
   workflow_dispatch:
   push:
@@ -7,10 +8,6 @@ on:
       - '**.py'
       - 'hazm/**'
       - 'corpora/**'
-  workflow_run:
-    workflows: ["Format code"]
-    types:
-      -completed
 
 jobs:
   build:
