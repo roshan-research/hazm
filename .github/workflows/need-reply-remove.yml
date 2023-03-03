@@ -1,4 +1,4 @@
-name: Remove needs-reply label
+name: Remove needs-reply
 
 on:
   issue_comment:
