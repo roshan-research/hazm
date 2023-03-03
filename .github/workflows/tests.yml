@@ -1,4 +1,4 @@
-on: 
+on:
   workflow_dispatch:
   push:
     branches:
@@ -6,7 +6,11 @@ on:
     paths:
       - '**.py'
       - 'hazm/**'
-      - 'corpora/**'      
+      - 'corpora/**'
+  workflow_run:
+    workflows: ["Format code"]
+    types:
+      -completed
 
 jobs:
   build:
