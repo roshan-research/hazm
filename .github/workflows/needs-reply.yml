@@ -1,4 +1,4 @@
-name: Close old issues that need reply 
+name: Close old issues 
 
 on:
   schedule:
