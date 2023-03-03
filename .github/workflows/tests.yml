@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.py'
+      - 'hazm/**'
+      - 'corpora/**'      
 
 jobs:
   build:
