@@ -1,34 +1,28 @@
-name: Run tests
 on:
   workflow_dispatch:
-  
   push:
     branches:
       - master
     paths:
       - '**.py'
       - 'hazm/**'
-      - 'corpora/**'      
-  
+      - 'corpora/**'
   workflow_run:
-    workflows: [Format code]
+    workflows: ["Format code"]
     types:
-      - completed
+      -completed
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ${{ steps.python-versions.outputs.python_versions }}
-    steps:    
+        python-versions: [ '3.7', '3.8', '3.9', '3.10' ]
+        #python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
+
+    steps:
     - uses: actions/checkout@v3
-    - name: Get latest 5 Python versions
-      id: python-versions
-      uses: actions/latest-python-versions@v1.1.2
-      with:
-        include-versions: 2.7
-        exclude-versions: 3.11, 2.7       
+    
     - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
