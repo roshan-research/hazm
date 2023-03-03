@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ${{ steps.python_versions.outputs.python_versions }}
+        python-version: ${{ fromJson(steps.python-versions.outputs.python-version-matrix) }}
         include:
-          - python-version: '2.7'
+          - python-version: 2.7
         exclude:
-          - python-version: '2.7'
-          - python-version: '3.11'
+          - python-version: 2.7
+          - python-version: 3.11
           
     steps:
     - uses: actions/checkout@v3
@@ -30,16 +30,12 @@ jobs:
       id: python-versions
       uses: actions/python-versions@v1
       with:        
-        major-versions-count: 5
-
-    - name: Set up matrix for Python versions
-      run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) | select(. != '3.11'), ',') }}, 2.7"
-      id: set-matrix
+        major-versions-count: 5    
     
     - name: Run tests  
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ fromJson(steps.set-matrix.outputs.matrix) }}
+        python-version: ${{ matrix.python-version }}
         
     - name: Install prerequisites
       run: |
