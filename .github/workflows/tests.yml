@@ -17,32 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ${{ fromJson(steps.python-versions.outputs.python-version-matrix) }}
-        include:
-          - python-version: 2.7
-        exclude:
-          - python-version: 2.7
-          - python-version: 3.11
-          
+        python-versions: [ '3.7', '3.8', '3.9', '3.10' ]
+        #python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
+
     steps:
     - uses: actions/checkout@v3
-    - name: Get latest Python versions
-      id: python-versions
-      uses: actions/python-versions@v1
-      with:
-        releases-type: stable # optional, defaults to stable
-        include-prereleases: false # optional, defaults to false
-        major-versions-count: 5 # optional, defaults to 3
-
-    - name: Set up matrix for Python versions
-      run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) | select(. != '3.11'), ',') }}, 2.7"
-      #run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) }}, 2.7"
-      id: set-matrix 
     
-    - name: Run tests  
+    - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ fromJson(steps.set-matrix.outputs.matrix) }}
+        python-version: ${{ matrix.python-versions }}
         
     - name: Install prerequisites
       run: |
