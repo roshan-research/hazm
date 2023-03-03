@@ -1,4 +1,4 @@
-name: Format code based on pep-8
+name: Format code
 
 on: 
   workflow_dispatch:
