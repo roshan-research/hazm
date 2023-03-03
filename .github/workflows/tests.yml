@@ -8,7 +8,7 @@ on:
     paths:
       - '**.py'
       - 'hazm/**'
-      - 'corpora/**'
+      - 'corpora/**'      
   
   workflow_run:
     workflows: [Format code]
@@ -18,16 +18,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest 
-          
+    strategy:
+      matrix:
+        python-version: ${{ steps.python-versions.outputs.python_versions }}
     steps:    
     - uses: actions/checkout@v3
     - name: Get latest 5 Python versions
       id: python-versions
-      uses: actions/python-versions@main
+      uses: actions/latest-python-versions@v1.1.2
       with:
-        include-version: 2.7
-        exclude-version: 2.7, 3.11
-        count: 5        
+        include-versions: 2.7
+        exclude-versions: 3.11, 2.7       
     - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
