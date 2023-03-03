@@ -29,13 +29,20 @@ jobs:
     - name: Get latest Python versions
       id: python-versions
       uses: actions/python-versions@v1
-      with:        
-        major-versions-count: 5    
+      with:
+        releases-type: stable # optional, defaults to stable
+        include-prereleases: false # optional, defaults to false
+        major-versions-count: 5 # optional, defaults to 3
+
+    - name: Set up matrix for Python versions
+      run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) | select(. != '3.11'), ',') }}, 2.7"
+      #run: echo "::set-output name=matrix::${{ join(fromJson(steps.python-versions.outputs.python-version-matrix) }}, 2.7"
+      id: set-matrix 
     
     - name: Run tests  
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ fromJson(steps.set-matrix.outputs.matrix) }}
         
     - name: Install prerequisites
       run: |
