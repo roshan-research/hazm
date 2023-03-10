@@ -188,38 +188,18 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.remove_diacritics">
-    remove_diacritics()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.character_refinement">
+    character_refinement()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.remove_specials_chars">
-    remove_specials_chars()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
+    punctuation_spacing()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.decrease_repeated_chars">
-    decrease_repeated_chars()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.persian_style">
-    persian_style()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.persian_number">
-    persian_number()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.unicodes_replacement">
-    unicodes_replacement()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.seperate_mi">
-    seperate_mi()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
+    affix_spacing()
   </a>
 </li>
 <li class="md-nav__item">
@@ -259,11 +239,6 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Embedding/">
-        Embedding
-      </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../SequenceTagger/">
         SequenceTagger
       </a>
@@ -294,15 +269,15 @@
       </a>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" id="__nav_2_15" type="checkbox"/>
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_14" id="__nav_2_14" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
 <a href="../../readers/">پیکره‌خوان‌ها</a>
-<label for="__nav_2_15">
+<label for="__nav_2_14">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
 <nav aria-label="پیکره‌خوان‌ها" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_15">
+<label class="md-nav__title" for="__nav_2_14">
 <span class="md-nav__icon md-icon"></span>
           پیکره‌خوان‌ها
         </label>
@@ -429,38 +404,18 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.remove_diacritics">
-    remove_diacritics()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.character_refinement">
+    character_refinement()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.remove_specials_chars">
-    remove_specials_chars()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.punctuation_spacing">
+    punctuation_spacing()
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.decrease_repeated_chars">
-    decrease_repeated_chars()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.persian_style">
-    persian_style()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.persian_number">
-    persian_number()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.unicodes_replacement">
-    unicodes_replacement()
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.seperate_mi">
-    seperate_mi()
+<a class="md-nav__link" href="#hazm.Normalizer.Normalizer.affix_spacing">
+    affix_spacing()
   </a>
 </li>
 <li class="md-nav__item">
@@ -494,7 +449,7 @@
 <div class="doc doc-contents">
 <p class="doc doc-class-bases">
         کلاس(های) پایه: <code>object</code></p>
-<p>این کلاس شامل توابعی برای نرمال‌سازی متن است.</p>
+<p>این کلاس شامل توابعی برای نرمال‌سازی متن است. </p>
 <p><strong>پارامترها:</strong></p>
 <table>
 <thead>
@@ -507,41 +462,11 @@
 </thead>
 <tbody>
 <tr>
-<td><code>correct_spacing</code></td>
+<td><code>remove_extra_spaces</code></td>
 <td>
 <code>bool</code>
 </td>
-<td><p>اگر <code>True‍</code> فاصله‌گذاری‌ها را در متن، نشانه‌های سجاوندی و پیشوندها و پسوندها اصلاح می‌کند.</p></td>
-<td>
-<code>True</code>
-</td>
-</tr>
-<tr>
-<td><code>remove_diacritics</code></td>
-<td>
-<code>bool</code>
-</td>
-<td><p>اگر <code>True</code> باشد اعرابِ حروف را حذف می‌کند.</p></td>
-<td>
-<code>True</code>
-</td>
-</tr>
-<tr>
-<td><code>remove_specials_chars</code></td>
-<td>
-<code>bool</code>
-</td>
-<td><p>اگر <code>True</code> باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.</p></td>
-<td>
-<code>True</code>
-</td>
-</tr>
-<tr>
-<td><code>decrease_repeated_chars</code></td>
-<td>
-<code>bool</code>
-</td>
-<td><p>اگر <code>True</code> باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.</p></td>
+<td><p>اگر <code>True‍</code> باشد فواصل اضافهٔ متن را حذف می‌کند.</p></td>
 <td>
 <code>True</code>
 </td>
@@ -567,21 +492,41 @@
 </td>
 </tr>
 <tr>
-<td><code>unicodes_replacement</code></td>
+<td><code>remove_diacritics</code></td>
 <td>
 <code>bool</code>
 </td>
-<td><p>اگر <code>True</code> باشد برخی از کاراکترهای یونیکد را با معادل نرمال‌شدهٔ آن جایگزین می‌کند.</p></td>
+<td><p>اگر <code>True</code> باشد اعرابِ حروف را حذف می‌کند.</p></td>
 <td>
 <code>True</code>
 </td>
 </tr>
 <tr>
-<td><code>seperate_mi</code></td>
+<td><code>affix_spacing</code></td>
 <td>
 <code>bool</code>
 </td>
-<td><p>اگر <code>True</code> باشد پیشوند «می» و «نمی» را در افعال جدا می‌کند.</p></td>
+<td><p>اگر <code>True</code> باشد فواصل را در پیشوندها و پسوندها اصلاح می‌کند.</p></td>
+<td>
+<code>True</code>
+</td>
+</tr>
+<tr>
+<td><code>token_based</code></td>
+<td>
+<code>bool</code>
+</td>
+<td><p>اگر <code>True‍</code> باشد متن به‌شکل توکن‌به‌توکن نرمالایز می‌شود نه یکجا.</p></td>
+<td>
+<code>False</code>
+</td>
+</tr>
+<tr>
+<td><code>punctuation_spacing</code></td>
+<td>
+<code>bool</code>
+</td>
+<td><p>اگر <code>True</code> باشد فواصل را در نشانه‌های سجاوندی اصلاح می‌کند.</p></td>
 <td>
 <code>True</code>
 </td>
@@ -643,15 +588,24 @@
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.remove_diacritics">
-<code class="highlight language-python"><span class="n">remove_diacritics</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.remove_diacritics" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.character_refinement">
+<code class="highlight language-python"><span class="n">character_refinement</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.character_refinement" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>اِعراب را از متن حذف می‌کند.</p>
+<p>حروف متن را به حروف استاندارد فارسی تبدیل می‌کند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">remove_diacritics</span><span class="p">(</span><span class="s1">'حَذفِ اِعراب'</span><span class="p">)</span>
-<span class="go">'حذف اعراب'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'اصلاح كاف و ياي عربي'</span><span class="p">)</span>
+<span class="go">'اصلاح کاف و یای عربی'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'عراق سال 2012 قراردادی به ارزش "4.2 میلیارد دلار" برای خرید تجهیزات نظامی با روسیه امضا  کرد.'</span><span class="p">)</span>
+<span class="go">'عراق سال ۲۰۱۲ قراردادی به ارزش «۴٫۲ میلیارد دلار» برای خرید تجهیزات نظامی با روسیه امضا کرد.'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'رمــــان'</span><span class="p">)</span>
+<span class="go">'رمان'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">character_refinement</span><span class="p">(</span><span class="s1">'بُشقابِ مَن را بِگیر'</span><span class="p">)</span>
+<span class="go">'بشقاب من را بگیر'</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -669,7 +623,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی که باید اعراب آن حذف شود.</p></td>
+<td><p>متنی که باید حروف آن استانداردسازی شود.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -689,22 +643,28 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی بدون اعراب.</p></td>
+<td><p>متنی با حروف استاندارد فارسی.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.remove_specials_chars">
-<code class="highlight language-python"><span class="n">remove_specials_chars</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.remove_specials_chars" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.punctuation_spacing">
+<code class="highlight language-python"><span class="n">punctuation_spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.punctuation_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.</p>
+<p>فاصله‌گذاری‌های اشتباه را در نشانه‌های سجاوندی اصلاح می‌کند. </p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">remove_specials_chars</span><span class="p">(</span><span class="s1">'پیامبر اکرم ﷺ'</span><span class="p">)</span>
-<span class="go">'پیامبر اکرم'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اصلاح ( پرانتزها ) در متن .'</span><span class="p">)</span>
+<span class="go">'اصلاح (پرانتزها) در متن.'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'نسخه 0.5 در ساعت 22:00 تهران،1396'</span><span class="p">)</span>
+<span class="go">'نسخه 0.5 در ساعت 22:00 تهران، 1396'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">punctuation_spacing</span><span class="p">(</span><span class="s1">'اتریش ۷.۹ میلیون.'</span><span class="p">)</span>
+<span class="go">'اتریش ۷.۹ میلیون.'</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -722,7 +682,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی که باید کاراکترها و نشانه‌های اضافهٔ آن حذف شود.</p></td>
+<td><p>متنی که باید فاصله‌گذاری‌های اشتباه آن در نشانه‌های سجاوندی اصلاح شود.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -742,22 +702,34 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی بدون کاراکترها و نشانه‌های اضافه.</p></td>
+<td><p>متنی با فاصله‌گذاری صحیحِ‌ نشانه‌های سجاوندی.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.decrease_repeated_chars">
-<code class="highlight language-python"><span class="n">decrease_repeated_chars</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.decrease_repeated_chars" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.affix_spacing">
+<code class="highlight language-python"><span class="n">affix_spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+<a class="headerlink" href="#hazm.Normalizer.Normalizer.affix_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>تکرارهای زائد حروف را در کلماتی مثل سلامممممم حذف می‌کند و در مواردی که نمی‌تواند تشخیص دهد دست کم به دو تکرار کاهش می‌دهد.</p>
+<p>فاصله‌گذاری‌های اشتباه را در پسوندها و پیشوندها اصلاح می‌کند.</p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">decrease_repeated_chars</span><span class="p">(</span><span class="s1">'سلامممم به همه'</span><span class="p">)</span>
-<span class="go">'سلام به همه'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'خانه ی پدری'</span><span class="p">)</span>
+<span class="go">'خانه‌ی پدری'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'فاصله میان پیشوند ها و پسوند ها را اصلاح می کند.'</span><span class="p">)</span>
+<span class="go">'فاصله میان پیشوند‌ها و پسوند‌ها را اصلاح می‌کند.'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'می روم'</span><span class="p">)</span>
+<span class="go">'می‌روم'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'حرفه ای'</span><span class="p">)</span>
+<span class="go">'حرفه‌ای'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">affix_spacing</span><span class="p">(</span><span class="s1">'محبوب ترین ها'</span><span class="p">)</span>
+<span class="go">'محبوب‌ترین‌ها'</span>
 </code></pre></div>
 <p><strong>پارامترها:</strong></p>
 <table>
@@ -775,7 +747,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی که باید تکرارهای زائد آن حذف شود.</p></td>
+<td><p>متنی که باید فاصله‌گذاری‌های اشتباهِ آن در پسوندها و پیشوندها اصلاح شود.</p></td>
 <td>
 <span class="required-parameter">اجباری</span>
 </td>
@@ -795,274 +767,7 @@
 <td>
 <code>str</code>
 </td>
-<td><p>متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.persian_style">
-<code class="highlight language-python"><span class="n">persian_style</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.persian_style" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>برخی از حروف و نشانه‌ها را با حروف و نشانه‌های فارسی جایگزین می‌کند.</p>
-<p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">persian_style</span><span class="p">(</span><span class="s1">'"نرمال‌سازی"'</span><span class="p">)</span>
-<span class="go">'«نرمال‌سازی»'</span>
-</code></pre></div>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید حروف و نشانه‌های آن با حروف و نشانه‌های فارسی جایگزین شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی با حروف و نشانه‌های فارسی‌سازی شده.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.persian_number">
-<code class="highlight language-python"><span class="n">persian_number</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.persian_number" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>اعداد لاتین و علامت % را با معادل فارسی آن جایگزین می‌کند</p>
-<p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">persian_number</span><span class="p">(</span><span class="s1">'5% رشد داشته است.'</span><span class="p">)</span>
-<span class="go">'۵٪ رشد داشته است.'</span>
-</code></pre></div>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید اعداد لاتین و علامت % آن با معادل فارسی جایگزین شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی با اعداد و علامت ٪ فارسی.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.unicodes_replacement">
-<code class="highlight language-python"><span class="n">unicodes_replacement</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.unicodes_replacement" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>برخی از کاراکترهای خاص یونیکد را با معادلِ نرمال آن جایگزین می‌کند. غالباً این کار فقط در مواردی صورت می‌گیرد که یک کلمه در قالب یک کاراکتر یونیکد تعریف شده است.</p>
-<p><strong>فهرست این کاراکترها و نسخهٔ جایگزین آن:</strong></p>
-<table>
-<thead>
-<tr>
-<th>کاراکتر</th>
-<th>نسخهٔ جایگزین</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>﷽</td>
-<td>بسم الله الرحمن الرحیم</td>
-</tr>
-<tr>
-<td>﷼</td>
-<td>ریال</td>
-</tr>
-<tr>
-<td>ﷰ، ﷹ</td>
-<td>صلی</td>
-</tr>
-<tr>
-<td>ﷲ</td>
-<td>الله</td>
-</tr>
-<tr>
-<td>ﷳ</td>
-<td>اکبر</td>
-</tr>
-<tr>
-<td>ﷴ</td>
-<td>محمد</td>
-</tr>
-<tr>
-<td>ﷵ</td>
-<td>صلعم</td>
-</tr>
-<tr>
-<td>ﷶ</td>
-<td>رسول</td>
-</tr>
-<tr>
-<td>ﷷ</td>
-<td>علیه</td>
-</tr>
-<tr>
-<td>ﷸ</td>
-<td>وسلم</td>
-</tr>
-<tr>
-<td>ﻵ، ﻶ، ﻷ، ﻸ، ﻹ، ﻺ، ﻻ، ﻼ</td>
-<td>لا</td>
-</tr>
-</tbody>
-</table>
-<p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">unicodes_replacement</span><span class="p">(</span><span class="s1">'حضرت ﷴ صلوات الله علیه)'</span><span class="p">)</span>
-<span class="go">'حضرت محمد صلوات الله علیه'</span>
-</code></pre></div>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که برخی از کاراکترهای یونیکد آن با شکل استاندارد جایگزین شده است.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="hazm.Normalizer.Normalizer.seperate_mi">
-<code class="highlight language-python"><span class="n">seperate_mi</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-<a class="headerlink" href="#hazm.Normalizer.Normalizer.seperate_mi" title="Permanent link">¶</a></h3>
-<div class="doc doc-contents">
-<p>پیشوند «می» و «نمی» را در افعال جدا کرده و با نیم‌فاصله می‌چسباند.</p>
-<p><strong>مثال‌ها:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">seperate_mi</span><span class="p">(</span><span class="s1">'نمیدانم چه میگفت'</span><span class="p">)</span>
-<span class="go">'نمی‌دانم چه می‌گفت'</span>
-</code></pre></div>
-<p><strong>پارامترها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نام</th>
-<th>نوع</th>
-<th>توضیحات</th>
-<th>پیش‌فرض</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی که باید پیشوند «می» و «نمی» در آن جدا شود.</p></td>
-<td>
-<span class="required-parameter">اجباری</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>خروجی‌ها:</strong></p>
-<table>
-<thead>
-<tr>
-<th>نوع</th>
-<th>توضیحات</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>str</code>
-</td>
-<td><p>متنی با «می» و «نمی» جدا شده.</p></td>
+<td><p>متنی با فاصله‌گذاری صحیحِ پیشوندها و پسوندها.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1073,22 +778,27 @@
 <code class="highlight language-python"><span class="n">token_spacing</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></code>
 <a class="headerlink" href="#hazm.Normalizer.Normalizer.token_spacing" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
-در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
+<p>توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.</p>
+<p>در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
 برای مثال: <code>['زمین', 'لرزه', 'ای']</code> تبدیل می‌شود به: <code>['زمین‌لرزه‌ای']</code></p>
 <p><strong>مثال‌ها:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="n">token_based</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'کتاب'</span><span class="p">,</span> <span class="s1">'ها'</span><span class="p">])</span>
 <span class="go">['کتاب‌ها']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'او'</span><span class="p">,</span> <span class="s1">'می'</span><span class="p">,</span> <span class="s1">'رود'</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'او'</span><span class="p">,</span> <span class="s1">'می'</span><span class="p">,</span> <span class="s1">'رود'</span><span class="p">])</span>
 <span class="go">['او', 'می‌رود']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'ماه'</span><span class="p">,</span> <span class="s1">'می'</span><span class="p">,</span> <span class="s1">'سال'</span><span class="p">,</span> <span class="s1">'جدید'</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'ماه'</span><span class="p">,</span> <span class="s1">'می'</span><span class="p">,</span> <span class="s1">'سال'</span><span class="p">,</span> <span class="s1">'جدید'</span><span class="p">])</span>
 <span class="go">['ماه', 'می', 'سال', 'جدید']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'اخلال'</span><span class="p">,</span> <span class="s1">'گر'</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'اخلال'</span><span class="p">,</span> <span class="s1">'گر'</span><span class="p">])</span>
 <span class="go">['اخلال‌گر']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'پرداخت'</span><span class="p">,</span> <span class="s1">'شده'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'پرداخت'</span><span class="p">,</span> <span class="s1">'شده'</span><span class="p">,</span> <span class="s1">'است'</span><span class="p">])</span>
 <span class="go">['پرداخت', 'شده', 'است']</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'زمین'</span><span class="p">,</span> <span class="s1">'لرزه'</span><span class="p">,</span> <span class="s1">'ای'</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span><span class="o">.</span><span class="n">token_spacing</span><span class="p">([</span><span class="s1">'زمین'</span><span class="p">,</span> <span class="s1">'لرزه'</span><span class="p">,</span> <span class="s1">'ای'</span><span class="p">])</span>
 <span class="go">['زمین‌لرزه‌ای']</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>    Args:
