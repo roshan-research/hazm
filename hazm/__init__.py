@@ -22,6 +22,7 @@ from .SequenceTagger import SequenceTagger, IOBTagger
 from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
 from .DependencyParser import DependencyParser, MaltParser, TurboParser
+from .Lemmatizer import Conjugation
 
 
 from .utils import words_list, stopwords_list

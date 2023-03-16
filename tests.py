@@ -26,6 +26,7 @@ modules = {
     "tnews": TNewsReader,
     "quran": QuranCorpusReader,
     "miras_text": MirasTextReader,
+    
     # "tagger": SequenceTagger,
     # "treebank": TreebankReader,
 }
