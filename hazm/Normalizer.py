@@ -79,10 +79,9 @@ class Normalizer(object):
                 (r"\u200c{2,}", "\u200c"),  # remove extra ZWNJs
                 (r"\u200c{1,} ", " "),  # remove unneded ZWNJs before space
                 (r" \u200c{1,}", " "),  # remove unneded ZWNJs after space
-                (r"\b\u200c*\B",""), # remove unneded ZWNJs at the beginning of words
-                (r"\B\u200c*\b",""), # remove unneded ZWNJs at the end of words
+                (r"\b\u200c*\B", ""),  # remove unneded ZWNJs at the beginning of words
+                (r"\B\u200c*\b", ""),  # remove unneded ZWNJs at the end of words
                 (r"[ـ\r]", ""),  # remove keshide, carriage returns
-
             ]
 
             punc_after, punc_before = r"\.:!،؛؟»\]\)\}", r"«\[\(\{"
