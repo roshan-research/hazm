@@ -55,7 +55,7 @@ class InformalNormalizer(Normalizer):
 
         def informal_to_formal_conjucation(i, f, flag):
             iv = self.informal_conjugations(i)
-            fv = self.lemmatizer.conjugations(f)
+            fv = self.lemmatizer.conjugation.get_all(f)
             res = {}
             if flag:
                 for i, j in zip(iv, fv[48:]):
