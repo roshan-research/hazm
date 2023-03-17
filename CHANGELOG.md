@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Excremental Informal normalizer.
 - A list of stop words.
-- ابزار تقطیع واژه‌های به‌هم‌پیوسته.
+- A tool for separating contiguous words.
 - Quran corpus reader.
 - Wikipedia corpus reader.
 - Persica corpus reader.
@@ -66,8 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2014-12-16
 
 ### Added
-- تجزیه سطحی مبتنی بر قاعده.
-- مبدل درخت تجزیه وابستگی به تجزیه سطحی.
+- Rule-based dependency parsing.
+- Dependency parser to tree converter.
 - TreeBank corpus reader.
 - VerbValency corpus reader.
 
