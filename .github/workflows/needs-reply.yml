@@ -1,8 +1,7 @@
 name: Close old issues
 
 on:
-  schedule:
-    - cron: "0 0 0 * *" # Run 00:00 every month
+  workflow_dispatch:
 
 jobs:
   build:
