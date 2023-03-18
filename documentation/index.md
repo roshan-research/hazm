@@ -43,7 +43,7 @@ $ pip install hazm
 </video>
 
 سپس [منابع هضم را دانلود
-کنید](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) و
+کنید](https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip) و
 در فولدری تحت عنوان resources در پروژهٔ خود قرار دهید.
 
 !!! note ""

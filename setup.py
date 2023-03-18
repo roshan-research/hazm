@@ -9,7 +9,7 @@ setup(
     description="Python library for digesting Persian text.",
     author="Alireza Nourian",
     author_email="az.nourian@gmail.com",
-    url="http://www.sobhe.ir/hazm/",
+    url="https://www.roshan-ai.ir/hazm/",
     long_description=codecs.open(
         path.join(path.abspath(path.dirname(__file__)), "README.md"), encoding="utf-8"
     ).read(),

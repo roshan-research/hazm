@@ -75,13 +75,13 @@ The latest stable version of Hazm can be installed through `pip`:
 
 But for testing or using Hazm with the latest updates you may use:
 
-	pip install https://github.com/sobhe/hazm/archive/master.zip --upgrade
+	pip install https://github.com/roshan-research/hazm/archive/master.zip --upgrade
 
-We have also trained [tagger and parser models](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip). You may put these models in the `resources` folder of your project.
+We have also trained [tagger and parser models](https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip). You may put these models in the `resources` folder of your project.
 
 ## Extensions
 
-Note: These are not official versions of hazm, not uptodate on functionality and are not supported by Sobhe.
+Note: These are not official versions of hazm, not uptodate on functionality and are not supported by Roshan.
 
 + [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java port of Hazm
 + [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# port of Hazm

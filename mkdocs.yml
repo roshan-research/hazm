@@ -2,8 +2,8 @@
 site_name: هضم | کتابخانهٔ پردازش زبان فارسی
 site_description: کتابخانه‌ای پایتونی برای پردازش زبان فارسی
 site_author: روشن
-site_url: https://sobhe.github.io
-repo_url: https://github.com/sobhe/hazm
+site_url: https://roshan-research.github.io
+repo_url: https://github.com/roshan-research/hazm
 
 remote_branch: master
 repo_name: hazm
@@ -13,7 +13,7 @@ docs_dir: documentation
 site_dir: docs/docs
 
 copyright: |
-    کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/sobhe/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+    کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
     <a href="#__consent">تغییر تنظیمات کوکی</a>
 
 theme:
@@ -105,7 +105,7 @@ nav:
           - هضم در زبان‌های دیگر: content/in-other-languages.md
 
 extra:
-    repo_url: https://github.com/sobhe/hazm
+    repo_url: https://github.com/roshan-research/hazm
     consent:
         title: درخواست استفاده از کوکی
         description: >-
@@ -115,7 +115,7 @@ extra:
 
     social:
         - icon: fontawesome/brands/github
-          link: https://github.com/sobhe
+          link: https://github.com/roshan-research
 
 extra_javascript:
     - https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js
