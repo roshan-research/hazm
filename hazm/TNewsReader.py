@@ -1,13 +1,12 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تی‌نیوز است.
 
 """
 
-from __future__ import print_function
+
 import os
 import sys
 import re
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -15,15 +14,15 @@ class TNewsReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ تی‌نیوز است.
     
     Args:
-        root (str): مسیر فولدر حاوی فایل‌های پیکره.
+        root: مسیر فولدر حاوی فایل‌های پیکره.
     
     """
 
-    def __init__(self, root):
+    def __init__(self, root: str):
         self._root = root
         self.cleaner = re.compile(r"<[^<>]+>")
 
-    def docs(self):
+    def docs(self) -> Iterator[dict]:
         """خبرها را در قالب یک `iterator` برمی‌گرداند.
         
         هر خبر، شی‌ای متشکل از چند پارامتر است:
@@ -97,7 +96,7 @@ class TNewsReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def texts(self):
+    def texts(self) -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
         
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
@@ -110,7 +109,7 @@ class TNewsReader:
             True
         
         Yields:
-            (str): متن خبر بعدی.
+            متن خبر بعدی.
         
         """
         for doc in self.docs():

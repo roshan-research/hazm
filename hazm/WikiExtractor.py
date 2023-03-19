@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل توابعی برای استخراج متن به‌شکل تمیز از دیتابیس خام ویکی‌پدیا
 است.
 
@@ -62,12 +60,12 @@ collecting template definitions.
 
 """
 
-from __future__ import unicode_literals, division
+
 
 import sys
 import argparse
 import bz2
-import codecs
+
 import cgi
 import fileinput
 import logging
@@ -83,15 +81,15 @@ from timeit import default_timer
 PY2 = sys.version_info[0] == 2
 # Python 2.7 compatibiity
 if PY2:
-    from urllib import quote
-    from htmlentitydefs import name2codepoint
-    from itertools import izip as zip, izip_longest as zip_longest
+    from urllib.parse import quote
+    from html.entities import name2codepoint
+    from itertools import zip_longest as zip_longest
 
     range = xrange  # Use Python 3 equivalent
-    chr = unichr  # Use Python 3 equivalent
-    text_type = unicode
+    chr = chr  # Use Python 3 equivalent
+    text_type = str
 
-    class SimpleNamespace(object):
+    class SimpleNamespace:
         def __init__(self, **kwargs):
             self.__dict__.update(kwargs)
 
@@ -221,11 +219,11 @@ options = SimpleNamespace(
 
 ##
 # Keys for Template and Module namespaces
-templateKeys = set(["10", "828"])
+templateKeys = {"10", "828"}
 
 ##
 # Regex for identifying disambig pages
-filter_disambig_page_pattern = re.compile("{{disambig(uation)?(\|[^}]*)?}}")
+filter_disambig_page_pattern = re.compile(r"{{disambig(uation)?(\|[^}]*)?}}")
 
 
 ##
@@ -242,7 +240,7 @@ def keepPage(ns, page):
 
 
 def get_url(uid):
-    return "%s?curid=%s" % (options.urlbase, uid)
+    return "{}?curid={}".format(options.urlbase, uid)
 
 
 # =========================================================================
@@ -349,7 +347,7 @@ def unescape(text):
         except:
             return text  # leave as is
 
-    return re.sub("&#?(\w+);", fixup, text)
+    return re.sub(r"&#?(\w+);", fixup, text)
 
 
 # Match HTML comments
@@ -379,12 +377,12 @@ selfClosing_tag_patterns = [
 placeholder_tag_patterns = [
     (
         re.compile(
-            r"<\s*%s(\s*| [^>]+?)>.*?<\s*/\s*%s\s*>" % (tag, tag),
+            r"<\s*{}(\s*| [^>]+?)>.*?<\s*/\s*{}\s*>".format(tag, tag),
             re.DOTALL | re.IGNORECASE,
         ),
         repl,
     )
-    for tag, repl in placeholder_tags.items()
+    for tag, repl in list(placeholder_tags.items())
 ]
 
 # Match preformatted lines
@@ -469,7 +467,7 @@ class TemplateText(text_type):
         return self
 
 
-class TemplateArg(object):
+class TemplateArg:
     """
     parameter to a template.
     Has a name and a default value, both of which are Templates.
@@ -499,7 +497,7 @@ class TemplateArg(object):
 
     def __str__(self):
         if self.default:
-            return "{{{%s|%s}}}" % (self.name, self.default)
+            return "{{{{{{{}|{}}}}}}}".format(self.name, self.default)
         else:
             return "{{{%s}}}" % self.name
 
@@ -526,7 +524,7 @@ class TemplateArg(object):
         return res
 
 
-class Frame(object):
+class Frame:
     def __init__(self, title="", args=[], prev=None):
         self.title = title
         self.args = args
@@ -545,7 +543,7 @@ class Frame(object):
         while prev:
             if res:
                 res += ", "
-            res += "(%s, %s)" % (prev.title, prev.args)
+            res += "({}, {})".format(prev.title, prev.args)
             prev = prev.prev
         return "<Frame [" + res + "]>"
 
@@ -555,7 +553,7 @@ class Frame(object):
 substWords = "subst:|safesubst:"
 
 
-class Extractor(object):
+class Extractor:
     """
     An extraction task on a article.
     
@@ -604,14 +602,14 @@ class Extractor(object):
             out.write("\n")
         else:
             if options.print_revision:
-                header = '<doc id="%s" revid="%s" url="%s" title="%s">\n' % (
+                header = '<doc id="{}" revid="{}" url="{}" title="{}">\n'.format(
                     self.id,
                     self.revid,
                     url,
                     self.title,
                 )
             else:
-                header = '<doc id="%s" url="%s" title="%s">\n' % (
+                header = '<doc id="{}" url="{}" title="{}">\n'.format(
                     self.id,
                     url,
                     self.title,
@@ -837,8 +835,8 @@ class Extractor(object):
         text = text.replace("\t", " ")
         text = spaces.sub(" ", text)
         text = dots.sub("...", text)
-        text = re.sub(" (,:\.\)\]»)", r"\1", text)
-        text = re.sub("(\[\(«) ", r"\1", text)
+        text = re.sub(r" (,:\.\)\]»)", r"\1", text)
+        text = re.sub(r"(\[\(«) ", r"\1", text)
         text = re.sub(
             r"\n\W+?\n", "\n", text, flags=re.U
         )  # lines with only punctuations
@@ -1277,8 +1275,8 @@ def findMatchingBraces(text, ldelim=0):
         reOpen = re.compile("[{]{%d,}" % ldelim)  # at least ldelim
         reNext = re.compile("[{]{2,}|}{2,}")  # at least 2
     else:
-        reOpen = re.compile("{{2,}|\[{2,}")
-        reNext = re.compile("{{2,}|}{2,}|\[{2,}|]{2,}")  # at least 2
+        reOpen = re.compile(r"{{2,}|\[{2,}")
+        reNext = re.compile(r"{{2,}|}{2,}|\[{2,}|]{2,}")  # at least 2
 
     cur = 0
     while True:
@@ -1618,7 +1616,7 @@ modules = {
 # variables
 
 
-class MagicWords(object):
+class MagicWords:
     """
     One copy in each Extractor.
     
@@ -1906,7 +1904,7 @@ def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
 
 def sharp_iferror(extr, test, then="", Else=None, *args):
     if re.match(
-        '<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"',
+        r'<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"',
         test,
     ):
         return extr.expand(then.strip())
@@ -2078,7 +2076,7 @@ def define_template(title, page):
         return
 
     # check for redirects
-    m = re.match("#REDIRECT.*?\[\[([^\]]*)]]", page[0], re.IGNORECASE)
+    m = re.match(r"#REDIRECT.*?\[\[([^\]]*)]]", page[0], re.IGNORECASE)
     if m:
         options.redirects[title] = m.group(1)  # normalizeTitle(m.group(1))
         return
@@ -2516,7 +2514,7 @@ def makeInternalLink(title, label):
         if colon2 > 1 and title[colon + 1 : colon2] not in options.acceptedNamespaces:
             return ""
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(title.encode("utf-8")), label)
+        return '<a href="{}">{}</a>'.format(quote(title.encode("utf-8")), label)
     else:
         return label
 
@@ -2566,7 +2564,7 @@ wgUrlProtocols = [
 EXT_LINK_URL_CLASS = r'[^][<>"\x00-\x20\x7F\s]'
 ANCHOR_CLASS = r"[^][\x00-\x08\x0a-\x1F]"
 ExtLinkBracketedRegex = re.compile(
-    "\[(((?i)"
+    r"\[(((?i)"
     + "|".join(wgUrlProtocols)
     + ")"
     + EXT_LINK_URL_CLASS
@@ -2632,14 +2630,14 @@ def makeExternalLink(url, anchor):
     
     """
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(url.encode("utf-8")), anchor)
+        return '<a href="{}">{}</a>'.format(quote(url.encode("utf-8")), anchor)
     else:
         return anchor
 
 
 def makeExternalImage(url, alt=""):
     if options.keepLinks:
-        return '<img src="%s" alt="%s">' % (url, alt)
+        return '<img src="{}" alt="{}">'.format(url, alt)
     else:
         return alt
 
@@ -2647,7 +2645,7 @@ def makeExternalImage(url, alt=""):
 # ----------------------------------------------------------------------
 
 # match tail after wikilink
-tailRE = re.compile("\w+")
+tailRE = re.compile(r"\w+")
 
 syntaxhighlight = re.compile(
     "&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;", re.DOTALL
@@ -2806,7 +2804,7 @@ def handle_unicode(entity):
 # Output
 
 
-class NextFile(object):
+class NextFile:
     """
     Synchronous generation of next available file name.
     
@@ -2841,7 +2839,7 @@ class NextFile(object):
         return "%s/wiki_%02d" % (self._dirname(), self.file_index)
 
 
-class OutputSplitter(object):
+class OutputSplitter:
     """
     File-like object, that splits output to multiple files of a given max size.
     
@@ -2897,7 +2895,7 @@ def load_templates(file, output_file=None):
     options.modulePrefix = options.moduleNamespace + ":"
 
     if output_file:
-        output = codecs.open(output_file, "wb", "utf-8")
+        output = open(output_file, "wb", "utf-8")
     for page_count, page_data in enumerate(pages_from(file)):
         id, revid, title, ns, page = page_data
         if not output_file and (

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت
 برچسب‌زنی در نسخهٔ حاضر ۹۷.۱ درصد [^1] است.**
 [^1]:
@@ -7,7 +5,7 @@
 
 """
 
-from __future__ import unicode_literals
+
 from nltk.tag import stanford
 from .SequenceTagger import SequenceTagger
 
@@ -27,7 +25,7 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
     
     """
 
-    def __init__(self, model_filename, path_to_jar, *args, **kwargs):
+    def __init__(self, model_filename, path_to_jar, *args, **kwargs):        
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
             model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs
@@ -48,5 +46,5 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
         """
     
     """
-        refined = map(lambda s: [w.replace(" ", "_") for w in s], sentences)
+        refined = [[w.replace(" ", "_") for w in s] for s in sentences]
         return super(stanford.StanfordPOSTagger, self).tag_sents(refined)

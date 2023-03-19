@@ -23,9 +23,7 @@ from .POSTagger import POSTagger, StanfordPOSTagger
 from .Chunker import Chunker, RuleBasedChunker, tree2brackets
 from .DependencyParser import DependencyParser, MaltParser, TurboParser
 
-
 from .utils import words_list, stopwords_list
-
 
 def sent_tokenize(text):
     if not hasattr(sent_tokenize, "tokenizer"):

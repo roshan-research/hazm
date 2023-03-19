@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ پرسیکا است.
 
 [پیکرهٔ پرسیکا](https://www.peykaregan.ir/dataset/%D9%BE%D8%B1%D8%B3%DB%8C%DA%A
@@ -12,20 +10,18 @@
 داده‌کاوی است.
 
 """
-
-from __future__ import print_function
-import codecs
+from typing import Iterator
 
 
 class PersicaReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ پرسیکا است.
     
     Args:
-        csv_file (str): مسیر فایلِ پیکره با پسوند csv.
+        csv_file: مسیر فایلِ پیکره با پسوند csv.
     
     """
 
-    def __init__(self, csv_file):
+    def __init__(self, csv_file: str) -> Iterator[dict[str, str]]:
         self._csv_file = csv_file
 
     def docs(self):
@@ -47,11 +43,11 @@ class PersicaReader:
             843656
         
         Yields:
-            (Dict): خبر بعدی.
+            خبر بعدی.
         
         """
         lines = []
-        for line in codecs.open(self._csv_file, encoding="utf-8-sig"):
+        for line in open(self._csv_file, encoding="utf-8-sig"):
             line = line.strip()
             if line:
                 if line.endswith(","):
@@ -69,7 +65,7 @@ class PersicaReader:
                     }
                     lines = []
 
-    def texts(self):
+    def texts(self) -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
         
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
@@ -82,7 +78,7 @@ class PersicaReader:
             True
         
         Yields:
-            (str): متنِ خبر بعدی.
+            متنِ خبر بعدی.
         
         """
         for doc in self.docs():

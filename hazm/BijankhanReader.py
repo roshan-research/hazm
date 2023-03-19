@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ بی‌جن‌خان است.
 
 [پیکرهٔ
@@ -11,8 +9,7 @@
 
 """
 
-from __future__ import unicode_literals
-import re, codecs
+
 from .Normalizer import *
 from .PeykareReader import join_verb_parts
 
@@ -64,27 +61,29 @@ class BijankhanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ بی‌جن‌خان است.
     
     Args:
-        bijankhan_file (str): مسیر فایلِ پیکره.
-        joined_verb_parts (bool, optional): اگر `True‍` باشد افعال چندبخشی را با _ به‌هم می‌چسباند.
-        pos_map (str, optional): دیکشنری مبدل برچسب‌های ریز به درشت.
+        bijankhan_file: مسیر فایلِ پیکره.
+        joined_verb_parts: اگر `True‍` باشد افعال چندبخشی را با _ به‌هم می‌چسباند.
+        pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
     
     """
 
-    def __init__(self, bijankhan_file, joined_verb_parts=True, pos_map=default_pos_map):
+    def __init__(self, bijankhan_file: str, joined_verb_parts:bool=True, pos_map:str=None):
+        if pos_map is None:
+            pos_map = default_pos_map
         self._bijankhan_file = bijankhan_file
         self._joined_verb_parts = joined_verb_parts
         self._pos_map = pos_map
         self._normalizer = Normalizer(correct_spacing=False)
 
-    def _sentences(self):
+    def _sentences(self) -> str:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
         
         Yields:
-            (str): جملهٔ بعدی.
+            جملهٔ بعدی.
         
         """
         sentence = []
-        for line in codecs.open(self._bijankhan_file, encoding="utf-8"):
+        for line in open(self._bijankhan_file, encoding="utf-8"):
             parts = re.split("  +", line.strip())
             if len(parts) == 2:
                 word, tag = parts
@@ -96,7 +95,7 @@ class BijankhanReader:
                         yield sentence
                         sentence = []
 
-    def sents(self):
+    def sents(self) -> list[tuple[str,str]]:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
         
         Examples:
@@ -105,7 +104,7 @@ class BijankhanReader:
             [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
         
         Yields:
-            (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
+            جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
         
         """
         map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))

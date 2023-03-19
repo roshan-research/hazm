@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای ریشه‌یابی کلمات است.
 
 فرق بین [Lemmatizer](./Lemmatizer.md) و [Stemmer](./Stemmer.md) این است که
@@ -12,31 +10,32 @@
 
 """
 
-from __future__ import unicode_literals
+
 from .utils import default_words, default_verbs
 from .Stemmer import Stemmer
 from .WordTokenizer import WordTokenizer
 
 
-class Lemmatizer(object):
+class Lemmatizer:
     """این کلاس شامل توابعی برای ریشه‌یابی کلمات است.
     
     Args:
-        words_file (str, optional): ریشه‌یابی کلمات از روی این فایل صورت
+        words_file: ریشه‌یابی کلمات از روی این فایل صورت
             می‌گیرد. هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
             این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
             ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
-        verbs_file (str, optional): اشکال صرفی فعل از روی این فایل ساخته
+        verbs_file: اشکال صرفی فعل از روی این فایل ساخته
             می‌شود. هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
             این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
             ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
-        joined_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با کاراکتر زیرخط به هم می‌چسباند.
+        joined_verb_parts: اگر `True` باشد افعال چندبخشی را با کاراکتر زیرخط به هم می‌چسباند.
     
     """
 
     def __init__(
-        self, words_file=default_words, verbs_file=default_verbs, joined_verb_parts=True
+        self, words_file:str=default_words, verbs_file:str=default_verbs, joined_verb_parts:bool=True
     ):
+        self.words_file = words_file
         self.verbs = {}
         self.stemmer = Stemmer()
 
@@ -57,7 +56,7 @@ class Lemmatizer(object):
                     for before_verb in tokenizer.before_verbs:
                         self.verbs[before_verb + "_" + bon] = verb
 
-    def lemmatize(self, word, pos=""):
+    def lemmatize(self, word:str, pos:str="") -> str:
         """ریشهٔ کلمه را پیدا می‌کند.
         
         پارامتر `pos` نوع کلمه است: (اسم، فعل، صفت و ...) و به این خاطر لازم
@@ -83,11 +82,11 @@ class Lemmatizer(object):
             'اجتماعی'
         
         Args:
-            word (str): کلمه‌ای که باید پردازش شود.
-            pos (str, optional): نوع کلمه. این پارامتر سه مقدار `V` (فعل) و `AJ` (صفت) و `PRO` (ضمیر) را می‌پذیرد.
+            word: کلمه‌ای که باید پردازش شود.
+            pos: نوع کلمه. این پارامتر سه مقدار `V` (فعل) و `AJ` (صفت) و `PRO` (ضمیر) را می‌پذیرد.
         
         Returns:
-            (str): ریشهٔ کلمه
+            ریشهٔ کلمه
         
         """
         if not pos and word in self.words:
@@ -111,7 +110,7 @@ class Lemmatizer(object):
 
         return word
 
-    def conjugations(self, verb):
+    def conjugations(self, verb:str) -> list[str]:
         """صورت‌های صرفی فعل را برمی‌گرداند.
         
         Examples:
@@ -122,10 +121,10 @@ class Lemmatizer(object):
             ['آوردم', 'آوردی', 'آورد', 'آوردیم', 'آوردید', 'آوردند', 'نیاوردم', 'نیاوردی', 'نیاورد', 'نیاوردیم', 'نیاوردید', 'نیاوردند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آوردم', 'می‌آوردی', 'می‌آورد', 'می‌آوردیم', 'می‌آوردید', 'می‌آوردند', 'نمی‌آوردم', 'نمی‌آوردی', 'نمی‌آورد', 'نمی‌آوردیم', 'نمی‌آوردید', 'نمی‌آوردند', 'آورده‌ام', 'آورده‌ای', 'آورده', 'آورده‌ایم', 'آورده‌اید', 'آورده‌اند', 'نیاورده‌ام', 'نیاورده‌ای', 'نیاورده', 'نیاورده‌ایم', 'نیاورده‌اید', 'نیاورده‌اند', 'آورم', 'آوری', 'آورد', 'آوریم', 'آورید', 'آورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'می‌آورم', 'می‌آوری', 'می‌آورد', 'می‌آوریم', 'می‌آورید', 'می‌آورند', 'نمی‌آورم', 'نمی‌آوری', 'نمی‌آورد', 'نمی‌آوریم', 'نمی‌آورید', 'نمی‌آورند', 'بیاورم', 'بیاوری', 'بیاورد', 'بیاوریم', 'بیاورید', 'بیاورند', 'نیاورم', 'نیاوری', 'نیاورد', 'نیاوریم', 'نیاورید', 'نیاورند', 'بیاور', 'نیاور']
         
         Args:
-            verb (str): فعلی که باید صرف شود.
+            verb: فعلی که باید صرف شود.
         
         Returns:
-            (List[str]): لیستِ صورت‌های صرفی فعل.
+            لیستِ صورت‌های صرفی فعل.
         
         """
 
@@ -143,7 +142,7 @@ class Lemmatizer(object):
         imperatives = ["ب" + present, "ن" + present]
 
         if present.endswith("ا") or present in ("آ", "گو"):
-            present = present + "ی"
+            present += "ی"
 
         ends = ["م", "ی", "د", "یم", "ید", "ند"]
         present_simples = [present + end for end in ends]
@@ -153,10 +152,10 @@ class Lemmatizer(object):
         ]
         present_not_subjunctives = ["ن" + item for item in present_simples]
 
-        with_nots = lambda items: items + list(map(lambda item: "ن" + item, items))
+        with_nots = lambda items: items + list(["ن" + item for item in items])
         aa_refinement = (
             lambda items: list(
-                map(lambda item: item.replace("بآ", "بیا").replace("نآ", "نیا"), items)
+                [item.replace("بآ", "بیا").replace("نآ", "نیا") for item in items]
             )
             if items[0].startswith("آ")
             else items

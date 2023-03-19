@@ -1,12 +1,10 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای استخراج جملاتِ متن است.
 
 برای استخراج کلمات از تابع [WordTokenizer()][hazm.WordTokenizer] استفاده کنید.
 
 """
 
-from __future__ import unicode_literals
+
 import re
 from nltk.tokenize.api import TokenizerI
 
@@ -17,9 +15,9 @@ class SentenceTokenizer(TokenizerI):
     """
 
     def __init__(self):
-        self.pattern = re.compile(r"([!\.\?⸮؟]+)[ \n]+")
+        self.pattern = re.compile(r'([!.?⸮؟]+)[ \n]+')
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> list[str]:
         """متن ورودی را به جملات سازندهٔ آن می‌شِکند.
         
         Examples:
@@ -28,10 +26,10 @@ class SentenceTokenizer(TokenizerI):
             ['جدا کردن ساده است.', 'تقریبا البته!']
         
         Args:
-            text (str): متنی که باید جملات آن استخراج شود.
+            text: متنی که باید جملات آن استخراج شود.
         
         Returns:
-            (List[str]): فهرست جملات استخراج‌شده.
+            فهرست جملات استخراج‌شده.
         
         """
         text = self.pattern.sub(r"\1\n\n", text)

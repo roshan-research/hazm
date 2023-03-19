@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ Peykare است.
 
 [peykare پیکرهٔ](https://www.peykaregan.ir/dataset/%D9%BE%DB%8C%DA%A9%D8%B1%D9%
@@ -17,13 +15,15 @@
 
 """
 
-from __future__ import unicode_literals
+
 import os, codecs
+from typing import Iterator
+
 from .Normalizer import Normalizer
 from .WordTokenizer import WordTokenizer
 
 
-def coarse_pos_u(tags, word):
+def coarse_pos_u(tags:list[str], word:str) -> list[str]:
     """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
     universal pos tags) تبدیل می‌کند.
     
@@ -32,10 +32,10 @@ def coarse_pos_u(tags, word):
         'NOUN'
     
     Args:
-        tags (List[str]): لیست برچسب‌های ریز.
+        tags: لیست برچسب‌های ریز.
     
     Returns:
-        (List[str]): لیست برچسب‌های درشت جهانی.
+        لیست برچسب‌های درشت جهانی.
     
     """
 
@@ -162,7 +162,7 @@ def coarse_pos_u(tags, word):
         return "NOUN"
 
 
-def coarse_pos_e(tags, word):
+def coarse_pos_e(tags: list[str], word) -> list[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
     
     Examples:
@@ -170,10 +170,10 @@ def coarse_pos_e(tags, word):
         'N'
     
     Args:
-        tags (List[str]): لیست برچسب‌های ریز.
+        tags: لیست برچسب‌های ریز.
     
     Returns:
-        (List[str]): لیست برچسب‌های درشت.
+        لیست برچسب‌های درشت.
     
     """
 
@@ -201,7 +201,7 @@ def coarse_pos_e(tags, word):
         return "N"
 
 
-def join_verb_parts(sentence):
+def join_verb_parts(sentence: list[tuple[str,str]]) -> list[tuple[str, str]]:
     """جمله را در قالب لیستی از `(توکن، برچسب)‌`ها می‌گیرد و توکن‌های مربوط به
     افعال چندبخشی را با کاراکتر زیرخط (_) به هم می‌چسباند.
     
@@ -210,10 +210,10 @@ def join_verb_parts(sentence):
         [('اولین', 'AJ'), ('سیاره', 'Ne'), ('خارج', 'AJ'), ('از', 'P'), ('منظومه', 'Ne'), ('شمسی', 'AJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
     
     Args:
-        sentence(List[Tuple[str,str]]): جمله در قالب لیستی از `(توکن، برچسب)`ها.
+        sentence: جمله در قالب لیستی از `(توکن، برچسب)`ها.
     
     Returns:
-        (List[Tuple[str, str]): لیستی از `(توکن، برچسب)`ها که در آن افعال چندبخشی در قالب یک توکن با کاراکتر زیرخط به هم چسبانده شده‌اند.
+        لیستی از `(توکن، برچسب)`ها که در آن افعال چندبخشی در قالب یک توکن با کاراکتر زیرخط به هم چسبانده شده‌اند.
     
     """
 
@@ -240,14 +240,14 @@ class PeykareReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ Peykare است.
     
     Args:
-        root (str): آدرس فولدر حاوی فایل‌های پیکره.
-        join_verb_parts (bool, optional): اگر `True‍` باشد افعال چندقسمتی به‌شکل چسبیده‌به‌هم برگردانده_می‌شود.
-        pos_map (str): دیکشنری مبدل برچسب‌های ریز به درشت.
+        root: آدرس فولدر حاوی فایل‌های پیکره.
+        join_verb_parts: اگر `True‍` باشد افعال چندقسمتی به‌شکل چسبیده‌به‌هم برگردانده_می‌شود.
+        pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
     
     """
 
     def __init__(
-        self, root, joined_verb_parts=True, pos_map=coarse_pos_e, universal_pos=False
+        self, root: str, joined_verb_parts: bool=True, pos_map: str=coarse_pos_e, universal_pos:bool=False
     ):
         self._root = root
         if pos_map is None:
@@ -259,11 +259,11 @@ class PeykareReader:
         self._joined_verb_parts = joined_verb_parts
         self._normalizer = Normalizer(correct_spacing=False)
 
-    def docs(self):
+    def docs(self) -> Iterator[str]:
         """اسناد را به شکل متن خام برمی‌گرداند.
         
         Yields:
-            (str): متن خام سند بعدی.
+            متن خام سند بعدی.
         
         """
 
@@ -276,16 +276,16 @@ class PeykareReader:
                     if text:
                         yield text
 
-    def doc_to_sents(self, document):
+    def doc_to_sents(self, document: str) -> list[[str,str]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
         
         هر جمله لیستی از `(کلمه, برچسب)`ها است.
         
         Args:
-            document (str): سندی که باید تبدیل شود.
+            document: سندی که باید تبدیل شود.
         
         Yields:
-            (List[(str,str)]): `ها جملهٔ بعدی در قالب لیستی از `(کلمه، برچسب).
+            `ها جملهٔ بعدی در قالب لیستی از `(کلمه، برچسب).
         
         """
 
@@ -305,7 +305,7 @@ class PeykareReader:
                     yield sentence
                 sentence = []
 
-    def sents(self):
+    def sents(self) -> list[tuple[str,str]]:
         """جملات پیکره را در قالب لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
         
         Examples:
@@ -314,7 +314,7 @@ class PeykareReader:
             [('دیرزمانی', 'N'), ('از', 'P'), ('راه‌اندازی', 'Ne'), ('شبکه‌ی', 'Ne'), ('خبر', 'Ne'), ('الجزیره', 'N'), ('نمی‌گذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه‌ی', 'Ne'), ('خبری', 'AJe'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'Ne'), ('شبکه‌های', 'Ne'), ('عظیم', 'AJe'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه‌های', 'Ne'), ('چندرسانه‌ای', 'AJe'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
         
         Yields:
-            (List[Tuple[str,str]]): جملهٔ بعدی در قالب لیستی از `(توکن، برچسب)`ها.
+            جملهٔ بعدی در قالب لیستی از `(توکن، برچسب)`ها.
         
         """
         # >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)

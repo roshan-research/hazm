@@ -1,13 +1,12 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ سِنتی‌پِرِس است.
 
 سِنتی‌پرس شامل مجموعه‌ای از متون فارسی با برچسب‌های معنایی است.
 
 """
 
-from __future__ import unicode_literals, print_function
+
 import os, sys, itertools
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -15,14 +14,14 @@ class SentiPersReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ سِنتی‌پِرِس است.
     
     Args:
-        root (str): مسیر فولدر حاوی فایل‌های پیکره
+        root: مسیر فولدر حاوی فایل‌های پیکره
     
     """
 
-    def __init__(self, root):
+    def __init__(self, root: str):
         self._root = root
 
-    def docs(self):
+    def docs(self) -> Iterator[dict]:
         """متن‌های فارسی را در قالب یک برمی‌گرداند.
         
         هر متن شامل این فیلدهاست:
@@ -40,7 +39,7 @@ class SentiPersReader:
         - جملات (sentences)
         
         Yields:
-            (Dict): متن بعدی.
+            متن بعدی.
         
         """
 
@@ -103,7 +102,7 @@ class SentiPersReader:
                 except Exception as e:
                     print("error in reading", filename, e, file=sys.stderr)
 
-    def comments(self):
+    def comments(self) -> Iterator[str]:
         """نظرات مربوط به متن را برمی‌گرداند.
         
         Examples:
@@ -112,7 +111,7 @@ class SentiPersReader:
             'بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .'
         
         Yields:
-            (str): نظر بعدی.
+            نظر بعدی.
         
         """
         for doc in self.docs():

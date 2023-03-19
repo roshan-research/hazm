@@ -1,8 +1,8 @@
 import re, textwrap, glob
 
 
-def format_all_docstrings(pyFile):
-    text = open(pyFile, "r", encoding="utf-8").read()
+def format_all_docstrings(py_file):
+    text = open(py_file, encoding="utf-8").read()
     text = text.replace("\t", "    ")
 
     # Regex pattern that matches all docstrings
@@ -13,7 +13,7 @@ def format_all_docstrings(pyFile):
         new_doc = format_docstring(old_doc)
         text = text.replace(old_doc, new_doc)
 
-    open(pyFile, "w", encoding="utf-8").write(text)
+    open(py_file, "w", encoding="utf-8").write(text)
 
 
 def format_section(section, new):
@@ -38,7 +38,7 @@ def wrap_text(text, width):
     result = ""
     lines = text.split("\n")
     for line in lines:
-        wrapped_line = textwrap.fill(line, 79)
+        wrapped_line = textwrap.fill(line, width)
         result += wrapped_line + "\n"
 
     return result

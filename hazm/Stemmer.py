@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای ریشه‌یابی کلمات است.
 
 فرق بین [Lemmatizer](./Lemmatizer.md) و [Stemmer](./Stemmer.md) این است که
@@ -12,7 +10,7 @@
 
 """
 
-from __future__ import unicode_literals
+
 from nltk.stem.api import StemmerI
 
 
@@ -38,7 +36,7 @@ class Stemmer(StemmerI):
             "‌",
         ]
 
-    def stem(self, word):
+    def stem(self, word: str)->str:
         """ریشهٔ کلمه را پیدا می‌کند.
         
         Examples:
@@ -59,10 +57,10 @@ class Stemmer(StemmerI):
             'محبوب'
         
         Args:
-            word (str): کلمه‌ای که باید ریشهٔ آن پیدا شود.
+            word: کلمه‌ای که باید ریشهٔ آن پیدا شود.
         
         Returns:
-            (str): ریشهٔ کلمه.
+            ریشهٔ کلمه.
         
         """
 

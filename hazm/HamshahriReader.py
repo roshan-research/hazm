@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ همشهری است.
 
 [پیکرهٔ
@@ -14,8 +12,9 @@ crawl
 
 """
 
-from __future__ import print_function
+
 import os, sys, re
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -23,14 +22,13 @@ class HamshahriReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ همشهری است.
     
     Args:
-        root (str): مسیر فولدرِ حاوی فایل‌های پیکرهٔ همشهری.
+        root: مسیر فولدرِ حاوی فایل‌های پیکرهٔ همشهری.
     
     """
 
-    def __init__(self, root):
+    def __init__(self, root: str):
         self._root = root
-        self._invalids = set(
-            [
+        self._invalids = {
                 "hamshahri.dtd",
                 "HAM2-960622.xml",
                 "HAM2-960630.xml",
@@ -75,11 +73,10 @@ class HamshahriReader:
                 "HAM2-050406.xml",
                 "HAM2-050407.xml",
                 "HAM2-050416.xml",
-            ]
-        )
+        }
         self._paragraph_pattern = re.compile(r"(\n.{0,50})(?=\n)")
 
-    def docs(self):
+    def docs(self) -> Iterator[dict[str, str]]:
         """خبرها را برمی‌گرداند.
         
         هر خبر، شی‌ای متشکل از این پارامتر است:
@@ -96,7 +93,7 @@ class HamshahriReader:
             'HAM2-750403-001'
         
         Yields:
-            (Dict): خبر بعدی.
+            خبر بعدی.
         
         """
 
@@ -108,13 +105,11 @@ class HamshahriReader:
                 try:
                     elements = minidom.parse(os.path.join(root, name))
                     for element in elements.getElementsByTagName("DOC"):
-                        doc = {}
-                        doc["id"] = (
+                        doc = {"id": (
                             element.getElementsByTagName("DOCID")[0].childNodes[0].data
-                        )
-                        doc["issue"] = (
+                        ), "issue": (
                             element.getElementsByTagName("ISSUE")[0].childNodes[0].data
-                        )
+                        )}
 
                         for cat in element.getElementsByTagName("CAT"):
                             doc[
@@ -145,7 +140,7 @@ class HamshahriReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def texts(self):
+    def texts(self) -> Iterator[str]:
         """فقط متن خبرها را در قالب یک برمی‌گرداند.
         
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
@@ -153,7 +148,7 @@ class HamshahriReader:
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
         
         Yields:
-            (str): متنِ خبر بعدی.
+            متنِ خبر بعدی.
         
         """
         for doc in self.docs():

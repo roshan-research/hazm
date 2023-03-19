@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای استخراج کلماتِ متن است.
 
 برای استخراج جملات، از تابع [SentenceTokenizer()][hazm.SentenceTokenizer]
@@ -7,9 +5,9 @@
 
 """
 
-from __future__ import unicode_literals
+
 import re
-import codecs
+
 from .utils import words_list, default_words, default_verbs
 from nltk.tokenize.api import TokenizerI
 
@@ -18,35 +16,35 @@ class WordTokenizer(TokenizerI):
     """این کلاس شامل توابعی برای استخراج کلماتِ متن است.
     
     Args:
-        words_file (str, optional): مسیر فایل حاوی لیست کلمات.
+        words_file: مسیر فایل حاوی لیست کلمات.
             هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
             این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
             ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
-        verbs_file (str, optional): مسیر فایل حاوی افعال.
+        verbs_file: مسیر فایل حاوی افعال.
             هضم به صورت پیش‌فرض فایلی برای این منظور در نظر گرفته است؛ با
             این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
             ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
-        join_verb_parts (bool, optional): اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
-        separate_emoji (bool, optional): اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
-        replace_links (bool, optional): اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
-        replace_IDs (bool, optional): اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
-        replace_emails (bool, optional): اگر `True` باشد آدرس‌های ایمیل را با کلمهٔ `EMAIL‍` جایگزین می‌کند.
-        replace_numbers (bool, optional): اگر `True` باشد اعداد اعشاری را با`NUMF` و اعداد صحیح را با` NUM` جایگزین می‌کند. در اعداد غیراعشاری، تعداد ارقام نیز جلوی `NUM` می‌آید.
-        replace_hashtags (bool, optional): اگر `True` باشد علامت `#` را با `TAG` جایگزین می‌کند.
+        join_verb_parts: اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
+        separate_emoji: اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
+        replace_links اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
+        replace_IDs: اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
+        replace_emails: اگر `True` باشد آدرس‌های ایمیل را با کلمهٔ `EMAIL‍` جایگزین می‌کند.
+        replace_numbers: اگر `True` باشد اعداد اعشاری را با`NUMF` و اعداد صحیح را با` NUM` جایگزین می‌کند. در اعداد غیراعشاری، تعداد ارقام نیز جلوی `NUM` می‌آید.
+        replace_hashtags: اگر `True` باشد علامت `#` را با `TAG` جایگزین می‌کند.
     
     """
 
     def __init__(
         self,
-        words_file=default_words,
-        verbs_file=default_verbs,
-        join_verb_parts=True,
-        separate_emoji=False,
-        replace_links=False,
-        replace_IDs=False,
-        replace_emails=False,
-        replace_numbers=False,
-        replace_hashtags=False,
+        words_file:str=default_words,
+        verbs_file:str=default_verbs,
+        join_verb_parts:bool=True,
+        separate_emoji:bool=False,
+        replace_links:bool=False,
+        replace_IDs:bool=False,
+        replace_emails:bool=False,
+        replace_numbers:bool=False,
+        replace_hashtags:bool=False,
     ):
         self._join_verb_parts = join_verb_parts
         self.separate_emoji = separate_emoji
@@ -57,7 +55,7 @@ class WordTokenizer(TokenizerI):
         self.replace_hashtags = replace_hashtags
 
         self.pattern = re.compile(
-            r'([؟!\?]+|[\d\.:]+|[:\.،؛»\]\)\}"«\[\(\{/\\])'
+            r'([؟!?]+|[\d.:]+|[:.،؛»\])}"«\[({/\\])'
         )  # TODO \d
         self.emoji_pattern = re.compile(
             "["
@@ -68,28 +66,28 @@ class WordTokenizer(TokenizerI):
             flags=re.UNICODE,
         )
         self.emoji_repl = r"\g<0> "
-        self.id_pattern = re.compile(r"(?<![\w\._])(@[\w_]+)")
+        self.id_pattern = re.compile(r"(?<![\w._])(@[\w_]+)")
         self.id_repl = r" ID "
         self.link_pattern = re.compile(
-            r"((https?|ftp):\/\/)?(?<!@)(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})[-\w@:%_\.\+\/~#?=&]*"
+            r"((https?|ftp)://)?(?<!@)(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})[-\w@:%_.+/~#?=&]*"
         )
         self.link_repl = r" LINK "
         self.email_pattern = re.compile(
-            r"[a-zA-Z0-9\._\+-]+@([a-zA-Z0-9-]+\.)+[A-Za-z]{2,}"
+            r"[a-zA-Z0-9._+-]+@([a-zA-Z0-9-]+\.)+[A-Za-z]{2,}"
         )
         self.email_repl = r" EMAIL "
 
         # '٫' is the decimal separator and '٬' is the thousands separator
         self.number_int_pattern = re.compile(
-            r"\b(?<![\d۰-۹][\.٫٬,])([\d۰-۹]+)(?![\.٫٬,][\d۰-۹])\b"
+            r"\b(?<![\d۰-۹][.٫٬,])([\d۰-۹]+)(?![.٫٬,][\d۰-۹])\b"
         )
         self.number_int_repl = lambda m: " NUM" + str(len(m.group(1))) + " "
         self.number_float_pattern = re.compile(
-            r"\b(?<!\.)([\d۰-۹,٬]+[\.٫٬]{1}[\d۰-۹]+)\b(?!\.)"
+            r"\b(?<!\.)([\d۰-۹,٬]+[.٫٬][\d۰-۹]+)\b(?!\.)"
         )
         self.number_float_repl = r" NUMF "
 
-        self.hashtag_pattern = re.compile(r"\#([\S]+)")
+        self.hashtag_pattern = re.compile(r"#(\S+)")
         # NOTE: python2.7 does not support unicodes with \w
 
         self.hashtag_repl = lambda m: "TAG " + m.group(1).replace("_", " ")
@@ -97,8 +95,7 @@ class WordTokenizer(TokenizerI):
         self.words = {item[0]: (item[1], item[2]) for item in words_list(words_file)}
 
         if join_verb_parts:
-            self.after_verbs = set(
-                [
+            self.after_verbs = {
                     "ام",
                     "ای",
                     "است",
@@ -213,11 +210,9 @@ class WordTokenizer(TokenizerI):
                     "نخواهیم_شد",
                     "نخواهید_شد",
                     "نخواهند_شد",
-                ]
-            )
+            }
 
-            self.before_verbs = set(
-                [
+            self.before_verbs = {
                     "خواهم",
                     "خواهی",
                     "خواهد",
@@ -230,20 +225,19 @@ class WordTokenizer(TokenizerI):
                     "نخواهیم",
                     "نخواهید",
                     "نخواهند",
-                ]
-            )
+            }
 
-            with codecs.open(verbs_file, encoding="utf8") as verbs_file:
+            with open(verbs_file, encoding="utf8") as verbs_file:
                 self.verbs = list(
                     reversed([verb.strip() for verb in verbs_file if verb])
                 )
-                self.bons = set([verb.split("#")[0] for verb in self.verbs])
+                self.bons = {verb.split("#")[0] for verb in self.verbs}
                 self.verbe = set(
                     [bon + "ه" for bon in self.bons]
                     + ["ن" + bon + "ه" for bon in self.bons]
                 )
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> list[str]:
         """توکن‌های متن را استخراج می‌کند.
         
         Examples:
@@ -264,10 +258,10 @@ class WordTokenizer(TokenizerI):
             دیگه میخوام ترک تحصیل کنم 😂 😂 😂
         
         Args:
-            text (str): متنی که باید توکن‌های آن استخراج شود.
+            text: متنی که باید توکن‌های آن استخراج شود.
         
         Returns:
-            (List[str]): لیست توکن‌های استخراج‌شده.
+            لیست توکن‌های استخراج‌شده.
         
         """
         # >>> tokenizer.tokenize('نسخه 0.5 در ساعت 22:00 تهران،1396.')
@@ -297,7 +291,7 @@ class WordTokenizer(TokenizerI):
             tokens = self.join_verb_parts(tokens)
         return tokens
 
-    def join_verb_parts(self, tokens):
+    def join_verb_parts(self, tokens:list[str]) -> list[str]:
         """افعال چندبخشی را به هم می‌چسباند.
         
         Examples:
@@ -314,10 +308,10 @@ class WordTokenizer(TokenizerI):
             ['خسته', 'شدید']
         
         Args:
-            tokens (List[str]): لیست کلمات یک فعل چندبخشی.
+            tokens: لیست کلمات یک فعل چندبخشی.
         
         Returns:
-            (List[str]): لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
+            لیست از افعال چندبخشی که در صورت لزوم بخش‌های آن با کاراکتر خط زیر به هم چسبانده_شده_است.
         
         """
 

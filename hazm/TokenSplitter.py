@@ -1,10 +1,8 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای تجزیه توکن به دو توکن کوچکتر است.
 
 """
 
-from __future__ import unicode_literals
+
 from .Lemmatizer import Lemmatizer
 
 
@@ -18,7 +16,7 @@ class TokenSplitter:
         self.lemmatize = self.lemmatizer.lemmatize
         self.words = self.lemmatizer.words
 
-    def split_token_words(self, token):
+    def split_token_words(self, token:str)-> list[tuple[str,str]]:
         """توکنِ ورودی را به دو توکن کوچکتر تجزیه می‌کند.
         
         اگر توکن به بیش از یک روش قابل تجزیه باشد همهٔ حالت‌های ممکن را
@@ -38,10 +36,10 @@ class TokenSplitter:
             [('دستان', 'سرا')]
         
         Args:
-            token (str): توکنی که باید پردازش شود.
+            token: توکنی که باید پردازش شود.
         
         Returns:
-            ([List[Tuple[str,str]]]): <dir-rtl>لیستی از `[(توکن, توکن), (توکن, توکن), …]`ها.</dir-rtl>
+            <dir-rtl>لیستی از `[(توکن, توکن), (توکن, توکن), …]`ها.</dir-rtl>
         
         """
 

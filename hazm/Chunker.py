@@ -1,18 +1,17 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای تجزیهٔ متن به عبارات اسمی، فعلی و حرف
 اضافه‌ای است. **میزان دقت تجزیه‌گر سطحی در نسخهٔ حاضر ۸۹.۹ درصد [^1] است.**
 [^1]:
 این عدد با انتشار هر نسخه بروزرسانی می‌شود.
 
 """
+from typing import Iterator
 
-from __future__ import unicode_literals
+import nltk.chunk.util
 from nltk.chunk import ChunkParserI, RegexpParser, tree2conlltags, conlltags2tree
 from .SequenceTagger import IOBTagger
 
 
-def tree2brackets(tree):
+def tree2brackets(tree:str) -> str:
     """خروجی درختی تابع [parse()][hazm.Chunker.Chunker.parse] را به یک ساختار
     کروشه‌ای تبدیل می‌کند.
     
@@ -29,10 +28,10 @@ def tree2brackets(tree):
         '[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'
     
     Args:
-        tree (str): ساختار درختی حاصل از پردزاش تابع parse()
+        tree: ساختار درختی حاصل از پردزاش تابع parse().
     
     Returns:
-        (str): رشته‌ای از کروشه‌ها که در هر کروشه جزئی از متن به همراه نوع آن جای گرفته است.
+        رشته‌ای از کروشه‌ها که در هر کروشه جزئی از متن به همراه نوع آن جای گرفته است.
     
     """
     str, tag = "", ""
@@ -57,16 +56,16 @@ class Chunker(IOBTagger, ChunkParserI):
     
     """
 
-    def train(self, trees):
+    def train(self, trees: list[str]):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
         
         Args:
-            trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
+            trees: لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        super(Chunker, self).train(map(tree2conlltags, trees))
+        super().train(list(map(tree2conlltags, trees)))
 
-    def parse(self, sentence):
+    def parse(self, sentence: list[tuple[str, str]]) -> str:
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
         
@@ -81,37 +80,37 @@ class Chunker(IOBTagger, ChunkParserI):
               ./PUNC)
         
         Args:
-            sentence (List[Tuple[str,str]): جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
+            sentence: جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
         
         Returns:
-            (str): ساختار درختی حاصل از تقطیع.
+            ساختار درختی حاصل از تقطیع.
             برای تبدیل این ساختار درختی به یک ساختار کروشه‌ای و قابل‌درک‌تر
             می‌توانید از تابع `tree2brackets()` استفاده کنید.
         
         """
         return next(self.parse_sents([sentence]))
 
-    def parse_sents(self, sentences):
+    def parse_sents(self, sentences: list[list[tuple[str,str]]]) -> Iterator[str]:
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
         
         Args:
-            sentences (List[List[Tuple(str,str)]]): جملات ورودی.
+            جملات ورودی.
         
         Yields:
-            (Iterator[str]): یک `Iterator` از جملات تقطیع شده.
+            یک `Iterator` از جملات تقطیع شده.
         
         """
-        for conlltagged in super(Chunker, self).tag_sents(sentences):
+        for conlltagged in super().tag_sents(sentences):
             yield conlltags2tree(conlltagged)
 
-    def evaluate(self, gold):
+    def evaluate(self, gold: list[str]) -> nltk.chunk.util.ChunkScore:
         """دقت مدل را ارزیابی می‌کند.
         
         Args:
-            gold (List[Tree]): دادهٔ مرجع برای ارزیابی دقت مدل.
+            gold: دادهٔ مرجع برای ارزیابی دقت مدل.
         
         Returns:
-            (ChunkScore): دقت تشخیص.
+            دقت تشخیص.
         
         """
         return ChunkParserI.evaluate(self, gold)
@@ -158,4 +157,4 @@ class RuleBasedChunker(RegexpParser):
 
         """
 
-        super(RuleBasedChunker, self).__init__(grammar=grammar)
+        super().__init__(grammar=grammar)

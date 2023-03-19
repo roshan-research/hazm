@@ -1,6 +1,3 @@
-# coding: utf-8
-
-from __future__ import unicode_literals
 import sys, inspect, doctest, unittest
 from hazm import *
 
@@ -30,7 +27,6 @@ modules = {
     # "treebank": TreebankReader,
 }
 
-
 class UnicodeOutputChecker(doctest.OutputChecker):
     def check_output(self, want, got, optionflags):
         try:
@@ -44,7 +40,7 @@ class UnicodeOutputChecker(doctest.OutputChecker):
         except:
             pass
 
-        if type(want) == unicode:
+        if type(want) == str:
             want = want.replace("٫", ".")  # eval issue
 
         return want == got
@@ -56,14 +52,11 @@ if __name__ == "__main__":
 
     suites = []
     checker = UnicodeOutputChecker() if utils.PY2 else None
-    for name, object in modules.items():
+    for name, obj in list(modules.items()):
         if all_modules or name in sys.argv:
             suites.append(
-                doctest.DocTestSuite(inspect.getmodule(object), checker=checker)
-            )
-
-    # if not utils.PY2 and all_modules:
-    #    suites.append(doctest.DocFileSuite("README.md"))
+                doctest.DocTestSuite(inspect.getmodule(obj), checker=checker)
+            )    
 
     failure = False
     runner = unittest.TextTestRunner(verbosity=2)

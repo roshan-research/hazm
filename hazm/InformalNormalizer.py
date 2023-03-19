@@ -1,12 +1,10 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
 
 """
 
-from __future__ import unicode_literals
-import codecs
-from .utils import informal_verbs, informal_words, NUMBERS, default_verbs
+
+
+from .utils import informal_verbs, informal_words, NUMBERS
 from .Normalizer import Normalizer
 from .Lemmatizer import Lemmatizer
 from .Stemmer import Stemmer
@@ -18,38 +16,38 @@ class InformalNormalizer(Normalizer):
     """این کلاس شامل توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
     
     Args:
-        verb_file (str, optional): فایل حاوی افعال محاوره‌ای.
-        word_file (str, optional): فایل حاوی کلمات محاوره‌ای.
-        seperation_flag (bool, optional): اگر `True` باشد و در بخشی از متن به فاصله نیاز بود آن فاصله درج می‌شود.
+        verb_file: فایل حاوی افعال محاوره‌ای.
+        word_file: فایل حاوی کلمات محاوره‌ای.
+        seperation_flag: اگر `True` باشد و در بخشی از متن به فاصله نیاز بود آن فاصله درج می‌شود.
         **kargs: پارامترهای نامدارِ اختیاری
     
     """
 
     def __init__(
         self,
-        verb_file=informal_verbs,
-        word_file=informal_words,
-        seperation_flag=False,
+        verb_file:str=informal_verbs,
+        word_file:str=informal_words,
+        seperation_flag:bool=False,
         **kargs
     ):
         self.seperation_flag = seperation_flag
         self.lemmatizer = Lemmatizer()
         self.ilemmatizer = InformalLemmatizer()
         self.stemmer = Stemmer()
-        super(InformalNormalizer, self).__init__(**kargs)
+        super().__init__(**kargs)
 
         self.sent_tokenizer = SentenceTokenizer()
         self.word_tokenizer = WordTokenizer()
 
-        with codecs.open(verb_file, encoding="utf8") as vf:
+        with open(verb_file, encoding="utf8") as vf:
             self.pastVerbs = {}
             self.presentVerbs = {}
-            for f, i, flag in map(lambda x: x.strip().split(" ", 2), vf):
+            for f, i, flag in [x.strip().split(" ", 2) for x in vf]:
                 splitedF = f.split("#")
                 self.presentVerbs.update({i: splitedF[1]})
                 self.pastVerbs.update({splitedF[0]: splitedF[0]})
-        with codecs.open(default_verbs, encoding="utf8") as vf:
-            for f, i in map(lambda x: x.strip().split("#", 2), vf):
+        with open(default_verbs, encoding="utf8") as vf:
+            for f, i in [x.strip().split("#", 2) for x in vf]:
                 self.presentVerbs.update({i: i})
                 self.pastVerbs.update({f: f})
 
@@ -76,25 +74,25 @@ class InformalNormalizer(Normalizer):
 
             return res
 
-        with codecs.open(verb_file, encoding="utf8") as vf:
+        with open(verb_file, encoding="utf8") as vf:
             self.iverb_map = {}
-            for f, i, flag in map(lambda x: x.strip().split(" ", 2), vf):
+            for f, i, flag in [x.strip().split(" ", 2) for x in vf]:
                 self.iverb_map.update(informal_to_formal_conjucation(i, f, flag))
 
-        with codecs.open(word_file, encoding="utf8") as wf:
-            self.iword_map = dict(map(lambda x: x.strip().split(" ", 1), wf))
+        with open(word_file, encoding="utf8") as wf:
+            self.iword_map = dict([x.strip().split(" ", 1) for x in wf])
 
         self.words = set()
         if self.seperation_flag:
-            self.words.update(self.iword_map.keys())
-            self.words.update(self.iword_map.values())
-            self.words.update(self.iverb_map.keys())
-            self.words.update(self.iverb_map.values())
+            self.words.update(list(self.iword_map.keys()))
+            self.words.update(list(self.iword_map.values()))
+            self.words.update(list(self.iverb_map.keys()))
+            self.words.update(list(self.iverb_map.values()))
             self.words.update(self.lemmatizer.words)
-            self.words.update(self.lemmatizer.verbs.keys())
-            self.words.update(self.lemmatizer.verbs.values())
+            self.words.update(list(self.lemmatizer.verbs.keys()))
+            self.words.update(list(self.lemmatizer.verbs.values()))
 
-    def split_token_words(self, token):
+    def split_token_words(self, token: str) -> str:
         """هرجایی در متن فاصله نیاز بود قرار می‌دهد.
         
         متأسفانه در برخی از متن‌ها، به بهانهٔ صرفه‌جویی در زمان یا از سرِ تنبلی،
@@ -103,10 +101,10 @@ class InformalNormalizer(Normalizer):
         ایجاد می‌کند و آن را به شکل صحیح برمی‌گرداند.
         
         Args:
-            token (str): توکنی که باید فاصله‌گذاری شود.
+            token: توکنی که باید فاصله‌گذاری شود.
         
         Returns:
-            (str): توکنی با فاصله‌گذاری صحیح.
+            توکنی با فاصله‌گذاری صحیح.
         
         """
 
@@ -135,13 +133,13 @@ class InformalNormalizer(Normalizer):
         token = re.sub(r"(.)\1{2,}", r"\1", token)
         ps = perm(shekan(token))
         for c in ps:
-            if set(map(lambda x: self.ilemmatizer.lemmatize(x), c)).issubset(
+            if {self.ilemmatizer.lemmatize(x) for x in c}.issubset(
                 self.words
             ):
                 return " ".join(c)
         return token
 
-    def normalized_word(self, word):
+    def normalized_word(self, word: str) -> list[str]:
         """اشکال مختلف نرمالایزشدهٔ کلمه را برمی‌گرداند.
         
         Examples:
@@ -150,10 +148,10 @@ class InformalNormalizer(Normalizer):
             ['می‌روم', 'می‌رم']
         
         Args:
-            word(str): کلمه‌ای که باید نرمال‌سازی شود.
+            word: کلمه‌ای که باید نرمال‌سازی شود.
         
         Returns:
-            (List[str]): اشکال نرمالایزشدهٔ کلمه.
+            اشکال نرمالایزشدهٔ کلمه.
         
         """
 
@@ -729,7 +727,7 @@ class InformalNormalizer(Normalizer):
 
         return possibleWords
 
-    def normalize(self, text):
+    def normalize(self, text: str) -> list[list[list[str]]]:
         """متن محاوره‌ای را به متن فارسی معیار تبدیل می‌کند.
         
         Examples:
@@ -741,14 +739,14 @@ class InformalNormalizer(Normalizer):
             [[['اجازه'], ['بدهیم'], ['همسرمان'], ['در'], ['جمع'], ['خانواده\u200cاش'], ['احساس'], ['آزادی'], ['کند'], ['و'], ['فکر'], ['نکند', 'نکنه'], ['که'], ['ما'], ['دائم'], ['حواسمان'], ['بهش'], ['هست'], ['.']]]
         
         Args:
-            text (str): متن محاوره‌ای که باید تبدیل به متن فارسی معیار شود.
+            text: متن محاوره‌ای که باید تبدیل به متن فارسی معیار شود.
         
         Returns:
-            (List[List[List[str]]]): متن فارسی معیار.
+           متن فارسی معیار.
         
         """
 
-        text = super(InformalNormalizer, self).normalize(text)
+        text = super().normalize(text)
         sents = [
             self.word_tokenizer.tokenize(sentence)
             for sentence in self.sent_tokenizer.tokenize(text)
@@ -756,14 +754,14 @@ class InformalNormalizer(Normalizer):
 
         return [[self.normalized_word(word) for word in sent] for sent in sents]
 
-    def informal_conjugations(self, verb):
+    def informal_conjugations(self, verb: str) -> list[str]:
         """صورت‌های صرفی فعل را در شکل محاوره‌ای تولید می‌کند.
         
         Args:
-            verb (str): فعلی که باید صرف شود.
+            verb: فعلی که باید صرف شود.
         
         Returns:
-            (List[str]): صورت‌های صرفی فعل.
+            صورت‌های صرفی فعل.
         
         """
         ends = ["م", "ی", "", "یم", "ین", "ن"]
@@ -791,7 +789,7 @@ class InformalNormalizer(Normalizer):
 
 class InformalLemmatizer(Lemmatizer):
     def __init__(self, **kargs):
-        super(InformalLemmatizer, self).__init__(**kargs)
+        super().__init__(**kargs)
 
         temp = []
         self.words = set(self.words.keys())
@@ -808,12 +806,12 @@ class InformalLemmatizer(Lemmatizer):
 
         self.verbs.update(temp)
 
-        with codecs.open(informal_verbs, encoding="utf8") as vf:
-            for f, i, flag in map(lambda x: x.strip().split(" ", 2), vf):
-                self.verbs.update(dict(map(lambda x: (x, f), self.iconjugations(i))))
+        with open(informal_verbs, encoding="utf8") as vf:
+            for f, i, flag in [x.strip().split(" ", 2) for x in vf]:
+                self.verbs.update({x: f for x in self.iconjugations(i)})
 
-        with codecs.open(informal_words, encoding="utf8") as wf:
-            self.words.update(map(lambda x: x.strip().split(" ", 1)[0], wf))
+        with open(informal_words, encoding="utf8") as wf:
+            self.words.update([x.strip().split(" ", 1)[0] for x in wf])
 
     def iconjugations(self, verb):
         ends = ["م", "ی", "", "یم", "ین", "ن"]
