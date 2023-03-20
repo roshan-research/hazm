@@ -16,10 +16,10 @@ buckwalter_transliteration = maketrans(
 
 class QuranCorpusReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ Quranic Arabic است.
-    
+
     Args:
         quran_file: مسیر فایلِ پیکره
-    
+
     """
 
     def __init__(self, quran_file: str):
@@ -27,10 +27,10 @@ class QuranCorpusReader:
 
     def parts(self) -> Iterator[dict[str, str]]:
         """اجزای متن قرآن را به‌همراه اطلاعات نحوی‌شان برمی‌گرداند.
-        
+
         یک جزء لزوماً یک کلمه نیست؛ مثلاً واژهٔ «الرحمن» از دو جزء «ال» و «رحمن» تشکیل
         شده است.
-        
+
         Examples:
             >>> parts=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').parts()
             >>> print(next(parts))
@@ -39,10 +39,10 @@ class QuranCorpusReader:
             {'loc': (1, 1, 1, 2), 'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}
             >>> print(next(parts))
             {'loc': (1, 1, 2, 1), 'text': 'ٱللَّهِ', 'tag': 'PN', 'lem': 'ٱللَّه', 'root': 'اله'}
-        
+
         Yields:
             جزء بعدی متن قرآن.
-        
+
         """
         for line in open(self._quran_file):
             if not line.startswith("("):
@@ -63,17 +63,17 @@ class QuranCorpusReader:
                     part["root"] = feature[5:].translate(buckwalter_transliteration)
             yield part
 
-    def words(self) -> Iterator[tuple[str,str,str,str,str,list[dict]]]:
+    def words(self) -> Iterator[tuple[str, str, str, str, str, list[dict]]]:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
-        
+
         Examples:
             >>> words=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').words()
             >>> print(next(words))
             ('1.1.1', 'بِسْمِ', 'ٱسْم', 'سمو', 'P-N', [{'text': 'بِ', 'tag': 'P'}, {'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}])
-        
+
         Yields:
             اطلاعات صرفی کلمهٔ بعدی قرآن.
-        
+
         """
 
         def word_item(location, parts):

@@ -1,4 +1,6 @@
-import re, textwrap, glob
+import glob
+import re
+import textwrap
 
 
 def format_all_docstrings(py_file):

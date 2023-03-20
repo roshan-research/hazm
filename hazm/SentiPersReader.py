@@ -5,17 +5,19 @@
 """
 
 
-import os, sys, itertools
+import itertools
+import os
+import sys
 from typing import Iterator
 from xml.dom import minidom
 
 
 class SentiPersReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ سِنتی‌پِرِس است.
-    
+
     Args:
         root: مسیر فولدر حاوی فایل‌های پیکره
-    
+
     """
 
     def __init__(self, root: str):
@@ -23,24 +25,24 @@ class SentiPersReader:
 
     def docs(self) -> Iterator[dict]:
         """متن‌های فارسی را در قالب یک برمی‌گرداند.
-        
+
         هر متن شامل این فیلدهاست:
-        
+
         - عنوان (Title)
         - نوع (Type)
         - نظرات (comments)
-        
+
         فیلد `comments `خودش شامل این فیلدهاست:
-        
+
         - شناسه (id)
         - نوع (type)
         - نویسنده (author)
         - ارزش (value)
         - جملات (sentences)
-        
+
         Yields:
             متن بعدی.
-        
+
         """
 
         def element_sentences(element):
@@ -104,15 +106,15 @@ class SentiPersReader:
 
     def comments(self) -> Iterator[str]:
         """نظرات مربوط به متن را برمی‌گرداند.
-        
+
         Examples:
             >>> sentipers = SentiPersReader(root='corpora/sentipers')
             >>> next(sentipers.comments())[0][1]
             'بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .'
-        
+
         Yields:
             نظر بعدی.
-        
+
         """
         for doc in self.docs():
             yield [

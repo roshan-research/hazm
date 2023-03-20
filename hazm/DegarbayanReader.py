@@ -21,7 +21,7 @@ from xml.dom import minidom
 
 class DegarbayanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ دگربیان است.
-    
+
     Args:
         root مسیر فولدر حاوی فایل‌های پیکره
         corpus_file: فایل اطلاعات پیکره.
@@ -31,11 +31,15 @@ class DegarbayanReader:
             ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
             `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
         version: شمارهٔ نسخهٔ پیکره
-    
+
     """
 
     def __init__(
-        self, root:str, corpus_file:str="CorpusPair.xml", judge_type:str="three_class", version:float=1.0
+        self,
+        root: str,
+        corpus_file: str = "CorpusPair.xml",
+        judge_type: str = "three_class",
+        version: float = 1.0,
     ):
         self._root = root
         self._corpus_file = corpus_file
@@ -45,10 +49,10 @@ class DegarbayanReader:
 
     def docs(self) -> Iterator[dict[str, str]]:
         """اسناد موجود در پیکره را برمی‌گرداند.
-        
+
         Yields:
             سند بعدی.
-        
+
         """
 
         def judge_number_to_text(judge):
@@ -64,43 +68,53 @@ class DegarbayanReader:
             try:
                 elements = minidom.parse(filename)
                 for element in elements.getElementsByTagName("Pair"):
-                    pair = {"id": (
-                        element.getElementsByTagName("PairId")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "news_source1": (
-                        element.getElementsByTagName("NewsSource1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "news_source2": (
-                        element.getElementsByTagName("NewsSource2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "news_id1": (
-                        element.getElementsByTagName("NewsId1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "news_id2": (
-                        element.getElementsByTagName("NewsId2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "sentence1": (
-                        element.getElementsByTagName("Sentence1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "sentence2": (
-                        element.getElementsByTagName("Sentence2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "method_type": (
-                        element.getElementsByTagName("MethodType")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    ), "judge": judge_number_to_text(
-                        element.getElementsByTagName("judge")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )}
+                    pair = {
+                        "id": (
+                            element.getElementsByTagName("PairId")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_source1": (
+                            element.getElementsByTagName("NewsSource1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_source2": (
+                            element.getElementsByTagName("NewsSource2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_id1": (
+                            element.getElementsByTagName("NewsId1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_id2": (
+                            element.getElementsByTagName("NewsId2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "sentence1": (
+                            element.getElementsByTagName("Sentence1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "sentence2": (
+                            element.getElementsByTagName("Sentence2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "method_type": (
+                            element.getElementsByTagName("MethodType")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "judge": judge_number_to_text(
+                            element.getElementsByTagName("judge")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                    }
                     yield pair
 
             except Exception as e:
@@ -111,15 +125,15 @@ class DegarbayanReader:
 
     def pairs(self) -> Iterator[tuple[str, str, str]]:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
-        
+
         Examples:
             >>> degarbayan = DegarbayanReader(root='corpora/degarbayan')
             >>> next(degarbayan.pairs())
             ('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')
-        
+
         Yields:
             `متن دگربیان بعدی در قالب یک `(متن اصلی، شکل دگربیان، برچسب).
-        
+
         """
         for pair in self.docs():
             yield pair["sentence1"], pair["sentence2"], pair["judge"]

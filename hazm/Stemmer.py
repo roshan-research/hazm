@@ -15,9 +15,7 @@ from nltk.stem.api import StemmerI
 
 
 class Stemmer(StemmerI):
-    """این کلاس شامل توابعی برای ریشه‌یابی کلمات است.
-    
-    """
+    """این کلاس شامل توابعی برای ریشه‌یابی کلمات است."""
 
     def __init__(self):
         self.ends = [
@@ -36,9 +34,9 @@ class Stemmer(StemmerI):
             "‌",
         ]
 
-    def stem(self, word: str)->str:
+    def stem(self, word: str) -> str:
         """ریشهٔ کلمه را پیدا می‌کند.
-        
+
         Examples:
             >>> stemmer = Stemmer()
             >>> stemmer.stem('کتابی')
@@ -55,13 +53,13 @@ class Stemmer(StemmerI):
             'خانه'
             >>> stemmer.stem('محبوب‌ترین‌ها')
             'محبوب'
-        
+
         Args:
             word: کلمه‌ای که باید ریشهٔ آن پیدا شود.
-        
+
         Returns:
             ریشهٔ کلمه.
-        
+
         """
 
         if word.endswith("ۀ"):

@@ -9,20 +9,22 @@ pages-articles.xml.bz2) پیکرهٔ
 """
 
 
-import os, re, subprocess
+import os
+import re
+import subprocess
 from typing import Iterator
 
 
 class WikipediaReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ ویکی‌پدیا است.
-    
+
     Args:
         fawiki_dump: مسیر فولدر حاوی فایل‌های پیکره.
         n_jobs: تعداد هسته‌های پردازنده برای پردازش موازی.
-    
+
     """
 
-    def __init__(self, fawiki_dump:str, n_jobs:int=2):
+    def __init__(self, fawiki_dump: str, n_jobs: int = 2):
         self.fawiki_dump = fawiki_dump
         self.wiki_extractor = os.path.join(
             os.path.abspath(os.path.dirname(__file__)), "WikiExtractor.py"
@@ -31,22 +33,22 @@ class WikipediaReader:
 
     def docs(self) -> Iterator[dict]:
         """مقالات را برمی‌گرداند.
-        
+
         هر مقاله، شی‌ای متشکل از چند پارامتر است:
-        
+
         - شناسه (id)،
         - عنوان (title)،
         - متن (text)،
         - نسخهٔ وب (date)،
         - آدرس صفحه (url).
-        
+
         Examples:
             >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
             >>> next(wikipedia.docs())['id']
-        
+
         Yields:
             (Dict): مقالهٔ بعدی.
-        
+
         """
         proc = subprocess.Popen(
             [
@@ -73,24 +75,24 @@ class WikipediaReader:
                 del doc[1]
                 id, url, title = doc_pattern.match(doc[0]).groups()
                 html = "\n".join(doc[1:-1])
-                
+
                 yield {"id": id, "url": url, "title": title, "html": html, "text": html}
                 doc = []
 
     def texts(self) -> Iterator[str]:
         """فقط متن مقالات را برمی‌گرداند.
-        
+
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
         ‍[docs()][hazm.WikipediaReader.WikipediaReader.docs] و دریافت مقدار
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
-        
+
         Examples:
             >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
             >>> next(wikipedia.texts())[:30]
-        
+
         Yields:
             متنِ مقالهٔ بعدی.
-        
+
         """
         for doc in self.docs():
             yield doc["text"]

@@ -6,31 +6,30 @@
 
 
 import re
+
 from nltk.tokenize.api import TokenizerI
 
 
 class SentenceTokenizer(TokenizerI):
-    """این کلاس شامل توابعی برای استخراج جملاتِ متن است.
-    
-    """
+    """این کلاس شامل توابعی برای استخراج جملاتِ متن است."""
 
     def __init__(self):
-        self.pattern = re.compile(r'([!.?⸮؟]+)[ \n]+')
+        self.pattern = re.compile(r"([!.?⸮؟]+)[ \n]+")
 
     def tokenize(self, text: str) -> list[str]:
         """متن ورودی را به جملات سازندهٔ آن می‌شِکند.
-        
+
         Examples:
             >>> tokenizer = SentenceTokenizer()
             >>> tokenizer.tokenize('جدا کردن ساده است. تقریبا البته!')
             ['جدا کردن ساده است.', 'تقریبا البته!']
-        
+
         Args:
             text: متنی که باید جملات آن استخراج شود.
-        
+
         Returns:
             فهرست جملات استخراج‌شده.
-        
+
         """
         text = self.pattern.sub(r"\1\n\n", text)
         return [

@@ -18,7 +18,6 @@
 """
 
 
-
 from collections import namedtuple
 from typing import Iterator
 
@@ -37,21 +36,21 @@ Verb = namedtuple(
 
 class VerbValencyReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ ظرفیت نحوی افعال فارسی است.
-    
+
     Args:
         valency_file: مسیر فایلِ پیکره.
-    
+
     """
 
-    def __init__(self, valency_file:str="corpora/valency.txt"):
+    def __init__(self, valency_file: str = "corpora/valency.txt"):
         self._valency_file = valency_file
 
     def verbs(self) -> Iterator[str]:
         """افعال پیکره را برمی‌گرداند.
-        
+
         Yields:
             (str): فعل بعدی.
-        
+
         """
         with open(self._valency_file, encoding="utf-8") as valency_file:
             for line in valency_file:

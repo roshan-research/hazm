@@ -12,11 +12,11 @@ from nltk.tree import Tree
 def coarse_pos_u(tags, word: str) -> str:
     """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
     universal pos tags) تبدیل می‌کند.
-    
+
     Examples:
         >>> coarse_pos_e(['N', 'IANM'], 'امروز')
         'N'
-    
+
     """
 
     map = {
@@ -48,11 +48,11 @@ def coarse_pos_u(tags, word: str) -> str:
 
 def coarse_pos_e(tags, word: str) -> str:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
-    
+
     Examples:
         >>> coarse_pos_e(['N', 'IANM'],'امروز')
         'N'
-    
+
     """
 
     map = {
@@ -72,22 +72,26 @@ def coarse_pos_e(tags, word: str) -> str:
     return map.get(tags[0], "X") + ("e" if "EZ" in tags else "")
 
 
-word_nodes = lambda tree: sorted(list(tree.nodes.values()), key=lambda node: node["address"])[
-    1:
-]
-node_deps = lambda node: sum(list(node["deps"].values()), [])
+def word_nodes(tree):
+    return sorted(list(tree.nodes.values()), key=lambda node: node["address"])[1:]
+
+
+def node_deps(node):
+    return sum(list(node["deps"].values()), [])
 
 
 class DadeganReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ PerDT است.
-    
+
     Args:
         conll_file: مسیر فایلِ پیکره.
         pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
-    
+
     """
 
-    def __init__(self, conll_file: str, pos_map:str=coarse_pos_e, universal_pos:bool=False):
+    def __init__(
+        self, conll_file: str, pos_map: str = coarse_pos_e, universal_pos: bool = False
+    ):
         self._conll_file = conll_file
         if pos_map is None:
             self._pos_map = lambda tags: ",".join(tags)
@@ -98,10 +102,10 @@ class DadeganReader:
 
     def _sentences(self) -> Iterator[str]:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
-        
+
         Yields:
             جملهٔ بعدی.
-        
+
         """
         with open(self._conll_file, encoding="utf8") as conll_file:
             text = conll_file.read()
@@ -123,10 +127,10 @@ class DadeganReader:
 
     def trees(self) -> Iterator[str]:
         """ساختار درختی جملات را برمی‌گرداند.
-        
+
         Yields:
             ساختار درختی جملهٔ بعدی.
-        
+
         """
         for sentence in self._sentences():
             tree = DependencyGraph(sentence)
@@ -141,35 +145,35 @@ class DadeganReader:
 
             yield tree
 
-    def sents(self) -> list[tuple[str,str]]:
+    def sents(self) -> list[tuple[str, str]]:
         """لیستی از جملات را برمی‌گرداند.
-        
+
         هر جمله لیستی از `(توکن، برچسب)`ها است.
-        
+
         Examples:
             >>> dadegan = DadeganReader(conll_file='corpora/dadegan.conll')
             >>> next(dadegan.sents())
             [('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
-        
+
         Yields:
             جملهٔ بعدی.
-        
+
         """
         for tree in self.trees():
             yield [(node["word"], node["mtag"]) for node in word_nodes(tree)]
 
     def chunked_trees(self) -> str:
         """درخت وابستگی‌های جملات را برمی‌گرداند.
-        
+
         Examples:
             >>> from hazm.Chunker import tree2brackets
             >>> dadegan = DadeganReader(conll_file='corpora/dadegan.conll')
             >>> tree2brackets(next(dadegan.chunked_trees()))
             '[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
-        
+
         Yields:
             درخت وابستگی‌های جملهٔ بعدی.
-        
+
         """
         for tree in self.trees():
             chunks = []

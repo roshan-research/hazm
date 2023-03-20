@@ -17,23 +17,27 @@ informal_verbs = path.join(data_path, "iverbs.dat")
 
 NUMBERS = "۰۱۲۳۴۵۶۷۸۹"
 
-maketrans = lambda A, B: {ord(a): b for a, b in zip(A, B)}
+
+def maketrans(A, B):
+    return {ord(a): b for a, b in zip(A, B)}
 
 
-def words_list(words_file:str=default_words) -> list[tuple[str, int, tuple[str, ...]]]:
+def words_list(
+    words_file: str = default_words,
+) -> list[tuple[str, int, tuple[str, ...]]]:
     """لیست کلمات را برمی‌گرداند.
-    
+
     Examples:
         >>> from hazm.utils import words_list
         >>> words_list()[1]
         ('آب', 549005877, ('N', 'AJ')) #(id, word, (tag1, tag2, ...))
-    
+
     Args:
         words_file: مسیر فایل حاوی کلمات.
-    
+
     Returns:
         فهرست کلمات.
-    
+
     """
     with open(words_file, encoding="utf-8") as words_file:
         items = [line.strip().split("\t") for line in words_file]
@@ -44,20 +48,20 @@ def words_list(words_file:str=default_words) -> list[tuple[str, int, tuple[str, 
         ]
 
 
-def stopwords_list(stopwords_file:str=default_stopwords) -> list[str]:
+def stopwords_list(stopwords_file: str = default_stopwords) -> list[str]:
     """لیست ایست‌واژه‌ها را برمی‌گرداند.
-    
+
     Examples:
         >>> from hazm.utils import stopwords_list
         >>> stopwords_list()[:4]
         ['محسوب', 'اول', 'بسیار', 'طول']
-    
+
     Args:
         stopwords_file: مسیر فایل حاوی ایست‌واژه‌ها.
-    
+
     Returns:
         فهرست ایست‌واژه‌ها.
-    
+
     """
     with open(stopwords_file, encoding="utf8") as stopwords_file:
         return list({w.strip() for w in stopwords_file})

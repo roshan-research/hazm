@@ -1,13 +1,27 @@
-import subprocess, random
+import random
+import subprocess
 from collections import Counter
 from itertools import islice
+
 from nltk.tag import untag
 from sklearn.model_selection import train_test_split
-from hazm import *
+
+from hazm import Chunker
+from hazm import DadeganReader
+from hazm import InformalNormalizer
+from hazm import Lemmatizer
+from hazm import MaltParser
+from hazm import Normalizer
+from hazm import PeykareReader
+from hazm import POSTagger
+from hazm import SentiPersReader
+from hazm import StanfordPOSTagger
+from hazm import TNewsReader
+from hazm import TreebankReader
+from hazm import TurboParser
+from hazm import sent_tokenize
 from hazm.Chunker import tree2brackets
 from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
-from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
-from hazm import Normalizer
 
 
 def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.dat"):
@@ -18,7 +32,11 @@ def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.
         for line in open(dic_file, encoding="utf-8")
         if len(line.strip().split("\t")) == 3
     ]
-    dic_words = [item for item in dic_words if not item[2].startswith("V") and "NEG" not in item[2]]
+    dic_words = [
+        item
+        for item in dic_words
+        if not item[2].startswith("V") and "NEG" not in item[2]
+    ]
     dic_words = [
         "\t".join(item) for item in sorted(dic_words, key=lambda item: item[0])
     ]
@@ -41,7 +59,9 @@ def evaluate_lemmatizer(
                     errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
         print(len(errors), "errors", file=output)
         counter = Counter(errors)
-        for item, count in sorted(list(counter.items()), key=lambda t: t[1], reverse=True):
+        for item, count in sorted(
+            list(counter.items()), key=lambda t: t[1], reverse=True
+        ):
             print(count, *item, file=output)
 
     missed = []
@@ -54,7 +74,9 @@ def evaluate_lemmatizer(
                         missed.append(word[0])
         print(len(missed), "missed", file=output)
         counter = Counter(missed)
-        for item, count in sorted(list(counter.items()), key=lambda t: t[1], reverse=True):
+        for item, count in sorted(
+            list(counter.items()), key=lambda t: t[1], reverse=True
+        ):
             print(count, item, file=output)
 
 

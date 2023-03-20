@@ -2,30 +2,34 @@
 این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
 
 """
-import numpy
-
-from . import word_tokenize, Normalizer
 import multiprocessing
-import warnings
-from gensim.test.utils import datapath
-from gensim.models.doc2vec import TaggedDocument
-from gensim.models import KeyedVectors, Doc2Vec, fasttext
-from gensim.scripts.glove2word2vec import glove2word2vec
 import os
+import warnings
+
+import numpy
+from gensim.models import Doc2Vec
+from gensim.models import KeyedVectors
+from gensim.models import fasttext
+from gensim.models.doc2vec import TaggedDocument
+from gensim.scripts.glove2word2vec import glove2word2vec
+from gensim.test.utils import datapath
+
+from . import Normalizer
+from . import word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 
 
 class WordEmbedding:
     """این کلاس شامل توابعی برای تبدیل کلمه به برداری از اعداد است.
-    
+
     Args:
         model_type: نوع امبدینگ که می‌تواند یکی از مقادیر ‍`fasttext`, `keyedvector`, `glove` باشد.
         model_path: مسیر فایل امبدینگ.
-    
+
     """
 
-    def __init__(self, model_type: str, model_path: str=None):
+    def __init__(self, model_type: str, model_path: str = None):
         if model_type != supported_embeddings:
             raise KeyError(
                 f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
@@ -36,14 +40,14 @@ class WordEmbedding:
 
     def load_model(self, model_path: str):
         """فایل امبدینگ را بارگزاری می‌کند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
-        
+
         Args:
             model_path: مسیر فایل امبدینگ.
-        
+
         """
 
         if self.model_type == "fasttext":
@@ -67,18 +71,18 @@ class WordEmbedding:
     def train(
         self,
         dataset_path: str,
-        workers:int=multiprocessing.cpu_count() - 1,
-        vector_size:int=200,
-        epochs:int=10,
-        fasttext_type:str="skipgram",
-        dest_path:str=None,
+        workers: int = multiprocessing.cpu_count() - 1,
+        vector_size: int = 200,
+        epochs: int = 10,
+        fasttext_type: str = "skipgram",
+        dest_path: str = None,
     ):
         """یک فایل امبدینگ از نوع fasttext ترین می‌کند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.train(dataset_path = 'dataset.txt', worker = 4, vector_size = 300, epochs = 30, fasttext_type = 'cbow', dest_path = 'fasttext_model')
-        
+
         Args:
             dataset_path: مسیر فایل متنی.
             worker: تعداد هسته درگیر برای ترین مدل.
@@ -86,7 +90,7 @@ class WordEmbedding:
             epochs: تعداد تکرار ترین بر روی کل دیتا.
             fasttext_type نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
-        
+
         """
 
         if self.model_type != "fasttext":
@@ -115,7 +119,7 @@ class WordEmbedding:
 
         print("Model trained.")
 
-        if dest_path != None:
+        if dest_path is not None:
             model.save_model(dest_path)
             print("Model saved.")
 
@@ -126,20 +130,20 @@ class WordEmbedding:
 
     def doesnt_match(self, words: list[str]) -> str:
         """لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
             >>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
             'ساعت'
-        
+
         Args:
             words: لیست کلمات.
-        
+
         Returns:
             کلمهٔ نامرتبط.
-        
+
         """
 
         if not self.model:
@@ -148,21 +152,21 @@ class WordEmbedding:
 
     def similarity(self, word1: str, word2: str) -> float:
         """میزان شباهت دو کلمه را برمی‌گرداند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.similarity('ایران', 'آلمان')
             0.44988164
             >>> wordEmbedding.similarity('ایران', 'پنجره')
             0.08837362
-        
+
         Args:
             word1: کلمهٔ اول
             word2: کلمهٔ دوم
-        
+
         Returns:
             میزان شباهت دو کلمه.
-        
+
         """
 
         if not self.model:
@@ -171,36 +175,36 @@ class WordEmbedding:
 
     def get_vocab(self) -> list[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.get_vocab()
             ['،', 'در', '.', 'و', ...]
-        
+
         Returns:
             لیست کلمات موجود در فایل امبدینگ.
-        
+
         """
 
         if not self.model:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model.index_to_key
 
-    def nearest_words(self, word: str, topn:int=5) -> list[tuple[str, str]]:
+    def nearest_words(self, word: str, topn: int = 5) -> list[tuple[str, str]]:
         """کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
             [('ايران', 0.657148540019989'), (جمهوری', 0.6470394134521484'), (آمریکا', 0.635792076587677'), (اسلامی', 0.6354473233222961'), (کشور', 0.6339613795280457')]
-        
+
         Args:
             word: کلمه‌ای که می‌خواهید واژگان مرتبط با آن را بدانید.
             topn: تعداد کلمات مرتبطی که می‌خواهید برگردانده شود.
-        
+
         Returns:
             لیستی از تاپل‌های [`کلمهٔ مرتبط`, `میزان ارتباط`].
-        
+
         """
 
         if not self.model:
@@ -209,18 +213,18 @@ class WordEmbedding:
 
     def get_normal_vector(self, word: str) -> numpy.ndarray:
         """بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.
-        
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'model_type', model_path = 'resources/cc.fa.300.bin')
             >>> wordEmbedding.get_normal_vector('سرباز')
             array([ 8.99544358e-03,  2.76231226e-02, -1.06164828e-01, ..., -9.45233554e-02, -7.59726465e-02, -8.96625668e-02], dtype=float32)
-        
+
         Args:
             word: کلمه‌ای که می‌خواهید بردار متناظر با آن را بدانید.
-        
+
         Returns:
             لیست بردار نرمالایزشدهٔ مرتبط با کلمهٔ ورودی.
-        
+
         """
 
         if not self.model:
@@ -231,26 +235,26 @@ class WordEmbedding:
 
 class SentEmbedding:
     """این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.
-    
+
     Args:
         model_path: مسیر فایل امبدینگ.
-    
+
     """
 
-    def __init__(self, model_path: str=None):
+    def __init__(self, model_path: str = None):
         if model_path:
             self.load_model(model_path)
 
     def load_model(self, model_path: str):
         """فایل امبدینگ را بارگذاری می‌کند.
-        
+
         Examples:
             >>> sentEmbedding = SentEmbedding()
             >>> sentEmbedding.load_model('sent2vec_model_path')
-        
+
         Args:
             model_path: مسیر فایل امبدینگ.
-        
+
         """
 
         self.model = Doc2Vec.load(model_path)
@@ -258,19 +262,19 @@ class SentEmbedding:
     def train(
         self,
         dataset_path: str,
-        min_count: int=5,
-        workers: int=multiprocessing.cpu_count() - 1,
-        windows: int=5,
-        vector_size: int=300,
-        epochs: int=10,
-        dest_path:str=None,
+        min_count: int = 5,
+        workers: int = multiprocessing.cpu_count() - 1,
+        windows: int = 5,
+        vector_size: int = 300,
+        epochs: int = 10,
+        dest_path: str = None,
     ):
         """یک فایل امبدینگ doc2vec ترین می‌کند.
-        
+
         Examples:
             >>> sentEmbedding = SentEmbedding()
             >>> sentEmbedding.train(dataset_path = 'dataset.txt', min_count = 10, worker = 6, windows = 3, vector_size = 250, epochs = 35, dest_path = 'doc2vec_model')
-        
+
         Args:
             dataset_path: مسیر فایل متنی.
             min_count: مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
@@ -279,7 +283,7 @@ class SentEmbedding:
             vector_size: طول وکتور خروجی به ازای هر جمله.
             epochs: تعداد تکرار ترین بر روی کل دیتا.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
-        
+
         """
         workers = 1 if workers == 0 else workers
 
@@ -298,7 +302,7 @@ class SentEmbedding:
 
         print("Model trained.")
 
-        if dest_path != None:
+        if dest_path is not None:
             model.save(dest_path)
             print("Model saved.")
 
@@ -309,18 +313,18 @@ class SentEmbedding:
 
     def get_sentence_vector(self, sent):
         """جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
-        
+
         Examples:
             >>> sentEmbedding = SentEmbedding(sent_embedding_file)
             >>> sentEmbedding.get_sentence_vector('این متن به برداری متناظر با خودش تبدیل خواهد شد')
             array([-0.28460968,  0.04566888, -0.00979532, ..., -0.4701098 , -0.3010612 , -0.18577948], dtype=float32)
-        
+
         Args:
             sent: جمله‌ای که می‌خواهید بردار امبیدنگ آن را دریافت کنید.
-        
+
         Returns:
             لیست بردار مرتبط با جملهٔ ورودی.
-        
+
         """
 
         if not self.model:
@@ -331,21 +335,21 @@ class SentEmbedding:
 
     def similarity(self, sent1: str, sent2: str) -> float:
         """میزان شباهت دو جمله را برمی‌گرداند.
-        
+
         Examples:
             >>> sentEmbedding = SentEmbedding(sent_embedding_file)
             >>> sentEmbedding.similarity('شیر حیوانی وحشی است', 'پلنگ از دیگر جانوران درنده است')
             0.8748713
             >>> sentEmbedding.similarity('هضم یک محصول پردازش متن فارسی است', 'شیر حیوانی وحشی است')
             0.2379288
-        
+
         Args:
             sent1: جملهٔ اول.
             sent2: جملهٔ دوم.
-        
+
         Returns:
             میزان شباهت دو جمله که عددی بین `0` و`1` است.
-        
+
         """
 
         if not self.model:

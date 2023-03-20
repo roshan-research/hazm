@@ -9,8 +9,9 @@
 
 """
 
+import re
 
-from .Normalizer import *
+from .Normalizer import Normalizer
 from .PeykareReader import join_verb_parts
 
 default_pos_map = {
@@ -59,15 +60,17 @@ default_pos_map = {
 
 class BijankhanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ بی‌جن‌خان است.
-    
+
     Args:
         bijankhan_file: مسیر فایلِ پیکره.
         joined_verb_parts: اگر `True‍` باشد افعال چندبخشی را با _ به‌هم می‌چسباند.
         pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
-    
+
     """
 
-    def __init__(self, bijankhan_file: str, joined_verb_parts:bool=True, pos_map:str=None):
+    def __init__(
+        self, bijankhan_file: str, joined_verb_parts: bool = True, pos_map: str = None
+    ):
         if pos_map is None:
             pos_map = default_pos_map
         self._bijankhan_file = bijankhan_file
@@ -77,10 +80,10 @@ class BijankhanReader:
 
     def _sentences(self) -> str:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
-        
+
         Yields:
             جملهٔ بعدی.
-        
+
         """
         sentence = []
         for line in open(self._bijankhan_file, encoding="utf-8"):
@@ -95,19 +98,20 @@ class BijankhanReader:
                         yield sentence
                         sentence = []
 
-    def sents(self) -> list[tuple[str,str]]:
+    def sents(self) -> list[tuple[str, str]]:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
-        
+
         Examples:
             >>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
             >>> next(bijankhan.sents())
             [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
-        
+
         Yields:
             جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
-        
+
         """
-        map_poses = lambda item: (item[0], self._pos_map.get(item[1], item[1]))
+        def map_poses(item):
+            return (item[0], self._pos_map.get(item[1], item[1]))
 
         for sentence in self._sentences():
             if self._joined_verb_parts:

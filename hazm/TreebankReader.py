@@ -5,26 +5,30 @@
 """
 
 
-import os, sys, re, codecs
+import os
+import re
+import sys
 from typing import Iterator
 from xml.dom import minidom
+
 from nltk.tree import Tree
+
 from .WordTokenizer import WordTokenizer
 
 
 def coarse_pos_e(tags: list[str]) -> list[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
-    
+
     Examples:
         >>> coarse_pos_e(['Nasp---', 'pers', 'prop'])
         'N'
-    
+
     Args:
         tags: لیست برچسب‌های ریز.
-    
+
     Returns:
         لیست برچسب‌های درشت.
-    
+
     """
 
     map = {
@@ -62,17 +66,21 @@ def coarse_pos_e(tags: list[str]) -> list[str]:
 
 class TreebankReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ تری‌بانک است.
-    
+
     Args:
         root: مسیر فولدر حاوی فایل‌های پیکره
         pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
         join_clitics: اگر `True‍` باشد واژه‌بست‌ها را به کلمهٔ مادر می‌چسباند.
         join_verb_parts: اگر `True` باشد افعال چندبخشی را با _ به هم می‌چسباند.
-    
+
     """
 
     def __init__(
-        self, root:str, pos_map:str=coarse_pos_e, join_clitics:bool=False, join_verb_parts:bool=False
+        self,
+        root: str,
+        pos_map: str = coarse_pos_e,
+        join_clitics: bool = False,
+        join_verb_parts: bool = False,
     ):
         self._root = root
         self._pos_map = pos_map if pos_map else lambda tags: ",".join(tags)
@@ -82,10 +90,10 @@ class TreebankReader:
 
     def docs(self) -> Iterator[str]:
         """اسناد موجود در پیکره را برمی‌گرداند.
-        
+
         Yields:
             سند بعدی.
-        
+
         """
         for root, dirs, files in os.walk(self._root):
             for name in sorted(files):
@@ -100,7 +108,7 @@ class TreebankReader:
 
     def trees(self) -> Iterator[str]:
         """ساختارهای درختی موجود در پیکره را برمی‌گرداند.
-        
+
         Examples:
             >>> treebank = TreebankReader(root='corpora/treebank')
             >>> print(next(treebank.trees()))
@@ -111,10 +119,10 @@ class TreebankReader:
                     (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
                     (V است/V)))
             (PUNC ./PUNC))
-        
+
         Yields:
             ساختار درختی بعدی.
-        
+
         """
 
         def traverse(node):
@@ -232,37 +240,37 @@ class TreebankReader:
                 ss = traverse(S)
                 yield traverse(S)
 
-    def sents(self) -> Iterator[list[tuple[str,str]]]:
+    def sents(self) -> Iterator[list[tuple[str, str]]]:
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
-        
+
         Examples:
             >>> treebank = TreebankReader(root='corpora/treebank')
             >>> next(treebank.sents())
             [('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
-        
+
         Yields:
             جملهٔ بعدی.
-        
+
         """
         for tree in self.trees():
             yield tree.leaves()
 
     def chunked_trees(self) -> Iterator[str]:
         """ساختار درختی را به شکل تقطیع شده برمی‌گرداند.
-        
+
         Examples:
             >>> from .Chunker import tree2brackets
             >>> treebank = TreebankReader(root='corpora/treebank')
             >>> tree2brackets(next(treebank.chunked_trees()))
             '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
-        
+
         Yields:
             درخت تقطیع شدهٔ بعدی.
-        
+
         """
-        collapse = lambda node, label: Tree(
-            label, [Tree(pos[1], [pos[0]]) for pos in node.pos()]
-        )
+
+        def collapse(node, label):
+            return Tree(label, [Tree(pos[1], [pos[0]]) for pos in node.pos()])
 
         def traverse(node, parent, chunks):
             label = node.label()

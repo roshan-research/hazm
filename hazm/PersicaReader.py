@@ -15,10 +15,10 @@ from typing import Iterator
 
 class PersicaReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ پرسیکا است.
-    
+
     Args:
         csv_file: مسیر فایلِ پیکره با پسوند csv.
-    
+
     """
 
     def __init__(self, csv_file: str) -> Iterator[dict[str, str]]:
@@ -26,9 +26,9 @@ class PersicaReader:
 
     def docs(self):
         """خبرها را برمی‌گرداند.
-        
+
         هر خبر، شی‌ای متشکل از این پارامتر است:
-        
+
         - شناسه (`id`)
         - عنوان (`title`)
         - متن (`text`)
@@ -36,15 +36,15 @@ class PersicaReader:
         - زمان (`time`)
         - دستهٔ اصلی (`category`)
         - دستهٔ فرعی (`category2`)
-        
+
         Examples:
             >>> persica = PersicaReader('corpora/persica.csv')
             >>> next(persica.docs())['id']
             843656
-        
+
         Yields:
             خبر بعدی.
-        
+
         """
         lines = []
         for line in open(self._csv_file, encoding="utf-8-sig"):
@@ -67,19 +67,19 @@ class PersicaReader:
 
     def texts(self) -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
-        
+
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
         ‍[docs()][hazm.PersicaReader.PersicaReader.docs] و دریافت مقدار پراپرتی
         `text` نیز می‌توانید همین کار را انجام دهید.
-        
+
         Examples:
             >>> persica = PersicaReader('corpora/persica.csv')
             >>> next(persica.texts()).startswith('وزير علوم در جمع استادان نمونه كشور گفت')
             True
-        
+
         Yields:
             متنِ خبر بعدی.
-        
+
         """
         for doc in self.docs():
             yield doc["text"]

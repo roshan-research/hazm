@@ -1,0 +1,66 @@
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[project]
+name = "hazm"
+description = "Python library for digesting Persian text."
+version = "0.8.1"
+authors = [{ name = "Alireza Nourian", email = "az.nourian@gmail.com" }]
+license = "MIT"
+requires-python = ">=3.9"
+readme = "README.md"
+keywords = ["nlp", "persian nlp", "persian"]
+dynamic = ["version"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Text Processing",
+    "Natural Language :: Persian",
+]
+dependencies = [
+    "nltk>=3.8.1",
+    "libwapiti>=0.2.1; platform_system!='Windows'",
+    "gensim>=4.3.1",
+    "numpy>=1.24.2",
+]
+
+[project.optional-dependencies]
+Documentation = [
+    "mkdocs==1.3.1",
+    "mkdocstrings-python==0.7.1",
+    "mkdocstrings==0.19.0",
+    "mkdocs-material==8.4.1",
+    "mkdocs-glightbox==0.2.0",
+    "pymdown-extensions==9.5",
+]
+
+
+[project.urls]
+Homepage = "https://roshan-ai.ir/hazm/"
+Demo = "https://www.roshan-ai.ir/hazm/demo/"
+Documentation = "https://roshan-ai.ir/hazm/docs/"
+Repository = "https://github.com/roshan-research/hazm/"
+Changelog = "https://github.com/roshan-research/hazm/blob/master/CHANGELOG.md"
+Issues = "https://github.com/roshan-research/hazm/issues"
+JoinUs = "https://www.roshan-ai.ir/join-us/"
+
+
+[tool.setuptools.package-data]
+"hazm" = ["data/*.dat"]
+
+[tool.pylama]
+format = "pylint"
+ignore = "E501,W0611,E722,C901,E741,E266"
+
+[tool.isort]
+profile = 'black'
+line_length = 120
+not_skip = "__init__.py"
+force_single_line = true
+balanced_wrapping = true
+
+[tools.black]
+line-length = 120

@@ -17,16 +17,15 @@ jobs:
     strategy:
       matrix:
         python-versions: [ '3.9', '3.10', '3.11' ]
-        #python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-versions }}
-        
+
     - name: Install prerequisites
       run: |
         pip install .
@@ -34,6 +33,6 @@ jobs:
         wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-stanford.zip
         unzip resources-0.5.zip -d resources
         unzip resources-stanford.zip -d resources
-        
+
     - name: Run tests
       run: python tests.py
