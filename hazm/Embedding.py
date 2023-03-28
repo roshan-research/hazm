@@ -25,7 +25,7 @@ class WordEmbedding:
     """
 
     def __init__(self, model_type, model_path=None):
-        if model_type != supported_embeddings:
+        if model_type not in supported_embeddings:
             raise KeyError(
                 f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
             )
@@ -95,7 +95,7 @@ class WordEmbedding:
             )
 
         fasttext_model_types = ["cbow", "skipgram"]
-        if fasttext_type != fasttext_model_types:
+        if fasttext_type not in fasttext_model_types:
             raise KeyError(
                 f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}'
             )
