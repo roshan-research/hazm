@@ -2,6 +2,8 @@ name: Publish to pypi
 
 on: 
   workflow_dispatch:
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -11,6 +13,7 @@ jobs:
     - uses: actions/checkout@v3    
     - uses: pdm-project/setup-pdm@v3      
     - name: Publish to pypi
-      run: pdm publish --repository testpypi
-    # run: pdm publish
+    # run: pdm publish -username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
+      run: pdm publish -username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} --repository testpypi
+    
       
