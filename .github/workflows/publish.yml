@@ -8,11 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    steps:    
-    - uses: pdm-project/setup-pdm@v3
-      name: Setup PDM
+    - uses: actions/checkout@v3    
+    - uses: pdm-project/setup-pdm@v3      
     - name: Publish to pypi
       run: pdm publish --repository testpypi
     # run: pdm publish
