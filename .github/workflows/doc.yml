@@ -25,6 +25,6 @@ jobs:
       - name: Push back changes          
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Update documentation based on the latest changes"
+          commit_message: "update docs"
           commit_user_name: "documentation-bot"
           commit_user_email: "documentation-bot@users.noreply.github.com"
