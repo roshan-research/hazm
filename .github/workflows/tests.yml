@@ -36,4 +36,4 @@ jobs:
         unzip resources-stanford.zip -d resources
         
     - name: Run tests
-      run: RUNNER_TRACKING_ID="" && python tests.py
+      run: python tests.py
