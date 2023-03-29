@@ -34,26 +34,18 @@ def remove_empty_lines(text):
     return "\n".join([line.rstrip() for line in text.splitlines() if line.strip()])
 
 
-def wrap_text(text, min_width, max_width):
-  # split the text into paragraphs by blank lines
-  paragraphs = text.split("\n\n")
-  # create a list to store the wrapped lines
+def wrap_text(text, min_width, max_width):  
+  paragraphs = text.split("\n\n")  
   wrapped_lines = []
-  # loop through each paragraph
   for paragraph in paragraphs:
-    # use textwrap.wrap to wrap the paragraph to the max_width
     lines = textwrap.wrap(paragraph, width=max_width, break_long_words=False)
-    # loop through each line
     for line in lines:
       # check if the line is shorter than the min_width
       if len(line) < min_width:
         # pad the line with spaces to reach the min_width
         line = line.ljust(min_width)
-      # append the line to the wrapped_lines list
       wrapped_lines.append(line)
-    # append a blank line after each paragraph
     wrapped_lines.append("")
-  # join the wrapped_lines list with newlines and return the result
   return "\n".join(wrapped_lines)
 
 
