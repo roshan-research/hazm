@@ -34,14 +34,28 @@ def remove_empty_lines(text):
     return "\n".join([line.rstrip() for line in text.splitlines() if line.strip()])
 
 
-def wrap_text(text, width):
-    result = ""
-    lines = text.split("\n")
+def wrap_text(text, min_width, max_width):
+  # split the text into paragraphs by blank lines
+  paragraphs = text.split("\n\n")
+  # create a list to store the wrapped lines
+  wrapped_lines = []
+  # loop through each paragraph
+  for paragraph in paragraphs:
+    # use textwrap.wrap to wrap the paragraph to the max_width
+    lines = textwrap.wrap(paragraph, width=max_width, break_long_words=False)
+    # loop through each line
     for line in lines:
-        wrapped_line = textwrap.fill(line, 79)
-        result += wrapped_line + "\n"
+      # check if the line is shorter than the min_width
+      if len(line) < min_width:
+        # pad the line with spaces to reach the min_width
+        line = line.ljust(min_width)
+      # append the line to the wrapped_lines list
+      wrapped_lines.append(line)
+    # append a blank line after each paragraph
+    wrapped_lines.append("")
+  # join the wrapped_lines list with newlines and return the result
+  return "\n".join(wrapped_lines)
 
-    return result
 
 
 def format_docstring(doc):
@@ -65,7 +79,7 @@ def format_docstring(doc):
     desc = re.sub(r"^ *", "", desc, flags=re.MULTILINE)
 
     # Wraps the description
-    desc = wrap_text(desc, 90)
+    desc = wrap_text(desc, 60, 80)
 
     doc = desc + "\n\n" + formatted_section + "\n" + '"""'
 
@@ -78,5 +92,7 @@ def format_docstring(doc):
     return doc
 
 
-for pyFile in glob.glob("./hazm/*.py"):
-    format_all_docstrings(pyFile)
+# for pyFile in glob.glob("./hazm/*.py"):
+#     format_all_docstrings(pyFile)
+
+format_all_docstrings("sample.py")
