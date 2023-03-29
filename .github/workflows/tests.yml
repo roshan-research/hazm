@@ -20,10 +20,7 @@ jobs:
         #python-versions: [ '2.7', '3.7', '3.8', '3.9', '3.10', '3.11' ]
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set RUNNER_TRACKING_ID
-      run: echo "RUNNER_TRACKING_ID=" >> $GITHUB_ENV
+    - uses: actions/checkout@v3    
     
     - name: Set up Python ${{ matrix.python-versions }}
       uses: actions/setup-python@v4
@@ -39,4 +36,4 @@ jobs:
         unzip resources-stanford.zip -d resources
         
     - name: Run tests
-      run: python tests.py
+      run: RUNNER_TRACKING_ID="" && python tests.py
