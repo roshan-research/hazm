@@ -1,0 +1,19 @@
+name: Publish to pypi
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    steps:    
+    - uses: pdm-project/setup-pdm@v3
+      name: Setup PDM
+    - name: Publish to pypi
+      run: pdm publish --repository testpypi
+    # run: pdm publish
+      
