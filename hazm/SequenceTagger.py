@@ -3,6 +3,7 @@
 """
 
 
+from typing import Any
 from nltk.metrics import accuracy
 from nltk.tag.api import TaggerI
 
@@ -17,12 +18,12 @@ class SequenceTagger(TaggerI):
 
     """
 
-    def __init__(self, patterns: list = [], **options: dict):
+    def __init__(self, patterns: list[str] = [], **options: str):
         from wapiti import Model
 
         self.model = Model(patterns="\n".join(patterns), **options)
 
-    def train(self, sentences: list[list[tuple[str, str]]]):
+    def train(self, sentences: list[list[tuple[str, str]]]) -> None:
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
 
         هر جمله، لیستی از `(توکن، برچسب)`هاست.
@@ -39,7 +40,7 @@ class SequenceTagger(TaggerI):
             ["\n".join([" ".join(word) for word in sentence]) for sentence in sentences]
         )
 
-    def save_model(self, filename: str):
+    def save_model(self, filename: str) -> None:
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
         را ذخیره می‌کند.
 
@@ -104,8 +105,8 @@ class IOBTagger(SequenceTagger):
     """ """
 
     def tag_sents(
-        self, sentences: list[list[str]]
-    ) -> list[list[dict[tuple[str, str, str]]]]:
+        self, sentences: list[list[tuple[str,str]]]
+    ) -> list[list[tuple[str, str, str]]]:
         """
 
         Examples:
@@ -126,7 +127,7 @@ class IOBTagger(SequenceTagger):
         tags = iter(results.strip().split("\n"))
         return [[word + (next(tags),) for word in sentence] for sentence in sentences]
 
-    def evaluate(self, gold):
+    def evaluate(self, gold: list[list[tuple[str, str]]]) -> float:
         """
 
         Examples:

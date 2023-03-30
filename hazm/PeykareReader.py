@@ -163,7 +163,7 @@ def coarse_pos_u(tags: list[str], word: str) -> list[str]:
         return "NOUN"
 
 
-def coarse_pos_e(tags: list[str], word) -> list[str]:
+def coarse_pos_e(tags: list[str], word: str) -> list[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
@@ -281,7 +281,7 @@ class PeykareReader:
                     if text:
                         yield text
 
-    def doc_to_sents(self, document: str) -> list[[str, str]]:
+    def doc_to_sents(self, document: str) -> Iterator[list[tuple[str, str]]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
 
         هر جمله لیستی از `(کلمه, برچسب)`ها است.
@@ -310,7 +310,7 @@ class PeykareReader:
                     yield sentence
                 sentence = []
 
-    def sents(self) -> list[tuple[str, str]]:
+    def sents(self) -> Iterator[list[tuple[str, str]]]:
         """جملات پیکره را در قالب لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
 
         Examples:

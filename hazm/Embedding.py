@@ -4,6 +4,7 @@
 """
 import multiprocessing
 import os
+from typing import Any
 import warnings
 
 import numpy
@@ -38,7 +39,7 @@ class WordEmbedding:
         if model_path:
             self.load_model(model_path)
 
-    def load_model(self, model_path: str):
+    def load_model(self, model_path: str) -> None:
         """فایل امبدینگ را بارگزاری می‌کند.
 
         Examples:
@@ -76,7 +77,7 @@ class WordEmbedding:
         epochs: int = 10,
         fasttext_type: str = "skipgram",
         dest_path: str = None,
-    ):
+    ) -> None:
         """یک فایل امبدینگ از نوع fasttext ترین می‌کند.
 
         Examples:
@@ -123,7 +124,7 @@ class WordEmbedding:
             model.save_model(dest_path)
             print("Model saved.")
 
-    def __getitem__(self, word):
+    def __getitem__(self, word: str) -> Any:
         if not self.model:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model[word]
@@ -211,7 +212,7 @@ class WordEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model.most_similar(word, topn=topn)
 
-    def get_normal_vector(self, word: str) -> numpy.ndarray:
+    def get_normal_vector(self, word: str) -> type[numpy.ndarray]:
         """بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.
 
         Examples:
@@ -245,7 +246,7 @@ class SentEmbedding:
         if model_path:
             self.load_model(model_path)
 
-    def load_model(self, model_path: str):
+    def load_model(self, model_path: str) -> None:
         """فایل امبدینگ را بارگذاری می‌کند.
 
         Examples:
@@ -268,7 +269,7 @@ class SentEmbedding:
         vector_size: int = 300,
         epochs: int = 10,
         dest_path: str = None,
-    ):
+    ) -> None:
         """یک فایل امبدینگ doc2vec ترین می‌کند.
 
         Examples:
@@ -306,12 +307,12 @@ class SentEmbedding:
             model.save(dest_path)
             print("Model saved.")
 
-    def __getitem__(self, sent: str) -> numpy.ndarray:
+    def __getitem__(self, sent: str) -> type[numpy.ndarray]:
         if not self.model:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.get_sentence_vector(sent)
 
-    def get_sentence_vector(self, sent):
+    def get_sentence_vector(self, sent:str) -> Any:
         """جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
 
         Examples:
@@ -365,7 +366,7 @@ class SentEmbedding:
 
 
 class SentenceEmbeddingCorpus:
-    def __init__(self, data_path):
+    def __init__(self, data_path: str):
         self.data_path = data_path
 
     def __iter__(self):

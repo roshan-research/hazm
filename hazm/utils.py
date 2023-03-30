@@ -5,6 +5,7 @@
 import re
 import sys
 from os import path
+from typing import Any
 
 PY2 = sys.version_info[0] == 2
 
@@ -18,13 +19,13 @@ informal_verbs = path.join(data_path, "iverbs.dat")
 NUMBERS = "۰۱۲۳۴۵۶۷۸۹"
 
 
-def maketrans(A, B):
+def maketrans(A: str, B: str) -> dict[int, Any]:
     return {ord(a): b for a, b in zip(A, B)}
 
 
 def words_list(
     words_file: str = default_words,
-) -> list[tuple[str, int, tuple[str, ...]]]:
+) -> list[tuple[str, int, tuple[str]]]:
     """لیست کلمات را برمی‌گرداند.
 
     Examples:
@@ -67,7 +68,7 @@ def stopwords_list(stopwords_file: str = default_stopwords) -> list[str]:
         return list({w.strip() for w in stopwords_file})
 
 
-def verbs_list():
+def verbs_list() -> list[str]:
     with open(default_verbs, encoding="utf8") as verbs_file:
         lst = []
         for line in verbs_file:
@@ -75,7 +76,7 @@ def verbs_list():
         return lst
 
 
-def past_roots():
+def past_roots() -> str:
     roots = ""
     for verb in verbs_list():
         split = verb.split("#")
@@ -84,7 +85,7 @@ def past_roots():
     return roots[:-1]
 
 
-def present_roots():
+def present_roots() -> str:
     roots = ""
     for verb in verbs_list():
         split = verb.split("#")
@@ -93,7 +94,7 @@ def present_roots():
     return roots[:-1]
 
 
-def regex_replace(patterns, text):
+def regex_replace(patterns: str, text: str) -> str:
     for pattern, repl in patterns:
         text = re.sub(pattern, repl, text)
     return text

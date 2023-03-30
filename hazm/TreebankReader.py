@@ -8,7 +8,7 @@
 import os
 import re
 import sys
-from typing import Iterator
+from typing import Any, Iterator
 from xml.dom import minidom
 
 from nltk.tree import Tree
@@ -88,7 +88,7 @@ class TreebankReader:
         self._join_verb_parts = join_verb_parts
         self._tokenizer = WordTokenizer()
 
-    def docs(self) -> Iterator[str]:
+    def docs(self) -> Iterator[Any]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:

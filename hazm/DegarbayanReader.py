@@ -15,7 +15,7 @@
 
 import os
 import sys
-from typing import Iterator
+from typing import Any, Iterator
 from xml.dom import minidom
 
 
@@ -47,7 +47,7 @@ class DegarbayanReader:
         if judge_type != "three_class" and judge_type != "two_class":
             self._judge_type = "three_class"
 
-    def docs(self) -> Iterator[dict[str, str]]:
+    def docs(self) -> Iterator[dict[str, Any]]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:

@@ -6,6 +6,7 @@
 """
 from typing import Iterator
 
+import nltk.tree.tree
 import nltk.chunk.util
 from nltk.chunk import ChunkParserI
 from nltk.chunk import RegexpParser
@@ -15,7 +16,7 @@ from nltk.chunk import tree2conlltags
 from .SequenceTagger import IOBTagger
 
 
-def tree2brackets(tree: str) -> str:
+def tree2brackets(tree: type[nltk.tree.tree.Tree]) -> str:
     """خروجی درختی تابع [parse()][hazm.Chunker.Chunker.parse] را به یک ساختار
     کروشه‌ای تبدیل می‌کند.
 
@@ -58,7 +59,7 @@ def tree2brackets(tree: str) -> str:
 class Chunker(IOBTagger, ChunkParserI):
     """این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است."""
 
-    def train(self, trees: list[str]):
+    def train(self, trees: list[type[nltk.tree.tree.Tree]]) -> None:
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
 
         Args:
@@ -105,7 +106,7 @@ class Chunker(IOBTagger, ChunkParserI):
         for conlltagged in super().tag_sents(sentences):
             yield conlltags2tree(conlltagged)
 
-    def evaluate(self, gold: list[str]) -> nltk.chunk.util.ChunkScore:
+    def evaluate(self, gold: list[str]) -> type[nltk.chunk.util.ChunkScore]:
         """دقت مدل را ارزیابی می‌کند.
 
         Args:

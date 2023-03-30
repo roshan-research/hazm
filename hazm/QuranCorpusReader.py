@@ -63,7 +63,7 @@ class QuranCorpusReader:
                     part["root"] = feature[5:].translate(buckwalter_transliteration)
             yield part
 
-    def words(self) -> Iterator[tuple[str, str, str, str, str, list[dict]]]:
+    def words(self) -> Iterator[tuple[str, str, str, str, str, list[dict[str,str]]]]:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
 
         Examples:

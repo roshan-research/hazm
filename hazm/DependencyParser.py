@@ -49,7 +49,7 @@ class MaltParser(MaltParser):
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
-    def parse_tagged_sents(self, sentences: str, verbose: bool = False) -> str:
+    def parse_tagged_sents(self, sentences: list[list[tuple[str,str]]], verbose: bool = False) -> str:
         """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
 
         Args:
@@ -136,7 +136,7 @@ class TurboParser(ParserI):
 
     """
 
-    def __init__(self, tagger, lemmatizer, model_file):
+    def __init__(self, tagger, lemmatizer: str, model_file: str):
         self.tagger = tagger
         self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
 
@@ -146,11 +146,11 @@ class TurboParser(ParserI):
         self.interface = self._pturboparser.create_parser()
         self.interface.load_parser_model(model_file)
 
-    def parse_sents(self, sentences):
+    def parse_sents(self, sentences: list[list[tuple[str,str]]]) -> type[DependencyGraph]:
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
-    def tagged_parse_sents(self, sentences):
+    def tagged_parse_sents(self, sentences: list[list[tuple[str,str]]]) -> type[DependencyGraph]:
         input_file = tempfile.NamedTemporaryFile(
             prefix="turbo_input.conll", dir="resources", delete=False
         )

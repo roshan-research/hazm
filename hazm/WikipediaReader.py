@@ -31,7 +31,7 @@ class WikipediaReader:
         )
         self.n_jobs = n_jobs
 
-    def docs(self) -> Iterator[dict]:
+    def docs(self) -> Iterator[dict[str, str]]:
         """مقالات را برمی‌گرداند.
 
         هر مقاله، شی‌ای متشکل از چند پارامتر است:
@@ -47,7 +47,7 @@ class WikipediaReader:
             >>> next(wikipedia.docs())['id']
 
         Yields:
-            (Dict): مقالهٔ بعدی.
+            مقالهٔ بعدی.
 
         """
         proc = subprocess.Popen(

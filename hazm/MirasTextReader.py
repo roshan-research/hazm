@@ -31,7 +31,7 @@ class MirasTextReader:
             # todo: extract link, tags, ...
             yield {"text": parts[0].strip()}
 
-    def texts(self) -> str:
+    def texts(self) -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع

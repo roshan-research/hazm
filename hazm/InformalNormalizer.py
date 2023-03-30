@@ -32,7 +32,7 @@ class InformalNormalizer(Normalizer):
         verb_file: str = informal_verbs,
         word_file: str = informal_words,
         seperation_flag: bool = False,
-        **kargs
+        **kargs: str
     ):
         self.seperation_flag = seperation_flag
         self.lemmatizer = Lemmatizer()
@@ -790,7 +790,7 @@ class InformalNormalizer(Normalizer):
 
 
 class InformalLemmatizer(Lemmatizer):
-    def __init__(self, **kargs):
+    def __init__(self, **kargs: str):
         super().__init__(**kargs)
 
         temp = []
@@ -815,7 +815,7 @@ class InformalLemmatizer(Lemmatizer):
         with open(informal_words, encoding="utf8") as wf:
             self.words.update([x.strip().split(" ", 1)[0] for x in wf])
 
-    def iconjugations(self, verb):
+    def iconjugations(self, verb: str):
         ends = ["م", "ی", "", "یم", "ین", "ن"]
         present_simples = [verb + end for end in ends]
         if verb.endswith("ا"):

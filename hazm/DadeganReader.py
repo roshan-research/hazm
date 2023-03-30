@@ -3,7 +3,7 @@
 PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده با اطلاعات نحوی و ساخت‌واژی است.
 
 """
-from typing import Iterator
+from typing import Any, Iterator
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
@@ -72,9 +72,8 @@ def coarse_pos_e(tags, word: str) -> str:
     return map.get(tags[0], "X") + ("e" if "EZ" in tags else "")
 
 
-def word_nodes(tree):
+def word_nodes(tree: type[Tree]) -> list[dict[str, Any]]:
     return sorted(list(tree.nodes.values()), key=lambda node: node["address"])[1:]
-
 
 def node_deps(node):
     return sum(list(node["deps"].values()), [])
@@ -125,7 +124,7 @@ class DadeganReader:
                 if item.strip():
                     yield item
 
-    def trees(self) -> Iterator[str]:
+    def trees(self) -> Iterator[type[Tree]]:
         """ساختار درختی جملات را برمی‌گرداند.
 
         Yields:
@@ -145,7 +144,7 @@ class DadeganReader:
 
             yield tree
 
-    def sents(self) -> list[tuple[str, str]]:
+    def sents(self) -> Iterator[list[tuple[str, str]]]:
         """لیستی از جملات را برمی‌گرداند.
 
         هر جمله لیستی از `(توکن، برچسب)`ها است.
@@ -162,7 +161,7 @@ class DadeganReader:
         for tree in self.trees():
             yield [(node["word"], node["mtag"]) for node in word_nodes(tree)]
 
-    def chunked_trees(self) -> str:
+    def chunked_trees(self) -> Iterator[type[Tree]]:
         """درخت وابستگی‌های جملات را برمی‌گرداند.
 
         Examples:

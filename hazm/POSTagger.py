@@ -6,6 +6,7 @@
 """
 
 
+from typing import Any
 from nltk.tag import stanford
 
 from .SequenceTagger import SequenceTagger
@@ -24,13 +25,13 @@ class POSTagger(SequenceTagger):
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
     """ """
 
-    def __init__(self, model_filename, path_to_jar, *args, **kwargs):
+    def __init__(self, model_filename: str, path_to_jar: str, *args: str, **kwargs: str):
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
             model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs
         )
 
-    def tag(self, tokens):
+    def tag(self, tokens: list[str]) -> list[tuple[str, str]]:
         """
 
         Examples:

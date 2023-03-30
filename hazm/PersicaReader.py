@@ -21,10 +21,10 @@ class PersicaReader:
 
     """
 
-    def __init__(self, csv_file: str) -> Iterator[dict[str, str]]:
+    def __init__(self, csv_file: str):
         self._csv_file = csv_file
 
-    def docs(self):
+    def docs(self) -> Iterator[dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از این پارامتر است:

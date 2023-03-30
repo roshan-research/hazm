@@ -229,7 +229,7 @@ class Normalizer:
 
         return text
 
-    def correct_spacing(self, text):
+    def correct_spacing(self, text: str) -> str:
         text = regex_replace(self.extra_space_patterns, text)
 
         lines = text.split("\n")
