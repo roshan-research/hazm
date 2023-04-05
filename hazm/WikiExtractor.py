@@ -95,7 +95,7 @@ if PY2:
 
         def __repr__(self):
             keys = sorted(self.__dict__)
-            items = ("{}={!r}".format(k, self.__dict__[k]) for k in keys)
+            items = (f"{k}={self.__dict__[k]!r}" for k in keys)
             return "{}({})".format(type(self).__name__, ", ".join(items))
 
         def __eq__(self, other):
@@ -240,7 +240,7 @@ def keepPage(ns, page):
 
 
 def get_url(uid):
-    return "{}?curid={}".format(options.urlbase, uid)
+    return f"{options.urlbase}?curid={uid}"
 
 
 # =========================================================================
@@ -375,7 +375,7 @@ selfClosing_tag_patterns = [
 placeholder_tag_patterns = [
     (
         re.compile(
-            r"<\s*{}(\s*| [^>]+?)>.*?<\s*/\s*{}\s*>".format(tag, tag),
+            fr"<\s*{tag}(\s*| [^>]+?)>.*?<\s*/\s*{tag}\s*>",
             re.DOTALL | re.IGNORECASE,
         ),
         repl,
@@ -493,7 +493,7 @@ class TemplateArg:
 
     def __str__(self):
         if self.default:
-            return "{{{{{{{}|{}}}}}}}".format(self.name, self.default)
+            return f"{{{{{{{self.name}|{self.default}}}}}}}"
         else:
             return "{{{%s}}}" % self.name
 
@@ -539,7 +539,7 @@ class Frame:
         while prev:
             if res:
                 res += ", "
-            res += "({}, {})".format(prev.title, prev.args)
+            res += f"({prev.title}, {prev.args})"
             prev = prev.prev
         return "<Frame [" + res + "]>"
 
@@ -2619,7 +2619,7 @@ def makeExternalLink(url, anchor):
 
 def makeExternalImage(url, alt=""):
     if options.keepLinks:
-        return '<img src="{}" alt="{}">'.format(url, alt)
+        return f'<img src="{url}" alt="{alt}">'
     else:
         return alt
 
