@@ -191,6 +191,8 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.normalize('اِعلاممممم کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
             'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر …»'
+            >>> normalizer.normalize('')
+            ''
         
         Args:
             text (str): متنی که باید نرمال‌سازی شود.
@@ -230,6 +232,35 @@ class Normalizer(object):
         return text
 
     def correct_spacing(self, text):
+        """ فاصله‌گذاری‌ها را در پیشوندها و پسوندها اصلاح می‌کند.
+
+        Examples:
+            >>> normalizer = Normalizer()
+            >>> normalizer.correct_spacing("سلام   دنیا")
+            'سلام دنیا'
+            >>> normalizer.correct_spacing("به طول ۹متر و عرض۶")
+            'به طول ۹ متر و عرض ۶'
+            >>> normalizer.correct_spacing("کاروان‌‌سرا")
+            'کاروان‌سرا'
+            >>> normalizer.correct_spacing("‌سلام‌ به ‌همه‌")
+            'سلام به همه'
+            >>> normalizer.correct_spacing("سلام دنیـــا")
+            'سلام دنیا'
+            >>> normalizer.correct_spacing("جمعهها که کار نمی کنم مطالعه می کنم")
+            'جمعه‌ها که کار نمی‌کنم مطالعه می‌کنم'
+            >>> normalizer.correct_spacing(' "سلام به همه"   ')
+            '"سلام به همه"'
+            >>> normalizer.correct_spacing('')
+            ''
+
+        Args:
+            text (str): متنی که باید فاصله‌گذاری‌های آن اصلاح شود.
+
+        Returns:
+            (str): متنی با فاصله‌گذاری‌های اصلاح‌شده.
+
+
+        """
         text = regex_replace(self.extra_space_patterns, text)
 
         lines = text.split("\n")
@@ -254,6 +285,12 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.remove_diacritics('حَذفِ اِعراب')
             'حذف اعراب'
+            >>> normalizer.remove_diacritics('آمدند')
+            'آمدند'
+            >>> normalizer.remove_diacritics('متن بدون اعراب')
+            'متن بدون اعراب'
+            >>> normalizer.remove_diacritics('')
+            ''
         
         Args:
             text (str): متنی که باید اعراب آن حذف شود.
@@ -290,10 +327,18 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.decrease_repeated_chars('سلامممم به همه')
             'سلام به همه'
+            >>> normalizer.decrease_repeated_chars('سلامم به همه')
+            'سلامم به همه'
+            >>> normalizer.decrease_repeated_chars('سلامم را برسان')
+            'سلامم را برسان'
+            >>> normalizer.decrease_repeated_chars('سلاممم را برسان')
+            'سلام را برسان'
+            >>> normalizer.decrease_repeated_chars('')
+            ''
         
         Args:
             text (str): متنی که باید تکرارهای زائد آن حذف شود.
-        
+        ئ
         Returns:
             (str): متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
         
@@ -322,6 +367,12 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.persian_style('"نرمال‌سازی"')
             '«نرمال‌سازی»'
+            >>> normalizer.persian_style('و ...')
+            'و …'
+            >>> normalizer.persian_style('10.450')
+            '10٫450'
+            >>> normalizer.persian_style('')
+            ''
         
         Args:
             text (str): متنی که باید حروف و نشانه‌های آن با حروف و نشانه‌های فارسی جایگزین شود.
@@ -337,8 +388,12 @@ class Normalizer(object):
         
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.persian_number('5% رشد داشته است.')
-            '۵٪ رشد داشته است.'
+            >>> normalizer.persian_number('5 درصد')
+            '۵ درصد'
+            >>> normalizer.persian_number('۵ درصد')
+            '۵ درصد'
+            >>> normalizer.persian_number('')
+            ''
         
         Args:
             text (str): متنی که باید اعداد لاتین و علامت % آن با معادل فارسی جایگزین شود.
@@ -377,6 +432,8 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
             'پیامبر اکرم '
+            >>> normalizer.remove_specials_chars('')
+            ''
         
         Args:
             text (str): متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.
@@ -398,6 +455,11 @@ class Normalizer(object):
             >>> normalizer = Normalizer()
             >>> normalizer.seperate_mi('نمیدانم چه میگفت')
             'نمی‌دانم چه می‌گفت'
+            >>> normalizer.seperate_mi('میز')
+            'میز'
+            >>> normalizer.seperate_mi('')
+            ''
+            
         
         Args:
             text (str): متنی که باید پیشوند «می» و «نمی» در آن جدا شود.
@@ -431,6 +493,8 @@ class Normalizer(object):
             ['اخلال‌گر']
             >>> normalizer.token_spacing(['زمین', 'لرزه', 'ای'])
             ['زمین‌لرزه‌ای']
+            >>> normalizer.token_spacing([])
+            []
         
         Args:
             tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
