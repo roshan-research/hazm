@@ -5,11 +5,11 @@
 """
 
 from __future__ import unicode_literals
-from nltk.tag.api import TaggerI
-from nltk.metrics import accuracy
+from pycrfsuite import Tagger, Trainer
+import warnings
 
 
-class SequenceTagger(TaggerI):
+class SequenceTagger():
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
     wrapper برای کتابخانهٔ [Wapiti](https://wapiti.limsi.fr/) است.
     
@@ -19,12 +19,16 @@ class SequenceTagger(TaggerI):
     
     """
 
-    def __init__(self, patterns=[], **options):
-        from wapiti import Model
+    def __init__(self, model = None):
+        if model != None:
+            self.load_model(model)
+            
+    
+    def load_model(self, model):
+        self.model = Tagger().open(model)
+        
 
-        self.model = Model(patterns="\n".join(patterns), **options)
-
-    def train(self, sentences):
+    def train(self, algouritm='lbfgs', c1=0.4, c2=0.04):
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
         
         هر جمله، لیستی از `(توکن، برچسب)`هاست.
