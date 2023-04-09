@@ -9,6 +9,7 @@ from pycrfsuite import Tagger, Trainer
 import numpy as np
 import time
 import multiprocessing
+import math
 import warnings
 
 punctuations_list = ['"', '#', '(', ')', '*', ',', '-', '.', '/', ':', '[', ']', '«', '»', '،',';','?','!']
@@ -36,7 +37,7 @@ class SequenceTagger():
         return word in punctuations_list
     
     def __universal_converter(self, tagged_list):
-        return [(word, tag.split(',')[0]) for word, tag in tagged_list]
+        return [tag.split(',')[0] for tag in tagged_list]
 
     def __features(self, sentence, index):
         return {
@@ -158,8 +159,9 @@ class SequenceTagger():
         # else:
         #     return self.__universal_converter(self.model.tag(data_maker(tokens)))
 
-    def __tag_sents(self, sentences, ):
-        if(self.is_universal):
+    def __tag_sents(self, sentences, tagges, start_ind, end_ind):
+        
+
             
         
 
@@ -183,7 +185,21 @@ class SequenceTagger():
         
         """
         workers = 1 if workers == 0 else workers
+        sents_size = len(sentences)
+        segments_size = math.ceil(sents_size / workers)
+
+        i = 0
+        while(i*segments_size<sents_size):
+            start_ind = i * segments_size
+            end_ind = (i + 1) * segments_size
+
+
+            i += 1
+
+
+
         
+
         
 
 
