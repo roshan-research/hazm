@@ -25,7 +25,7 @@ class SequenceTagger():
     """
 
     def __init__(self, model=None, universal_tag=False):
-        self.is_universal = universal_tag
+        self.__is_universal = universal_tag
         if model != None:
             self.load_model(model)
             
@@ -66,6 +66,26 @@ class SequenceTagger():
         'next_is_punc':  '' if index== len(sentence) -1 else self.__is_punc(sentence[index+1]),
     }
 
+    def __train(self, X, y, args, verbose, file_name, report_duration):
+        trainer = Trainer(verbose=verbose)
+        trainer.set_params(args)
+
+        for xseq, yseq in zip(X, y):
+            trainer.append(xseq, yseq)
+
+        end_time = time.time()
+        data_preprocessing_time = end_time - start_time
+
+        if(report_duration):
+            print(f'preprocessing time: {data_preprocessing_time}')
+        
+        start_time = time.time()
+        trainer.train(file_name)
+        end_time = time.time()
+
+        if(report_duration):
+            print(f'training time: {end_time - start_time}')
+
 
     def prepare_data(self, tokens):
         return [[self.__features(tokens, index) for index in range(len(token))] for token in tokens]
@@ -84,40 +104,26 @@ class SequenceTagger():
             sentences (List[List[Tuple[str,str]]]): جملاتی که مدل از روی آن‌ها آموزش می‌بیند.
         
         """
-        trainer = Trainer(verbose=verbose)
-        trainer.set_params({
+        tagged_list = np.array(tagged_list)
+        
+        start_time = time.time()
+        X = data_maker(tagged_list[:, 0:tagged_list.shape[2] - 1])
+        y = tagged_list[:, tagged_list.shape[2]]
+        end_time = time.time()
+
+        if(report_duration):
+            print(f'training time: {end_time - start_time}')
+
+        args = {
         'algourithm': algouritm,
         'c1': c1,
         'c2': c2,  
         'max_iterations': max_iteration,
         'feature.possible_transitions': True,
-        })
+        }
 
-        tagged_list = np.array(tagged_list)
+        return self.__train(X, y, args, verbose, file_name, report_duration)
         
-        start_time = time.time()
-        X, y = data_maker(tagged_list[:, 0])
-        y = tagged_list[:, 1]
-
-
-        for xseq, yseq in zip(X, y):
-            trainer.append(xseq, yseq)
-
-        end_time = time.time()
-        data_preprocessing_time = end_time - start_time
-
-        if(report_duration):
-            print(f'preprocessing time: {data_preprocessing_time}')
-        
-        start_time = time.time()
-        trainer.train(file_name)
-        end_time = time.time()
-        training_time = end_time - start_time
-
-        if(report_duration):
-            print(f'training time: {training_time}')
-            print(f'the total time duration: {data_preprocessing_time + training_time}')
-
         
     def save_model(self, filename):
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
@@ -150,7 +156,7 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
         
         """
-        return self.model.tag(data_provider(tokens)) if self.is_universal else self.__universal_converter(self.model.tag(data_provider(tokens)))
+        return self.model.tag(data_provider(tokens)) if self.__is_universal else self.__universal_converter(self.model.tag(data_provider(tokens)))
         # if(self.is_universal):
         #     return self.model.tag(data_maker(tokens))
         # else:
@@ -212,6 +218,10 @@ class IOBTagger(SequenceTagger):
 
     def tag(self, tagged_data, data_provider = prepare_data):
         return self.model.tag(data_provider(tagged_data))
+    
+    def train(self, tagged_list, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
+        # check if it work without write it...
+        return super().train(tagged_list, algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def tag_sents(self, sentences):
         """
