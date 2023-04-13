@@ -12,7 +12,7 @@ import multiprocessing
 import math
 import warnings
 
-punctuations_list = ['"', '#', '(', ')', '*', ',', '-', '.', '/', ':', '[', ']', '«', '»', '،',';','?','!']
+punctuation_list = ['"', '#', '(', ')', '*', ',', '-', '.', '/', ':', '[', ']', '«', '»', '،',';','?','!']
 
 class SequenceTagger():
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
@@ -34,7 +34,7 @@ class SequenceTagger():
         self.model = Tagger().open(model)
 
     def __is_punc(self, word):
-        return word in punctuations_list
+        return word in punctuation_list
     
     def __universal_converter(self, tagged_list):
         return [tag.split(',')[0] for tag in tagged_list]
@@ -44,7 +44,7 @@ class SequenceTagger():
         'word': sentence[index],
         'is_first': index == 0,
         'is_last': index == len(sentence) - 1,
-        
+        #*ix
         'prefix-1': sentence[index][0],
         'prefix-2': sentence[index][:2],
         'prefix-3': sentence[index][:3],
@@ -67,19 +67,11 @@ class SequenceTagger():
     }
 
 
-    def make_data(self, tagged_list):
-        X, y = [], []
-        tagged_list = np.array(tagged_list)
-        words = tagged_list[:, 0]
-
-        for tagged in tagged_list:
-            X.append([self.__features(words, index) for index in range(len(tagged))])
-            y.append([tag for _, tag in tagged])
-
-        return X,y
+    def prepare_data(self, tokens):
+        return [[self.__features(tokens, index) for index in range(len(token))] for token in tokens]
         
 
-    def train(self, tagged_list, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=make_data, report_duration=True):
+    def train(self, tagged_list, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
         
         هر جمله، لیستی از `(توکن، برچسب)`هاست.
@@ -101,8 +93,12 @@ class SequenceTagger():
         'feature.possible_transitions': True,
         })
 
+        tagged_list = np.array(tagged_list)
+        
         start_time = time.time()
-        X, y = data_maker(tagged_list)
+        X, y = data_maker(tagged_list[:, 0])
+        y = tagged_list[:, 1]
+
 
         for xseq, yseq in zip(X, y):
             trainer.append(xseq, yseq)
@@ -121,6 +117,7 @@ class SequenceTagger():
         if(report_duration):
             print(f'training time: {training_time}')
             print(f'the total time duration: {data_preprocessing_time + training_time}')
+
         
     def save_model(self, filename):
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
@@ -135,9 +132,9 @@ class SequenceTagger():
             filename (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
         
         """
-        self.model.save(filename)
+        None
 
-    def tag(self, tokens, data_maker = make_data):
+    def tag(self, tokens, data_provider = prepare_data):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
         `(توکن، برچسب)`ها برمی‌گرداند.
         
@@ -153,14 +150,14 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
         
         """
-        return self.model.tag(data_maker(tokens)) if self.is_universal else self.__universal_converter(self.model.tag(data_maker(tokens)))
+        return self.model.tag(data_provider(tokens)) if self.is_universal else self.__universal_converter(self.model.tag(data_provider(tokens)))
         # if(self.is_universal):
         #     return self.model.tag(data_maker(tokens))
         # else:
         #     return self.__universal_converter(self.model.tag(data_maker(tokens)))
 
     def __tag_sents(self, sentences, tagges, start_ind, end_ind):
-        
+        None
 
             
         
@@ -198,15 +195,19 @@ class SequenceTagger():
 
 
 
-        
-
-        
-
-
 class IOBTagger(SequenceTagger):
     """
     
     """
+
+    def prepare_data(self, tokens):
+        tokens = np.array(tokens)
+        super().prepare_data(tokens[:,0])
+
+
+    def tag(self, tagged_data, data_provider = prepare_data):
+        tagged_data = np.array(tagged_data)
+
 
     def tag_sents(self, sentences):
         """
