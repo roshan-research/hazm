@@ -162,7 +162,7 @@ class SequenceTagger():
             
         
 
-    def tag_sents(self, sentences, workers = multiprocessing.cpu_count() - 1):
+    def tag_sents(self, sentences, data_provider = prepare_data, workers = multiprocessing.cpu_count() - 1):
         """جملات را در قالب لیستی از توکن‌ها دریافت می‌کند
         و در خروجی، لیستی از لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
         
@@ -200,14 +200,18 @@ class IOBTagger(SequenceTagger):
     
     """
 
-    def prepare_data(self, tokens):
-        tokens = np.array(tokens)
-        super().prepare_data(tokens[:,0])
+    def __add_pos_to_features(self, pos_taggs, index):
+        return {
+            'pos': pos_taggs[index],
+            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
+            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
+        }
 
+    def prepare_data(self, tokens):
+        return [[self.__features(tokens[:, :, 0], index).update(self.__add_pos_to_features(tokens[:, :, 1], index)) for index in range(len(token))] for token in tokens]
 
     def tag(self, tagged_data, data_provider = prepare_data):
-        tagged_data = np.array(tagged_data)
-
+        return self.model.tag(data_provider(tagged_data))
 
     def tag_sents(self, sentences):
         """
@@ -219,16 +223,17 @@ class IOBTagger(SequenceTagger):
             [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
         
         """
-        sentences = list(sentences)
-        lines = "\n\n".join(
-            [
-                "\n".join(["\t".join(word) for word in sentence])
-                for sentence in sentences
-            ]
-        ).replace(" ", "_")
-        results = self.model.label_sequence(lines).decode("utf8")
-        tags = iter(results.strip().split("\n"))
-        return [[word + (next(tags),) for word in sentence] for sentence in sentences]
+        # sentences = list(sentences)
+        # lines = "\n\n".join(
+        #     [
+        #         "\n".join(["\t".join(word) for word in sentence])
+        #         for sentence in sentences
+        #     ]
+        # ).replace(" ", "_")
+        # results = self.model.label_sequence(lines).decode("utf8")
+        # tags = iter(results.strip().split("\n"))
+        # return [[word + (next(tags),) for word in sentence] for sentence in sentences]
+        None
 
     def evaluate(self, gold):
         """
@@ -238,7 +243,8 @@ class IOBTagger(SequenceTagger):
             >>> tagger.evaluate([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
         
         """
-        tagged_sents = self.tag_sents(
-            ([word[:-1] for word in sentence] for sentence in gold)
-        )
-        return accuracy(sum(gold, []), sum(tagged_sents, []))
+        # tagged_sents = self.tag_sents(
+        #     ([word[:-1] for word in sentence] for sentence in gold)
+        # )
+        # return accuracy(sum(gold, []), sum(tagged_sents, []))
+        None
