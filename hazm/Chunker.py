@@ -73,14 +73,14 @@ class Chunker(IOBTagger):
     
     """
 
-    def train(self, trees):
+    def train(self, trees, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=super().prepare_data, report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
         
         Args:
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        super(Chunker, self).train(map(tree2conlltags, trees))
+        super(Chunker, self).train([tree2IOB(tree) for tree in trees], algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def parse(self, sentence):
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
