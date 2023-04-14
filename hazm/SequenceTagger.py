@@ -220,7 +220,6 @@ class IOBTagger(SequenceTagger):
         return self.model.tag(data_provider(tagged_data))
     
     def train(self, tagged_list, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
-        # check if it work without write it...
         return super().train(tagged_list, algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def tag_sents(self, sentences):
