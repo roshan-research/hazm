@@ -42,10 +42,24 @@ def features(sentence, index):
     'next_is_punc':  '' if index== len(sentence) -1 else is_punc(sentence[index+1]),
 }
 
+def add_pos_to_features(pos_taggs, index):
+        return {
+            'pos': pos_taggs[index],
+            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
+            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
+        }
+    
 def prepare_data(tokens):
     return [[features(token, index) for index in range(len(token))] for token in tokens]
 
+def prepare_data_IOB(tokens):
+    words = [[word for word, _ in token] for token in tokens]
+    tags = [[tag for _, tag in token] for token in tokens]
+    word_features = [[features(word_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
+    
+    return [[features(word_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
 
+# .update(add_pos_to_features(tag_tokens, index))
 class SequenceTagger():
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
     wrapper برای کتابخانهٔ [Wapiti](https://wapiti.limsi.fr/) است.
@@ -69,6 +83,12 @@ class SequenceTagger():
     
     def __universal_converter(self, tagged_list):
         return [tag.split(',')[0] for tag in tagged_list]
+    
+    def __tag(self, tokens):
+        return self.__universal_converter(self.model.tag(self.data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.data_provider([tokens])[0]) 
+
+#     def __tag_sents(self, sentences, tagges, start_ind, end_ind):
+#     None
 
     def __train(self, X, y, args, verbose, file_name, report_duration):
         trainer = Trainer(verbose=verbose)
@@ -153,19 +173,10 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
         
         """
-        return self.__universal_converter(self.model.tag(data_provider([tokens])[0])) if self.__is_universal else self.model.tag(data_provider([tokens])[0]) 
-        # if(self.is_universal):
-        #     return self.model.tag(data_maker(tokens))
-        # else:
-        #     return self.__universal_converter(self.model.tag(data_maker(tokens)))
+        self.data_provider = data_provider
+        return self.__tag(tokens)
 
-    def __tag_sents(self, sentences, tagges, start_ind, end_ind):
-        None
-
-            
-        
-
-    def tag_sents(self, sentences, data_provider = prepare_data, workers = multiprocessing.cpu_count() - 1):
+    def tag_sents(self, sentences, data_provider = prepare_data):
         """جملات را در قالب لیستی از توکن‌ها دریافت می‌کند
         و در خروجی، لیستی از لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
         
@@ -184,17 +195,21 @@ class SequenceTagger():
                     هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
         
         """
-        workers = 1 if workers == 0 else workers
-        sents_size = len(sentences)
-        segments_size = math.ceil(sents_size / workers)
+        self.data_provider = data_provider
+        return [self.__tag(tokens) for tokens in sentences]
+#         workers = 1 if workers == 0 else workers
+#         sents_size = len(sentences)
+#         segments_size = math.ceil(sents_size / workers)
 
-        i = 0
-        while(i*segments_size<sents_size):
-            start_ind = i * segments_size
-            end_ind = (i + 1) * segments_size
+#         i = 0
+#         while(i*segments_size<sents_size):
+#             start_ind = i * segments_size
+#             end_ind = (i + 1) * segments_size
 
 
-            i += 1
+#             i += 1
+
+
 
 
 
@@ -203,20 +218,11 @@ class IOBTagger(SequenceTagger):
     
     """
 
-    def __add_pos_to_features(self, pos_taggs, index):
-        return {
-            'pos': pos_taggs[index],
-            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
-            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
-        }
-
-    def prepare_data(self, tokens):
-        return [[self.__features(tokens[:, :, 0], index).update(self.__add_pos_to_features(tokens[:, :, 1], index)) for index in range(len(token))] for token in tokens]
-
-    def tag(self, tagged_data, data_provider = prepare_data):
+    def tag(self, tagged_data, data_provider = prepare_data_IOB):
+        print(data_provider(tagged_data))
         return self.model.tag(data_provider(tagged_data))
     
-    def train(self, tagged_list, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
+    def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
         return super().train(tagged_list, algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def tag_sents(self, sentences):
@@ -229,17 +235,7 @@ class IOBTagger(SequenceTagger):
             [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
         
         """
-        # sentences = list(sentences)
-        # lines = "\n\n".join(
-        #     [
-        #         "\n".join(["\t".join(word) for word in sentence])
-        #         for sentence in sentences
-        #     ]
-        # ).replace(" ", "_")
-        # results = self.model.label_sequence(lines).decode("utf8")
-        # tags = iter(results.strip().split("\n"))
-        # return [[word + (next(tags),) for word in sentence] for sentence in sentences]
-        None
+        return [self.tag()]
 
     def evaluate(self, gold):
         """
