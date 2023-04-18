@@ -42,12 +42,14 @@ def features(sentence, index):
     'next_is_punc':  '' if index== len(sentence) -1 else is_punc(sentence[index+1]),
 }
 
-def add_pos_to_features(pos_taggs, index):
-        return {
-            'pos': pos_taggs[index],
-            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
-            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
-        }
+def features_IOB(words, pos_taggs, index):
+    word_features = features(words, index)
+    word_features.update({
+        'pos': pos_taggs[index],
+        'prev_pos': '' if index == 0 else pos_taggs[index - 1],
+        'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
+    })
+    return word_features
     
 def prepare_data(tokens):
     return [[features(token, index) for index in range(len(token))] for token in tokens]
@@ -55,9 +57,7 @@ def prepare_data(tokens):
 def prepare_data_IOB(tokens):
     words = [[word for word, _ in token] for token in tokens]
     tags = [[tag for _, tag in token] for token in tokens]
-    word_features = [[features(word_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
-    
-    return [[features(word_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
+    return [[features_IOB(word_tokens, tag_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
 
 # .update(add_pos_to_features(tag_tokens, index))
 class SequenceTagger():
@@ -218,14 +218,14 @@ class IOBTagger(SequenceTagger):
     
     """
 
+
     def tag(self, tagged_data, data_provider = prepare_data_IOB):
-        print(data_provider(tagged_data))
-        return self.model.tag(data_provider(tagged_data))
+        return super().tag(tagged_data, data_provider)
     
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
-        return super().train(tagged_list, algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
+        return super().train(tagged_list, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
-    def tag_sents(self, sentences):
+    def tag_sents(self, sentences, data_provider = prepare_data_IOB):
         """
         
         Examples:
@@ -235,18 +235,4 @@ class IOBTagger(SequenceTagger):
             [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
         
         """
-        return [self.tag()]
-
-    def evaluate(self, gold):
-        """
-        
-        Examples:
-            >>> tagger = IOBTagger(patterns=['*', 'U:word-%x[0,0]', 'U:word-%x[0,1]'])
-            >>> tagger.evaluate([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
-        
-        """
-        # tagged_sents = self.tag_sents(
-        #     ([word[:-1] for word in sentence] for sentence in gold)
-        # )
-        # return accuracy(sum(gold, []), sum(tagged_sents, []))
         None
