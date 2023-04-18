@@ -235,4 +235,5 @@ class IOBTagger(SequenceTagger):
             [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
         
         """
-        None
+        return super().tag_sents(sentences, data_provider)
+
