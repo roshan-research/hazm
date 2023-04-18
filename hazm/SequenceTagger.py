@@ -217,10 +217,12 @@ class IOBTagger(SequenceTagger):
     """
     
     """
-
+    def __chunker_format(self, tagged_data, chunks):
+        return [(token[0], token[1], chunk_tag) for token, chunk_tag in zip(tagged_data, chunks)]
 
     def tag(self, tagged_data, data_provider = prepare_data_IOB):
-        return super().tag(tagged_data, data_provider)
+        chunk_tags = super().tag(tagged_data, data_provider)
+        return self.__chunker_format(tagged_data, chunk_tags)
     
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
         return super().train(tagged_list, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
@@ -235,5 +237,5 @@ class IOBTagger(SequenceTagger):
             [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
         
         """
-        return super().tag_sents(sentences, data_provider)
-
+        chunk_tags = super().tag_sents(sentences, data_provider)
+        return [self.__chunker_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
