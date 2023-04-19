@@ -75,7 +75,6 @@ class SequenceTagger():
         if model != None:
             self.load_model(model)
             
-    
     def load_model(self, model):
         tagger = Tagger()
         tagger.open(model)
@@ -85,10 +84,7 @@ class SequenceTagger():
         return [tag.split(',')[0] for tag in tagged_list]
     
     def __tag(self, tokens):
-        return self.__universal_converter(self.model.tag(self.data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.data_provider([tokens])[0]) 
-
-#     def __tag_sents(self, sentences, tagges, start_ind, end_ind):
-#     None
+        return self.__universal_converter(self.model.tag(self.__data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.__data_provider([tokens])[0]) 
 
     def __train(self, X, y, args, verbose, file_name, report_duration):
         trainer = Trainer(verbose=verbose)
@@ -113,8 +109,6 @@ class SequenceTagger():
             
         self.load_model(file_name)
         
-        
-
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
         
@@ -140,7 +134,6 @@ class SequenceTagger():
         }
 
         return self.__train(X, y, args, verbose, file_name, report_duration)
-        
         
     def save_model(self, filename):
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
@@ -173,7 +166,7 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
         
         """
-        self.data_provider = data_provider
+        self.__data_provider = data_provider
         return self.__tag(tokens)
 
     def tag_sents(self, sentences, data_provider = prepare_data):
@@ -195,21 +188,8 @@ class SequenceTagger():
                     هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
         
         """
-        self.data_provider = data_provider
+        self.__data_provider = data_provider
         return [self.__tag(tokens) for tokens in sentences]
-#         workers = 1 if workers == 0 else workers
-#         sents_size = len(sentences)
-#         segments_size = math.ceil(sents_size / workers)
-
-#         i = 0
-#         while(i*segments_size<sents_size):
-#             start_ind = i * segments_size
-#             end_ind = (i + 1) * segments_size
-
-
-#             i += 1
-
-
 
 
 

@@ -8,9 +8,9 @@
 """
 
 from __future__ import unicode_literals
-from nltk.chunk import ChunkParserI, RegexpParser, tree2conlltags, conlltags2tree
+from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
 from nltk.tree import Tree
-from .SequenceTagger import IOBTagger
+from .SequenceTagger import IOBTagger, prepare_data_IOB
 
 
 def tree2brackets(tree):
@@ -73,16 +73,16 @@ class Chunker(IOBTagger):
     
     """
 
-    def train(self, trees, algouritm='lbfgs', c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=super().prepare_data, report_duration=True):
+    def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=super().prepare_data, report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
         
         Args:
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        super(Chunker, self).train([tree2IOB(tree) for tree in trees], algouritm, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
+        super().train([tree2IOB(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
-    def parse(self, sentence):
+    def parse(self, sentence, data_provider = prepare_data_IOB):
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
         
@@ -105,7 +105,7 @@ class Chunker(IOBTagger):
             می‌توانید از تابع `tree2brackets()` استفاده کنید.
         
         """
-        return next(self.parse_sents([sentence]))
+        return conlltags2tree(super().tag(sentence, data_provider))
 
     def parse_sents(self, sentences):
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
@@ -119,18 +119,6 @@ class Chunker(IOBTagger):
         """
         for conlltagged in super(Chunker, self).tag_sents(sentences):
             yield conlltags2tree(conlltagged)
-
-    def evaluate(self, gold):
-        """دقت مدل را ارزیابی می‌کند.
-        
-        Args:
-            gold (List[Tree]): دادهٔ مرجع برای ارزیابی دقت مدل.
-        
-        Returns:
-            (ChunkScore): دقت تشخیص.
-        
-        """
-        return ChunkParserI.evaluate(self, gold)
 
 
 class RuleBasedChunker(RegexpParser):
