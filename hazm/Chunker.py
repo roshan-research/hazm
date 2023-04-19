@@ -73,14 +73,14 @@ class Chunker(IOBTagger):
     
     """
 
-    def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=super().prepare_data, report_duration=True):
+    def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='chunker_crf.model', data_maker=prepare_data_IOB, report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
         
         Args:
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        super().train([tree2IOB(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
+        return super().train([tree2IOB(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def parse(self, sentence, data_provider = prepare_data_IOB):
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
@@ -107,7 +107,7 @@ class Chunker(IOBTagger):
         """
         return conlltags2tree(super().tag(sentence, data_provider))
 
-    def parse_sents(self, sentences):
+    def parse_sents(self, sentences, data_maker = prepare_data_IOB):
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
         
         Args:
@@ -117,7 +117,7 @@ class Chunker(IOBTagger):
             (Iterator[str]): یک `Iterator` از جملات تقطیع شده.
         
         """
-        for conlltagged in super(Chunker, self).tag_sents(sentences):
+        for conlltagged in super(Chunker, self).tag_sents(sentences, data_maker):
             yield conlltags2tree(conlltagged)
 
 

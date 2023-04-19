@@ -123,8 +123,8 @@ class SequenceTagger():
         
         """
         
-        X = data_maker([[word for word, _ in tagged_sent] for tagged_sent in tagged_list])
-        y = [[tag for _, tag in tagged_sent] for tagged_sent in tagged_list]
+        X = data_maker([[x for x, _ in tagged_sent] for tagged_sent in tagged_list])
+        y = [[y for _, y in tagged_sent] for tagged_sent in tagged_list]
         
         args = {
         'c1': c1,
@@ -196,6 +196,7 @@ class SequenceTagger():
 class IOBTagger(SequenceTagger):
     """
     
+    
     """
     def __chunker_format(self, tagged_data, chunks):
         return [(token[0], token[1], chunk_tag) for token, chunk_tag in zip(tagged_data, chunks)]
@@ -204,7 +205,8 @@ class IOBTagger(SequenceTagger):
         chunk_tags = super().tag(tagged_data, data_provider)
         return self.__chunker_format(tagged_data, chunk_tags)
     
-    def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data, report_duration=True):
+    def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data_IOB, report_duration=True):
+        tagged_list = [[((word, tag), chunk) for word, tag, chunk in tagged_sent] for tagged_sent in tagged_list]
         return super().train(tagged_list, c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def tag_sents(self, sentences, data_provider = prepare_data_IOB):
