@@ -201,12 +201,12 @@ class IOBTagger(SequenceTagger):
     
     
     """
-    def __chunker_format(self, tagged_data, chunk_tags):
+    def __IOB_format(self, tagged_data, chunk_tags):
         return [(token[0], token[1], chunk_tag[1]) for token, chunk_tag in zip(tagged_data, chunk_tags)]
 
     def tag(self, tagged_data, data_provider = prepare_data_IOB):
         chunk_tags = super().tag(tagged_data, data_provider)
-        return self.__chunker_format(tagged_data, chunk_tags)
+        return self.__IOB_format(tagged_data, chunk_tags)
     
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', data_maker=prepare_data_IOB, report_duration=True):
         tagged_list = [[((word, tag), chunk) for word, tag, chunk in tagged_sent] for tagged_sent in tagged_list]
@@ -223,5 +223,5 @@ class IOBTagger(SequenceTagger):
         
         """
         chunk_tags = super().tag_sents(sentences, data_provider)
-        return [self.__chunker_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
+        return [self.__IOB_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
 
