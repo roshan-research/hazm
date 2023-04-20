@@ -13,16 +13,17 @@ import warnings
 from sklearn.metrics.pairwise import cosine_similarity
 
 grammers = [
-    """
+"""
 NP:
-        {<Ne>?<N.*>}    # Noun(s) + Noun(optional) 
+        {<NOUN,EZ>?<NOUN.*>}    # Noun(s) + Noun(optional) 
         
 """,
-    """
+
+"""
 NP:
-        {<N.*><AJ.*>?}    # Noun(s) + Adjective(optional) 
+        {<NOUN.*><ADJ.*>?}    # Noun(s) + Adjective(optional) 
         
-""",
+"""
 ]
 
 normalizer = Normalizer()
