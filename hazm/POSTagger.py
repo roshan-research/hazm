@@ -20,6 +20,21 @@ class POSTagger(SequenceTagger):
     این عدد با انتشار هر نسخه بروزرسانی می‌شود.
     
     """
+    def __init__(self, model=None, universal_tag=False):
+        super().__init__(model)
+        self.__is_universal = universal_tag
+
+    def __universal_converter(self, tagged_list):
+        return [tag.split(',')[0] for tag in tagged_list]
+    
+    def tag(self, tokens, data_provider=...):
+        tagged_token = super().tag(tokens, data_provider)
+        return self.__universal_converter(tagged_token) if self.__is_universal else tagged_token
+    
+    def tag_sents(self, sentences, data_provider=...):
+        tagged_sents = super().tag_sents(sentences, data_provider)
+        return [self.__universal_converter(tagged_sent) for tagged_sent in tagged_sents] if self.__is_universal else tagged_sents
+
 
 
 class StanfordPOSTagger(stanford.StanfordPOSTagger):

@@ -70,8 +70,7 @@ class SequenceTagger():
     
     """
 
-    def __init__(self, model=None, universal_tag=False):
-        self.__is_universal = universal_tag
+    def __init__(self, model=None):
         if model != None:
             self.load_model(model)
             
@@ -80,14 +79,11 @@ class SequenceTagger():
         tagger.open(model)
         self.model = tagger
     
-    def __universal_converter(self, tagged_list):
-        return [tag.split(',')[0] for tag in tagged_list]
-    
     def __add_label(self, sentence, tags):
         return [(word, tag) for word, tag in zip(sentence, tags)]
     
     def __tag(self, tokens):
-        return self.__add_label(tokens, self.__universal_converter(self.model.tag(self.__data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.__data_provider([tokens])[0])) 
+        return self.__add_label(self.model.tag(self.__data_provider([tokens])[0])) 
 
     def __train(self, X, y, args, verbose, file_name, report_duration):
         trainer = Trainer(verbose=verbose)
