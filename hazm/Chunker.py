@@ -52,21 +52,6 @@ def tree2brackets(tree):
 
     return str.strip()
 
-def tree2IOB(tree):
-    boi_tags = []
-    for subtree in tree:
-        if isinstance(subtree, Tree):
-            chunk_label = subtree.label()
-            words = [word for word, pos in subtree.leaves()]
-            for i, word in enumerate(words):
-                if i == 0:
-                    boi_tags.append((word, subtree[i][1], f"B-{chunk_label}"))
-                else:
-                    boi_tags.append((word, subtree[i][1], f"I-{chunk_label}"))
-        else:
-            boi_tags.append((subtree[0], subtree[1], 'O'))
-    return boi_tags
-
 
 class Chunker(IOBTagger):
     """این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است.
@@ -80,7 +65,7 @@ class Chunker(IOBTagger):
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        return super().train([tree2IOB(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
+        return super().train([tree2conlltags(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
 
     def parse(self, sentence, data_provider = prepare_data_IOB):
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
