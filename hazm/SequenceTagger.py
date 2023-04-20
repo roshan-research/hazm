@@ -83,8 +83,11 @@ class SequenceTagger():
     def __universal_converter(self, tagged_list):
         return [tag.split(',')[0] for tag in tagged_list]
     
+    def __add_label(self, sentence, tags):
+        return [(word, tag) for word, tag in zip(sentence, tags)]
+    
     def __tag(self, tokens):
-        return self.__universal_converter(self.model.tag(self.__data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.__data_provider([tokens])[0]) 
+        return self.__add_label(tokens, self.__universal_converter(self.model.tag(self.__data_provider([tokens])[0])) if self.__is_universal else self.model.tag(self.__data_provider([tokens])[0])) 
 
     def __train(self, X, y, args, verbose, file_name, report_duration):
         trainer = Trainer(verbose=verbose)
@@ -198,8 +201,8 @@ class IOBTagger(SequenceTagger):
     
     
     """
-    def __chunker_format(self, tagged_data, chunks):
-        return [(token[0], token[1], chunk_tag) for token, chunk_tag in zip(tagged_data, chunks)]
+    def __chunker_format(self, tagged_data, chunk_tags):
+        return [(token[0], token[1], chunk_tag[1]) for token, chunk_tag in zip(tagged_data, chunk_tags)]
 
     def tag(self, tagged_data, data_provider = prepare_data_IOB):
         chunk_tags = super().tag(tagged_data, data_provider)
@@ -221,3 +224,4 @@ class IOBTagger(SequenceTagger):
         """
         chunk_tags = super().tag_sents(sentences, data_provider)
         return [self.__chunker_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
+
