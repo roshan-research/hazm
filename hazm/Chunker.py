@@ -10,7 +10,7 @@
 from __future__ import unicode_literals
 from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
 from nltk.tree import Tree
-from .SequenceTagger import IOBTagger, prepare_data_IOB
+from .SequenceTagger import IOBTagger
 
 
 def tree2brackets(tree):
@@ -58,16 +58,16 @@ class Chunker(IOBTagger):
     
     """
 
-    def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='chunker_crf.model', data_maker=prepare_data_IOB, report_duration=True):
+    def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='chunker_crf.model', report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
         
         Args:
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
         
         """
-        return super().train([tree2conlltags(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, data_maker, report_duration)
+        return super().train([tree2conlltags(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, report_duration)
 
-    def parse(self, sentence, data_provider = prepare_data_IOB):
+    def parse(self, sentence):
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
         
@@ -90,9 +90,9 @@ class Chunker(IOBTagger):
             می‌توانید از تابع `tree2brackets()` استفاده کنید.
         
         """
-        return conlltags2tree(super().tag(sentence, data_provider))
+        return conlltags2tree(super().tag(sentence))
 
-    def parse_sents(self, sentences, data_maker = prepare_data_IOB):
+    def parse_sents(self, sentences):
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
         
         Args:
@@ -102,7 +102,7 @@ class Chunker(IOBTagger):
             (Iterator[str]): یک `Iterator` از جملات تقطیع شده.
         
         """
-        for conlltagged in super(Chunker, self).tag_sents(sentences, data_maker):
+        for conlltagged in super(Chunker, self).tag_sents(sentences):
             yield conlltags2tree(conlltagged)
 
 
