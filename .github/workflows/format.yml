@@ -25,6 +25,9 @@ jobs:
         
     - name: Format all codes with black formatter
       run: black .
+
+    - name: Sort import alfabeticly
+      run: isort .
       
     - name: Format docstrings with a custom formatter
       run: python format_docstrings.py

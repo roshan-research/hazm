@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ ظرفیت نحوی افعال فارسی
 است.
 
@@ -19,10 +17,9 @@
 
 """
 
-from __future__ import unicode_literals
-import codecs
-from collections import namedtuple
 
+from collections import namedtuple
+from typing import Iterator
 
 Verb = namedtuple(
     "Verb",
@@ -39,23 +36,23 @@ Verb = namedtuple(
 
 class VerbValencyReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ ظرفیت نحوی افعال فارسی است.
-    
+
     Args:
-        valency_file(str, optional): مسیر فایلِ پیکره.
-    
+        valency_file: مسیر فایلِ پیکره.
+
     """
 
-    def __init__(self, valency_file="corpora/valency.txt"):
+    def __init__(self, valency_file: str = "corpora/valency.txt"):
         self._valency_file = valency_file
 
-    def verbs(self):
+    def verbs(self) -> Iterator[Verb]:
         """افعال پیکره را برمی‌گرداند.
-        
+
         Yields:
-            (str): فعل بعدی.
-        
+            فعل بعدی.
+
         """
-        with codecs.open(self._valency_file, encoding="utf-8") as valency_file:
+        with open(self._valency_file, encoding="utf-8") as valency_file:
             for line in valency_file:
                 if "بن ماضی" in line:
                     continue

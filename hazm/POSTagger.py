@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت
 برچسب‌زنی در نسخهٔ حاضر ۹۷.۱ درصد [^1] است.**
 [^1]:
@@ -7,8 +5,10 @@
 
 """
 
-from __future__ import unicode_literals
+
+from typing import Any
 from nltk.tag import stanford
+
 from .SequenceTagger import SequenceTagger
 
 
@@ -18,35 +18,31 @@ class POSTagger(SequenceTagger):
     [SequenceTagger][hazm.SequenceTagger.SequenceTagger] به ارث می‌برد.
     [^1]:
     این عدد با انتشار هر نسخه بروزرسانی می‌شود.
-    
+
     """
 
 
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
-    """
-    
-    """
+    """ """
 
-    def __init__(self, model_filename, path_to_jar, *args, **kwargs):
+    def __init__(self, model_filename: str, path_to_jar: str, *args: str, **kwargs: str):
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
             model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs
         )
 
-    def tag(self, tokens):
+    def tag(self, tokens: list[str]) -> list[tuple[str, str]]:
         """
-        
+
         Examples:
             >>> tagger = StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar')
             >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
             [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
-        
+
         """
         return self.tag_sents([tokens])[0]
 
     def tag_sents(self, sentences):
-        """
-    
-    """
-        refined = map(lambda s: [w.replace(" ", "_") for w in s], sentences)
+        """ """
+        refined = [[w.replace(" ", "_") for w in s] for s in sentences]
         return super(stanford.StanfordPOSTagger, self).tag_sents(refined)

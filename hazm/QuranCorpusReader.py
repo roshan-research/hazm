@@ -1,14 +1,11 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ Quranic Arabic است.
 
 پیکرهٔ [Quranic Arabic](https://corpus.quran.com/) شامل قواعد نحوی و اطلاعات
 ریخت‌شناسی تک‌تک کلمات قرآن کریم است.
 
 """
+from typing import Iterator
 
-from __future__ import unicode_literals
-import codecs
 from .utils import maketrans
 
 buckwalter_transliteration = maketrans(
@@ -19,21 +16,21 @@ buckwalter_transliteration = maketrans(
 
 class QuranCorpusReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ Quranic Arabic است.
-    
+
     Args:
-        quran_file (str): مسیر فایلِ پیکره
-    
+        quran_file: مسیر فایلِ پیکره
+
     """
 
-    def __init__(self, quran_file):
+    def __init__(self, quran_file: str):
         self._quran_file = quran_file
 
-    def parts(self):
+    def parts(self) -> Iterator[dict[str, str]]:
         """اجزای متن قرآن را به‌همراه اطلاعات نحوی‌شان برمی‌گرداند.
-        
+
         یک جزء لزوماً یک کلمه نیست؛ مثلاً واژهٔ «الرحمن» از دو جزء «ال» و «رحمن» تشکیل
         شده است.
-        
+
         Examples:
             >>> parts=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').parts()
             >>> print(next(parts))
@@ -42,12 +39,12 @@ class QuranCorpusReader:
             {'loc': (1, 1, 1, 2), 'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}
             >>> print(next(parts))
             {'loc': (1, 1, 2, 1), 'text': 'ٱللَّهِ', 'tag': 'PN', 'lem': 'ٱللَّه', 'root': 'اله'}
-        
+
         Yields:
-            (Dict): جزء بعدی متن قرآن.
-        
+            جزء بعدی متن قرآن.
+
         """
-        for line in codecs.open(self._quran_file):
+        for line in open(self._quran_file):
             if not line.startswith("("):
                 continue
             parts = line.strip().split("\t")
@@ -66,17 +63,17 @@ class QuranCorpusReader:
                     part["root"] = feature[5:].translate(buckwalter_transliteration)
             yield part
 
-    def words(self):
+    def words(self) -> Iterator[tuple[str, str, str, str, str, list[dict[str,str]]]]:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
-        
+
         Examples:
             >>> words=QuranCorpusReader(quran_file='corpora/quranic-corpus-morphology.txt').words()
             >>> print(next(words))
             ('1.1.1', 'بِسْمِ', 'ٱسْم', 'سمو', 'P-N', [{'text': 'بِ', 'tag': 'P'}, {'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}])
-        
+
         Yields:
-            (Tuple[str,str,str,str,str,List[Dict]]): اطلاعات صرفی کلمهٔ بعدی قرآن.
-        
+            اطلاعات صرفی کلمهٔ بعدی قرآن.
+
         """
 
         def word_item(location, parts):

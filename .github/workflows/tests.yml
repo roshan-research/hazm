@@ -1,38 +1,38 @@
 name: Run tests
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ master ]
-    paths: [ '**.py', 'hazm/**', 'corpora/**' ]
-  pull_request:
-    branches: [ master ]
-  workflow_run:
-    workflows: ["Format code"]
-    types: [ completed ]
+    workflow_dispatch:
+    push:
+        branches: [master]
+        paths: ["**.py", "hazm/**", "corpora/**"]
+    pull_request:
+        branches: [master]
+    workflow_run:
+        workflows: ["Format code"]
+        types: [completed]
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:        
-        python-versions: [ '3.6', '3.7', '3.8', '3.9', '3.10', '3.11' ]        
+    build:
+        runs-on: ubuntu-20.04
+        strategy:
+            matrix:
+                python-versions: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
 
-    steps:
-    - uses: actions/checkout@v3    
-    
-    - name: Set up Python ${{ matrix.python-versions }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-versions }}
-        
-    - name: Install prerequisites
-      run: |
-        pip install .
-        wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip
-        wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-stanford.zip
-        unzip resources-0.5.zip -d resources
-        unzip resources-stanford.zip -d resources
-        
-    - name: Run tests
-      run: python tests.py
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Python ${{ matrix.python-versions }}
+              uses: actions/setup-python@v4
+              with:
+                  python-version: ${{ matrix.python-versions }}
+
+            - name: Install prerequisites
+              run: |
+                  pip install .
+                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip
+                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-stanford.zip
+                  unzip resources-0.5.zip -d resources
+                  unzip resources-stanford.zip -d resources
+
+            - name: Run tests
+              run: python tests.py

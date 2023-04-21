@@ -1,8 +1,32 @@
-# coding: utf-8
+import doctest
+import inspect
+import sys
+import unittest
 
-from __future__ import unicode_literals
-import sys, inspect, doctest, unittest
-from hazm import *
+from hazm import BijankhanReader
+from hazm import Chunker
+from hazm import DadeganReader
+from hazm import DegarbayanReader
+from hazm import DependencyParser
+from hazm import HamshahriReader
+from hazm import InformalNormalizer
+from hazm import Lemmatizer
+from hazm import MirasTextReader
+from hazm import Normalizer
+from hazm import PersicaReader
+from hazm import PeykareReader
+from hazm import POSTagger
+from hazm import QuranCorpusReader
+from hazm import SentenceTokenizer
+from hazm import SentiPersReader
+from hazm import SequenceTagger
+from hazm import Stemmer
+from hazm import TNewsReader
+from hazm import TokenSplitter
+from hazm import TreebankReader
+from hazm import VerbValencyReader
+from hazm import WordTokenizer
+from hazm import utils
 
 modules = {
     "normalizer": Normalizer,
@@ -45,7 +69,7 @@ class UnicodeOutputChecker(doctest.OutputChecker):
         except:
             pass
 
-        if type(want) == unicode:
+        if type(want) == str:
             want = want.replace("٫", ".")  # eval issue
 
         return want == got
@@ -57,14 +81,9 @@ if __name__ == "__main__":
 
     suites = []
     checker = UnicodeOutputChecker() if utils.PY2 else None
-    for name, object in modules.items():
+    for name, obj in list(modules.items()):
         if all_modules or name in sys.argv:
-            suites.append(
-                doctest.DocTestSuite(inspect.getmodule(object), checker=checker)
-            )
-
-    # if not utils.PY2 and all_modules:
-    #    suites.append(doctest.DocFileSuite("README.md"))
+            suites.append(doctest.DocTestSuite(inspect.getmodule(obj), checker=checker))
 
     failure = False
     runner = unittest.TextTestRunner(verbosity=2)

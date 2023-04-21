@@ -1,26 +1,26 @@
-from hazm import (
-    Embedding,
-    Normalizer,
-    sent_tokenize,
-    word_tokenize,
-    POSTagger,
-    PersicaReader,
-)
+import warnings
+
 import nltk
 import numpy as np
 import pandas as pd
-import warnings
 from sklearn.metrics.pairwise import cosine_similarity
+
+from hazm import Embedding
+from hazm import Normalizer
+from hazm import PersicaReader
+from hazm import POSTagger
+from hazm import sent_tokenize
+from hazm import word_tokenize
 
 grammers = [
     """
 NP:
-        {<Ne>?<N.*>}    # Noun(s) + Noun(optional) 
+        {<Ne>?<N.*>}    # Noun(s) + Noun(optional)
         
 """,
     """
 NP:
-        {<N.*><AJ.*>?}    # Noun(s) + Adjective(optional) 
+        {<N.*><AJ.*>?}    # Noun(s) + Adjective(optional)
         
 """,
 ]
