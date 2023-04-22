@@ -39,15 +39,8 @@ class SequenceTagger():
         trainer = Trainer(verbose=verbose)
         trainer.set_params(args)
         
-        start_time = time.time()
         for xseq, yseq in zip(X, y):
             trainer.append(xseq, yseq)
-
-        end_time = time.time()
-        data_preprocessing_time = end_time - start_time
-
-        if(report_duration):
-            print(f'preprocessing time: {data_preprocessing_time}')
         
         start_time = time.time()
         trainer.train(file_name)
