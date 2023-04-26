@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت
-برچسب‌زنی در نسخهٔ حاضر ۹۷.۱ درصد [^1] است.**
+برچسب‌زنی در نسخهٔ حاضر ۹۷.۲ درصد [^1] است.**
 [^1]:
 این عدد با انتشار هر نسخه بروزرسانی می‌شود.
 
@@ -14,7 +14,7 @@ from .SequenceTagger import SequenceTagger
 
 class POSTagger(SequenceTagger):
     """این کلاس‌ها شامل توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت برچسب‌زنی در
-    نسخهٔ حاضر ۹۷.۱ درصد [^1] است.** این کلاس تمام توابع خود را از کلاس
+    نسخهٔ حاضر ۹۷.۲ درصد [^1] است.** این کلاس تمام توابع خود را از کلاس
     [SequenceTagger][hazm.SequenceTagger.SequenceTagger] به ارث می‌برد.
     [^1]:
     این عدد با انتشار هر نسخه بروزرسانی می‌شود.
@@ -28,13 +28,53 @@ class POSTagger(SequenceTagger):
         return [(word, tag.split(',')[0]) for word, tag in tagged_list]
     
     def tag(self, tokens):
+        """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
+        `(توکن، برچسب)`ها برمی‌گرداند.
+        
+        Examples:
+            >>> posTagger = POSTagger(model = 'posTagger.model')
+            >>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+
+            >>> posTagger = POSTagger(model = 'posTagger.model', universal_tag = True)
+            >>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+        
+        Args:
+            tokens (List[str]): لیستی از توکن‌های یک جمله که باید برچسب‌گذاری شود.
+        
+        Returns:
+            (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
+        
+        """
         tagged_token = super().tag(tokens)
         return self.__universal_converter(tagged_token) if self.__is_universal else tagged_token
     
     def tag_sents(self, sentences):
+        """جملات را در قالب لیستی از توکن‌ها دریافت می‌کند
+        و در خروجی، لیستی از لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
+        
+        هر لیست از `(توکن، برچسب)`ها مربوط به یک جمله است.
+        
+        Examples:
+            >>> posTagger = SequenceTagger(model = 'posTagger.model')
+            >>> posTagger.tag_sents(sentences = [['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
+            [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]]
+
+            >>> posTagger = SequenceTagger(model = 'posTagger.model', universal_tag = True)
+            >>> posTagger.tag_sents(sentences = [['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
+            [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]]
+
+        Args:
+            sentences (List[List[str]]): لیستی از جملات که باید برچسب‌گذاری شود.
+        
+        Returns:
+            (List[List[Tuple[str,str]]]): لیستی از لیستی از `(توکن، برچسب)`ها.
+                    هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
+        
+        """
         tagged_sents = super().tag_sents(sentences)
         return [self.__universal_converter(tagged_sent) for tagged_sent in tagged_sents] if self.__is_universal else tagged_sents
-
 
 
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
