@@ -136,7 +136,7 @@ class SequenceTagger():
         
         Examples:
             >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.tag(sentences = [['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
+            >>> tagger.tag_sents(sentences = [['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
             [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]]
         
         Args:
