@@ -47,7 +47,7 @@ class SequenceTagger():
         end_time = time.time()
 
         if(report_duration):
-            print(f'training time: {end_time - start_time}')
+            print(f'training time: {(end_time - start_time):.2f} sec')
             
         self.load_model(file_name)
 
@@ -67,13 +67,18 @@ class SequenceTagger():
         self.model = tagger
     
     def data_maker(self, tokens):
-        """تابعی که لیستی دو بعدی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
+        """تابعی که لیستی از لیستی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
         
         Examples:
             >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.data_maker([['نتوانستم', 'که', 'بگویم', 'دلم', 'اینجا', 'مانده‌است', '.']])
+            >>> tagger.data_maker(tokens = [['نتوانستم', 'که', 'بگویم', 'دلم', 'اینجا', 'مانده‌است', '.']])
             [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_is_punc': False}, ..., 'prev_is_numeric': False, 'next_is_numeric': '', 'is_punc': True, 'prev_is_punc': False, 'next_is_punc': ''}]]
             
+        Args:
+            tokens (List[List[str]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
+
+        Returns:
+            List(List(Dict())): لیستی از لیستی از دیکشنری‌های بیان‌کننده ویژگی‌های یک کلمه.
         """
         return [[self.features(token, index) for index in range(len(token))] for token in tokens]
 
@@ -110,7 +115,7 @@ class SequenceTagger():
         
         Examples:
             >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.tag(['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            >>> tagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
             [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
         
         Args:
@@ -131,7 +136,7 @@ class SequenceTagger():
         
         Examples:
             >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.tag([['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
+            >>> tagger.tag(sentences = [['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
             [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]]
         
         Args:
@@ -165,7 +170,8 @@ class SequenceTagger():
             Writing feature references for attributes
             Seconds required: 0.000
 
-            training time: 0.011992692947387695
+            training time: 0.01 sec
+
         Args:
             tagged_list (List[List[Tuple[str,str]]]): جملاتی که مدل از روی آن‌ها آموزش می‌بیند.
             c1 (float): مقدار L1 regularization.
@@ -187,7 +193,7 @@ class SequenceTagger():
         'feature.possible_transitions': True,
         }
 
-        return self.__train(X, y, args, verbose, file_name, report_duration)
+        self.__train(X, y, args, verbose, file_name, report_duration)
         
     def save_model(self, filename):
         """مدل تهیه‌شده توسط تابع [train()][hazm.SequenceTagger.SequenceTagger.train]
@@ -218,6 +224,20 @@ class IOBTagger(SequenceTagger):
         return [(token[0], token[1], chunk_tag[1]) for token, chunk_tag in zip(tagged_data, chunk_tags)]
     
     def data_maker(self, tokens):
+        """تابعی که لیستی دو بعدی از کلمات به همراه لیبل را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
+        
+        Examples:
+            >>> iobTagger = IOBTagger(model = 'tagger.model')
+            >>> iobTagger.data_maker(tokens = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
+            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_pos': 'ADP'}, ..., 'prev_is_punc': False, 'next_is_punc': '', 'pos': 'PUNCT', 'prev_pos': 'VERB', 'next_pos': ''}]]
+
+        Args:
+            tokens (List[List[Tuple[str,str]]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
+
+        Returns:
+            List(List(Dict())): لیستی از لیستی از دیکشنری‌های بیان‌کننده ویژگی‌های یک کلمه.
+
+        """
         words = [[word for word, _ in token] for token in tokens]
         tags = [[tag for _, tag in token] for token in tokens]
         return [[self.features(word_tokens, tag_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
@@ -232,22 +252,79 @@ class IOBTagger(SequenceTagger):
         return word_features
 
     def tag(self, tagged_data):
+        """یک جمله را در قالب لیستی از توکن‌ها و تگ‌ها دریافت می‌کند و در خروجی لیستی از
+        `(توکن، تگ، برچسب)`ها برمی‌گرداند.
+        
+        Examples:
+            >>> tagger = SequenceTagger(model = 'tagger.model')
+            >>> tagger.tag(tagged_data = [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')])
+            [('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]
+                    
+        Args:
+            tagged_data (List[Tuple[str, str]]): لیستی از توکن‌های یک جمله که باید برچسب‌گذاری شود.
+        
+        Returns:
+            (List[Tuple[str, str, str]]): ‌لیستی از `(توکن، تگ، برچسب)`ها.
+        
+        """
         chunk_tags = super().tag(tagged_data)
         return self.__IOB_format(tagged_data, chunk_tags)
 
     def tag_sents(self, sentences):
-        """
+        """جملات را در قالب لیستی لیستی از توکن‌ها و تگ‌ها دریافت می‌کند
+        و در خروجی، لیستی از لیستی از `(توکن، تگ، برچسب)`ها برمی‌گرداند.
+        
+        هر لیست از `(توکن، برچسب)`ها مربوط به یک جمله است.
         
         Examples:
-            >>> tagger = IOBTagger(patterns=['*', 'U:word-%x[0,0]', 'U:word-%x[0,1]'])
-            >>> tagger.train([[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]])
-            >>> tagger.tag_sents([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
-            [[('من', 'PRO', 'B-NP'), ('به', 'P', 'B-PP'), ('مدرسه', 'N', 'B-NP'), ('رفته_بودم', 'V', 'B-VP'), ('.', 'PUNC', 'O')]]
+            >>> tagger = SequenceTagger(model = 'tagger.model')
+            >>> tagger.tag_sents(tagged_data = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
+            [[('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]]
+          
+        Args:
+            sentences (List[List[str]]): لیستی از جملات که باید برچسب‌گذاری شود.
+        
+        Returns:
+            (List[List[Tuple[str,str]]]): لیستی از لیستی از `(توکن، تگ، برچسب)`ها.
+                    هر لیست از `(توکن، تگ، برچسب)`ها مربوط به یک جمله است.
         
         """
         chunk_tags = super().tag_sents(sentences)
         return [self.__IOB_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
     
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', report_duration=True):
+        """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
+        
+        هر جمله، لیستی از `(توکن، تگ، برچسب)`هاست.
+        
+        Examples:
+            >>> tagger = SequenceTagger()
+            >>> tagger.train(tagged_list = [[('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]], c1 = 0.5, c2 = 0.5, max_iteration = 100, verbose = True, file_name = 'newIobTagger.model', report_duration = True)
+            Feature generation
+            type: CRF1d
+            feature.minfreq: 0.000000
+            feature.possible_states: 0
+            feature.possible_transitions: 1
+            0....1....2....3....4....5....6....7....8....9....10
+            Number of features: 150
+            Seconds required: 0.001
+            ...
+            Writing feature references for attributes
+            Seconds required: 0.000
+
+            training time: 0.01 sec
+            
+        Args:
+            tagged_list (List[List[Tuple[str, str, str]]]): جملاتی که مدل از روی آن‌ها آموزش می‌بیند.
+            c1 (float): مقدار L1 regularization.
+            c2 (float): مقدار L2 regularization.
+            max_iteration (int): تعداد تکرار آموزش بر کل دیتا.
+            verbose (boolean): نمایش اطلاعات مربوط به آموزش.
+            file_name (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
+            report_duraion (boolean): نمایش گزارشات مربوط به زمان.
+        
+        """
         tagged_list = [[((word, tag), chunk) for word, tag, chunk in tagged_sent] for tagged_sent in tagged_list]
         return super().train(tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration)
+
+ 
