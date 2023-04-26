@@ -256,8 +256,8 @@ class IOBTagger(SequenceTagger):
         `(توکن، تگ، برچسب)`ها برمی‌گرداند.
         
         Examples:
-            >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.tag(tagged_data = [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')])
+            >>> iobTagger = IOBTagger(model = 'tagger.model')
+            >>> iobTagger.tag(tagged_data = [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')])
             [('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]
                     
         Args:
@@ -277,8 +277,8 @@ class IOBTagger(SequenceTagger):
         هر لیست از `(توکن، برچسب)`ها مربوط به یک جمله است.
         
         Examples:
-            >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.tag_sents(tagged_data = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
+            >>> iobTagger = IOBTagger(model = 'tagger.model')
+            >>> iobTagger.tag_sents(tagged_data = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
             [[('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]]
           
         Args:
@@ -298,8 +298,8 @@ class IOBTagger(SequenceTagger):
         هر جمله، لیستی از `(توکن، تگ، برچسب)`هاست.
         
         Examples:
-            >>> tagger = SequenceTagger()
-            >>> tagger.train(tagged_list = [[('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]], c1 = 0.5, c2 = 0.5, max_iteration = 100, verbose = True, file_name = 'newIobTagger.model', report_duration = True)
+            >>> iobTagger = IOBTagger()
+            >>> iobTagger.train(tagged_list = [[('من', 'PRON', 'B-NP'), ('به', 'ADP', 'B-PP'), ('مدرسه', 'NOUN,EZ', 'B-NP'), ('ایران', 'NOUN', 'I-NP'), ('رفته_بودم', 'VERB', 'B-VP'), ('.', 'PUNCT', 'O')]], c1 = 0.5, c2 = 0.5, max_iteration = 100, verbose = True, file_name = 'newIOBTagger.model', report_duration = True)
             Feature generation
             type: CRF1d
             feature.minfreq: 0.000000

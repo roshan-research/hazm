@@ -9,7 +9,6 @@
 
 from __future__ import unicode_literals
 from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
-from nltk.tree import Tree
 from .SequenceTagger import IOBTagger
 
 
@@ -60,9 +59,15 @@ class Chunker(IOBTagger):
 
     def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='chunker_crf.model', report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
-        
+
         Args:
             trees (List[Tree]): لیستی از درخت‌ها برای آموزش مدل.
+            c1 (float): مقدار L1 regularization.
+            c2 (float): مقدار L2 regularization.
+            max_iteration (int): تعداد تکرار آموزش بر کل دیتا.
+            verbose (boolean): نمایش اطلاعات مربوط به آموزش.
+            file_name (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
+            report_duraion (boolean): نمایش گزارشات مربوط به زمان.
         
         """
         return super().train([tree2conlltags(tree) for tree in trees], c1, c2, max_iteration, verbose, file_name, report_duration)
@@ -72,15 +77,15 @@ class Chunker(IOBTagger):
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
         
         Examples:
-            >>> chunker = Chunker(model='resources/chunker.model')
-            >>> tree=chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')])
+            >>> chunker = Chunker(model = 'tagger.model')
+            >>> tree = chunker.parse(sentence = [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
             >>> print(tree)
             (S
-              (NP نامه/Ne ایشان/PRO)
-              (POSTP را/POSTP)
-              (VP دریافت/N داشتم/V)
-              ./PUNC)
-        
+              (NP نامه/NOUN,EZ ایشان/PRON)
+              (POSTP را/ADP)
+              (VP دریافت/NOUN داشتم/VERB)
+              ./PUNCT)
+
         Args:
             sentence (List[Tuple[str,str]): جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
         
@@ -93,6 +98,7 @@ class Chunker(IOBTagger):
         return conlltags2tree(super().tag(sentence))
 
     def parse_sents(self, sentences):
+        
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
         
         Args:
