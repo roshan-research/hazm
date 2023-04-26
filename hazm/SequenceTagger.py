@@ -4,26 +4,26 @@
 
 from __future__ import unicode_literals
 from pycrfsuite import Tagger, Trainer
-import numpy as np
 import time
-import warnings
 
 punctuation_list = ['"', '#', '(', ')', '*', ',', '-', '.', '/', ':', '[', ']', '«', '»', '،',';','?','!']
     
 
 class SequenceTagger():
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
-    wrapper برای کتابخانهٔ [Wapiti](https://wapiti.limsi.fr/) است.
+    wrapper برای کتابخانهٔ [python-](https://python-crfsuite.readthedocs.io/en/latest/) است.
     
     Args:
-        patterns (List, optional): الگوهای لازم برای ساخت مدل.
-        **options (Dict, optional): آرگومان‌های نامدارِ اختیاری.
+        model (str, optional): مسیر فایل tagger.
+        data_maker (function, optional): تابعی که لیستی دو بعدی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
     
     """
 
     def __init__(self, model=None, data_maker = None):
         if model != None:
             self.load_model(model)
+        else:
+            self.model = None
         self.data_maker = self.data_maker if data_maker == None else data_maker
     
     def __is_punc(self, word):
@@ -52,11 +52,29 @@ class SequenceTagger():
         self.load_model(file_name)
 
     def load_model(self, model):
+        """فایل تگر را بارگزاری می‌کند.
+        
+        Examples:
+            >>> tagger = SequenceTagger()
+            >>> tagger.load_model(model = 'tagger.model')
+        
+        Args:
+            model (str): مسیر فایل تگر.
+        
+        """
         tagger = Tagger()
         tagger.open(model)
         self.model = tagger
     
     def data_maker(self, tokens):
+        """تابعی که لیستی دو بعدی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
+        
+        Examples:
+            >>> tagger = SequenceTagger(model = 'tagger.model')
+            >>> tagger.data_maker([['نتوانستم', 'که', 'بگویم', 'دلم', 'اینجا', 'مانده‌است', '.']])
+            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_is_punc': False}, ..., 'prev_is_numeric': False, 'next_is_numeric': '', 'is_punc': True, 'prev_is_punc': False, 'next_is_punc': ''}]]
+            
+        """
         return [[self.features(token, index) for index in range(len(token))] for token in tokens]
 
     def features(self, sentence, index):
@@ -91,9 +109,9 @@ class SequenceTagger():
         `(توکن، برچسب)`ها برمی‌گرداند.
         
         Examples:
-            >>> tagger = SequenceTagger(patterns=['*', 'u:word-%x[0,0]'])
-            >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
-            [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+            >>> tagger = SequenceTagger(model = 'tagger.model')
+            >>> tagger.tag(['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
         
         Args:
             tokens (List[str]): لیستی از توکن‌های یک جمله که باید برچسب‌گذاری شود.
@@ -102,6 +120,7 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
         
         """
+        assert self.model != None, 'you should load model first...'
         return self.__tag(tokens)
 
     def tag_sents(self, sentences):
@@ -111,9 +130,9 @@ class SequenceTagger():
         هر لیست از `(توکن، برچسب)`ها مربوط به یک جمله است.
         
         Examples:
-            >>> tagger = SequenceTagger(patterns=['*', 'u:word-%x[0,0]'])
-            >>> tagger.tag_sents([['من', 'به', 'مدرسه', 'رفته_بودم', '.']])
-            [[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]]
+            >>> tagger = SequenceTagger(model = 'tagger.model')
+            >>> tagger.tag([['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.']])
+            [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]]
         
         Args:
             sentences (List[List[str]]): لیستی از جملات که باید برچسب‌گذاری شود.
@@ -123,6 +142,7 @@ class SequenceTagger():
                     هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
         
         """
+        assert self.model != None, 'you should load model first...'
         return [self.__tag(tokens) for tokens in sentences]
         
     def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', report_duration=True):
@@ -131,11 +151,29 @@ class SequenceTagger():
         هر جمله، لیستی از `(توکن، برچسب)`هاست.
         
         Examples:
-            >>> tagger = SequenceTagger(patterns=['*', 'u:word-%x[0,0]'])
-            >>> tagger.train([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
-        
+            >>> tagger = SequenceTagger()
+            >>> tagger.train(tagged_list = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]], c1 = 0.5, c2 = 0.5, max_iteration = 100, verbose = True, file_name = 'tagger.model', report_duration = True)
+            Feature generation
+            type: CRF1d
+            feature.minfreq: 0.000000
+            feature.possible_states: 0
+            feature.possible_transitions: 1
+            0....1....2....3....4....5....6....7....8....9....10
+            Number of features: 150
+            Seconds required: 0.001
+            ...
+            Writing feature references for attributes
+            Seconds required: 0.000
+
+            training time: 0.011992692947387695
         Args:
-            sentences (List[List[Tuple[str,str]]]): جملاتی که مدل از روی آن‌ها آموزش می‌بیند.
+            tagged_list (List[List[Tuple[str,str]]]): جملاتی که مدل از روی آن‌ها آموزش می‌بیند.
+            c1 (float): مقدار L1 regularization.
+            c2 (float): مقدار L2 regularization.
+            max_iteration (int): تعداد تکرار آموزش بر کل دیتا.
+            verbose (boolean): نمایش اطلاعات مربوط به آموزش.
+            file_name (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
+            report_duraion (boolean): نمایش گزارشات مربوط به زمان.
         
         """
         
@@ -156,16 +194,16 @@ class SequenceTagger():
         را ذخیره می‌کند.
         
         Examples:
-            >>> tagger = SequenceTagger(patterns=['*', 'u:word-%x[0,0]'])
-            >>> tagger.train([[('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]])
-            >>> tagger.save_model('resources/test.model')
+            >>> tagger = SequenceTagger()
+            >>> tagger.train(tagged_list = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]], c1 = 0.5, c2 = 0.5, max_iteration = 100, verbose = True, file_name = 'tagger.model', report_duration = True)
+            >>> tagger.save_model(file_name = 'new_tagger.model')
         
         Args:
             filename (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
         
         """
+        assert self.model != None, 'you should load model first...'
         self.model.dump(filename)
-
 
 
 class IOBTagger(SequenceTagger):
