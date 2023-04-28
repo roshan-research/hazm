@@ -5,8 +5,6 @@
 from __future__ import unicode_literals
 from pycrfsuite import Tagger, Trainer
 import time
-
-punctuation_list = ['"', '#', '(', ')', '*', ',', '-', '.', '/', ':', '[', ']', '«', '»', '،',';','?','!']
     
 
 class SequenceTagger():
@@ -24,10 +22,7 @@ class SequenceTagger():
             self.load_model(model)
         else:
             self.model = None
-        self.data_maker = self.data_maker if data_maker == None else data_maker
-    
-    def __is_punc(self, word):
-        return word in punctuation_list
+        self.data_maker = data_maker
     
     def __add_label(self, sentence, tags):
         return [(word, tag) for word, tag in zip(sentence, tags)]
@@ -65,49 +60,6 @@ class SequenceTagger():
         tagger = Tagger()
         tagger.open(model)
         self.model = tagger
-    
-    def data_maker(self, tokens):
-        """تابعی که لیستی از لیستی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
-        
-        Examples:
-            >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.data_maker(tokens = [['نتوانستم', 'که', 'بگویم', 'دلم', 'اینجا', 'مانده‌است', '.']])
-            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_is_punc': False}, ..., 'prev_is_numeric': False, 'next_is_numeric': '', 'is_punc': True, 'prev_is_punc': False, 'next_is_punc': ''}]]
-            
-        Args:
-            tokens (List[List[str]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
-
-        Returns:
-            List(List(Dict())): لیستی از لیستی از دیکشنری‌های بیان‌کننده ویژگی‌های یک کلمه.
-        """
-        return [[self.features(token, index) for index in range(len(token))] for token in tokens]
-
-    def features(self, sentence, index):
-        return {
-        'word': sentence[index],
-        'is_first': index == 0,
-        'is_last': index == len(sentence) - 1,
-        #*ix
-        'prefix-1': sentence[index][0],
-        'prefix-2': sentence[index][:2],
-        'prefix-3': sentence[index][:3],
-        'suffix-1': sentence[index][-1],
-        'suffix-2': sentence[index][-2:],
-        'suffix-3': sentence[index][-3:],
-        #word
-        'prev_word': '' if index == 0 else sentence[index - 1],
-        'two_prev_word':'' if index == 0 else sentence[index - 2],
-        'next_word': '' if index == len(sentence) - 1 else sentence[index + 1],
-        'two_next_word': '' if (index == len(sentence) - 1 or index == len(sentence) - 2) else sentence[index + 2],
-        #digit
-        'is_numeric': sentence[index].isdigit(),
-        'prev_is_numeric': '' if index == 0 else sentence[index - 1].isdigit(),
-        'next_is_numeric': '' if index == len(sentence) - 1 else sentence[index + 1].isdigit(),
-        #punc
-        'is_punc': self.__is_punc(sentence[index]),
-        'prev_is_punc':  '' if  index==0 else self.__is_punc(sentence[index-1]),
-        'next_is_punc':  '' if index== len(sentence) -1 else self.__is_punc(sentence[index+1]),
-    }
 
     def tag(self, tokens):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
@@ -222,34 +174,6 @@ class IOBTagger(SequenceTagger):
 
     def __IOB_format(self, tagged_data, chunk_tags):
         return [(token[0], token[1], chunk_tag[1]) for token, chunk_tag in zip(tagged_data, chunk_tags)]
-    
-    def data_maker(self, tokens):
-        """تابعی که لیستی دو بعدی از کلمات به همراه لیبل را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
-        
-        Examples:
-            >>> iobTagger = IOBTagger(model = 'tagger.model')
-            >>> iobTagger.data_maker(tokens = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
-            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_pos': 'ADP'}, ..., 'prev_is_punc': False, 'next_is_punc': '', 'pos': 'PUNCT', 'prev_pos': 'VERB', 'next_pos': ''}]]
-
-        Args:
-            tokens (List[List[Tuple[str,str]]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
-
-        Returns:
-            List(List(Dict())): لیستی از لیستی از دیکشنری‌های بیان‌کننده ویژگی‌های یک کلمه.
-
-        """
-        words = [[word for word, _ in token] for token in tokens]
-        tags = [[tag for _, tag in token] for token in tokens]
-        return [[self.features(word_tokens, tag_tokens, index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
-
-    def features(self, words, pos_taggs, index):
-        word_features = super().features(words, index)
-        word_features.update({
-            'pos': pos_taggs[index],
-            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
-            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
-        })
-        return word_features
 
     def tag(self, tagged_data):
         """یک جمله را در قالب لیستی از توکن‌ها و تگ‌ها دریافت می‌کند و در خروجی لیستی از

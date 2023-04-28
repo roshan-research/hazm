@@ -10,6 +10,7 @@
 from __future__ import unicode_literals
 from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
 from .SequenceTagger import IOBTagger
+from .POSTagger import POSTagger
 
 
 def tree2brackets(tree):
@@ -56,7 +57,39 @@ class Chunker(IOBTagger):
     """این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است.
     
     """
+    def __init__(self, model=None, data_maker=None):
+        data_maker = self.data_maker if data_maker == None else data_maker
+        self.posTagger = POSTagger()
+        super().__init__(model, data_maker)
 
+    def data_maker(self, tokens):
+        """تابعی که لیستی دو بعدی از کلمات به همراه لیبل را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
+        
+        Examples:
+            >>> chunker = Chunker(model = 'tagger.model')
+            >>> chunker.data_maker(tokens = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
+            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_pos': 'ADP'}, ..., 'prev_is_punc': False, 'next_is_punc': '', 'pos': 'PUNCT', 'prev_pos': 'VERB', 'next_pos': ''}]]
+
+        Args:
+            tokens (List[List[Tuple[str, str]]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
+
+        Returns:
+            List(List(Dict())): لیستی از لیستی از دیکشنری‌های بیان‌کننده ویژگی‌های یک کلمه.
+
+        """
+        words = [[word for word, _ in token] for token in tokens]
+        tags = [[tag for _, tag in token] for token in tokens]        
+        return [[self.features(words = word_tokens, pos_taggs = tag_tokens, index = index) for index in range(len(word_tokens))] for word_tokens, tag_tokens in zip(words, tags)]
+
+    def features(self, words, pos_taggs, index):
+        word_features = self.posTagger.features(words, index)
+        word_features.update({
+            'pos': pos_taggs[index],
+            'prev_pos': '' if index == 0 else pos_taggs[index - 1],
+            'next_pos': '' if index == len(pos_taggs) - 1 else pos_taggs[index + 1]
+        })
+        return word_features
+    
     def train(self, trees, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='chunker_crf.model', report_duration=True):
         """از روی درخت ورودی، مدل را آموزش می‌دهد.
 
