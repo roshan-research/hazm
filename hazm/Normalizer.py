@@ -1,41 +1,41 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن است.
 
 """
 
-from __future__ import unicode_literals
+
 import re
+
 from .Lemmatizer import Lemmatizer
+from .utils import maketrans
+from .utils import regex_replace
 from .WordTokenizer import WordTokenizer
-from .utils import maketrans, regex_replace
 
 
-class Normalizer(object):
+class Normalizer:
     """این کلاس شامل توابعی برای نرمال‌سازی متن است.
-    
+
     Args:
-        correct_spacing (bool, optional): اگر `True‍` فاصله‌گذاری‌ها را در متن، نشانه‌های سجاوندی و پیشوندها و پسوندها اصلاح می‌کند.
-        remove_diacritics (bool, optional): اگر `True` باشد اعرابِ حروف را حذف می‌کند.
-        remove_specials_chars (bool, optional): اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
-        decrease_repeated_chars (bool, optional): اگر `True` باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.
-        persian_style (bool, optional): اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
-        persian_numbers (bool, optional): اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
-        unicodes_replacement (bool, optional): اگر `True` باشد برخی از کاراکترهای یونیکد را با معادل نرمال‌شدهٔ آن جایگزین می‌کند.
-        seperate_mi (bool, optional): اگر `True` باشد پیشوند «می» و «نمی» را در افعال جدا می‌کند.
-    
+        correct_spacing: اگر `True‍` فاصله‌گذاری‌ها را در متن، نشانه‌های سجاوندی و پیشوندها و پسوندها اصلاح می‌کند.
+        remove_diacritics: اگر `True` باشد اعرابِ حروف را حذف می‌کند.
+        remove_specials_chars: اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
+        decrease_repeated_chars: اگر `True` باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.
+        persian_style اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
+        persian_numbers: اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
+        unicodes_replacement: اگر `True` باشد برخی از کاراکترهای یونیکد را با معادل نرمال‌شدهٔ آن جایگزین می‌کند.
+        seperate_mi: اگر `True` باشد پیشوند «می» و «نمی» را در افعال جدا می‌کند.
+
     """
 
     def __init__(
         self,
-        correct_spacing=True,
-        remove_diacritics=True,
-        remove_specials_chars=True,
-        decrease_repeated_chars=True,
-        persian_style=True,
-        persian_numbers=True,
-        unicodes_replacement=True,
-        seperate_mi=True,
+        correct_spacing: bool = True,
+        remove_diacritics: bool = True,
+        remove_specials_chars: bool = True,
+        decrease_repeated_chars: bool = True,
+        persian_style: bool = True,
+        persian_numbers: bool = True,
+        unicodes_replacement: bool = True,
+        seperate_mi: bool = True,
     ):
         self._correct_spacing = correct_spacing
         self._remove_diacritics = remove_diacritics
@@ -93,7 +93,7 @@ class Normalizer(object):
                 ("([" + punc_before + "]) ", r"\1"),  # remove space after
                 # put space after . and :
                 (
-                    "([" + punc_after[:3] + "])([^ " + punc_after + "\d۰۱۲۳۴۵۶۷۸۹])",
+                    "([" + punc_after[:3] + "])([^ " + punc_after + r"\d۰۱۲۳۴۵۶۷۸۹])",
                     r"\1 \2",
                 ),
                 (
@@ -105,9 +105,9 @@ class Normalizer(object):
                     r"\1 \2",
                 ),  # put space before
                 # put space after number; e.g., به طول ۹متر -> به طول ۹ متر
-                ("(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])", r"\1 \2"),
+                (r"(\d)([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])", r"\1 \2"),
                 # put space after number; e.g., به طول۹ -> به طول ۹
-                ("([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)", r"\1 \2"),
+                (r"([آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی])(\d)", r"\1 \2"),
             ]
 
             self.affix_spacing_patterns = [
@@ -136,7 +136,7 @@ class Normalizer(object):
         if self._persian_style:
             self.persian_style_patterns = [
                 ('"([^\n"]+)"', r"«\1»"),  # replace quotation with gyoome
-                ("([\d+])\.([\d+])", r"\1٫\2"),  # replace dot with momayez
+                (r"([\d+])\.([\d+])", r"\1٫\2"),  # replace dot with momayez
                 (r" ?\.\.\.", " …"),  # replace 3 dots
             ]
 
@@ -184,22 +184,22 @@ class Normalizer(object):
                 ("ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ", "لا"),
             ]
 
-    def normalize(self, text):
+    def normalize(self, text: str) -> str:
         """متن را نرمال‌سازی می‌کند.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.normalize('اِعلاممممم کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»')
             'اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر …»'
             >>> normalizer.normalize('')
             ''
-        
+
         Args:
-            text (str): متنی که باید نرمال‌سازی شود.
-        
+            text: متنی که باید نرمال‌سازی شود.
+
         Returns:
-            (str): متنِ نرمال‌سازی‌شده.
-        
+            متنِ نرمال‌سازی‌شده.
+
         """
 
         translations = maketrans(self.translation_src, self.translation_dst)
@@ -231,7 +231,7 @@ class Normalizer(object):
 
         return text
 
-    def correct_spacing(self, text):
+    def correct_spacing(self, text: str) -> str:
         """ فاصله‌گذاری‌ها را در پیشوندها و پسوندها اصلاح می‌کند.
 
         Examples:
@@ -278,9 +278,9 @@ class Normalizer(object):
 
         return text
 
-    def remove_diacritics(self, text):
+    def remove_diacritics(self, text: str) -> str:
         """اِعراب را از متن حذف می‌کند.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.remove_diacritics('حَذفِ اِعراب')
@@ -291,38 +291,38 @@ class Normalizer(object):
             'متن بدون اعراب'
             >>> normalizer.remove_diacritics('')
             ''
-        
+
         Args:
-            text (str): متنی که باید اعراب آن حذف شود.
-        
+            text: متنی که باید اعراب آن حذف شود.
+
         Returns:
-            (str): متنی بدون اعراب.
-        
+            متنی بدون اعراب.
+
         """
         return regex_replace(self.diacritics_patterns, text)
 
-    def remove_specials_chars(self, text):
+    def remove_specials_chars(self, text: str) -> str:
         """برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف
         می‌کند.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
             'پیامبر اکرم '
-        
+
         Args:
-            text (str): متنی که باید کاراکترها و نشانه‌های اضافهٔ آن حذف شود.
-        
+            text: متنی که باید کاراکترها و نشانه‌های اضافهٔ آن حذف شود.
+
         Returns:
-            (str): متنی بدون کاراکترها و نشانه‌های اضافه.
-        
+            متنی بدون کاراکترها و نشانه‌های اضافه.
+
         """
         return regex_replace(self.specials_chars_patterns, text)
 
-    def decrease_repeated_chars(self, text):
+    def decrease_repeated_chars(self, text: str) -> str:
         """تکرارهای زائد حروف را در کلماتی مثل سلامممممم حذف می‌کند و در مواردی که
         نمی‌تواند تشخیص دهد دست کم به دو تکرار کاهش می‌دهد.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.decrease_repeated_chars('سلامممم به همه')
@@ -335,13 +335,13 @@ class Normalizer(object):
             'سلام را برسان'
             >>> normalizer.decrease_repeated_chars('')
             ''
-        
+
         Args:
-            text (str): متنی که باید تکرارهای زائد آن حذف شود.
-        ئ
+            text: متنی که باید تکرارهای زائد آن حذف شود.
+            
         Returns:
-            (str): متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
-        
+            متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
+
         """
 
         matches = re.finditer(self.repeated_chars_pattern, text)
@@ -360,9 +360,9 @@ class Normalizer(object):
 
         return text
 
-    def persian_style(self, text):
+    def persian_style(self, text: str) -> str:
         """برخی از حروف و نشانه‌ها را با حروف و نشانه‌های فارسی جایگزین می‌کند.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.persian_style('"نرمال‌سازی"')
@@ -373,19 +373,19 @@ class Normalizer(object):
             '10٫450'
             >>> normalizer.persian_style('')
             ''
-        
+
         Args:
-            text (str): متنی که باید حروف و نشانه‌های آن با حروف و نشانه‌های فارسی جایگزین شود.
-        
+            text: متنی که باید حروف و نشانه‌های آن با حروف و نشانه‌های فارسی جایگزین شود.
+
         Returns:
-            (str): متنی با حروف و نشانه‌های فارسی‌سازی شده.
-        
+            متنی با حروف و نشانه‌های فارسی‌سازی شده.
+
         """
         return regex_replace(self.persian_style_patterns, text)
 
-    def persian_number(self, text):
+    def persian_number(self, text: str) -> str:
         """اعداد لاتین و علامت % را با معادل فارسی آن جایگزین می‌کند
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.persian_number('5 درصد')
@@ -394,26 +394,26 @@ class Normalizer(object):
             '۵ درصد'
             >>> normalizer.persian_number('')
             ''
-        
+
         Args:
-            text (str): متنی که باید اعداد لاتین و علامت % آن با معادل فارسی جایگزین شود.
-        
+            text: متنی که باید اعداد لاتین و علامت % آن با معادل فارسی جایگزین شود.
+
         Returns:
-            (str): متنی با اعداد و علامت ٪ فارسی.
-        
+            متنی با اعداد و علامت ٪ فارسی.
+
         """
         translations = maketrans(
             self.number_translation_src, self.number_translation_dst
         )
         return text.translate(translations)
 
-    def unicodes_replacement(self, text):
+    def unicodes_replacement(self, text: str) -> str:
         """برخی از کاراکترهای خاص یونیکد را با معادلِ نرمال آن جایگزین می‌کند. غالباً
         این کار فقط در مواردی صورت می‌گیرد که یک کلمه در قالب یک کاراکتر یونیکد تعریف
         شده است.
-        
+
         **فهرست این کاراکترها و نسخهٔ جایگزین آن:**
-        
+
         |کاراکتر|نسخهٔ جایگزین|
         |--------|------------------|
         |﷽|بسم الله الرحمن الرحیم|
@@ -427,20 +427,20 @@ class Normalizer(object):
         |ﷷ|علیه|
         |ﷸ|وسلم|
         |ﻵ، ﻶ، ﻷ، ﻸ، ﻹ، ﻺ، ﻻ، ﻼ|لا|
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
             'پیامبر اکرم '
             >>> normalizer.remove_specials_chars('')
             ''
-        
+
         Args:
-            text (str): متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.
-        
+            text: متنی که باید برخی از کاراکترهای یونیکد آن (جدول بالا)، با شکل استاندارد، جایگزین شود.
+
         Returns:
-            (str): متنی که برخی از کاراکترهای یونیکد آن با شکل استاندارد جایگزین شده است.
-        
+            متنی که برخی از کاراکترهای یونیکد آن با شکل استاندارد جایگزین شده است.
+
         """
 
         for old, new in self.replacements:
@@ -448,9 +448,9 @@ class Normalizer(object):
 
         return text
 
-    def seperate_mi(self, text):
+    def seperate_mi(self, text: str) -> str:
         """پیشوند «می» و «نمی» را در افعال جدا کرده و با نیم‌فاصله می‌چسباند.
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.seperate_mi('نمیدانم چه میگفت')
@@ -459,14 +459,14 @@ class Normalizer(object):
             'میز'
             >>> normalizer.seperate_mi('')
             ''
-            
-        
+
+
         Args:
-            text (str): متنی که باید پیشوند «می» و «نمی» در آن جدا شود.
-        
+            text: متنی که باید پیشوند «می» و «نمی» در آن جدا شود.
+
         Returns:
-            (str): متنی با «می» و «نمی» جدا شده.
-        
+            متنی با «می» و «نمی» جدا شده.
+
         """
         matches = re.findall(r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", text)
         for m in matches:
@@ -476,11 +476,11 @@ class Normalizer(object):
 
         return text
 
-    def token_spacing(self, tokens):
+    def token_spacing(self, tokens: list[str]) -> list[str]:
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
         در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
         برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
-        
+
         Examples:
             >>> normalizer = Normalizer()
             >>> normalizer.token_spacing(['کتاب', 'ها'])
@@ -495,13 +495,13 @@ class Normalizer(object):
             ['زمین‌لرزه‌ای']
             >>> normalizer.token_spacing([])
             []
-        
+
         Args:
-            tokens (List[str]): توکن‌هایی که باید نرمال‌سازی شود.
-        
+            tokens: توکن‌هایی که باید نرمال‌سازی شود.
+
         Returns:
-            (List[str]): لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
-        
+            لیستی از توکن‌های نرمال‌سازی شده به شکل `[token1, token2, ...]`.
+
         """
         # >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
         #    ['پرداخت', 'شده', 'است']

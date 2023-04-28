@@ -1,8 +1,10 @@
-import re, textwrap, glob
+import glob
+import re
+import textwrap
 
 
-def format_all_docstrings(pyFile):
-    text = open(pyFile, "r", encoding="utf-8").read()
+def format_all_docstrings(py_file):
+    text = open(py_file, encoding="utf-8").read()
     text = text.replace("\t", "    ")
 
     # Regex pattern that matches all docstrings
@@ -13,7 +15,7 @@ def format_all_docstrings(pyFile):
         new_doc = format_docstring(old_doc)
         text = text.replace(old_doc, new_doc)
 
-    open(pyFile, "w", encoding="utf-8").write(text)
+    open(py_file, "w", encoding="utf-8").write(text)
 
 
 def format_section(section, new):
@@ -40,13 +42,8 @@ def wrap_text(text, min_width, max_width):
   for paragraph in paragraphs:
     lines = textwrap.wrap(paragraph, width=max_width, break_long_words=False)
     for line in lines:
-      # check if the line is shorter than the min_width
-      if len(line) < min_width:
-        # pad the line with spaces to reach the min_width
-        line = line.ljust(min_width)
-      wrapped_lines.append(line)
-    wrapped_lines.append("")
-  return "\n".join(wrapped_lines)
+        wrapped_line = textwrap.fill(line, width)
+        result += wrapped_line + "\n"
 
 
 

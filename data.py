@@ -1,17 +1,27 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals
-import codecs, subprocess, random
-import multiprocessing
+import random
+import subprocess
 from collections import Counter
 from itertools import islice
+
 from nltk.tag import untag
 from sklearn.model_selection import train_test_split
-from hazm import *
+
+from hazm import Chunker
+from hazm import DadeganReader
+from hazm import InformalNormalizer
+from hazm import Lemmatizer
+from hazm import MaltParser
+from hazm import Normalizer
+from hazm import PeykareReader
+from hazm import POSTagger
+from hazm import SentiPersReader
+from hazm import StanfordPOSTagger
+from hazm import TNewsReader
+from hazm import TreebankReader
+from hazm import TurboParser
+from hazm import sent_tokenize
 from hazm.Chunker import tree2brackets
 from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
-from hazm.DadeganReader import coarse_pos_e as dadegan_coarse_pos_e
-from hazm import Normalizer
 
 
 def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.dat"):
@@ -19,16 +29,18 @@ def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.
 
     dic_words = [
         line.strip().replace(", ", ",").split("\t")
-        for line in codecs.open(dic_file, encoding="utf-8")
+        for line in open(dic_file, encoding="utf-8")
         if len(line.strip().split("\t")) == 3
     ]
-    dic_words = filter(
-        lambda item: not item[2].startswith("V") and "NEG" not in item[2], dic_words
-    )
+    dic_words = [
+        item
+        for item in dic_words
+        if not item[2].startswith("V") and "NEG" not in item[2]
+    ]
     dic_words = [
         "\t".join(item) for item in sorted(dic_words, key=lambda item: item[0])
     ]
-    print(*dic_words, sep="\n", file=codecs.open(output, "w", "utf-8"))
+    print(*dic_words, sep="\n", file=open(output, "w", "utf-8"))
     print(output, "created")
 
 
@@ -38,7 +50,7 @@ def evaluate_lemmatizer(
     lemmatizer = Lemmatizer()
 
     errors = []
-    with codecs.open("resources/lemmatizer_errors.txt", "w", "utf8") as output:
+    with open("resources/lemmatizer_errors.txt", "w", "utf8") as output:
         dadegan = DadeganReader(conll_file)
         for tree in dadegan.trees():
             for node in tree.nodelist[1:]:
@@ -47,11 +59,13 @@ def evaluate_lemmatizer(
                     errors.append((word, lemma, pos, lemmatizer.lemmatize(word, pos)))
         print(len(errors), "errors", file=output)
         counter = Counter(errors)
-        for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+        for item, count in sorted(
+            list(counter.items()), key=lambda t: t[1], reverse=True
+        ):
             print(count, *item, file=output)
 
     missed = []
-    with codecs.open("resources/lemmatizer_missed.txt", "w", "utf8") as output:
+    with open("resources/lemmatizer_missed.txt", "w", "utf8") as output:
         peykare = PeykareReader(peykare_root)
         for sentence in peykare.sents():
             for word in sentence:
@@ -60,7 +74,9 @@ def evaluate_lemmatizer(
                         missed.append(word[0])
         print(len(missed), "missed", file=output)
         counter = Counter(missed)
-        for item, count in sorted(counter.items(), key=lambda t: t[1], reverse=True):
+        for item, count in sorted(
+            list(counter.items()), key=lambda t: t[1], reverse=True
+        ):
             print(count, item, file=output)
 
 
@@ -81,7 +97,7 @@ def evaluate_normalizer(tnews_root="corpora/tnews"):
         affix_spacing=False,
     )
 
-    with codecs.open("resources/normalized.txt", "w", "utf8") as output1, codecs.open(
+    with open("resources/normalized.txt", "w", "utf8") as output1, open(
         "resources/normalized_token_based.txt", "w", "utf8"
     ) as output2:
         random.seed(0)
@@ -99,7 +115,7 @@ def evaluate_informal_normalizer(sentipars_root="corpora/sentipers"):
     normalizer = Normalizer()
     informal_normalizer = InformalNormalizer()
 
-    output = codecs.open("resources/normalized.txt", "w", "utf8")
+    output = open("resources/normalized.txt", "w", "utf8")
     for comments in sentipers.comments():
         for comment in comments:
             for sentence in comment:
@@ -120,7 +136,7 @@ def evaluate_chunker(treebank_root="corpora/treebank"):
 
     print(chunker.evaluate(chunked_trees))
 
-    output = codecs.open("resources/chunker_errors.txt", "w", "utf8")
+    output = open("resources/chunker_errors.txt", "w", "utf8")
     for sentence, gold in zip(treebank.sents(), chunked_trees):
         chunked = chunker.parse(sentence)
         if chunked != gold:
@@ -155,14 +171,14 @@ def train_postagger(
             '*:s1=%m[0,0,".?$"]',
             '*:s2=%m[0,0,".?.?$"]',
             '*:s3=%m[0,0,".?.?.?$"]',
-            '*:p?l=%t[-1,0,"\p"]',
-            '*:p?=%t[0,0,"\p"]',
-            '*:p?r=%t[1,0,"\p"]',
-            '*:p?a=%t[0,0,"^\p*$"]',
-            '*:n?l=%t[-1,0,"\d"]',
-            '*:n?=%t[0,0,"\d"]',
-            '*:n?r=%t[1,0,"\d"]',
-            '*:n?a=%t[0,0,"^\d*$"]',
+            r'*:p?l=%t[-1,0,"\p"]',
+            r'*:p?=%t[0,0,"\p"]',
+            r'*:p?r=%t[1,0,"\p"]',
+            r'*:p?a=%t[0,0,"^\p*$"]',
+            r'*:n?l=%t[-1,0,"\d"]',
+            r'*:n?=%t[0,0,"\d"]',
+            r'*:n?r=%t[1,0,"\d"]',
+            r'*:n?a=%t[0,0,"^\d*$"]',
         ],
     )
 
@@ -204,7 +220,7 @@ def train_chunker(
     )
 
     def retag_trees(trees, sents):
-        for tree, sentence in zip(trees, tagger.tag_sents(map(untag, sents))):
+        for tree, sentence in zip(trees, tagger.tag_sents(list(map(untag, sents)))):
             for n, word in zip(tree.treepositions("leaves"), sentence):
                 tree[n] = word
 
@@ -234,9 +250,9 @@ def train_maltparser(
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
     train_data = train_file + ".data"
-    with codecs.open(train_data, "w", "utf8") as output:
+    with open(train_data, "w", "utf8") as output:
         for tree, sentence in zip(
-            train.trees(), tagger.tag_sents(map(untag, train.sents()))
+            train.trees(), tagger.tag_sents(list(map(untag, train.sents())))
         ):
             for i, (node, word) in enumerate(
                 zip(list(tree.nodes.values())[1:], sentence), start=1
@@ -283,16 +299,16 @@ def train_maltparser(
 
     # evaluation
     parser = MaltParser(tagger=tagger, lemmatizer=lemmatizer, model_file=model_file)
-    parsed_trees = parser.parse_sents(map(untag, test.sents()))
+    parsed_trees = parser.parse_sents(list(map(untag, test.sents())))
 
     test_data, test_results = test_file + ".data", test_file + ".results"
     print(
         "\n".join([tree.to_conll(10) for tree in test.trees()]).strip(),
-        file=codecs.open(test_data, "w", "utf8"),
+        file=open(test_data, "w", "utf8"),
     )
     print(
         "\n".join([tree.to_conll(10) for tree in parsed_trees]).strip(),
-        file=codecs.open(test_results, "w", "utf8"),
+        file=open(test_results, "w", "utf8"),
     )
     subprocess.Popen(
         ["java", "-jar", "resources/MaltEval.jar", "-g", test_data, "-s", test_results]
@@ -309,9 +325,9 @@ def train_turboparser(
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
     train_data = train_file + ".data"
-    with codecs.open(train_data, "w", "utf8") as output:
+    with open(train_data, "w", "utf8") as output:
         for tree, sentence in zip(
-            train.trees(), tagger.tag_sents(map(untag, train.sents()))
+            train.trees(), tagger.tag_sents(list(map(untag, train.sents())))
         ):
             for i, (node, word) in enumerate(
                 zip(list(tree.nodes.values())[1:], sentence), start=1
@@ -346,16 +362,16 @@ def train_turboparser(
 
     # evaluation
     parser = TurboParser(tagger=tagger, lemmatizer=lemmatizer, model_file=model_file)
-    parsed_trees = parser.parse_sents(map(untag, test.sents()))
+    parsed_trees = parser.parse_sents(list(map(untag, test.sents())))
 
     test_data, test_results = test_file + ".data", test_file + ".results"
     print(
         "\n".join([tree.to_conll(10) for tree in test.trees()]).strip(),
-        file=codecs.open(test_data, "w", "utf8"),
+        file=open(test_data, "w", "utf8"),
     )
     print(
         "\n".join([tree.to_conll(10) for tree in parsed_trees]).strip(),
-        file=codecs.open(test_results, "w", "utf8"),
+        file=open(test_results, "w", "utf8"),
     )
     subprocess.Popen(
         [
@@ -390,9 +406,9 @@ def train_stanford_postagger(
         list(peykare.sents()), test_size=test_size, random_state=0
     )
 
-    output = codecs.open(train_file, "w", "utf8")
+    output = open(train_file, "w", "utf8")
     for sentence in train:
-        print(*(map(lambda w: "/".join(w).replace(" ", "_"), sentence)), file=output)
+        print(*(["/".join(w).replace(" ", "_") for w in sentence]), file=output)
     subprocess.Popen(
         [
             "java",

@@ -1,33 +1,32 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تی‌نیوز است.
 
 """
 
-from __future__ import print_function
+
 import os
-import sys
 import re
+import sys
+from typing import Any, Iterator
 from xml.dom import minidom
 
 
 class TNewsReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ تی‌نیوز است.
-    
+
     Args:
-        root (str): مسیر فولدر حاوی فایل‌های پیکره.
-    
+        root: مسیر فولدر حاوی فایل‌های پیکره.
+
     """
 
-    def __init__(self, root):
+    def __init__(self, root: str):
         self._root = root
         self.cleaner = re.compile(r"<[^<>]+>")
 
-    def docs(self):
+    def docs(self) -> Iterator[dict[str,str]]:
         """خبرها را در قالب یک `iterator` برمی‌گرداند.
-        
+
         هر خبر، شی‌ای متشکل از چند پارامتر است:
-        
+
         - شناسه (id)،
         - عنوان (title)،
         - پیش از عنوان (pre-title)،
@@ -37,18 +36,18 @@ class TNewsReader:
         - آدرس (url)،
         - موضوع (category)،
         - تاریخ و زمان انتشار (datetime).
-        
+
         Examples:
             >>> tnews = TNewsReader(root='corpora/tnews')
             >>> next(tnews.docs())['id']
             '14092303482300013653'
-        
+
         Yields:
             (Dict): خبر بعدی.
-        
+
         """
 
-        def get_text(element):
+        def get_text(element: Any) -> str:
             raw_html = element.childNodes[0].data if element.childNodes else ""
             cleaned_text = re.sub(self.cleaner, "", raw_html)
             return cleaned_text
@@ -97,21 +96,21 @@ class TNewsReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def texts(self):
+    def texts(self) -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
-        
+
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
         ‍[docs()][hazm.TNewsReader.TNewsReader.docs] و دریافت مقدار پراپرتی
         `text` نیز می‌توانید همین کار را انجام دهید.
-        
+
         Examples:
             >>> tnews = TNewsReader(root='corpora/tnews')
             >>> next(tnews.texts()).startswith('به گزارش ”  شبکه اطلاع رسانی اینترنتی بوتیا  ” به نقل از ارگ نیوز')
             True
-        
+
         Yields:
-            (str): متن خبر بعدی.
-        
+            متن خبر بعدی.
+
         """
         for doc in self.docs():
             yield doc["text"]
