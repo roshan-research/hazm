@@ -1,28 +1,29 @@
-import warnings
-
+from hazm import (
+    Embedding,
+    Normalizer,
+    sent_tokenize,
+    word_tokenize,
+    POSTagger,
+    PersicaReader,
+)
 import nltk
 import numpy as np
 import pandas as pd
+import warnings
 from sklearn.metrics.pairwise import cosine_similarity
 
-from hazm import Embedding
-from hazm import Normalizer
-from hazm import PersicaReader
-from hazm import POSTagger
-from hazm import sent_tokenize
-from hazm import word_tokenize
-
 grammers = [
-    """
+"""
 NP:
-        {<Ne>?<N.*>}    # Noun(s) + Noun(optional)
-        
+        {<NOUN,EZ>?<NOUN.*>}    # Noun(s) + Noun(optional)
+
 """,
-    """
+
+"""
 NP:
-        {<N.*><AJ.*>?}    # Noun(s) + Adjective(optional)
-        
-""",
+        {<NOUN.*><ADJ.*>?}    # Noun(s) + Adjective(optional)
+
+"""
 ]
 
 normalizer = Normalizer()
@@ -152,7 +153,7 @@ def embedRank(text, keyword_num, sent2vecModel=None, posTaggerModel=None):
     return extractKeyword(candidates, keyword_num, sent2vecModel=sent2vecModel)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":{}
     persikaReader = PersicaReader("persika.csv")
     text = next(persikaReader.texts())
     keyword_num = 10
