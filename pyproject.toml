@@ -23,7 +23,7 @@ classifiers = [
 dependencies = [
     "nltk>=3.6.7",
     "libwapiti>=0.2.1; platform_system!='Windows'",
-    "gensim>=4.3.1",
+    "gensim>=4.2.0",
     "numpy>=1.19.5",
 ]
 
