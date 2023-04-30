@@ -375,7 +375,7 @@ selfClosing_tag_patterns = [
 placeholder_tag_patterns = [
     (
         re.compile(
-            fr"<\s*{tag}(\s*| [^>]+?)>.*?<\s*/\s*{tag}\s*>",
+            rf"<\s*{tag}(\s*| [^>]+?)>.*?<\s*/\s*{tag}\s*>",
             re.DOTALL | re.IGNORECASE,
         ),
         repl,
@@ -424,7 +424,7 @@ class Template(list):
         start = 0
         for s, e in findMatchingBraces(body, 3):
             tpl.append(TemplateText(body[start:s]))
-            tpl.append(TemplateArg(body[s + 3: e - 3]))
+            tpl.append(TemplateArg(body[s + 3 : e - 3]))
             start = e
         tpl.append(TemplateText(body[start:]))  # leftover
         return tpl
@@ -637,7 +637,7 @@ class Extractor:
         colon = self.title.find(":")
         if colon != -1:
             ns = self.title[:colon]
-            pagename = self.title[colon + 1:]
+            pagename = self.title[colon + 1 :]
         else:
             ns = ""  # Main
             pagename = self.title
@@ -648,7 +648,7 @@ class Extractor:
         slash = pagename.rfind("/")
         if slash != -1:
             self.magicWords["BASEPAGENAME"] = pagename[:slash]
-            self.magicWords["SUBPAGENAME"] = pagename[slash + 1:]
+            self.magicWords["SUBPAGENAME"] = pagename[slash + 1 :]
         else:
             self.magicWords["BASEPAGENAME"] = pagename
             self.magicWords["SUBPAGENAME"] = ""
@@ -692,7 +692,7 @@ class Extractor:
                 "Template errors in article '%s' (%s): title(%d) recursion(%d, %d, %d)",
                 self.title,
                 self.id,
-                *errs
+                *errs,
             )
 
     def transform(self, wikitext):
@@ -706,8 +706,8 @@ class Extractor:
         cur = 0
         for m in nowiki.finditer(wikitext, cur):
             res += (
-                self.transform1(wikitext[cur: m.start()])
-                + wikitext[m.start(): m.end()]
+                self.transform1(wikitext[cur : m.start()])
+                + wikitext[m.start() : m.end()]
             )
             cur = m.end()
         # leftover
@@ -774,7 +774,7 @@ class Extractor:
         res = ""
         cur = 0
         for m in syntaxhighlight.finditer(text):
-            res += unescape(text[cur: m.start()]) + m.group(1)
+            res += unescape(text[cur : m.start()]) + m.group(1)
             cur = m.end()
         text = res + unescape(text[cur:])
         return text
@@ -893,7 +893,7 @@ class Extractor:
         cur = 0
         # look for matching {{...}}
         for s, e in findMatchingBraces(wikitext, 2):
-            res += wikitext[cur:s] + self.expandTemplate(wikitext[s + 2: e - 2])
+            res += wikitext[cur:s] + self.expandTemplate(wikitext[s + 2 : e - 2])
             cur = e
         # leftover
         res += wikitext[cur:]
@@ -1062,7 +1062,7 @@ class Extractor:
         if colon > 1:
             funct = title[:colon]
             parts[0] = title[
-                colon + 1:
+                colon + 1 :
             ].strip()  # side-effect (parts[0] not used later)
             # arguments after first are not evaluated
             ret = callParserFunction(funct, parts, self)
@@ -1484,7 +1484,7 @@ def string_sublength(args):
     s = params.get("s", "")
     i = int(params.get("i", 1) or 1) - 1  # lua is 1-based
     len = int(params.get("len", 1) or 1)
-    return s[i: i + len]
+    return s[i : i + len]
 
 
 def string_len(args):
@@ -2202,7 +2202,7 @@ def replaceInternalLinks(text):
         else:
             trail = ""
             end = e
-        inner = text[s + 2: e - 2]
+        inner = text[s + 2 : e - 2]
         # find first |
         pipe = inner.find("|")
         if pipe < 0:
@@ -2495,7 +2495,7 @@ def makeInternalLink(title, label):
     if colon == 0:
         # drop also :File:
         colon2 = title.find(":", colon + 1)
-        if colon2 > 1 and title[colon + 1: colon2] not in options.acceptedNamespaces:
+        if colon2 > 1 and title[colon + 1 : colon2] not in options.acceptedNamespaces:
             return ""
     if options.keepLinks:
         return '<a href="{}">{}</a>'.format(quote(title.encode("utf-8")), label)
@@ -2959,7 +2959,7 @@ def pages_from(input):
                 # <text xml:space="preserve" />
                 continue
             inText = True
-            line = line[m.start(3): m.end(3)]
+            line = line[m.start(3) : m.end(3)]
             page.append(line)
             if m.lastindex == 4:  # open-close
                 inText = False

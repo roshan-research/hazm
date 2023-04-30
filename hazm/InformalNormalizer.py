@@ -4,6 +4,7 @@
 
 
 import re
+from typing import List
 
 from .Lemmatizer import Lemmatizer
 from .Normalizer import Normalizer
@@ -14,8 +15,6 @@ from .utils import informal_verbs
 from .utils import informal_words
 from .WordTokenizer import WordTokenizer
 from .WordTokenizer import default_verbs
-from typing import List
-
 
 
 class InformalNormalizer(Normalizer):

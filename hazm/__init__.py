@@ -10,8 +10,8 @@ from .DependencyParser import TurboParser
 from .HamshahriReader import HamshahriReader
 from .InformalNormalizer import InformalLemmatizer
 from .InformalNormalizer import InformalNormalizer
-from .Lemmatizer import Lemmatizer
 from .Lemmatizer import Conjugation
+from .Lemmatizer import Lemmatizer
 from .MirasTextReader import MirasTextReader
 from .Normalizer import Normalizer
 from .PersicaReader import PersicaReader

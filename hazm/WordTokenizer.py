@@ -7,13 +7,13 @@
 
 
 import re
+from typing import List
 
 from nltk.tokenize.api import TokenizerI
 
 from .utils import default_verbs
 from .utils import default_words
 from .utils import words_list
-from typing import List
 
 
 class WordTokenizer(TokenizerI):
@@ -49,7 +49,7 @@ class WordTokenizer(TokenizerI):
         replace_emails: bool = False,
         replace_numbers: bool = False,
         replace_hashtags: bool = False,
-    )->None:
+    ) -> None:
         self._join_verb_parts = join_verb_parts
         self.separate_emoji = separate_emoji
         self.replace_links = replace_links

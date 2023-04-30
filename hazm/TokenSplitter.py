@@ -3,9 +3,10 @@
 """
 
 
-from .Lemmatizer import Lemmatizer
 from typing import List
 from typing import Tuple
+
+from .Lemmatizer import Lemmatizer
 
 
 class TokenSplitter:

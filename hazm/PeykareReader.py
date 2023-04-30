@@ -19,11 +19,12 @@
 import codecs
 import os
 from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from .Normalizer import Normalizer
 from .WordTokenizer import WordTokenizer
-from typing import List
-from typing import Tuple
+
 
 def coarse_pos_u(tags: List[str], word: str) -> List[str]:
     """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
@@ -254,7 +255,7 @@ class PeykareReader:
         joined_verb_parts: bool = True,
         pos_map: str = coarse_pos_e,
         universal_pos: bool = False,
-    )->None:
+    ) -> None:
         self._root = root
         if pos_map is None:
             self._pos_map = lambda tags: ",".join(tags)

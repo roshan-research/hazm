@@ -8,14 +8,15 @@
 import os
 import re
 import sys
-from typing import Any, Iterator
+from typing import Any
+from typing import Iterator
+from typing import List
+from typing import Tuple
 from xml.dom import minidom
 
 from nltk.tree import Tree
 
 from .WordTokenizer import WordTokenizer
-from typing import List
-from typing import Tuple
 
 
 def coarse_pos_e(tags: List[str]) -> List[str]:
@@ -83,7 +84,7 @@ class TreebankReader:
         pos_map: str = coarse_pos_e,
         join_clitics: bool = False,
         join_verb_parts: bool = False,
-    )->None:
+    ) -> None:
         self._root = root
         self._pos_map = pos_map if pos_map else lambda tags: ",".join(tags)
         self._join_clitics = join_clitics

@@ -8,9 +8,10 @@
 import itertools
 import os
 import sys
-from typing import Any, Iterator
-from xml.dom import minidom
+from typing import Any
 from typing import Dict
+from typing import Iterator
+from xml.dom import minidom
 
 
 class SentiPersReader:
@@ -24,7 +25,7 @@ class SentiPersReader:
     def __init__(self, root: str):
         self._root = root
 
-    def docs(self) -> Iterator[Dict[str,Any]]:
+    def docs(self) -> Iterator[Dict[str, Any]]:
         """متن‌های فارسی را در قالب یک برمی‌گرداند.
 
         هر متن شامل این فیلدهاست:

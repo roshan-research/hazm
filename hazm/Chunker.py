@@ -5,9 +5,12 @@
 
 """
 
-from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
-from .SequenceTagger import IOBTagger
+from nltk.chunk import RegexpParser
+from nltk.chunk import conlltags2tree
+from nltk.chunk import tree2conlltags
+
 from .POSTagger import POSTagger
+from .SequenceTagger import IOBTagger
 
 
 def tree2brackets(tree):

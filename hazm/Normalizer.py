@@ -4,12 +4,12 @@
 
 
 import re
+from typing import List
 
 from .Lemmatizer import Lemmatizer
 from .utils import maketrans
 from .utils import regex_replace
 from .WordTokenizer import WordTokenizer
-from typing import List
 
 
 class Normalizer:
@@ -37,7 +37,7 @@ class Normalizer:
         persian_numbers: bool = True,
         unicodes_replacement: bool = True,
         seperate_mi: bool = True,
-    )->None:
+    ) -> None:
         self._correct_spacing = correct_spacing
         self._remove_diacritics = remove_diacritics
         self._remove_specials_chars = remove_specials_chars
@@ -233,7 +233,7 @@ class Normalizer:
         return text
 
     def correct_spacing(self, text: str) -> str:
-        """ فاصله‌گذاری‌ها را در پیشوندها و پسوندها اصلاح می‌کند.
+        """فاصله‌گذاری‌ها را در پیشوندها و پسوندها اصلاح می‌کند.
 
         Examples:
             >>> normalizer = Normalizer()

@@ -1,4 +1,5 @@
 from typing import Any
+
 from nltk.corpus import PlaintextCorpusReader
 from nltk.corpus.reader import StreamBackedCorpusView
 from nltk.corpus.reader import read_blankline_block
@@ -22,9 +23,9 @@ class PersianPlainTextReader(PlaintextCorpusReader):
         self,
         root: Any,
         fileids: Any,
-        word_tokenizer:Any= word_tokenize,
-        sent_tokenizer: Any= sent_tokenize,
-        para_block_reader: Any= read_blankline_block,
+        word_tokenizer: Any = word_tokenize,
+        sent_tokenizer: Any = sent_tokenize,
+        para_block_reader: Any = read_blankline_block,
         encoding="utf8",
     ) -> None:
         super().__init__(

@@ -16,9 +16,9 @@ crawl
 import os
 import re
 import sys
+from typing import Dict
 from typing import Iterator
 from xml.dom import minidom
-from typing import Dict
 
 
 class HamshahriReader:

@@ -2,11 +2,13 @@
 
 """
 
-from pycrfsuite import Tagger, Trainer
 import time
 
+from pycrfsuite import Tagger
+from pycrfsuite import Trainer
 
-class SequenceTagger():
+
+class SequenceTagger:
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
     wrapper برای کتابخانهٔ [python-](https://python-crfsuite.readthedocs.io/en/latest/) است.
 
@@ -16,7 +18,7 @@ class SequenceTagger():
 
     """
 
-    def __init__(self, model=None, data_maker = None):
+    def __init__(self, model=None, data_maker=None):
         if model != None:
             self.load_model(model)
         else:
@@ -40,8 +42,8 @@ class SequenceTagger():
         trainer.train(file_name)
         end_time = time.time()
 
-        if(report_duration):
-            print(f'training time: {(end_time - start_time):.2f} sec')
+        if report_duration:
+            print(f"training time: {(end_time - start_time):.2f} sec")
 
         self.load_model(file_name)
 
@@ -76,7 +78,7 @@ class SequenceTagger():
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
 
         """
-        assert self.model != None, 'you should load model first...'
+        assert self.model != None, "you should load model first..."
         return self.__tag(tokens)
 
     def tag_sents(self, sentences):
@@ -98,10 +100,19 @@ class SequenceTagger():
                     هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
 
         """
-        assert self.model != None, 'you should load model first...'
+        assert self.model != None, "you should load model first..."
         return [self.__tag(tokens) for tokens in sentences]
 
-    def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', report_duration=True):
+    def train(
+        self,
+        tagged_list,
+        c1=0.4,
+        c2=0.04,
+        max_iteration=400,
+        verbose=True,
+        file_name="crf.model",
+        report_duration=True,
+    ):
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
 
         هر جمله، لیستی از `(توکن، برچسب)`هاست.
@@ -134,14 +145,16 @@ class SequenceTagger():
 
         """
 
-        X = self.data_maker([[x for x, _ in tagged_sent] for tagged_sent in tagged_list])
+        X = self.data_maker(
+            [[x for x, _ in tagged_sent] for tagged_sent in tagged_list]
+        )
         y = [[y for _, y in tagged_sent] for tagged_sent in tagged_list]
 
         args = {
-        'c1': c1,
-        'c2': c2,
-        'max_iterations': max_iteration,
-        'feature.possible_transitions': True,
+            "c1": c1,
+            "c2": c2,
+            "max_iterations": max_iteration,
+            "feature.possible_transitions": True,
         }
 
         self.__train(X, y, args, verbose, file_name, report_duration)
@@ -159,20 +172,21 @@ class SequenceTagger():
             filename (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
 
         """
-        assert self.model != None, 'you should load model first...'
+        assert self.model != None, "you should load model first..."
         self.model.dump(filename)
 
 
 class IOBTagger(SequenceTagger):
-    """
+    """ """
 
-
-    """
     def __init__(self, model=None, data_maker=None):
         super().__init__(model, data_maker)
 
     def __IOB_format(self, tagged_data, chunk_tags):
-        return [(token[0], token[1], chunk_tag[1]) for token, chunk_tag in zip(tagged_data, chunk_tags)]
+        return [
+            (token[0], token[1], chunk_tag[1])
+            for token, chunk_tag in zip(tagged_data, chunk_tags)
+        ]
 
     def tag(self, tagged_data):
         """یک جمله را در قالب لیستی از توکن‌ها و تگ‌ها دریافت می‌کند و در خروجی لیستی از
@@ -213,9 +227,21 @@ class IOBTagger(SequenceTagger):
 
         """
         chunk_tags = super().tag_sents(sentences)
-        return [self.__IOB_format(tagged_data, chunks) for tagged_data, chunks in zip(sentences, chunk_tags)]
+        return [
+            self.__IOB_format(tagged_data, chunks)
+            for tagged_data, chunks in zip(sentences, chunk_tags)
+        ]
 
-    def train(self, tagged_list, c1=0.4, c2=0.04, max_iteration=400, verbose=True, file_name='crf.model', report_duration=True):
+    def train(
+        self,
+        tagged_list,
+        c1=0.4,
+        c2=0.04,
+        max_iteration=400,
+        verbose=True,
+        file_name="crf.model",
+        report_duration=True,
+    ):
         """لیستی از جملات را می‌گیرد و بر اساس آن مدل را آموزش می‌دهد.
 
         هر جمله، لیستی از `(توکن، تگ، برچسب)`هاست.
@@ -247,5 +273,10 @@ class IOBTagger(SequenceTagger):
             report_duraion (boolean): نمایش گزارشات مربوط به زمان.
 
         """
-        tagged_list = [[((word, tag), chunk) for word, tag, chunk in tagged_sent] for tagged_sent in tagged_list]
-        return super().train(tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration)
+        tagged_list = [
+            [((word, tag), chunk) for word, tag, chunk in tagged_sent]
+            for tagged_sent in tagged_list
+        ]
+        return super().train(
+            tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration
+        )

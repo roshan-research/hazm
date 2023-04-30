@@ -5,13 +5,13 @@
 
 import os
 import tempfile
+from typing import List
+from typing import Tuple
+from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
 from nltk.parse.malt import MaltParser
-from typing import List
-from typing import Tuple
-from typing import Type
 
 
 class MaltParser(MaltParser):
@@ -52,7 +52,9 @@ class MaltParser(MaltParser):
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
-    def parse_tagged_sents(self, sentences: List[List[Tuple[str,str]]], verbose: bool = False) -> str:
+    def parse_tagged_sents(
+        self, sentences: List[List[Tuple[str, str]]], verbose: bool = False
+    ) -> str:
         """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
 
         Args:
@@ -149,11 +151,15 @@ class TurboParser(ParserI):
         self.interface = self._pturboparser.create_parser()
         self.interface.load_parser_model(model_file)
 
-    def parse_sents(self, sentences: List[List[Tuple[str,str]]]) -> Type[DependencyGraph]:
+    def parse_sents(
+        self, sentences: List[List[Tuple[str, str]]]
+    ) -> Type[DependencyGraph]:
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
-    def tagged_parse_sents(self, sentences: List[List[Tuple[str,str]]]) -> Type[DependencyGraph]:
+    def tagged_parse_sents(
+        self, sentences: List[List[Tuple[str, str]]]
+    ) -> Type[DependencyGraph]:
         input_file = tempfile.NamedTemporaryFile(
             prefix="turbo_input.conll", dir="resources", delete=False
         )

@@ -113,7 +113,8 @@ class BijankhanReader:
             جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
 
         """
-        def map_poses(item: Tuple[str, str]) -> Tuple [str, str]:
+
+        def map_poses(item: Tuple[str, str]) -> Tuple[str, str]:
             return (item[0], self._pos_map.get(item[1], item[1]))
 
         for sentence in self._sentences():

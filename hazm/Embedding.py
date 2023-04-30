@@ -4,8 +4,11 @@
 """
 import multiprocessing
 import os
-from typing import Any
 import warnings
+from typing import Any
+from typing import List
+from typing import Tuple
+from typing import Type
 
 import numpy
 from gensim.models import Doc2Vec
@@ -14,9 +17,6 @@ from gensim.models import fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
-from typing import List
-from typing import Tuple
-from typing import Type
 
 from . import Normalizer
 from . import word_tokenize
@@ -315,7 +315,7 @@ class SentEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.get_sentence_vector(sent)
 
-    def get_sentence_vector(self, sent:str) -> Any:
+    def get_sentence_vector(self, sent: str) -> Any:
         """جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
 
         Examples:
