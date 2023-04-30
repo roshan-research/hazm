@@ -1,6 +1,6 @@
 name: Format code
 
-on: 
+on:
   workflow_dispatch:
   push:
     branches:
@@ -14,25 +14,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
         python-version: "3.10"
-        
+
     - name: Install black formatter
       run: pip install black
-        
+
     - name: Format all codes with black formatter
       run: black .
 
+    - name: Install isrot
+      run: pip install isort
+
     - name: Sort import alfabeticly
       run: isort .
-      
+
     - name: Format docstrings with a custom formatter
       run: python format_docstrings.py
-        
-    - name: Push back changes          
+
+    - name: Push back changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Format code"
