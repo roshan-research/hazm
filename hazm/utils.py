@@ -52,7 +52,7 @@ def words_list(
         ]
 
 
-def stopwords_list(stopwords_file: str = default_stopwords) -> list[str]:
+def stopwords_list(stopwords_file: str = default_stopwords) -> List[str]:
     """لیست ایست‌واژه‌ها را برمی‌گرداند.
 
     Examples:
