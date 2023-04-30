@@ -11,6 +11,8 @@
 
 import re
 from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from .Normalizer import Normalizer
 from .PeykareReader import join_verb_parts
@@ -71,7 +73,7 @@ class BijankhanReader:
 
     def __init__(
         self, bijankhan_file: str, joined_verb_parts: bool = True, pos_map: str = None
-    ):
+    ) -> None:
         if pos_map is None:
             pos_map = default_pos_map
         self._bijankhan_file = bijankhan_file
@@ -79,7 +81,7 @@ class BijankhanReader:
         self._pos_map = pos_map
         self._normalizer = Normalizer(correct_spacing=False)
 
-    def _sentences(self) -> Iterator[list[tuple[str, str]]]:
+    def _sentences(self) -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
 
         Yields:
@@ -99,7 +101,7 @@ class BijankhanReader:
                         yield sentence
                         sentence = []
 
-    def sents(self) -> Iterator[list[tuple[str, str]]]:
+    def sents(self) -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
 
         Examples:
@@ -111,7 +113,7 @@ class BijankhanReader:
             جملهٔ بعدی در قالب لیستی از `(توکن،برچسب)`ها.
 
         """
-        def map_poses(item: tuple[str, str]) -> tuple [str, str]:
+        def map_poses(item: tuple[str, str]) -> Tuple [str, str]:
             return (item[0], self._pos_map.get(item[1], item[1]))
 
         for sentence in self._sentences():

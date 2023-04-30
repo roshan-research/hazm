@@ -11,6 +11,7 @@
 
 """
 from typing import Iterator
+from typing import Dict
 
 
 class PersicaReader:
@@ -24,7 +25,7 @@ class PersicaReader:
     def __init__(self, csv_file: str):
         self._csv_file = csv_file
 
-    def docs(self) -> Iterator[dict[str, str]]:
+    def docs(self) -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از این پارامتر است:

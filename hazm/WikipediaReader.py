@@ -13,6 +13,7 @@ import os
 import re
 import subprocess
 from typing import Iterator
+from typing import Dict
 
 
 class WikipediaReader:
@@ -31,7 +32,7 @@ class WikipediaReader:
         )
         self.n_jobs = n_jobs
 
-    def docs(self) -> Iterator[dict[str, str]]:
+    def docs(self) -> Iterator[Dict[str, str]]:
         """مقالات را برمی‌گرداند.
 
         هر مقاله، شی‌ای متشکل از چند پارامتر است:

@@ -18,7 +18,7 @@ class TNewsReader:
 
     """
 
-    def __init__(self, root: str):
+    def __init__(self, root: str)->None:
         self._root = root
         self.cleaner = re.compile(r"<[^<>]+>")
 

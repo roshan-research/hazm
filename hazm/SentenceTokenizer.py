@@ -8,15 +8,16 @@
 import re
 
 from nltk.tokenize.api import TokenizerI
+from typing import List
 
 
 class SentenceTokenizer(TokenizerI):
     """این کلاس شامل توابعی برای استخراج جملاتِ متن است."""
 
-    def __init__(self):
+    def __init__(self)->None:
         self.pattern = re.compile(r"([!.?⸮؟]+)[ \n]+")
 
-    def tokenize(self, text: str) -> list[str]:
+    def tokenize(self, text: str) -> List[str]:
         """متن ورودی را به جملات سازندهٔ آن می‌شِکند.
 
         Examples:

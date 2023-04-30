@@ -9,6 +9,8 @@ import tempfile
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
 from nltk.parse.malt import MaltParser
+from typing import List
+from typing import Tuple
 
 
 class MaltParser(MaltParser):
@@ -28,7 +30,7 @@ class MaltParser(MaltParser):
         lemmatizer: str,
         working_dir: str = "resources",
         model_file: str = "langModel.mco",
-    ):
+    ) -> None:
         self.tagger = tagger
         self.working_dir = working_dir
         self.mco = model_file
@@ -49,7 +51,7 @@ class MaltParser(MaltParser):
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
-    def parse_tagged_sents(self, sentences: list[list[tuple[str,str]]], verbose: bool = False) -> str:
+    def parse_tagged_sents(self, sentences: List[List[Tuple[str,str]]], verbose: bool = False) -> str:
         """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
 
         Args:

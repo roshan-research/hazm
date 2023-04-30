@@ -16,6 +16,8 @@
 import os
 import sys
 from typing import Any, Iterator
+from typing import Dict
+from typing import Tuple
 from xml.dom import minidom
 
 
@@ -40,14 +42,14 @@ class DegarbayanReader:
         corpus_file: str = "CorpusPair.xml",
         judge_type: str = "three_class",
         version: float = 1.0,
-    ):
+    ) -> None:
         self._root = root
         self._corpus_file = corpus_file
         self._judge_type = judge_type
         if judge_type != "three_class" and judge_type != "two_class":
             self._judge_type = "three_class"
 
-    def docs(self) -> Iterator[dict[str, Any]]:
+    def docs(self) -> Iterator[Dict[str, Any]]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:
@@ -123,7 +125,7 @@ class DegarbayanReader:
             print("error in reading file", filename, e, file=sys.stderr)
             raise FileNotFoundError("error in reading file", filename)
 
-    def pairs(self) -> Iterator[tuple[str, str, str]]:
+    def pairs(self) -> Iterator[Tuple[str, str, str]]:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
 
         Examples:

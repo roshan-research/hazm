@@ -9,6 +9,7 @@ from .Lemmatizer import Lemmatizer
 from .utils import maketrans
 from .utils import regex_replace
 from .WordTokenizer import WordTokenizer
+from typing import List
 
 
 class Normalizer:
@@ -36,7 +37,7 @@ class Normalizer:
         persian_numbers: bool = True,
         unicodes_replacement: bool = True,
         seperate_mi: bool = True,
-    ):
+    )->None:
         self._correct_spacing = correct_spacing
         self._remove_diacritics = remove_diacritics
         self._remove_specials_chars = remove_specials_chars
@@ -338,7 +339,7 @@ class Normalizer:
 
         Args:
             text: متنی که باید تکرارهای زائد آن حذف شود.
-            
+
         Returns:
             متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
 
@@ -476,7 +477,7 @@ class Normalizer:
 
         return text
 
-    def token_spacing(self, tokens: list[str]) -> list[str]:
+    def token_spacing(self, tokens: List[str]) -> List[str]:
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
         در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
         برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`

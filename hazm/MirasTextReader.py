@@ -5,6 +5,7 @@
 
 """
 from typing import Iterator
+from typing import Dict
 
 
 class MirasTextReader:
@@ -18,7 +19,7 @@ class MirasTextReader:
     def __init__(self, filename: str):
         self._filename = filename
 
-    def docs(self) -> Iterator[dict[str, str]]:
+    def docs(self) -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         Yields:

@@ -4,6 +4,8 @@ PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده
 
 """
 from typing import Any, Iterator
+from typing import List
+from typing import Tuple
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
@@ -90,7 +92,7 @@ class DadeganReader:
 
     def __init__(
         self, conll_file: str, pos_map: str = coarse_pos_e, universal_pos: bool = False
-    ):
+    ) -> None:
         self._conll_file = conll_file
         if pos_map is None:
             self._pos_map = lambda tags: ",".join(tags)
@@ -144,7 +146,7 @@ class DadeganReader:
 
             yield tree
 
-    def sents(self) -> Iterator[list[tuple[str, str]]]:
+    def sents(self) -> Iterator[List[Tuple[str, str]]]:
         """لیستی از جملات را برمی‌گرداند.
 
         هر جمله لیستی از `(توکن، برچسب)`ها است.

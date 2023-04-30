@@ -22,9 +22,10 @@ from typing import Iterator
 
 from .Normalizer import Normalizer
 from .WordTokenizer import WordTokenizer
+from typing import List
+from typing import Tuple
 
-
-def coarse_pos_u(tags: list[str], word: str) -> list[str]:
+def coarse_pos_u(tags: List[str], word: str) -> List[str]:
     """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
     universal pos tags) تبدیل می‌کند.
 
@@ -163,7 +164,7 @@ def coarse_pos_u(tags: list[str], word: str) -> list[str]:
         return "NOUN"
 
 
-def coarse_pos_e(tags: list[str], word: str) -> list[str]:
+def coarse_pos_e(tags: List[str], word: str) -> List[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
@@ -202,7 +203,7 @@ def coarse_pos_e(tags: list[str], word: str) -> list[str]:
         return "N"
 
 
-def join_verb_parts(sentence: list[tuple[str, str]]) -> list[tuple[str, str]]:
+def join_verb_parts(sentence: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
     """جمله را در قالب لیستی از `(توکن، برچسب)‌`ها می‌گیرد و توکن‌های مربوط به
     افعال چندبخشی را با کاراکتر زیرخط (_) به هم می‌چسباند.
 
@@ -253,7 +254,7 @@ class PeykareReader:
         joined_verb_parts: bool = True,
         pos_map: str = coarse_pos_e,
         universal_pos: bool = False,
-    ):
+    )->None:
         self._root = root
         if pos_map is None:
             self._pos_map = lambda tags: ",".join(tags)
@@ -281,7 +282,7 @@ class PeykareReader:
                     if text:
                         yield text
 
-    def doc_to_sents(self, document: str) -> Iterator[list[tuple[str, str]]]:
+    def doc_to_sents(self, document: str) -> Iterator[List[Tuple[str, str]]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
 
         هر جمله لیستی از `(کلمه, برچسب)`ها است.
@@ -310,7 +311,7 @@ class PeykareReader:
                     yield sentence
                 sentence = []
 
-    def sents(self) -> Iterator[list[tuple[str, str]]]:
+    def sents(self) -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را در قالب لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
 
         Examples:

@@ -13,6 +13,7 @@ from nltk.tokenize.api import TokenizerI
 from .utils import default_verbs
 from .utils import default_words
 from .utils import words_list
+from typing import List
 
 
 class WordTokenizer(TokenizerI):
@@ -48,7 +49,7 @@ class WordTokenizer(TokenizerI):
         replace_emails: bool = False,
         replace_numbers: bool = False,
         replace_hashtags: bool = False,
-    ):
+    )->None:
         self._join_verb_parts = join_verb_parts
         self.separate_emoji = separate_emoji
         self.replace_links = replace_links
@@ -238,7 +239,7 @@ class WordTokenizer(TokenizerI):
                     + ["ن" + bon + "ه" for bon in self.bons]
                 )
 
-    def tokenize(self, text: str) -> list[str]:
+    def tokenize(self, text: str) -> List[str]:
         """توکن‌های متن را استخراج می‌کند.
 
         Examples:
@@ -292,7 +293,7 @@ class WordTokenizer(TokenizerI):
             tokens = self.join_verb_parts(tokens)
         return tokens
 
-    def join_verb_parts(self, tokens: list[str]) -> list[str]:
+    def join_verb_parts(self, tokens: List[str]) -> List[str]:
         """افعال چندبخشی را به هم می‌چسباند.
 
         Examples:

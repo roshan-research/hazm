@@ -14,6 +14,8 @@ from .utils import informal_verbs
 from .utils import informal_words
 from .WordTokenizer import WordTokenizer
 from .WordTokenizer import default_verbs
+from typing import List
+
 
 
 class InformalNormalizer(Normalizer):
@@ -32,8 +34,8 @@ class InformalNormalizer(Normalizer):
         verb_file: str = informal_verbs,
         word_file: str = informal_words,
         seperation_flag: bool = False,
-        **kargs: str
-    ):
+        **kargs: str,
+    ) -> None:
         self.seperation_flag = seperation_flag
         self.lemmatizer = Lemmatizer()
         self.ilemmatizer = InformalLemmatizer()
@@ -141,7 +143,7 @@ class InformalNormalizer(Normalizer):
                 return " ".join(c)
         return token
 
-    def normalized_word(self, word: str) -> list[str]:
+    def normalized_word(self, word: str) -> List[str]:
         """اشکال مختلف نرمالایزشدهٔ کلمه را برمی‌گرداند.
 
         Examples:
@@ -729,7 +731,7 @@ class InformalNormalizer(Normalizer):
 
         return possibleWords
 
-    def normalize(self, text: str) -> list[list[list[str]]]:
+    def normalize(self, text: str) -> List[List[List[str]]]:
         """متن محاوره‌ای را به متن فارسی معیار تبدیل می‌کند.
 
         Examples:
@@ -756,7 +758,7 @@ class InformalNormalizer(Normalizer):
 
         return [[self.normalized_word(word) for word in sent] for sent in sents]
 
-    def informal_conjugations(self, verb: str) -> list[str]:
+    def informal_conjugations(self, verb: str) -> List[str]:
         """صورت‌های صرفی فعل را در شکل محاوره‌ای تولید می‌کند.
 
         Args:
@@ -790,7 +792,7 @@ class InformalNormalizer(Normalizer):
 
 
 class InformalLemmatizer(Lemmatizer):
-    def __init__(self, **kargs: str):
+    def __init__(self, **kargs: str) -> None:
         super().__init__(**kargs)
 
         temp = []

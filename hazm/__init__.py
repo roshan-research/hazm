@@ -34,7 +34,7 @@ from .WikipediaReader import WikipediaReader
 from .WordTokenizer import WordTokenizer
 
 
-def sent_tokenize(text):
+def sent_tokenize(text: str):
     if not hasattr(sent_tokenize, "tokenizer"):
         sent_tokenize.tokenizer = SentenceTokenizer()
     return sent_tokenize.tokenizer.tokenize(text)

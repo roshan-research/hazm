@@ -14,6 +14,8 @@ from gensim.models import fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
+from typing import List
+from typing import Tuple
 
 from . import Normalizer
 from . import word_tokenize
@@ -129,7 +131,7 @@ class WordEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model[word]
 
-    def doesnt_match(self, words: list[str]) -> str:
+    def doesnt_match(self, words: List[str]) -> str:
         """لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.
 
         Examples:
@@ -174,7 +176,7 @@ class WordEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return float(str(self.model.similarity(word1, word2)))
 
-    def get_vocab(self) -> list[str]:
+    def get_vocab(self) -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
         Examples:
@@ -191,7 +193,7 @@ class WordEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model.index_to_key
 
-    def nearest_words(self, word: str, topn: int = 5) -> list[tuple[str, str]]:
+    def nearest_words(self, word: str, topn: int = 5) -> List[Tuple[str, str]]:
         """کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.
 
         Examples:

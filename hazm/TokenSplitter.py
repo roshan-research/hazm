@@ -4,6 +4,8 @@
 
 
 from .Lemmatizer import Lemmatizer
+from typing import List
+from typing import Tuple
 
 
 class TokenSplitter:
@@ -14,7 +16,7 @@ class TokenSplitter:
         self.lemmatize = self.lemmatizer.lemmatize
         self.words = self.lemmatizer.words
 
-    def split_token_words(self, token: str) -> list[tuple[str, str]]:
+    def split_token_words(self, token: str) -> List[Tuple[str, str]]:
         """توکنِ ورودی را به دو توکن کوچکتر تجزیه می‌کند.
 
         اگر توکن به بیش از یک روش قابل تجزیه باشد همهٔ حالت‌های ممکن را

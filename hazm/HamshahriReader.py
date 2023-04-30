@@ -18,6 +18,7 @@ import re
 import sys
 from typing import Iterator
 from xml.dom import minidom
+from typing import Dict
 
 
 class HamshahriReader:
@@ -28,7 +29,7 @@ class HamshahriReader:
 
     """
 
-    def __init__(self, root: str):
+    def __init__(self, root: str) -> None:
         self._root = root
         self._invalids = {
             "hamshahri.dtd",
@@ -78,7 +79,7 @@ class HamshahriReader:
         }
         self._paragraph_pattern = re.compile(r"(\n.{0,50})(?=\n)")
 
-    def docs(self) -> Iterator[dict[str, str]]:
+    def docs(self) -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از این پارامتر است:

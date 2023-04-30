@@ -26,7 +26,7 @@ class PersianPlainTextReader(PlaintextCorpusReader):
         sent_tokenizer: Any= sent_tokenize,
         para_block_reader: Any= read_blankline_block,
         encoding="utf8",
-    ):
+    ) -> None:
         super().__init__(
             root, fileids, word_tokenizer, sent_tokenizer, para_block_reader, encoding
         )

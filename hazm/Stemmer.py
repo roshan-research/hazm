@@ -17,7 +17,7 @@ from nltk.stem.api import StemmerI
 class Stemmer(StemmerI):
     """این کلاس شامل توابعی برای ریشه‌یابی کلمات است."""
 
-    def __init__(self):
+    def __init__(self)->None:
         self.ends = [
             "ات",
             "ان",

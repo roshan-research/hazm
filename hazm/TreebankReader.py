@@ -14,9 +14,11 @@ from xml.dom import minidom
 from nltk.tree import Tree
 
 from .WordTokenizer import WordTokenizer
+from typing import List
+from typing import Tuple
 
 
-def coarse_pos_e(tags: list[str]) -> list[str]:
+def coarse_pos_e(tags: List[str]) -> List[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
@@ -81,7 +83,7 @@ class TreebankReader:
         pos_map: str = coarse_pos_e,
         join_clitics: bool = False,
         join_verb_parts: bool = False,
-    ):
+    )->None:
         self._root = root
         self._pos_map = pos_map if pos_map else lambda tags: ",".join(tags)
         self._join_clitics = join_clitics
@@ -240,7 +242,7 @@ class TreebankReader:
                 ss = traverse(S)
                 yield traverse(S)
 
-    def sents(self) -> Iterator[list[tuple[str, str]]]:
+    def sents(self) -> Iterator[List[Tuple[str, str]]]:
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
 
         Examples:
