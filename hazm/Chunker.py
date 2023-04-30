@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای تجزیهٔ متن به عبارات اسمی، فعلی و حرف
 اضافه‌ای است. **میزان دقت تجزیه‌گر سطحی در نسخهٔ حاضر ۸۹.۹ درصد [^1] است.**
 [^1]:
@@ -7,7 +5,6 @@
 
 """
 
-from __future__ import unicode_literals
 from nltk.chunk import RegexpParser, tree2conlltags, conlltags2tree
 from .SequenceTagger import IOBTagger
 from .POSTagger import POSTagger
@@ -164,7 +161,7 @@ class Chunker(IOBTagger):
             (Iterator[str]): یک `Iterator` از جملات تقطیع شده.
 
         """
-        for conlltagged in super(Chunker, self).tag_sents(sentences):
+        for conlltagged in super().tag_sents(sentences):
             yield conlltags2tree(conlltagged)
 
 
@@ -209,4 +206,4 @@ class RuleBasedChunker(RegexpParser):
 
         """
 
-        super(RuleBasedChunker, self).__init__(grammar=grammar)
+        super().__init__(grammar=grammar)

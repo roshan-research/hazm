@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست. **میزان دقت
 برچسب‌زنی در نسخهٔ حاضر ۹۷.۲ درصد [^1] است.**
 [^1]:
@@ -7,7 +5,6 @@
 
 """
 
-from __future__ import unicode_literals
 from nltk.tag import stanford
 from .SequenceTagger import SequenceTagger
 

@@ -6,7 +6,6 @@ import re
 import sys
 from os import path
 from typing import Any
-from typing import Dict
 
 PY2 = sys.version_info[0] == 2
 
@@ -20,7 +19,7 @@ informal_verbs = path.join(data_path, "iverbs.dat")
 NUMBERS = "۰۱۲۳۴۵۶۷۸۹"
 
 
-def maketrans(A: str, B: str) -> Dict[int, Any]:
+def maketrans(A: str, B: str) -> dict[int, Any]:
     return {ord(a): b for a, b in zip(A, B)}
 
 
