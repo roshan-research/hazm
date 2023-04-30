@@ -153,7 +153,7 @@ def embedRank(text, keyword_num, sent2vecModel=None, posTaggerModel=None):
     return extractKeyword(candidates, keyword_num, sent2vecModel=sent2vecModel)
 
 
-if __name__ == "__main__":{}
+if __name__ == "__main__":
     persikaReader = PersicaReader("persika.csv")
     text = next(persikaReader.texts())
     keyword_num = 10
