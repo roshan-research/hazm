@@ -39,6 +39,7 @@ Documentation = [
     "mkdocs-material==8.4.1",
     "mkdocs-glightbox==0.2.0",
     "pymdown-extensions==9.5",
+    "isort>=5.12.0"
 ]
 
 
