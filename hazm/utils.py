@@ -71,7 +71,7 @@ def stopwords_list(stopwords_file: str = default_stopwords) -> list[str]:
         return list({w.strip() for w in stopwords_file})
 
 
-def verbs_list() -> list[str]:
+def verbs_list() -> List[str]:
     with open(default_verbs, encoding="utf8") as verbs_file:
         lst = []
         for line in verbs_file:
