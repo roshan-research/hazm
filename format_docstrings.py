@@ -36,8 +36,8 @@ def remove_empty_lines(text):
     return "\n".join([line.rstrip() for line in text.splitlines() if line.strip()])
 
 
-def wrap_text(text, min_width, max_width):  
-  paragraphs = text.split("\n\n")  
+def wrap_text(text, min_width, max_width):
+  paragraphs = text.split("\n\n")
   wrapped_lines = []
   for paragraph in paragraphs:
     lines = textwrap.wrap(paragraph, width=max_width, break_long_words=False)
@@ -81,7 +81,5 @@ def format_docstring(doc):
     return doc
 
 
-# for pyFile in glob.glob("./hazm/*.py"):
-#     format_all_docstrings(pyFile)
-
-format_all_docstrings("sample.py")
+for pyFile in glob.glob("./hazm/*.py"):
+    format_all_docstrings(pyFile)
