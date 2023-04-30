@@ -19,7 +19,7 @@ informal_verbs = path.join(data_path, "iverbs.dat")
 NUMBERS = "۰۱۲۳۴۵۶۷۸۹"
 
 
-def maketrans(A: str, B: str) -> dict[int, Any]:
+def maketrans(A: str, B: str) -> Dict[int, Any]:
     return {ord(a): b for a, b in zip(A, B)}
 
 
