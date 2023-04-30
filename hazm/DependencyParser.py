@@ -149,11 +149,11 @@ class TurboParser(ParserI):
         self.interface = self._pturboparser.create_parser()
         self.interface.load_parser_model(model_file)
 
-    def parse_sents(self, sentences: list[list[tuple[str,str]]]) -> Type[DependencyGraph]:
+    def parse_sents(self, sentences: List[List[Tuple[str,str]]]) -> Type[DependencyGraph]:
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
-    def tagged_parse_sents(self, sentences: list[list[tuple[str,str]]]) -> Type[DependencyGraph]:
+    def tagged_parse_sents(self, sentences: List[List[Tuple[str,str]]]) -> Type[DependencyGraph]:
         input_file = tempfile.NamedTemporaryFile(
             prefix="turbo_input.conll", dir="resources", delete=False
         )
