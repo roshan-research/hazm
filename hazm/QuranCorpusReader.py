@@ -7,6 +7,7 @@
 from typing import Iterator
 from typing import Tuple
 from typing import Dict
+from typing import List
 from .utils import maketrans
 
 buckwalter_transliteration = maketrans(
@@ -64,7 +65,7 @@ class QuranCorpusReader:
                     part["root"] = feature[5:].translate(buckwalter_transliteration)
             yield part
 
-    def words(self) -> Iterator[Tuple[str, str, str, str, str, list[Dict[str,str]]]]:
+    def words(self) -> Iterator[Tuple[str, str, str, str, str, List[Dict[str,str]]]]:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
 
         Examples:
