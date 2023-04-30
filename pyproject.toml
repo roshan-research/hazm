@@ -26,7 +26,7 @@ classifiers = [
 dependencies = [
     "nltk>=3.6.7",
     "libwapiti>=0.2.1; platform_system!='Windows'",
-    "gensim>=4.2.0",
+    "gensim>=4.1.2",
     "numpy>=1.19.5",
     "python-crfsuite>=0.9.9",
 ]
