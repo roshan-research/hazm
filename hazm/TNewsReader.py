@@ -8,6 +8,7 @@ import re
 import sys
 from typing import Any, Iterator
 from xml.dom import minidom
+from typing import Dict
 
 
 class TNewsReader:
@@ -22,7 +23,7 @@ class TNewsReader:
         self._root = root
         self.cleaner = re.compile(r"<[^<>]+>")
 
-    def docs(self) -> Iterator[dict[str,str]]:
+    def docs(self) -> Iterator[Dict[str,str]]:
         """خبرها را در قالب یک `iterator` برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از چند پارامتر است:
