@@ -7,6 +7,8 @@ import sys
 from os import path
 from typing import Any
 from typing import Dict
+from typing import List
+from typing import Tuple
 
 PY2 = sys.version_info[0] == 2
 
@@ -26,7 +28,7 @@ def maketrans(A: str, B: str) -> Dict[int, Any]:
 
 def words_list(
     words_file: str = default_words,
-) -> list[tuple[str, int, tuple[str]]]:
+) -> List[Tuple[str, int, Tuple[str]]]:
     """لیست کلمات را برمی‌گرداند.
 
     Examples:
