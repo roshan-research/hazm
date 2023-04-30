@@ -6,6 +6,7 @@ PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده
 from typing import Any, Iterator
 from typing import List
 from typing import Tuple
+from typing import Dict
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
@@ -74,7 +75,7 @@ def coarse_pos_e(tags, word: str) -> str:
     return map.get(tags[0], "X") + ("e" if "EZ" in tags else "")
 
 
-def word_nodes(tree: type[Tree]) -> list[dict[str, Any]]:
+def word_nodes(tree: type[Tree]) -> List[Dict[str, Any]]:
     return sorted(list(tree.nodes.values()), key=lambda node: node["address"])[1:]
 
 def node_deps(node):
