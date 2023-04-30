@@ -16,6 +16,7 @@ from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
 from typing import List
 from typing import Tuple
+from typing import Type
 
 from . import Normalizer
 from . import word_tokenize
@@ -214,7 +215,7 @@ class WordEmbedding:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.model.most_similar(word, topn=topn)
 
-    def get_normal_vector(self, word: str) -> type[numpy.ndarray]:
+    def get_normal_vector(self, word: str) -> Type[numpy.ndarray]:
         """بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.
 
         Examples:
@@ -309,7 +310,7 @@ class SentEmbedding:
             model.save(dest_path)
             print("Model saved.")
 
-    def __getitem__(self, sent: str) -> type[numpy.ndarray]:
+    def __getitem__(self, sent: str) -> Type[numpy.ndarray]:
         if not self.model:
             raise AttributeError("Model must not be None! Please load model first.")
         return self.get_sentence_vector(sent)

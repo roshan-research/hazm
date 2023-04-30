@@ -7,6 +7,8 @@ from typing import Any, Iterator
 from typing import List
 from typing import Tuple
 from typing import Dict
+from typing import Type
+
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
@@ -75,7 +77,7 @@ def coarse_pos_e(tags, word: str) -> str:
     return map.get(tags[0], "X") + ("e" if "EZ" in tags else "")
 
 
-def word_nodes(tree: type[Tree]) -> List[Dict[str, Any]]:
+def word_nodes(tree: Type[Tree]) -> List[Dict[str, Any]]:
     return sorted(list(tree.nodes.values()), key=lambda node: node["address"])[1:]
 
 def node_deps(node):
@@ -127,7 +129,7 @@ class DadeganReader:
                 if item.strip():
                     yield item
 
-    def trees(self) -> Iterator[type[Tree]]:
+    def trees(self) -> Iterator[Type[Tree]]:
         """ساختار درختی جملات را برمی‌گرداند.
 
         Yields:
@@ -164,7 +166,7 @@ class DadeganReader:
         for tree in self.trees():
             yield [(node["word"], node["mtag"]) for node in word_nodes(tree)]
 
-    def chunked_trees(self) -> Iterator[type[Tree]]:
+    def chunked_trees(self) -> Iterator[Type[Tree]]:
         """درخت وابستگی‌های جملات را برمی‌گرداند.
 
         Examples:
