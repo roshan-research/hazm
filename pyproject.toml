@@ -29,7 +29,6 @@ dependencies = [
     "gensim>=4.1.2",
     "numpy>=1.19.5",
     "python-crfsuite>=0.9.9",
-    "isort>=5.12.0",
 ]
 
 [project.optional-dependencies]
@@ -40,7 +39,6 @@ Documentation = [
     "mkdocs-material==8.4.1",
     "mkdocs-glightbox==0.2.0",
     "pymdown-extensions==9.5",
-    "isort>=5.12.0"
 ]
 
 
