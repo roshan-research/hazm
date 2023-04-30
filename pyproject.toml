@@ -8,12 +8,15 @@ description = "Python library for digesting Persian text."
 version = "0.8.1"
 authors = [{ name = "Alireza Nourian", email = "az.nourian@gmail.com" }]
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.6"
 readme = "README.md"
 keywords = ["nlp", "persian nlp", "persian"]
 dynamic = ["version"]
 classifiers = [
     "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
