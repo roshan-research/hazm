@@ -32,7 +32,7 @@ def square_array(arr: np.ndarray) -> np.ndarray:
     return arr ** 2
 ```
 
-- Provide documentation for your modules, classes and functions in [google style format](https://google.github.io/styleguide/pyguide.html).
+- Provide documentation for your modules, classes and functions following the [google style format](https://google.github.io/styleguide/pyguide.html).
 
 ```py
 def calculate_average(numbers: list) -> float:
