@@ -29,17 +29,17 @@ from hazm import WordTokenizer
 from hazm import utils
 
 modules = {
-    # "normalizer": Normalizer,
-    # "informal_normalizer": InformalNormalizer,
-    # "lemmatizer": Lemmatizer,
-    # "stemmer": Stemmer,
-    # "sentence_tokenizer": SentenceTokenizer,
-    # "word_tokenizer": WordTokenizer,
-    # "splitter": TokenSplitter,
-    # "postagger": POSTagger,
-    # "parser": DependencyParser,
-    # "chunker": Chunker,
-    # "tagger": SequenceTagger,
+    "normalizer": Normalizer,
+    "informal_normalizer": InformalNormalizer,
+    "lemmatizer": Lemmatizer,
+    "stemmer": Stemmer,
+    "sentence_tokenizer": SentenceTokenizer,
+    "word_tokenizer": WordTokenizer,
+    "splitter": TokenSplitter,
+    "postagger": POSTagger,
+    "parser": DependencyParser,
+    "chunker": Chunker,
+    "tagger": SequenceTagger,
     "persica": PersicaReader,
     "hamshahri": HamshahriReader,
     "bijankhan": BijankhanReader,
@@ -51,7 +51,7 @@ modules = {
     "tnews": TNewsReader,
     "quran": QuranCorpusReader,
     "miras_text": MirasTextReader,
-    # "treebank": TreebankReader,
+    "treebank": TreebankReader,
 }
 
 
