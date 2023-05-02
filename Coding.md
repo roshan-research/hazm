@@ -1,4 +1,4 @@
-## Contributing guideline
+## Coding guideline
 
 - All our code should currently compaitable with [python 3.6](https://docs.python.org/3/whatsnew/3.6.html) and higher.
 
