@@ -86,7 +86,7 @@ Note: These are not official versions of hazm, not uptodate on functionality and
 + [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java port of Hazm
 + [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# port of Hazm
 
-## Contributing
+## Contribution
 
 We welcome and appreciate any contributions to this repo, such as bug reports, feature requests, code improvements, documentation updates, etc. Please follow the [coding guideline](./CODING.md) when contributing. You can open an issue, fork the repo, write your code, create a pull request and wait for a review and feedback. Thank you for your interest and support in this repo! 
 
