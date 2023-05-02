@@ -2,7 +2,7 @@
 
 - All our code should currently compaitable with [python 3.6](https://docs.python.org/3/whatsnew/3.6.html) and higher.
 
-- Whenever possible, utilize the latest language features avialable in python 3.6. For example instead of using older style `"Hello %s" % name` use f-strings `f"Hello {name}"`.
+- Whenever possible, utilize the latest language features available in python 3.6. For example instead of using older style `"Hello %s" % name` use f-strings `f"Hello {name}"`.
 
 - Use type hints for parameters and return values. Built-in types like `str` and `float` can be used directly and specific types like `Dict` and `List` need to be imported from the `typing` module:
 
