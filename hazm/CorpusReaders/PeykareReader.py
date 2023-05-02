@@ -22,8 +22,8 @@ from typing import Iterator
 from typing import List
 from typing import Tuple
 
-from .Normalizer import Normalizer
-from .WordTokenizer import WordTokenizer
+from ..Normalizer import Normalizer
+from ..WordTokenizer import WordTokenizer
 
 
 def coarse_pos_u(tags: List[str], word: str) -> List[str]:

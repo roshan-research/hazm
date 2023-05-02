@@ -1,1 +1,1 @@
-::: hazm.WikipediaReader
+::: hazm.CorpusReaders.WikipediaReader

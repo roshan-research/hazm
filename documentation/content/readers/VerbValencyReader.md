@@ -1,1 +1,1 @@
-::: hazm.VerbValencyReader
+::: hazm.CorpusReaders.VerbValencyReader

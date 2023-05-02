@@ -1,1 +1,1 @@
-::: hazm.DegarbayanReader
+::: hazm.CorpusReaders.DegarbayanReader

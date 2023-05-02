@@ -16,7 +16,7 @@ from xml.dom import minidom
 
 from nltk.tree import Tree
 
-from .WordTokenizer import WordTokenizer
+from ..WordTokenizer import WordTokenizer
 
 
 def coarse_pos_e(tags: List[str]) -> List[str]:

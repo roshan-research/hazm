@@ -1,1 +1,1 @@
-::: hazm.TNewsReader
+::: hazm.CorpusReaders.TNewsReader

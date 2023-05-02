@@ -1,1 +1,1 @@
-::: hazm.BijankhanReader
+::: hazm.CorpusReaders.BijankhanReader

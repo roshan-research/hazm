@@ -9,7 +9,7 @@ from typing import Iterator
 from typing import List
 from typing import Tuple
 
-from .utils import maketrans
+from ..utils import maketrans
 
 buckwalter_transliteration = maketrans(
     "'>&<}AbptvjHxd*rzs$SDTZEg_fqklmnhwYyFNKaui~o^#`{:@\"[;,.!-+%]",
