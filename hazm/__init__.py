@@ -1,33 +1,40 @@
-from .WordTokenizer import WordTokenizer
-from .SentenceTokenizer import SentenceTokenizer
-from .TokenSplitter import TokenSplitter
-from .HamshahriReader import HamshahriReader
-from .PersicaReader import PersicaReader
-from .BijankhanReader import BijankhanReader
-from .PeykareReader import PeykareReader
-from .VerbValencyReader import VerbValencyReader
-from .DadeganReader import DadeganReader
-from .TreebankReader import TreebankReader
-from .WikipediaReader import WikipediaReader
-from .SentiPersReader import SentiPersReader
-from .DegarbayanReader import DegarbayanReader
-from .QuranCorpusReader import QuranCorpusReader
-from .TNewsReader import TNewsReader
-from .MirasTextReader import MirasTextReader
-from .Normalizer import Normalizer
-from .InformalNormalizer import InformalNormalizer, InformalLemmatizer
-from .Stemmer import Stemmer
+from .Chunker import Chunker
+from .Chunker import RuleBasedChunker
+from .Chunker import tree2brackets
+from .CorpusReaders import BijankhanReader
+from .CorpusReaders import DadeganReader
+from .CorpusReaders import DegarbayanReader
+from .CorpusReaders import HamshahriReader
+from .CorpusReaders import MirasTextReader
+from .CorpusReaders import PersicaReader
+from .CorpusReaders import PeykareReader
+from .CorpusReaders import QuranCorpusReader
+from .CorpusReaders import SentiPersReader
+from .CorpusReaders import TNewsReader
+from .CorpusReaders import TreebankReader
+from .CorpusReaders import VerbValencyReader
+from .CorpusReaders import WikipediaReader
+from .DependencyParser import DependencyParser
+from .DependencyParser import MaltParser
+from .DependencyParser import TurboParser
+from .InformalNormalizer import InformalLemmatizer
+from .InformalNormalizer import InformalNormalizer
+from .Lemmatizer import Conjugation
 from .Lemmatizer import Lemmatizer
-from .SequenceTagger import SequenceTagger, IOBTagger
-from .POSTagger import POSTagger, StanfordPOSTagger
-from .Chunker import Chunker, RuleBasedChunker, tree2brackets
-from .DependencyParser import DependencyParser, MaltParser, TurboParser
+from .Normalizer import Normalizer
+from .POSTagger import POSTagger
+from .POSTagger import StanfordPOSTagger
+from .SentenceTokenizer import SentenceTokenizer
+from .SequenceTagger import IOBTagger
+from .SequenceTagger import SequenceTagger
+from .Stemmer import Stemmer
+from .TokenSplitter import TokenSplitter
+from .utils import stopwords_list
+from .utils import words_list
+from .WordTokenizer import WordTokenizer
 
 
-from .utils import words_list, stopwords_list
-
-
-def sent_tokenize(text):
+def sent_tokenize(text: str):
     if not hasattr(sent_tokenize, "tokenizer"):
         sent_tokenize.tokenizer = SentenceTokenizer()
     return sent_tokenize.tokenizer.tokenize(text)

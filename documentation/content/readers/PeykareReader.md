@@ -1,1 +1,1 @@
-::: hazm.PeykareReader
+::: hazm.CorpusReaders.PeykareReader

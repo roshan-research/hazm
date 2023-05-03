@@ -1,1 +1,1 @@
-::: hazm.TreebankReader
+::: hazm.CorpusReaders.TreebankReader

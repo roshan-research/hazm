@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ دِگَربیان است.
 
 [پیکرهٔ
@@ -14,41 +12,50 @@
 
 """
 
-from __future__ import unicode_literals, print_function
+
 import os
+import sys
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import Tuple
 from xml.dom import minidom
 
 
 class DegarbayanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ دگربیان است.
-    
+
     Args:
-        root (str): مسیر فولدر حاوی فایل‌های پیکره
-        corpus_file (str, optional): فایل اطلاعات پیکره.
+        root مسیر فولدر حاوی فایل‌های پیکره
+        corpus_file: فایل اطلاعات پیکره.
             در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
-        judge_type (str, optional): این پارامتر دارای دو مقدار `three_class` و `two_class` است.
+        judge_type: این پارامتر دارای دو مقدار `three_class` و `two_class` است.
             در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
             ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
             `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
-        version (float, optional): شمارهٔ نسخهٔ پیکره
-    
+        version: شمارهٔ نسخهٔ پیکره
+
     """
 
     def __init__(
-        self, root, corpus_file="CorpusPair.xml", judge_type="three_class", version=1.0
-    ):
+        self,
+        root: str,
+        corpus_file: str = "CorpusPair.xml",
+        judge_type: str = "three_class",
+        version: float = 1.0,
+    ) -> None:
         self._root = root
         self._corpus_file = corpus_file
         self._judge_type = judge_type
         if judge_type != "three_class" and judge_type != "two_class":
             self._judge_type = "three_class"
 
-    def docs(self):
+    def docs(self) -> Iterator[Dict[str, Any]]:
         """اسناد موجود در پیکره را برمی‌گرداند.
-        
+
         Yields:
-            (Dict): سند بعدی.
-        
+            سند بعدی.
+
         """
 
         def judge_number_to_text(judge):
@@ -64,52 +71,53 @@ class DegarbayanReader:
             try:
                 elements = minidom.parse(filename)
                 for element in elements.getElementsByTagName("Pair"):
-                    pair = {}
-                    pair["id"] = (
-                        element.getElementsByTagName("PairId")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["news_source1"] = (
-                        element.getElementsByTagName("NewsSource1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["news_source2"] = (
-                        element.getElementsByTagName("NewsSource2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["news_id1"] = (
-                        element.getElementsByTagName("NewsId1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["news_id2"] = (
-                        element.getElementsByTagName("NewsId2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["sentence1"] = (
-                        element.getElementsByTagName("Sentence1")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["sentence2"] = (
-                        element.getElementsByTagName("Sentence2")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["method_type"] = (
-                        element.getElementsByTagName("MethodType")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
-                    pair["judge"] = judge_number_to_text(
-                        element.getElementsByTagName("judge")[0]
-                        .childNodes[0]
-                        .data.strip()
-                    )
+                    pair = {
+                        "id": (
+                            element.getElementsByTagName("PairId")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_source1": (
+                            element.getElementsByTagName("NewsSource1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_source2": (
+                            element.getElementsByTagName("NewsSource2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_id1": (
+                            element.getElementsByTagName("NewsId1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "news_id2": (
+                            element.getElementsByTagName("NewsId2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "sentence1": (
+                            element.getElementsByTagName("Sentence1")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "sentence2": (
+                            element.getElementsByTagName("Sentence2")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "method_type": (
+                            element.getElementsByTagName("MethodType")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                        "judge": judge_number_to_text(
+                            element.getElementsByTagName("judge")[0]
+                            .childNodes[0]
+                            .data.strip()
+                        ),
+                    }
                     yield pair
 
             except Exception as e:
@@ -118,17 +126,17 @@ class DegarbayanReader:
             print("error in reading file", filename, e, file=sys.stderr)
             raise FileNotFoundError("error in reading file", filename)
 
-    def pairs(self):
+    def pairs(self) -> Iterator[Tuple[str, str, str]]:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
-        
+
         Examples:
             >>> degarbayan = DegarbayanReader(root='corpora/degarbayan')
             >>> next(degarbayan.pairs())
             ('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')
-        
+
         Yields:
-            (Tuple(str,str,str)): `متن دگربیان بعدی در قالب یک `(متن اصلی، شکل دگربیان، برچسب).
-        
+            `متن دگربیان بعدی در قالب یک `(متن اصلی، شکل دگربیان، برچسب).
+
         """
         for pair in self.docs():
             yield pair["sentence1"], pair["sentence2"], pair["judge"]

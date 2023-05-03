@@ -1,12 +1,10 @@
-# coding: utf-8
-
 """این ماژول شامل توابعی برای استخراج متن به‌شکل تمیز از دیتابیس خام ویکی‌پدیا
 است.
 
 """
 
 
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # =============================================================================
@@ -42,6 +40,23 @@
 #
 # =============================================================================
 
+import argparse
+import bz2
+import cgi
+import fileinput
+import json
+import logging
+import os.path
+import re  # TODO use regex when it will be standard
+import sys
+import time
+from io import StringIO
+from multiprocessing import Process
+from multiprocessing import Queue
+from multiprocessing import Value
+from multiprocessing import cpu_count
+from timeit import default_timer
+
 """Wikipedia Extractor:
 Extracts and cleans text from a Wikipedia database dump and stores output in a
 number of files of similar size in a given directory.
@@ -62,52 +77,35 @@ collecting template definitions.
 
 """
 
-from __future__ import unicode_literals, division
-
-import sys
-import argparse
-import bz2
-import codecs
-import cgi
-import fileinput
-import logging
-import os.path
-import re  # TODO use regex when it will be standard
-import time
-import json
-from io import StringIO
-from multiprocessing import Queue, Process, Value, cpu_count
-from timeit import default_timer
-
 
 PY2 = sys.version_info[0] == 2
 # Python 2.7 compatibiity
 if PY2:
-    from urllib import quote
-    from htmlentitydefs import name2codepoint
-    from itertools import izip as zip, izip_longest as zip_longest
+    from html.entities import name2codepoint
+    from itertools import zip_longest as zip_longest
+    from urllib.parse import quote
 
     range = xrange  # Use Python 3 equivalent
-    chr = unichr  # Use Python 3 equivalent
-    text_type = unicode
+    chr = chr  # Use Python 3 equivalent
+    text_type = str
 
-    class SimpleNamespace(object):
+    class SimpleNamespace:
         def __init__(self, **kwargs):
             self.__dict__.update(kwargs)
 
         def __repr__(self):
             keys = sorted(self.__dict__)
-            items = ("{}={!r}".format(k, self.__dict__[k]) for k in keys)
+            items = (f"{k}={self.__dict__[k]!r}" for k in keys)
             return "{}({})".format(type(self).__name__, ", ".join(items))
 
         def __eq__(self, other):
             return self.__dict__ == other.__dict__
 
 else:
-    from urllib.parse import quote
     from html.entities import name2codepoint
     from itertools import zip_longest
     from types import SimpleNamespace
+    from urllib.parse import quote
 
     text_type = str
 
@@ -221,11 +219,11 @@ options = SimpleNamespace(
 
 ##
 # Keys for Template and Module namespaces
-templateKeys = set(["10", "828"])
+templateKeys = {"10", "828"}
 
 ##
 # Regex for identifying disambig pages
-filter_disambig_page_pattern = re.compile("{{disambig(uation)?(\|[^}]*)?}}")
+filter_disambig_page_pattern = re.compile(r"{{disambig(uation)?(\|[^}]*)?}}")
 
 
 ##
@@ -242,7 +240,7 @@ def keepPage(ns, page):
 
 
 def get_url(uid):
-    return "%s?curid=%s" % (options.urlbase, uid)
+    return f"{options.urlbase}?curid={uid}"
 
 
 # =========================================================================
@@ -287,9 +285,7 @@ placeholder_tags = {"math": "formula", "code": "codice"}
 
 
 def normalizeTitle(title):
-    """Normalize title
-    
-    """
+    """Normalize title"""
     # remove leading/trailing whitespace and underscores
     title = title.strip(" _")
     # replace sequences of whitespace and underscore chars with a single space
@@ -329,10 +325,10 @@ def normalizeTitle(title):
 def unescape(text):
     """
     Removes HTML or XML character references and entities from a text string.
-    
+
     :param text The HTML (or XML) source text.
     :return The plain text, as a Unicode string, if necessary.
-    
+
     """
 
     def fixup(m):
@@ -349,7 +345,7 @@ def unescape(text):
         except:
             return text  # leave as is
 
-    return re.sub("&#?(\w+);", fixup, text)
+    return re.sub(r"&#?(\w+);", fixup, text)
 
 
 # Match HTML comments
@@ -379,12 +375,12 @@ selfClosing_tag_patterns = [
 placeholder_tag_patterns = [
     (
         re.compile(
-            r"<\s*%s(\s*| [^>]+?)>.*?<\s*/\s*%s\s*>" % (tag, tag),
+            rf"<\s*{tag}(\s*| [^>]+?)>.*?<\s*/\s*{tag}\s*>",
             re.DOTALL | re.IGNORECASE,
         ),
         repl,
     )
-    for tag, repl in placeholder_tags.items()
+    for tag, repl in list(placeholder_tags.items())
 ]
 
 # Match preformatted lines
@@ -414,7 +410,7 @@ dots = re.compile(r"\.{4,}")
 class Template(list):
     """
     A Template is a list of TemplateText or TemplateArgs
-    
+
     """
 
     @classmethod
@@ -461,25 +457,23 @@ class Template(list):
 
 
 class TemplateText(text_type):
-    """Fixed text of template
-    
-    """
+    """Fixed text of template"""
 
     def subst(self, params, extractor, depth):
         return self
 
 
-class TemplateArg(object):
+class TemplateArg:
     """
     parameter to a template.
     Has a name and a default value, both of which are Templates.
-    
+
     """
 
     def __init__(self, parameter):
         """
         :param parameter: the parts of a tplarg.
-        
+
         """
         # the parameter name itself might contain templates, e.g.:
         #   appointe{{#if:{{{appointer14|}}}|r|d}}14|
@@ -499,7 +493,7 @@ class TemplateArg(object):
 
     def __str__(self):
         if self.default:
-            return "{{{%s|%s}}}" % (self.name, self.default)
+            return f"{{{{{{{self.name}|{self.default}}}}}}}"
         else:
             return "{{{%s}}}" % self.name
 
@@ -508,7 +502,7 @@ class TemplateArg(object):
         Substitute value for this argument from dict :param params:
         Use :param extractor: to evaluate expressions for name and default.
         Limit substitution to the maximun :param depth:.
-        
+
         """
         # the parameter name itself might contain templates, e.g.:
         # appointe{{#if:{{{appointer14|}}}|r|d}}14|
@@ -526,7 +520,7 @@ class TemplateArg(object):
         return res
 
 
-class Frame(object):
+class Frame:
     def __init__(self, title="", args=[], prev=None):
         self.title = title
         self.args = args
@@ -545,7 +539,7 @@ class Frame(object):
         while prev:
             if res:
                 res += ", "
-            res += "(%s, %s)" % (prev.title, prev.args)
+            res += f"({prev.title}, {prev.args})"
             prev = prev.prev
         return "<Frame [" + res + "]>"
 
@@ -555,10 +549,10 @@ class Frame(object):
 substWords = "subst:|safesubst:"
 
 
-class Extractor(object):
+class Extractor:
     """
     An extraction task on a article.
-    
+
     """
 
     def __init__(self, id, revid, title, lines):
@@ -566,7 +560,7 @@ class Extractor(object):
         :param id: id of page.
         :param title: tutle of page.
         :param lines: a list of lines.
-        
+
         """
         self.id = id
         self.revid = revid
@@ -583,7 +577,7 @@ class Extractor(object):
         """
         :param out: a memory file
         :param text: the text of the page
-        
+
         """
         url = get_url(self.id)
         if options.write_json:
@@ -604,14 +598,14 @@ class Extractor(object):
             out.write("\n")
         else:
             if options.print_revision:
-                header = '<doc id="%s" revid="%s" url="%s" title="%s">\n' % (
+                header = '<doc id="{}" revid="{}" url="{}" title="{}">\n'.format(
                     self.id,
                     self.revid,
                     url,
                     self.title,
                 )
             else:
-                header = '<doc id="%s" url="%s" title="%s">\n' % (
+                header = '<doc id="{}" url="{}" title="{}">\n'.format(
                     self.id,
                     url,
                     self.title,
@@ -630,7 +624,7 @@ class Extractor(object):
     def extract(self, out):
         """
         :param out: a memory file.
-        
+
         """
         # logging.info('%s\t%s', self.id, self.title)
 
@@ -698,14 +692,14 @@ class Extractor(object):
                 "Template errors in article '%s' (%s): title(%d) recursion(%d, %d, %d)",
                 self.title,
                 self.id,
-                *errs
+                *errs,
             )
 
     def transform(self, wikitext):
         """
         Transforms wiki markup.
         @see https://www.mediawiki.org/wiki/Help:Formatting
-        
+
         """
         # look for matching <nowiki>...</nowiki>
         res = ""
@@ -721,9 +715,7 @@ class Extractor(object):
         return res
 
     def transform1(self, text):
-        """Transform text not containing <nowiki>
-        
-        """
+        """Transform text not containing <nowiki>"""
         if options.expand_templates:
             # expand templates
             # See: http://www.mediawiki.org/wiki/Help:Templates
@@ -790,7 +782,7 @@ class Extractor(object):
     def clean(self, text):
         """
         Removes irrelevant parts from :param: text.
-        
+
         """
 
         # Collect spans
@@ -837,8 +829,8 @@ class Extractor(object):
         text = text.replace("\t", " ")
         text = spaces.sub(" ", text)
         text = dots.sub("...", text)
-        text = re.sub(" (,:\.\)\]»)", r"\1", text)
-        text = re.sub("(\[\(«) ", r"\1", text)
+        text = re.sub(r" (,:\.\)\]»)", r"\1", text)
+        text = re.sub(r"(\[\(«) ", r"\1", text)
         text = re.sub(
             r"\n\W+?\n", "\n", text, flags=re.U
         )  # lines with only punctuations
@@ -871,13 +863,13 @@ class Extractor(object):
     def expand(self, wikitext):
         """
         :param wikitext: the text to be expanded.
-        
+
         Templates are frequently nested. Occasionally, parsing mistakes may
         cause template insertion to enter an infinite loop, for instance when
         trying to instantiate Template:Country
-        
+
         {{country_{{{1}}}|{{{2}}}|{{{2}}}|size={{{size|}}}|name={{{name|}}}}}
-        
+
         which is repeatedly trying to insert template 'country_', which is
         again resolved to Template:Country. The straightforward solution of
         keeping track of templates that were already inserted for the current
@@ -885,7 +877,7 @@ class Extractor(object):
         more than once, with different parameters in different parts of the
         article.  Therefore, we limit the number of iterations of nested
         template inclusion.
-        
+
         """
         # Test template expansion at:
         # https://en.wikipedia.org/wiki/Special:ExpandTemplates
@@ -912,7 +904,7 @@ class Extractor(object):
         """
         Build a dictionary with positional or name key to expanded parameters.
         :param parameters: the parts[1:] of a template, i.e. all except the title.
-        
+
         """
         templateParams = {}
 
@@ -984,30 +976,30 @@ class Extractor(object):
     def expandTemplate(self, body):
         """Expands template invocation.
         :param body: the parts of a template.
-        
+
         :see http://meta.wikimedia.org/wiki/Help:Expansion for an explanation
         of the process.
-        
+
         See in particular: Expansion of names and values
         http://meta.wikimedia.org/wiki/Help:Expansion#Expansion_of_names_and_values
-        
+
         For most parser functions all names and values are expanded,
         regardless of what is relevant for the result. The branching functions
         (#if, #ifeq, #iferror, #ifexist, #ifexpr, #switch) are exceptions.
-        
+
         All names in a template call are expanded, and the titles of the
         tplargs in the template body, after which it is determined which
         values must be expanded, and for which tplargs in the template body
         the first part (default) [sic in the original doc page].
-        
+
         In the case of a tplarg, any parts beyond the first are never
         expanded.  The possible name and the value of the first part is
         expanded if the title does not match a name in the template call.
-        
+
         :see code for braceSubstitution at
         https://doc.wikimedia.org/mediawiki-
         core/master/php/html/Parser_8php_source.html#3397:
-        
+
         """
 
         # template        = "{{" parts "}}"
@@ -1162,10 +1154,10 @@ class Extractor(object):
 def splitParts(paramsList):
     """
     :param paramsList: the parts of a template or tplarg.
-    
+
     Split template parameters at the separator "|".
     separator "=".
-    
+
     Template parameters often contain URLs, internal links, text or even
     template expressions, since we evaluate templates outside in.
     This is required for cases like:
@@ -1173,7 +1165,7 @@ def splitParts(paramsList):
     Parameters are separated by "|" symbols. However, we
     cannot simply split the string on "|" symbols, since these
     also appear inside templates and internal links, e.g.
-    
+
     {{if:|
     |{{#if:the president|
     |{{#if:|
@@ -1181,10 +1173,10 @@ def splitParts(paramsList):
     }}
     }}
     }}
-    
+
     We split parts at the "|" symbols that are not inside any pair
     {{{...}}}, {{...}}, [[...]], {|...|}.
-    
+
     """
 
     # Must consider '[' as normal in expansion of Template:EMedicine2:
@@ -1236,7 +1228,7 @@ def splitParts(paramsList):
 def findMatchingBraces(text, ldelim=0):
     """
     :param ldelim: number of braces to match. 0 means match [[]], {{}} and {{{}}}.
-    
+
     """
     # Parsing is done with respect to pairs of double braces {{..}} delimiting
     # a template, and pairs of triple braces {{{..}}} delimiting a tplarg.
@@ -1277,8 +1269,8 @@ def findMatchingBraces(text, ldelim=0):
         reOpen = re.compile("[{]{%d,}" % ldelim)  # at least ldelim
         reNext = re.compile("[{]{2,}|}{2,}")  # at least 2
     else:
-        reOpen = re.compile("{{2,}|\[{2,}")
-        reNext = re.compile("{{2,}|}{2,}|\[{2,}|]{2,}")  # at least 2
+        reOpen = re.compile(r"{{2,}|\[{2,}")
+        reNext = re.compile(r"{{2,}|}{2,}|\[{2,}|]{2,}")  # at least 2
 
     cur = 0
     while True:
@@ -1351,7 +1343,7 @@ def findBalanced(text, openDelim=["[["], closeDelim=["]]"]):
     :param closeDelim: as closing delimiters.
     :return: an iterator producing pairs (start, end) of start and end
     positions in text containing a balanced expression.
-    
+
     """
     openPat = "|".join([re.escape(x) for x in openDelim])
     # pattern for delimiters expected after each opening delimiter
@@ -1400,15 +1392,15 @@ def findBalanced(text, openDelim=["[["], closeDelim=["]]"]):
 def if_empty(*rest):
     """
     This implements If_empty from English Wikipedia module:
-    
+
     <title>Module:If empty</title>
     <ns>828</ns>
     <text>local p = {}
-    
+
     function p.main(frame)
     local args = require('Module:Arguments').getArgs(frame, {wrappers =
     'Template:If empty', removeBlanks = false})
-    
+
     -- For backwards compatibility reasons, the first 8 parameters can be unset
     instead of being blank,
     -- even though there's really no legitimate use case for this. At some point,
@@ -1420,7 +1412,7 @@ def if_empty(*rest):
     lowestNil = i
     end
     end
-    
+
     for k,v in ipairs(args) do
     if v ~= '' then
     if lowestNil &lt; k then
@@ -1437,9 +1429,9 @@ def if_empty(*rest):
     end
     end
     end
-    
+
     return p   </text>
-    
+
     """
     for arg in rest:
         if arg:
@@ -1457,7 +1449,7 @@ def functionParams(args, vars):
     Build a dictionary of var/value from :param: args.
     Parameters can be either named or unnamed. In the latter case, their
     name is taken fron :param: vars.
-    
+
     """
     params = {}
     index = 1
@@ -1555,9 +1547,7 @@ def string_rep(args):
 
 
 def roman_main(args):
-    """Convert first arg to roman numeral if <= 5000 else :return: second arg.
-    
-    """
+    """Convert first arg to roman numeral if <= 5000 else :return: second arg."""
     num = int(float(args.get("1")))
 
     # Return a message for numbers too big to be expressed in Roman numerals.
@@ -1565,9 +1555,7 @@ def roman_main(args):
         return args.get("2", "N/A")
 
     def toRoman(n, romanNumeralMap):
-        """convert integer to Roman numeral
-        
-        """
+        """convert integer to Roman numeral"""
         result = ""
         for integer, numeral in romanNumeralMap:
             while n >= integer:
@@ -1618,13 +1606,13 @@ modules = {
 # variables
 
 
-class MagicWords(object):
+class MagicWords:
     """
     One copy in each Extractor.
-    
+
     @see https://doc.wikimedia.org/mediawiki-
     core/master/php/MagicWord_8php_source.html
-    
+
     """
 
     names = [
@@ -1747,7 +1735,7 @@ magicWordsRE = re.compile("|".join(MagicWords.switches))
 def ucfirst(string):
     """:return: a string with just its first character uppercase
     We can't use title() since it coverts all words.
-    
+
     """
     if string:
         return string[0].upper() + string[1:]
@@ -1756,9 +1744,7 @@ def ucfirst(string):
 
 
 def lcfirst(string):
-    """:return: a string with its first character lowercase
-    
-    """
+    """:return: a string with its first character lowercase"""
     if string:
         if len(string) > 1:
             return string[0].lower() + string[1:]
@@ -1772,7 +1758,7 @@ def fullyQualifiedTemplateTitle(templateTitle):
     """
     Determine the namespace of the page being included through the template
     mechanism
-    
+
     """
     if templateTitle.startswith(":"):
         # Leading colon by itself implies main namespace, so strip this colon
@@ -1816,7 +1802,7 @@ class Infix:
     """Infix operators.
     The calling sequence for the infix is:
     x |op| y
-    
+
     """
 
     def __init__(self, function):
@@ -1840,27 +1826,23 @@ class Infix:
 
 ROUND = Infix(lambda x, y: round(x, y))
 
-from math import (
-    floor,
-    ceil,
-    pi,
-    e,
-    trunc,
-    exp,
-    log as ln,
-    sin,
-    cos,
-    tan,
-    asin,
-    acos,
-    atan,
-)
+from math import acos
+from math import asin
+from math import atan
+from math import ceil
+from math import cos
+from math import e
+from math import exp
+from math import floor
+from math import log as ln
+from math import pi
+from math import sin
+from math import tan
+from math import trunc
 
 
 def sharp_expr(extr, expr):
-    """Tries converting a lua expr into a Python expr.
-    
-    """
+    """Tries converting a lua expr into a Python expr."""
     try:
         expr = extr.expand(expr)
         expr = re.sub("(?<![!<>])=", "==", expr)  # negative lookbehind
@@ -1906,7 +1888,7 @@ def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
 
 def sharp_iferror(extr, test, then="", Else=None, *args):
     if re.match(
-        '<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"',
+        r'<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"',
         test,
     ):
         return extr.expand(then.strip())
@@ -2001,10 +1983,10 @@ def callParserFunction(functionName, args, extractor):
     Parser functions have similar syntax as templates, except that
     the first argument is everything after the first colon.
     :return: the result of the invocation, None in case of failure.
-    
+
     :param: args not yet expanded (see branching functions).
     https://www.mediawiki.org/wiki/Help:Extension:ParserFunctions
-    
+
     """
 
     try:
@@ -2069,7 +2051,7 @@ def define_template(title, page):
     Adds a template defined in the :param page:.
     @see https://en.wikipedia.org/wiki/Help:Template#Noinclude.2C_includeonly.2C_an
     d_onlyinclude
-    
+
     """
     # title = normalizeTitle(title)
 
@@ -2078,7 +2060,7 @@ def define_template(title, page):
         return
 
     # check for redirects
-    m = re.match("#REDIRECT.*?\[\[([^\]]*)]]", page[0], re.IGNORECASE)
+    m = re.match(r"#REDIRECT.*?\[\[([^\]]*)]]", page[0], re.IGNORECASE)
     if m:
         options.redirects[title] = m.group(1)  # normalizeTitle(m.group(1))
         return
@@ -2123,7 +2105,7 @@ def define_template(title, page):
 def dropNested(text, openDelim, closeDelim):
     """
     A matching function for nested expressions, e.g. namespaces and tables.
-    
+
     """
     openRE = re.compile(openDelim, re.IGNORECASE)
     closeRE = re.compile(closeDelim, re.IGNORECASE)
@@ -2177,7 +2159,7 @@ def dropNested(text, openDelim, closeDelim):
 def dropSpans(spans, text):
     """
     Drop from text the blocks identified in :param spans:, possibly nested.
-    
+
     """
     spans.sort()
     res = ""
@@ -2202,11 +2184,11 @@ def replaceInternalLinks(text):
     """
     Replaces internal links of the form:
     [[title |...|label]]trail
-    
+
     with title concatenated with trail, when present, e.g. 's' for plural.
-    
+
     See https://www.mediawiki.org/wiki/Help:Links#Internal_links
-    
+
     """
     # call this after removal of external links, so we need not worry about
     # triple closing ]]].
@@ -2516,7 +2498,7 @@ def makeInternalLink(title, label):
         if colon2 > 1 and title[colon + 1 : colon2] not in options.acceptedNamespaces:
             return ""
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(title.encode("utf-8")), label)
+        return '<a href="{}">{}</a>'.format(quote(title.encode("utf-8")), label)
     else:
         return label
 
@@ -2566,7 +2548,7 @@ wgUrlProtocols = [
 EXT_LINK_URL_CLASS = r'[^][<>"\x00-\x20\x7F\s]'
 ANCHOR_CLASS = r"[^][\x00-\x08\x0a-\x1F]"
 ExtLinkBracketedRegex = re.compile(
-    "\[(((?i)"
+    r"\[(((?i)"
     + "|".join(wgUrlProtocols)
     + ")"
     + EXT_LINK_URL_CLASS
@@ -2593,7 +2575,7 @@ def replaceExternalLinks(text):
     """
     https://www.mediawiki.org/wiki/Help:Links#External_links
     [URL anchor text]
-    
+
     """
     s = ""
     cur = 0
@@ -2628,18 +2610,16 @@ def replaceExternalLinks(text):
 
 
 def makeExternalLink(url, anchor):
-    """Function applied to wikiLinks
-    
-    """
+    """Function applied to wikiLinks"""
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(url.encode("utf-8")), anchor)
+        return '<a href="{}">{}</a>'.format(quote(url.encode("utf-8")), anchor)
     else:
         return anchor
 
 
 def makeExternalImage(url, alt=""):
     if options.keepLinks:
-        return '<img src="%s" alt="%s">' % (url, alt)
+        return f'<img src="{url}" alt="{alt}">'
     else:
         return alt
 
@@ -2647,7 +2627,7 @@ def makeExternalImage(url, alt=""):
 # ----------------------------------------------------------------------
 
 # match tail after wikilink
-tailRE = re.compile("\w+")
+tailRE = re.compile(r"\w+")
 
 syntaxhighlight = re.compile(
     "&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;", re.DOTALL
@@ -2669,7 +2649,7 @@ listItem = {
 def compact(text):
     """Deal with headers, lists, empty sections, residuals of tables.
     :param text: convert to HTML.
-    
+
     """
 
     page = []  # list of paragraph
@@ -2806,10 +2786,10 @@ def handle_unicode(entity):
 # Output
 
 
-class NextFile(object):
+class NextFile:
     """
     Synchronous generation of next available file name.
-    
+
     """
 
     filesPerDir = 100
@@ -2841,10 +2821,10 @@ class NextFile(object):
         return "%s/wiki_%02d" % (self._dirname(), self.file_index)
 
 
-class OutputSplitter(object):
+class OutputSplitter:
     """
     File-like object, that splits output to multiple files of a given max size.
-    
+
     """
 
     def __init__(self, nextFile, max_file_size=0, compress=True):
@@ -2853,7 +2833,7 @@ class OutputSplitter(object):
         to use.
         :param max_file_size: the maximum size of each file.
         :para compress: whether to write data with bzip compression.
-        
+
         """
         self.nextFile = nextFile
         self.compress = compress
@@ -2891,13 +2871,13 @@ def load_templates(file, output_file=None):
     """
     Load templates from :param file:.
     :param output_file: file where to save templates and modules.
-    
+
     """
     options.templatePrefix = options.templateNamespace + ":"
     options.modulePrefix = options.moduleNamespace + ":"
 
     if output_file:
-        output = codecs.open(output_file, "wb", "utf-8")
+        output = open(output_file, "wb", "utf-8")
     for page_count, page_data in enumerate(pages_from(file)):
         id, revid, title, ns, page = page_data
         if not output_file and (
@@ -2938,7 +2918,7 @@ def pages_from(input):
     """
     Scans input extracting pages.
     :return: (id, revid, title, namespace key, page), page is a list of lines.
-    
+
     """
     # we collect individual lines, since str.join() is significantly faster
     # than concatenation
@@ -3011,7 +2991,7 @@ def process_dump(
     file)
     :param file_compress: whether to compress files with bzip.
     :param process_count: number of extraction processes to spawn.
-    
+
     """
 
     if input_file == "-":
@@ -3180,7 +3160,7 @@ def extract_process(opts, i, jobs_queue, output_queue):
     :param i: process id.
     :param jobs_queue: where to get jobs.
     :param output_queue: where to queue extracted text for output.
-    
+
     """
 
     global options
@@ -3225,7 +3205,7 @@ def reduce_process(
     :param out_file: filename where to print.
     :param file_size: max file size.
     :param file_compress: whether to compress output.
-    
+
     """
 
     global options

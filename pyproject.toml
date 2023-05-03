@@ -1,0 +1,65 @@
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[project]
+name = "hazm"
+description = "Persian NLP Toolkit"
+version = "0.0.9"
+authors = [{ name = "Alireza Nourian", email = "az.nourian@gmail.com" }]
+license = "MIT"
+requires-python = ">=3.6"
+readme = "README.md"
+keywords = ["nlp", "persian nlp", "persian"]
+dynamic = ["version"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Text Processing",
+    "Natural Language :: Persian",
+]
+dependencies = [
+    "nltk>=3.6.7",
+    "gensim>=4.1.2",
+    "numpy>=1.19.5",
+    "python-crfsuite>=0.9.9",
+]
+
+[project.optional-dependencies]
+Documentation = [
+    "mkdocs>=1.4.2",
+    "mkdocstrings-python>=0.9.0",
+    "mkdocstrings>=0.21.2",
+    "mkdocs-material>=9.1.9",
+    "mkdocs-glightbox>=0.3.4",
+    "pymdown-extensions>=9.11",
+]
+
+
+[project.urls]
+Homepage = "https://roshan-ai.ir/hazm/"
+Demo = "https://www.roshan-ai.ir/hazm/demo/"
+Documentation = "https://roshan-ai.ir/hazm/docs/"
+Repository = "https://github.com/roshan-research/hazm/"
+Changelog = "https://github.com/roshan-research/hazm/blob/master/CHANGELOG.md"
+Issues = "https://github.com/roshan-research/hazm/issues"
+JoinUs = "https://www.roshan-ai.ir/join-us/"
+
+
+[tool.setuptools.package-data]
+"hazm" = ["data/*.dat"]
+
+[tool.isort]
+profile = 'black'
+line_length = 120
+not_skip = "__init__.py"
+force_single_line = true
+balanced_wrapping = true
+
+[tools.black]
+line-length = 120

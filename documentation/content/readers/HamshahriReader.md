@@ -1,1 +1,1 @@
-::: hazm.HamshahriReader
+::: hazm.CorpusReaders.HamshahriReader

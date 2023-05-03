@@ -1,1 +1,1 @@
-::: hazm.QuranCorpusReader
+::: hazm.CorpusReaders.QuranCorpusReader

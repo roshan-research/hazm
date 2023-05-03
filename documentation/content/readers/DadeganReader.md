@@ -1,1 +1,1 @@
-::: hazm.DadeganReader
+::: hazm.CorpusReaders.DadeganReader

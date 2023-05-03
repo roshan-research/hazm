@@ -1,1 +1,1 @@
-::: hazm.SentiPersReader
+::: hazm.CorpusReaders.SentiPersReader

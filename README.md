@@ -1,9 +1,8 @@
 Hazm
 ====
 ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/tests.yml?branch=master)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/hazm)
+![PyPI - Downloads](https://img.shields.io/github/downloads/roshan-research/hazm/total)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
-![PyPI](https://img.shields.io/pypi/v/hazm)
 
 Python library for digesting Persian text.
 + Text cleaning
@@ -14,7 +13,7 @@ Python library for digesting Persian text.
 + Dependency parser
 + Interfaces for Persian corpora
 + [NLTK](http://nltk.org/) compatible
-+ Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8 support
++ Python 3.6, 3.7, 3.8, 3.9, 3.10 and 3.11 support
 
 ## Documentation
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
@@ -85,6 +84,12 @@ Note: These are not official versions of hazm, not uptodate on functionality and
 
 + [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java port of Hazm
 + [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# port of Hazm
+
+## Contribution
+
+We welcome and appreciate any contributions to this repo, such as bug reports, feature requests, code improvements, documentation updates, etc. Please follow the [coding guideline](./CODING.md) when contributing. You can open an issue, fork the repo, write your code, create a pull request and wait for a review and feedback. Thank you for your interest and support in this repo! 
+
+We look forward to collaborating with you! 😊
 
 ## Thanks
 
