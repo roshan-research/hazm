@@ -70,3 +70,6 @@ Check out a more complete example [here]( https://sphinxcontrib-napoleon.readthe
 
 - Follow [pep8](https://peps.python.org/pep-0008/) coding guidline. The [persian version](https://pep8.ir/).
 
+- Config should be defined in `pyproject.toml` whenever possible. This way, all configuration and dependencies can be managed in one place, and the project can be made easier for others to contribute to.
+
+
