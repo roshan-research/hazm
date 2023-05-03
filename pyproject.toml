@@ -54,10 +54,6 @@ JoinUs = "https://www.roshan-ai.ir/join-us/"
 [tool.setuptools.package-data]
 "hazm" = ["data/*.dat"]
 
-[tool.pylama]
-format = "pylint"
-ignore = "E501,W0611,E722,C901,E741,E266"
-
 [tool.isort]
 profile = 'black'
 line_length = 120
