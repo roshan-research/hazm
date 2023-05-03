@@ -4,8 +4,8 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "hazm"
-description = "Python library for digesting Persian text."
-version = "0.8.1"
+description = "Persian NLP Toolkit"
+version = "0.0.9"
 authors = [{ name = "Alireza Nourian", email = "az.nourian@gmail.com" }]
 license = "MIT"
 requires-python = ">=3.6"
@@ -25,7 +25,6 @@ classifiers = [
 ]
 dependencies = [
     "nltk>=3.6.7",
-    "libwapiti>=0.2.1; platform_system!='Windows'",
     "gensim>=4.1.2",
     "numpy>=1.19.5",
     "python-crfsuite>=0.9.9",
@@ -33,12 +32,12 @@ dependencies = [
 
 [project.optional-dependencies]
 Documentation = [
-    "mkdocs==1.4.2",
-    "mkdocstrings-python==0.9.0",
-    "mkdocstrings==0.21.2",
-    "mkdocs-material==9.1.9",
-    "mkdocs-glightbox==0.3.4",
-    "pymdown-extensions==9.11",
+    "mkdocs>=1.4.2",
+    "mkdocstrings-python>=0.9.0",
+    "mkdocstrings>=0.21.2",
+    "mkdocs-material>=9.1.9",
+    "mkdocs-glightbox>=0.3.4",
+    "pymdown-extensions>=9.11",
 ]
 
 
