@@ -13,13 +13,12 @@ from hazm import sent_tokenize
 from hazm import word_tokenize
 
 grammers = [
-"""
+    """
 NP:
         {<NOUN,EZ>?<NOUN.*>}    # Noun(s) + Noun(optional)
 
 """,
-
-"""
+    """
 NP:
         {<NOUN.*><ADJ.*>?}    # Noun(s) + Adjective(optional)
 

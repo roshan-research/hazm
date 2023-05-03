@@ -11,7 +11,6 @@ from nltk.chunk import tree2conlltags
 
 from .POSTagger import POSTagger
 from .SequenceTagger import IOBTagger
-from .POSTagger import POSTagger
 
 
 def tree2brackets(tree):
@@ -156,7 +155,6 @@ class Chunker(IOBTagger):
         return conlltags2tree(super().tag(sentence))
 
     def parse_sents(self, sentences):
-        
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
 
         Args:
