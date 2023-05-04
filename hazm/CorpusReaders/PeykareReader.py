@@ -159,8 +159,8 @@ def coarse_pos_u(tags: List[str], word: str) -> List[str]:
         if old_pos == "CONJ" and word in sconj_list:
             return "SCONJ"
         if old_pos == "NUM" and word in num_adj_list:
-            return "ADJ"
-        return map_pos_to_upos[old_pos]
+            return "ADJ" + (",EZ" if "EZ" in tags else "")
+        return map_pos_to_upos[old_pos] + (",EZ" if "EZ" in tags else "")
     except:
         return "NOUN"
 
@@ -199,7 +199,7 @@ def coarse_pos_e(tags: List[str], word: str) -> List[str]:
                 "INT",
                 "RES",
             }
-        )[0] + ("e" if "EZ" in tags else "")
+        )[0] + (",EZ" if "EZ" in tags else "")
     except:
         return "N"
 
@@ -274,7 +274,7 @@ class PeykareReader:
 
         """
 
-        for root, dirs, files in os.walk(self._root):
+        for root, _, files in os.walk(self._root):
             for name in sorted(files):
                 with codecs.open(
                     os.path.join(root, name), encoding="windows-1256"
