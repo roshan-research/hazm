@@ -4,7 +4,7 @@ Before you start development, open a new issue and discuss your idea with a team
 
 1. If you are not a team member, fork the repo and clone it to your local machine. If you are a team member, clone the repo directly without forking.
 
-2. Create a feature branch with this name format: `users/<username>/<description>`. For example: `users/ayub/migrate-py2-to-py3`.
+2. Create a feature branch, for example: `migrate-py2-to-py3`.
 
 3. Make and commit changes to your feature branch.
 
