@@ -24,7 +24,7 @@ Thank you for your contribution! 😍
 
 ## Rules
 
-1. Follow the pattern of what you already see in the code. This is our [coding style guide](./CODING.md).
+1. **Follow the pattern of what you already see in the code**. This is our [coding style guide](./CODING.md).
 
 2. **Make atomic commits**: each commit should contain a single logical change that can be easily understood and reverted if needed. Avoid making large or unrelated changes in one commit. If you find it difficult to come up with a brief and clear commit message, it could be a sign that your changes are too large or not related to each other. It's recommended to split them into smaller, logical chunks and make separate commits for better code management and collaboration.
 
