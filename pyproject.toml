@@ -63,3 +63,5 @@ balanced_wrapping = true
 
 [tools.black]
 line-length = 120
+
+[tool.pdm]
