@@ -14,6 +14,6 @@ jobs:
     - uses: pdm-project/setup-pdm@v3      
     - name: Publish to pypi
     # run: pdm publish -username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
-      run: pdm publish -u ${{ secrets.TESTPYPI_USERNAME }} -P ${{ secrets.TESTPYPI_PASSWORD }} --repository testpypi
+      run: pdm publish --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} --repository testpypi
     
       
