@@ -81,19 +81,19 @@ class Chunker(IOBTagger):
         tags = [[tag for _, tag in token] for token in tokens]
         return [
             [
-                self.features(words=word_tokens, pos_taggs=tag_tokens, index=index)
+                self.features(words=word_tokens, pos_tags=tag_tokens, index=index)
                 for index in range(len(word_tokens))
             ]
             for word_tokens, tag_tokens in zip(words, tags)
         ]
 
-    def features(self, words, pos_taggs, index):
+    def features(self, words, pos_tags, index):
         word_features = self.posTagger.features(words, index)
         word_features.update(
             {
-                "pos": pos_taggs[index],
-                "prev_pos": "" if index == 0 else pos_taggs[index - 1],
-                "next_pos": "" if index == len(pos_taggs) - 1 else pos_taggs[index + 1],
+                "pos": pos_tags[index],
+                "prev_pos": "" if index == 0 else pos_tags[index - 1],
+                "next_pos": "" if index == len(pos_tags) - 1 else pos_tags[index + 1],
             }
         )
         return word_features

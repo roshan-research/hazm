@@ -7,6 +7,41 @@ import time
 from pycrfsuite import Tagger
 from pycrfsuite import Trainer
 
+features = lambda sent, index: {'word': sent[index],
+               'is_first': index == 0,
+               'is_last': index == len(sent),
+               'is_num': sent[index].isdigit(),
+               'prev_word': sent[index - 1] if index != 0 else '',
+               'next_word': sent[index + 1] if index != len(sent)-1 else '',
+               # you can also customize your own features here...
+               }
+data_maker = lambda tokens: [
+            [features(sent, index) for index in range(len(sent))]
+            for sent in tokens
+            ]
+
+def iob_features(words, pos_tags, index):
+    word_features = features(words, index)
+    word_features.update(
+        {
+            "pos": pos_tags[index],
+            "prev_pos": "" if index == 0 else pos_tags[index - 1],
+            "next_pos": "" if index == len(pos_tags) - 1 else pos_tags[index + 1],
+        }
+    )
+    return word_features
+
+def iob_data_maker(tokens):
+    words = [[word for word, _ in token] for token in tokens]
+    tags = [[tag for _, tag in token] for token in tokens]
+    return [
+        [
+            iob_features(words=word_tokens, pos_taggs=tag_tokens, index=index)
+            for index in range(len(word_tokens))
+        ]
+        for word_tokens, tag_tokens in zip(words, tags)
+    ]
+
 
 class SequenceTagger:
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
@@ -18,7 +53,7 @@ class SequenceTagger:
 
     """
 
-    def __init__(self, model=None, data_maker=None):
+    def __init__(self, model=None, data_maker=data_maker):
         if model != None:
             self.load_model(model)
         else:
@@ -179,7 +214,7 @@ class SequenceTagger:
 class IOBTagger(SequenceTagger):
     """ """
 
-    def __init__(self, model=None, data_maker=None):
+    def __init__(self, model=None, data_maker=iob_data_maker):
         super().__init__(model, data_maker)
 
     def __IOB_format(self, tagged_data, chunk_tags):
