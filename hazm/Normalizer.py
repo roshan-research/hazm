@@ -7,8 +7,7 @@ import re
 from typing import List
 
 from .Lemmatizer import Lemmatizer
-from .utils import maketrans
-from .utils import regex_replace
+from .utils import maketrans, regex_replace
 from .WordTokenizer import WordTokenizer
 
 

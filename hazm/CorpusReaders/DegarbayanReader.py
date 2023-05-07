@@ -15,10 +15,7 @@
 
 import os
 import sys
-from typing import Any
-from typing import Dict
-from typing import Iterator
-from typing import Tuple
+from typing import Any, Dict, Iterator, Tuple
 from xml.dom import minidom
 
 

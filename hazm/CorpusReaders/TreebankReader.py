@@ -8,10 +8,7 @@
 import os
 import re
 import sys
-from typing import Any
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Any, Iterator, List, Tuple
 from xml.dom import minidom
 
 from nltk.tree import Tree

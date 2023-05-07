@@ -10,11 +10,8 @@ from .Lemmatizer import Lemmatizer
 from .Normalizer import Normalizer
 from .SentenceTokenizer import SentenceTokenizer
 from .Stemmer import Stemmer
-from .utils import NUMBERS
-from .utils import informal_verbs
-from .utils import informal_words
-from .WordTokenizer import WordTokenizer
-from .WordTokenizer import default_verbs
+from .utils import NUMBERS, informal_verbs, informal_words
+from .WordTokenizer import WordTokenizer, default_verbs
 
 
 class InformalNormalizer(Normalizer):

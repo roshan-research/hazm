@@ -51,10 +51,7 @@ import re  # TODO use regex when it will be standard
 import sys
 import time
 from io import StringIO
-from multiprocessing import Process
-from multiprocessing import Queue
-from multiprocessing import Value
-from multiprocessing import cpu_count
+from multiprocessing import Process, Queue, Value, cpu_count
 from timeit import default_timer
 
 """Wikipedia Extractor:
@@ -1826,19 +1823,9 @@ class Infix:
 
 ROUND = Infix(lambda x, y: round(x, y))
 
-from math import acos
-from math import asin
-from math import atan
-from math import ceil
-from math import cos
-from math import e
-from math import exp
-from math import floor
+from math import acos, asin, atan, ceil, cos, e, exp, floor
 from math import log as ln
-from math import pi
-from math import sin
-from math import tan
-from math import trunc
+from math import pi, sin, tan, trunc
 
 
 def sharp_expr(extr, expr):

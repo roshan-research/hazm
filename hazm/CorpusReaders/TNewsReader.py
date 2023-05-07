@@ -6,9 +6,7 @@
 import os
 import re
 import sys
-from typing import Any
-from typing import Dict
-from typing import Iterator
+from typing import Any, Dict, Iterator
 from xml.dom import minidom
 
 

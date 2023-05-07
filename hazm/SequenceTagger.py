@@ -4,8 +4,7 @@
 
 import time
 
-from pycrfsuite import Tagger
-from pycrfsuite import Trainer
+from pycrfsuite import Tagger, Trainer
 
 
 class SequenceTagger:

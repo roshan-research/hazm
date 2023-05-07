@@ -11,9 +11,7 @@ from typing import List
 
 from nltk.tokenize.api import TokenizerI
 
-from .utils import default_verbs
-from .utils import default_words
-from .utils import words_list
+from .utils import default_verbs, default_words, words_list
 
 
 class WordTokenizer(TokenizerI):

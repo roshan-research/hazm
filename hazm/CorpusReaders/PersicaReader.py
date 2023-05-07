@@ -10,8 +10,7 @@
 داده‌کاوی است.
 
 """
-from typing import Dict
-from typing import Iterator
+from typing import Dict, Iterator
 
 
 class PersicaReader:

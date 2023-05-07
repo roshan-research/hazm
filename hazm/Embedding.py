@@ -5,21 +5,15 @@
 import multiprocessing
 import os
 import warnings
-from typing import Any
-from typing import List
-from typing import Tuple
-from typing import Type
+from typing import Any, List, Tuple, Type
 
 import numpy
-from gensim.models import Doc2Vec
-from gensim.models import KeyedVectors
-from gensim.models import fasttext
+from gensim.models import Doc2Vec, KeyedVectors, fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
 
-from . import Normalizer
-from . import word_tokenize
+from . import Normalizer, word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 

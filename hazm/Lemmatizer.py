@@ -14,8 +14,7 @@
 from typing import List
 
 from .Stemmer import Stemmer
-from .utils import default_verbs
-from .utils import default_words
+from .utils import default_verbs, default_words
 from .WordTokenizer import WordTokenizer
 
 

@@ -4,10 +4,7 @@
 ریخت‌شناسی تک‌تک کلمات قرآن کریم است.
 
 """
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Dict, Iterator, List, Tuple
 
 from ..utils import maketrans
 

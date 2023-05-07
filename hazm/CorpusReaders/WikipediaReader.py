@@ -12,8 +12,7 @@ pages-articles.xml.bz2) پیکرهٔ
 import os
 import re
 import subprocess
-from typing import Dict
-from typing import Iterator
+from typing import Dict, Iterator
 
 
 class WikipediaReader:

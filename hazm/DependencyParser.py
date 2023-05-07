@@ -5,9 +5,7 @@
 
 import os
 import tempfile
-from typing import List
-from typing import Tuple
-from typing import Type
+from typing import List, Tuple, Type
 
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI

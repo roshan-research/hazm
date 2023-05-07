@@ -5,10 +5,7 @@
 import re
 import sys
 from os import path
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Tuple
+from typing import Any, Dict, List, Tuple
 
 PY2 = sys.version_info[0] == 2
 

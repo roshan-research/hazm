@@ -5,9 +5,7 @@
 
 """
 
-from nltk.chunk import RegexpParser
-from nltk.chunk import conlltags2tree
-from nltk.chunk import tree2conlltags
+from nltk.chunk import RegexpParser, conlltags2tree, tree2conlltags
 
 from .POSTagger import POSTagger
 from .SequenceTagger import IOBTagger

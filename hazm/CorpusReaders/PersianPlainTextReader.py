@@ -1,11 +1,9 @@
 from typing import Any
 
 from nltk.corpus import PlaintextCorpusReader
-from nltk.corpus.reader import StreamBackedCorpusView
-from nltk.corpus.reader import read_blankline_block
+from nltk.corpus.reader import StreamBackedCorpusView, read_blankline_block
 
-from hazm import sent_tokenize
-from hazm import word_tokenize
+from hazm import sent_tokenize, word_tokenize
 
 
 class PersianPlainTextReader(PlaintextCorpusReader):

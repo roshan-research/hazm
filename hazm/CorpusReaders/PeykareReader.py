@@ -18,9 +18,7 @@
 
 import codecs
 import os
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Iterator, List, Tuple
 
 from ..Normalizer import Normalizer
 from ..WordTokenizer import WordTokenizer

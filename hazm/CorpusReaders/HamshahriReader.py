@@ -16,8 +16,7 @@ crawl
 import os
 import re
 import sys
-from typing import Dict
-from typing import Iterator
+from typing import Dict, Iterator
 from xml.dom import minidom
 
 
