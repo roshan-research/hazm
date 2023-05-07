@@ -11,9 +11,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3    
-    - uses: pdm-project/setup-pdm@v3      
-    - name: Publish to pypi
-    # run: pdm publish -username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
-      run: pdm publish --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} --repository testpypi
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+    - name: Build and publish
+      run: |
+        # poetry config pypi-token.test-pypi ${{secrets.TESTPYPI_TOKEN}}
+        # poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}        
+        # poetry build
+        # poetry publish -r test-pypi
+        # poetry publish
     
       
