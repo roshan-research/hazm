@@ -3,32 +3,13 @@ import inspect
 import sys
 import unittest
 
-from hazm import (
-    BijankhanReader,
-    Chunker,
-    DadeganReader,
-    DegarbayanReader,
-    DependencyParser,
-    HamshahriReader,
-    InformalNormalizer,
-    Lemmatizer,
-    MirasTextReader,
-    Normalizer,
-    PersicaReader,
-    PeykareReader,
-    POSTagger,
-    QuranCorpusReader,
-    SentenceTokenizer,
-    SentiPersReader,
-    SequenceTagger,
-    Stemmer,
-    TNewsReader,
-    TokenSplitter,
-    TreebankReader,
-    VerbValencyReader,
-    WordTokenizer,
-    utils,
-)
+from hazm import (BijankhanReader, Chunker, DadeganReader, DegarbayanReader,
+                  DependencyParser, HamshahriReader, InformalNormalizer,
+                  Lemmatizer, MirasTextReader, Normalizer, PersicaReader,
+                  PeykareReader, POSTagger, QuranCorpusReader,
+                  SentenceTokenizer, SentiPersReader, SequenceTagger, Stemmer,
+                  TNewsReader, TokenSplitter, TreebankReader,
+                  VerbValencyReader, WordTokenizer, utils)
 
 modules = {
     "normalizer": Normalizer,
