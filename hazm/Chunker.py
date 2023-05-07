@@ -16,14 +16,15 @@ def tree2brackets(tree):
     کروشه‌ای تبدیل می‌کند.
 
     Examples:
-        >>> chunker = Chunker(model='resources/chunker.model')
-        >>> tree=chunker.parse([('نامه', 'Ne'), ('ایشان', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')])
+        >>> chunker = Chunker(model='resources/Chunker.model')
+        >>> tree=chunker.parse([('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
         >>> print(tree)
         (S
-          (NP نامه/Ne ایشان/PRO)
-          (POSTP را/POSTP)
-          (VP دریافت/N داشتم/V)
-          ./PUNC)
+          (NP نامه/NOUN,EZ ایشان/PRON)
+          (POSTP را/ADP)
+          (VP دریافت/NOUN داشتم/VERB)
+          ./PUNCT)
+
         >>> tree2brackets(tree)
         '[نامه ایشان NP] [را POSTP] [دریافت داشتم VP] .'
 
@@ -63,10 +64,10 @@ class Chunker(IOBTagger):
         """تابعی که لیستی دو بعدی از کلمات به همراه لیبل را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
 
         Examples:
-            >>> chunker = Chunker(model = 'tagger.model')
+            >>> chunker = Chunker(model = 'resources/Chunker.model')
             >>> chunker.data_maker(tokens = [[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]])
-            [[{'word': 'نتوانستم', 'is_first': True, 'is_last': False, 'prefix-1': 'ن', ..., 'next_pos': 'ADP'}, ..., 'prev_is_punc': False, 'next_is_punc': '', 'pos': 'PUNCT', 'prev_pos': 'VERB', 'next_pos': ''}]]
-
+            [[{'word': 'من', 'is_first': True, 'is_last': False, 'prefix-1': 'م', 'prefix-2': 'من', 'prefix-3': 'من', 'suffix-1': 'ن', 'suffix-2': 'من', 'suffix-3': 'من', 'prev_word': '', 'two_prev_word': '', 'next_word': 'به', 'two_next_word': 'مدرسه', 'is_numeric': False, 'prev_is_numeric': '', 'next_is_numeric': False, 'is_punc': False, 'prev_is_punc': '', 'next_is_punc': False, 'pos': 'PRON', 'prev_pos': '', 'next_pos': 'ADP'}, {'word': 'به', 'is_first': False, 'is_last': False, 'prefix-1': 'ب', 'prefix-2': 'به', 'prefix-3': 'به', 'suffix-1': 'ه', 'suffix-2': 'به', 'suffix-3': 'به', 'prev_word': 'من', 'two_prev_word': '.', 'next_word': 'مدرسه', 'two_next_word': 'ایران', 'is_numeric': False, 'prev_is_numeric': False, 'next_is_numeric': False, 'is_punc': False, 'prev_is_punc': False, 'next_is_punc': False, 'pos': 'ADP', 'prev_pos': 'PRON', 'next_pos': 'NOUN,EZ'}, {'word': 'مدرسه', 'is_first': False, 'is_last': False, 'prefix-1': 'م', 'prefix-2': 'مد', 'prefix-3': 'مدر', 'suffix-1': 'ه', 'suffix-2': 'سه', 'suffix-3': 'رسه', 'prev_word': 'به', 'two_prev_word': 'من', 'next_word': 'ایران', 'two_next_word': 'رفته_بودم', 'is_numeric': False, 'prev_is_numeric': False, 'next_is_numeric': False, 'is_punc': False, 'prev_is_punc': False, 'next_is_punc': False, 'pos': 'NOUN,EZ', 'prev_pos': 'ADP', 'next_pos': 'NOUN'}, {'word': 'ایران', 'is_first': False, 'is_last': False, 'prefix-1': 'ا', 'prefix-2': 'ای', 'prefix-3': 'ایر', 'suffix-1': 'ن', 'suffix-2': 'ان', 'suffix-3': 'ران', 'prev_word': 'مدرسه', 'two_prev_word': 'به', 'next_word': 'رفته_بودم', 'two_next_word': '.', 'is_numeric': False, 'prev_is_numeric': False, 'next_is_numeric': False, 'is_punc': False, 'prev_is_punc': False, 'next_is_punc': False, 'pos': 'NOUN', 'prev_pos': 'NOUN,EZ', 'next_pos': 'VERB'}, {'word': 'رفته_بودم', 'is_first': False, 'is_last': False, 'prefix-1': 'ر', 'prefix-2': 'رف', 'prefix-3': 'رفت', 'suffix-1': 'م', 'suffix-2': 'دم', 'suffix-3': 'ودم', 'prev_word': 'ایران', 'two_prev_word': 'مدرسه', 'next_word': '.', 'two_next_word': '', 'is_numeric': False, 'prev_is_numeric': False, 'next_is_numeric': False, 'is_punc': False, 'prev_is_punc': False, 'next_is_punc': True, 'pos': 'VERB', 'prev_pos': 'NOUN', 'next_pos': 'PUNCT'}, {'word': '.', 'is_first': False, 'is_last': True, 'prefix-1': '.', 'prefix-2': '.', 'prefix-3': '.', 'suffix-1': '.', 'suffix-2': '.', 'suffix-3': '.', 'prev_word': 'رفته_بودم', 'two_prev_word': 'ایران', 'next_word': '', 'two_next_word': '', 'is_numeric': False, 'prev_is_numeric': False, 'next_is_numeric': '', 'is_punc': True, 'prev_is_punc': False, 'next_is_punc': '', 'pos': 'PUNCT', 'prev_pos': 'VERB', 'next_pos': ''}]]
+        
         Args:
             tokens (List[List[Tuple[str, str]]]): جملاتی که نیاز به تبدیل آن به برداری از ویژگی‌ها است.
 
@@ -78,19 +79,19 @@ class Chunker(IOBTagger):
         tags = [[tag for _, tag in token] for token in tokens]
         return [
             [
-                self.features(words=word_tokens, pos_taggs=tag_tokens, index=index)
+                self.features(words=word_tokens, pos_tags=tag_tokens, index=index)
                 for index in range(len(word_tokens))
             ]
             for word_tokens, tag_tokens in zip(words, tags)
         ]
 
-    def features(self, words, pos_taggs, index):
+    def features(self, words, pos_tags, index):
         word_features = self.posTagger.features(words, index)
         word_features.update(
             {
-                "pos": pos_taggs[index],
-                "prev_pos": "" if index == 0 else pos_taggs[index - 1],
-                "next_pos": "" if index == len(pos_taggs) - 1 else pos_taggs[index + 1],
+                "pos": pos_tags[index],
+                "prev_pos": "" if index == 0 else pos_tags[index - 1],
+                "next_pos": "" if index == len(pos_tags) - 1 else pos_tags[index + 1],
             }
         )
         return word_features
@@ -132,7 +133,7 @@ class Chunker(IOBTagger):
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
 
         Examples:
-            >>> chunker = Chunker(model = 'tagger.model')
+            >>> chunker = Chunker(model = 'resources/Chunker.model')
             >>> tree = chunker.parse(sentence = [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
             >>> print(tree)
             (S
