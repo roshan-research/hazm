@@ -218,6 +218,6 @@ class DependencyParser(MaltParser):
         >>> from hazm import POSTagger, Lemmatizer
         >>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())
         >>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
-        (رفته_بودم من (به مدرسه) .)
+        (من (به (مدرسه (رفته_بودم .))))
 
     """
