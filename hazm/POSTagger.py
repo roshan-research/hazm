@@ -9,7 +9,6 @@ from nltk.tag import stanford
 
 from .SequenceTagger import SequenceTagger
 
-
 punctuation_list = [
     '"',
     "#",

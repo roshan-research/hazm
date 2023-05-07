@@ -6,18 +6,19 @@ import time
 
 from pycrfsuite import Tagger, Trainer
 
-features = lambda sent, index: {'word': sent[index],
-               'is_first': index == 0,
-               'is_last': index == len(sent),
-               'is_num': sent[index].isdigit(),
-               'prev_word': sent[index - 1] if index != 0 else '',
-               'next_word': sent[index + 1] if index != len(sent)-1 else '',
-               # you can also customize your own features here...
-               }
+features = lambda sent, index: {
+    "word": sent[index],
+    "is_first": index == 0,
+    "is_last": index == len(sent),
+    "is_num": sent[index].isdigit(),
+    "prev_word": sent[index - 1] if index != 0 else "",
+    "next_word": sent[index + 1] if index != len(sent) - 1 else "",
+    # you can also customize your own features here...
+}
 data_maker = lambda tokens: [
-            [features(sent, index) for index in range(len(sent))]
-            for sent in tokens
-            ]
+    [features(sent, index) for index in range(len(sent))] for sent in tokens
+]
+
 
 def iob_features(words, pos_tags, index):
     word_features = features(words, index)
@@ -29,6 +30,7 @@ def iob_features(words, pos_tags, index):
         }
     )
     return word_features
+
 
 def iob_data_maker(tokens):
     words = [[word for word, _ in token] for token in tokens]
