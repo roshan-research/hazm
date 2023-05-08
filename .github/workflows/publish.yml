@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3    
+    - uses: actions/checkout@v3   
+    - name: Update pip
+      run: pip install --upgrade pip
     - name: Build and publish to test.pypi.org
       uses: JRubics/poetry-publish@v1.16
       with:
         pypi_token: ${{ secrets.TESTPYPI_TOKEN }}        
         repository_url: "https://test.pypi.org/legacy/"
-        run: poetry run pip install --upgrade pip
           
       
     
