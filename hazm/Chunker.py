@@ -167,6 +167,7 @@ class Chunker(IOBTagger):
             yield conlltags2tree(conlltagged)
 
 
+
 class RuleBasedChunker(RegexpParser):
     """
 
