@@ -31,7 +31,7 @@ optional=true
 mkdocs="^1"
 mkdocstrings-python="^0"
 mkdocstrings="^0"
-mkdocs-material="^9"
+mkdocs-material="^8"
 mkdocs-glightbox="^0"
 pymdown-extensions="^9"
 
