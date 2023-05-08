@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3   
-    - name: Update pip
-      run: pip install --upgrade pip
-    - name: Build and publish to test.pypi.org
-      uses: JRubics/poetry-publish@v1.16
-      with:
-        pypi_token: ${{ secrets.TESTPYPI_TOKEN }}        
-        repository_url: "https://test.pypi.org/legacy/"
-        run: poetry config virtualenvs.create false
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:        
+        virtualenvs-create: false
+        virtualenvs-in-project: false           
+        run: |
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry config pypi-token.test-pypi ${{secrets.PYPITEST_TOKEN}}
+          poetry publish --build -r test-pypi
           
       
     
