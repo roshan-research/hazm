@@ -29,7 +29,6 @@ optional=true
 
 [tool.poetry.group.docs.dependencies]
 mkdocs="^1"
-mkdocstrings-python="^0"
 mkdocstrings="^0"
 mkdocs-material="^8"
 mkdocs-glightbox="^0"
