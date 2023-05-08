@@ -89,13 +89,17 @@ Note: These are not official versions of hazm, not uptodate on functionality and
 
 We welcome and appreciate any contributions to this repo, such as bug reports, feature requests, code improvements, documentation updates, etc. Please follow the [Contribution guideline](./CONTRIBUTION.md) when contributing. You can open an issue, fork the repo, write your code, create a pull request and wait for a review and feedback. Thank you for your interest and support in this repo! 
 
-We look forward to collaborating with you! 😊
 
 ## Thanks
 
-+ to constributors: [Mojtaba Khallash](https://github.com/mojtaba-khallash) and [Mohsen Imany](https://github.com/imani).
-+ to [Virastyar](http://virastyar.ir/) project for persian word list.
+### Code contributores
+![Alt](https://repobeats.axiom.co/api/embed/ae42bda158791645d143c3e3c7f19d8a68d06d08.svg "Repobeats analytics image")
 
-## Star History
+<a href="https://github.com/roshan-research/hazm/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=roshan-research/hazm" />
+</a>
+
+### Others
++ Thanks to [Virastyar](http://virastyar.ir/) project for providing the persian word list.
 
 [![Star History Chart](https://api.star-history.com/svg?repos=roshan-research/hazm&type=Date)](https://star-history.com/#roshan-research/hazm&Date)
