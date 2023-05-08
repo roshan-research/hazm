@@ -165,6 +165,10 @@ class Chunker(IOBTagger):
         """
         for conlltagged in super().tag_sents(sentences):
             yield conlltags2tree(conlltagged)
+    
+    def evaluate(self, trees):
+        return super().evaluate([tree2conlltags(tree) for tree in trees])
+
 
 
 
