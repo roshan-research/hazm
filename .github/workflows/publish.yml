@@ -1,4 +1,4 @@
-name: Publish to test.pypi.org
+name: Publish to pypi
 
 on: 
   workflow_dispatch:
@@ -16,11 +16,10 @@ jobs:
       with:
         virtualenvs-create: false
         virtualenvs-in-project: false
-    - name: Publish to test.pypi.org
-      run: |
-        poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry config pypi-token.testpypi ${{secrets.TESTPYPI_TOKEN}}
-        poetry publish --build -r testpypi
+    - name: Publish to pypi
+      run: |        
+        poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}
+        poetry publish --build
           
       
     
