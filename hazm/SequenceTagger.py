@@ -344,5 +344,24 @@ class IOBTagger(SequenceTagger):
         return super().train(
             tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration
         )
-    
 
+    def evaluate(self, tagged_sent):
+        """داده صحیح دریافت شده را با استفاده از مدل لیبل می‌زند و دقت مدل را برمی‌گرداند.
+
+        Examples:
+            >>> iobTagger = IOBTagger(model = 'tagger.model')
+            >>> iobTagger.evaluate([[('نامه', 'NOUN,EZ', 'B-NP'), ('ایشان', 'PRON', 'I-NP'), ('را', 'ADP', 'B-POSTP'), ('دریافت', 'NOUN', 'B-VP'), ('داشتم', 'VERB', 'I-VP'), ('.', 'PUNCT', 'O')]])
+            1.0
+        Args:
+            tagged_sent (List[List[Tuple[str, str, str]]]): جملات لیبل‌داری که با استفاده از آن مدل را ارزیابی می‌کنیم.
+
+        Returns:
+            (Float): دقت مدل
+
+        """
+        assert self.model != None, "you should load model first..."
+        extract_labels = lambda tagged_list: [[token[-1] for token in sent] for sent in tagged_list]
+        tokens = [[token[:-1] for token in sent] for sent in tagged_sent]
+        predicted_tagged_sent = self.tag_sents(tokens)
+        return super()._SequenceTagger__evaluate(extract_labels(tagged_sent), extract_labels(predicted_tagged_sent))
+    
