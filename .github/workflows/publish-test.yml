@@ -17,9 +17,9 @@ jobs:
         virtualenvs-in-project: false
     - name: Publish to test.pypi.org
       run: |
-        poetry config repositories.test-pypi https://test.pypi.org/legacy/
-        poetry config pypi-token.test-pypi ${{secrets.PYPITEST_TOKEN}}
-        poetry publish --build -r test-pypi
+        poetry config repositories.testpypi https://test.pypi.org/legacy/
+        poetry config pypi-token.testpypi ${{secrets.TESTPYPI_TOKEN}}
+        poetry publish --build -r testpypi
           
       
     
