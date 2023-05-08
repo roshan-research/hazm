@@ -15,9 +15,9 @@ jobs:
       uses: snok/install-poetry@v1
     - name: Build and publish
       run: |
-        # poetry config pypi-token.test-pypi ${{secrets.TESTPYPI_TOKEN}}
-        # poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}       
-        # poetry publish --build -r test-pypi
+        poetry config pypi-token.test-pypi ${{secrets.TESTPYPI_TOKEN}}
+        poetry publish --build -r test-pypi
+        # poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}               
         # poetry publish --build
     
       
