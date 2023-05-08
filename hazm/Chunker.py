@@ -167,6 +167,21 @@ class Chunker(IOBTagger):
             yield conlltags2tree(conlltagged)
     
     def evaluate(self, trees):
+        """داده صحیح دریافت شده را با استفاده از مدل لیبل می‌زند و دقت مدل را برمی‌گرداند.
+
+        Examples:
+            >>> chunker = Chunker(model = 'resources/Chunker.model')
+            >>> trees = list(chunker.parse_sents([[('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')]]))
+            >>> chunker.evaluate(trees)
+            1.0
+            
+        Args:
+            trees (List[Tree]): لیست درختانی که با استفاده از آن مدل را ارزیابی می‌کنیم.
+
+        Returns:
+            (Float): دقت مدل
+
+        """
         return super().evaluate([tree2conlltags(tree) for tree in trees])
 
 

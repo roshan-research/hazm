@@ -222,7 +222,7 @@ class SequenceTagger:
 
         Examples:
             >>> tagger = SequenceTagger(model = 'tagger.model')
-            >>> tagger.evaluate([[('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')], [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')]])
+            >>> tagger.evaluate([[('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')]])
             1.0
         Args:
             tagged_sent (List[List[Tuple[str,str]]]): جملات لیبل‌داری که با استفاده از آن مدل را ارزیابی می‌کنیم.
