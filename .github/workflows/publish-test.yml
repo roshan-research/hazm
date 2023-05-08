@@ -1,4 +1,4 @@
-name: Publish to pypi
+name: Publish to test.pypi.org
 
 on: 
   workflow_dispatch:
