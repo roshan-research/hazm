@@ -11,10 +11,7 @@ jobs:
 
     steps:
     - name: Install and configure Poetry
-      uses: snok/install-poetry@v1
-      with:        
-        virtualenvs-create: false
-        virtualenvs-in-project: false
+      uses: snok/install-poetry@v1      
     - name: Publish to test.pypi.org
       run: |
         poetry config repositories.testpypi https://test.pypi.org/legacy/
