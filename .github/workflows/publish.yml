@@ -16,5 +16,8 @@ jobs:
       with:
         pypi_token: ${{ secrets.TESTPYPI_TOKEN }}        
         repository_url: "https://test.pypi.org/legacy/"
+        run: poetry run pip install --upgrade pip
+          
+      
     
       
