@@ -18,6 +18,7 @@ jobs:
       with:
         pypi_token: ${{ secrets.TESTPYPI_TOKEN }}        
         repository_url: "https://test.pypi.org/legacy/"
+        run: poetry config virtualenvs.create false
           
       
     
