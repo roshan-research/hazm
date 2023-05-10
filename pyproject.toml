@@ -19,7 +19,7 @@ include = ["data/*"]
 
 [tool.poetry.dependencies]
 python="^3.6"
-nltk="^3.6.7"
+nltk="^3.8.1"
 gensim="^4.1.2"
 numpy="^1.19.5"
 python-crfsuite="^0.9.9"
