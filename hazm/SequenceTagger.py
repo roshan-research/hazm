@@ -3,9 +3,10 @@
 """
 
 import time
+
 import numpy as np
-from sklearn.metrics import accuracy_score
 from pycrfsuite import Tagger, Trainer
+from sklearn.metrics import accuracy_score
 
 features = lambda sent, index: {
     "word": sent[index],
@@ -83,7 +84,7 @@ class SequenceTagger:
             print(f"training time: {(end_time - start_time):.2f} sec")
 
         self.load_model(file_name)
-    
+
     def __evaluate(self, gold_labels, predicted_labels):
         gold_labels = np.concatenate(gold_labels)
         predicted_labels = np.concatenate(predicted_labels)
@@ -216,7 +217,7 @@ class SequenceTagger:
         """
         assert self.model != None, "you should load model first..."
         self.model.dump(filename)
-    
+
     def evaluate(self, tagged_sent):
         """داده صحیح دریافت شده را با استفاده از مدل لیبل می‌زند و دقت مدل را برمی‌گرداند.
 
@@ -232,12 +233,14 @@ class SequenceTagger:
 
         """
         assert self.model != None, "you should load model first..."
-        extract_labels = lambda tagged_list: [[label for _, label in sent] for sent in tagged_list]
+        extract_labels = lambda tagged_list: [
+            [label for _, label in sent] for sent in tagged_list
+        ]
         tokens = [[word for word, _ in sent] for sent in tagged_sent]
         predicted_tagged_sent = self.tag_sents(tokens)
-        return self.__evaluate(extract_labels(tagged_sent), extract_labels(predicted_tagged_sent))
-
-        
+        return self.__evaluate(
+            extract_labels(tagged_sent), extract_labels(predicted_tagged_sent)
+        )
 
 
 class IOBTagger(SequenceTagger):
@@ -360,8 +363,11 @@ class IOBTagger(SequenceTagger):
 
         """
         assert self.model != None, "you should load model first..."
-        extract_labels = lambda tagged_list: [[token[-1] for token in sent] for sent in tagged_list]
+        extract_labels = lambda tagged_list: [
+            [token[-1] for token in sent] for sent in tagged_list
+        ]
         tokens = [[token[:-1] for token in sent] for sent in tagged_sent]
         predicted_tagged_sent = self.tag_sents(tokens)
-        return super()._SequenceTagger__evaluate(extract_labels(tagged_sent), extract_labels(predicted_tagged_sent))
-    
+        return super()._SequenceTagger__evaluate(
+            extract_labels(tagged_sent), extract_labels(predicted_tagged_sent)
+        )
