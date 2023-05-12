@@ -26,6 +26,12 @@ jobs:
               with:
                   python-version: ${{ matrix.python-versions }}
                   
+            - name: Install and configure Poetry
+              uses: snok/install-poetry@v1
+              
+            - name: Install all requirements packages
+              run: poetry install
+                  
             - name: Install poethepoet
               run: pip install poethepoet 
 
