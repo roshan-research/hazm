@@ -42,7 +42,7 @@ class VerbValencyReader:
 
     """
 
-    def __init__(self, valency_file: str = "corpora/valency.txt"):
+    def __init__(self, valency_file: str = "corpora/valency.txt") -> None:
         self._valency_file = valency_file
 
     def verbs(self) -> Iterator[Verb]:

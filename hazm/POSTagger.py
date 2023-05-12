@@ -40,8 +40,8 @@ class POSTagger(SequenceTagger):
 
     """
 
-    def __init__(self, model=None, data_maker=None, universal_tag=False):
-        data_maker = self.data_maker if data_maker == None else data_maker
+    def __init__(self, model=None, data_maker=None, universal_tag=False) -> None:
+        data_maker = self.data_maker if data_maker is None else data_maker
         self.__is_universal = universal_tag
         super().__init__(model, data_maker)
 
@@ -164,24 +164,23 @@ class POSTagger(SequenceTagger):
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
     """ """
 
-    def __init__(self, model_filename, path_to_jar, *args, **kwargs):
+    def __init__(self, model_filename, path_to_jar, *args, **kwargs) -> None:
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
-            model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs
+            model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs,
         )
 
     def tag(self, tokens):
         """
-
         Examples:
-            >>> tagger = StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar')
-            >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
-            [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+        >>> tagger = StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford-postagger.jar')
+        >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
+        [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
 
         """
         return self.tag_sents([tokens])[0]
 
     def tag_sents(self, sentences):
         """ """
-        refined = map(lambda s: [w.replace(" ", "_") for w in s], sentences)
+        refined = ([w.replace(" ", "_") for w in s] for s in sentences)
         return super(stanford.StanfordPOSTagger, self).tag_sents(refined)

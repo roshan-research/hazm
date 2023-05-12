@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای شناساییِ وابستگی‌های دستوری متن است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای شناساییِ وابستگی‌های دستوری متن است."""
 
 
 import os
@@ -51,7 +49,7 @@ class MaltParser(MaltParser):
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
     def parse_tagged_sents(
-        self, sentences: List[List[Tuple[str, str]]], verbose: bool = False
+        self, sentences: List[List[Tuple[str, str]]], verbose: bool = False,
     ) -> str:
         """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
 
@@ -67,10 +65,10 @@ class MaltParser(MaltParser):
 
         """
         input_file = tempfile.NamedTemporaryFile(
-            prefix="malt_input.conll", dir=self.working_dir, delete=False
+            prefix="malt_input.conll", dir=self.working_dir, delete=False,
         )
         output_file = tempfile.NamedTemporaryFile(
-            prefix="malt_output.conll", dir=self.working_dir, delete=False
+            prefix="malt_output.conll", dir=self.working_dir, delete=False,
         )
 
         try:
@@ -94,9 +92,9 @@ class MaltParser(MaltParser):
                                     "_",
                                     "_",
                                     "\n",
-                                ]
+                                ],
                             )
-                        ).encode("utf8")
+                        ).encode("utf8"),
                     )
                 input_file.write(b"\n\n")
             input_file.close()
@@ -133,13 +131,12 @@ class MaltParser(MaltParser):
 
 
 class TurboParser(ParserI):
-    """
-    interfaces [TurboParser](http://www.ark.cs.cmu.edu/TurboParser/) which you must
-    manually install
+    """interfaces [TurboParser](http://www.ark.cs.cmu.edu/TurboParser/) which you must
+    manually install.
 
     """
 
-    def __init__(self, tagger, lemmatizer: str, model_file: str):
+    def __init__(self, tagger, lemmatizer: str, model_file: str) -> None:
         self.tagger = tagger
         self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
 
@@ -150,19 +147,19 @@ class TurboParser(ParserI):
         self.interface.load_parser_model(model_file)
 
     def parse_sents(
-        self, sentences: List[List[Tuple[str, str]]]
+        self, sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
     def tagged_parse_sents(
-        self, sentences: List[List[Tuple[str, str]]]
+        self, sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
         input_file = tempfile.NamedTemporaryFile(
-            prefix="turbo_input.conll", dir="resources", delete=False
+            prefix="turbo_input.conll", dir="resources", delete=False,
         )
         output_file = tempfile.NamedTemporaryFile(
-            prefix="turbo_output.conll", dir="resources", delete=False
+            prefix="turbo_output.conll", dir="resources", delete=False,
         )
 
         try:
@@ -186,9 +183,9 @@ class TurboParser(ParserI):
                                     "_",
                                     "_",
                                     "\n",
-                                ]
+                                ],
                             )
-                        ).encode("utf8")
+                        ).encode("utf8"),
                     )
                 input_file.write(b"\n")
             input_file.close()
@@ -213,7 +210,7 @@ class DependencyParser(MaltParser):
 
     این کلاس تمام توابع خود را از کلاس
     [MaltParser][hazm.DependencyParser.MaltParser] به ارث می‌برد.
-
+    
     Examples:
         >>> from hazm import POSTagger, Lemmatizer
         >>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())

@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن است."""
 
 
 import re
@@ -19,7 +17,7 @@ class Normalizer:
         remove_diacritics: اگر `True` باشد اعرابِ حروف را حذف می‌کند.
         remove_specials_chars: اگر `True` باشد برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف می‌کند.
         decrease_repeated_chars: اگر `True` باشد تکرارهای بیش از ۲ بار را به ۲ بار کاهش می‌دهد. مثلاً «سلاممم» را به «سلامم» تبدیل می‌کند.
-        persian_style اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
+        persian_style: اگر `True` باشد اصلاحات مخصوص زبان فارسی را انجام می‌دهد؛ مثلاً جایگزین‌کردن کوتیشن با گیومه.
         persian_numbers: اگر `True` باشد ارقام انگلیسی را با فارسی جایگزین می‌کند.
         unicodes_replacement: اگر `True` باشد برخی از کاراکترهای یونیکد را با معادل نرمال‌شدهٔ آن جایگزین می‌کند.
         seperate_mi: اگر `True` باشد پیشوند «می» و «نمی» را در افعال جدا می‌کند.
@@ -201,7 +199,6 @@ class Normalizer:
             متنِ نرمال‌سازی‌شده.
 
         """
-
         translations = maketrans(self.translation_src, self.translation_dst)
         text = text.translate(translations)
 
@@ -343,7 +340,6 @@ class Normalizer:
             متنی بدون کاراکترهای زائد یا حداقل با دو تکرار.
 
         """
-
         matches = re.finditer(self.repeated_chars_pattern, text)
 
         for m in matches:
@@ -384,7 +380,7 @@ class Normalizer:
         return regex_replace(self.persian_style_patterns, text)
 
     def persian_number(self, text: str) -> str:
-        """اعداد لاتین و علامت % را با معادل فارسی آن جایگزین می‌کند
+        """اعداد لاتین و علامت % را با معادل فارسی آن جایگزین می‌کند.
 
         Examples:
             >>> normalizer = Normalizer()
@@ -403,7 +399,7 @@ class Normalizer:
 
         """
         translations = maketrans(
-            self.number_translation_src, self.number_translation_dst
+            self.number_translation_src, self.number_translation_dst,
         )
         return text.translate(translations)
 
@@ -442,7 +438,6 @@ class Normalizer:
             متنی که برخی از کاراکترهای یونیکد آن با شکل استاندارد جایگزین شده است.
 
         """
-
         for old, new in self.replacements:
             text = re.sub(old, new, text)
 
@@ -479,7 +474,7 @@ class Normalizer:
     def token_spacing(self, tokens: List[str]) -> List[str]:
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
         در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
-        برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`
+        برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`.
 
         Examples:
             >>> normalizer = Normalizer()
@@ -504,7 +499,6 @@ class Normalizer:
 
         """
         # >>> normalizer.token_spacing(['پرداخت', 'شده', 'است'])
-        #    ['پرداخت', 'شده', 'است']
 
         result = []
         for t, token in enumerate(tokens):

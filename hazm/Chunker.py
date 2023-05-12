@@ -9,6 +9,8 @@ from nltk.chunk import RegexpParser, conlltags2tree, tree2conlltags
 
 from .POSTagger import POSTagger
 from .SequenceTagger import IOBTagger
+from typing import Tuple
+from typing import List
 
 
 def tree2brackets(tree):
@@ -55,8 +57,8 @@ def tree2brackets(tree):
 class Chunker(IOBTagger):
     """این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است."""
 
-    def __init__(self, model=None, data_maker=None):
-        data_maker = self.data_maker if data_maker == None else data_maker
+    def __init__(self, model=None, data_maker=None) -> None:
+        data_maker = self.data_maker if data_maker is None else data_maker
         self.posTagger = POSTagger()
         super().__init__(model, data_maker)
 
@@ -92,7 +94,7 @@ class Chunker(IOBTagger):
                 "pos": pos_tags[index],
                 "prev_pos": "" if index == 0 else pos_tags[index - 1],
                 "next_pos": "" if index == len(pos_tags) - 1 else pos_tags[index + 1],
-            }
+            },
         )
         return word_features
 
@@ -115,7 +117,7 @@ class Chunker(IOBTagger):
             max_iteration (int): تعداد تکرار آموزش بر کل دیتا.
             verbose (boolean): نمایش اطلاعات مربوط به آموزش.
             file_name (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
-            report_duraion (boolean): نمایش گزارشات مربوط به زمان.
+            report_duration (boolean): نمایش گزارشات مربوط به زمان.
 
         """
         return super().train(
@@ -128,7 +130,7 @@ class Chunker(IOBTagger):
             report_duration,
         )
 
-    def parse(self, sentence):
+    def parse(self, sentence: List[Tuple[str,str]]) -> str:
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
 
@@ -143,10 +145,10 @@ class Chunker(IOBTagger):
               ./PUNCT)
 
         Args:
-            sentence (List[Tuple[str,str]): جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
+            sentence: جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
 
         Returns:
-            (str): ساختار درختی حاصل از تقطیع.
+            ساختار درختی حاصل از تقطیع.
             برای تبدیل این ساختار درختی به یک ساختار کروشه‌ای و قابل‌درک‌تر
             می‌توانید از تابع `tree2brackets()` استفاده کنید.
 
@@ -187,15 +189,14 @@ class Chunker(IOBTagger):
 
 class RuleBasedChunker(RegexpParser):
     """
-
     Examples:
-        >>> chunker = RuleBasedChunker()
-        >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUMe'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
-        '[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
+    >>> chunker = RuleBasedChunker()
+    >>> tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUMe'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+    '[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'
 
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         grammar = r"""
 
             NP:

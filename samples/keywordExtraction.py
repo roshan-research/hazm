@@ -5,8 +5,13 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from hazm import (Embedding, Normalizer, PersicaReader, POSTagger,
-                  sent_tokenize, word_tokenize)
+from hazm import Embedding
+from hazm.Normalizer import Normalizer
+from hazm.CorpusReaders import PersicaReader
+from hazm import POSTagger
+from hazm import sent_tokenize
+from hazm import word_tokenize
+
 
 grammers = [
     """

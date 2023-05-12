@@ -20,7 +20,7 @@ class SentiPersReader:
 
     """
 
-    def __init__(self, root: str):
+    def __init__(self, root: str) -> None:
         self._root = root
 
     def docs(self) -> Iterator[Dict[str, Any]]:
@@ -50,12 +50,14 @@ class SentiPersReader:
                 yield {
                     "text": sentence.childNodes[0].data,
                     "id": sentence.getAttribute("ID"),
-                    "value": int(sentence.getAttribute("Value"))
-                    if comment.getAttribute("Value")
-                    else None,
+                    "value": (
+                        int(sentence.getAttribute("Value"))
+                        if comment.getAttribute("Value")
+                        else None
+                    ),
                 }
 
-        for root, dirs, files in os.walk(self._root):
+        for root, _dirs, files in os.walk(self._root):
             for filename in sorted(files):
                 try:
                     elements = minidom.parse(os.path.join(root, filename))
@@ -90,11 +92,13 @@ class SentiPersReader:
                                 "id": comment.getAttribute("ID"),
                                 "type": comment.nodeName,
                                 "author": comment.getAttribute("Holder").strip(),
-                                "value": int(comment.getAttribute("Value"))
-                                if comment.getAttribute("Value")
-                                else None,
+                                "value": (
+                                    int(comment.getAttribute("Value"))
+                                    if comment.getAttribute("Value")
+                                    else None
+                                ),
                                 "sentences": list(element_sentences(comment)),
-                            }
+                            },
                         )
 
                     # todo: Accessories, Features, Review, Advantages, Tags, Keywords, Index

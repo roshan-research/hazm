@@ -23,7 +23,7 @@ class DegarbayanReader:
     """این کلاس شامل توابعی برای خواندن پیکرهٔ دگربیان است.
 
     Args:
-        root مسیر فولدر حاوی فایل‌های پیکره
+        root: مسیر فولدر حاوی فایل‌های پیکره
         corpus_file: فایل اطلاعات پیکره.
             در صورتی که بخواهید از حالت استاندارد پیکره استفاده کنید نیازی به تغییرِ این فایل نیست.
         judge_type: این پارامتر دارای دو مقدار `three_class` و `two_class` است.
@@ -112,7 +112,7 @@ class DegarbayanReader:
                         "judge": judge_number_to_text(
                             element.getElementsByTagName("judge")[0]
                             .childNodes[0]
-                            .data.strip()
+                            .data.strip(),
                         ),
                     }
                     yield pair
@@ -121,7 +121,8 @@ class DegarbayanReader:
                 print("error in reading", filename, e, file=sys.stderr)
         else:
             print("error in reading file", filename, e, file=sys.stderr)
-            raise FileNotFoundError("error in reading file", filename)
+            msg = "error in reading file"
+            raise FileNotFoundError(msg, filename)
 
     def pairs(self) -> Iterator[Tuple[str, str, str]]:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.

@@ -61,7 +61,6 @@ class Stemmer(StemmerI):
             ریشهٔ کلمه.
 
         """
-
         if word.endswith("ۀ"):
             word = word[:-1] + "ه"
 

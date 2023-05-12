@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای تجزیه توکن به دو توکن کوچکتر است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای تجزیه توکن به دو توکن کوچکتر است."""
 
 
 from typing import List, Tuple
@@ -11,7 +9,7 @@ from .Lemmatizer import Lemmatizer
 class TokenSplitter:
     """این کلاس شامل توابعی برای تجزیه توکن به دو توکن کوچکتر است."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.lemmatizer = Lemmatizer()
         self.lemmatize = self.lemmatizer.lemmatize
         self.words = self.lemmatizer.words
@@ -42,9 +40,7 @@ class TokenSplitter:
             <dir-rtl>لیستی از `[(توکن, توکن), (توکن, توکن), …]`ها.</dir-rtl>
 
         """
-
         # >>> splitter.split_token_words('شهرموشها')
-        # [('شهر', 'موشها')]
 
         candidates = []
         if "‌" in token:
@@ -59,11 +55,11 @@ class TokenSplitter:
             list(
                 filter(
                     lambda tokens: set(map(self.lemmatize, tokens)).issubset(
-                        self.words
+                        self.words,
                     ),
                     splits,
-                )
-            )
+                ),
+            ),
         )
 
         return candidates

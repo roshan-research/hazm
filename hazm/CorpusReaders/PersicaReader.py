@@ -21,7 +21,7 @@ class PersicaReader:
 
     """
 
-    def __init__(self, csv_file: str):
+    def __init__(self, csv_file: str) -> None:
         self._csv_file = csv_file
 
     def docs(self) -> Iterator[Dict[str, str]]:
@@ -69,7 +69,7 @@ class PersicaReader:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
-        ‍[docs()][hazm.PersicaReader.PersicaReader.docs] و دریافت مقدار پراپرتی
+        ‍[docs()][hazm.CorpusReaders.PersicaReader.PersicaReader.docs] و دریافت مقدار پراپرتی
         `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:

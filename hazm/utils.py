@@ -1,14 +1,11 @@
 """این ماژول شامل کلاس‌ها و توابع کمکی است.
-
 """
 
 import re
-import sys
 from os import path
 from typing import Any, Dict, List, Tuple
 
-PY2 = sys.version_info[0] == 2
-
+#fdfd
 data_path = path.join(path.dirname(__file__), "data")
 default_words = path.join(data_path, "words.dat")
 default_stopwords = path.join(data_path, "stopwords.dat")
@@ -31,7 +28,7 @@ def words_list(
     Examples:
         >>> from hazm.utils import words_list
         >>> words_list()[1]
-        ('آب', 549005877, ('N', 'AJ')) #(id, word, (tag1, tag2, ...))
+        ('آب', 549005877, ('N', 'AJ'))
 
     Args:
         words_file: مسیر فایل حاوی کلمات.
@@ -55,7 +52,7 @@ def stopwords_list(stopwords_file: str = default_stopwords) -> List[str]:
     Examples:
         >>> from hazm.utils import stopwords_list
         >>> stopwords_list()[:4]
-        ['محسوب', 'اول', 'بسیار', 'طول']
+        ['آخرین', 'آقای', 'آمد', 'آمده']
 
     Args:
         stopwords_file: مسیر فایل حاوی ایست‌واژه‌ها.
@@ -65,7 +62,7 @@ def stopwords_list(stopwords_file: str = default_stopwords) -> List[str]:
 
     """
     with open(stopwords_file, encoding="utf8") as stopwords_file:
-        return list({w.strip() for w in stopwords_file})
+        return sorted({w.strip() for w in stopwords_file})
 
 
 def verbs_list() -> List[str]:

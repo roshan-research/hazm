@@ -24,10 +24,11 @@ class WikipediaReader:
 
     """
 
-    def __init__(self, fawiki_dump: str, n_jobs: int = 2):
+    def __init__(self, fawiki_dump: str, n_jobs: int = 2) -> None:
         self.fawiki_dump = fawiki_dump
         self.wiki_extractor = os.path.join(
-            os.path.abspath(os.path.dirname(__file__)), "WikiExtractor.py"
+            os.path.abspath(os.path.dirname(__file__)),
+            "WikiExtractor.py",
         )
         self.n_jobs = n_jobs
 
@@ -83,7 +84,7 @@ class WikipediaReader:
         """فقط متن مقالات را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
-        ‍[docs()][hazm.WikipediaReader.WikipediaReader.docs] و دریافت مقدار
+        ‍[docs()][hazm.CorpusReaders.WikipediaReader.WikipediaReader.docs] و دریافت مقدار
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:

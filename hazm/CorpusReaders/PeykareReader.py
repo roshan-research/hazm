@@ -39,7 +39,6 @@ def coarse_pos_u(tags: List[str], word: str) -> List[str]:
         لیست برچسب‌های درشت جهانی.
 
     """
-
     map_pos_to_upos = {
         "N": "NOUN",
         "V": "VERB",
@@ -152,7 +151,7 @@ def coarse_pos_u(tags: List[str], word: str) -> List[str]:
                 "CL",
                 "INT",
                 "RES",
-            }
+            },
         )[0]
         if old_pos == "CONJ" and word in sconj_list:
             return "SCONJ"
@@ -177,7 +176,6 @@ def coarse_pos_e(tags: List[str], word: str) -> List[str]:
         لیست برچسب‌های درشت.
 
     """
-
     try:
         return list(
             set(tags)
@@ -196,7 +194,7 @@ def coarse_pos_e(tags: List[str], word: str) -> List[str]:
                 "CL",
                 "INT",
                 "RES",
-            }
+            },
         )[0] + (",EZ" if "EZ" in tags else "")
     except:
         return "N"
@@ -217,7 +215,6 @@ def join_verb_parts(sentence: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
         لیستی از `(توکن، برچسب)`ها که در آن افعال چندبخشی در قالب یک توکن با کاراکتر زیرخط به هم چسبانده شده‌اند.
 
     """
-
     if not hasattr(join_verb_parts, "tokenizer"):
         join_verb_parts.tokenizer = WordTokenizer()
     before_verbs, after_verbs, verbe = (
@@ -242,7 +239,7 @@ class PeykareReader:
 
     Args:
         root: آدرس فولدر حاوی فایل‌های پیکره.
-        join_verb_parts: اگر `True‍` باشد افعال چندقسمتی به‌شکل چسبیده‌به‌هم برگردانده_می‌شود.
+        joined_verb_parts: اگر `True‍` باشد افعال چندقسمتی به‌شکل چسبیده‌به‌هم برگردانده_می‌شود.
         pos_map: دیکشنری مبدل برچسب‌های ریز به درشت.
 
     """
@@ -271,11 +268,11 @@ class PeykareReader:
             متن خام سند بعدی.
 
         """
-
         for root, _, files in os.walk(self._root):
             for name in sorted(files):
                 with codecs.open(
-                    os.path.join(root, name), encoding="windows-1256"
+                    os.path.join(root, name),
+                    encoding="windows-1256",
                 ) as peykare_file:
                     text = peykare_file.read()
                     if text:
@@ -293,7 +290,6 @@ class PeykareReader:
             `ها جملهٔ بعدی در قالب لیستی از `(کلمه، برچسب).
 
         """
-
         sentence = []
         for line in document.split("\r\n"):
             if not line:
@@ -318,14 +314,13 @@ class PeykareReader:
             >>> next(peykare.sents())
             [('دیرزمانی', 'N'), ('از', 'P'), ('راه\u200cاندازی', 'N,EZ'), ('شبکه\u200cی', 'N,EZ'), ('خبر', 'N,EZ'), ('الجزیره', 'N'), ('نمی\u200cگذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه\u200cی', 'N,EZ'), ('خبری', 'AJ,EZ'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'N,EZ'), ('شبکه\u200cهای', 'N,EZ'), ('عظیم', 'AJ,EZ'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه\u200cهای', 'N,EZ'), ('چندرسانه\u200cای', 'AJ,EZ'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 
-            Yields:
+        Yields:
             جملهٔ بعدی در قالب لیستی از `(توکن، برچسب)`ها.
 
         """
 
         # >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
         #    >>> next(peykare.sents())
-        #    [('دیرزمانی', 'N,COM,SING,TIME,YA'), ('از', 'P'), ('راه‌اندازی', 'N,COM,SING,EZ'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبر', 'N,COM,SING,EZ'), ('الجزیره', 'N,PR,SING'), ('نمی‌گذرد', 'V,PRES,NEG,3'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET,DEMO'), ('شبکه‌ی', 'N,COM,SING,EZ'), ('خبری', 'AJ,SIM,EZ'), ('عربی', 'N,PR,SING'), ('بسیار', 'ADV,INTSF,SIM'), ('سریع', 'ADV,GENR,SIM'), ('توانسته', 'V,PASTP'), ('در', 'P'), ('میان', 'N,COM,SING,EZ'), ('شبکه‌های', 'N,COM,PL,EZ'), ('عظیم', 'AJ,SIM,EZ'), ('خبری', 'AJ,SIM'), ('و', 'CONJ'), ('بنگاه‌های', 'N,COM,PL,EZ'), ('چندرسانه‌ای', 'AJ,SIM,EZ'), ('دنیا', 'N,COM,SING'), ('خودی', 'N,COM,SING,YA'), ('نشان', 'N,COM,SING'), ('دهد', 'V,SUB,POS,3'), ('.', 'PUNC')]
         def map_pos(item):
             return (item[0], self._pos_map(item[1].split(","), item[0]))
 

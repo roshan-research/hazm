@@ -6,12 +6,24 @@ from itertools import islice
 from nltk.tag import untag
 from sklearn.model_selection import train_test_split
 
-from hazm import (Chunker, DadeganReader, InformalNormalizer, Lemmatizer,
-                  MaltParser, Normalizer, PeykareReader, POSTagger,
-                  SentiPersReader, StanfordPOSTagger, TNewsReader,
-                  TreebankReader, TurboParser, sent_tokenize)
+from hazm import Chunker
+from hazm.CorpusReaders import DadeganReader
+from hazm import InformalNormalizer
+from hazm import Lemmatizer
+from hazm.DependencyParser import MaltParser
+from hazm import Normalizer
+from hazm.CorpusReaders import PeykareReader
+from hazm import POSTagger
+from hazm.CorpusReaders import SentiPersReader
+from hazm.POSTagger import StanfordPOSTagger
+from hazm.CorpusReaders import TNewsReader
+from hazm.CorpusReaders import TreebankReader
+from hazm.DependencyParser import TurboParser
+from hazm import sent_tokenize
+
+
 from hazm.Chunker import tree2brackets
-from hazm.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
+from hazm.CorpusReaders.PeykareReader import coarse_pos_e as peykare_coarse_pos_e
 
 
 def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.dat"):

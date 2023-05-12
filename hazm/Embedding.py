@@ -1,7 +1,4 @@
-"""
-این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است."""
 import multiprocessing
 import os
 import warnings
@@ -27,10 +24,11 @@ class WordEmbedding:
 
     """
 
-    def __init__(self, model_type: str, model_path: str = None):
+    def __init__(self, model_type: str, model_path: str = None) -> None:
         if model_type not in supported_embeddings:
+            msg = f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
             raise KeyError(
-                f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
+                msg,
             )
         self.model_type = model_type
         if model_path:
@@ -47,7 +45,6 @@ class WordEmbedding:
             model_path: مسیر فایل امبدینگ.
 
         """
-
         if self.model_type == "fasttext":
             self.model = fasttext.load_facebook_model(model_path).wv
         elif self.model_type == "keyedvector":
@@ -62,8 +59,9 @@ class WordEmbedding:
             self.model = KeyedVectors.load_word2vec_format(word2vec_addr)
             self.model_type = "keyedvector"
         else:
+            msg = f"{self.model_type} not supported! Please choose from {supported_embeddings}"
             raise KeyError(
-                f"{self.model_type} not supported! Please choose from {supported_embeddings}"
+                msg,
             )
 
     def train(
@@ -83,24 +81,24 @@ class WordEmbedding:
 
         Args:
             dataset_path: مسیر فایل متنی.
-            worker: تعداد هسته درگیر برای ترین مدل.
+            workers: تعداد هسته درگیر برای ترین مدل.
             vector_size: طول وکتور خروجی به ازای هر کلمه.
             epochs: تعداد تکرار ترین بر روی کل دیتا.
-            fasttext_type نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
+            fasttext_type: نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
 
         """
-
         if self.model_type != "fasttext":
             self.model = "fasttext"
             warnings.warn(
-                f"this function is for training fasttext models only and {self.model_type} is not supported"
+                f"this function is for training fasttext models only and {self.model_type} is not supported",
             )
 
         fasttext_model_types = ["cbow", "skipgram"]
         if fasttext_type not in fasttext_model_types:
+            msg = f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}'
             raise KeyError(
-                f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}'
+                msg,
             )
 
         workers = 1 if workers == 0 else workers
@@ -123,7 +121,8 @@ class WordEmbedding:
 
     def __getitem__(self, word: str) -> Any:
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return self.model[word]
 
     def doesnt_match(self, words: List[str]) -> str:
@@ -143,9 +142,9 @@ class WordEmbedding:
             کلمهٔ نامرتبط.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return self.model.doesnt_match(words)
 
     def similarity(self, word1: str, word2: str) -> float:
@@ -166,9 +165,9 @@ class WordEmbedding:
             میزان شباهت دو کلمه.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return float(str(self.model.similarity(word1, word2)))
 
     def get_vocab(self) -> List[str]:
@@ -179,13 +178,13 @@ class WordEmbedding:
             >>> wordEmbedding.get_vocab()
             ['،', 'در', '.', 'و', ...]
 
-        Returns:
+        Returns
             لیست کلمات موجود در فایل امبدینگ.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return self.model.index_to_key
 
     def nearest_words(self, word: str, topn: int = 5) -> List[Tuple[str, str]]:
@@ -204,9 +203,9 @@ class WordEmbedding:
             لیستی از تاپل‌های [`کلمهٔ مرتبط`, `میزان ارتباط`].
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return self.model.most_similar(word, topn=topn)
 
     def get_normal_vector(self, word: str) -> Type[numpy.ndarray]:
@@ -224,9 +223,9 @@ class WordEmbedding:
             لیست بردار نرمالایزشدهٔ مرتبط با کلمهٔ ورودی.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
 
         return self.model.get_vector(word=word, norm=True)
 
@@ -239,7 +238,7 @@ class SentEmbedding:
 
     """
 
-    def __init__(self, model_path: str = None):
+    def __init__(self, model_path: str = None) -> None:
         if model_path:
             self.load_model(model_path)
 
@@ -254,7 +253,6 @@ class SentEmbedding:
             model_path: مسیر فایل امبدینگ.
 
         """
-
         self.model = Doc2Vec.load(model_path)
 
     def train(
@@ -276,8 +274,8 @@ class SentEmbedding:
         Args:
             dataset_path: مسیر فایل متنی.
             min_count: مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
-            worker: تعداد هسته درگیر برای ترین مدل.
-            wondows: طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
+            workers: تعداد هسته درگیر برای ترین مدل.
+            windows: طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
             vector_size: طول وکتور خروجی به ازای هر جمله.
             epochs: تعداد تکرار ترین بر روی کل دیتا.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
@@ -306,7 +304,8 @@ class SentEmbedding:
 
     def __getitem__(self, sent: str) -> Type[numpy.ndarray]:
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         return self.get_sentence_vector(sent)
 
     def get_sentence_vector(self, sent: str) -> Any:
@@ -324,9 +323,9 @@ class SentEmbedding:
             لیست بردار مرتبط با جملهٔ ورودی.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         else:
             tokenized_sent = word_tokenize(sent)
             return self.model.infer_vector(tokenized_sent)
@@ -349,21 +348,21 @@ class SentEmbedding:
             میزان شباهت دو جمله که عددی بین `0` و`1` است.
 
         """
-
         if not self.model:
-            raise AttributeError("Model must not be None! Please load model first.")
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
         else:
             return float(
                 str(
                     self.model.similarity_unseen_docs(
-                        word_tokenize(sent1), word_tokenize(sent2)
-                    )
-                )
+                        word_tokenize(sent1), word_tokenize(sent2),
+                    ),
+                ),
             )
 
 
 class SentenceEmbeddingCorpus:
-    def __init__(self, data_path: str):
+    def __init__(self, data_path: str) -> None:
         self.data_path = data_path
 
     def __iter__(self):
@@ -371,5 +370,5 @@ class SentenceEmbeddingCorpus:
         normalizer = Normalizer()
         for i, list_of_words in enumerate(open(corpus_path)):
             yield TaggedDocument(
-                word_tokenize(normalizer.normalize(list_of_words)), [i]
+                word_tokenize(normalizer.normalize(list_of_words)), [i],
             )

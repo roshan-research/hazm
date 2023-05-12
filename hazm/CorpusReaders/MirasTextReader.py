@@ -15,7 +15,7 @@ class MirasTextReader:
 
     """
 
-    def __init__(self, filename: str):
+    def __init__(self, filename: str) -> None:
         self._filename = filename
 
     def docs(self) -> Iterator[Dict[str, str]]:
@@ -25,7 +25,6 @@ class MirasTextReader:
             خبر بعدی.
 
         """
-
         for line in open(self._filename, encoding="utf-8"):
             parts = line.split("***")
             # todo: extract link, tags, ...
@@ -35,7 +34,7 @@ class MirasTextReader:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
-        ‍[docs()][hazm.MirasTextReader.MirasTextReader.docs] و دریافت مقدار
+        ‍[docs()][hazm.CorpusReaders.MirasTextReader.MirasTextReader.docs] و دریافت مقدار
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:

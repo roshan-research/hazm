@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تی‌نیوز است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ تی‌نیوز است."""
 
 
 import os
@@ -52,15 +50,15 @@ class TNewsReader:
             cleaned_text = re.sub(self.cleaner, "", raw_html)
             return cleaned_text
 
-        for root, dirs, files in os.walk(self._root):
+        for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 try:
                     content = open(os.path.join(root, name), encoding="utf8").read()
 
                     # fix xml formating issue
                     content = (
-                        re.sub(r"[]", "", content).replace(
-                            "</TNews>", ""
+                        re.sub(r"[\x1B\b\x1A]", "", content).replace(
+                            "</TNews>", "",
                         )
                         + "</TNews>"
                     )
@@ -71,25 +69,25 @@ class TNewsReader:
                         doc["id"] = get_text(element.getElementsByTagName("NEWSID")[0])
                         doc["url"] = get_text(element.getElementsByTagName("URL")[0])
                         doc["datetime"] = get_text(
-                            element.getElementsByTagName("UTCDATE")[0]
+                            element.getElementsByTagName("UTCDATE")[0],
                         )
                         doc["category"] = get_text(
-                            element.getElementsByTagName("CATEGORY")[0]
+                            element.getElementsByTagName("CATEGORY")[0],
                         )
                         doc["pre-title"] = get_text(
-                            element.getElementsByTagName("PRETITLE")[0]
+                            element.getElementsByTagName("PRETITLE")[0],
                         )
                         doc["title"] = get_text(
-                            element.getElementsByTagName("TITLE")[0]
+                            element.getElementsByTagName("TITLE")[0],
                         )
                         doc["post-title"] = get_text(
-                            element.getElementsByTagName("POSTTITLE")[0]
+                            element.getElementsByTagName("POSTTITLE")[0],
                         )
                         doc["brief"] = get_text(
-                            element.getElementsByTagName("BRIEF")[0]
+                            element.getElementsByTagName("BRIEF")[0],
                         )
                         doc["text"] = get_text(
-                            element.getElementsByTagName("DESCRIPTION")[0]
+                            element.getElementsByTagName("DESCRIPTION")[0],
                         )
                         yield doc
 
@@ -100,7 +98,7 @@ class TNewsReader:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع
-        ‍[docs()][hazm.TNewsReader.TNewsReader.docs] و دریافت مقدار پراپرتی
+        ‍[docs()][hazm.CorpusReaders.TNewsReader.TNewsReader.docs] و دریافت مقدار پراپرتی
         `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:

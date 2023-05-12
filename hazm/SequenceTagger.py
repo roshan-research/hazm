@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست."""
 
 import time
 
@@ -8,18 +6,11 @@ import numpy as np
 from pycrfsuite import Tagger, Trainer
 from sklearn.metrics import accuracy_score
 
-features = lambda sent, index: {
-    "word": sent[index],
-    "is_first": index == 0,
-    "is_last": index == len(sent),
-    "is_num": sent[index].isdigit(),
-    "prev_word": sent[index - 1] if index != 0 else "",
-    "next_word": sent[index + 1] if index != len(sent) - 1 else "",
-    # you can also customize your own features here...
-}
-data_maker = lambda tokens: [
-    [features(sent, index) for index in range(len(sent))] for sent in tokens
-]
+
+def features(sent, index):
+    return {"word": sent[index], "is_first": index == 0, "is_last": index == len(sent), "is_num": sent[index].isdigit(), "prev_word": sent[index - 1] if index != 0 else "", "next_word": sent[index + 1] if index != len(sent) - 1 else ""}
+def data_maker(tokens):
+    return [[features(sent, index) for index in range(len(sent))] for sent in tokens]
 
 
 def iob_features(words, pos_tags, index):
@@ -29,7 +20,7 @@ def iob_features(words, pos_tags, index):
             "pos": pos_tags[index],
             "prev_pos": "" if index == 0 else pos_tags[index - 1],
             "next_pos": "" if index == len(pos_tags) - 1 else pos_tags[index + 1],
-        }
+        },
     )
     return word_features
 
@@ -56,8 +47,8 @@ class SequenceTagger:
 
     """
 
-    def __init__(self, model=None, data_maker=data_maker):
-        if model != None:
+    def __init__(self, model=None, data_maker=data_maker) -> None:
+        if model is not None:
             self.load_model(model)
         else:
             self.model = None
@@ -121,7 +112,7 @@ class SequenceTagger:
             (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
 
         """
-        assert self.model != None, "you should load model first..."
+        assert self.model is not None, "you should load model first..."
         return self.__tag(tokens)
 
     def tag_sents(self, sentences):
@@ -143,7 +134,7 @@ class SequenceTagger:
                     هر لیست از `(توکن،برچسب)`ها مربوط به یک جمله است.
 
         """
-        assert self.model != None, "you should load model first..."
+        assert self.model is not None, "you should load model first..."
         return [self.__tag(tokens) for tokens in sentences]
 
     def train(
@@ -184,12 +175,11 @@ class SequenceTagger:
             max_iteration (int): تعداد تکرار آموزش بر کل دیتا.
             verbose (boolean): نمایش اطلاعات مربوط به آموزش.
             file_name (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
-            report_duraion (boolean): نمایش گزارشات مربوط به زمان.
+            report_duration (boolean): نمایش گزارشات مربوط به زمان.
 
         """
-
         X = self.data_maker(
-            [[x for x, _ in tagged_sent] for tagged_sent in tagged_list]
+            [[x for x, _ in tagged_sent] for tagged_sent in tagged_list],
         )
         y = [[y for _, y in tagged_sent] for tagged_sent in tagged_list]
 
@@ -215,7 +205,7 @@ class SequenceTagger:
             filename (str): نام و مسیر فایلی که می‌خواهید مدل در آن ذخیره شود.
 
         """
-        assert self.model != None, "you should load model first..."
+        assert self.model is not None, "you should load model first..."
         self.model.dump(filename)
 
     def evaluate(self, tagged_sent):
@@ -246,7 +236,7 @@ class SequenceTagger:
 class IOBTagger(SequenceTagger):
     """ """
 
-    def __init__(self, model=None, data_maker=iob_data_maker):
+    def __init__(self, model=None, data_maker=iob_data_maker) -> None:
         super().__init__(model, data_maker)
 
     def __IOB_format(self, tagged_data, chunk_tags):
@@ -345,7 +335,7 @@ class IOBTagger(SequenceTagger):
             for tagged_sent in tagged_list
         ]
         return super().train(
-            tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration
+            tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration,
         )
 
     def evaluate(self, tagged_sent):

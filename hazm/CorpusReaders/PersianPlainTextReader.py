@@ -7,8 +7,7 @@ from hazm import sent_tokenize, word_tokenize
 
 
 class PersianPlainTextReader(PlaintextCorpusReader):
-    """
-    Reader for corpora that consist of plaintext documents.  Paragraphs
+    """Reader for corpora that consist of plaintext documents.  Paragraphs
     are assumed to be split using blank lines.  Sentences and words can
     be tokenized using the default tokenizers, or by custom tokenizers
     specificed as parameters to the constructor.
@@ -27,5 +26,5 @@ class PersianPlainTextReader(PlaintextCorpusReader):
         encoding="utf8",
     ) -> None:
         super().__init__(
-            root, fileids, word_tokenizer, sent_tokenizer, para_block_reader, encoding
+            root, fileids, word_tokenizer, sent_tokenizer, para_block_reader, encoding,
         )

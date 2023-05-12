@@ -18,7 +18,6 @@ def coarse_pos_u(tags, word: str) -> str:
         'N'
 
     """
-
     map = {
         "N": "NOUN",
         "V": "VERB",
@@ -54,7 +53,6 @@ def coarse_pos_e(tags, word: str) -> str:
         'N'
 
     """
-
     map = {
         "N": "N",
         "V": "V",
@@ -73,7 +71,7 @@ def coarse_pos_e(tags, word: str) -> str:
 
 
 def word_nodes(tree: Type[Tree]) -> List[Dict[str, Any]]:
-    return sorted(list(tree.nodes.values()), key=lambda node: node["address"])[1:]
+    return sorted(tree.nodes.values(), key=lambda node: node["address"])[1:]
 
 
 def node_deps(node):
@@ -90,7 +88,7 @@ class DadeganReader:
     """
 
     def __init__(
-        self, conll_file: str, pos_map: str = coarse_pos_e, universal_pos: bool = False
+        self, conll_file: str, pos_map: str = coarse_pos_e, universal_pos: bool = False,
     ) -> None:
         self._conll_file = conll_file
         if pos_map is None:
@@ -278,7 +276,7 @@ class DadeganReader:
                         node["head"] == n - 1
                         and len(chunks) > 0
                         and type(chunks[-1]) == Tree
-                        and not chunks[-1].label() == "PP"
+                        and chunks[-1].label() != "PP"
                     ):
                         chunks[-1].append(item)
                         appended = True

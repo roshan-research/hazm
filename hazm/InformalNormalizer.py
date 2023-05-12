@@ -1,6 +1,4 @@
-"""این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن‌های محاوره‌ای است.
-
-"""
+"""این ماژول شامل کلاس‌ها و توابعی برای نرمال‌سازی متن‌های محاوره‌ای است."""
 
 
 import re
@@ -44,7 +42,7 @@ class InformalNormalizer(Normalizer):
         with open(verb_file, encoding="utf8") as vf:
             self.pastVerbs = {}
             self.presentVerbs = {}
-            for f, i, flag in [x.strip().split(" ", 2) for x in vf]:
+            for f, i, _flag in [x.strip().split(" ", 2) for x in vf]:
                 splitedF = f.split("#")
                 self.presentVerbs.update({i: splitedF[1]})
                 self.pastVerbs.update({splitedF[0]: splitedF[0]})
@@ -114,7 +112,7 @@ class InformalNormalizer(Normalizer):
             res = [""]
             for i in token:
                 res[-1] += i
-                if i in set(["ا", "د", "ذ", "ر", "ز", "ژ", "و"] + list(NUMBERS)):
+                if i in {"ا", "د", "ذ", "ر", "ز", "ژ", "و", *list(NUMBERS)}:
                     res.append("")
             while "" in res:
                 res.remove("")
@@ -127,7 +125,7 @@ class InformalNormalizer(Normalizer):
                 return [lst]
             res = []
             for i in up:
-                res.append([lst[0]] + i)
+                res.append([lst[0], *i])
                 res.append([lst[0] + i[0]] + i[1:])
             res.sort(key=len)
             return res
@@ -154,10 +152,8 @@ class InformalNormalizer(Normalizer):
             اشکال نرمالایزشدهٔ کلمه.
 
         """
-
         # >>> normalizer = InformalNormalizer(seperation_flag=True)
         # >>> normalizer.normalized_word('صداوسیماجمهوری')
-        # ['صداوسیما جمهوری', 'صداوسیماجمهوری']
 
         def analyzeWord(word):
             endWordsList = [
@@ -206,7 +202,7 @@ class InformalNormalizer(Normalizer):
 
             midWordCondidate = []
 
-            if word.endswith("‌") or word.endswith("‎"):
+            if word.endswith(("\u200c", "\u200e")):
                 word = word[:-1]
 
             if word in self.lemmatizer.words or word in self.iword_map:
@@ -214,7 +210,7 @@ class InformalNormalizer(Normalizer):
                     collectionOfWordAndSuffix.append({"word": word, "suffix": []})
                 if word in self.iword_map:
                     collectionOfWordAndSuffix.append(
-                        {"word": self.iword_map[word], "suffix": []}
+                        {"word": self.iword_map[word], "suffix": []},
                     )
                 FoundEarly = True
 
@@ -228,14 +224,14 @@ class InformalNormalizer(Normalizer):
                         ):
                             if sliceWord in self.lemmatizer.words:
                                 collectionOfWordAndSuffix.append(
-                                    {"word": sliceWord, "suffix": [endWord]}
+                                    {"word": sliceWord, "suffix": [endWord]},
                                 )
                             if sliceWord in self.iword_map:
                                 collectionOfWordAndSuffix.append(
                                     {
                                         "word": self.iword_map[sliceWord],
                                         "suffix": [endWord],
-                                    }
+                                    },
                                 )
                         else:
                             midWordCondidate.append(sliceWord)
@@ -257,15 +253,15 @@ class InformalNormalizer(Normalizer):
                                     collectionOfWordAndSuffix.append(
                                         {
                                             "word": sliceWord,
-                                            "suffix": [endWord] + midWordEndWordList,
-                                        }
+                                            "suffix": [endWord, *midWordEndWordList],
+                                        },
                                     )
                                 if sliceWord in self.iword_map:
                                     collectionOfWordAndSuffix.append(
                                         {
                                             "word": self.iword_map[sliceWord],
-                                            "suffix": [endWord] + midWordEndWordList,
-                                        }
+                                            "suffix": [endWord, *midWordEndWordList],
+                                        },
                                     )
 
             for i in range(len(collectionOfWordAndSuffix)):
@@ -327,7 +323,7 @@ class InformalNormalizer(Normalizer):
                         collectionOfVerbList.append({"word": word[:-2], "suffix": "ید"})
                     elif endVerb == "ستن":
                         collectionOfVerbList.append(
-                            {"word": word[:-3], "suffix": "ستند"}
+                            {"word": word[:-3], "suffix": "ستند"},
                         )
                     elif endVerb == "ن":
                         collectionOfVerbList.append({"word": word[:-1], "suffix": "ن"})
@@ -336,21 +332,21 @@ class InformalNormalizer(Normalizer):
                         if len(word) > 1:
                             if word[-2] != "د":
                                 collectionOfVerbList.append(
-                                    {"word": word[:-1], "suffix": "د"}
+                                    {"word": word[:-1], "suffix": "د"},
                                 )
                             collectionOfVerbList.append(
-                                {"word": word[:-1], "suffix": "ه"}
+                                {"word": word[:-1], "suffix": "ه"},
                             )
                         else:
                             collectionOfVerbList.append(
-                                {"word": word[:-1], "suffix": "ه"}
+                                {"word": word[:-1], "suffix": "ه"},
                             )
                     else:
                         collectionOfVerbList.append(
                             {
                                 "word": word[: -1 * len(endVerb)],
                                 "suffix": endVerb,
-                            }
+                            },
                         )
             collectionOfVerbList.append({"word": word, "suffix": ""})
             collectionOfVerbList2 = []
@@ -383,7 +379,7 @@ class InformalNormalizer(Normalizer):
                                 "word": mainWord,
                                 "preffix": "",
                                 "suffix": collectionOfVerbList[i]["suffix"],
-                            }
+                            },
                         )
 
                     if newMainWord != "":
@@ -402,7 +398,7 @@ class InformalNormalizer(Normalizer):
                             "word": mainWord,
                             "preffix": "",
                             "suffix": collectionOfVerbList[i]["suffix"],
-                        }
+                        },
                     )
 
                 elif mainWord.startswith("بی"):
@@ -416,7 +412,7 @@ class InformalNormalizer(Normalizer):
                             "word": mainWord,
                             "preffix": "",
                             "suffix": collectionOfVerbList[i]["suffix"],
-                        }
+                        },
                     )
 
             for i in range(len(collectionOfVerbList2)):
@@ -425,7 +421,7 @@ class InformalNormalizer(Normalizer):
             collectionOfRealVerbList = []
             for i in range(len(collectionOfVerbList)):
                 mainWord = collectionOfVerbList[i]["word"]
-                if mainWord.startswith("‌") or mainWord.startswith("‎"):
+                if mainWord.startswith(("\u200c", "\u200e")):
                     mainWord = mainWord[1:]
 
                 mainWord2 = None
@@ -457,9 +453,8 @@ class InformalNormalizer(Normalizer):
                     returnWord += "‌"
                 returnWord += mainWord
                 returnWord += suffix
-                if mainWord != "":
-                    if returnWord not in returnList:
-                        returnList.append(returnWord)
+                if mainWord != "" and returnWord not in returnList:
+                    returnList.append(returnWord)
 
             return returnList
 
@@ -516,14 +511,14 @@ class InformalNormalizer(Normalizer):
                     returnWord += "مان"
                 elif suffixList[i] == "هام":
                     try:
-                        var = adhesiveAlphabet[returnWord[-1]]
+                        adhesiveAlphabet[returnWord[-1]]
                         returnWord += "‌"
                     except:
                         None
                     returnWord += "هایم"
                 elif suffixList[i] == "ها":
                     try:
-                        var = adhesiveAlphabet[returnWord[-1]]
+                        adhesiveAlphabet[returnWord[-1]]
                         returnWord += "‌"
                     except:
                         None
@@ -534,7 +529,7 @@ class InformalNormalizer(Normalizer):
                     and not returnWord.endswith("ه")
                 ):
                     try:
-                        var = adhesiveAlphabet[returnWord[-1]]
+                        adhesiveAlphabet[returnWord[-1]]
                         returnWord += "‌"
                     except:
                         None
@@ -745,7 +740,6 @@ class InformalNormalizer(Normalizer):
            متن فارسی معیار.
 
         """
-
         text = super().normalize(text)
         sents = [
             self.word_tokenizer.tokenize(sentence)
@@ -807,7 +801,7 @@ class InformalLemmatizer(Lemmatizer):
         self.verbs.update(temp)
 
         with open(informal_verbs, encoding="utf8") as vf:
-            for f, i, flag in [x.strip().split(" ", 2) for x in vf]:
+            for f, i, _flag in [x.strip().split(" ", 2) for x in vf]:
                 self.verbs.update({x: f for x in self.iconjugations(i)})
 
         with open(informal_words, encoding="utf8") as wf:

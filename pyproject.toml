@@ -1,46 +1,137 @@
 [tool.poetry]
 name = "hazm"
-version = "0.0.9"
+version = "0.9.0"
 description = "Persian NLP Toolkit"
 authors = ["Roshan <salam@roshan-ai.com>"]
 maintainers = ["Roshan <salam@roshan-ai.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://roshan-ai.ir/hazm/"
-repository = "https://github.com/roshan-research/hazm/"
-documentation = "https://roshan-ai.ir/hazm/docs/"
-keywords = ["nlp", "persian nlp", "persian"]
+include = ["data/*"]
+
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Text Processing",
     "Natural Language :: Persian",
 ]
-include = ["data/*"]
 
-[tool.poetry.dependencies]
-python="^3.6"
-nltk="^3.6.7"
-gensim="^4.1.2"
-numpy="^1.19.5"
-python-crfsuite="^0.9.9"
-
-[tool.poetry.group.docs]
-optional=true
-
-[tool.poetry.group.docs.dependencies]
-mkdocs="^1"
-mkdocstrings="^0"
-mkdocs-material="^8"
-mkdocs-glightbox="^0"
-pymdown-extensions="^9"
+homepage = "https://roshan-ai.ir/hazm/"
+repository = "https://github.com/roshan-research/hazm/"
+documentation = "https://roshan-ai.ir/hazm/docs/"
+keywords = ["nlp", "persian nlp", "persian"]
 
 [tool.poetry.urls]
 "Demo" = "https://www.roshan-ai.ir/hazm/demo/"
 "Changelog" = "https://github.com/roshan-research/hazm/blob/master/CHANGELOG.md"
 "Contribution" = "https://github.com/roshan-research/hazm/blob/master/CONTRIBUTION.md"
 "Issues" = "https://github.com/roshan-research/hazm/issues"
-"JoinUs" = "https://www.roshan-ai.ir/join-us/"
+"Join-us" = "https://www.roshan-ai.ir/join-us/"
+
+[tool.poetry.dependencies]
+python= ">=3.7"
+nltk="3.8.1"
+gensim="4.2.0"
+python-crfsuite="0.9.9"
+numpy = "1.19.5"
+scikit-learn = "1.0.2"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs="1.4.3"
+mkdocs-material="9.1.11"
+pymdown-extensions="9.11"
+mkdocs-glightbox="0.3.4"
+mkdocstrings = "0.21.2"
+mkdocstrings-python = "1.0.0"
+
+
+[tool.poetry.group.docs]
+optional=true
+
+[tool.poetry.group.dev.dependencies]
+pytest = "7.3.1"
+pandas = "1.1.5"
+#pre-commit = "*"
+poethepoet = "0.19.0"
+
+[tool.poetry.group.typing.dependencies]
+#mypy = "*"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py37"
+line-length = 120
+ignore=["E501","RUF001","RUF002","RUF003", "D407", "ERA001"]
+extend-select = [
+    "F",
+    "E",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "D",
+    "UP",
+    "YTT",
+    "ANN",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "DJ",
+    "EM",
+    "EXE",
+    "ISC",
+    "ICN",
+    "G",
+    "INP",
+    "PIE",
+    "T20",
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SIM",
+    "TID",
+    "TCH",
+    "INT",
+    "ARG",
+    "PTH",
+    "ERA",
+    "PD",
+    "PGH",
+    "PL",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "TRY",
+    "NPY",
+    "RUF",   
+]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.isort]
+force-single-line = true
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party = ["hazm"]
+
+[tool.black]
+target-version = ['py37']
+preview = true
+
+[tool.pytest.ini_options]
+addopts = "--ignore=hazm/SequenceTagger.py --ignore=hazm/CorpusReaders/TreeBankReader.py"
+
+[tool.poe.tasks]
+test = "pytest --doctest-modules --doctest-continue-on-failure"

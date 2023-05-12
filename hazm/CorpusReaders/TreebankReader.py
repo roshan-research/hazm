@@ -30,7 +30,6 @@ def coarse_pos_e(tags: List[str]) -> List[str]:
         لیست برچسب‌های درشت.
 
     """
-
     map = {
         "N": "N",
         "V": "V",
@@ -95,11 +94,12 @@ class TreebankReader:
             سند بعدی.
 
         """
-        for root, dirs, files in os.walk(self._root):
+        for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 try:
                     with open(
-                        os.path.join(root, name), encoding="utf8"
+                        os.path.join(root, name),
+                        encoding="utf8",
                     ) as treebank_file:
                         raw = re.sub(r"\n *", "", treebank_file.read())
                         yield minidom.parseString(raw.encode("utf8"))
@@ -159,10 +159,10 @@ class TreebankReader:
                         clitic[0] = ("‌" + clitic[0][0], clitic[0][1])
                     tree[-1] = (tree[-1][0] + clitic[0][0], clitic[0][1])
                     tree.set_label("CLITICS")
-                    return
+                    return None
 
             if not len(node.childNodes):
-                return
+                return None
             first = node.childNodes[0]
 
             if first.nodeName == "w":
@@ -170,10 +170,7 @@ class TreebankReader:
                 return Tree(
                     node.nodeName,
                     [
-                        (
-                            # first.childNodes[0].data.replace("می ", "می‌"),
-                            self._pos_map(pos),
-                        )
+                        (self._pos_map(pos),),
                     ],
                 )
             childs = node.childNodes[2:] if node.tagName == "S" else node.childNodes
@@ -189,7 +186,7 @@ class TreebankReader:
                 and tree[1][0][1] not in {"P", "V"}
             ):
                 clitic = tree[-1]
-                tree = Tree(tree.label(), [subtree for subtree in tree[0]])
+                tree = Tree(tree.label(), list(tree[0]))
                 clitic_join(tree, clitic)
             if (
                 self._join_verb_parts
@@ -237,7 +234,7 @@ class TreebankReader:
 
         for doc in self.docs():
             for S in doc.getElementsByTagName("S"):
-                ss = traverse(S)
+                traverse(S)
                 yield traverse(S)
 
     def sents(self) -> Iterator[List[Tuple[str, str]]]:
@@ -320,10 +317,9 @@ class TreebankReader:
                 chunks.append(collapse(node, "NP"))
                 return
 
-            if label == "NPA" and len(node) >= 1:
-                if node[0].label() == "ADV":
-                    chunks.append(collapse(node, "NP"))
-                    return
+            if label == "NPA" and len(node) >= 1 and node[0].label() == "ADV":
+                chunks.append(collapse(node, "NP"))
+                return
 
             if label in {
                 "NPC",
@@ -343,8 +339,10 @@ class TreebankReader:
                 chunks.append(collapse(node, "NP"))
                 return
 
-            if label == "NPA" and len(node) >= 2:
-                if (
+            if (
+                label == "NPA"
+                and len(node) >= 2
+                and (
                     node[0].label() == "ADJ"
                     and node[1].label() == "NPC"
                     or node[0].label() in {"N", "PRON"}
@@ -359,9 +357,10 @@ class TreebankReader:
                     and node[1].label() != "NPC"
                     or node[1].label() == "NPA"
                     and node[0].label() != "NPC"
-                ):
-                    chunks.append(collapse(node, "NP"))
-                    return
+                )
+            ):
+                chunks.append(collapse(node, "NP"))
+                return
 
             if label == "DPC" and len(node) >= 2:
                 chunkable = True
@@ -372,10 +371,9 @@ class TreebankReader:
                     chunks.append(collapse(node, "NP"))
                     return
 
-            if label == "DPA" and len(node) >= 2:
-                if node[1].label() == "ADV":
-                    chunks.append(collapse(node, "ADVP"))
-                    return
+            if label == "DPA" and len(node) >= 2 and node[1].label() == "ADV":
+                chunks.append(collapse(node, "ADVP"))
+                return
 
             if label in {"MV", "V", "AUX", "PPARV"}:
                 chunks.append(Tree("VP", [node]))

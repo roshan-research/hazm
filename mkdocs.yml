@@ -19,7 +19,7 @@ copyright: |
 theme:
     name: material
     custom_dir: documentation/theme
-    favicon: assets/favicon.png
+    favicon: assets/favicon.png    
     palette:
         - scheme: default
           primary: indigo
@@ -51,6 +51,7 @@ theme:
         - search.share
         - content.tooltips
         - content.code.annotate
+        - content.code.copy
 
 plugins:
     - autorefs
@@ -64,6 +65,7 @@ plugins:
     - search
     - tags
     - glightbox
+    - offline
 
 extra_css:
     - hint.min.css

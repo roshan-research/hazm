@@ -98,8 +98,7 @@ class HamshahriReader:
             خبر بعدی.
 
         """
-
-        for root, dirs, files in os.walk(self._root):
+        for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 if name in self._invalids:
                     continue
@@ -121,9 +120,9 @@ class HamshahriReader:
                         }
 
                         for cat in element.getElementsByTagName("CAT"):
-                            doc[
-                                "categories_" + cat.attributes["xml:lang"].value
-                            ] = cat.childNodes[0].data.split(".")
+                            doc["categories_" + cat.attributes["xml:lang"].value] = (
+                                cat.childNodes[0].data.split(".")
+                            )
 
                         for date in element.getElementsByTagName("DATE"):
                             if date.attributes["calender"].value == "Persian":
@@ -141,7 +140,8 @@ class HamshahriReader:
 
                         # refine text
                         doc["text"] = self._paragraph_pattern.sub(
-                            r"\1\n", doc["text"]
+                            r"\1\n",
+                            doc["text"],
                         ).replace("\no ", "\n")
 
                         yield doc
@@ -153,7 +153,7 @@ class HamshahriReader:
         """فقط متن خبرها را در قالب یک برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
-        ‍[docs()][hazm.HamshahriReader.HamshahriReader.docs] و دریافت مقدار
+        ‍[docs()][hazm.CorpusReaders.HamshahriReader.HamshahriReader.docs] و دریافت مقدار
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Yields:

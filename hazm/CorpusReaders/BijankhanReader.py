@@ -70,7 +70,7 @@ class BijankhanReader:
     """
 
     def __init__(
-        self, bijankhan_file: str, joined_verb_parts: bool = True, pos_map: str = None
+        self, bijankhan_file: str, joined_verb_parts: bool = True, pos_map: str = None,
     ) -> None:
         if pos_map is None:
             pos_map = default_pos_map
@@ -94,10 +94,9 @@ class BijankhanReader:
                 if word not in ("#", "*"):
                     word = self._normalizer.normalize(word)
                     sentence.append((word if word else "_", tag))
-                if tag == "DELM" and word in ("#", "*", ".", "؟", "!"):
-                    if len(sentence):
-                        yield sentence
-                        sentence = []
+                if tag == "DELM" and word in ("#", "*", ".", "؟", "!") and len(sentence):
+                    yield sentence
+                    sentence = []
 
     def sents(self) -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
