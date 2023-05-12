@@ -2,6 +2,7 @@ Hazm
 ====
 ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/tests.yml?branch=master)
 ![PyPI - Downloads](https://img.shields.io/github/downloads/roshan-research/hazm/total)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hazm)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
 
 Python library for digesting Persian text.
