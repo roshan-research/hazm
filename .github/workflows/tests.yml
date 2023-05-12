@@ -30,15 +30,16 @@ jobs:
             - name: Install and configure Poetry
               run: curl -sSL https://install.python-poetry.org | python3 -
               
-            - name: Install requirements packages
+            - name: Install poetry
               uses: snok/install-poetry@v1
               with: |
                 virtualenvs-create: false
                 virtualenvs-in-project: false
-            
-                - run: |                
-                    poetry lock                
-                    poetry install                
+                
+            - name: Install requirements packages            
+              run: |                
+                poetry lock                
+                poetry install                
                   
             - name: Install poethepoet
               run: pip install poethepoet 
