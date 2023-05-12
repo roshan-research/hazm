@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-20.04
         strategy:
             matrix:
-                python-versions: ["3.11"] 
+                python-versions: ["3.10"] 
                 #python-versions: ["3.7", "3.8", "3.9", "3.10", "3.11"]                
 
         steps:
@@ -28,12 +28,9 @@ jobs:
                   python-version: ${{ matrix.python-versions }}            
               
             - name: Install poetry
-              uses: snok/install-poetry@v1
-              with:
-                virtualenvs-create: false
-                virtualenvs-in-project: false
+              run: curl -sSL https://install.python-poetry.org | python3 -
                 
-            - name: Install requirements packages            
+            - name: Install requirements            
               run: |                
                 poetry lock                
                 poetry install                
