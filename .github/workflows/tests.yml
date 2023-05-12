@@ -31,7 +31,7 @@ jobs:
 
             - name: Download resources
               run: |                                   
-                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.9.zip            
+                  wget https://github.com/sir-kokabi/test/raw/main/resources-0.9.zip            
                   unzip resources-0.9.zip -d resources          
 
             - name: Run tests
