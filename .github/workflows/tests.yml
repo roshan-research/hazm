@@ -25,15 +25,14 @@ jobs:
               uses: actions/setup-python@v4
               with:
                   python-version: ${{ matrix.python-versions }}
+                  
+            - name: Install poethepoet
+              run: pip install poethepoet 
 
-            - name: Install prerequisites
-              run: |
-                  pip install --upgrade pip
-                  pip install .
-                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip
-                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-stanford.zip
-                  unzip resources-0.5.zip -d resources
-                  unzip resources-stanford.zip -d resources
+            - name: Download resources
+              run: |                                   
+                  wget https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.9.zip            
+                  unzip resources-0.9.zip -d resources          
 
             - name: Run tests
-              run: python tests.py
+              run: poe test
