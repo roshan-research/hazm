@@ -32,6 +32,7 @@ jobs:
             - name: Install requirements packages
               run: |
                 poetry lock
+                poetry config settings.virtualenvs.create false
                 poetry install                
                   
             - name: Install poethepoet
