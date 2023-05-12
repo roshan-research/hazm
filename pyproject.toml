@@ -31,7 +31,7 @@ python= ">=3.7"
 nltk="3.8.1"
 gensim="4.2.0"
 python-crfsuite="0.9.9"
-numpy = "1.19.5"
+numpy = "1.21.5"
 scikit-learn = "1.0.2"
 
 [tool.poetry.group.docs.dependencies]
