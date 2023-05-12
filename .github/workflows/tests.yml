@@ -32,7 +32,7 @@ jobs:
               
             - name: Install poetry
               uses: snok/install-poetry@v1
-              with: |
+              with:
                 virtualenvs-create: false
                 virtualenvs-in-project: false
                 
