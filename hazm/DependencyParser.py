@@ -225,7 +225,7 @@ class DependencyParser(MaltParser):
 
     Examples:
         >>> from hazm import POSTagger, Lemmatizer
-        >>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())
+        >>> parser = DependencyParser(tagger=POSTagger(model='resources/POSTagger.model'), lemmatizer=Lemmatizer())
         >>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
         (من (به (مدرسه (رفته_بودم .))))
 
