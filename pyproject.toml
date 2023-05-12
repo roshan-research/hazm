@@ -133,7 +133,7 @@ preview = true
 [tool.pytest.ini_options]
 addopts = """
 --ignore=hazm/SequenceTagger.py 
---ignore=hazm/CorpusReaders/TreeBankReader.py
+--ignore=hazm/CorpusReaders/TreebankReader.py
 --ignore=hazm/CorpusReaders/WikipediaReader.py
 --ignore=hazm/Embedding.py
 """
