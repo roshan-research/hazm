@@ -57,8 +57,11 @@ class TNewsReader:
 
                     # fix xml formating issue
                     content = (
-                        re.sub(r"[\x1B\b\x1A]", "", content).replace(
-                            "</TNews>", "",
+                        re.sub(
+                            r"[\x1B\b\x1A]", "", content
+                        ).replace(
+                            "</TNews>",
+                            "",
                         )
                         + "</TNews>"
                     )

@@ -49,7 +49,9 @@ class MaltParser(MaltParser):
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
     def parse_tagged_sents(
-        self, sentences: List[List[Tuple[str, str]]], verbose: bool = False,
+        self,
+        sentences: List[List[Tuple[str, str]]],
+        verbose: bool = False,
     ) -> str:
         """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
 
@@ -65,10 +67,14 @@ class MaltParser(MaltParser):
 
         """
         input_file = tempfile.NamedTemporaryFile(
-            prefix="malt_input.conll", dir=self.working_dir, delete=False,
+            prefix="malt_input.conll",
+            dir=self.working_dir,
+            delete=False,
         )
         output_file = tempfile.NamedTemporaryFile(
-            prefix="malt_output.conll", dir=self.working_dir, delete=False,
+            prefix="malt_output.conll",
+            dir=self.working_dir,
+            delete=False,
         )
 
         try:
@@ -115,7 +121,7 @@ class MaltParser(MaltParser):
                 "parse",
             ]
             if self._execute(cmd, verbose) != 0:
-                raise Exception("MaltParser parsing failed: %s" % (" ".join(cmd)))
+                raise Exception("MaltParser parsing failed: %s" % " ".join(cmd))
 
             return (
                 DependencyGraph(item)
@@ -147,19 +153,25 @@ class TurboParser(ParserI):
         self.interface.load_parser_model(model_file)
 
     def parse_sents(
-        self, sentences: List[List[Tuple[str, str]]],
+        self,
+        sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
     def tagged_parse_sents(
-        self, sentences: List[List[Tuple[str, str]]],
+        self,
+        sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
         input_file = tempfile.NamedTemporaryFile(
-            prefix="turbo_input.conll", dir="resources", delete=False,
+            prefix="turbo_input.conll",
+            dir="resources",
+            delete=False,
         )
         output_file = tempfile.NamedTemporaryFile(
-            prefix="turbo_output.conll", dir="resources", delete=False,
+            prefix="turbo_output.conll",
+            dir="resources",
+            delete=False,
         )
 
         try:
@@ -210,7 +222,7 @@ class DependencyParser(MaltParser):
 
     این کلاس تمام توابع خود را از کلاس
     [MaltParser][hazm.DependencyParser.MaltParser] به ارث می‌برد.
-    
+
     Examples:
         >>> from hazm import POSTagger, Lemmatizer
         >>> parser = DependencyParser(tagger=POSTagger(model='resources/postagger.model'), lemmatizer=Lemmatizer())

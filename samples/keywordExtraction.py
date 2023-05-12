@@ -5,13 +5,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from hazm import Embedding
-from hazm.Normalizer import Normalizer
+from hazm import Embedding, POSTagger, sent_tokenize, word_tokenize
 from hazm.CorpusReaders import PersicaReader
-from hazm import POSTagger
-from hazm import sent_tokenize
-from hazm import word_tokenize
-
+from hazm.Normalizer import Normalizer
 
 grammers = [
     """
@@ -105,7 +101,8 @@ def embedRankExtraction(
 ):
     if len(all_candidates) < keyword_num:
         warnings.warn(
-            f"total number of keyword candidates is {len(all_candidates)}, which is lower than your request keyword_num"
+            f"total number of keyword candidates is {len(all_candidates)}, which is"
+            " lower than your request keyword_num"
         )
 
     N = min(len(all_candidates), keyword_num)

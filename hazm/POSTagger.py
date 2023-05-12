@@ -86,21 +86,25 @@ class POSTagger(SequenceTagger):
             "prev_word": "" if index == 0 else sentence[index - 1],
             "two_prev_word": "" if index == 0 else sentence[index - 2],
             "next_word": "" if index == len(sentence) - 1 else sentence[index + 1],
-            "two_next_word": ""
-            if (index == len(sentence) - 1 or index == len(sentence) - 2)
-            else sentence[index + 2],
+            "two_next_word": (
+                ""
+                if (index == len(sentence) - 1 or index == len(sentence) - 2)
+                else sentence[index + 2]
+            ),
             # digit
             "is_numeric": sentence[index].isdigit(),
             "prev_is_numeric": "" if index == 0 else sentence[index - 1].isdigit(),
-            "next_is_numeric": ""
-            if index == len(sentence) - 1
-            else sentence[index + 1].isdigit(),
+            "next_is_numeric": (
+                "" if index == len(sentence) - 1 else sentence[index + 1].isdigit()
+            ),
             # punc
             "is_punc": self.__is_punc(sentence[index]),
             "prev_is_punc": "" if index == 0 else self.__is_punc(sentence[index - 1]),
-            "next_is_punc": ""
-            if index == len(sentence) - 1
-            else self.__is_punc(sentence[index + 1]),
+            "next_is_punc": (
+                ""
+                if index == len(sentence) - 1
+                else self.__is_punc(sentence[index + 1])
+            ),
         }
 
     def tag(self, tokens):
@@ -167,7 +171,10 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
     def __init__(self, model_filename, path_to_jar, *args, **kwargs) -> None:
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
-            model_filename=model_filename, path_to_jar=path_to_jar, *args, **kwargs,
+            model_filename=model_filename,
+            path_to_jar=path_to_jar,
+            *args,
+            **kwargs,
         )
 
     def tag(self, tokens):

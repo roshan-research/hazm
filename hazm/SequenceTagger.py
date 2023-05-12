@@ -8,7 +8,16 @@ from sklearn.metrics import accuracy_score
 
 
 def features(sent, index):
-    return {"word": sent[index], "is_first": index == 0, "is_last": index == len(sent), "is_num": sent[index].isdigit(), "prev_word": sent[index - 1] if index != 0 else "", "next_word": sent[index + 1] if index != len(sent) - 1 else ""}
+    return {
+        "word": sent[index],
+        "is_first": index == 0,
+        "is_last": index == len(sent),
+        "is_num": sent[index].isdigit(),
+        "prev_word": sent[index - 1] if index != 0 else "",
+        "next_word": sent[index + 1] if index != len(sent) - 1 else "",
+    }
+
+
 def data_maker(tokens):
     return [[features(sent, index) for index in range(len(sent))] for sent in tokens]
 
@@ -335,7 +344,13 @@ class IOBTagger(SequenceTagger):
             for tagged_sent in tagged_list
         ]
         return super().train(
-            tagged_list, c1, c2, max_iteration, verbose, file_name, report_duration,
+            tagged_list,
+            c1,
+            c2,
+            max_iteration,
+            verbose,
+            file_name,
+            report_duration,
         )
 
     def evaluate(self, tagged_sent):

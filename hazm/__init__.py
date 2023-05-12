@@ -1,53 +1,20 @@
-from .Chunker import Chunker
-from .Chunker import RuleBasedChunker
-from .Chunker import tree2brackets
-
-from .CorpusReaders import BijankhanReader
-from .CorpusReaders import DadeganReader
-from .CorpusReaders import DegarbayanReader
-from .CorpusReaders import HamshahriReader
-from .CorpusReaders import MirasTextReader
-from .CorpusReaders import PersicaReader
-from .CorpusReaders import PeykareReader
-from .CorpusReaders import QuranCorpusReader
-from .CorpusReaders import SentiPersReader
-from .CorpusReaders import TNewsReader
-from .CorpusReaders import TreebankReader
-from .CorpusReaders import VerbValencyReader
-from .CorpusReaders import WikipediaReader
-
-from .DependencyParser import DependencyParser
-from .DependencyParser import MaltParser
-from .DependencyParser import TurboParser
-
-from .InformalNormalizer import InformalLemmatizer
-from .InformalNormalizer import InformalNormalizer
-
-from .Lemmatizer import Conjugation
-from .Lemmatizer import Lemmatizer
-
+from .Chunker import Chunker, RuleBasedChunker, tree2brackets
+from .CorpusReaders import (BijankhanReader, DadeganReader, DegarbayanReader,
+                            HamshahriReader, MirasTextReader, PersicaReader,
+                            PeykareReader, QuranCorpusReader, SentiPersReader,
+                            TNewsReader, TreebankReader, VerbValencyReader,
+                            WikipediaReader)
+from .DependencyParser import DependencyParser, MaltParser, TurboParser
+from .InformalNormalizer import InformalLemmatizer, InformalNormalizer
+from .Lemmatizer import Conjugation, Lemmatizer
 from .Normalizer import Normalizer
-
-from .POSTagger import POSTagger
-from .POSTagger import StanfordPOSTagger
-
+from .POSTagger import POSTagger, StanfordPOSTagger
 from .SentenceTokenizer import SentenceTokenizer
-
-from .SequenceTagger import IOBTagger
-from .SequenceTagger import SequenceTagger
-
+from .SequenceTagger import IOBTagger, SequenceTagger
 from .Stemmer import Stemmer
-
 from .TokenSplitter import TokenSplitter
-
-from .utils import stopwords_list
-from .utils import words_list
-from .utils import default_verbs
-from .utils import default_words
-
+from .utils import default_verbs, default_words, stopwords_list, words_list
 from .WordTokenizer import WordTokenizer
-
-
 
 
 def sent_tokenize(text: str):

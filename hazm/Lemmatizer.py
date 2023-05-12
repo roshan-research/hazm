@@ -284,7 +284,8 @@ class Conjugation:
         return [
             x + " " + y
             for x, y in zip(
-                self.perfective_past("داشت"), self.passive_imperfective_past(ri),
+                self.perfective_past("داشت"),
+                self.passive_imperfective_past(ri),
             )
         ]
 
@@ -302,9 +303,7 @@ class Conjugation:
         Returns:
              صورت‌های صرفی فعل در زمان حال کامل.
         """
-        return [
-            ri + x for x in ["ه‌ام", "ه‌ای", "ه است", "ه", "ه‌ایم", "ه‌اید", "ه‌اند"]
-        ]
+        return [ri + x for x in ["ه‌ام", "ه‌ای", "ه است", "ه", "ه‌ایم", "ه‌اید", "ه‌اند"]]
 
     def negative_present_perfect(self, ri: str) -> List[str]:
         """فعل را در زمان حال کامل به‌شکل منفی صرف می‌کند.
@@ -609,7 +608,8 @@ class Conjugation:
         ]
 
     def negative_passive_subjunctive_imperfective_present_perfect(
-        self, ri: str,
+        self,
+        ri: str,
     ) -> List[str]:
         """فعل را در زمان حال کامل پایا در وجه التزامی در حالت مجهول به‌شکل منفی صرف می‌کند.
 
@@ -646,7 +646,8 @@ class Conjugation:
         return [
             x + " " + y
             for x, y in zip(
-                self.present_perfect("داشت"), self.imperfective_present_perfect(ri),
+                self.present_perfect("داشت"),
+                self.imperfective_present_perfect(ri),
             )
         ]
 
@@ -817,7 +818,8 @@ class Conjugation:
         return [
             x + " " + y
             for x, y in zip(
-                self.perfective_past("داشت"), self.imperfective_past_precedent(ri),
+                self.perfective_past("داشت"),
+                self.imperfective_past_precedent(ri),
             )
         ]
 
@@ -1092,7 +1094,8 @@ class Conjugation:
         return ["می‌" + x for x in self.subjunctive_past_precedent_perfect(ri)]
 
     def negative_subjunctive_imperfective_past_precedent_perfect(
-        self, ri: str,
+        self,
+        ri: str,
     ) -> List[str]:
         """فعل را در زمان گذشتهٔ پیشین کامل پایا در وجه التزامی به‌شکل منفی صرف می‌کند.
 
@@ -1128,7 +1131,8 @@ class Conjugation:
         return [ri + "ه " + x for x in self.imperfective_past_precedent_perfect("شد")]
 
     def negative_passive_imperfective_past_precedent_perfect(
-        self, ri: str,
+        self,
+        ri: str,
     ) -> List[str]:
         """فعل را در زمان گذشتهٔ پیشین کامل پایا در حالت مجهول به‌شکل منفی صرف می‌کند.
 
@@ -1149,7 +1153,8 @@ class Conjugation:
         ]
 
     def passive_subjunctive_imperfective_past_precedent_perfect(
-        self, ri: str,
+        self,
+        ri: str,
     ) -> List[str]:
         """فعل را در زمان گذشتهٔ پیشین کامل پایا در وجه التزامی در حالت مجهول صرف می‌کند.
 
@@ -1170,7 +1175,8 @@ class Conjugation:
         ]
 
     def negative_passive_subjunctive_imperfective_past_precedent_perfect(
-        self, ri: str,
+        self,
+        ri: str,
     ) -> List[str]:
         """فعل را در زمان گذشتهٔ پیشین کامل پایا در وجه التزامی در حالت مجهول به‌شکل منفی صرف می‌کند.
 
@@ -1250,7 +1256,7 @@ class Conjugation:
         """
         return [rii + x for x in ["م", "ی", "د", "یم", "ید", "ند"]]
 
-    def negative_perfective_present(self, rii: str) -> List[str] :
+    def negative_perfective_present(self, rii: str) -> List[str]:
         """فعل را در زمان حال مطلق به‌شکل منفی صرف می‌کند.
 
         Examples:
@@ -1520,7 +1526,8 @@ class Conjugation:
         return [
             x + " " + y
             for x, y in zip(
-                self.perfective_present("دار"), self.imperfective_present(rii),
+                self.perfective_present("دار"),
+                self.imperfective_present(rii),
             )
         ]
 
@@ -1541,7 +1548,8 @@ class Conjugation:
         return [
             x + " " + y
             for x, y in zip(
-                self.perfective_present("دار"), self.passive_imperfective_present(ri),
+                self.perfective_present("دار"),
+                self.passive_imperfective_present(ri),
             )
         ]
 

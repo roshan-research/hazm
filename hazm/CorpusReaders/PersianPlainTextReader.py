@@ -26,5 +26,10 @@ class PersianPlainTextReader(PlaintextCorpusReader):
         encoding="utf8",
     ) -> None:
         super().__init__(
-            root, fileids, word_tokenizer, sent_tokenizer, para_block_reader, encoding,
+            root,
+            fileids,
+            word_tokenizer,
+            sent_tokenizer,
+            para_block_reader,
+            encoding,
         )

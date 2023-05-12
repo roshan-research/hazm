@@ -344,7 +344,8 @@ nowiki = re.compile(r"<nowiki>.*?</nowiki>")
 
 def ignoreTag(tag):
     left = re.compile(
-        r"<%s\b.*?>" % tag, re.IGNORECASE | re.DOTALL,
+        r"<%s\b.*?>" % tag,
+        re.IGNORECASE | re.DOTALL,
     )  # both <ref> and <reference>
     right = re.compile(r"</\s*%s>" % tag, re.IGNORECASE)
     options.ignored_tag_patterns.append((left, right))
@@ -425,7 +426,6 @@ class Template(list):
         # Template:ppp containing "{{{{{{p}}}}}}", {{ppp|p=q|q=r}} and even
         # {{ppp|q=r|p=q}} gives r, but using Template:tvvv containing
         # "{{{{{{{{{p}}}}}}}}}", {{tvvv|p=q|q=r|r=s}} gives s.
-
 
         if depth > extractor.maxParameterRecursionLevels:
             extractor.recursion_exceeded_3_errs += 1
@@ -593,7 +593,9 @@ class Extractor:
     def extract(self, out):
         """:param out: a memory file."""
         # Separate header from text with a newline.
-        title_str = "<h1>" + self.title + "</h1>" if options.toHTML else self.title + "\n"
+        title_str = (
+            "<h1>" + self.title + "</h1>" if options.toHTML else self.title + "\n"
+        )
         # https://www.mediawiki.org/wiki/Help:Magic_words
         colon = self.title.find(":")
         if colon != -1:
@@ -788,7 +790,10 @@ class Extractor:
         text = re.sub(r" (,:\.\)\]»)", r"\1", text)
         text = re.sub(r"(\[\(«) ", r"\1", text)
         text = re.sub(
-            r"\n\W+?\n", "\n", text, flags=re.U,
+            r"\n\W+?\n",
+            "\n",
+            text,
+            flags=re.U,
         )  # lines with only punctuations
         text = text.replace(",,", ",").replace(",.", ".")
         if options.keep_tables:
@@ -842,7 +847,6 @@ class Extractor:
         if self.frame.depth >= self.maxTemplateRecursionLevels:
             self.recursion_exceeded_1_errs += 1
             return res
-
 
         cur = 0
         # look for matching {{...}}
@@ -1420,7 +1424,7 @@ def string_sublength(args):
 
 
 def string_len(args):
-    params = functionParams(args, ("s"))
+    params = functionParams(args, "s")
     s = params.get("s", "")
     return len(s)
 
@@ -1465,7 +1469,7 @@ def string_replace(args):
 
 
 def string_rep(args):
-    params = functionParams(args, ("s"))
+    params = functionParams(args, "s")
     source = params.get("source", "")
     count = int(params.get("count", "1"))
     return source * count
@@ -1755,7 +1759,6 @@ class Infix:
 ROUND = Infix(lambda x, y: round(x, y))
 
 
-
 def sharp_expr(extr, expr):
     """Tries converting a lua expr into a Python expr."""
     try:
@@ -1907,7 +1910,12 @@ def callParserFunction(functionName, args, extractor):
         if functionName == "#invoke":
             module, fun = args[0].strip(), args[1].strip()
             logging.debug(
-                "%*s#invoke %s %s %s", extractor.frame.depth, "", module, fun, args[2:],
+                "%*s#invoke %s %s %s",
+                extractor.frame.depth,
+                "",
+                module,
+                fun,
+                args[2:],
             )
             # special handling of frame
             if len(args) == 2:
@@ -1928,7 +1936,12 @@ def callParserFunction(functionName, args, extractor):
                 params = extractor.templateParams(params)
             ret = sharp_invoke(module, fun, params)
             logging.debug(
-                "%*s<#invoke %s %s %s", extractor.frame.depth, "", module, fun, ret,
+                "%*s<#invoke %s %s %s",
+                extractor.frame.depth,
+                "",
+                module,
+                fun,
+                ret,
             )
             return ret
         if functionName in parserFunctions:
@@ -1991,7 +2004,11 @@ def define_template(title, page):
     onlyincludeAccumulator = ""
     for m in re.finditer("<onlyinclude>(.*?)</onlyinclude>", text, re.DOTALL):
         onlyincludeAccumulator += m.group(1)
-    text = onlyincludeAccumulator if onlyincludeAccumulator else reIncludeonly.sub("", text)
+    text = (
+        onlyincludeAccumulator
+        if onlyincludeAccumulator
+        else reIncludeonly.sub("", text)
+    )
 
     if text:
         if title in options.templates:
@@ -2401,7 +2418,8 @@ def makeExternalImage(url, alt=""):
 tailRE = re.compile(r"\w+")
 
 syntaxhighlight = re.compile(
-    "&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;", re.DOTALL,
+    "&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;",
+    re.DOTALL,
 )
 
 # skip level 1, it is page name level
@@ -2579,7 +2597,8 @@ class NextFile:
         char1 = self.dir_index % 26
         char2 = self.dir_index // 26 % 26
         return os.path.join(
-            self.path_name, "%c%c" % (ord("A") + char2, ord("A") + char1),
+            self.path_name,
+            "%c%c" % (ord("A") + char2, ord("A") + char1),
         )
 
     def _filepath(self):
@@ -2740,7 +2759,12 @@ def pages_from(input):
 
 
 def process_dump(
-    input_file, template_file, out_file, file_size, file_compress, process_count,
+    input_file,
+    template_file,
+    out_file,
+    file_size,
+    file_compress,
+    process_count,
 ):
     """:param input_file: name of the wikipedia dump file; '-' to read from stdin
     :param template_file: optional file with template definitions.
@@ -2751,7 +2775,11 @@ def process_dump(
     :param process_count: number of extraction processes to spawn.
 
     """
-    input = sys.stdin if input_file == "-" else fileinput.FileInput(input_file, openhook=fileinput.hook_compressed)
+    input = (
+        sys.stdin
+        if input_file == "-"
+        else fileinput.FileInput(input_file, openhook=fileinput.hook_compressed)
+    )
 
     # collect siteinfo
     for line in input:
@@ -2788,25 +2816,33 @@ def process_dump(
                 logging.info("Loading template definitions from: %s", template_file)
                 # can't use with here:
                 file = fileinput.FileInput(
-                    template_file, openhook=fileinput.hook_compressed,
+                    template_file,
+                    openhook=fileinput.hook_compressed,
                 )
                 load_templates(file)
                 file.close()
             else:
                 if input_file == "-":
                     # can't scan then reset stdin; must error w/ suggestion to specify template_file
-                    msg = "to use templates with stdin dump, must supply explicit template-file"
+                    msg = (
+                        "to use templates with stdin dump, must supply explicit"
+                        " template-file"
+                    )
                     raise ValueError(
                         msg,
                     )
                 logging.info(
-                    "Preprocessing '%s' to collect template definitions: this may take some time.",
+                    (
+                        "Preprocessing '%s' to collect template definitions: this may"
+                        " take some time."
+                    ),
                     input_file,
                 )
                 load_templates(input, template_file)
                 input.close()
                 input = fileinput.FileInput(
-                    input_file, openhook=fileinput.hook_compressed,
+                    input_file,
+                    openhook=fileinput.hook_compressed,
                 )
         template_load_elapsed = default_timer() - template_load_start
         logging.info(
@@ -2852,7 +2888,8 @@ def process_dump(
     workers = []
     for i in range(worker_count):
         extractor = Process(
-            target=extract_process, args=(options, i, jobs_queue, output_queue),
+            target=extract_process,
+            args=(options, i, jobs_queue, output_queue),
         )
         extractor.daemon = True  # only live while parent process lives
         extractor.start()
@@ -2946,7 +2983,12 @@ report_period = 10000  # progress report period
 
 
 def reduce_process(
-    opts, output_queue, spool_length, out_file=None, file_size=0, file_compress=True,
+    opts,
+    output_queue,
+    spool_length,
+    out_file=None,
+    file_size=0,
+    file_compress=True,
 ):
     """Pull finished article text, write series of files (or stdout)
     :param opts: global parameters.
@@ -2986,7 +3028,9 @@ def reduce_process(
             if next_page % report_period == 0:
                 interval_rate = report_period / (default_timer() - interval_start)
                 logging.info(
-                    "Extracted %d articles (%.1f art/s)", next_page, interval_rate,
+                    "Extracted %d articles (%.1f art/s)",
+                    next_page,
+                    interval_rate,
                 )
                 interval_start = default_timer()
         else:
@@ -3039,7 +3083,10 @@ def main():
         metavar="n[KMG]",
     )
     groupO.add_argument(
-        "-c", "--compress", action="store_true", help="compress output files using bzip",
+        "-c",
+        "--compress",
+        action="store_true",
+        help="compress output files using bzip",
     )
     groupO.add_argument(
         "--json",
@@ -3049,11 +3096,16 @@ def main():
 
     groupP = parser.add_argument_group("Processing")
     groupP.add_argument(
-        "--html", action="store_true", help="produce HTML output, subsumes --links",
+        "--html",
+        action="store_true",
+        help="produce HTML output, subsumes --links",
     )
     groupP.add_argument("-l", "--links", action="store_true", help="preserve links")
     groupP.add_argument(
-        "-s", "--sections", action="store_true", help="preserve sections",
+        "-s",
+        "--sections",
+        action="store_true",
+        help="preserve sections",
     )
     groupP.add_argument("--lists", action="store_true", help="preserve lists")
     groupP.add_argument(
@@ -3065,7 +3117,9 @@ def main():
     )
     groupP.add_argument("--templates", help="use or create file containing templates")
     groupP.add_argument(
-        "--no-templates", action="store_false", help="Do not expand templates",
+        "--no-templates",
+        action="store_false",
+        help="Do not expand templates",
     )
     groupP.add_argument(
         "-r",
@@ -3078,13 +3132,19 @@ def main():
         "--min_text_length",
         type=int,
         default=options.min_text_length,
-        help="Minimum expanded text length required to write document (default=%(default)s)",
+        help=(
+            "Minimum expanded text length required to write document"
+            " (default=%(default)s)"
+        ),
     )
     groupP.add_argument(
         "--filter_disambig_pages",
         action="store_true",
         default=options.filter_disambig_pages,
-        help="Remove pages from output that contain disabmiguation markup (default=%(default)s)",
+        help=(
+            "Remove pages from output that contain disabmiguation markup"
+            " (default=%(default)s)"
+        ),
     )
     groupP.add_argument(
         "-it",
@@ -3098,7 +3158,10 @@ def main():
         "--discard_elements",
         default="",
         metavar="gallery,timeline,noinclude",
-        help="comma separated list of elements that will be removed from the article text",
+        help=(
+            "comma separated list of elements that will be removed from the article"
+            " text"
+        ),
     )
     groupP.add_argument(
         "--keep_tables",
@@ -3116,7 +3179,10 @@ def main():
 
     groupS = parser.add_argument_group("Special")
     groupS.add_argument(
-        "-q", "--quiet", action="store_true", help="suppress reporting progress info",
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="suppress reporting progress info",
     )
     groupS.add_argument("--debug", action="store_true", help="print debug info")
     groupS.add_argument(

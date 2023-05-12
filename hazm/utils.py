@@ -5,7 +5,7 @@ import re
 from os import path
 from typing import Any, Dict, List, Tuple
 
-#fdfd
+# fdfd
 data_path = path.join(path.dirname(__file__), "data")
 default_words = path.join(data_path, "words.dat")
 default_stopwords = path.join(data_path, "stopwords.dat")

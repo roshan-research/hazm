@@ -59,9 +59,9 @@ class WordTokenizer(TokenizerI):
         self.pattern = re.compile(r'([؟!?]+|[\d.:]+|[:.،؛»\])}"«\[({/\\])')  # TODO \d
         self.emoji_pattern = re.compile(
             "["
-            "\U0001F600-\U0001F64F"  # emoticons
-            "\U0001F300-\U0001F5FF"  # symbols & pictographs
-            "\U0001F4CC\U0001F4CD"  # other emojis
+            "\U0001f600-\U0001f64f"  # emoticons
+            "\U0001f300-\U0001f5ff"  # symbols & pictographs
+            "\U0001f4cc\U0001f4cd"  # other emojis
             "]",
             flags=re.UNICODE,
         )

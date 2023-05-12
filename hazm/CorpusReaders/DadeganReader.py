@@ -88,7 +88,10 @@ class DadeganReader:
     """
 
     def __init__(
-        self, conll_file: str, pos_map: str = coarse_pos_e, universal_pos: bool = False,
+        self,
+        conll_file: str,
+        pos_map: str = coarse_pos_e,
+        universal_pos: bool = False,
     ) -> None:
         self._conll_file = conll_file
         if pos_map is None:

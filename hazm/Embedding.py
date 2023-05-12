@@ -26,7 +26,10 @@ class WordEmbedding:
 
     def __init__(self, model_type: str, model_path: str = None) -> None:
         if model_type not in supported_embeddings:
-            msg = f'Model type "{model_type}" is not supported! Please choose from {supported_embeddings}'
+            msg = (
+                f'Model type "{model_type}" is not supported! Please choose from'
+                f" {supported_embeddings}"
+            )
             raise KeyError(
                 msg,
             )
@@ -59,7 +62,10 @@ class WordEmbedding:
             self.model = KeyedVectors.load_word2vec_format(word2vec_addr)
             self.model_type = "keyedvector"
         else:
-            msg = f"{self.model_type} not supported! Please choose from {supported_embeddings}"
+            msg = (
+                f"{self.model_type} not supported! Please choose from"
+                f" {supported_embeddings}"
+            )
             raise KeyError(
                 msg,
             )
@@ -91,12 +97,18 @@ class WordEmbedding:
         if self.model_type != "fasttext":
             self.model = "fasttext"
             warnings.warn(
-                f"this function is for training fasttext models only and {self.model_type} is not supported",
+                (
+                    "this function is for training fasttext models only and"
+                    f" {self.model_type} is not supported"
+                ),
             )
 
         fasttext_model_types = ["cbow", "skipgram"]
         if fasttext_type not in fasttext_model_types:
-            msg = f'Model type "{fasttext_type}" is not supported! Please choose from {fasttext_model_types}'
+            msg = (
+                f'Model type "{fasttext_type}" is not supported! Please choose from'
+                f" {fasttext_model_types}"
+            )
             raise KeyError(
                 msg,
             )
@@ -355,7 +367,8 @@ class SentEmbedding:
             return float(
                 str(
                     self.model.similarity_unseen_docs(
-                        word_tokenize(sent1), word_tokenize(sent2),
+                        word_tokenize(sent1),
+                        word_tokenize(sent2),
                     ),
                 ),
             )
@@ -370,5 +383,6 @@ class SentenceEmbeddingCorpus:
         normalizer = Normalizer()
         for i, list_of_words in enumerate(open(corpus_path)):
             yield TaggedDocument(
-                word_tokenize(normalizer.normalize(list_of_words)), [i],
+                word_tokenize(normalizer.normalize(list_of_words)),
+                [i],
             )

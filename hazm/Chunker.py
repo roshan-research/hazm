@@ -5,12 +5,12 @@
 
 """
 
+from typing import List, Tuple
+
 from nltk.chunk import RegexpParser, conlltags2tree, tree2conlltags
 
 from .POSTagger import POSTagger
 from .SequenceTagger import IOBTagger
-from typing import Tuple
-from typing import List
 
 
 def tree2brackets(tree):
@@ -130,7 +130,7 @@ class Chunker(IOBTagger):
             report_duration,
         )
 
-    def parse(self, sentence: List[Tuple[str,str]]) -> str:
+    def parse(self, sentence: List[Tuple[str, str]]) -> str:
         """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
         دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
 
