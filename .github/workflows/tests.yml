@@ -27,7 +27,7 @@ jobs:
                   python-version: ${{ matrix.python-versions }}
                   
             - name: Install and configure Poetry
-              uses: snok/install-poetry@v1
+              run: curl -sSL https://install.python-poetry.org | python3 -
               
             - name: Install requirements packages
               run: poetry install
