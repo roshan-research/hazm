@@ -131,7 +131,13 @@ target-version = ['py37']
 preview = true
 
 [tool.pytest.ini_options]
-addopts = "--ignore=hazm/SequenceTagger.py --ignore=hazm/CorpusReaders/TreeBankReader.py"
+addopts = """
+--ignore=hazm/SequenceTagger.py 
+--ignore=hazm/CorpusReaders/TreeBankReader.py
+--ignore=hazm/CorpusReaders/WikipediaReader.py
+--ignore=hazm/Embedding.py
+"""
+filterwarnings = "ignore::DeprecationWarning"
 
 [tool.poe.tasks]
 test = "pytest --doctest-modules --doctest-continue-on-failure"
