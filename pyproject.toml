@@ -27,7 +27,7 @@ keywords = ["nlp", "persian nlp", "persian"]
 "Join-us" = "https://www.roshan-ai.ir/join-us/"
 
 [tool.poetry.dependencies]
-python= ">=3.7, <3.11"
+python= ">=3.7"
 nltk="3.8.1"
 gensim="4.2.0"
 python-crfsuite="0.9.9"
