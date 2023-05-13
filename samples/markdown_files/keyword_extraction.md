@@ -147,7 +147,7 @@ tokenize_text
 
 
 ```python
-model_path = '/repo/ebi/myPosTagger/python-crf/python-crf_uni_iter400_train95_rs10_c1-0.4_c2-0.04.model'
+model_path = '/resources/POSTagger.model'
 tagger = POSTagger(model = model_path)
 token_tag_list = tagger.tag_sents(tokenize_text)
 token_tag_list
@@ -312,7 +312,7 @@ print(np.array(list(all_candidates)))
 
 
 ```python
-sent2vec_model_path = '/repo/ebi/embedding/training_files/trained_models/sent2vec/sent2vec-naab.model'
+sent2vec_model_path = '/resources/sent2vec.model'
 sent2vec_model = SentEmbedding(sent2vec_model_path)
 ```
 
