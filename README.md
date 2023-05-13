@@ -23,12 +23,13 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
 The `Chunker` and `Lemmatizer` as surface analyzers have a precision of 89.9%. Also, `POSTagger` and `DependencyParser` as morphological taggers, have a precision of 97.1%.
 
-|**Module name**       |**Precision**   |
-|----------------------|----------------|
-| **Lemmatizer**       | 89.9%          |
-| **Chunker**          | 89.9%          |
-| **POSTagger**        | 97.1%          |
-| **DependencyParser** | 97.1%          |
+|**Module name**           |**Precision**   |
+|--------------------------|----------------|
+| **Lemmatizer**           | 89.9%          |
+| **Chunker**              | 93.4%          |
+| **POSTagger**            | 97.2%          |
+| **POSTagger(Universal)** | 98.8%          |
+| **DependencyParser**     | 97.1%          |
 
 
 ## Usage
