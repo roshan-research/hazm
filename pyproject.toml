@@ -135,6 +135,7 @@ addopts = """
 --ignore=hazm/SequenceTagger.py 
 --ignore=hazm/CorpusReaders/TreebankReader.py
 --ignore=hazm/CorpusReaders/WikipediaReader.py
+--ignore=hazm/CorpusReaders/WikiExtractor.py
 --ignore=hazm/Embedding.py
 """
 filterwarnings = "ignore::DeprecationWarning"
