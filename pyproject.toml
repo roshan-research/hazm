@@ -127,7 +127,7 @@ lines-after-imports = 2
 known-first-party = ["hazm"]
 
 [tool.black]
-target-version = ['py37']
+target-version = ['py38']
 preview = true
 
 [tool.pytest.ini_options]
