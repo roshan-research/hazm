@@ -141,4 +141,4 @@ addopts = """
 filterwarnings = "ignore::DeprecationWarning"
 
 [tool.poe.tasks]
-test = "pytest --doctest-modules --doctest-continue-on-failure"
+test = "pytest --doctest-modules --doctest-continue-on-failure ${py_file}"
