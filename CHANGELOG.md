@@ -7,21 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Add Windows compatibility without WSL dependency. @E-Ghafour.
-- Enhance the normalizer module with new functionality. @sir-kokabi.
-- Increase the lemmatizer and tokenizer accuracy by adding over 30,000 nouns and 1,000 verbs. @sir-kokabi.
+### Added
+
+- Windows compatibility without WSL dependency. @E-Ghafour.
+- New functionalities in the normalizer. @sir-kokabi.
+- More than 40,000 new words to improve Lemmatizer and Tokenizer. @sir-kokabi.
+- `data_maker` function in SequenceTagger. @E-Ghafour.
+- EZ tag support in PeykareReader. @E-Ghafour.
+- Universal tags support in POSTagger. @E-Ghafour.
+
+### Fixed
+
 - Improve the POSTagger and chunker accuracy. @E-Ghafour.
-- Replace patterns with data_maker function in SequenceTagger. @E-Ghafour.
-- Add universal tags support in POSTagger. @E-Ghafour.
-- Update IOBTagger, POSTagger, Chunker to work with the new implementation. @E-Ghafour.
-- Drop Python 2 support and migrate all code to Python 3. @sir-kokabi.
-- Migrate to mkdocs-material 9 for faster and better-looking docs. @sir-kokabi.
-- Fix tests in some modules. @E-Ghafour @sir-kokabi.
-- Add and increase test coverage in some modules. @E-Ghafour @sir-kokabi.
-- Overhaul the project structure and GitHub repo to follow the latest standards and tools for easier contribution. @sir-kokabi.
-- Add EZ tag support in PeykareReader. @E-Ghafour.
-- Perform a heavy refactoring of some modules for better code readability and maintainability. @sir-kokabi.
+- Improve IOBTagger, POSTagger, Chunker to work with the new implementation. @E-Ghafour.
+- Improve docs appearance by migrating to the mkdocs-material 9. @sir-kokabi.
+- Improve test coverage. @E-Ghafour @sir-kokabi.
+- Improve project structure and GitHub repo to better contribution. @sir-kokabi.
+- Improve code readability and maintainability. @sir-kokabi.
+- Fix some tests issues. @E-Ghafour @sir-kokabi.
 - Fix various reported issues.
+
+### Changed
+
+- Remove Python 2 support and migrate all code to Python 3. @sir-kokabi.
 
 ## [0.8.3] - 2023-03-10
 
