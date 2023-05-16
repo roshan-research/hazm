@@ -31,9 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove Python 2 support and migrate all code to Python 3. @sir-kokabi.
 
-## [0.8.3] - 2023-03-10
-
-
 ## [0.8.2] - 2022-11-29
 
 ### Added
