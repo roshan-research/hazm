@@ -7,20 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Add Windows compatibility without WSL dependency. Thanks @E-Ghafour.
-- Enhance the normalizer module with new functionality. Thanks @sir-kokabi.
-- Increase the lemmatizer and tokenizer accuracy by adding over 30,000 nouns and 1,000 verbs. Thanks @sir-kokabi.
-- Improve the POSTagger and chunker accuracy. Thanks @E-Ghafour.
-- Replace patterns with data_maker function in SequenceTagger. Thanks @E-Ghafour.
-- Add universal tags support in POSTagger. Thanks @E-Ghafour.
-- Update IOBTagger, POSTagger, Chunker to work with the new implementation. Thanks @E-Ghafour.
-- Drop Python 2 support and migrate all code to Python 3. Thanks @sir-kokabi.
-- Migrate to mkdocs-material 9 for faster and better-looking docs. Thanks @sir-kokabi.
-- Fix tests in some modules. Thanks @E-Ghafour and @sir-kokabi.
-- Add and increase test coverage in some modules. Thanks @E-Ghafour and @sir-kokabi.
-- Overhaul the project structure and GitHub repo to follow the latest standards and tools for easier contribution. Thanks @sir-kokabi.
-- Add EZ tag support in PeykareReader. Thanks @E-Ghafour.
-- Perform a heavy refactoring of some modules for better code readability and maintainability. Thanks @sir-kokabi.
+- Add Windows compatibility without WSL dependency. @E-Ghafour.
+- Enhance the normalizer module with new functionality. @sir-kokabi.
+- Increase the lemmatizer and tokenizer accuracy by adding over 30,000 nouns and 1,000 verbs. @sir-kokabi.
+- Improve the POSTagger and chunker accuracy. @E-Ghafour.
+- Replace patterns with data_maker function in SequenceTagger. @E-Ghafour.
+- Add universal tags support in POSTagger. @E-Ghafour.
+- Update IOBTagger, POSTagger, Chunker to work with the new implementation. @E-Ghafour.
+- Drop Python 2 support and migrate all code to Python 3. @sir-kokabi.
+- Migrate to mkdocs-material 9 for faster and better-looking docs. @sir-kokabi.
+- Fix tests in some modules. @E-Ghafour @sir-kokabi.
+- Add and increase test coverage in some modules. @E-Ghafour @sir-kokabi.
+- Overhaul the project structure and GitHub repo to follow the latest standards and tools for easier contribution. @sir-kokabi.
+- Add EZ tag support in PeykareReader. @E-Ghafour.
+- Perform a heavy refactoring of some modules for better code readability and maintainability. @sir-kokabi.
 - Fix various reported issues.
 
 ## [0.8.3] - 2023-03-10
