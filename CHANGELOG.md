@@ -7,29 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+- Add windows compaitiblity by replacing `Wapiti` with `Python-crfsuite`. @E-Ghafour.
+- Add `seperate_mi parameter` to `Normalizer` to separate the prefixes «می» and «نمی» in verbs (می‌خوانم instead of میخوانم). @sir-kokabi. 
+- Add `remove_specials_chars` parameter to `Normalizer` to remove non-useful characters for text processing (e.g. ۝۞). @sir-kokabi.
+- Add `decrease_repeated_chars` parameter to `Normalizer` to remove extra repeated characters. @sir-kokabi.
+- Add `unicodes_replacement` parameter to `Normalizer` to replace some characters with standard ones (e.g. محمد instead of ﷴ). @sir-kokabi.
+- Add regex pattern to `Normalizer` to convert «هها» to «ه‌ها» (e.g. شنبه‌ها instead of شنبهها). @sir-kokabi.
+- Add regex pattern to `Normalizer` to remove unneded ZWNJs after and before space. @sir-kokabi.
+- Add regex pattern to `Normalizer` to correct text with letters and numbers (e.g. پلاک ۱۲ instead of پلاک۱۲). @sir-kokabi.
+- Add more Non-standard unicode characters to be replaced in `Normalizer`. @sir-kokabi.
+- Add regex pattern to `Normalizer` to remove unneded ZWNJs at the start and end of words. @sir-kokabi.
+- Add 40,000+ new words to improve `Lemmatizer` and `Tokenizer`. @sir-kokabi.
+- `PersianPlainTextReader`, remove diacritics, new nltk compatibility (#120). @mhbashari.
+- Support slash & back-slash (/ \) in `Tokenizer` (#102). @elahimanesh.
+- Support universal POS mapper to `PeykareReader` & `DadeganReader` (#239). @phsfr.
+- Fix pep8 issues. (#135). @hadifar.
+- Add translate_nums option to `Normalizer` (#16). @kharazi.
+- Change می روم to می‌روم in example (#203). @SMSadegh19.
+- Improve `InformalNormalizer` #219. @riasati.
+- Add new tests and fix some tests. @sir-kokabi @E-Ghafour.
+- Move Corpus Readers to `CorpusReaders` folder. @sir-kokabi.
+- Update accuracy of `Lemmatizer`, `POSTagger`, `DependencyParser` in the readme. @E-Ghafour.
+- Add Contribution section to readme. @sir-kokabi.
+- Add `POSTagger` and `Chunker` accuracy to docs. @sir-kokabi.
+- Add a central `CHANGELOG.md`. @sir-kokabi.
+- Add new GitHub workflows. @sir-kokabi.
+- Add an example of extracting keywords with the help of [hazm](https://github.com/roshan-research/hazm) to docs. @E-Ghafour @sir-kokabi.
+- Add [Contribution](https://github.com/roshan-research/hazm/blob/master/CONTRIBUTION.md) and [Coding guide](https://github.com/roshan-research/hazm/blob/master/CODING.md). @sir-kokabi.
+- Add some [shields](https://shields.io/) to readme. @sir-kokabi.
+- Improve `conjugation` function. @sir-kokabi.
+- Fix `Stemmer` issues with multiple suffixes. @sir-kokabi.
+- Refactor and optimize codes. @sir-kokabi.
+- Fix reported issues.
+- Migrate from Travis to GitHub Action. @sir-kokabi.
+- Remove `remove_extra_spaces`, `affix_spacing` and `punctuation_spacing` parameters from `Normalizer` and replace them with one `correct_spacing` parameter. @sir-kokabi.
+- Remove `token_based` parameter from `Normalizer`. @sir-kokabi.
+- Remove `setup.py`, `requirements.txt` and replace them with [pyproject.toml](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/) file. @sir-kokabi.
+- Remove `tests.py` and run tests with [pytest](https://pytest.org/) via [poethepoet](https://poethepoet.natn.io/). @sir-kokabi.
+- Update .gitignore file. @sir-kokabi.
+- Use [poetry](https://python-poetry.org/)) tool. @sir-kokabi.
+- Change minimum python requirement version to `3.8` in readme. @sir-kokabi.
+- Replace **sobhe** with new name **Roshan-Research**. @sir-kokabi.
 
-- Windows compatibility without WSL dependency. @E-Ghafour.
-- New functionalities in the normalizer. @sir-kokabi.
-- More than 40,000 new words to improve Lemmatizer and Tokenizer. @sir-kokabi.
-- `data_maker` function in SequenceTagger. @E-Ghafour.
-- EZ tag support in PeykareReader. @E-Ghafour.
-- Universal tags support in POSTagger. @E-Ghafour.
-
-### Fixed
-
-- Improve the POSTagger and chunker accuracy. @E-Ghafour.
-- Improve IOBTagger, POSTagger, Chunker to work with the new implementation. @E-Ghafour.
-- Improve docs appearance by migrating to the mkdocs-material 9. @sir-kokabi.
-- Improve test coverage. @E-Ghafour @sir-kokabi.
-- Improve project structure and GitHub repo to better contribution. @sir-kokabi.
-- Improve code readability and maintainability. @sir-kokabi.
-- Fix some tests issues. @E-Ghafour @sir-kokabi.
-- Fix various reported issues.
-
-### Changed
-
-- Remove Python 2 support and migrate all code to Python 3. @sir-kokabi.
+**Full Changelog**: https://github.com/roshan-research/hazm/compare/v0.8.2...v0.9.0
 
 ## [0.8.2] - 2022-11-29
 
