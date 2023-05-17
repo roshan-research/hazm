@@ -22,7 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support slash & back-slash (/ \) in `Tokenizer` (#102). @elahimanesh.
 - Support universal POS mapper to `PeykareReader` & `DadeganReader` (#239). @phsfr.
 - Fix pep8 issues. (#135). @hadifar.
-- Add translate_nums option to `Normalizer` (#16). @kharazi.
 - Change می روم to می‌روم in example (#203). @SMSadegh19.
 - Improve `InformalNormalizer` #219. @riasati.
 - Add new tests and fix some tests. @sir-kokabi @E-Ghafour.
