@@ -9,20 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Windows compaitiblity by using `Python-crfsuite` instead of `Wapiti`. @E-Ghafour.
+- Pretrained `Chunker` and `POSTagger` models with `Python-crfsuite`. @E-Ghafour.
 - Four parameters to Normalizer for better text processing: `seperate_mi`, `remove_specials_chars`, `decrease_repeated_chars`, and `unicodes_replacement`. @sir-kokabi.
-- Three regex patterns to Normalizer to fix ZWNJs and spacing issues. @sir-kokabi.
+- Three regex patterns to Normalizer, fix ZWNJs and spacing issues. @sir-kokabi.
 - 400 Non-standard unicode characters to be replaced in `Normalizer`. @sir-kokabi.
 - 40,000+ new words to improve `Lemmatizer` and `Tokenizer`. @sir-kokabi.
-- `PersianPlainTextReader` to process raw text datasets (#120). @mhbashari.
-- Slash & back-slash (/ \) support in `Tokenizer` (#102). @elahimanesh.
+- `train` function for `Word2vec` and `Sent2vec` modules in `Embedding`. @E-Ghafour.
+- Implement `keywordExtraction` with the `embedRank` approach as a sample of Hazm usage. @E-Ghafour.
+- Support `Universal tags` in `POSTagger`. @E-Ghafour.
 - Support universal POS mapper in `PeykareReader` & `DadeganReader` (#239). @phsfr.
-- `data_maker` function instead of pattern in SequenceTagger. @E-Ghafour.
-- Support Universal tags in POSTagger && EZ tag in PeykareReader. @E-Ghafour.
+- `PersianPlainTextReader` to process raw text datasets (#120). @mhbashari.
+- Support `EZ` tag in `PeykareReader`. @E-Ghafour.
+- Slash & back-slash (/ \) support in `Tokenizer` (#102). @elahimanesh.
 - `Conjugation` class to handle verb conjugation. @sir-kokabi.
 
 ### Fixed
+- Improve the accuracy of `POSTagger` and `Chunker`. @E-Ghafour.
 - Improve `InformalNormalizer` #219. @riasati.
-- Improve the accuracy of POSTagger and chunker. @E-Ghafour.
 - Fix pep8 issues. (#135). @hadifar.
 - Fix Some tests issues. @sir-kokabi @E-Ghafour.
 - Fix `Stemmer` issues with multiple suffixes. @sir-kokabi.
@@ -30,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Drop Python 2 support and migrate all code to Python 3. @sir-kokabi.
+- Use `data_maker` function instead of `patterns` in `SequenceTagger`. @E-Ghafour.
+- Refactor `IOBTagger` and `POSTagger` to be compatible with `data_maker`. @E_Ghafour.
 - Change می روم to می‌روم in example (#203). @SMSadegh19.
 - Overhaul the project structure and GitHub repo. @sir-kokabi.
 
