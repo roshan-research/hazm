@@ -1,4 +1,4 @@
-name: Publish to pypi
+name: Publish
 
 on: 
   workflow_dispatch:
@@ -6,7 +6,8 @@ on:
     types: [created]
 
 jobs:
-  build:
+  publish:
+    needs: update-docs
     runs-on: ubuntu-latest    
     steps:
     - name: Checkout
