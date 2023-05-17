@@ -34,7 +34,6 @@ The `Chunker` and `Lemmatizer` as surface analyzers have a precision of 89.9%. A
 ## Usage
 
 ```python
->>> from __future__ import unicode_literals
 >>> from hazm import *
 
 >>> normalizer = Normalizer()
@@ -53,11 +52,11 @@ The `Chunker` and `Lemmatizer` as surface analyzers have a precision of 89.9%. A
 >>> lemmatizer.lemmatize('می‌روم')
 'رفت#رو'
 
->>> tagger = POSTagger(model='resources/postagger.model')
+>>> tagger = POSTagger(model='resources/POSTagger.model')
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
->>> chunker = Chunker(model='resources/chunker.model')
+>>> chunker = Chunker(model='resources/Chunker.model')
 >>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
