@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Windows compaitiblity by using `Python-crfsuite` instead of `Wapiti`. @E-Ghafour.
 - Pretrained `Chunker` and `POSTagger` models with `Python-crfsuite`. @E-Ghafour.
-- Four parameters to Normalizer for better text processing: `seperate_mi`, `remove_specials_chars`, `decrease_repeated_chars`, and `unicodes_replacement`. @sir-kokabi.
-- Three regex patterns to Normalizer, fix ZWNJs and spacing issues. @sir-kokabi.
+- Four parameters in Normalizer to better text processing: `seperate_mi`, `remove_specials_chars`, `decrease_repeated_chars`, and `unicodes_replacement`. @sir-kokabi.
+- Three regex patterns in Normalizer to fix ZWNJs and spacing issues. @sir-kokabi.
 - 400 Non-standard unicode characters to be replaced in `Normalizer`. @sir-kokabi.
 - 40,000+ new words to improve `Lemmatizer` and `Tokenizer`. @sir-kokabi.
 - `train` function for `Word2vec` and `Sent2vec` modules in `Embedding`. @E-Ghafour.
