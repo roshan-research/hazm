@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 400 Non-standard unicode characters to be replaced in `Normalizer`. @sir-kokabi.
 - 40,000+ new words to improve `Lemmatizer` and `Tokenizer`. @sir-kokabi.
 - `PersianPlainTextReader` to process raw text datasets (#120). @mhbashari.
-- slash & back-slash (/ \) support in `Tokenizer` (#102). @elahimanesh.
+- Slash & back-slash (/ \) support in `Tokenizer` (#102). @elahimanesh.
 - Support universal POS mapper in `PeykareReader` & `DadeganReader` (#239). @phsfr.
 - `data_maker` function instead of pattern in SequenceTagger. @E-Ghafour.
 - Support Universal tags in POSTagger && EZ tag in PeykareReader. @E-Ghafour.
