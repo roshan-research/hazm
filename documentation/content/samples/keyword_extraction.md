@@ -1,13 +1,11 @@
-در این مثال قصد داریم با کمک هضم و برخی از کتابخانه‌های پردازش زبان، کلمات کلیدی یک متن را استخراج کنیم. در تمام الگوریتم‌های استخراج کلمات کلیدی، ابتدا باید متن خام 
+در این مثال قصد داریم با کمک هضم و برخی از کتابخانه‌های پردازش زبان، کلمات کلیدی یک متن را استخراج کنیم. در تمام الگوریتم‌های استخراج کلمات کلیدی، ابتدا باید متن خام
 ورودی نرمال‌سازی، توکنایز و برچسب‌گذاری شود که انجام این کارها به سادگی توسط کتابخانهٔ هضم میسر است.
 
 ابتدا آخرین نسخهٔ هضم و تمام کتابخانه‌هایی را که در مثال زیر ایمپورت شده‌اند نصب کنید.
 
-
 ```python
 pip install hazm
 ```
-
 
 ```python
 import numpy as np
@@ -21,11 +19,10 @@ from configparser import ConfigParser
 from functools import reduce
 from gensim.models import Doc2Vec
 from hazm.Embedding import SentEmbedding
-from hazm import * 
+from hazm import *
 ```
 
 متنی را برای استخراج کلمات کلیدی آن در نظر بگیرید.
-
 
 ```python
 text = 'سفارت ایران در مادرید درباره فیلم منتشرشده از «حسن قشقاوی» در مراسم سال نو در کاخ سلطنتی اسپانیا و حاشیه‌سازی‌ها در فضای مجازی اعلام کرد: به تشریفات دربار کتباً اعلام شد سفیر بدون همراه در مراسم حضور خواهد داشت و همچون قبل به دلایل تشریفاتی نمی‌تواند با ملکه دست بدهد. همان‌گونه که کارشناس رسمی تشریفات در توضیحات خود به یک نشریه اسپانیایی گفت این موضوع توضیح مذهبی داشته و هرگز به معنی بی‌احترامی به مقام و شخصیت زن آن هم در سطح ملکه محترمه یک کشور نیست.'
@@ -34,8 +31,8 @@ keyword_count = 10
 ```
 
 ## نرمال‌سازی متن و استخراج توکن‌ها توسط هضم
-متن ورودی را با کمک نرمالایزر هضم نرمال‌سازی می‌کنیم و پس از آن با کمک توکنایزر به جملات و در نهایت به کلمات می‌شکنیم.
 
+متن ورودی را با کمک نرمالایزر هضم نرمال‌سازی می‌کنیم و پس از آن با کمک توکنایزر به جملات و در نهایت به کلمات می‌شکنیم.
 
 ```python
 normalizer = Normalizer()
@@ -43,9 +40,6 @@ normalize_text = normalizer.normalize(text)
 tokenize_text = [word_tokenize(txt) for txt in sent_tokenize(normalize_text)]
 tokenize_text
 ```
-
-
-
 
     [['سفارت',
       'ایران',
@@ -139,21 +133,16 @@ tokenize_text
       'نیست',
       '.']]
 
-
-
 ## استخراج تگ POS برای هر یک از کلمات
+
 بعد از لودکردن مدل POS، هر یک از کلمات را با ماژول POSTagger هضم برچسب‌گذاری می‌کنیم.
 
-
 ```python
-model_path = '/resources/POSTagger.model'
+model_path = '/resources/pos_tagger.model'
 tagger = POSTagger(model = model_path)
 token_tag_list = tagger.tag_sents(tokenize_text)
 token_tag_list
 ```
-
-
-
 
     [[('سفارت', 'NOUN,EZ'),
       ('ایران', 'NOUN'),
@@ -247,29 +236,26 @@ token_tag_list
       ('نیست', 'VERB'),
       ('.', 'PUNCT')]]
 
-
-
 ## استخراج کاندیداها
-با استفاده از چند گرامر، کاندیداها را پیدا می‌کنیم.
 
+با استفاده از چند گرامر، کاندیداها را پیدا می‌کنیم.
 
 ```python
 grammers = [
 """
 NP:
-        {<NOUN,EZ>?<NOUN.*>}    # Noun(s) + Noun(optional) 
-        
+        {<NOUN,EZ>?<NOUN.*>}    # Noun(s) + Noun(optional)
+
 """,
 
 """
 NP:
-        {<NOUN.*><ADJ.*>?}    # Noun(s) + Adjective(optional) 
-        
+        {<NOUN.*><ADJ.*>?}    # Noun(s) + Adjective(optional)
+
 """
 ]
 ## you can also add your own grammer to be extracted from the text...
 ```
-
 
 ```python
 def extract_candidates(tagged, grammer):
@@ -282,7 +268,7 @@ def extract_candidates(tagged, grammer):
             keyphrase_candidate.add(' '.join(word for word, tag in subtree.leaves()))
     keyphrase_candidate = {kp for kp in keyphrase_candidate if len(kp.split()) <= 5}
     keyphrase_candidate = list(keyphrase_candidate)
-    return keyphrase_candidate    
+    return keyphrase_candidate
 
 all_candidates = set()
 for grammer in grammers:
@@ -305,10 +291,9 @@ print(np.array(list(all_candidates)))
      'کاخ سلطنتی' 'همان‌گونه' 'دربار' 'اعلام' 'زن' 'حسن قشقاوی' 'نشریه'
      'قشقاوی' 'فضای مجازی' 'همراه' 'شخصیت']
 
-
 ## لودکردن مدل Sent2Vec
-مدل sent2vec را لود می‌کنیم.
 
+مدل sent2vec را لود می‌کنیم.
 
 ```python
 sent2vec_model_path = '/resources/sent2vec.model'
@@ -316,16 +301,13 @@ sent2vec_model = SentEmbedding(sent2vec_model_path)
 ```
 
 ## استخراج وکتور برای هر یک از کاندیداها و کل متن
-با کمک مدلی که در مرحله قبل لود شد هر یک از کاندیداها را به وکتور متناظر تبدیل می‌کنیم و همانند آن یکبار هم با ترکیب تمام کاندیداهای یک وکتور، به عنوان وکتور نمایندهٔ متن تعیین می‌کنیم.  
 
+با کمک مدلی که در مرحله قبل لود شد هر یک از کاندیداها را به وکتور متناظر تبدیل می‌کنیم و همانند آن یکبار هم با ترکیب تمام کاندیداهای یک وکتور، به عنوان وکتور نمایندهٔ متن تعیین می‌کنیم.
 
 ```python
 all_candidates_vectors = [sent2vec_model[candidate] for candidate in all_candidates]
 all_candidates_vectors[0:2]
 ```
-
-
-
 
     [array([-0.01188162, -0.01629335, -0.02919522, -0.00783677, -0.00102758,
             -0.03208233, -0.01709846,  0.0117062 ,  0.03449516,  0.07738346,
@@ -465,18 +447,12 @@ all_candidates_vectors[0:2]
              1.66201517e-02, -2.28249431e-02, -5.76155819e-02,  1.91252027e-02],
            dtype=float32)]
 
-
-
-
 ```python
- 
+
 candidates_concatinate = ' '.join(all_candidates)
 whole_text_vector = sent2vec_model[candidates_concatinate]
 whole_text_vector
 ```
-
-
-
 
     array([ 4.67376083e-01,  1.41185641e-01, -4.01345827e-02,  8.06454271e-02,
             2.87257284e-01, -1.73859105e-01,  2.10984781e-01, -4.19053972e-01,
@@ -555,19 +531,14 @@ whole_text_vector
            -3.09568077e-01, -3.18129718e-01,  5.96830010e-01,  2.02072367e-01],
           dtype=float32)
 
-
-
 ## یافتن شباهت کسینوسی کاندیداها و کل متن
-شباهت کسینوسی بین هریک از کاندیداها و وکتور نمایندهٔ متن را محاسبه می‌کنیم.
 
+شباهت کسینوسی بین هریک از کاندیداها و وکتور نمایندهٔ متن را محاسبه می‌کنیم.
 
 ```python
 candidates_sim_whole = cosine_similarity(all_candidates_vectors, whole_text_vector.reshape(1,-1))
 candidates_sim_whole.reshape(1,-1)
 ```
-
-
-
 
     array([[ 1.19351953e-01,  1.23398483e-01,  1.25267982e-01,
              1.78353339e-02,  2.34080136e-01, -1.43648628e-02,
@@ -587,19 +558,14 @@ candidates_sim_whole.reshape(1,-1)
              2.32247636e-04, -1.09125897e-01, -6.53942488e-03,
              4.97795194e-02]], dtype=float32)
 
-
-
 ## یافتن شباهت کسینوسی کاندیداها به یکدیگر
-ماتریسی ایجاد می‌کنیم که هر درایهٔ آن با اندیس آی و جی، بیانگر شباهت کسینوسی کاندیدای آی با کاندیدای جی است.
 
+ماتریسی ایجاد می‌کنیم که هر درایهٔ آن با اندیس آی و جی، بیانگر شباهت کسینوسی کاندیدای آی با کاندیدای جی است.
 
 ```python
 candidate_sim_candidate = cosine_similarity(all_candidates_vectors)
 candidate_sim_candidate
 ```
-
-
-
 
     array([[0.9999997 , 0.14587443, 0.20270647, ..., 0.42830434, 0.27730745,
             0.30513293],
@@ -615,20 +581,15 @@ candidate_sim_candidate
            [0.30513293, 0.19037738, 0.18565692, ..., 0.50683355, 0.40011758,
             0.9999996 ]], dtype=float32)
 
-
-
 ## نرمال‌سازی مقادیر مربوط به شباهت‌های کسینوسی
-دو مقدار بالا را برای استفاده در مراحل بعد نرمال‌سازی می‌کنیم.
 
+دو مقدار بالا را برای استفاده در مراحل بعد نرمال‌سازی می‌کنیم.
 
 ```python
 candidates_sim_whole_norm = candidates_sim_whole / np.max(candidates_sim_whole)
 candidates_sim_whole_norm = 0.5 + (candidates_sim_whole_norm - np.average(candidates_sim_whole_norm)) / np.std(candidates_sim_whole_norm)
 candidates_sim_whole_norm
 ```
-
-
-
 
     array([[ 0.9393711 ],
            [ 0.979393  ],
@@ -680,18 +641,12 @@ candidates_sim_whole_norm
            [-0.3057471 ],
            [ 0.25127074]], dtype=float32)
 
-
-
-
 ```python
 np.fill_diagonal(candidate_sim_candidate, np.NaN)
 candidate_sim_candidate_norm = candidate_sim_candidate / np.nanmax(candidate_sim_candidate, axis=0)
 candidate_sim_candidate_norm = 0.5 + (candidate_sim_candidate_norm - np.nanmean(candidate_sim_candidate_norm, axis=0)) / np.nanstd(candidate_sim_candidate_norm, axis=0)
 candidate_sim_candidate_norm
 ```
-
-
-
 
     array([[           nan, -3.5498703e-01,  3.2357961e-02, ...,
              1.8948689e-01,  3.9502221e-01,  6.2098056e-01],
@@ -707,14 +662,12 @@ candidate_sim_candidate_norm
            [ 8.9874434e-01,  1.5904903e-03, -9.9972427e-02, ...,
              5.4664868e-01,  1.2696817e+00,            nan]], dtype=float32)
 
-
-
 ## استخراج کلمات کلیدی از روی شباهت‌های کسینوسی
+
 با استفاده از روش امبدرنک در یک الگوریتم تکرارشونده، در هر مرحله با یک فرمول، یک کاندیدا به عنوان کلمهٔ کلیدی انتخاب می‌شود.
 کاندیدایی انتخاب می‌شود که در درجهٔ اول بیشترین شباهت را با کل متن دارد و در درجهٔ دوم کمترین شباهت را با کاندیداهای انتخاب‌شده دارد.
 میزان اثرگذاری این دو فاکتور را می‌توان با درنظرگرفتن عوامل مختلفی مثل طول و محتوای متن تغییر داد.
 (beta)
-
 
 ```python
 beta = 0.82
@@ -730,23 +683,20 @@ unselected_candidates.remove(best_candidate)
 for i in range(N-1):
     selected_vec = np.array(selected_candidates)
     unselected_vec = np.array(unselected_candidates)
-    
+
     unselected_candidate_sim_whole_norm = candidates_sim_whole_norm[unselected_vec, :]
-    
+
     dist_between = candidate_sim_candidate_norm[unselected_vec][:, selected_vec]
-    
+
     if dist_between.ndim == 1:
         dist_between = dist_between[:, np.newaxis]
-    
+
     best_candidate = np.argmax(beta * unselected_candidate_sim_whole_norm - (1 - beta) * np.max(dist_between, axis = 1).reshape(-1,1))
     best_index = unselected_candidates[best_candidate]
     selected_candidates.append(best_index)
     unselected_candidates.remove(best_index)
 all_candidates[selected_candidates].tolist()
 ```
-
-
-
 
     ['معنی بی‌احترامی',
      'دلایل تشریفاتی',
@@ -758,5 +708,3 @@ all_candidates[selected_candidates].tolist()
      'فیلم',
      'کارشناس رسمی',
      'کشور']
-
-

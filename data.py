@@ -6,15 +6,25 @@ from itertools import islice
 from nltk.tag import untag
 from sklearn.model_selection import train_test_split
 
-from hazm import (Chunker, InformalNormalizer, Lemmatizer, Normalizer,
-                  POSTagger, sent_tokenize)
-from hazm.Chunker import tree2brackets
-from hazm.CorpusReaders import (DadeganReader, PeykareReader, SentiPersReader,
-                                TNewsReader, TreebankReader)
-from hazm.CorpusReaders.PeykareReader import \
-    coarse_pos_e as peykare_coarse_pos_e
-from hazm.DependencyParser import MaltParser, TurboParser
-from hazm.POSTagger import StanfordPOSTagger
+from hazm import (
+    Chunker,
+    InformalNormalizer,
+    Lemmatizer,
+    Normalizer,
+    POSTagger,
+    sent_tokenize,
+)
+from hazm.chunker import tree2brackets
+from hazm.corpus_readers import (
+    DadeganReader,
+    PeykareReader,
+    SentiPersReader,
+    TNewsReader,
+    TreebankReader,
+)
+from hazm.corpus_readers.peykare_reader import coarse_pos_e as peykare_coarse_pos_e
+from hazm.dependency_parser import MaltParser, TurboParser
+from hazm.pos_tagger import StanfordPOSTagger
 
 
 def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.dat"):
@@ -232,7 +242,7 @@ def train_maltparser(
     train_file="corpora/train.conll",
     dev_file="corpora/dev.conll",
     test_file="corpora/test.conll",
-    model_file="langModel.mco",
+    model_file="lang_model.mco",
     path_to_jar="resources/malt.jar",
     options_file="resources/malt-options.xml",
     features_file="resources/malt-features.xml",
@@ -386,7 +396,7 @@ def train_turboparser(
 def train_stanford_postagger(
     peykare_root="corpora/peykare",
     path_to_model="resources/persian.tagger",
-    path_to_jar="resources/stanford-postagger.jar",
+    path_to_jar="resources/stanford_postagger.jar",
     properties_file="resources/stanford-postagger.props",
     memory_min="-Xms1g",
     memory_max="-Xmx6g",
