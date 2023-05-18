@@ -49,7 +49,7 @@ def iob_data_maker(tokens):
 class SequenceTagger:
     """این کلاس شامل توابعی برای برچسب‌گذاری توکن‌ها است. این کلاس در نقش یک
     wrapper برای کتابخانهٔ [python-crfsuite](https://python-crfsuite.readthedocs.io/en/latest/) است.
-    
+
     Args:
         model (str, optional): مسیر فایل tagger.
         data_maker (function, optional): تابعی که لیستی دو بعدی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.

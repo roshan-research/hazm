@@ -1,9 +1,9 @@
 from .chunker import Chunker, RuleBasedChunker, tree2brackets
 from .corpus_readers import (BijankhanReader, DadeganReader, DegarbayanReader,
-                            HamshahriReader, MirasTextReader, PersicaReader,
-                            PeykareReader, QuranReader, SentiPersReader,
-                            TNewsReader, TreebankReader, VerbValencyReader,
-                            WikipediaReader)
+                             HamshahriReader, MirasTextReader, PersicaReader,
+                             PeykareReader, QuranReader, SentiPersReader,
+                             TNewsReader, TreebankReader, VerbValencyReader,
+                             WikipediaReader)
 from .dependency_parser import DependencyParser, MaltParser, TurboParser
 from .informal_normalizer import InformalLemmatizer, InformalNormalizer
 from .lemmatizer import Conjugation, Lemmatizer

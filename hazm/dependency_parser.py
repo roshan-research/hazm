@@ -32,7 +32,7 @@ class MaltParser(MaltParser):
         tagger: str,
         lemmatizer: str,
         working_dir: str = "resources",
-        model_file: str = "langModel.mco", # Don't rename this file
+        model_file: str = "langModel.mco",  # Don't rename this file
     ) -> None:
         self.tagger = tagger
         self.working_dir = working_dir
@@ -235,5 +235,3 @@ class DependencyParser(MaltParser):
         >>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
         (من (به (مدرسه (رفته_بودم .))))
     """
-
-

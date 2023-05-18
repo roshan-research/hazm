@@ -6,23 +6,13 @@ from itertools import islice
 from nltk.tag import untag
 from sklearn.model_selection import train_test_split
 
-from hazm import (
-    Chunker,
-    InformalNormalizer,
-    Lemmatizer,
-    Normalizer,
-    POSTagger,
-    sent_tokenize,
-)
+from hazm import (Chunker, InformalNormalizer, Lemmatizer, Normalizer,
+                  POSTagger, sent_tokenize)
 from hazm.chunker import tree2brackets
-from hazm.corpus_readers import (
-    DadeganReader,
-    PeykareReader,
-    SentiPersReader,
-    TNewsReader,
-    TreebankReader,
-)
-from hazm.corpus_readers.peykare_reader import coarse_pos_e as peykare_coarse_pos_e
+from hazm.corpus_readers import (DadeganReader, PeykareReader, SentiPersReader,
+                                 TNewsReader, TreebankReader)
+from hazm.corpus_readers.peykare_reader import \
+    coarse_pos_e as peykare_coarse_pos_e
 from hazm.dependency_parser import MaltParser, TurboParser
 from hazm.pos_tagger import StanfordPOSTagger
 
