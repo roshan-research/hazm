@@ -1,6 +1,5 @@
 .idea
 resources
-corpora
 *.pyc
 
 # Byte-compiled / optimized / DLL files
