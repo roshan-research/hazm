@@ -16,7 +16,10 @@
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterator, Tuple
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import Tuple
 from xml.dom import minidom
 
 

@@ -5,7 +5,10 @@
 
 """
 from pathlib import Path
-from typing import Dict, Iterator, List, Tuple
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from hazm.utils import maketrans
 

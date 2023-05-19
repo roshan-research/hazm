@@ -10,7 +10,9 @@
 import os
 import tempfile
 from pathlib import Path
-from typing import List, Tuple, Type
+from typing import List
+from typing import Tuple
+from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
@@ -41,7 +43,7 @@ class MaltParser(MaltParser):
         self._malt_bin = os.path.join(working_dir, "malt.jar")
         self.lemmatize = (
             lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
-        )  # noqa: ARG005
+        )
 
     def parse_sents(self: "MaltParser", sentences: str, verbose: bool = False) -> str:
         """گراف وابستگی را برمی‌گرداند.
@@ -155,7 +157,7 @@ class TurboParser(ParserI):
         self.tagger = tagger
         self.lemmatize = (
             lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
-        )  # noqa: ARG005
+        )
 
         import turboparser
 

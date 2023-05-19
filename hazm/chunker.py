@@ -5,9 +5,15 @@
 
 """
 
-from typing import Dict, Iterator, List, Tuple, Union
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Union
 
-from nltk.chunk import RegexpParser, conlltags2tree, tree2conlltags
+from nltk.chunk import RegexpParser
+from nltk.chunk import conlltags2tree
+from nltk.chunk import tree2conlltags
 
 from hazm.pos_tagger import POSTagger
 from hazm.sequence_tagger import IOBTagger

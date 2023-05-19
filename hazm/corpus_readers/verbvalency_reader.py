@@ -44,7 +44,7 @@ class VerbValencyReader:
     """
 
     def __init__(
-        self: "VerbValencyReader", valency_file: str = "corpora/valency.txt"
+        self: "VerbValencyReader", valency_file: str = "corpora/valency.txt",
     ) -> None:
         self._valency_file = valency_file
 

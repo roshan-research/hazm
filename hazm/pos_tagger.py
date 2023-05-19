@@ -43,7 +43,7 @@ class POSTagger(SequenceTagger):
     """
 
     def __init__(
-        self: "POSTagger", model=None, data_maker=None, universal_tag=False
+        self: "POSTagger", model=None, data_maker=None, universal_tag=False,
     ) -> None:
         data_maker = self.data_maker if data_maker is None else data_maker
         self.__is_universal = universal_tag
@@ -179,7 +179,7 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
         path_to_jar: str,
         *args,
         **kwargs,
-    ) -> None:  # noqa: ANN002, ANN003
+    ) -> None:
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
             model_filename=model_filename,

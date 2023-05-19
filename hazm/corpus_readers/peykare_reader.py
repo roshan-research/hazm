@@ -19,7 +19,10 @@
 import codecs
 import os
 from pathlib import Path
-from typing import Any, Iterator, List, Tuple
+from typing import Any
+from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from hazm.normalizer import Normalizer
 from hazm.word_tokenizer import WordTokenizer
@@ -281,7 +284,7 @@ class PeykareReader:
                         yield text
 
     def doc_to_sents(
-        self: "PeykareReader", document: str
+        self: "PeykareReader", document: str,
     ) -> Iterator[List[Tuple[str, str]]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
 

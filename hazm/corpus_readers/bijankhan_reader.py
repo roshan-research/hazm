@@ -11,7 +11,9 @@
 
 import re
 from pathlib import Path
-from typing import Iterator, List, Tuple
+from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from ..normalizer import Normalizer
 from .peykare_reader import join_verb_parts

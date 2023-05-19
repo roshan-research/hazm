@@ -3,15 +3,22 @@ import multiprocessing
 import os
 import warnings
 from pathlib import Path
-from typing import Any, Iterator, List, Tuple, Type
+from typing import Any
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Type
 
-from gensim.models import Doc2Vec, KeyedVectors, fasttext
+from gensim.models import Doc2Vec
+from gensim.models import KeyedVectors
+from gensim.models import fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
 from numpy import ndarray
 
-from hazm import Normalizer, word_tokenize
+from hazm import Normalizer
+from hazm import word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 

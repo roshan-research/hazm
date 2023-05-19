@@ -1,10 +1,12 @@
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست."""
 
 import time
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
 
 import numpy as np
-from pycrfsuite import Tagger, Trainer
+from pycrfsuite import Tagger
+from pycrfsuite import Trainer
 from sklearn.metrics import accuracy_score
 
 
@@ -74,7 +76,7 @@ class SequenceTagger:
         return self.__add_label(tokens, self.model.tag(self.data_maker([tokens])[0]))
 
     def __train(
-        self: "SequenceTagger", x, y, args, verbose, file_name, report_duration
+        self: "SequenceTagger", x, y, args, verbose, file_name, report_duration,
     ):
         trainer = Trainer(verbose=verbose)
         trainer.set_params(args)
@@ -233,7 +235,7 @@ class SequenceTagger:
         self.model.dump(filename)
 
     def evaluate(
-        self: "SequenceTagger", tagged_sent: List[List[Tuple[str, str]]]
+        self: "SequenceTagger", tagged_sent: List[List[Tuple[str, str]]],
     ) -> float:
         """داده صحیح دریافت شده را با استفاده از مدل لیبل می‌زند و دقت مدل را برمی‌گرداند.
 
@@ -377,7 +379,7 @@ class IOBTagger(SequenceTagger):
         )
 
     def evaluate(
-        self: "SequenceTagger", tagged_sent: List[List[Tuple[str, str, str]]]
+        self: "SequenceTagger", tagged_sent: List[List[Tuple[str, str, str]]],
     ) -> float:
         """داده صحیح دریافت شده را با استفاده از مدل لیبل می‌زند و دقت مدل را برمی‌گرداند.
 

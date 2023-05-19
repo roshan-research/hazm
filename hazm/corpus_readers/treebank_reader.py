@@ -9,7 +9,11 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Tuple
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
 from xml.dom import minidom
 
 from nltk.tree import Tree

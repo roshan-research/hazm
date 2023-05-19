@@ -9,8 +9,11 @@ from hazm.lemmatizer import Lemmatizer
 from hazm.normalizer import Normalizer
 from hazm.sentence_tokenizer import SentenceTokenizer
 from hazm.stemmer import Stemmer
-from hazm.utils import NUMBERS, informal_verbs, informal_words
-from hazm.word_tokenizer import WordTokenizer, default_verbs
+from hazm.utils import NUMBERS
+from hazm.utils import informal_verbs
+from hazm.utils import informal_words
+from hazm.word_tokenizer import WordTokenizer
+from hazm.word_tokenizer import default_verbs
 
 
 class InformalNormalizer(Normalizer):
@@ -273,7 +276,7 @@ class InformalNormalizer(Normalizer):
 
             for i in range(len(collection_of_word_and_suffix)):
                 new_possible_word_list = append_suffix_to_word(
-                    collection_of_word_and_suffix[i]
+                    collection_of_word_and_suffix[i],
                 )
                 for j in range(len(new_possible_word_list)):
                     new_possible_word = new_possible_word_list[j]
@@ -330,7 +333,7 @@ class InformalNormalizer(Normalizer):
                 if word.endswith(endverb):
                     if endverb == "ین":
                         collection_of_verb_list.append(
-                            {"word": word[:-2], "suffix": "ید"}
+                            {"word": word[:-2], "suffix": "ید"},
                         )
                     elif endverb == "ستن":
                         collection_of_verb_list.append(
@@ -338,10 +341,10 @@ class InformalNormalizer(Normalizer):
                         )
                     elif endverb == "ن":
                         collection_of_verb_list.append(
-                            {"word": word[:-1], "suffix": "ن"}
+                            {"word": word[:-1], "suffix": "ن"},
                         )
                         collection_of_verb_list.append(
-                            {"word": word[:-1], "suffix": "ند"}
+                            {"word": word[:-1], "suffix": "ند"},
                         )
                     elif endverb == "ه":
                         if len(word) > 1:

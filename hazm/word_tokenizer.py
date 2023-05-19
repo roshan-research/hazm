@@ -12,7 +12,9 @@ from typing import List
 
 from nltk.tokenize.api import TokenizerI
 
-from hazm.utils import default_verbs, default_words, words_list
+from hazm.utils import default_verbs
+from hazm.utils import default_words
+from hazm.utils import words_list
 
 
 class WordTokenizer(TokenizerI):

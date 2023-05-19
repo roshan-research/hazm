@@ -4,7 +4,12 @@ PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده
 
 """
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Tuple, Type
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree

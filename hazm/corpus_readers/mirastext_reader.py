@@ -5,7 +5,8 @@
 
 """
 from pathlib import Path
-from typing import Dict, Iterator
+from typing import Dict
+from typing import Iterator
 
 
 class MirasTextReader:
