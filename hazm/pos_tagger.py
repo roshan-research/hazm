@@ -9,7 +9,7 @@
 
 from nltk.tag import stanford
 
-from .sequence_tagger import SequenceTagger
+from hazm.sequence_tagger import SequenceTagger
 
 punctuation_list = [
     '"',
@@ -42,18 +42,18 @@ class POSTagger(SequenceTagger):
 
     """
 
-    def __init__(self, model=None, data_maker=None, universal_tag=False) -> None:
+    def __init__(self:"POSTagger", model=None, data_maker=None, universal_tag=False) -> None:
         data_maker = self.data_maker if data_maker is None else data_maker
         self.__is_universal = universal_tag
         super().__init__(model, data_maker)
 
-    def __universal_converter(self, tagged_list):
+    def __universal_converter(self:"POSTagger", tagged_list):
         return [(word, tag.split(",")[0]) for word, tag in tagged_list]
 
-    def __is_punc(self, word):
+    def __is_punc(self:"POSTagger", word):
         return word in punctuation_list
 
-    def data_maker(self, tokens):
+    def data_maker(self:"POSTagger", tokens):
         """تابعی که لیستی از لیستی از کلمات توکنایز شده را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
 
         Examples:
@@ -72,7 +72,8 @@ class POSTagger(SequenceTagger):
             for token in tokens
         ]
 
-    def features(self, sentence, index):
+    def features(self:"POSTagger", sentence, index):
+        """features."""
         return {
             "word": sentence[index],
             "is_first": index == 0,
@@ -109,7 +110,7 @@ class POSTagger(SequenceTagger):
             ),
         }
 
-    def tag(self, tokens):
+    def tag(self:"POSTagger", tokens):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
         `(توکن، برچسب)`ها برمی‌گرداند.
 
@@ -136,7 +137,7 @@ class POSTagger(SequenceTagger):
             else tagged_token
         )
 
-    def tag_sents(self, sentences):
+    def tag_sents(self:"POSTagger", sentences):
         """جملات را در قالب لیستی از توکن‌ها دریافت می‌کند
         و در خروجی، لیستی از لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
 
@@ -168,28 +169,29 @@ class POSTagger(SequenceTagger):
 
 
 class StanfordPOSTagger(stanford.StanfordPOSTagger):
-    """ """
+    """StanfordPOSTagger."""
 
-    def __init__(self, model_filename, path_to_jar, *args, **kwargs) -> None:
+    def __init__(self: "StanfordPOSTagger", model_filename: "str", path_to_jar:str, *args, **kwargs) -> None: # noqa: ANN002, ANN003
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(
             model_filename=model_filename,
             path_to_jar=path_to_jar,
-            *args,
+            *args, # noqa: B026
             **kwargs,
         )
 
-    def tag(self, tokens):
-        """
+    def tag(self:"StanfordPOSTagger", tokens):
+        """tag.
+
         Examples:
-        >>> tagger = StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford_postagger.jar')
-        >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
-        [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+            >>> tagger = StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford_postagger.jar')
+            >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
+            [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
 
         """
         return self.tag_sents([tokens])[0]
 
-    def tag_sents(self, sentences):
-        """ """
+    def tag_sents(self: "StanfordPOSTagger", sentences):
+        """tag_sents."""
         refined = ([w.replace(" ", "_") for w in s] for s in sentences)
         return super(stanford.StanfordPOSTagger, self).tag_sents(refined)

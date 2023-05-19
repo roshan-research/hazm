@@ -1,20 +1,21 @@
 """این ماژول شامل کلاس‌ها و توابعی برای تجزیه توکن به دو توکن کوچکتر است."""
 
 
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
 
-from .lemmatizer import Lemmatizer
+from hazm.lemmatizer import Lemmatizer
 
 
 class TokenSplitter:
     """این کلاس شامل توابعی برای تجزیه توکن به دو توکن کوچکتر است."""
 
-    def __init__(self) -> None:
+    def __init__(self: "TokenSplitter") -> None:
         self.lemmatizer = Lemmatizer()
         self.lemmatize = self.lemmatizer.lemmatize
         self.words = self.lemmatizer.words
 
-    def split_token_words(self, token: str) -> List[Tuple[str, str]]:
+    def split_token_words(self: "TokenSplitter", token: str) -> List[Tuple[str, str]]:
         """توکنِ ورودی را به دو توکن کوچکتر تجزیه می‌کند.
 
         اگر توکن به بیش از یک روش قابل تجزیه باشد همهٔ حالت‌های ممکن را

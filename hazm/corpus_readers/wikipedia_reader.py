@@ -12,7 +12,9 @@ pages-articles.xml.bz2) پیکرهٔ
 import os
 import re
 import subprocess
-from typing import Dict, Iterator
+from pathlib import Path
+from typing import Dict
+from typing import Iterator
 
 
 class WikipediaReader:
@@ -24,15 +26,12 @@ class WikipediaReader:
 
     """
 
-    def __init__(self, fawiki_dump: str, n_jobs: int = 2) -> None:
+    def __init__(self: "WikipediaReader", fawiki_dump: str, n_jobs: int = 2) -> None:
         self.fawiki_dump = fawiki_dump
-        self.wiki_extractor = os.path.join(
-            os.path.abspath(os.path.dirname(__file__)),
-            "wiki_extractor.py",
-        )
+        self.wiki_extractor = Path(__file__).parent / "wiki_extractor.py"
         self.n_jobs = n_jobs
 
-    def docs(self) -> Iterator[Dict[str, str]]:
+    def docs(self: "WikipediaReader") -> Iterator[Dict[str, str]]:
         """مقالات را برمی‌گرداند.
 
         هر مقاله، شی‌ای متشکل از چند پارامتر است:
@@ -74,13 +73,13 @@ class WikipediaReader:
 
             if line == "</doc>":
                 del doc[1]
-                id, url, title = doc_pattern.match(doc[0]).groups()
+                id, url, title = doc_pattern.match(doc[0]).groups() # noqa: A001
                 html = "\n".join(doc[1:-1])
 
                 yield {"id": id, "url": url, "title": title, "html": html, "text": html}
                 doc = []
 
-    def texts(self) -> Iterator[str]:
+    def texts(self: "WikipediaReader") -> Iterator[str]:
         """فقط متن مقالات را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع

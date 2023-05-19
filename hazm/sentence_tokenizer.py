@@ -14,10 +14,10 @@ from nltk.tokenize.api import TokenizerI
 class SentenceTokenizer(TokenizerI):
     """این کلاس شامل توابعی برای استخراج جملاتِ متن است."""
 
-    def __init__(self) -> None:
+    def __init__(self: "SentenceTokenizer") -> None:
         self.pattern = re.compile(r"([!.?⸮؟]+)[ \n]+")
 
-    def tokenize(self, text: str) -> List[str]:
+    def tokenize(self: "SentenceTokenizer", text: str) -> List[str]:
         """متن ورودی را به جملات سازندهٔ آن می‌شِکند.
 
         Examples:

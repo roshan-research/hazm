@@ -1,3 +1,4 @@
+"""init."""
 from .bijankhan_reader import BijankhanReader
 from .dadegan_reader import DadeganReader
 from .degarbayan_reader import DegarbayanReader

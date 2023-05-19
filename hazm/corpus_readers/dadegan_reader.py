@@ -3,13 +3,19 @@
 PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده با اطلاعات نحوی و ساخت‌واژی است.
 
 """
-from typing import Any, Dict, Iterator, List, Tuple, Type
+from pathlib import Path
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
 
 
-def coarse_pos_u(tags, word: str) -> str:
+def coarse_pos_u(tags: List[str], word: str) -> str:
     """برچسب‌های ریز را به برچسب‌های درشت منطبق با استاندارد جهانی (coarse-grained
     universal pos tags) تبدیل می‌کند.
 
@@ -18,7 +24,7 @@ def coarse_pos_u(tags, word: str) -> str:
         'N'
 
     """
-    map = {
+    mapping = {
         "N": "NOUN",
         "V": "VERB",
         "ADJ": "ADJ",
@@ -37,7 +43,7 @@ def coarse_pos_u(tags, word: str) -> str:
         "PART": "PART",
         "ADR": "INTJ",
     }
-    pos_mapped = map.get(tags[0], "X")
+    pos_mapped = mapping.get(tags[0], "X")
     if pos_mapped == "PART" and word == "را":
         return "ADP"
     if pos_mapped == "PART" and word in ["خوب", "آخر"]:
@@ -45,7 +51,7 @@ def coarse_pos_u(tags, word: str) -> str:
     return pos_mapped
 
 
-def coarse_pos_e(tags, word: str) -> str:
+def coarse_pos_e(tags: List[str], word) -> str:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
@@ -53,7 +59,7 @@ def coarse_pos_e(tags, word: str) -> str:
         'N'
 
     """
-    map = {
+    mapping = {
         "N": "N",
         "V": "V",
         "ADJ": "AJ",
@@ -67,14 +73,16 @@ def coarse_pos_e(tags, word: str) -> str:
         "PUNC": "PUNC",
         "SUBR": "CONJ",
     }
-    return map.get(tags[0], "X") + ("e" if "EZ" in tags else "")
+    return mapping.get(tags[0], "X") + ("e" if "EZ" in tags else "")
 
 
 def word_nodes(tree: Type[Tree]) -> List[Dict[str, Any]]:
+    """نودها را به صورت مرتب‌شده برمی‌گرداند."""
     return sorted(tree.nodes.values(), key=lambda node: node["address"])[1:]
 
 
-def node_deps(node):
+def node_deps(node: List[Dict[str,Any]]) -> List[Any]:
+    """مقادیر موجود در فیلد deps نود ورودی را برمی‌گرداند."""
     return sum(list(node["deps"].values()), [])
 
 
@@ -88,7 +96,7 @@ class DadeganReader:
     """
 
     def __init__(
-        self,
+        self: "DadeganReader",
         conll_file: str,
         pos_map: str = coarse_pos_e,
         universal_pos: bool = False,
@@ -101,14 +109,14 @@ class DadeganReader:
         else:
             self._pos_map = coarse_pos_e
 
-    def _sentences(self) -> Iterator[str]:
+    def _sentences(self: "DadeganReader") -> Iterator[str]:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
 
         Yields:
             جملهٔ بعدی.
 
         """
-        with open(self._conll_file, encoding="utf8") as conll_file:
+        with Path(self._conll_file).open(encoding="utf8") as conll_file:
             text = conll_file.read()
 
             # refine text
@@ -126,7 +134,7 @@ class DadeganReader:
                 if item.strip():
                     yield item
 
-    def trees(self) -> Iterator[Type[Tree]]:
+    def trees(self:"DadeganReader") -> Iterator[Type[Tree]]:
         """ساختار درختی جملات را برمی‌گرداند.
 
         Yields:
@@ -146,7 +154,7 @@ class DadeganReader:
 
             yield tree
 
-    def sents(self) -> Iterator[List[Tuple[str, str]]]:
+    def sents(self: "DadeganReader") -> Iterator[List[Tuple[str, str]]]:
         """لیستی از جملات را برمی‌گرداند.
 
         هر جمله لیستی از `(توکن، برچسب)`ها است.
@@ -163,7 +171,7 @@ class DadeganReader:
         for tree in self.trees():
             yield [(node["word"], node["mtag"]) for node in word_nodes(tree)]
 
-    def chunked_trees(self) -> Iterator[Type[Tree]]:
+    def chunked_trees(self: "DadeganReader") -> Iterator[Type[Tree]]:
         """درخت وابستگی‌های جملات را برمی‌گرداند.
 
         Examples:
@@ -211,8 +219,8 @@ class DadeganReader:
                         and len(chunks) > 0
                         and type(chunks[-1]) == Tree
                     ):
-                        for l in chunks[-1].leaves():
-                            if l[1] == item[1]:
+                        for leaf in chunks[-1].leaves():
+                            if leaf[1] == item[1]:
                                 chunks[-1].append(item)
                                 appended = True
                                 break
@@ -236,8 +244,8 @@ class DadeganReader:
                                 chunks[-1].append(item)
                             else:
                                 j = n - 1
-                                treeNode = Tree("NP", [chunks.pop(), item])
-                                chunks.append(treeNode)
+                                treenode = Tree("NP", [chunks.pop(), item])
+                                chunks.append(treenode)
                             while j > node["head"]:
                                 leaves = chunks.pop().leaves()
                                 if len(chunks) < 1:
@@ -245,8 +253,8 @@ class DadeganReader:
                                     j -= 1
                                 elif type(chunks[-1]) == Tree:
                                     j -= len(chunks[-1])
-                                    for l in leaves:
-                                        chunks[-1].append(l)
+                                    for leaf in leaves:
+                                        chunks[-1].append(leaf)
                                 else:
                                     leaves.insert(0, chunks.pop())
                                     chunks.append(Tree("NP", leaves))

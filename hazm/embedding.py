@@ -2,15 +2,23 @@
 import multiprocessing
 import os
 import warnings
-from typing import Any, List, Tuple, Type
+from pathlib import Path
+from typing import Any
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Type
 
-import numpy
-from gensim.models import Doc2Vec, KeyedVectors, fasttext
+from gensim.models import Doc2Vec
+from gensim.models import KeyedVectors
+from gensim.models import fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
+from numpy import ndarray
 
-from . import Normalizer, word_tokenize
+from hazm import Normalizer
+from hazm import word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 
@@ -24,7 +32,9 @@ class WordEmbedding:
 
     """
 
-    def __init__(self, model_type: str, model_path: str = None) -> None:
+    def __init__(
+        self: "WordEmbedding", model_type: str, model_path: str = None,
+    ) -> None:
         if model_type not in supported_embeddings:
             msg = (
                 f'Model type "{model_type}" is not supported! Please choose from'
@@ -37,7 +47,7 @@ class WordEmbedding:
         if model_path:
             self.load_model(model_path)
 
-    def load_model(self, model_path: str) -> None:
+    def load_model(self: "WordEmbedding", model_path: str) -> None:
         """فایل امبدینگ را بارگزاری می‌کند.
 
         Examples:
@@ -57,7 +67,7 @@ class WordEmbedding:
                 self.model = KeyedVectors.load_word2vec_format(model_path)
         elif self.model_type == "glove":
             word2vec_addr = str(model_path) + "_word2vec_format.vec"
-            if not os.path.exists(word2vec_addr):
+            if not Path.exists(word2vec_addr):
                 _ = glove2word2vec(model_path, word2vec_addr)
             self.model = KeyedVectors.load_word2vec_format(word2vec_addr)
             self.model_type = "keyedvector"
@@ -71,9 +81,9 @@ class WordEmbedding:
             )
 
     def train(
-        self,
+        self: "WordEmbedding",
         dataset_path: str,
-        workers: int = multiprocessing.cpu_count() - 1,
+        workers: int = multiprocessing.cpu_count() - 1,  # noqa: B008
         vector_size: int = 200,
         epochs: int = 10,
         fasttext_type: str = "skipgram",
@@ -101,6 +111,7 @@ class WordEmbedding:
                     "this function is for training fasttext models only and"
                     f" {self.model_type} is not supported"
                 ),
+                stacklevel=2,
             )
 
         fasttext_model_types = ["cbow", "skipgram"]
@@ -131,13 +142,14 @@ class WordEmbedding:
             model.save_model(dest_path)
             print("Model saved.")
 
-    def __getitem__(self, word: str) -> Any:
+    def __getitem__(self: "WordEmbedding", word: str) -> str:
+        """__getitem__."""
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
         return self.model[word]
 
-    def doesnt_match(self, words: List[str]) -> str:
+    def doesnt_match(self: "WordEmbedding", words: List[str]) -> str:
         """لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.
 
         Examples:
@@ -159,7 +171,7 @@ class WordEmbedding:
             raise AttributeError(msg)
         return self.model.doesnt_match(words)
 
-    def similarity(self, word1: str, word2: str) -> float:
+    def similarity(self: "WordEmbedding", word1: str, word2: str) -> float:
         """میزان شباهت دو کلمه را برمی‌گرداند.
 
         Examples:
@@ -182,7 +194,7 @@ class WordEmbedding:
             raise AttributeError(msg)
         return float(str(self.model.similarity(word1, word2)))
 
-    def get_vocab(self) -> List[str]:
+    def get_vocab(self: "WordEmbedding") -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
         Examples:
@@ -190,7 +202,7 @@ class WordEmbedding:
             >>> wordEmbedding.get_vocab()
             ['،', 'در', '.', 'و', ...]
 
-        Returns
+        Returns:
             لیست کلمات موجود در فایل امبدینگ.
 
         """
@@ -199,7 +211,9 @@ class WordEmbedding:
             raise AttributeError(msg)
         return self.model.index_to_key
 
-    def nearest_words(self, word: str, topn: int = 5) -> List[Tuple[str, str]]:
+    def nearest_words(
+        self: "WordEmbedding", word: str, topn: int = 5,
+    ) -> List[Tuple[str, str]]:
         """کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.
 
         Examples:
@@ -220,7 +234,7 @@ class WordEmbedding:
             raise AttributeError(msg)
         return self.model.most_similar(word, topn=topn)
 
-    def get_normal_vector(self, word: str) -> Type[numpy.ndarray]:
+    def get_normal_vector(self: "WordEmbedding", word: str) -> Type[ndarray]:
         """بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.
 
         Examples:
@@ -250,11 +264,11 @@ class SentEmbedding:
 
     """
 
-    def __init__(self, model_path: str = None) -> None:
+    def __init__(self: "SentEmbedding", model_path: str = None) -> None:
         if model_path:
             self.load_model(model_path)
 
-    def load_model(self, model_path: str) -> None:
+    def load_model(self: "SentEmbedding", model_path: str) -> None:
         """فایل امبدینگ را بارگذاری می‌کند.
 
         Examples:
@@ -268,10 +282,10 @@ class SentEmbedding:
         self.model = Doc2Vec.load(model_path)
 
     def train(
-        self,
+        self: "SentEmbedding",
         dataset_path: str,
         min_count: int = 5,
-        workers: int = multiprocessing.cpu_count() - 1,
+        workers: int = multiprocessing.cpu_count() - 1,  # noqa: B008
         windows: int = 5,
         vector_size: int = 300,
         epochs: int = 10,
@@ -314,13 +328,14 @@ class SentEmbedding:
             model.save(dest_path)
             print("Model saved.")
 
-    def __getitem__(self, sent: str) -> Type[numpy.ndarray]:
+    def __getitem__(self: "SentEmbedding", sent: str) -> Type[ndarray]:
+        """__getitem__."""
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
         return self.get_sentence_vector(sent)
 
-    def get_sentence_vector(self, sent: str) -> Any:
+    def get_sentence_vector(self: "SentEmbedding", sent: str) -> str:
         """جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.
 
         Examples:
@@ -338,11 +353,11 @@ class SentEmbedding:
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
-        else:
-            tokenized_sent = word_tokenize(sent)
-            return self.model.infer_vector(tokenized_sent)
 
-    def similarity(self, sent1: str, sent2: str) -> float:
+        tokenized_sent = word_tokenize(sent)
+        return self.model.infer_vector(tokenized_sent)
+
+    def similarity(self: "SentEmbedding", sent1: str, sent2: str) -> float:
         """میزان شباهت دو جمله را برمی‌گرداند.
 
         Examples:
@@ -363,25 +378,29 @@ class SentEmbedding:
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
-        else:
-            return float(
-                str(
-                    self.model.similarity_unseen_docs(
-                        word_tokenize(sent1),
-                        word_tokenize(sent2),
-                    ),
+
+        return float(
+            str(
+                self.model.similarity_unseen_docs(
+                    word_tokenize(sent1),
+                    word_tokenize(sent2),
                 ),
-            )
+            ),
+        )
 
 
 class SentenceEmbeddingCorpus:
-    def __init__(self, data_path: str) -> None:
+    """SentenceEmbeddingCorpus."""
+
+    def __init__(self: "SentenceEmbeddingCorpus", data_path: str) -> None:
+        """__init__."""
         self.data_path = data_path
 
-    def __iter__(self):
+    def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
+        """__iter__."""
         corpus_path = datapath(self.data_path)
         normalizer = Normalizer()
-        for i, list_of_words in enumerate(open(corpus_path)):
+        for i, list_of_words in enumerate(Path.open(corpus_path)):
             yield TaggedDocument(
                 word_tokenize(normalizer.normalize(list_of_words)),
                 [i],

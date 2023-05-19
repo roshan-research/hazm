@@ -4,7 +4,9 @@
 ۲۵۰ خبرگزاری فارسی است.
 
 """
-from typing import Dict, Iterator
+from pathlib import Path
+from typing import Dict
+from typing import Iterator
 
 
 class MirasTextReader:
@@ -15,22 +17,22 @@ class MirasTextReader:
 
     """
 
-    def __init__(self, filename: str) -> None:
+    def __init__(self: "MirasTextReader", filename: str) -> None:
         self._filename = filename
 
-    def docs(self) -> Iterator[Dict[str, str]]:
+    def docs(self: "MirasTextReader") -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         Yields:
             خبر بعدی.
 
         """
-        for line in open(self._filename, encoding="utf-8"):
+        for line in Path(self._filename).open(encoding="utf-8"):
             parts = line.split("***")
             # todo: extract link, tags, ...
             yield {"text": parts[0].strip()}
 
-    def texts(self) -> Iterator[str]:
+    def texts(self: "MirasTextReader") -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع
@@ -38,8 +40,8 @@ class MirasTextReader:
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:
-            >>> miras_text = MirasTextReader(filename='corpora/miras_text.txt')
-            >>> next(miras_text.texts())[:42]  # first 42 characters of fitst text
+            >>> mirastext = MirasTextReader(filename='corpora/mirastext.txt')
+            >>> next(mirastext.texts())[:42]  # first 42 characters of fitst text
             'ایرانی‌ها چقدر از اینترنت استفاده می‌کنند؟'
 
         Yields:

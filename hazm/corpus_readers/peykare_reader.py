@@ -18,10 +18,14 @@
 
 import codecs
 import os
-from typing import Iterator, List, Tuple
+from pathlib import Path
+from typing import Any
+from typing import Iterator
+from typing import List
+from typing import Tuple
 
-from ..normalizer import Normalizer
-from ..word_tokenizer import WordTokenizer
+from hazm.normalizer import Normalizer
+from hazm.word_tokenizer import WordTokenizer
 
 
 def coarse_pos_u(tags: List[str], word: str) -> List[str]:
@@ -34,6 +38,7 @@ def coarse_pos_u(tags: List[str], word: str) -> List[str]:
 
     Args:
         tags: لیست برچسب‌های ریز.
+        word: برچسبی که می‌خواهید به برچسب جهانی تبدیل شود.
 
     Returns:
         لیست برچسب‌های درشت جهانی.
@@ -162,7 +167,7 @@ def coarse_pos_u(tags: List[str], word: str) -> List[str]:
         return "NOUN"
 
 
-def coarse_pos_e(tags: List[str], word: str) -> List[str]:
+def coarse_pos_e(tags: List[str], word) -> List[str]:
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:
@@ -245,7 +250,7 @@ class PeykareReader:
     """
 
     def __init__(
-        self,
+        self: "PeykareReader",
         root: str,
         joined_verb_parts: bool = True,
         pos_map: str = coarse_pos_e,
@@ -261,7 +266,7 @@ class PeykareReader:
         self._joined_verb_parts = joined_verb_parts
         self._normalizer = Normalizer(correct_spacing=False)
 
-    def docs(self) -> Iterator[str]:
+    def docs(self: "PeykareReader") -> Iterator[str]:
         """اسناد را به شکل متن خام برمی‌گرداند.
 
         Yields:
@@ -271,14 +276,14 @@ class PeykareReader:
         for root, _, files in os.walk(self._root):
             for name in sorted(files):
                 with codecs.open(
-                    os.path.join(root, name),
+                    Path(root) / name,
                     encoding="windows-1256",
                 ) as peykare_file:
                     text = peykare_file.read()
                     if text:
                         yield text
 
-    def doc_to_sents(self, document: str) -> Iterator[List[Tuple[str, str]]]:
+    def doc_to_sents(self:"PeykareReader", document: str) -> Iterator[List[Tuple[str, str]]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
 
         هر جمله لیستی از `(کلمه, برچسب)`ها است.
@@ -306,7 +311,7 @@ class PeykareReader:
                     yield sentence
                 sentence = []
 
-    def sents(self) -> Iterator[List[Tuple[str, str]]]:
+    def sents(self: "PeykareReader") -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را در قالب لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
 
         Examples:
@@ -320,8 +325,8 @@ class PeykareReader:
         """
 
         # >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
-        #    >>> next(peykare.sents())
-        def map_pos(item):
+        # >>> next(peykare.sents())
+        def map_pos(item: str)->Tuple:
             return (item[0], self._pos_map(item[1].split(","), item[0]))
 
         for document in self.docs():

@@ -10,7 +10,10 @@
 """
 
 import re
-from typing import Iterator, List, Tuple
+from pathlib import Path
+from typing import Iterator
+from typing import List
+from typing import Tuple
 
 from ..normalizer import Normalizer
 from .peykare_reader import join_verb_parts
@@ -70,11 +73,12 @@ class BijankhanReader:
     """
 
     def __init__(
-        self,
+        self: "BijankhanReader",
         bijankhan_file: str,
         joined_verb_parts: bool = True,
         pos_map: str = None,
     ) -> None:
+        """Init."""
         if pos_map is None:
             pos_map = default_pos_map
         self._bijankhan_file = bijankhan_file
@@ -82,7 +86,7 @@ class BijankhanReader:
         self._pos_map = pos_map
         self._normalizer = Normalizer(correct_spacing=False)
 
-    def _sentences(self) -> Iterator[List[Tuple[str, str]]]:
+    def _sentences(self: "BijankhanReader") -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
 
         Yields:
@@ -90,22 +94,24 @@ class BijankhanReader:
 
         """
         sentence = []
-        for line in open(self._bijankhan_file, encoding="utf-8"):
-            parts = re.split("  +", line.strip())
-            if len(parts) == 2:
-                word, tag = parts
-                if word not in ("#", "*"):
-                    word = self._normalizer.normalize(word)
-                    sentence.append((word if word else "_", tag))
-                if (
-                    tag == "DELM"
-                    and word in ("#", "*", ".", "؟", "!")
-                    and len(sentence)
-                ):
-                    yield sentence
-                    sentence = []
+        with Path(self._bijankhan_file).open(encoding="utf-8") as f:
+            length = 2
+            for line in f:
+                parts = re.split("  +", line.strip())
+                if len(parts) == length:
+                    word, tag = parts
+                    if word not in ("#", "*"):
+                        word = self._normalizer.normalize(word)
+                        sentence.append((word if word else "_", tag))
+                    if (
+                        tag == "DELM"
+                        and word in ("#", "*", ".", "؟", "!")
+                        and len(sentence)
+                    ):
+                        yield sentence
+                        sentence = []
 
-    def sents(self) -> Iterator[List[Tuple[str, str]]]:
+    def sents(self: "BijankhanReader") -> Iterator[List[Tuple[str, str]]]:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
 
         Examples:

@@ -9,7 +9,10 @@
 
 import os
 import tempfile
-from typing import List, Tuple, Type
+from pathlib import Path
+from typing import List
+from typing import Tuple
+from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
@@ -28,7 +31,7 @@ class MaltParser(MaltParser):
     """
 
     def __init__(
-        self,
+        self: "MaltParser",
         tagger: str,
         lemmatizer: str,
         working_dir: str = "resources",
@@ -38,9 +41,9 @@ class MaltParser(MaltParser):
         self.working_dir = working_dir
         self.mco = model_file
         self._malt_bin = os.path.join(working_dir, "malt.jar")
-        self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
+        self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_" # noqa: ARG005
 
-    def parse_sents(self, sentences: str, verbose: bool = False) -> str:
+    def parse_sents(self: "MaltParser", sentences: str, verbose: bool = False) -> str:
         """گراف وابستگی را برمی‌گرداند.
 
         Args:
@@ -55,7 +58,7 @@ class MaltParser(MaltParser):
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
     def parse_tagged_sents(
-        self,
+        self: "MaltParser",
         sentences: List[List[Tuple[str, str]]],
         verbose: bool = False,
     ) -> str:
@@ -148,9 +151,9 @@ class TurboParser(ParserI):
 
     """
 
-    def __init__(self, tagger, lemmatizer: str, model_file: str) -> None:
+    def __init__(self: "TurboParser", tagger, lemmatizer: str, model_file: str) -> None:
         self.tagger = tagger
-        self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
+        self.lemmatize = lemmatizer.lemmatize if lemmatizer else lambda w, t: "_" # noqa: ARG005
 
         import turboparser
 
@@ -159,16 +162,18 @@ class TurboParser(ParserI):
         self.interface.load_parser_model(model_file)
 
     def parse_sents(
-        self,
+        self: "TurboParser",
         sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
+        """parse_sents."""
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.tagged_parse_sents(tagged_sentences)
 
     def tagged_parse_sents(
-        self,
+        self: "TurboParser",
         sentences: List[List[Tuple[str, str]]],
     ) -> Type[DependencyGraph]:
+        """tagged_parse_sents."""
         input_file = tempfile.NamedTemporaryFile(
             prefix="turbo_input.conll",
             dir="resources",

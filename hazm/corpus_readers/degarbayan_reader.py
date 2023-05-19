@@ -15,7 +15,11 @@
 
 import os
 import sys
-from typing import Any, Dict, Iterator, Tuple
+from pathlib import Path
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import Tuple
 from xml.dom import minidom
 
 
@@ -35,11 +39,10 @@ class DegarbayanReader:
     """
 
     def __init__(
-        self,
+        self: "DegarbayanReader",
         root: str,
         corpus_file: str = "corpus_pair.xml",
         judge_type: str = "three_class",
-        version: float = 1.0,
     ) -> None:
         self._root = root
         self._corpus_file = corpus_file
@@ -47,7 +50,7 @@ class DegarbayanReader:
         if judge_type != "three_class" and judge_type != "two_class":
             self._judge_type = "three_class"
 
-    def docs(self) -> Iterator[Dict[str, Any]]:
+    def docs(self: "DegarbayanReader") -> Iterator[Dict[str, Any]]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:
@@ -55,13 +58,14 @@ class DegarbayanReader:
 
         """
 
-        def judge_number_to_text(judge):
+        def judge_number_to_text(judge: str) -> str:
             if judge == "1" or (self._judge_type == "two_class" and judge == "0"):
                 return "Paraphrase"
-            elif judge == "0":
+
+            if judge == "0":
                 return "SemiParaphrase"
-            else:
-                return "NotParaphrase"
+
+            return "NotParaphrase"
 
         filename = os.path.join(self._root, self._corpus_file)
         if os.path.exists(filename):
@@ -120,11 +124,11 @@ class DegarbayanReader:
             except Exception as e:
                 print("error in reading", filename, e, file=sys.stderr)
         else:
-            print("error in reading file", filename, e, file=sys.stderr)
+            print("error in reading file", filename, e, file=sys.stderr) # noqa: F821
             msg = "error in reading file"
             raise FileNotFoundError(msg, filename)
 
-    def pairs(self) -> Iterator[Tuple[str, str, str]]:
+    def pairs(self: "DegarbayanReader") -> Iterator[Tuple[str, str, str]]:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
 
         Examples:

@@ -1,9 +1,14 @@
+"""این ماژول، پیکره‌های متنی خام را می‌خواند."""
 from typing import Any
+from typing import Callable
+from typing import List
 
 from nltk.corpus import PlaintextCorpusReader
-from nltk.corpus.reader import StreamBackedCorpusView, read_blankline_block
+from nltk.corpus.reader import StreamBackedCorpusView
+from nltk.corpus.reader import read_blankline_block
 
-from hazm import sent_tokenize, word_tokenize
+from hazm import sent_tokenize
+from hazm import word_tokenize
 
 
 class PersianPlainTextReader(PlaintextCorpusReader):
@@ -17,13 +22,13 @@ class PersianPlainTextReader(PlaintextCorpusReader):
     CorpusView = StreamBackedCorpusView
 
     def __init__(
-        self,
-        root: Any,
-        fileids: Any,
-        word_tokenizer: Any = word_tokenize,
-        sent_tokenizer: Any = sent_tokenize,
-        para_block_reader: Any = read_blankline_block,
-        encoding="utf8",
+        self: "PersianPlainTextReader",
+        root: str,
+        fileids: List,
+        word_tokenizer: Callable = word_tokenize,
+        sent_tokenizer: Callable = sent_tokenize,
+        para_block_reader: Callable = read_blankline_block,
+        encoding:str="utf8",
     ) -> None:
         super().__init__(
             root,

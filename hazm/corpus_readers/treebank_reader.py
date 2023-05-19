@@ -8,7 +8,12 @@
 import os
 import re
 import sys
-from typing import Any, Iterator, List, Tuple
+from pathlib import Path
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Tuple
 from xml.dom import minidom
 
 from nltk.tree import Tree
@@ -30,7 +35,7 @@ def coarse_pos_e(tags: List[str]) -> List[str]:
         لیست برچسب‌های درشت.
 
     """
-    map = {
+    mapping = {
         "N": "N",
         "V": "V",
         "A": "AJ",
@@ -58,7 +63,7 @@ def coarse_pos_e(tags: List[str]) -> List[str]:
                 tags[0] = "D"
             elif "det" in tags:
                 tags[0] = "T"
-        return map[tags[0][0]] + ("e" if "ezafe" in tags else "")
+        return mapping[tags[0][0]] + ("e" if "ezafe" in tags else "")
     except Exception:
         return ""
 
@@ -75,7 +80,7 @@ class TreebankReader:
     """
 
     def __init__(
-        self,
+        self:"TreebankReader",
         root: str,
         pos_map: str = coarse_pos_e,
         join_clitics: bool = False,
@@ -87,7 +92,7 @@ class TreebankReader:
         self._join_verb_parts = join_verb_parts
         self._tokenizer = WordTokenizer()
 
-    def docs(self) -> Iterator[Any]:
+    def docs(self:"TreebankReader") -> Iterator[Any]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:
@@ -97,8 +102,8 @@ class TreebankReader:
         for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 try:
-                    with open(
-                        os.path.join(root, name),
+                    with Path.open(
+                        Path(root) / name,
                         encoding="utf8",
                     ) as treebank_file:
                         raw = re.sub(r"\n *", "", treebank_file.read())
@@ -106,7 +111,7 @@ class TreebankReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def trees(self) -> Iterator[str]:
+    def trees(self:"TreebankReader") -> Iterator[str]:
         """ساختارهای درختی موجود در پیکره را برمی‌گرداند.
 
         Examples:
@@ -125,10 +130,10 @@ class TreebankReader:
 
         """
 
-        def traverse(node):
-            def extract_tags(W):
-                pos = [W.getAttribute("lc") if W.getAttribute("lc") else None]
-                if W.getAttribute("clitic") in {
+        def traverse(node: str) -> Tree:
+            def extract_tags(w: str):
+                pos = [w.getAttribute("lc") if w.getAttribute("lc") else None]
+                if w.getAttribute("clitic") in {
                     "ezafe",
                     "pronominal",
                     "verb",
@@ -136,30 +141,30 @@ class TreebankReader:
                     "adv",
                     "det",
                 }:
-                    pos.append(W.getAttribute("clitic"))
-                if W.getAttribute("ne_sort"):
-                    pos.append(W.getAttribute("ne_sort"))
-                if W.getAttribute("n_type"):
-                    pos.append(W.getAttribute("n_type"))
-                if W.getAttribute("ya_type"):
-                    pos.append(W.getAttribute("ya_type"))
-                if W.getAttribute("ke_type"):
-                    pos.append(W.getAttribute("ke_type"))
-                if W.getAttribute("type"):
-                    pos.append(W.getAttribute("type"))
-                if W.getAttribute("kind"):
-                    pos.append(W.getAttribute("kind"))
+                    pos.append(w.getAttribute("clitic"))
+                if w.getAttribute("ne_sort"):
+                    pos.append(w.getAttribute("ne_sort"))
+                if w.getAttribute("n_type"):
+                    pos.append(w.getAttribute("n_type"))
+                if w.getAttribute("ya_type"):
+                    pos.append(w.getAttribute("ya_type"))
+                if w.getAttribute("ke_type"):
+                    pos.append(w.getAttribute("ke_type"))
+                if w.getAttribute("type"):
+                    pos.append(w.getAttribute("type"))
+                if w.getAttribute("kind"):
+                    pos.append(w.getAttribute("kind"))
                 return pos
 
-            def clitic_join(tree, clitic):
+            def clitic_join(tree: Tree, clitic: Dict):
                 if type(tree[-1]) == Tree:
                     return clitic_join(tree[-1], clitic)
-                else:
-                    if clitic[0][0][0] == "ا":
-                        clitic[0] = ("‌" + clitic[0][0], clitic[0][1])
-                    tree[-1] = (tree[-1][0] + clitic[0][0], clitic[0][1])
-                    tree.set_label("CLITICS")
-                    return None
+
+                if clitic[0][0][0] == "ا":
+                    clitic[0] = ("‌" + clitic[0][0], clitic[0][1])
+                tree[-1] = (tree[-1][0] + clitic[0][0], clitic[0][1])
+                tree.set_label("CLITICS")
+                return None
 
             if not len(node.childNodes):
                 return None
@@ -233,11 +238,11 @@ class TreebankReader:
             return tree
 
         for doc in self.docs():
-            for S in doc.getElementsByTagName("S"):
-                traverse(S)
-                yield traverse(S)
+            for s in doc.getElementsByTagName("S"):
+                traverse(s)
+                yield traverse(s)
 
-    def sents(self) -> Iterator[List[Tuple[str, str]]]:
+    def sents(self:"TreebankReader") -> Iterator[List[Tuple[str, str]]]:
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
 
         Examples:
@@ -252,7 +257,7 @@ class TreebankReader:
         for tree in self.trees():
             yield tree.leaves()
 
-    def chunked_trees(self) -> Iterator[str]:
+    def chunked_trees(self:"TreebankReader") -> Iterator[str]:
         """ساختار درختی را به شکل تقطیع شده برمی‌گرداند.
 
         Examples:

@@ -16,7 +16,9 @@ crawl
 import os
 import re
 import sys
-from typing import Dict, Iterator
+from pathlib import Path
+from typing import Dict
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -28,7 +30,7 @@ class HamshahriReader:
 
     """
 
-    def __init__(self, root: str) -> None:
+    def __init__(self: "HamshahriReader", root: str) -> None:
         self._root = root
         self._invalids = {
             "hamshahri.dtd",
@@ -78,7 +80,7 @@ class HamshahriReader:
         }
         self._paragraph_pattern = re.compile(r"(\n.{0,50})(?=\n)")
 
-    def docs(self) -> Iterator[Dict[str, str]]:
+    def docs(self: "HamshahriReader") -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از این پارامتر است:
@@ -149,7 +151,7 @@ class HamshahriReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def texts(self) -> Iterator[str]:
+    def texts(self: "HamshahriReader") -> Iterator[str]:
         """فقط متن خبرها را در قالب یک برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با تابع

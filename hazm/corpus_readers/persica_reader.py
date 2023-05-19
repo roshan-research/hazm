@@ -10,7 +10,9 @@
 داده‌کاوی است.
 
 """
-from typing import Dict, Iterator
+from pathlib import Path
+from typing import Dict
+from typing import Iterator
 
 
 class PersicaReader:
@@ -21,10 +23,10 @@ class PersicaReader:
 
     """
 
-    def __init__(self, csv_file: str) -> None:
+    def __init__(self: "PersicaReader", csv_file: str) -> None:
         self._csv_file = csv_file
 
-    def docs(self) -> Iterator[Dict[str, str]]:
+    def docs(self: "PersicaReader") -> Iterator[Dict[str, str]]:
         """خبرها را برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از این پارامتر است:
@@ -47,13 +49,13 @@ class PersicaReader:
 
         """
         lines = []
-        for line in open(self._csv_file, encoding="utf-8-sig"):
-            line = line.strip()
-            if line:
-                if line.endswith(","):
-                    lines.append(line[:-1])
+        for current_line in Path(self._csv_file).open(encoding="utf-8-sig"):
+            current_line = current_line.strip()
+            if current_line:
+                if current_line.endswith(","):
+                    lines.append(current_line[:-1])
                 else:
-                    lines.append(line)
+                    lines.append(current_line)
                     yield {
                         "id": int(lines[0]),
                         "title": lines[1],
@@ -65,7 +67,7 @@ class PersicaReader:
                     }
                     lines = []
 
-    def texts(self) -> Iterator[str]:
+    def texts(self: "PersicaReader") -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع

@@ -4,7 +4,10 @@
 import os
 import re
 import sys
-from typing import Any, Dict, Iterator
+from pathlib import Path
+from typing import Any
+from typing import Dict
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -16,11 +19,11 @@ class TNewsReader:
 
     """
 
-    def __init__(self, root: str) -> None:
+    def __init__(self: "TNewsReader", root: str) -> None:
         self._root = root
         self.cleaner = re.compile(r"<[^<>]+>")
 
-    def docs(self) -> Iterator[Dict[str, str]]:
+    def docs(self: "TNewsReader") -> Iterator[Dict[str, str]]:
         """خبرها را در قالب یک `iterator` برمی‌گرداند.
 
         هر خبر، شی‌ای متشکل از چند پارامتر است:
@@ -45,20 +48,20 @@ class TNewsReader:
 
         """
 
-        def get_text(element: Any) -> str:
+        def get_text(element: str) -> str:
             raw_html = element.childNodes[0].data if element.childNodes else ""
-            cleaned_text = re.sub(self.cleaner, "", raw_html)
-            return cleaned_text
+            return re.sub(self.cleaner, "", raw_html)
 
         for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 try:
-                    content = open(os.path.join(root, name), encoding="utf8").read()
+                    path = Path(root) / name
+                    content = path.read_text(encoding="utf8")
 
                     # fix xml formating issue
                     content = (
                         re.sub(
-                            r"[\x1B\b\x1A]", "", content
+                            r"[\x1B\b\x1A]", "", content,
                         ).replace(
                             "</TNews>",
                             "",
@@ -97,7 +100,7 @@ class TNewsReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def texts(self) -> Iterator[str]:
+    def texts(self: "TNewsReader") -> Iterator[str]:
         """فقط متن خبرها را برمی‌گرداند.
 
         این تابع صرفاً برای راحتی بیشتر تهیه شده وگرنه با همان تابع

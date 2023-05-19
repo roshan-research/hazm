@@ -85,7 +85,7 @@ if PY2:
     text_type = str
 
     class SimpleNamespace:
-        def __init__(self, **kwargs) -> None:
+        def __init__(self: "SimpleNamespace", **kwargs) -> None:
             self.__dict__.update(kwargs)
 
         def __repr__(self) -> str:
@@ -93,7 +93,7 @@ if PY2:
             items = (f"{k}={self.__dict__[k]!r}" for k in keys)
             return "{}({})".format(type(self).__name__, ", ".join(items))
 
-        def __eq__(self, other):
+        def __eq__(self:"SimpleNamespace", other):
             return self.__dict__ == other.__dict__
 
 else:
@@ -412,7 +412,7 @@ class Template(list):
         tpl.append(TemplateText(body[start:]))  # leftover
         return tpl
 
-    def subst(self, params, extractor, depth=0):
+    def subst(self: "Template", params, extractor, depth=0):
         # We perform parameter substitutions recursively.
         # We also limit the maximum number of iterations to avoid too long or
         # even endless loops (in case of malformed input).
@@ -440,7 +440,7 @@ class Template(list):
 class TemplateText(text_type):
     """Fixed text of template."""
 
-    def subst(self, params, extractor, depth):
+    def subst(self: "TemplateText", params, extractor, depth):
         return self
 
 
@@ -450,7 +450,7 @@ class TemplateArg:
 
     """
 
-    def __init__(self, parameter) -> None:
+    def __init__(self: "TemplateArg", parameter) -> None:
         """:param parameter: the parts of a tplarg."""
         # the parameter name itself might contain templates, e.g.:
         #   appointe{{#if:{{{appointer14|}}}|r|d}}14|
@@ -473,7 +473,7 @@ class TemplateArg:
         else:
             return "{{{%s}}}" % self.name
 
-    def subst(self, params, extractor, depth):
+    def subst(self: "TemplateArg", params, extractor, depth):
         """Substitute value for this argument from dict :param params:
         Use :param extractor: to evaluate expressions for name and default.
         Limit substitution to the maximun :param depth:.
@@ -495,13 +495,13 @@ class TemplateArg:
 
 
 class Frame:
-    def __init__(self, title="", args=[], prev=None) -> None:
+    def __init__(self: "Frame", title="", args=[], prev=None) -> None:
         self.title = title
         self.args = args
         self.prev = prev
         self.depth = prev.depth + 1 if prev else 0
 
-    def push(self, title, args):
+    def push(self: "Frame", title, args):
         return Frame(title, args, self)
 
     def pop(self):
@@ -526,7 +526,7 @@ substWords = "subst:|safesubst:"
 class Extractor:
     """An extraction task on a article."""
 
-    def __init__(self, id, revid, title, lines) -> None:
+    def __init__(self: "Extractor", id, revid, title, lines) -> None:
         """:param id: id of page.
         :param title: tutle of page.
         :param lines: a list of lines.
@@ -543,7 +543,7 @@ class Extractor:
         self.recursion_exceeded_3_errs = 0  # parameter recursion
         self.template_title_errs = 0
 
-    def write_output(self, out, text):
+    def write_output(self: "Extractor", out, text):
         """:param out: a memory file
         :param text: the text of the page
 
@@ -590,7 +590,7 @@ class Extractor:
                 out.write("\n")
             out.write(footer)
 
-    def extract(self, out):
+    def extract(self: "Extractor", out):
         """:param out: a memory file."""
         # Separate header from text with a newline.
         title_str = (
@@ -658,7 +658,7 @@ class Extractor:
                 *errs,
             )
 
-    def transform(self, wikitext):
+    def transform(self: "Extractor", wikitext):
         """Transforms wiki markup.
         @see https://www.mediawiki.org/wiki/Help:Formatting.
 
@@ -676,7 +676,7 @@ class Extractor:
         res += self.transform1(wikitext[cur:])
         return res
 
-    def transform1(self, text):
+    def transform1(self: "Extractor", text):
         """Transform text not containing <nowiki>."""
         if options.expand_templates:
             # expand templates
@@ -686,7 +686,7 @@ class Extractor:
             # Drop transclusions (template, parser functions)
             return dropNested(text, r"{{", r"}}")
 
-    def wiki2text(self, text):
+    def wiki2text(self: "Extractor", text):
         #
         # final part of internalParse().)
         #
@@ -741,7 +741,7 @@ class Extractor:
         text = res + unescape(text[cur:])
         return text
 
-    def clean(self, text):
+    def clean(self:"Extractor", text):
         """Removes irrelevant parts from :param: text."""
         # Collect spans
         spans = []
@@ -821,7 +821,7 @@ class Extractor:
     # check for template beginning
     reOpen = re.compile("(?<!{){{(?!{)", re.DOTALL)
 
-    def expand(self, wikitext):
+    def expand(self: "Extractor", wikitext):
         """:param wikitext: the text to be expanded.
 
         Templates are frequently nested. Occasionally, parsing mistakes may
@@ -857,7 +857,7 @@ class Extractor:
         res += wikitext[cur:]
         return res
 
-    def templateParams(self, parameters):
+    def templateParams(self: "Extractor", parameters):
         """Build a dictionary with positional or name key to expanded parameters.
         :param parameters: the parts[1:] of a template, i.e. all except the title.
 
@@ -926,7 +926,7 @@ class Extractor:
                 templateParams[str(unnamedParameterCounter)] = param
         return templateParams
 
-    def expandTemplate(self, body):
+    def expandTemplate(self: "Extractor", body):
         """Expands template invocation.
         :param body: the parts of a template.
 
@@ -1631,10 +1631,10 @@ class MagicWords:
     def __init__(self) -> None:
         self.values = {"!": "|"}
 
-    def __getitem__(self, name):
+    def __getitem__(self:"MagicWords", name):
         return self.values.get(name)
 
-    def __setitem__(self, name, value) -> None:
+    def __setitem__(self:"MagicWords", name, value) -> None:
         self.values[name] = value
 
     switches = (
@@ -1737,22 +1737,22 @@ class Infix:
 
     """
 
-    def __init__(self, function) -> None:
+    def __init__(self:"Infix", function) -> None:
         self.function = function
 
-    def __ror__(self, other):
+    def __ror__(self:"Infix", other):
         return Infix(lambda x, self=self, other=other: self.function(other, x))
 
-    def __or__(self, other):
+    def __or__(self:"Infix", other):
         return self.function(other)
 
-    def __rlshift__(self, other):
+    def __rlshift__(self:"Infix", other):
         return Infix(lambda x, self=self, other=other: self.function(other, x))
 
-    def __rshift__(self, other):
+    def __rshift__(self:"Infix", other):
         return self.function(other)
 
-    def __call__(self, value1, value2):
+    def __call__(self:"Infix", value1, value2):
         return self.function(value1, value2)
 
 
@@ -2577,7 +2577,7 @@ class NextFile:
 
     filesPerDir = 100
 
-    def __init__(self, path_name) -> None:
+    def __init__(self: "NextFile", path_name) -> None:
         self.path_name = path_name
         self.dir_index = -1
         self.file_index = -1
@@ -2608,7 +2608,7 @@ class NextFile:
 class OutputSplitter:
     """File-like object, that splits output to multiple files of a given max size."""
 
-    def __init__(self, nextFile, max_file_size=0, compress=True) -> None:
+    def __init__(self: "OutputSplitter", nextFile, max_file_size=0, compress=True) -> None:
         """:param nextFile: a NextFile object from which to obtain filenames
         to use.
         :param max_file_size: the maximum size of each file.
@@ -2620,19 +2620,19 @@ class OutputSplitter:
         self.max_file_size = max_file_size
         self.file = self.open(next(self.nextFile))
 
-    def reserve(self, size):
+    def reserve(self: "OutputSplitter", size):
         if self.file.tell() + size > self.max_file_size:
             self.close()
             self.file = self.open(next(self.nextFile))
 
-    def write(self, data):
+    def write(self: "OutputSplitter", data):
         self.reserve(len(data))
         self.file.write(data)
 
     def close(self):
         self.file.close()
 
-    def open(self, filename):
+    def open(self: "OutputSplitter", filename):
         if self.compress:
             return bz2.BZ2File(filename + ".bz2", "w")
         else:

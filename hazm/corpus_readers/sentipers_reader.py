@@ -8,7 +8,10 @@
 import itertools
 import os
 import sys
-from typing import Any, Dict, Iterator
+from pathlib import Path
+from typing import Any
+from typing import Dict
+from typing import Iterator
 from xml.dom import minidom
 
 
@@ -20,10 +23,10 @@ class SentiPersReader:
 
     """
 
-    def __init__(self, root: str) -> None:
+    def __init__(self: "SentiPersReader", root: str) -> None:
         self._root = root
 
-    def docs(self) -> Iterator[Dict[str, Any]]:
+    def docs(self: "SentiPersReader") -> Iterator[Dict[str, Any]]:
         """متن‌های فارسی را در قالب یک برمی‌گرداند.
 
         هر متن شامل این فیلدهاست:
@@ -45,7 +48,7 @@ class SentiPersReader:
 
         """
 
-        def element_sentences(element):
+        def element_sentences(element: str) -> Iterator[Dict]:
             for sentence in element.getElementsByTagName("Sentence"):
                 yield {
                     "text": sentence.childNodes[0].data,
@@ -108,7 +111,7 @@ class SentiPersReader:
                 except Exception as e:
                     print("error in reading", filename, e, file=sys.stderr)
 
-    def comments(self) -> Iterator[str]:
+    def comments(self: "SentiPersReader") -> Iterator[str]:
         """نظرات مربوط به متن را برمی‌گرداند.
 
         Examples:

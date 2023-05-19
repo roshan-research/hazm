@@ -7,11 +7,14 @@
 
 
 import re
+from pathlib import Path
 from typing import List
 
 from nltk.tokenize.api import TokenizerI
 
-from .utils import default_verbs, default_words, words_list
+from hazm.utils import default_verbs
+from hazm.utils import default_words
+from hazm.utils import words_list
 
 
 class WordTokenizer(TokenizerI):
@@ -29,7 +32,7 @@ class WordTokenizer(TokenizerI):
         join_verb_parts: اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
         separate_emoji: اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
         replace_links: اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
-        replace_IDs: اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
+        replace_ids: اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
         replace_emails: اگر `True` باشد آدرس‌های ایمیل را با کلمهٔ `EMAIL‍` جایگزین می‌کند.
         replace_numbers: اگر `True` باشد اعداد اعشاری را با`NUMF` و اعداد صحیح را با` NUM` جایگزین می‌کند. در اعداد غیراعشاری، تعداد ارقام نیز جلوی `NUM` می‌آید.
         replace_hashtags: اگر `True` باشد علامت `#` را با `TAG` جایگزین می‌کند.
@@ -37,13 +40,13 @@ class WordTokenizer(TokenizerI):
     """
 
     def __init__(
-        self,
+        self: "WordTokenizer",
         words_file: str = default_words,
         verbs_file: str = default_verbs,
         join_verb_parts: bool = True,
         separate_emoji: bool = False,
         replace_links: bool = False,
-        replace_IDs: bool = False,
+        replace_ids: bool = False,
         replace_emails: bool = False,
         replace_numbers: bool = False,
         replace_hashtags: bool = False,
@@ -51,7 +54,7 @@ class WordTokenizer(TokenizerI):
         self._join_verb_parts = join_verb_parts
         self.separate_emoji = separate_emoji
         self.replace_links = replace_links
-        self.replace_IDs = replace_IDs
+        self.replace_ids = replace_ids
         self.replace_emails = replace_emails
         self.replace_numbers = replace_numbers
         self.replace_hashtags = replace_hashtags
@@ -227,7 +230,7 @@ class WordTokenizer(TokenizerI):
                 "نخواهند",
             }
 
-            with open(verbs_file, encoding="utf8") as verbs_file:
+            with Path.open(verbs_file, encoding="utf8") as verbs_file:
                 self.verbs = list(
                     reversed([verb.strip() for verb in verbs_file if verb]),
                 )
@@ -237,7 +240,7 @@ class WordTokenizer(TokenizerI):
                     + ["ن" + bon + "ه" for bon in self.bons],
                 )
 
-    def tokenize(self, text: str) -> List[str]:
+    def tokenize(self:"WordTokenizer", text: str) -> List[str]:
         """توکن‌های متن را استخراج می‌کند.
 
         Examples:
@@ -250,7 +253,7 @@ class WordTokenizer(TokenizerI):
             >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_links=True)
             >>> print(' '.join(tokenizer.tokenize('در قطر هک شد https://t.co/tZOurPSXzi https://t.co/vtJtwsRebP')))
             در قطر هک شد LINK LINK
-            >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_IDs=True, replace_numbers=True)
+            >>> tokenizer = WordTokenizer(join_verb_parts=False, replace_ids=True, replace_numbers=True)
             >>> print(' '.join(tokenizer.tokenize('زلزله ۴.۸ ریشتری در هجدک کرمان @bourse24ir')))
             زلزله NUMF ریشتری در هجدک کرمان ID
             >>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
@@ -275,7 +278,7 @@ class WordTokenizer(TokenizerI):
             text = self.email_pattern.sub(self.email_repl, text)
         if self.replace_links:
             text = self.link_pattern.sub(self.link_repl, text)
-        if self.replace_IDs:
+        if self.replace_ids:
             text = self.id_pattern.sub(self.id_repl, text)
         if self.replace_hashtags:
             text = self.hashtag_pattern.sub(self.hashtag_repl, text)
@@ -290,7 +293,7 @@ class WordTokenizer(TokenizerI):
             tokens = self.join_verb_parts(tokens)
         return tokens
 
-    def join_verb_parts(self, tokens: List[str]) -> List[str]:
+    def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
         """افعال چندبخشی را به هم می‌چسباند.
 
         Examples:
