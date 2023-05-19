@@ -5,15 +5,9 @@
 
 """
 
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Tuple
-from typing import Union
+from typing import Dict, Iterator, List, Tuple, Union
 
-from nltk.chunk import RegexpParser
-from nltk.chunk import conlltags2tree
-from nltk.chunk import tree2conlltags
+from nltk.chunk import RegexpParser, conlltags2tree, tree2conlltags
 
 from hazm.pos_tagger import POSTagger
 from hazm.sequence_tagger import IOBTagger
@@ -64,7 +58,9 @@ class Chunker(IOBTagger):
     """این کلاس شامل توابعی برای تقطیع متن، آموزش و ارزیابی مدل است."""
 
     def __init__(
-        self: "Chunker", model: str = None, data_maker: List[List[Dict]] = None,
+        self: "Chunker",
+        model: str = None,
+        data_maker: List[List[Dict]] = None,
     ) -> None:
         """constructor."""
         data_maker = self.data_maker if data_maker is None else data_maker
@@ -72,7 +68,8 @@ class Chunker(IOBTagger):
         super().__init__(model, data_maker)
 
     def data_maker(
-        self: "Chunker", tokens: List[List[Tuple[str, str]]],
+        self: "Chunker",
+        tokens: List[List[Tuple[str, str]]],
     ) -> List[List[Dict]]:
         """تابعی که لیستی دو بعدی از کلمات به همراه لیبل را گرفته و لیست دو بعدی از از دیکشنری‌هایی که تعیین‌کننده ویژگی‌ها هر کلمه هستند را برمی‌گرداند.
 
@@ -99,7 +96,10 @@ class Chunker(IOBTagger):
         ]
 
     def features(
-        self: "Chunker", words: List[str], pos_tags: List[str], index: int,
+        self: "Chunker",
+        words: List[str],
+        pos_tags: List[str],
+        index: int,
     ) -> Dict[str, Union[str, bool]]:
         """ویژگی‌های کلمه را برمی‌گرداند."""
         word_features = self.posTagger.features(words, index)
@@ -170,7 +170,8 @@ class Chunker(IOBTagger):
         return conlltags2tree(super().tag(sentence))
 
     def parse_sents(
-        self: "Chunker", sentences: List[List[Tuple[str, str]]],
+        self: "Chunker",
+        sentences: List[List[Tuple[str, str]]],
     ) -> Iterator[str]:
         """جملات ورودی را به‌شکل تقطیع‌شده و در قالب یک برمی‌گرداند.
 

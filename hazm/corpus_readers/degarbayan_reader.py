@@ -16,10 +16,7 @@
 import os
 import sys
 from pathlib import Path
-from typing import Any
-from typing import Dict
-from typing import Iterator
-from typing import Tuple
+from typing import Any, Dict, Iterator, Tuple
 from xml.dom import minidom
 
 
@@ -124,7 +121,7 @@ class DegarbayanReader:
             except Exception as e:
                 print("error in reading", filename, e, file=sys.stderr)
         else:
-            print("error in reading file", filename, e, file=sys.stderr) # noqa: F821
+            print("error in reading file", filename, e, file=sys.stderr)  # noqa: F821
             msg = "error in reading file"
             raise FileNotFoundError(msg, filename)
 

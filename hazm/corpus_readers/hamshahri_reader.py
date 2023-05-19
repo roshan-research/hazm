@@ -17,8 +17,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Dict
-from typing import Iterator
+from typing import Dict, Iterator
 from xml.dom import minidom
 
 

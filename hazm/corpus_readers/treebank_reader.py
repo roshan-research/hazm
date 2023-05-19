@@ -9,11 +9,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Any, Dict, Iterator, List, Tuple
 from xml.dom import minidom
 
 from nltk.tree import Tree
@@ -80,7 +76,7 @@ class TreebankReader:
     """
 
     def __init__(
-        self:"TreebankReader",
+        self: "TreebankReader",
         root: str,
         pos_map: str = coarse_pos_e,
         join_clitics: bool = False,
@@ -92,7 +88,7 @@ class TreebankReader:
         self._join_verb_parts = join_verb_parts
         self._tokenizer = WordTokenizer()
 
-    def docs(self:"TreebankReader") -> Iterator[Any]:
+    def docs(self: "TreebankReader") -> Iterator[Any]:
         """اسناد موجود در پیکره را برمی‌گرداند.
 
         Yields:
@@ -111,7 +107,7 @@ class TreebankReader:
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
-    def trees(self:"TreebankReader") -> Iterator[str]:
+    def trees(self: "TreebankReader") -> Iterator[str]:
         """ساختارهای درختی موجود در پیکره را برمی‌گرداند.
 
         Examples:
@@ -242,7 +238,7 @@ class TreebankReader:
                 traverse(s)
                 yield traverse(s)
 
-    def sents(self:"TreebankReader") -> Iterator[List[Tuple[str, str]]]:
+    def sents(self: "TreebankReader") -> Iterator[List[Tuple[str, str]]]:
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
 
         Examples:
@@ -257,7 +253,7 @@ class TreebankReader:
         for tree in self.trees():
             yield tree.leaves()
 
-    def chunked_trees(self:"TreebankReader") -> Iterator[str]:
+    def chunked_trees(self: "TreebankReader") -> Iterator[str]:
         """ساختار درختی را به شکل تقطیع شده برمی‌گرداند.
 
         Examples:

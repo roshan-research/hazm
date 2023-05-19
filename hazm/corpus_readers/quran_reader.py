@@ -5,10 +5,7 @@
 
 """
 from pathlib import Path
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Dict, Iterator, List, Tuple
 
 from hazm.utils import maketrans
 
@@ -67,7 +64,9 @@ class QuranReader:
                     part["root"] = feature[5:].translate(buckwalter_transliteration)
             yield part
 
-    def words(self: "QuranReader") -> Iterator[Tuple[str, str, str, str, str, List[Dict[str, str]]]]:
+    def words(
+        self: "QuranReader",
+    ) -> Iterator[Tuple[str, str, str, str, str, List[Dict[str, str]]]]:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
 
         Examples:
@@ -80,7 +79,7 @@ class QuranReader:
 
         """
 
-        def word_item(location: Tuple[int], parts: List[Dict])->str:
+        def word_item(location: Tuple[int], parts: List[Dict]) -> str:
             text = "".join([part["text"] for part in parts])
             tag = "-".join([part["tag"] for part in parts])
             lem = "-".join([part["lem"] for part in parts if "lem" in part])

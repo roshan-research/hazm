@@ -13,8 +13,7 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Dict
-from typing import Iterator
+from typing import Dict, Iterator
 
 
 class WikipediaReader:
@@ -73,7 +72,7 @@ class WikipediaReader:
 
             if line == "</doc>":
                 del doc[1]
-                id, url, title = doc_pattern.match(doc[0]).groups() # noqa: A001
+                id, url, title = doc_pattern.match(doc[0]).groups()  # noqa: A001
                 html = "\n".join(doc[1:-1])
 
                 yield {"id": id, "url": url, "title": title, "html": html, "text": html}

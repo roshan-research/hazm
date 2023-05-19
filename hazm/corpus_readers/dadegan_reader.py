@@ -4,12 +4,7 @@ PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده
 
 """
 from pathlib import Path
-from typing import Any
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Tuple
-from typing import Type
+from typing import Any, Dict, Iterator, List, Tuple, Type
 
 from nltk.parse import DependencyGraph
 from nltk.tree import Tree
@@ -81,7 +76,7 @@ def word_nodes(tree: Type[Tree]) -> List[Dict[str, Any]]:
     return sorted(tree.nodes.values(), key=lambda node: node["address"])[1:]
 
 
-def node_deps(node: List[Dict[str,Any]]) -> List[Any]:
+def node_deps(node: List[Dict[str, Any]]) -> List[Any]:
     """مقادیر موجود در فیلد deps نود ورودی را برمی‌گرداند."""
     return sum(list(node["deps"].values()), [])
 
@@ -134,7 +129,7 @@ class DadeganReader:
                 if item.strip():
                     yield item
 
-    def trees(self:"DadeganReader") -> Iterator[Type[Tree]]:
+    def trees(self: "DadeganReader") -> Iterator[Type[Tree]]:
         """ساختار درختی جملات را برمی‌گرداند.
 
         Yields:

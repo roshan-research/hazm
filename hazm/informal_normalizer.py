@@ -9,11 +9,8 @@ from hazm.lemmatizer import Lemmatizer
 from hazm.normalizer import Normalizer
 from hazm.sentence_tokenizer import SentenceTokenizer
 from hazm.stemmer import Stemmer
-from hazm.utils import NUMBERS
-from hazm.utils import informal_verbs
-from hazm.utils import informal_words
-from hazm.word_tokenizer import WordTokenizer
-from hazm.word_tokenizer import default_verbs
+from hazm.utils import NUMBERS, informal_verbs, informal_words
+from hazm.word_tokenizer import WordTokenizer, default_verbs
 
 
 class InformalNormalizer(Normalizer):
@@ -257,19 +254,27 @@ class InformalNormalizer(Normalizer):
                                     collection_of_word_and_suffix.append(
                                         {
                                             "word": sliceword,
-                                            "suffix": [endword, *mid_word_end_word_list],
+                                            "suffix": [
+                                                endword,
+                                                *mid_word_end_word_list,
+                                            ],
                                         },
                                     )
                                 if sliceword in self.iword_map:
                                     collection_of_word_and_suffix.append(
                                         {
                                             "word": self.iword_map[sliceword],
-                                            "suffix": [endword, *mid_word_end_word_list],
+                                            "suffix": [
+                                                endword,
+                                                *mid_word_end_word_list,
+                                            ],
                                         },
                                     )
 
             for i in range(len(collection_of_word_and_suffix)):
-                new_possible_word_list = append_suffix_to_word(collection_of_word_and_suffix[i])
+                new_possible_word_list = append_suffix_to_word(
+                    collection_of_word_and_suffix[i]
+                )
                 for j in range(len(new_possible_word_list)):
                     new_possible_word = new_possible_word_list[j]
                     if new_possible_word not in return_list:
@@ -287,7 +292,7 @@ class InformalNormalizer(Normalizer):
 
             if word in self.lemmatizer.words:
                 if word[-1] == "ن":
-                    None # noqa: B018
+                    None  # noqa: B018
                 else:
                     return []
 
@@ -324,14 +329,20 @@ class InformalNormalizer(Normalizer):
             for endverb in end_verb_list:
                 if word.endswith(endverb):
                     if endverb == "ین":
-                        collection_of_verb_list.append({"word": word[:-2], "suffix": "ید"})
+                        collection_of_verb_list.append(
+                            {"word": word[:-2], "suffix": "ید"}
+                        )
                     elif endverb == "ستن":
                         collection_of_verb_list.append(
                             {"word": word[:-3], "suffix": "ستند"},
                         )
                     elif endverb == "ن":
-                        collection_of_verb_list.append({"word": word[:-1], "suffix": "ن"})
-                        collection_of_verb_list.append({"word": word[:-1], "suffix": "ند"})
+                        collection_of_verb_list.append(
+                            {"word": word[:-1], "suffix": "ن"}
+                        )
+                        collection_of_verb_list.append(
+                            {"word": word[:-1], "suffix": "ند"}
+                        )
                     elif endverb == "ه":
                         if len(word) > 1:
                             if word[-2] != "د":
@@ -445,7 +456,9 @@ class InformalNormalizer(Normalizer):
                         collection_of_verb_list[i]["word"] = self.pastVerbs[mainword2]
                         collection_of_real_verb_list.append(collection_of_verb_list[i])
                     if mainword2 in self.presentVerbs:
-                        collection_of_verb_list[i]["word"] = self.presentVerbs[mainword2]
+                        collection_of_verb_list[i]["word"] = self.presentVerbs[
+                            mainword2
+                        ]
                         collection_of_real_verb_list.append(collection_of_verb_list[i])
 
             for i in range(len(collection_of_real_verb_list)):
@@ -518,14 +531,14 @@ class InformalNormalizer(Normalizer):
                         adhesive_alphabet[returnword[-1]]
                         returnword += "‌"
                     except:
-                        None # noqa: B018
+                        None  # noqa: B018
                     returnword += "هایم"
-                elif suffix_list[i] == "ها": # noqa: SIM114
+                elif suffix_list[i] == "ها":  # noqa: SIM114
                     try:
                         adhesive_alphabet[returnword[-1]]
                         returnword += "‌"
                     except:
-                        None # noqa: B018
+                        None  # noqa: B018
                     returnword += "ها"
                 elif (
                     suffix_list[i] == "ا"
@@ -536,14 +549,16 @@ class InformalNormalizer(Normalizer):
                         adhesive_alphabet[returnword[-1]]
                         returnword += "‌"
                     except:
-                        None # noqa: B018
+                        None  # noqa: B018
                     returnword += "ها"
                 elif suffix_list[i] == "و" and suffix_list[len(suffix_list) - 1] == "و":
                     return_word2 = returnword
                     return_word2 += " و"
                     returnword += " را"
 
-                elif suffix_list[i] == "رو" and suffix_list[len(suffix_list) - 1] == "رو":
+                elif (
+                    suffix_list[i] == "رو" and suffix_list[len(suffix_list) - 1] == "رو"
+                ):
                     returnword += " را"
 
                 elif suffix_list[i] == "ه" and suffix_list[len(suffix_list) - 1] == "ه":
@@ -721,7 +736,7 @@ class InformalNormalizer(Normalizer):
             possible_words.remove(mainword)
             possible_words.append(mainword)
         elif len(possible_words) == 0:
-                possible_words.append(mainword)
+            possible_words.append(mainword)
 
         return possible_words
 
@@ -786,6 +801,7 @@ class InformalNormalizer(Normalizer):
 
 class InformalLemmatizer(Lemmatizer):
     """این کلاس شامل توابعی برای نرمال‌سازی متن‌های محاوره‌ای است."""
+
     def __init__(self: "InformalNormalizer", **kargs: str) -> None:
         """__init__."""
         super().__init__(**kargs)

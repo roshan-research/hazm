@@ -5,8 +5,7 @@ import re
 from typing import List
 
 from hazm.lemmatizer import Lemmatizer
-from hazm.utils import maketrans
-from hazm.utils import regex_replace
+from hazm.utils import maketrans, regex_replace
 from hazm.word_tokenizer import WordTokenizer
 
 
@@ -185,7 +184,7 @@ class Normalizer:
                 ("ﻵ|ﻶ|ﻷ|ﻸ|ﻹ|ﻺ|ﻻ|ﻼ", "لا"),
             ]
 
-    def normalize(self:"Normalizer", text: str) -> str:
+    def normalize(self: "Normalizer", text: str) -> str:
         """متن را نرمال‌سازی می‌کند.
 
         Examples:
@@ -231,7 +230,7 @@ class Normalizer:
 
         return text
 
-    def correct_spacing(self:"Normalizer", text: str) -> str:
+    def correct_spacing(self: "Normalizer", text: str) -> str:
         """فاصله‌گذاری‌ها را در پیشوندها و پسوندها اصلاح می‌کند.
 
         Examples:
@@ -278,7 +277,7 @@ class Normalizer:
 
         return text
 
-    def remove_diacritics(self:"Normalizer", text: str) -> str:
+    def remove_diacritics(self: "Normalizer", text: str) -> str:
         """اِعراب را از متن حذف می‌کند.
 
         Examples:
@@ -301,7 +300,7 @@ class Normalizer:
         """
         return regex_replace(self.diacritics_patterns, text)
 
-    def remove_specials_chars(self:"Normalizer", text: str) -> str:
+    def remove_specials_chars(self: "Normalizer", text: str) -> str:
         """برخی از کاراکترها و نشانه‌های خاص را که کاربردی در پردازش متن ندارند حذف
         می‌کند.
 
@@ -319,7 +318,7 @@ class Normalizer:
         """
         return regex_replace(self.specials_chars_patterns, text)
 
-    def decrease_repeated_chars(self:"Normalizer", text: str) -> str:
+    def decrease_repeated_chars(self: "Normalizer", text: str) -> str:
         """تکرارهای زائد حروف را در کلماتی مثل سلامممممم حذف می‌کند و در مواردی که
         نمی‌تواند تشخیص دهد دست کم به دو تکرار کاهش می‌دهد.
 
@@ -359,7 +358,7 @@ class Normalizer:
 
         return text
 
-    def persian_style(self:"Normalizer", text: str) -> str:
+    def persian_style(self: "Normalizer", text: str) -> str:
         """برخی از حروف و نشانه‌ها را با حروف و نشانه‌های فارسی جایگزین می‌کند.
 
         Examples:
@@ -382,7 +381,7 @@ class Normalizer:
         """
         return regex_replace(self.persian_style_patterns, text)
 
-    def persian_number(self:"Normalizer", text: str) -> str:
+    def persian_number(self: "Normalizer", text: str) -> str:
         """اعداد لاتین و علامت % را با معادل فارسی آن جایگزین می‌کند.
 
         Examples:
@@ -407,7 +406,7 @@ class Normalizer:
         )
         return text.translate(translations)
 
-    def unicodes_replacement(self:"Normalizer", text: str) -> str:
+    def unicodes_replacement(self: "Normalizer", text: str) -> str:
         """برخی از کاراکترهای خاص یونیکد را با معادلِ نرمال آن جایگزین می‌کند. غالباً
         این کار فقط در مواردی صورت می‌گیرد که یک کلمه در قالب یک کاراکتر یونیکد تعریف
         شده است.
@@ -447,7 +446,7 @@ class Normalizer:
 
         return text
 
-    def seperate_mi(self:"Normalizer", text: str) -> str:
+    def seperate_mi(self: "Normalizer", text: str) -> str:
         """پیشوند «می» و «نمی» را در افعال جدا کرده و با نیم‌فاصله می‌چسباند.
 
         Examples:
@@ -475,7 +474,7 @@ class Normalizer:
 
         return text
 
-    def token_spacing(self:"Normalizer", tokens: List[str]) -> List[str]:
+    def token_spacing(self: "Normalizer", tokens: List[str]) -> List[str]:
         """توکن‌های ورودی را به فهرستی از توکن‌های نرمال‌سازی شده تبدیل می‌کند.
         در این فرایند ممکن است برخی از توکن‌ها به یکدیگر بچسبند؛
         برای مثال: `['زمین', 'لرزه', 'ای']` تبدیل می‌شود به: `['زمین‌لرزه‌ای']`.

@@ -93,7 +93,7 @@ if PY2:
             items = (f"{k}={self.__dict__[k]!r}" for k in keys)
             return "{}({})".format(type(self).__name__, ", ".join(items))
 
-        def __eq__(self:"SimpleNamespace", other):
+        def __eq__(self: "SimpleNamespace", other):
             return self.__dict__ == other.__dict__
 
 else:
@@ -741,7 +741,7 @@ class Extractor:
         text = res + unescape(text[cur:])
         return text
 
-    def clean(self:"Extractor", text):
+    def clean(self: "Extractor", text):
         """Removes irrelevant parts from :param: text."""
         # Collect spans
         spans = []
@@ -1631,10 +1631,10 @@ class MagicWords:
     def __init__(self) -> None:
         self.values = {"!": "|"}
 
-    def __getitem__(self:"MagicWords", name):
+    def __getitem__(self: "MagicWords", name):
         return self.values.get(name)
 
-    def __setitem__(self:"MagicWords", name, value) -> None:
+    def __setitem__(self: "MagicWords", name, value) -> None:
         self.values[name] = value
 
     switches = (
@@ -1737,22 +1737,22 @@ class Infix:
 
     """
 
-    def __init__(self:"Infix", function) -> None:
+    def __init__(self: "Infix", function) -> None:
         self.function = function
 
-    def __ror__(self:"Infix", other):
+    def __ror__(self: "Infix", other):
         return Infix(lambda x, self=self, other=other: self.function(other, x))
 
-    def __or__(self:"Infix", other):
+    def __or__(self: "Infix", other):
         return self.function(other)
 
-    def __rlshift__(self:"Infix", other):
+    def __rlshift__(self: "Infix", other):
         return Infix(lambda x, self=self, other=other: self.function(other, x))
 
-    def __rshift__(self:"Infix", other):
+    def __rshift__(self: "Infix", other):
         return self.function(other)
 
-    def __call__(self:"Infix", value1, value2):
+    def __call__(self: "Infix", value1, value2):
         return self.function(value1, value2)
 
 
@@ -2608,7 +2608,9 @@ class NextFile:
 class OutputSplitter:
     """File-like object, that splits output to multiple files of a given max size."""
 
-    def __init__(self: "OutputSplitter", nextFile, max_file_size=0, compress=True) -> None:
+    def __init__(
+        self: "OutputSplitter", nextFile, max_file_size=0, compress=True
+    ) -> None:
         """:param nextFile: a NextFile object from which to obtain filenames
         to use.
         :param max_file_size: the maximum size of each file.

@@ -19,10 +19,7 @@
 import codecs
 import os
 from pathlib import Path
-from typing import Any
-from typing import Iterator
-from typing import List
-from typing import Tuple
+from typing import Any, Iterator, List, Tuple
 
 from hazm.normalizer import Normalizer
 from hazm.word_tokenizer import WordTokenizer
@@ -283,7 +280,9 @@ class PeykareReader:
                     if text:
                         yield text
 
-    def doc_to_sents(self:"PeykareReader", document: str) -> Iterator[List[Tuple[str, str]]]:
+    def doc_to_sents(
+        self: "PeykareReader", document: str
+    ) -> Iterator[List[Tuple[str, str]]]:
         """سند ورودی را به لیستی از جملات تبدیل می‌کند.
 
         هر جمله لیستی از `(کلمه, برچسب)`ها است.
@@ -326,7 +325,7 @@ class PeykareReader:
 
         # >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
         # >>> next(peykare.sents())
-        def map_pos(item: str)->Tuple:
+        def map_pos(item: str) -> Tuple:
             return (item[0], self._pos_map(item[1].split(","), item[0]))
 
         for document in self.docs():

@@ -3,10 +3,7 @@
 import re
 from os import path
 from pathlib import Path
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Tuple
+from typing import Any, Dict, List, Tuple
 
 data_path = Path(__file__).parent / "data"
 

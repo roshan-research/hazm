@@ -1,8 +1,7 @@
 """این ماژول شامل کلاس‌ها و توابعی برای تجزیه توکن به دو توکن کوچکتر است."""
 
 
-from typing import List
-from typing import Tuple
+from typing import List, Tuple
 
 from hazm.lemmatizer import Lemmatizer
 

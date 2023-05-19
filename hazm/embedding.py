@@ -3,22 +3,15 @@ import multiprocessing
 import os
 import warnings
 from pathlib import Path
-from typing import Any
-from typing import Iterator
-from typing import List
-from typing import Tuple
-from typing import Type
+from typing import Any, Iterator, List, Tuple, Type
 
-from gensim.models import Doc2Vec
-from gensim.models import KeyedVectors
-from gensim.models import fasttext
+from gensim.models import Doc2Vec, KeyedVectors, fasttext
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
 from numpy import ndarray
 
-from hazm import Normalizer
-from hazm import word_tokenize
+from hazm import Normalizer, word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 
@@ -33,7 +26,9 @@ class WordEmbedding:
     """
 
     def __init__(
-        self: "WordEmbedding", model_type: str, model_path: str = None,
+        self: "WordEmbedding",
+        model_type: str,
+        model_path: str = None,
     ) -> None:
         if model_type not in supported_embeddings:
             msg = (
@@ -212,7 +207,9 @@ class WordEmbedding:
         return self.model.index_to_key
 
     def nearest_words(
-        self: "WordEmbedding", word: str, topn: int = 5,
+        self: "WordEmbedding",
+        word: str,
+        topn: int = 5,
     ) -> List[Tuple[str, str]]:
         """کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.
 
