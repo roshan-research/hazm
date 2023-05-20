@@ -80,7 +80,7 @@
               {% endif %}
               {% if parameter.default %}
                 <span class="doc-param-default">
-                  <b>DEFAULT:</b> 
+                  <b>DEFAULT:</b>
                   {% with expression = parameter.default %}
                     <code>{% include "expression.html" with context %}</code>
                   {% endwith %}

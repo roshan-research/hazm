@@ -21,6 +21,8 @@ from .corpus_readers import WikipediaReader
 from .dependency_parser import DependencyParser
 from .dependency_parser import MaltParser
 from .dependency_parser import TurboParser
+from .embedding import SentEmbedding
+from .embedding import WordEmbedding
 from .informal_normalizer import InformalLemmatizer
 from .informal_normalizer import InformalNormalizer
 from .lemmatizer import Conjugation
@@ -38,8 +40,6 @@ from .utils import default_words
 from .utils import stopwords_list
 from .utils import words_list
 from .word_tokenizer import WordTokenizer
-from .embedding import WordEmbedding
-from .embedding import SentEmbedding
 
 
 def sent_tokenize(text: str) -> List[str]:

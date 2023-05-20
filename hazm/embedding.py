@@ -20,7 +20,6 @@ from numpy import ndarray
 from hazm import Normalizer
 from hazm import WordTokenizer
 
-
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 
 

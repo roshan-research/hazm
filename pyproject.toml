@@ -111,7 +111,7 @@ extend-select = [
     "PLW",
     "TRY",
     "NPY",
-    "RUF", 
+    "RUF",
 ]
 ignore=[
 "RUF001", # String contains ambiguous unicode character

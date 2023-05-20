@@ -1,6 +1,6 @@
 name: Publish
 
-on: 
+on:
   workflow_dispatch:
   release:
     types: [created]
@@ -8,7 +8,7 @@ on:
 jobs:
   publish:
     needs: update-docs
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -18,10 +18,6 @@ jobs:
         virtualenvs-create: false
         virtualenvs-in-project: false
     - name: Publish to pypi
-      run: |        
+      run: |
         poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}
         poetry --build publish
-          
-      
-    
-      
