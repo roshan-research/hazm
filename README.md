@@ -23,7 +23,7 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 ## Download Pretrained models
 
 |                          | **accuracy** | **pretrained model** |
-| ------------------------ |:------------:|--------------------:|
+| ------------------------ |:------------:|:--------------------:|
 | **Lemmatizer**           | 89.9%        | download             |
 | **Chunker**              | 93.4%        | [download](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
 | **POSTagger**            | 97.2%        | download             |
