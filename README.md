@@ -20,7 +20,7 @@ Python library for digesting Persian text.
 
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
-## Download Pretrained models
+## Download models
 
 |                          | **accuracy** | **pretrained model** |
 | ------------------------ |:------------:|:--------------------:|
