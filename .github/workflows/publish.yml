@@ -6,8 +6,7 @@ on:
     types: [created]
 
 jobs:
-  publish:
-    needs: update-docs
+  publish:    
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
