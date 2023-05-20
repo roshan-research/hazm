@@ -38,6 +38,8 @@ from .utils import default_words
 from .utils import stopwords_list
 from .utils import words_list
 from .word_tokenizer import WordTokenizer
+from .embedding import WordEmbedding
+from .embedding import SentEmbedding
 
 
 def sent_tokenize(text: str) -> List[str]:
