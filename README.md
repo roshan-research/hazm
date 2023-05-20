@@ -20,15 +20,15 @@ Python library for digesting Persian text.
 
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
-## Download models
+## Modules accuracy
 
-|                          | **accuracy** | **pretrained model** |
+|                          | **accuracy** |  |
 | ------------------------ |:------------:|:--------------------:|
-| **Lemmatizer**           | 89.9%        | download             |
-| **Chunker**              | 93.4%        | [download](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
-| **POSTagger**            | 97.2%        | download             |
-| **POSTagger(Universal)** | 98.8%        | [download](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
-| **DependencyParser**     | 97.1%        | [download](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
+| **Lemmatizer**           | 89.9%        |              |
+| **Chunker**              | 93.4%        | [download pre-trained model](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
+| **POSTagger**            | 97.2%        | download pre-trained model             |
+| **POSTagger(Universal)** | 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
+| **DependencyParser**     | 97.1%        | [download pre-trained model](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
 
 
 ## Installation
