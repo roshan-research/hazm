@@ -69,7 +69,7 @@ We have also trained [tagger and parser models](https://github.com/roshan-resear
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
->>> chunker = chunker.model='resources/chunker.model')
+>>> chunker = Chunker(model='resources/chunker.model')
 >>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
