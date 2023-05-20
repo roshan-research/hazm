@@ -1,0 +1,1892 @@
+
+<!doctype html>
+<html lang="fa" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="کتابخانه‌ای پایتونی برای پردازش زبان فارسی">
+      
+      
+        <meta name="author" content="روشن">
+      
+      
+        <link rel="canonical" href="https://roshan-research.github.io/content/samples/keyword_extraction.html">
+      
+      
+        <link rel="prev" href="../hazm/corpus_readers/wikipedia_reader.html">
+      
+      
+        <link rel="next" href="../in-other-languages.html">
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>استخراج کلمات کلیدی - هضم | کتابخانهٔ پردازش زبان فارسی</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../hint.min.css">
+    
+      <link rel="stylesheet" href="../../custom-style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          پرش به محتویات
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="سرتیتر">
+    <a href="../../index.html" title="هضم | کتابخانهٔ پردازش زبان فارسی" class="md-header__button md-logo" aria-label="هضم | کتابخانهٔ پردازش زبان فارسی" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            هضم | کتابخانهٔ پردازش زبان فارسی
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              استخراج کلمات کلیدی
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="تغییر به حالت شب"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="تغییر به حالت شب" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="تغییر به حالت روز"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="تغییر به حالت روز" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="جستجو" placeholder="جستجو" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="جستجو">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="هم‌رسانی" aria-label="هم‌رسانی" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="بازنشانی" aria-label="بازنشانی" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            راه‌اندازی جستجو
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/roshan-research/hazm" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hazm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="هدایت" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="هضم | کتابخانهٔ پردازش زبان فارسی" class="md-nav__button md-logo" aria-label="هضم | کتابخانهٔ پردازش زبان فارسی" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    هضم | کتابخانهٔ پردازش زبان فارسی
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/roshan-research/hazm" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hazm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        معرفی و نصب
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../hazm/index.html">کلاس‌ها و توابع</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          کلاس‌ها و توابع
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/normalizer.html" class="md-nav__link">
+        Normalizer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/informal_normalizer.html" class="md-nav__link">
+        InformalNormalizer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/stemmer.html" class="md-nav__link">
+        Stemmer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/lemmatizer.html" class="md-nav__link">
+        Lemmatizer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/sentence_tokenizer.html" class="md-nav__link">
+        SentenceTokenizer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/word_tokenizer.html" class="md-nav__link">
+        WordTokenizer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/embedding.html" class="md-nav__link">
+        Embedding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/sequence_tagger.html" class="md-nav__link">
+        SequenceTagger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/token_splitter.html" class="md-nav__link">
+        TokenSplitter
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/chunker.html" class="md-nav__link">
+        Chunker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/pos_tagger.html" class="md-nav__link">
+        POSTagger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/dependency_parser.html" class="md-nav__link">
+        DependencyParser
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils.html" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_15" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../hazm/corpus_readers/index.html">پیکره‌خوان‌ها</a>
+          
+            <label for="__nav_2_15">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_15_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          پیکره‌خوان‌ها
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/mirastext_reader.html" class="md-nav__link">
+        MirasTextReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/bijankhan_reader.html" class="md-nav__link">
+        BijankhanReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/dadegan_reader.html" class="md-nav__link">
+        DadeganReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/degarbayan_reader.html" class="md-nav__link">
+        DegarbayanReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/hamshahri_reader.html" class="md-nav__link">
+        HamshahriReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/persica_reader.html" class="md-nav__link">
+        PersicaReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/peykare_reader.html" class="md-nav__link">
+        PeykareReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/quran_reader.html" class="md-nav__link">
+        QuranReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/sentipers_reader.html" class="md-nav__link">
+        SentiPersReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/tnews_reader.html" class="md-nav__link">
+        TNewsReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/treebank_reader.html" class="md-nav__link">
+        TreebankReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/verbvalency_reader.html" class="md-nav__link">
+        VerbValencyReader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hazm/corpus_readers/wikipedia_reader.html" class="md-nav__link">
+        WikipediaReader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          کاربردهای هضم
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          کاربردهای هضم
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          استخراج کلمات کلیدی
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="keyword_extraction.html" class="md-nav__link md-nav__link--active">
+        استخراج کلمات کلیدی
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    نرمال‌سازی متن و استخراج توکن‌ها توسط هضم
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pos" class="md-nav__link">
+    استخراج تگ POS برای هر یک از کلمات
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    استخراج کاندیداها
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sent2vec" class="md-nav__link">
+    لودکردن مدل Sent2Vec
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    استخراج وکتور برای هر یک از کاندیداها و کل متن
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    یافتن شباهت کسینوسی کاندیداها و کل متن
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    یافتن شباهت کسینوسی کاندیداها به یکدیگر
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    نرمال‌سازی مقادیر مربوط به شباهت‌های کسینوسی
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    استخراج کلمات کلیدی از روی شباهت‌های کسینوسی
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          سایر بخش‌ها
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          سایر بخش‌ها
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../in-other-languages.html" class="md-nav__link">
+        هضم در زبان‌های دیگر
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    نرمال‌سازی متن و استخراج توکن‌ها توسط هضم
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pos" class="md-nav__link">
+    استخراج تگ POS برای هر یک از کلمات
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    استخراج کاندیداها
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sent2vec" class="md-nav__link">
+    لودکردن مدل Sent2Vec
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    استخراج وکتور برای هر یک از کاندیداها و کل متن
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    یافتن شباهت کسینوسی کاندیداها و کل متن
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    یافتن شباهت کسینوسی کاندیداها به یکدیگر
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    نرمال‌سازی مقادیر مربوط به شباهت‌های کسینوسی
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    استخراج کلمات کلیدی از روی شباهت‌های کسینوسی
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+  
+  
+
+
+  <h1>استخراج کلمات کلیدی</h1>
+
+<p>در این مثال قصد داریم با کمک هضم و برخی از کتابخانه‌های پردازش زبان، کلمات کلیدی یک متن را استخراج کنیم. در تمام الگوریتم‌های استخراج کلمات کلیدی، ابتدا باید متن خام
+ورودی نرمال‌سازی، توکنایز و برچسب‌گذاری شود که انجام این کارها به سادگی توسط کتابخانهٔ هضم میسر است.</p>
+<p>ابتدا آخرین نسخهٔ هضم و تمام کتابخانه‌هایی را که در مثال زیر ایمپورت شده‌اند نصب کنید.</p>
+<div class="highlight"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">hazm</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">gensim</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Doc2Vec</span>
+<span class="kn">from</span> <span class="nn">hazm.Embedding</span> <span class="kn">import</span> <span class="n">SentEmbedding</span>
+<span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+<p>متنی را برای استخراج کلمات کلیدی آن در نظر بگیرید.</p>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;سفارت ایران در مادرید درباره فیلم منتشرشده از «حسن قشقاوی» در مراسم سال نو در کاخ سلطنتی اسپانیا و حاشیه‌سازی‌ها در فضای مجازی اعلام کرد: به تشریفات دربار کتباً اعلام شد سفیر بدون همراه در مراسم حضور خواهد داشت و همچون قبل به دلایل تشریفاتی نمی‌تواند با ملکه دست بدهد. همان‌گونه که کارشناس رسمی تشریفات در توضیحات خود به یک نشریه اسپانیایی گفت این موضوع توضیح مذهبی داشته و هرگز به معنی بی‌احترامی به مقام و شخصیت زن آن هم در سطح ملکه محترمه یک کشور نیست.&#39;</span>
+
+<span class="n">keyword_count</span> <span class="o">=</span> <span class="mi">10</span>
+</code></pre></div>
+<h2 id="_1">نرمال‌سازی متن و استخراج توکن‌ها توسط هضم<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>متن ورودی را با کمک نرمالایزر هضم نرمال‌سازی می‌کنیم و پس از آن با کمک توکنایزر به جملات و در نهایت به کلمات می‌شکنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="n">normalize_text</span> <span class="o">=</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">tokenize_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span> <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">normalize_text</span><span class="p">)]</span>
+<span class="n">tokenize_text</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[[&#39;سفارت&#39;,
+  &#39;ایران&#39;,
+  &#39;در&#39;,
+  &#39;مادرید&#39;,
+  &#39;درباره&#39;,
+  &#39;فیلم&#39;,
+  &#39;منتشرشده&#39;,
+  &#39;از&#39;,
+  &#39;«&#39;,
+  &#39;حسن&#39;,
+  &#39;قشقاوی&#39;,
+  &#39;»&#39;,
+  &#39;در&#39;,
+  &#39;مراسم&#39;,
+  &#39;سال&#39;,
+  &#39;نو&#39;,
+  &#39;در&#39;,
+  &#39;کاخ&#39;,
+  &#39;سلطنتی&#39;,
+  &#39;اسپانیا&#39;,
+  &#39;و&#39;,
+  &#39;حاشیه‌سازی‌ها&#39;,
+  &#39;در&#39;,
+  &#39;فضای&#39;,
+  &#39;مجازی&#39;,
+  &#39;اعلام&#39;,
+  &#39;کرد&#39;,
+  &#39;:&#39;,
+  &#39;به&#39;,
+  &#39;تشریفات&#39;,
+  &#39;دربار&#39;,
+  &#39;کتبا&#39;,
+  &#39;اعلام&#39;,
+  &#39;شد&#39;,
+  &#39;سفیر&#39;,
+  &#39;بدون&#39;,
+  &#39;همراه&#39;,
+  &#39;در&#39;,
+  &#39;مراسم&#39;,
+  &#39;حضور&#39;,
+  &#39;خواهد_داشت&#39;,
+  &#39;و&#39;,
+  &#39;همچون&#39;,
+  &#39;قبل&#39;,
+  &#39;به&#39;,
+  &#39;دلایل&#39;,
+  &#39;تشریفاتی&#39;,
+  &#39;نمی‌تواند&#39;,
+  &#39;با&#39;,
+  &#39;ملکه&#39;,
+  &#39;دست&#39;,
+  &#39;بدهد&#39;,
+  &#39;.&#39;],
+ [&#39;همان‌گونه&#39;,
+  &#39;که&#39;,
+  &#39;کارشناس&#39;,
+  &#39;رسمی&#39;,
+  &#39;تشریفات&#39;,
+  &#39;در&#39;,
+  &#39;توضیحات&#39;,
+  &#39;خود&#39;,
+  &#39;به&#39;,
+  &#39;یک&#39;,
+  &#39;نشریه&#39;,
+  &#39;اسپانیایی&#39;,
+  &#39;گفت&#39;,
+  &#39;این&#39;,
+  &#39;موضوع&#39;,
+  &#39;توضیح&#39;,
+  &#39;مذهبی&#39;,
+  &#39;داشته&#39;,
+  &#39;و&#39;,
+  &#39;هرگز&#39;,
+  &#39;به&#39;,
+  &#39;معنی&#39;,
+  &#39;بی‌احترامی&#39;,
+  &#39;به&#39;,
+  &#39;مقام&#39;,
+  &#39;و&#39;,
+  &#39;شخصیت&#39;,
+  &#39;زن&#39;,
+  &#39;آن&#39;,
+  &#39;هم&#39;,
+  &#39;در&#39;,
+  &#39;سطح&#39;,
+  &#39;ملکه&#39;,
+  &#39;محترمه&#39;,
+  &#39;یک&#39;,
+  &#39;کشور&#39;,
+  &#39;نیست&#39;,
+  &#39;.&#39;]]
+</code></pre></div>
+<h2 id="pos">استخراج تگ POS برای هر یک از کلمات<a class="headerlink" href="#pos" title="Permanent link">&para;</a></h2>
+<p>بعد از لودکردن مدل POS، هر یک از کلمات را با ماژول POSTagger هضم برچسب‌گذاری می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;/resources/pos_tagger.model&#39;</span>
+<span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_path</span><span class="p">)</span>
+<span class="n">token_tag_list</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag_sents</span><span class="p">(</span><span class="n">tokenize_text</span><span class="p">)</span>
+<span class="n">token_tag_list</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[[(&#39;سفارت&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;ایران&#39;, &#39;NOUN&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;مادرید&#39;, &#39;NOUN&#39;),
+  (&#39;درباره&#39;, &#39;ADP,EZ&#39;),
+  (&#39;فیلم&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;منتشرشده&#39;, &#39;ADJ&#39;),
+  (&#39;از&#39;, &#39;ADP&#39;),
+  (&#39;«&#39;, &#39;PUNCT&#39;),
+  (&#39;حسن&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;قشقاوی&#39;, &#39;NOUN&#39;),
+  (&#39;»&#39;, &#39;PUNCT&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;مراسم&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;سال&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;نو&#39;, &#39;ADJ&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;کاخ&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;سلطنتی&#39;, &#39;ADJ,EZ&#39;),
+  (&#39;اسپانیا&#39;, &#39;NOUN&#39;),
+  (&#39;و&#39;, &#39;CCONJ&#39;),
+  (&#39;حاشیه‌سازی‌ها&#39;, &#39;NOUN&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;فضای&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;مجازی&#39;, &#39;ADJ&#39;),
+  (&#39;اعلام&#39;, &#39;NOUN&#39;),
+  (&#39;کرد&#39;, &#39;VERB&#39;),
+  (&#39;:&#39;, &#39;PUNCT&#39;),
+  (&#39;به&#39;, &#39;ADP&#39;),
+  (&#39;تشریفات&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;دربار&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;کتبا&#39;, &#39;ADV&#39;),
+  (&#39;اعلام&#39;, &#39;NOUN&#39;),
+  (&#39;شد&#39;, &#39;VERB&#39;),
+  (&#39;سفیر&#39;, &#39;NOUN&#39;),
+  (&#39;بدون&#39;, &#39;ADP,EZ&#39;),
+  (&#39;همراه&#39;, &#39;NOUN&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;مراسم&#39;, &#39;NOUN&#39;),
+  (&#39;حضور&#39;, &#39;NOUN&#39;),
+  (&#39;خواهد_داشت&#39;, &#39;VERB&#39;),
+  (&#39;و&#39;, &#39;CCONJ&#39;),
+  (&#39;همچون&#39;, &#39;ADV&#39;),
+  (&#39;قبل&#39;, &#39;ADP&#39;),
+  (&#39;به&#39;, &#39;ADP&#39;),
+  (&#39;دلایل&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;تشریفاتی&#39;, &#39;ADJ&#39;),
+  (&#39;نمی‌تواند&#39;, &#39;VERB&#39;),
+  (&#39;با&#39;, &#39;ADP&#39;),
+  (&#39;ملکه&#39;, &#39;NOUN&#39;),
+  (&#39;دست&#39;, &#39;NOUN&#39;),
+  (&#39;بدهد&#39;, &#39;VERB&#39;),
+  (&#39;.&#39;, &#39;PUNCT&#39;)],
+ [(&#39;همان‌گونه&#39;, &#39;NOUN&#39;),
+  (&#39;که&#39;, &#39;SCONJ&#39;),
+  (&#39;کارشناس&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;رسمی&#39;, &#39;ADJ,EZ&#39;),
+  (&#39;تشریفات&#39;, &#39;NOUN&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;توضیحات&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;خود&#39;, &#39;PRON&#39;),
+  (&#39;به&#39;, &#39;ADP&#39;),
+  (&#39;یک&#39;, &#39;NUM&#39;),
+  (&#39;نشریه&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;اسپانیایی&#39;, &#39;ADJ&#39;),
+  (&#39;گفت&#39;, &#39;VERB&#39;),
+  (&#39;این&#39;, &#39;DET&#39;),
+  (&#39;موضوع&#39;, &#39;NOUN&#39;),
+  (&#39;توضیح&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;مذهبی&#39;, &#39;ADJ&#39;),
+  (&#39;داشته&#39;, &#39;VERB&#39;),
+  (&#39;و&#39;, &#39;CCONJ&#39;),
+  (&#39;هرگز&#39;, &#39;ADV&#39;),
+  (&#39;به&#39;, &#39;ADP&#39;),
+  (&#39;معنی&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;بی‌احترامی&#39;, &#39;NOUN&#39;),
+  (&#39;به&#39;, &#39;ADP&#39;),
+  (&#39;مقام&#39;, &#39;NOUN&#39;),
+  (&#39;و&#39;, &#39;CCONJ&#39;),
+  (&#39;شخصیت&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;زن&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;آن&#39;, &#39;PRON&#39;),
+  (&#39;هم&#39;, &#39;CCONJ&#39;),
+  (&#39;در&#39;, &#39;ADP&#39;),
+  (&#39;سطح&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;ملکه&#39;, &#39;NOUN,EZ&#39;),
+  (&#39;محترمه&#39;, &#39;ADJ,EZ&#39;),
+  (&#39;یک&#39;, &#39;NUM&#39;),
+  (&#39;کشور&#39;, &#39;NOUN&#39;),
+  (&#39;نیست&#39;, &#39;VERB&#39;),
+  (&#39;.&#39;, &#39;PUNCT&#39;)]]
+</code></pre></div>
+<h2 id="_2">استخراج کاندیداها<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>با استفاده از چند گرامر، کاندیداها را پیدا می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">grammers</span> <span class="o">=</span> <span class="p">[</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">NP:</span>
+<span class="sd">        {&lt;NOUN,EZ&gt;?&lt;NOUN.*&gt;}    # Noun(s) + Noun(optional)</span>
+
+<span class="sd">&quot;&quot;&quot;</span><span class="p">,</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">NP:</span>
+<span class="sd">        {&lt;NOUN.*&gt;&lt;ADJ.*&gt;?}    # Noun(s) + Adjective(optional)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">]</span>
+<span class="c1">## you can also add your own grammer to be extracted from the text...</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">extract_candidates</span><span class="p">(</span><span class="n">tagged</span><span class="p">,</span> <span class="n">grammer</span><span class="p">):</span>
+    <span class="n">keyphrase_candidate</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">np_parser</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">RegexpParser</span><span class="p">(</span><span class="n">grammer</span><span class="p">)</span>
+    <span class="n">trees</span> <span class="o">=</span> <span class="n">np_parser</span><span class="o">.</span><span class="n">parse_sents</span><span class="p">(</span><span class="n">tagged</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">trees</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">subtree</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">subtrees</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;NP&#39;</span><span class="p">):</span>  <span class="c1"># For each nounphrase</span>
+            <span class="c1"># Concatenate the token with a space</span>
+            <span class="n">keyphrase_candidate</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">subtree</span><span class="o">.</span><span class="n">leaves</span><span class="p">()))</span>
+    <span class="n">keyphrase_candidate</span> <span class="o">=</span> <span class="p">{</span><span class="n">kp</span> <span class="k">for</span> <span class="n">kp</span> <span class="ow">in</span> <span class="n">keyphrase_candidate</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kp</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">}</span>
+    <span class="n">keyphrase_candidate</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keyphrase_candidate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">keyphrase_candidate</span>
+
+<span class="n">all_candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">grammer</span> <span class="ow">in</span> <span class="n">grammers</span><span class="p">:</span>
+    <span class="n">all_candidates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">extract_candidates</span><span class="p">(</span><span class="n">token_tag_list</span><span class="p">,</span> <span class="n">grammer</span><span class="p">))</span>
+
+
+<span class="n">all_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_candidates</span><span class="p">))</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_candidates</span><span class="p">)))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[&#39;مقام&#39; &#39;توضیح&#39; &#39;اسپانیا&#39; &#39;ملکه محترمه&#39; &#39;توضیح مذهبی&#39; &#39;ملکه&#39;
+ &#39;تشریفات دربار&#39; &#39;معنی بی‌احترامی&#39; &#39;توضیحات&#39; &#39;دلایل&#39; &#39;سفارت&#39; &#39;کشور&#39;
+ &#39;فضای&#39; &#39;مراسم&#39; &#39;موضوع&#39; &#39;سفارت ایران&#39; &#39;حاشیه‌سازی‌ها&#39; &#39;ایران&#39;
+ &#39;شخصیت زن&#39; &#39;بی‌احترامی&#39; &#39;سطح&#39; &#39;حضور&#39; &#39;سال نو&#39; &#39;دست&#39; &#39;دلایل تشریفاتی&#39;
+ &#39;نشریه اسپانیایی&#39; &#39;سفیر&#39; &#39;حسن&#39; &#39;کارشناس رسمی&#39; &#39;فیلم&#39; &#39;کارشناس&#39;
+ &#39;مراسم سال&#39; &#39;مادرید&#39; &#39;تشریفات&#39; &#39;کاخ&#39; &#39;معنی&#39; &#39;فیلم منتشرشده&#39; &#39;سطح ملکه&#39;
+ &#39;کاخ سلطنتی&#39; &#39;همان‌گونه&#39; &#39;دربار&#39; &#39;اعلام&#39; &#39;زن&#39; &#39;حسن قشقاوی&#39; &#39;نشریه&#39;
+ &#39;قشقاوی&#39; &#39;فضای مجازی&#39; &#39;همراه&#39; &#39;شخصیت&#39;]
+</code></pre></div>
+<h2 id="sent2vec">لودکردن مدل Sent2Vec<a class="headerlink" href="#sent2vec" title="Permanent link">&para;</a></h2>
+<p>مدل sent2vec را لود می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">sent2vec_model_path</span> <span class="o">=</span> <span class="s1">&#39;/resources/sent2vec.model&#39;</span>
+<span class="n">sent2vec_model</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">(</span><span class="n">sent2vec_model_path</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="_3">استخراج وکتور برای هر یک از کاندیداها و کل متن<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>با کمک مدلی که در مرحله قبل لود شد هر یک از کاندیداها را به وکتور متناظر تبدیل می‌کنیم و همانند آن یکبار هم با ترکیب تمام کاندیداهای یک وکتور، به عنوان وکتور نمایندهٔ متن تعیین می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">all_candidates_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent2vec_model</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">all_candidates</span><span class="p">]</span>
+<span class="n">all_candidates_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[array([-0.01188162, -0.01629335, -0.02919522, -0.00783677, -0.00102758,
+        -0.03208233, -0.01709846,  0.0117062 ,  0.03449516,  0.07738346,
+         0.00717299, -0.01352314, -0.01112981,  0.03587793,  0.02290764,
+         0.02365053, -0.04915352,  0.03136308,  0.02879261, -0.0384808 ,
+         0.02003807,  0.08317484, -0.04286249, -0.00853691,  0.0007173 ,
+        -0.02911104, -0.06039644,  0.05314305,  0.08562349, -0.01360018,
+         0.0557404 , -0.02959855, -0.06252556,  0.05031461, -0.01516408,
+        -0.04968432,  0.04772092, -0.01781998,  0.0710771 , -0.00372977,
+         0.00765758,  0.00515331,  0.00598954, -0.0136055 ,  0.01701651,
+         0.01654306, -0.04593932,  0.01149338,  0.04326366, -0.0027622 ,
+        -0.03415394,  0.05197985,  0.00967025, -0.03596427, -0.03119466,
+         0.02795039, -0.01621666, -0.02909403, -0.02455824, -0.03838604,
+         0.01372122, -0.02214047,  0.02800225, -0.0036714 , -0.00367276,
+        -0.02312022, -0.01213884,  0.01923293, -0.0138466 ,  0.0245442 ,
+         0.02510322, -0.02143596,  0.01493786, -0.02484095, -0.01944517,
+         0.05156582,  0.02139942,  0.02890227, -0.01623013, -0.05854516,
+         0.01643235, -0.03991502,  0.02022447,  0.01189267,  0.01317829,
+         0.02556234, -0.01462544, -0.00787411, -0.01378851, -0.00172833,
+         0.06837806, -0.01764285,  0.06281603, -0.01626222,  0.02556866,
+         0.0185748 , -0.0067836 , -0.05015644, -0.01342974,  0.02539523,
+        -0.01581901, -0.02425192,  0.0452649 , -0.00750458,  0.0967936 ,
+        -0.05387386, -0.0530752 , -0.03162006, -0.00527164, -0.00276   ,
+        -0.01255972, -0.04338565,  0.02156437,  0.001823  , -0.01073027,
+         0.01847384, -0.01646022,  0.02929114, -0.00578533, -0.02494396,
+         0.0087481 ,  0.01070363,  0.0446781 , -0.01213747,  0.0204882 ,
+         0.01355058, -0.01376898,  0.05580157,  0.0251492 , -0.00559421,
+         0.05595972, -0.00807772, -0.00067975, -0.03694296, -0.01427727,
+        -0.02566851, -0.05726627, -0.06947549, -0.00970706,  0.03093396,
+        -0.02401018, -0.02033974,  0.04390932,  0.0235374 , -0.02385219,
+        -0.0382009 ,  0.06009208, -0.00510711,  0.05597803,  0.00266409,
+         0.00551957,  0.01635106, -0.03252611, -0.03596902, -0.00345108,
+         0.01352903, -0.04293061, -0.05658675,  0.06818494,  0.01084052,
+        -0.0122018 ,  0.03576101,  0.00328646,  0.03027316, -0.01719276,
+        -0.04367308,  0.03075343, -0.03755889,  0.00605542,  0.02004578,
+         0.00340594,  0.01712043, -0.016981  ,  0.05374645,  0.00200974,
+        -0.03294465,  0.04005791,  0.00457313, -0.01694714,  0.01113838,
+        -0.01993673, -0.01606067,  0.03990012,  0.0253757 , -0.00950528,
+         0.01274851, -0.01169313, -0.01289013, -0.01327011, -0.01994459,
+        -0.04132632, -0.02350255, -0.01223114,  0.07291141, -0.00721371,
+        -0.07875457,  0.00083011,  0.00684158, -0.05026994,  0.01031176,
+         0.02373392,  0.03969928,  0.01638419, -0.03867376, -0.0687755 ,
+        -0.01340831, -0.02255411, -0.0149805 ,  0.03496141,  0.02445213,
+         0.01440182, -0.00022292, -0.00643517,  0.05528902, -0.00860113,
+        -0.06000795,  0.04228028, -0.01444338,  0.00576453,  0.01684438,
+        -0.01549434, -0.01222704,  0.01536382, -0.0287157 , -0.04939798,
+         0.03567187, -0.05428684, -0.01057596, -0.00523087, -0.00397995,
+        -0.04025532, -0.02501184, -0.05732642, -0.0331133 , -0.00092318,
+        -0.03302578, -0.0284121 ,  0.04260454, -0.00608311, -0.02456535,
+         0.03953174,  0.00345775,  0.0538222 , -0.01100798,  0.04303414,
+        -0.02364497, -0.08066952,  0.00375242, -0.01103138, -0.03017887,
+        -0.09796415,  0.00921125,  0.05321204, -0.02509299, -0.03102512,
+        -0.05872759, -0.01289234,  0.02453171,  0.00230233,  0.00488943,
+        -0.01761841, -0.00174712, -0.00661878,  0.03181373, -0.04850807,
+        -0.00707506, -0.0349974 ,  0.03866537, -0.00474136,  0.01659487,
+         0.0594902 , -0.00231924,  0.00096324, -0.01005271,  0.05310801,
+        -0.02776042,  0.02169719, -0.00060658,  0.03078633, -0.00852389,
+         0.0055141 , -0.00418154, -0.04047189, -0.00518277,  0.06997076,
+         0.01247645,  0.03207724,  0.0086117 ,  0.04791804, -0.0459297 ,
+        -0.04185048,  0.02209319, -0.01489274, -0.00096468,  0.03030732,
+         0.00811978,  0.01588543,  0.00286602, -0.0305667 , -0.03791318],
+       dtype=float32),
+ array([ 1.61259193e-02, -2.24474519e-02, -3.80111709e-02,  2.28938404e-02,
+         1.09725883e-02,  3.17719281e-02,  6.31656572e-02,  8.05895310e-03,
+        -3.53254005e-02, -1.86222717e-02,  4.08435427e-02,  1.67486863e-03,
+        -2.47621853e-02,  3.77383642e-02,  3.37502137e-02,  3.93473580e-02,
+         2.38729995e-02, -9.84842610e-03, -4.05367874e-02, -1.37408227e-02,
+         4.74064574e-02,  3.14173172e-03, -6.56105811e-03,  5.09371283e-04,
+        -4.29384643e-03,  3.29073286e-03, -2.15584543e-02,  5.68162464e-03,
+        -1.66979544e-02, -1.84549782e-02,  2.46190634e-02,  3.47545161e-03,
+         3.08716279e-02,  5.02820574e-02,  2.44595818e-02, -3.07906978e-02,
+        -7.40932208e-03, -4.51853164e-02,  1.66600700e-02, -1.01724509e-02,
+        -3.62079367e-02,  1.51233776e-02, -9.31378547e-03,  1.26175648e-02,
+        -7.64256269e-02,  3.31216864e-02, -1.85449794e-02, -2.94767078e-02,
+        -3.93361785e-02,  1.24856019e-02,  1.26723386e-02,  2.16722433e-02,
+        -1.14210444e-02, -2.07549557e-02,  1.36339143e-02, -1.38463574e-02,
+         1.06643150e-02, -1.01469979e-02,  2.93516796e-02,  9.60155949e-03,
+         1.22689735e-02,  4.08919603e-02,  9.78052337e-03,  4.25264006e-05,
+        -2.53092498e-02, -1.14650708e-02,  3.55252065e-04,  3.56378034e-02,
+         3.77339800e-03,  3.29325721e-02,  3.37304510e-02, -4.21778522e-02,
+         7.58386077e-03,  3.34312394e-03, -2.34390255e-02,  4.45654336e-03,
+        -4.01547318e-03, -1.37788076e-02,  5.44098429e-02,  2.10932754e-02,
+         1.08978506e-02, -4.35097292e-02,  5.21442480e-02,  5.11527397e-02,
+        -2.04837527e-02,  8.39341432e-03,  4.85086218e-02,  1.83619317e-02,
+        -6.74439818e-02, -2.07678247e-02,  2.59952177e-03, -5.99921905e-02,
+        -4.64598276e-02, -5.67924567e-02,  2.63284668e-02,  4.18948568e-02,
+         8.77644960e-03,  2.32700463e-02, -4.69084218e-04, -3.99603210e-02,
+        -3.66844982e-03, -4.19982858e-02,  5.26686348e-02,  7.80321285e-03,
+         5.45849465e-03, -3.21091115e-02,  1.48136532e-02, -1.08047845e-02,
+         6.18305476e-03, -3.27244541e-03, -2.21317764e-02, -2.81676892e-02,
+         2.93632448e-02,  2.34199744e-02, -3.65932249e-02,  5.99884167e-02,
+         4.23262753e-02, -6.37584599e-03,  1.18953157e-02, -3.98992002e-02,
+         8.21764022e-02,  6.34778515e-02,  5.80455083e-03,  4.27116267e-02,
+        -1.33993533e-02, -2.12867167e-02, -1.75663619e-03,  1.38958599e-02,
+         2.04161946e-02, -1.98126342e-02, -2.37677116e-02,  2.20986288e-02,
+        -2.11866628e-02, -7.54425004e-02,  2.83495197e-03,  4.04435098e-02,
+        -2.16520559e-02, -1.57567412e-02, -4.30966169e-02,  3.07689384e-02,
+        -3.34076933e-03,  4.64651966e-03, -2.71396097e-02,  5.72864786e-02,
+         1.92495678e-02, -2.27472223e-02, -2.72661005e-03, -1.49670069e-03,
+        -2.65399162e-02, -3.39104868e-02,  1.88349164e-03,  3.54786664e-02,
+        -3.47826071e-02, -6.91301599e-02,  1.59207906e-03, -2.85722595e-02,
+        -3.60434540e-02, -3.22819352e-02,  4.15584631e-02, -1.40359988e-02,
+         2.60002650e-02,  3.70233804e-02, -3.68171483e-02, -3.38851882e-04,
+         1.03969611e-02,  5.47843752e-03, -1.22256344e-02, -5.46388812e-02,
+        -1.76120512e-02,  5.58832334e-03, -3.96850007e-03, -3.92588265e-02,
+        -1.55795477e-02, -1.74091645e-02, -2.05926299e-02, -3.58914435e-02,
+         4.86572925e-03, -6.49047866e-02,  7.77042191e-03, -3.95775437e-02,
+        -3.77140641e-02, -8.92203860e-03, -5.86874178e-03,  1.78200230e-02,
+        -3.00387219e-02,  1.41944112e-02, -1.26480032e-02,  8.37522838e-03,
+         6.40433095e-03,  1.28734531e-02,  3.11341765e-03, -1.25999823e-02,
+         6.48253690e-03, -6.21253327e-02, -1.07876705e-02,  1.52199538e-02,
+         3.34009062e-03, -1.37483543e-02, -2.59680673e-03,  2.30002590e-02,
+         1.48606775e-02,  3.37255634e-02,  1.18859601e-03, -1.26267644e-02,
+        -6.23443313e-02,  1.05426302e-02, -1.16890691e-01,  6.32693470e-02,
+         8.37623328e-03, -5.21574169e-02, -1.24192918e-02,  1.28806029e-02,
+        -2.46884692e-02,  1.09140491e-02,  3.90921719e-02,  4.26316336e-02,
+         5.07211946e-02, -1.98766068e-02,  1.80651341e-03,  2.71296687e-03,
+        -6.57337978e-02,  2.03521047e-02, -1.23877386e-02, -6.88543485e-04,
+         1.29983081e-02,  4.26853262e-02, -4.82731014e-02,  5.27809700e-03,
+         1.24023827e-02,  1.13279969e-02,  3.95294325e-03, -4.58956845e-02,
+        -1.52627397e-02,  1.48914512e-02, -4.32942901e-03,  2.87926253e-02,
+        -2.14931779e-02, -9.98509675e-03,  4.22625057e-02,  8.89317226e-03,
+        -6.50819624e-04,  1.49660220e-03,  1.18057523e-03,  2.92290677e-03,
+         2.30702627e-02, -9.86105949e-03,  3.34995277e-02,  3.97632718e-02,
+         8.42674263e-03,  1.57389920e-02, -3.15342695e-02, -1.74464211e-02,
+        -2.75895614e-02,  2.13450920e-02,  5.23088090e-02,  1.44411633e-02,
+        -6.59985235e-03, -2.57882383e-02,  1.64036956e-02,  2.44096126e-02,
+        -6.84994971e-03, -2.85031367e-02,  5.74258752e-02,  3.78873944e-02,
+        -2.49026623e-02, -4.18873550e-03, -9.72696953e-03,  9.08288348e-04,
+        -1.96612123e-02, -1.12741981e-02,  6.91469610e-02,  4.23650108e-02,
+        -2.32512038e-02, -1.41811147e-02,  3.53554904e-04,  1.42879663e-02,
+         1.52949486e-02,  1.94263272e-02,  4.98711737e-03,  2.58604288e-02,
+         8.07583041e-04,  1.84617136e-02, -2.12450395e-03,  1.10163295e-03,
+         4.63078031e-04,  2.57978961e-03, -5.59910526e-03, -3.86752374e-02,
+         2.02463642e-02, -1.84897278e-02,  1.78292543e-02,  5.31280087e-03,
+         1.04076657e-02, -1.76131763e-02,  1.36526041e-02, -3.16180114e-04,
+         1.66201517e-02, -2.28249431e-02, -5.76155819e-02,  1.91252027e-02],
+       dtype=float32)]
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">candidates_concatinate</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">all_candidates</span><span class="p">)</span>
+<span class="n">whole_text_vector</span> <span class="o">=</span> <span class="n">sent2vec_model</span><span class="p">[</span><span class="n">candidates_concatinate</span><span class="p">]</span>
+<span class="n">whole_text_vector</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([ 4.67376083e-01,  1.41185641e-01, -4.01345827e-02,  8.06454271e-02,
+        2.87257284e-01, -1.73859105e-01,  2.10984781e-01, -4.19053972e-01,
+        5.07716499e-02,  1.81625992e-01,  2.94933677e-01, -8.55805278e-02,
+        1.48084328e-01, -9.41419080e-02,  5.89552283e-01,  3.02299976e-01,
+       -4.53922212e-01,  8.01923499e-02, -8.41862783e-02,  2.84251839e-01,
+        2.46634156e-01,  1.53678849e-01, -3.66186112e-01,  5.90183679e-03,
+       -1.70991004e-01, -4.96781468e-01, -1.27169549e-01,  5.82241416e-02,
+        1.20417640e-01,  4.94717717e-01,  5.77962518e-01,  1.18188798e-01,
+       -6.67512298e-01,  5.29394031e-01, -7.98275769e-02, -1.44854588e-02,
+       -3.16317052e-01, -1.98610872e-01, -1.48992175e-02,  9.87645239e-02,
+       -3.27269435e-02,  1.41058192e-01, -2.29777753e-01, -1.86174229e-01,
+       -2.49014020e-01,  5.10655567e-02, -3.53054017e-01,  9.72972959e-02,
+       -4.69784170e-01,  1.05591603e-01, -1.02906279e-01, -3.80217880e-01,
+       -6.22809350e-01, -3.72316897e-01,  3.62496346e-01, -6.20689332e-01,
+       -3.47774744e-01,  3.33177954e-01, -3.97790000e-02,  2.65603602e-01,
+       -3.18654068e-02,  2.06118658e-01,  6.80918157e-01,  2.35603571e-01,
+        6.08658373e-01,  2.30967417e-01,  2.18739480e-01,  4.28926438e-01,
+        5.95629275e-01,  7.48399124e-02,  2.33383089e-01, -5.90643585e-02,
+       -1.44794971e-01, -2.44355276e-01,  1.19658187e-02, -6.11210883e-01,
+       -4.93510604e-01,  3.08846384e-01,  2.36394048e-01,  1.40831068e-01,
+        2.57682931e-02, -5.83631277e-01,  2.25270651e-02, -4.18923259e-01,
+        1.24322265e-01,  1.31361187e-01,  1.88170344e-01,  6.02326691e-01,
+       -1.89337790e-01,  1.94994032e-01,  1.28665030e-01, -3.76140147e-01,
+        1.19094886e-02,  1.07814811e-01, -2.00988099e-01,  1.47196427e-01,
+       -3.30575407e-01,  1.77142993e-01,  1.41541317e-01, -5.74676931e-01,
+        6.26891136e-01, -9.08448733e-03,  3.01960588e-01,  4.91884172e-01,
+        9.31690156e-01,  5.47371805e-01, -1.70721978e-01, -1.41838700e-01,
+       -8.38901475e-02, -2.05935732e-01,  1.37186851e-02,  8.66265148e-02,
+        1.11656010e-01, -1.36832088e-01, -2.39025876e-01, -8.61346722e-02,
+       -1.18631475e-01, -6.04380369e-01, -2.15705678e-01, -1.21428408e-02,
+        1.54913977e-01,  1.24827653e-01, -2.44612187e-01,  3.71789515e-01,
+       -1.60871133e-01, -1.51875302e-01, -5.64015269e-01, -3.08716953e-01,
+       -1.67982921e-01,  1.27021670e-02,  2.52896454e-03, -1.59719393e-01,
+       -1.25709428e-02, -3.50810885e-01, -2.77388275e-01,  1.43130552e-02,
+        2.44775698e-01, -3.57535966e-02,  4.96162623e-01,  4.52934563e-01,
+       -6.59682512e-01,  5.73042147e-02,  3.26564074e-01,  1.51106983e-01,
+       -3.95536602e-01,  3.04116189e-01,  5.98153770e-01,  1.14780769e-01,
+        1.15485869e-01,  5.72891593e-01, -3.16252053e-01, -2.30602831e-01,
+        2.15535402e-01,  1.14284508e-01,  1.60032928e-01,  6.81623936e-01,
+        3.37536365e-01, -4.05635983e-01,  2.18363509e-01, -2.09458731e-02,
+       -1.68600664e-01,  2.75623977e-01, -2.99802348e-02,  2.28692424e-02,
+       -1.46384001e-01,  5.26684463e-01,  4.41757679e-01,  6.12292998e-02,
+        2.23614007e-01, -2.45505378e-01,  3.18603873e-01, -1.07176088e-01,
+       -7.45218575e-01,  5.31067699e-02, -2.81688541e-01, -2.26904973e-01,
+        3.33808869e-01,  2.18855459e-02, -2.28264630e-02, -2.09667850e-02,
+        2.52372295e-01, -1.29880995e-01,  2.11536847e-02,  3.27383906e-01,
+        1.48726091e-01, -3.87222623e-04,  1.09353639e-01, -1.12598769e-01,
+       -1.89939946e-01, -2.24384770e-01,  2.63944596e-01, -7.81262293e-02,
+       -9.49431658e-02, -5.48009813e-01, -3.33849698e-01,  8.96409154e-02,
+       -1.09443903e-01,  6.64399564e-01, -3.40993464e-01,  3.89764398e-01,
+        2.48190627e-01, -1.12249866e-01, -4.52181816e-01,  2.20591724e-01,
+       -5.87389886e-01, -6.31692708e-01, -1.97141483e-01,  8.69040266e-02,
+       -1.87570602e-02,  8.52509141e-02,  4.43617642e-01,  6.45090580e-01,
+       -2.35322297e-01, -9.30620357e-02, -1.40743494e-01,  1.02335766e-01,
+        3.40746194e-01,  2.31563702e-01, -1.85893580e-01,  1.33655444e-01,
+        4.61917892e-02,  1.08569838e-01, -1.44024184e-02, -1.47935614e-01,
+        8.89264047e-02,  7.47074857e-02, -4.07868624e-01, -3.82418305e-01,
+        5.50290227e-01, -2.81685531e-01, -2.39913285e-01, -1.53242961e-01,
+       -2.58827180e-01, -1.05847180e-01, -1.58128515e-01,  8.90466273e-02,
+       -1.82038650e-03, -1.49243668e-01,  1.90218553e-01,  4.93904322e-01,
+        3.22095044e-02,  4.68806326e-02,  1.10853136e-01,  1.13328099e-01,
+       -2.54292171e-02,  1.44241145e-02, -1.34598732e-01,  1.00531451e-01,
+       -2.85001695e-02, -6.23005211e-01,  1.60148814e-01,  9.68517885e-02,
+       -4.37249184e-01,  6.43102050e-01, -3.22275519e-01,  2.95264661e-01,
+       -3.75824600e-01,  2.72107422e-01,  1.28027484e-01, -7.13291913e-02,
+       -1.74246386e-01, -1.75826594e-01, -1.78420529e-01,  2.41429999e-01,
+        1.87329784e-01,  8.00989792e-02, -2.71158099e-01,  6.24268174e-01,
+        6.17186911e-02, -7.63479108e-03, -7.83906952e-02,  4.22500730e-01,
+        2.01404437e-01,  2.42894515e-01, -1.95990071e-01, -5.97726285e-01,
+        1.11996360e-01,  1.70009479e-01,  3.25256288e-01, -4.49297190e-01,
+        1.49387524e-01,  4.34649475e-02, -1.87276959e-01, -1.66159928e-01,
+       -1.89135864e-01, -4.85989690e-01,  3.62226367e-01, -1.33195028e-01,
+       -6.60636842e-01, -7.73904741e-01, -3.70514840e-01,  5.36868989e-01,
+       -1.52960256e-01, -7.74044320e-02, -4.28031415e-01, -4.06813294e-01,
+       -3.09568077e-01, -3.18129718e-01,  5.96830010e-01,  2.02072367e-01],
+      dtype=float32)
+</code></pre></div>
+<h2 id="_4">یافتن شباهت کسینوسی کاندیداها و کل متن<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>شباهت کسینوسی بین هریک از کاندیداها و وکتور نمایندهٔ متن را محاسبه می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">candidates_sim_whole</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">all_candidates_vectors</span><span class="p">,</span> <span class="n">whole_text_vector</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">candidates_sim_whole</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[ 1.19351953e-01,  1.23398483e-01,  1.25267982e-01,
+         1.78353339e-02,  2.34080136e-01, -1.43648628e-02,
+        -5.21925651e-03,  2.66611010e-01,  1.66823924e-01,
+         1.12354815e-01, -1.51119381e-02,  1.41785324e-01,
+         2.92644836e-03,  1.90887198e-01,  5.18489107e-02,
+        -7.30122924e-02, -5.37125580e-02,  9.29163471e-02,
+         1.13298275e-01,  1.23427741e-01,  1.57424986e-01,
+         9.25901681e-02, -1.08412527e-01, -1.73858460e-02,
+         2.51174212e-01,  2.12025747e-01,  5.75144589e-02,
+         1.49892541e-02,  1.66313797e-01,  1.69365540e-01,
+         8.05877075e-02,  1.91820011e-01,  1.14597335e-01,
+         7.08760321e-02,  2.80742906e-02,  3.49122845e-02,
+         7.90452361e-02,  2.57898092e-01, -1.49483442e-01,
+         2.14596186e-02,  4.02773991e-02,  1.76318884e-02,
+         1.82765976e-01, -1.09764189e-01,  1.59435749e-01,
+         2.32247636e-04, -1.09125897e-01, -6.53942488e-03,
+         4.97795194e-02]], dtype=float32)
+</code></pre></div>
+<h2 id="_5">یافتن شباهت کسینوسی کاندیداها به یکدیگر<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>ماتریسی ایجاد می‌کنیم که هر درایهٔ آن با اندیس آی و جی، بیانگر شباهت کسینوسی کاندیدای آی با کاندیدای جی است.</p>
+<div class="highlight"><pre><span></span><code><span class="n">candidate_sim_candidate</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">all_candidates_vectors</span><span class="p">)</span>
+<span class="n">candidate_sim_candidate</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[0.9999997 , 0.14587443, 0.20270647, ..., 0.42830434, 0.27730745,
+        0.30513293],
+       [0.14587443, 0.9999996 , 0.10514447, ..., 0.48333895, 0.3179143 ,
+        0.19037738],
+       [0.20270647, 0.10514447, 1.        , ..., 0.47220594, 0.24125722,
+        0.18565692],
+       ...,
+       [0.42830434, 0.48333895, 0.47220594, ..., 0.9999998 , 0.52577287,
+        0.50683355],
+       [0.27730745, 0.3179143 , 0.24125722, ..., 0.52577287, 0.99999964,
+        0.40011758],
+       [0.30513293, 0.19037738, 0.18565692, ..., 0.50683355, 0.40011758,
+        0.9999996 ]], dtype=float32)
+</code></pre></div>
+<h2 id="_6">نرمال‌سازی مقادیر مربوط به شباهت‌های کسینوسی<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>دو مقدار بالا را برای استفاده در مراحل بعد نرمال‌سازی می‌کنیم.</p>
+<div class="highlight"><pre><span></span><code><span class="n">candidates_sim_whole_norm</span> <span class="o">=</span> <span class="n">candidates_sim_whole</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">candidates_sim_whole</span><span class="p">)</span>
+<span class="n">candidates_sim_whole_norm</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidates_sim_whole_norm</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">candidates_sim_whole_norm</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">candidates_sim_whole_norm</span><span class="p">)</span>
+<span class="n">candidates_sim_whole_norm</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[ 0.9393711 ],
+       [ 0.979393  ],
+       [ 0.9978831 ],
+       [-0.06467056],
+       [ 2.0740807 ],
+       [-0.3831439 ],
+       [-0.2926901 ],
+       [ 2.3958247 ],
+       [ 1.4088888 ],
+       [ 0.87016654],
+       [-0.3905328 ],
+       [ 1.1612465 ],
+       [-0.21212566],
+       [ 1.6468846 ],
+       [ 0.27173793],
+       [-0.9631914 ],
+       [-0.77230906],
+       [ 0.677912  ],
+       [ 0.8794977 ],
+       [ 0.9796823 ],
+       [ 1.3159292 ],
+       [ 0.67468596],
+       [-1.3133144 ],
+       [-0.4130227 ],
+       [ 2.2431483 ],
+       [ 1.8559536 ],
+       [ 0.32777256],
+       [-0.09281945],
+       [ 1.4038434 ],
+       [ 1.4340265 ],
+       [ 0.55597657],
+       [ 1.6561104 ],
+       [ 0.892346  ],
+       [ 0.45992404],
+       [ 0.03659701],
+       [ 0.1042276 ],
+       [ 0.54072094],
+       [ 2.3096502 ],
+       [-1.719523  ],
+       [-0.02882487],
+       [ 0.15729082],
+       [-0.0666827 ],
+       [ 1.5665622 ],
+       [-1.326683  ],
+       [ 1.3358166 ],
+       [-0.23877239],
+       [-1.3203701 ],
+       [-0.3057471 ],
+       [ 0.25127074]], dtype=float32)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">candidate_sim_candidate</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
+<span class="n">candidate_sim_candidate_norm</span> <span class="o">=</span> <span class="n">candidate_sim_candidate</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">candidate_sim_candidate</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">candidate_sim_candidate_norm</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidate_sim_candidate_norm</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">candidate_sim_candidate_norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">candidate_sim_candidate_norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">candidate_sim_candidate_norm</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[           nan, -3.5498703e-01,  3.2357961e-02, ...,
+         1.8948689e-01,  3.9502221e-01,  6.2098056e-01],
+       [-5.2607918e-01,            nan, -7.2487104e-01, ...,
+         4.3979204e-01,  6.8422610e-01, -9.5400155e-02],
+       [-1.7625093e-02, -6.8133366e-01,            nan, ...,
+         3.8915750e-01,  1.3827083e-01, -1.2486839e-01],
+       ...,
+       [ 2.0007110e+00,  2.3489289e+00,  2.1240823e+00, ...,
+                   nan,  2.1646044e+00,  1.8801302e+00],
+       [ 6.4980078e-01,  1.0234730e+00,  3.3157024e-01, ...,
+         6.3278729e-01,            nan,  1.2139380e+00],
+       [ 8.9874434e-01,  1.5904903e-03, -9.9972427e-02, ...,
+         5.4664868e-01,  1.2696817e+00,            nan]], dtype=float32)
+</code></pre></div>
+<h2 id="_7">استخراج کلمات کلیدی از روی شباهت‌های کسینوسی<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>با استفاده از روش امبدرنک در یک الگوریتم تکرارشونده، در هر مرحله با یک فرمول، یک کاندیدا به عنوان کلمهٔ کلیدی انتخاب می‌شود.
+کاندیدایی انتخاب می‌شود که در درجهٔ اول بیشترین شباهت را با کل متن دارد و در درجهٔ دوم کمترین شباهت را با کاندیداهای انتخاب‌شده دارد.
+میزان اثرگذاری این دو فاکتور را می‌توان با درنظرگرفتن عوامل مختلفی مثل طول و محتوای متن تغییر داد.
+(beta)</p>
+<div class="highlight"><pre><span></span><code><span class="n">beta</span> <span class="o">=</span> <span class="mf">0.82</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_candidates</span><span class="p">),</span> <span class="n">keyword_count</span><span class="p">)</span>
+
+<span class="n">selected_candidates</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">unselected_candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_candidates</span><span class="p">))]</span>
+<span class="n">best_candidate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">candidates_sim_whole_norm</span><span class="p">)</span>
+<span class="n">selected_candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_candidate</span><span class="p">)</span>
+<span class="n">unselected_candidates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">best_candidate</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">selected_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">selected_candidates</span><span class="p">)</span>
+    <span class="n">unselected_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unselected_candidates</span><span class="p">)</span>
+
+    <span class="n">unselected_candidate_sim_whole_norm</span> <span class="o">=</span> <span class="n">candidates_sim_whole_norm</span><span class="p">[</span><span class="n">unselected_vec</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="n">dist_between</span> <span class="o">=</span> <span class="n">candidate_sim_candidate_norm</span><span class="p">[</span><span class="n">unselected_vec</span><span class="p">][:,</span> <span class="n">selected_vec</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">dist_between</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dist_between</span> <span class="o">=</span> <span class="n">dist_between</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+    <span class="n">best_candidate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="n">unselected_candidate_sim_whole_norm</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dist_between</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">best_index</span> <span class="o">=</span> <span class="n">unselected_candidates</span><span class="p">[</span><span class="n">best_candidate</span><span class="p">]</span>
+    <span class="n">selected_candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_index</span><span class="p">)</span>
+    <span class="n">unselected_candidates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">best_index</span><span class="p">)</span>
+<span class="n">all_candidates</span><span class="p">[</span><span class="n">selected_candidates</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[&#39;معنی بی‌احترامی&#39;,
+ &#39;دلایل تشریفاتی&#39;,
+ &#39;سطح ملکه&#39;,
+ &#39;توضیح مذهبی&#39;,
+ &#39;نشریه اسپانیایی&#39;,
+ &#39;زن&#39;,
+ &#39;مراسم سال&#39;,
+ &#39;فیلم&#39;,
+ &#39;کارشناس رسمی&#39;,
+ &#39;کشور&#39;]
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            برگشت به بالا
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+<a href="#__consent">تغییر تنظیمات کوکی</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/roshan-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+    
+  
+
+
+
+  
+
+
+<h4>درخواست استفاده از کوکی</h4>
+<p>با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود بخشیم. <br> سپاس از همکاری شما. ❤️</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="github" checked>
+          <span class="task-list-indicator"></span>
+          GitHub
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">تایید</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">مدیریت تنظیمات</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs.sticky", "navigation.indexes", "navigation.prune", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.tooltips", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u06a9\u067e\u06cc \u0634\u062f", "clipboard.copy": "\u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646", "search.result.more.one": "1 \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.more.other": "# \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.none": "\u0633\u0646\u062f\u06cc \u06cc\u0627\u0641\u062a \u0646\u0634\u062f", "search.result.one": "1 \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.other": "# \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.placeholder": "\u0628\u0631\u0627\u06cc \u0634\u0631\u0648\u0639 \u062c\u0633\u062a\u062c\u0648 \u062a\u0627\u06cc\u067e \u06a9\u0646\u06cc\u062f", "search.result.term.missing": "\u0645\u0648\u062c\u0648\u062f \u0646\u06cc\u0633\u062a", "select.version": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0648\u06cc\u0631\u0627\u06cc\u0634"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

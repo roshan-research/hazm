@@ -1,153 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://roshan-research.github.io/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/index.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/in-other-languages/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/in-other-languages.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/utils/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/utils.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/index.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/Chunker/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/chunker.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/DependencyParser/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/dependency_parser.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/InformalNormalizer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/embedding.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/Lemmatizer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/informal_normalizer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/Normalizer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/lemmatizer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/POSTagger/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/normalizer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/SentenceTokenizer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/pos_tagger.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/SequenceTagger/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/sentence_tokenizer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/Stemmer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/sequence_tagger.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/TokenSplitter/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/stemmer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/WordTokenizer/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/token_splitter.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/modules/embedding/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/word_tokenizer.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/index.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/BijankhanReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/bijankhan_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/DadeganReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/dadegan_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/DegarbayanReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/degarbayan_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/HamshahriReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/hamshahri_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/MirasTextReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/mirastext_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/PersicaReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/persica_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/PeykareReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/peykare_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/QuranCorpusReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/quran_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/SentiPersReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/sentipers_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/TNewsReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/tnews_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/TreebankReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/treebank_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/VerbValencyReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/verbvalency_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://roshan-research.github.io/content/readers/WikipediaReader/</loc>
-         <lastmod>2023-04-05</lastmod>
+         <loc>https://roshan-research.github.io/content/hazm/corpus_readers/wikipedia_reader.html</loc>
+         <lastmod>2023-05-20</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://roshan-research.github.io/content/samples/keyword_extraction.html</loc>
+         <lastmod>2023-05-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
