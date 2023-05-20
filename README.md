@@ -78,9 +78,9 @@ But for testing or using Hazm with the latest updates you may use:
 
 ```
 
-## Extensions
+## Hazm in other languages
 
-Note: These are not official versions of hazm, not uptodate on functionality and are not supported by Roshan.
+**Disclaimer:** These ports are not developed or maintained by Roshan. They may not have the same functionality or quality as the original Hazm..
 
 - [**JHazm**](https://github.com/mojtaba-khallash/JHazm): A Java port of Hazm
 - [**NHazm**](https://github.com/mojtaba-khallash/NHazm): A C# port of Hazm
