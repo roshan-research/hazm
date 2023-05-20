@@ -950,7 +950,7 @@ class Extractor():
           e.g. "## Section 1"
         """
         self.magicWords['namespace'] = self.title[:max(0, self.title.find(":"))]
-        #self.magicWords['namespacenumber'] = '0' # for article, 
+        #self.magicWords['namespacenumber'] = '0' # for article,
         self.magicWords['pagename'] = self.title
         self.magicWords['fullpagename'] = self.title
         self.magicWords['currentyear'] = time.strftime('%Y')

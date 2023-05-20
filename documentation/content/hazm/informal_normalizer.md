@@ -2,6 +2,6 @@
     handler: python
     options:
         members:
-            - InformalNormalizer        
+            - InformalNormalizer
         show_root_heading: false
         show_source: false

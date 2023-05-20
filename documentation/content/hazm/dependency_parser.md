@@ -6,7 +6,7 @@
     handler: python
     options:
         members:
-            - DependencyParser        
+            - DependencyParser
             - MaltParser
         show_root_heading: false
         show_source: false

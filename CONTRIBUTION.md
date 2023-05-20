@@ -30,4 +30,3 @@ Thank you for your contribution! 😍
 
 
 3. **Use new feature branches for every change**: create a new feature branch from the main branch for each new feature or bug fix that you want to contribute. Do not work directly on the main branch or reuse old feature branches.
-

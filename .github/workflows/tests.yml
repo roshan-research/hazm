@@ -15,8 +15,8 @@ jobs:
     build:
         runs-on: ubuntu-20.04
         strategy:
-            matrix:                
-                python-versions: ["3.8", "3.9", "3.10", "3.11"]                
+            matrix:
+                python-versions: ["3.8", "3.9", "3.10", "3.11"]
 
         steps:
             - uses: actions/checkout@v3
@@ -24,23 +24,23 @@ jobs:
             - name: Set up Python ${{ matrix.python-versions }}
               uses: actions/setup-python@v4
               with:
-                  python-version: ${{ matrix.python-versions }}            
-              
+                  python-version: ${{ matrix.python-versions }}
+
             - name: Install poetry
               run: curl -sSL https://install.python-poetry.org | python3 -
-                
-            - name: Install requirements            
-              run: |                
-                poetry lock                
-                poetry install                
-                  
+
+            - name: Install requirements
+              run: |
+                poetry lock
+                poetry install
+
             - name: Install poethepoet
-              run: pip install poethepoet 
+              run: pip install poethepoet
 
             - name: Download resources
-              run: |                                   
-                  wget https://github.com/sir-kokabi/test/raw/main/resources-0.9.zip            
-                  unzip resources-0.9.zip -d resources          
+              run: |
+                  wget https://github.com/sir-kokabi/test/raw/main/resources-0.9.zip
+                  unzip resources-0.9.zip -d resources
 
             - name: Run tests
               run: poe test
