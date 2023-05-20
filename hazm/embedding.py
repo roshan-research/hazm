@@ -18,7 +18,8 @@ from gensim.test.utils import datapath
 from numpy import ndarray
 
 from hazm import Normalizer
-from hazm import WordTokenizer
+
+from hazm import word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
 
@@ -358,7 +359,7 @@ class SentEmbedding:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
 
-        tokenized_sent = WordTokenizer.tokenize(sent)
+        tokenized_sent = word_tokenize(sent)
         return self.model.infer_vector(tokenized_sent)
 
     def similarity(self: "SentEmbedding", sent1: str, sent2: str) -> float:
@@ -386,8 +387,8 @@ class SentEmbedding:
         return float(
             str(
                 self.model.similarity_unseen_docs(
-                    WordTokenizer.tokenize(sent1),
-                    WordTokenizer.tokenize(sent2),
+                    word_tokenize(sent1),
+                    word_tokenize(sent2),
                 ),
             ),
         )
@@ -406,6 +407,6 @@ class SentenceEmbeddingCorpus:
         
         for i, list_of_words in enumerate(Path.open(corpus_path)):
             yield TaggedDocument(
-                WordTokenizer.tokenize(Normalizer().normalize(list_of_words)),
+                word_tokenize(Normalizer().normalize(list_of_words)),
                 [i],
             )

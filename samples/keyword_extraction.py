@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from hazm import WordEmbedding
 from hazm import SentEmbedding
 from hazm import POSTagger
-from hazm import WordTokenizer
-from hazm import SentenceTokenizer
 from hazm.corpus_readers import PersicaReader
 from hazm import Normalizer
+from hazm import word_tokenize
+from hazm import sent_tokenize
+
 
 grammers = [
     """
@@ -32,12 +32,12 @@ normalizer = Normalizer()
 def tokenize(text):
     normalizer = Normalizer()
     return [
-        WordTokenizer.tokenize(sent)
-        for sent in SentenceTokenizer.tokenize(normalizer.normalize(text))
+        word_tokenize(sent)
+        for sent in sent_tokenize(normalizer.normalize(text))
     ]
 
 
-def posTagger(text, pos_model_path="POStagger.model", posTaggerModel=None):
+def posTagger(text, pos_model_path="resources/pos_tagger.model", posTaggerModel=None):
     tokens = tokenize(text)
     tagger = POSTagger(pos_model_path) if posTaggerModel is None else posTaggerModel
     return tagger.tag_sents(tokens)

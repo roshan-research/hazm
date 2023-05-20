@@ -33,6 +33,19 @@ from hazm.chunker import tree2brackets
 
 from hazm.sentence_tokenizer import SentenceTokenizer
 
+def sent_tokenize(text: str) -> List[str]:
+    """Sentence Tokenizer."""
+    if not hasattr(sent_tokenize, "tokenizer"):
+        sent_tokenize.tokenizer = SentenceTokenizer()
+    return sent_tokenize.tokenizer.tokenize(text)
+
+
+def word_tokenize(sentence: str) -> List[str]:
+    """Word Tokenizer."""
+    if not hasattr(word_tokenize, "tokenizer"):
+        word_tokenize.tokenizer = WordTokenizer()
+    return word_tokenize.tokenizer.tokenize(sentence)
+
 from hazm.corpus_readers import PeykareReader
 from hazm.corpus_readers import BijankhanReader
 from hazm.corpus_readers import DadeganReader
@@ -61,15 +74,3 @@ from hazm.informal_normalizer import InformalNormalizer
 from hazm.token_splitter import TokenSplitter
 
 
-def sent_tokenize(text: str) -> List[str]:
-    """Sentence Tokenizer."""
-    if not hasattr(sent_tokenize, "tokenizer"):
-        sent_tokenize.tokenizer = SentenceTokenizer()
-    return sent_tokenize.tokenizer.tokenize(text)
-
-
-def word_tokenize(sentence: str) -> List[str]:
-    """Word Tokenizer."""
-    if not hasattr(word_tokenize, "tokenizer"):
-        word_tokenize.tokenizer = WordTokenizer()
-    return word_tokenize.tokenizer.tokenize(sentence)
