@@ -15,7 +15,6 @@ Python library for digesting Persian text.
 - Dependency parser
 - Interfaces for Persian corpora
 - [NLTK](http://nltk.org/) compatible
-- Python 3.8, 3.9, 3.10 and 3.11 support
 
 ## Documentation
 
