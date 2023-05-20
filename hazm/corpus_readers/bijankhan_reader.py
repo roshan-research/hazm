@@ -15,7 +15,7 @@ from typing import Iterator
 from typing import List
 from typing import Tuple
 
-from ..normalizer import Normalizer
+from hazm import Normalizer
 from .peykare_reader import join_verb_parts
 
 default_pos_map = {

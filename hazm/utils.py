@@ -103,3 +103,4 @@ def regex_replace(patterns: str, text: str) -> str:
     for pattern, repl in patterns:
         text = re.sub(pattern, repl, text)
     return text
+

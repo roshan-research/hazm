@@ -4,7 +4,7 @@
 from typing import List
 from typing import Tuple
 
-from hazm.lemmatizer import Lemmatizer
+from hazm import Lemmatizer
 
 
 class TokenSplitter:

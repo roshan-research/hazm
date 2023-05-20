@@ -2,44 +2,63 @@
 
 from typing import List
 
-from .chunker import Chunker
-from .chunker import RuleBasedChunker
-from .chunker import tree2brackets
-from .corpus_readers import BijankhanReader
-from .corpus_readers import DadeganReader
-from .corpus_readers import DegarbayanReader
-from .corpus_readers import HamshahriReader
-from .corpus_readers import MirasTextReader
-from .corpus_readers import PersicaReader
-from .corpus_readers import PeykareReader
-from .corpus_readers import QuranReader
-from .corpus_readers import SentiPersReader
-from .corpus_readers import TNewsReader
-from .corpus_readers import TreebankReader
-from .corpus_readers import VerbValencyReader
-from .corpus_readers import WikipediaReader
-from .dependency_parser import DependencyParser
-from .dependency_parser import MaltParser
-from .dependency_parser import TurboParser
-from .embedding import SentEmbedding
-from .embedding import WordEmbedding
-from .informal_normalizer import InformalLemmatizer
-from .informal_normalizer import InformalNormalizer
-from .lemmatizer import Conjugation
-from .lemmatizer import Lemmatizer
-from .normalizer import Normalizer
-from .pos_tagger import POSTagger
-from .pos_tagger import StanfordPOSTagger
-from .sentence_tokenizer import SentenceTokenizer
-from .sequence_tagger import IOBTagger
-from .sequence_tagger import SequenceTagger
-from .stemmer import Stemmer
-from .token_splitter import TokenSplitter
-from .utils import default_verbs
-from .utils import default_words
-from .utils import stopwords_list
-from .utils import words_list
-from .word_tokenizer import WordTokenizer
+from hazm.utils import default_verbs
+from hazm.utils import default_words
+from hazm.utils import stopwords_list
+from hazm.utils import words_list
+from hazm.utils import maketrans
+from hazm.utils import regex_replace
+from hazm.utils import words_list
+from hazm.utils import NUMBERS
+from hazm.utils import informal_verbs
+from hazm.utils import informal_words
+
+from hazm.sequence_tagger import IOBTagger
+from hazm.sequence_tagger import SequenceTagger
+
+from hazm.pos_tagger import POSTagger
+from hazm.pos_tagger import StanfordPOSTagger
+
+from hazm.stemmer import Stemmer
+from hazm.word_tokenizer import WordTokenizer
+
+from hazm.lemmatizer import Conjugation
+from hazm.lemmatizer import Lemmatizer
+
+from hazm.normalizer import Normalizer
+
+from hazm.chunker import Chunker
+from hazm.chunker import RuleBasedChunker
+from hazm.chunker import tree2brackets
+
+from hazm.sentence_tokenizer import SentenceTokenizer
+
+from hazm.corpus_readers import PeykareReader
+from hazm.corpus_readers import BijankhanReader
+from hazm.corpus_readers import DadeganReader
+from hazm.corpus_readers import DegarbayanReader
+from hazm.corpus_readers import HamshahriReader
+from hazm.corpus_readers import MirasTextReader
+from hazm.corpus_readers import PersicaReader
+from hazm.corpus_readers import QuranReader
+from hazm.corpus_readers import SentiPersReader
+from hazm.corpus_readers import TNewsReader
+from hazm.corpus_readers import TreebankReader
+from hazm.corpus_readers import VerbValencyReader
+from hazm.corpus_readers import WikipediaReader
+from hazm.corpus_readers import persian_plain_text_reader
+
+from hazm.dependency_parser import DependencyParser
+from hazm.dependency_parser import MaltParser
+from hazm.dependency_parser import TurboParser
+
+from hazm.embedding import SentEmbedding
+from hazm.embedding import WordEmbedding
+
+from hazm.informal_normalizer import InformalLemmatizer
+from hazm.informal_normalizer import InformalNormalizer
+
+from hazm.token_splitter import TokenSplitter
 
 
 def sent_tokenize(text: str) -> List[str]:

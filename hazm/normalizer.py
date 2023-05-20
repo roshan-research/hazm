@@ -4,10 +4,10 @@
 import re
 from typing import List
 
-from hazm.lemmatizer import Lemmatizer
-from hazm.utils import maketrans
-from hazm.utils import regex_replace
-from hazm.word_tokenizer import WordTokenizer
+from hazm import Lemmatizer
+from hazm import maketrans
+from hazm import regex_replace
+from hazm import WordTokenizer
 
 
 class Normalizer:

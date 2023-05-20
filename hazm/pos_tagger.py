@@ -9,7 +9,7 @@
 
 from nltk.tag import stanford
 
-from hazm.sequence_tagger import SequenceTagger
+from hazm import SequenceTagger
 
 punctuation_list = [
     '"',

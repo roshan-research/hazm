@@ -18,10 +18,10 @@
 
 from typing import List
 
-from hazm.stemmer import Stemmer
-from hazm.utils import default_verbs
-from hazm.utils import default_words
-from hazm.word_tokenizer import WordTokenizer
+from hazm import Stemmer
+from hazm import default_verbs
+from hazm import default_words
+from hazm import WordTokenizer
 
 
 class Lemmatizer:

@@ -5,12 +5,13 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from hazm import Embedding
+from hazm import WordEmbedding
+from hazm import SentEmbedding
 from hazm import POSTagger
-from hazm import sent_tokenize
-from hazm import word_tokenize
+from hazm import WordTokenizer
+from hazm import SentenceTokenizer
 from hazm.corpus_readers import PersicaReader
-from hazm.Normalizer import Normalizer
+from hazm import Normalizer
 
 grammers = [
     """
@@ -30,7 +31,10 @@ normalizer = Normalizer()
 
 def tokenize(text):
     normalizer = Normalizer()
-    return [word_tokenize(sent) for sent in sent_tokenize(normalizer.normalize(text))]
+    return [
+        WordTokenizer.tokenize(sent)
+        for sent in SentenceTokenizer.tokenize(normalizer.normalize(text))
+    ]
 
 
 def posTagger(text, pos_model_path="POStagger.model", posTaggerModel=None):
@@ -61,7 +65,9 @@ def extractCandidates(tagged_text, grammers=grammers):
 
 
 def text2vec(candidates, sent2vec_model_path="sent2vec.model", sent2vecModel=None):
-    sent2vec_model = Embedding.SentEmbedding(sent2vec_model_path) if sent2vecModel is None else sent2vecModel
+    sent2vec_model = (
+        SentEmbedding(sent2vec_model_path) if sent2vecModel is None else sent2vecModel
+    )
     candidate_vector = [[sent2vec_model[candidate] for candidate in candidates]]
     text_vector = sent2vec_model[" ".join(candidates)]
     return candidate_vector, text_vector
@@ -69,7 +75,8 @@ def text2vec(candidates, sent2vec_model_path="sent2vec.model", sent2vecModel=Non
 
 def vectorSimilarity(candidates_vector, text_vector, norm=True):
     candidate_sim_text = cosine_similarity(
-        candidates_vector[0], text_vector.reshape(1, -1),
+        candidates_vector[0],
+        text_vector.reshape(1, -1),
     )
     candidate_sim_candidate = cosine_similarity(candidates_vector[0])
     if norm:
@@ -79,7 +86,8 @@ def vectorSimilarity(candidates_vector, text_vector, norm=True):
         ) / np.std(candidates_sim_text_norm)
         np.fill_diagonal(candidate_sim_candidate, np.NaN)
         candidate_sim_candidate_norm = candidate_sim_candidate / np.nanmax(
-            candidate_sim_candidate, axis=0,
+            candidate_sim_candidate,
+            axis=0,
         )
         candidate_sim_candidate_norm = 0.5 + (
             candidate_sim_candidate_norm
@@ -98,11 +106,13 @@ def embedRankExtraction(
 ):
     if len(all_candidates) < keyword_num:
         warnings.warn(
-            f"total number of keyword candidates is {len(all_candidates)}, which is"
-            " lower than your request keyword_num",
+            (
+                f"total number of keyword candidates is {len(all_candidates)}, which is"
+                " lower than your request keyword_num"
+            ),
         )
 
-    N = min(len(all_candidates), keyword_num)
+    N = int(min(len(all_candidates), keyword_num))
 
     selected_candidates = []
     unselected_candidates = list(range(len(all_candidates)))
@@ -134,10 +144,14 @@ def embedRankExtraction(
 def extractKeyword(candidates, keyword_num=5, sent2vecModel=None):
     candidates_vector, text_vector = text2vec(candidates, sent2vecModel=sent2vecModel)
     candidate_sim_text_norm, candidate_sim_candidate_norm = vectorSimilarity(
-        candidates_vector, text_vector,
+        candidates_vector,
+        text_vector,
     )
     return embedRankExtraction(
-        candidates, candidate_sim_text_norm, candidate_sim_candidate_norm, keyword_num,
+        candidates,
+        candidate_sim_text_norm,
+        candidate_sim_candidate_norm,
+        keyword_num,
     )
 
 

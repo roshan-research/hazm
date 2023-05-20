@@ -15,8 +15,8 @@ from nltk.chunk import RegexpParser
 from nltk.chunk import conlltags2tree
 from nltk.chunk import tree2conlltags
 
-from hazm.pos_tagger import POSTagger
-from hazm.sequence_tagger import IOBTagger
+from hazm import POSTagger
+from hazm import IOBTagger
 
 
 def tree2brackets(tree: str) -> str:

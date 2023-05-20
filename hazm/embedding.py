@@ -403,9 +403,9 @@ class SentenceEmbeddingCorpus:
     def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
         """__iter__."""
         corpus_path = datapath(self.data_path)
-        normalizer = Normalizer()
+        
         for i, list_of_words in enumerate(Path.open(corpus_path)):
             yield TaggedDocument(
-                WordTokenizer.tokenize(normalizer.normalize(list_of_words)),
+                WordTokenizer.tokenize(Normalizer().normalize(list_of_words)),
                 [i],
             )
