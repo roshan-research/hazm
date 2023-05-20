@@ -26,9 +26,7 @@
 $ pip install hazm
 ```
 
-سپس [منابع هضم را دانلود
-کنید](https://github.com/roshan-research/hazm/releases/download/v0.9/resources-0.9.zip) و
-و بعد از اکسترکت، فولدر resources را در ریشهٔ پروژهٔ خود قرار دهید.
+سپس [منابع موردنظر را دانلود کنید](https://github.com/roshan-research/hazm#modules-accuracy) و در پوشه‌ای به اسم resources در ریشهٔ پروژهٔ خود قرار دهید.
 
 و در آخر، هضم را را در پروژه خود ایمپورت کنید:
 
@@ -69,7 +67,7 @@ print(tagger.tag(WordTokenizer().tokenize("ما بسیار کتاب می‌خو�
 # [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
 # Labels each word with its part of speech, such as noun, verb, adjective, etc.
-chunker = chunker.model='resources/chunker.model')
+chunker = chunker('resources/chunker.model')
 tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 tree2brackets(chunker.parse(tagged))
 # '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
