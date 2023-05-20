@@ -20,17 +20,16 @@ Python library for digesting Persian text.
 
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
-## Precisions
+## Download Pretrained models
 
-The `Chunker` and `Lemmatizer` as surface analyzers have a precision of 89.9%. Also, `POSTagger` and `DependencyParser` as morphological taggers, have a precision of 97.1%.
+|                          | **accuracy** | **pretrained model** |
+| ------------------------ |:------------:|--------------------:|
+| **Lemmatizer**           | 89.9%        | download             |
+| **Chunker**              | 93.4%        | [download](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
+| **POSTagger**            | 97.2%        | download             |
+| **POSTagger(Universal)** | 98.8%        | [download](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
+| **DependencyParser**     | 97.1%        | [download](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
 
-| **Module name**          | **Precision** |
-| ------------------------ | ------------- |
-| **Lemmatizer**           | 89.9%         |
-| **Chunker**              | 93.4%         |
-| **POSTagger**            | 97.2%         |
-| **POSTagger(Universal)** | 98.8%         |
-| **DependencyParser**     | 97.1%         |
 
 ## Installation
 
@@ -42,7 +41,6 @@ But for testing or using Hazm with the latest updates you may use:
 
     pip install https://github.com/roshan-research/hazm/archive/master.zip --upgrade
 
-We have also trained [tagger and parser models](https://github.com/roshan-research/hazm/releases/download/v0.5/resources-0.5.zip). You may put these models in the `resources` folder of your project.
 
 ## Usage
 
