@@ -15,12 +15,17 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
+        
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+          virtualenvs-in-project: false
           
-      - name: Upgrade pip
-        run: pip install --upgrade pip
-
-      - name: Install requirements packages
-        run: pip install -r requirements.txt
+      - name: Install requirements
+        run: |
+          poetry lock
+          poetry install --with docs
 
       - name: Build docs
         run: mkdocs build --clean
