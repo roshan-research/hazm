@@ -47,6 +47,7 @@ mkdocstrings-python = "^1.0.0"
 optional=true
 
 [tool.poetry.group.dev.dependencies]
+pandas= "^2.0.1"
 pytest = "^7.3.1"
 poethepoet = "^0.20.0"
 ruff = "^0.0.269"
