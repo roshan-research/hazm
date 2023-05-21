@@ -15,11 +15,10 @@ jobs:
 
         - name: Install and configure Poetry
           uses: snok/install-poetry@v1
-
-        - name: Install dependencies
-          run: |
-            poetry lock
-            poetry install --only dev        
+          with:            
+              run: |
+                poetry lock
+                poetry install --only dev        
 
         - name: Run lints
           run: poetry poe lint --format github
