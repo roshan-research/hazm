@@ -23,10 +23,10 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 ## Modules accuracy
 
 | **Module name**          | **accuracy** |  |
-|:------------------------ |:------------:|:--------------------:|
+|:------------------------ |:------------|:--------------------:|
 | **Lemmatizer**           | 89.9%        |              |
 | **Chunker**              | 93.4%        | [download pre-trained model](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
-| **POSTagger** | 97.2% / universal: 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
+| **POSTagger** | 97.2% <br> universal: 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
 | **DependencyParser**     | 97.1%        | [download pre-trained model](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
 
 
