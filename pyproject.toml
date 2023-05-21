@@ -48,9 +48,8 @@ optional=true
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
-pandas = "2.0.1"
-#pre-commit = "*"
 poethepoet = "^0.20.0"
+ruff = "^0.0.269"
 
 [tool.poetry.group.typing.dependencies]
 #mypy = "*"
