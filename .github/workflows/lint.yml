@@ -22,4 +22,4 @@ jobs:
             poetry install --only dev        
 
         - name: Run lints
-          run: poetry poe lint
+          run: poetry poe lint --format github
