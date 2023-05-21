@@ -7,9 +7,6 @@ on:
         paths: ["**.py", "hazm/**", "corpora/**"]
     pull_request:
         branches: [master]
-    workflow_run:
-        workflows: ["Run lints"]
-        types: [completed]
 
 jobs:
     build:
