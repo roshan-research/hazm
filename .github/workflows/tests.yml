@@ -8,7 +8,7 @@ on:
     pull_request:
         branches: [master]
     workflow_run:
-        workflows: ["Format code"]
+        workflows: ["Run lints"]
         types: [completed]
 
 jobs:
@@ -19,9 +19,10 @@ jobs:
                 python-versions: ["3.8", "3.9", "3.10", "3.11"]
 
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout master
+              uses: actions/checkout@v3
 
-            - name: Set up Python ${{ matrix.python-versions }}
+            - name: Install Python ${{ matrix.python-versions }}
               uses: actions/setup-python@v4
               with:
                   python-version: ${{ matrix.python-versions }}
@@ -29,13 +30,10 @@ jobs:
             - name: Install poetry
               run: curl -sSL https://install.python-poetry.org | python3 -
 
-            - name: Install requirements
+            - name: Install dependencies
               run: |
                 poetry lock
-                poetry install
-
-            - name: Install poethepoet
-              run: pip install poethepoet
+                poetry install --with dev            
 
             - name: Download resources
               run: |
@@ -43,4 +41,4 @@ jobs:
                   unzip resources-0.9.zip -d resources
 
             - name: Run tests
-              run: poe test
+              run: poetry poe test
