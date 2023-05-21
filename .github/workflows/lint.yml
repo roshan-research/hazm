@@ -13,5 +13,5 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v3
         
-      - name: Ruff check --fix
+      - name: Ruff check
         uses: chartboost/ruff-action@v1
