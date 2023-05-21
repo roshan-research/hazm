@@ -13,12 +13,11 @@ jobs:
         - name: Checkout master
           uses: actions/checkout@v3
 
-        - name: Install and configure Poetry
-          uses: snok/install-poetry@v1
-          with:            
-              run: |
-                poetry lock
-                poetry install --only dev        
+        - name: Install Python
+          uses: actions/setup-python@v4
+          
+        - name: Install ruff
+          run: pip install ruff
 
         - name: Run lints
-          run: poetry poe lint --format github
+          run: ruff check . --format github
