@@ -12,12 +12,5 @@ jobs:
     steps:
         - name: Checkout master
           uses: actions/checkout@v3
-
-        - name: Install Python
-          uses: actions/setup-python@v4
-          
-        - name: Install ruff
-          run: pip install ruff
-
-        - name: Run lints
-          run: ruff check . --format github
+        - name: Ruff check
+          uses: chartboost/ruff-action@v1
