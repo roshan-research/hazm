@@ -26,7 +26,7 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 |:------------------------ |:------------|:--------------------:|
 | **Lemmatizer**           | 89.9%        |              |
 | **Chunker**              | 93.4%        | [download pre-trained model](https://drive.google.com/file/d/1wdByk0LHBZizjbUqdDxeDB5AYIEjn4IK)             |
-| **POSTagger** | 97.2% <br> universal: 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1im7lHHHwk7byBJHgfxthuwY1-QE98FKC)             |
+| **POSTagger** | 97.2% <br> universal: 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)             |
 | **DependencyParser**     | 97.1%        | [download pre-trained model](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
 
 
