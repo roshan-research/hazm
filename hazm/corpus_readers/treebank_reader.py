@@ -6,7 +6,6 @@
 
 
 import os
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -15,10 +14,11 @@ from typing import Iterator
 from typing import List
 from typing import Tuple
 from xml.dom import minidom
+from xml.dom.minidom import Node
 
 from nltk.tree import Tree
 
-from ..word_tokenizer import WordTokenizer
+from hazm import WordTokenizer
 
 
 def coarse_pos_e(tags: List[str]) -> List[str]:
@@ -99,6 +99,14 @@ class TreebankReader:
             سند بعدی.
 
         """
+        def remove_blanks(node):
+            for x in node.childNodes:
+                if x.nodeType == Node.TEXT_NODE:
+                    if x.nodeValue:
+                        x.nodeValue = x.nodeValue.strip()
+                elif x.nodeType == Node.ELEMENT_NODE:
+                    remove_blanks(x)
+
         for root, _dirs, files in os.walk(self._root):
             for name in sorted(files):
                 try:
@@ -106,8 +114,10 @@ class TreebankReader:
                         Path(root) / name,
                         encoding="utf8",
                     ) as treebank_file:
-                        raw = re.sub(r"\n *", "", treebank_file.read())
-                        yield minidom.parseString(raw.encode("utf8"))
+                        xml = minidom.parseString(treebank_file.read().encode("utf8"))
+                        remove_blanks(xml)
+                        xml.normalize()
+                        yield xml
                 except Exception as e:
                     print("error in reading", name, e, file=sys.stderr)
 
@@ -118,12 +128,13 @@ class TreebankReader:
             >>> treebank = TreebankReader(root='corpora/treebank')
             >>> print(next(treebank.trees()))
             (S
-            (VPS
-                    (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
-                    (VPC
-                    (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
-                    (V است/V)))
-            (PUNC ./PUNC))
+              (VPS
+                (NPC (N دنیای/Ne) (MN (N آدولف/N) (N بورن/N)))
+                (VPC
+                  (NPC (N دنیای/Ne) (NPA (N اتفاقات/Ne) (ADJ رویایی/AJ)))
+                  (V است/V)))
+              (PUNC ./PUNC))
+
 
         Yields:
             ساختار درختی بعدی.
@@ -169,20 +180,22 @@ class TreebankReader:
             if not len(node.childNodes):
                 return None
             first = node.childNodes[0]
-
-            if first.nodeName == "w":
+            if first.tagName == "w":
                 pos = extract_tags(first)
                 return Tree(
-                    node.nodeName,
+                    node.tagName,
                     [
-                        (self._pos_map(pos),),
+                        (
+                            first.childNodes[0].data.replace("می ", "می‌"),
+                            self._pos_map(pos),
+                        ),
                     ],
                 )
             childs = node.childNodes[2:] if node.tagName == "S" else node.childNodes
             for child in childs:
                 if not len(child.childNodes):
                     childs.remove(child)
-            tree = Tree(node.tagName, list(map(traverse, childs)))
+            tree = Tree(node.tagName, map(traverse, childs))
             if (
                 self._join_clitics
                 and len(tree) > 1
@@ -261,7 +274,7 @@ class TreebankReader:
         """ساختار درختی را به شکل تقطیع شده برمی‌گرداند.
 
         Examples:
-            >>> from .Chunker import tree2brackets
+            >>> from hazm.chunker import tree2brackets
             >>> treebank = TreebankReader(root='corpora/treebank')
             >>> tree2brackets(next(treebank.chunked_trees()))
             '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
