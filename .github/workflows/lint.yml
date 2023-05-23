@@ -1,11 +1,7 @@
 name: Run lints
-on:
-    workflow_dispatch:
-    push:
-        branches: [master]
-        paths: ["**.py"]
-    pull_request:
-        branches: [master]
+on:    
+    push:        
+        paths: ["**.py"]    
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -15,7 +11,10 @@ jobs:
           
         - name: Get changed files
           id: changed-files
-          uses: tj-actions/changed-files@v3
+          uses: tj-actions/changed-files@v35
+          with:
+            files: |
+              **/*.py
           
         - name: Upgrade pip
           run: pip install --upgrade pip
@@ -23,6 +22,5 @@ jobs:
         - name: Install ruff
           run: pip install ruff
           
-        - name: Ruff check
-          if: steps.changed-files.outputs.files_changed == 'true'
+        - name: Ruff check          
           run: ruff check ${{ steps.changed-files.outputs.all_changed_files }}
