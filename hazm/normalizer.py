@@ -10,7 +10,7 @@ from hazm import maketrans
 from hazm import regex_replace
 
 
-class Normalizer:
+class Normalizer:   
     """این کلاس شامل توابعی برای نرمال‌سازی متن است.
 
     Args:
