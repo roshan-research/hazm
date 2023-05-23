@@ -24,4 +24,5 @@ jobs:
           run: pip install ruff
           
         - name: Ruff check
+          if: steps.changed-files.outputs.files_changed == 'true'
           run: ruff check ${{ steps.changed-files.outputs.all_changed_files }}
