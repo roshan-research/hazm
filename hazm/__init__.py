@@ -1,3 +1,4 @@
+# noqa: I
 """entry point for the package."""
 
 from typing import List
