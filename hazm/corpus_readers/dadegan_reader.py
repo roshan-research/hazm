@@ -51,7 +51,7 @@ def coarse_pos_u(tags: List[str], word: str) -> str:
     return pos_mapped
 
 
-def coarse_pos_e(tags: List[str], word) -> str:
+def coarse_pos_e(tags: List[str], word) -> str: # noqa: ARG001
     """برچسب‌های ریز را به برچسب‌های درشت (coarse-grained pos tags) تبدیل می‌کند.
 
     Examples:

@@ -106,7 +106,7 @@ class HamshahriReader:
                     continue
 
                 try:
-                    elements = minidom.parse(os.path.join(root, name))
+                    elements = minidom.parse(os.path.join(root, name)) # noqa: PTH118
                     for element in elements.getElementsByTagName("DOC"):
                         doc = {
                             "id": (

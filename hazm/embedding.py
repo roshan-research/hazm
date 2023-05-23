@@ -18,7 +18,6 @@ from gensim.test.utils import datapath
 from numpy import ndarray
 
 from hazm import Normalizer
-
 from hazm import word_tokenize
 
 supported_embeddings = ["fasttext", "keyedvector", "glove"]
@@ -404,7 +403,7 @@ class SentenceEmbeddingCorpus:
     def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
         """__iter__."""
         corpus_path = datapath(self.data_path)
-        
+
         for i, list_of_words in enumerate(Path.open(corpus_path)):
             yield TaggedDocument(
                 word_tokenize(Normalizer().normalize(list_of_words)),

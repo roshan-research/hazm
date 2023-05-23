@@ -177,8 +177,8 @@ class StanfordPOSTagger(stanford.StanfordPOSTagger):
         self: "StanfordPOSTagger",
         model_filename: "str",
         path_to_jar: str,
-        *args,
-        **kwargs,
+        *args, # noqa: ANN002
+        **kwargs, # noqa: ANN003
     ) -> None:
         self._SEPARATOR = "/"
         super(stanford.StanfordPOSTagger, self).__init__(

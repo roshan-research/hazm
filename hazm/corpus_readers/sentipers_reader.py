@@ -63,7 +63,7 @@ class SentiPersReader:
         for root, _dirs, files in os.walk(self._root):
             for filename in sorted(files):
                 try:
-                    elements = minidom.parse(os.path.join(root, filename))
+                    elements = minidom.parse(os.path.join(root, filename)) # noqa: PTH118
 
                     product = elements.getElementsByTagName("Product")[0]
                     doc = {

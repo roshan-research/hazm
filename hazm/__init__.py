@@ -1,4 +1,4 @@
-# noqa: I
+# ruff: noqa
 """entry point for the package."""
 
 from typing import List

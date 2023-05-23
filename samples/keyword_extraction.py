@@ -1,3 +1,5 @@
+# ruff: noqa
+
 import warnings
 
 import nltk
@@ -25,7 +27,6 @@ NP:
 
 """,
 ]
-
 normalizer = Normalizer()
 
 

@@ -5,9 +5,9 @@ import re
 from typing import List
 
 from hazm import Lemmatizer
+from hazm import WordTokenizer
 from hazm import maketrans
 from hazm import regex_replace
-from hazm import WordTokenizer
 
 
 class Normalizer:

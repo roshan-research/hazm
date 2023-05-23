@@ -54,7 +54,7 @@ class QuranReader:
             parts = line.strip().split("\t")
 
             part = {
-                "loc": eval(parts[0].replace(":", ",")),
+                "loc": eval(parts[0].replace(":", ",")), # noqa: PGH001
                 "text": parts[1].translate(buckwalter_transliteration),
                 "tag": parts[2],
             }

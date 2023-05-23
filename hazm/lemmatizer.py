@@ -19,9 +19,9 @@
 from typing import List
 
 from hazm import Stemmer
+from hazm import WordTokenizer
 from hazm import default_verbs
 from hazm import default_words
-from hazm import WordTokenizer
 
 
 class Lemmatizer:

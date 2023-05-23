@@ -67,8 +67,8 @@ class DegarbayanReader:
 
             return "NotParaphrase"
 
-        filename = os.path.join(self._root, self._corpus_file)
-        if os.path.exists(filename):
+        filename = os.path.join(self._root, self._corpus_file) # noqa: PTH118
+        if os.path.exists(filename): # noqa: PTH110
             try:
                 elements = minidom.parse(filename)
                 for element in elements.getElementsByTagName("Pair"):

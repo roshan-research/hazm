@@ -40,9 +40,9 @@ class MaltParser(MaltParser):
         self.tagger = tagger
         self.working_dir = working_dir
         self.mco = model_file
-        self._malt_bin = os.path.join(working_dir, "malt.jar")
+        self._malt_bin = os.path.join(working_dir, "malt.jar") # noqa: PTH118
         self.lemmatize = (
-            lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
+            lemmatizer.lemmatize if lemmatizer else lambda w, t: "_" # noqa: ARG005
         )
 
     def parse_sents(self: "MaltParser", sentences: str, verbose: bool = False) -> str:
@@ -136,15 +136,15 @@ class MaltParser(MaltParser):
 
             return (
                 DependencyGraph(item)
-                for item in open(output_file.name, encoding="utf8").read().split("\n\n")
+                for item in open(output_file.name, encoding="utf8").read().split("\n\n") # noqa: SIM115, PTH123
                 if item.strip()
             )
 
         finally:
             input_file.close()
-            os.remove(input_file.name)
+            os.remove(input_file.name) # noqa: PTH107
             output_file.close()
-            os.remove(output_file.name)
+            os.remove(output_file.name) # noqa: PTH107
 
 
 class TurboParser(ParserI):
@@ -156,7 +156,7 @@ class TurboParser(ParserI):
     def __init__(self: "TurboParser", tagger, lemmatizer: str, model_file: str) -> None:
         self.tagger = tagger
         self.lemmatize = (
-            lemmatizer.lemmatize if lemmatizer else lambda w, t: "_"
+            lemmatizer.lemmatize if lemmatizer else lambda w, t: "_" # noqa: ARG005
         )
 
         import turboparser
@@ -221,15 +221,15 @@ class TurboParser(ParserI):
 
             return (
                 DependencyGraph(item, cell_extractor=lambda cells: cells[1:8])
-                for item in open(output_file.name, encoding="utf8").read().split("\n\n")
+                for item in open(output_file.name, encoding="utf8").read().split("\n\n") # noqa: SIM115, PTH123
                 if item.strip()
             )
 
         finally:
             input_file.close()
-            os.remove(input_file.name)
+            os.remove(input_file.name) # noqa: PTH107
             output_file.close()
-            os.remove(output_file.name)
+            os.remove(output_file.name) # noqa: PTH107
 
 
 class DependencyParser(MaltParser):
