@@ -1,5 +1,4 @@
 name: Run lints
-description: A GitHub action that runs ruff to check and fix linting errors in Python files that have been changed in a push event.
 
 on:    
     push:        
