@@ -1,20 +1,33 @@
 name: Run lints
+description: A GitHub action that runs ruff to check and fix linting errors in Python files that have been changed in a push event.
+
 on:    
     push:        
         paths: ["**.py"]    
 jobs:
-  lint:
+  check-changes:
     runs-on: ubuntu-latest
+    outputs:
+      any_changed: ${{ steps.changed-files.outputs.any_changed }}
+      all_changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
         - name: Checkout master
           uses: actions/checkout@v3
           
-        - name: Get changed files
+        - name: Get changed *.py files
           id: changed-files
           uses: tj-actions/changed-files@v35
           with:
             files: |
               **/*.py
+  
+  lint:
+    runs-on: ubuntu-latest
+    needs: check-changes
+    if: needs.check-changes.outputs.any_changed == 'true'
+    steps:
+        - name: Checkout master
+          uses: actions/checkout@v3
           
         - name: Upgrade pip
           run: pip install --upgrade pip
@@ -22,5 +35,12 @@ jobs:
         - name: Install ruff
           run: pip install ruff
           
-        - name: Ruff check          
-          run: ruff check ${{ steps.changed-files.outputs.all_changed_files }}
+        - name: Ruff check and fix
+          run: ruff check ${{ needs.check-changes.outputs.all_changed_files }}
+          
+        - name: Push back changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: "fix auto-fixable linting errors"
+            commit_user_name: "linter-bot"
+            commit_user_email: "linter-bot@users.noreply.github.com"
