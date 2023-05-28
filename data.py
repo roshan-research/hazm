@@ -425,10 +425,3 @@ def train_stanford_postagger(
 
     tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
     print(tagger.evaluate(test))
-
-
-train_maltparser(
-     train_file="resources/train.conll",
-    dev_file="resources/dev.conll",
-    test_file="resources/test.conll",
-    )

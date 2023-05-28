@@ -162,6 +162,7 @@ addopts = """
 --ignore=hazm/corpus_readers/wikipedia_reader.py
 --ignore=hazm/corpus_readers/Wiki_extractor.py
 --ignore=hazm/embedding.py
+--ignore=data.py
 """
 filterwarnings = "ignore::DeprecationWarning"
 
