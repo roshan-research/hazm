@@ -268,8 +268,52 @@ class WordEmbedding:
 
         return self.model.get_vector(word=word, norm=True)
     
-    def abcd():
-        pass
+    def get_vocabs(self: "WordEmbedding") -> List[str]:
+        """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
+            ['و', '.', 'در', '،', ...]
+
+        Returns:
+            لیست کلمات موجود در فایل امبدینگ.
+
+        """
+        if not self.model:
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
+        return self.model.index_to_key
+
+    def vocab_to_index(self: "WordEmbedding") -> dict:
+        """دیکشنری برمی‌گرداند که هر کلمه موجود در فایل امبدینگ را به ایندکس آن کلمه در لیست بردارها مپ می‌کند.
+
+        """
+        return self.model.key_to_index
+
+    def get_vectors(self: "WordEmbedding") -> Type(ndarray):
+        """وکتورهای توصیف کننده کلمات را برمیگرداند.(عناصر این وکتور با وکتور کلمات تابع  get_vocabs هم‌اندیس هستند.
+        """
+        return self.model.vectors
+
+
+class SentenceEmbeddingCorpus:
+    """SentenceEmbeddingCorpus."""
+
+    def __init__(self: "SentenceEmbeddingCorpus", data_path: str) -> None:
+        """__init__."""
+        self.data_path = data_path
+
+    def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
+        """__iter__."""
+        corpus_path = datapath(self.data_path)
+
+        for i, list_of_words in enumerate(Path.open(corpus_path)):
+            yield TaggedDocument(
+                word_tokenize(Normalizer().normalize(list_of_words)),
+                [i],
+            )
 
 
 class SentEmbedding:
@@ -410,21 +454,3 @@ class SentEmbedding:
                 ),
             ),
         )
-
-
-class SentenceEmbeddingCorpus:
-    """SentenceEmbeddingCorpus."""
-
-    def __init__(self: "SentenceEmbeddingCorpus", data_path: str) -> None:
-        """__init__."""
-        self.data_path = data_path
-
-    def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
-        """__iter__."""
-        corpus_path = datapath(self.data_path)
-
-        for i, list_of_words in enumerate(Path.open(corpus_path)):
-            yield TaggedDocument(
-                word_tokenize(Normalizer().normalize(list_of_words)),
-                [i],
-            )
