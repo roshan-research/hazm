@@ -267,6 +267,9 @@ class WordEmbedding:
             raise AttributeError(msg)
 
         return self.model.get_vector(word=word, norm=True)
+    
+    def abcd():
+        pass
 
 
 class SentEmbedding:
