@@ -232,18 +232,18 @@ def train_maltparser(
     train_file="corpora/train.conll",
     dev_file="corpora/dev.conll",
     test_file="corpora/test.conll",
-    model_file="lang_model.mco",
+    model_file="langModel.mco",
     path_to_jar="resources/malt.jar",
     options_file="resources/malt-options.xml",
     features_file="resources/malt-features.xml",
     memory_min="-Xms7g",
     memory_max="-Xmx8g",
 ):
-    lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/postagger.model")
+    lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/pos_tagger.model")
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
     train_data = train_file + ".data"
-    with open(train_data, "w", "utf8") as output:
+    with open(train_data, "w", encoding="utf8") as output:
         for tree, sentence in zip(
             train.trees(), tagger.tag_sents(list(map(untag, train.sents())))
         ):
@@ -297,11 +297,11 @@ def train_maltparser(
     test_data, test_results = test_file + ".data", test_file + ".results"
     print(
         "\n".join([tree.to_conll(10) for tree in test.trees()]).strip(),
-        file=open(test_data, "w", "utf8"),
+        file=open(test_data, "w", encoding="utf8"),
     )
     print(
         "\n".join([tree.to_conll(10) for tree in parsed_trees]).strip(),
-        file=open(test_results, "w", "utf8"),
+        file=open(test_results, "w", encoding="utf8"),
     )
     subprocess.Popen(
         ["java", "-jar", "resources/MaltEval.jar", "-g", test_data, "-s", test_results]
@@ -425,3 +425,10 @@ def train_stanford_postagger(
 
     tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
     print(tagger.evaluate(test))
+
+
+train_maltparser(
+     train_file="resources/train.conll",
+    dev_file="resources/dev.conll",
+    test_file="resources/test.conll",
+    )
