@@ -183,9 +183,9 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
             >>> wordEmbedding.similarity('ایران', 'آلمان')
-            0.44988164
+            0.72231203
             >>> wordEmbedding.similarity('ایران', 'پنجره')
-            0.08837362
+            0.04535884
 
         Args:
             word1: کلمهٔ اول
@@ -207,7 +207,7 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
             >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
-            ['و', '.', 'در', '،', ...
+            ['و', '</s>', 'به', 'که', ...
 
         Returns:
             لیست کلمات موجود در فایل امبدینگ.
@@ -229,7 +229,7 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
-            [('ايران', 0.657148540019989), ('جمهوری', 0.6470394134521484), ('آمریکا', 0.635792076587677), ('اسلامی', 0.6354473233222961), ('کشور', 0.6339613795280457)]
+            [('ایران،', 0.8742443919181824), ('کشور', 0.8735059499740601), ('کشورمان', 0.8443885445594788), ('ایران\u200cبه', 0.8271722197532654), ('خاورمیانه', 0.8266966342926025)]
 
 
         Args:
