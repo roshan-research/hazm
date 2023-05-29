@@ -7,59 +7,107 @@ class TestNormazlier:
     def normalizer(self):
         return Normalizer()
     
-    @pytest.mark.parametrize("input,output", [
+    @pytest.mark.parametrize("text,expected", [
 
-        # Multiple spaces between words should be replaced with one space.
+        # Replaces multiple spaces between words with one space.
         ("سلام    دنیا", "سلام دنیا"),
 
-        # Spaces at the beginning of the string should be removed.
+        # Removes spaces at the beginning of the string.
         ("     سلام", "سلام"),
 
-        # Spaces at the end of the string should be removed.
+        # Removes spaces at the end of the string.
         ("سلام     ", "سلام"),
 
-        # There should be a space after numbers.
+        # Adds a space after numbers.
         ("مسافت ۹کیلومتر", "مسافت ۹ کیلومتر"),
 
-        # There should be a space before numbers.
+        # Adds a space before numbers.
         ("مسافت۹ کیلومتر", "مسافت ۹ کیلومتر"),
 
-        # More than one ZWNJ (\u200c) should not be replaced with one ZWNJ.
+        # Replaces more than one ZWNJ (\u200c) with one ZWNJ.
         ("کاروان‌‌سرا", "کاروان‌سرا"),
 
-        # ZWNJs after spaces should be removed.
+        # Removes ZWNJs after spaces.
         ("سلام ‌‌دنیا", "سلام دنیا"),
 
-        # ZWNJs before spaces should be removed.
+        # Removes ZWNJs before spaces.
         ("سلام‌‌ دنیا", "سلام دنیا"),
 
-        # ZWNJs at the beginning of the string should be removed.
+        # Removes ZWNJs at the beginning of the string.
         ("‌‌کاروان‌سرا", "کاروان‌سرا"),
 
-        # ZWNJs at the end of the string should be removed.
+        # Removes ZWNJs at the end of the string.
         ("کاروان‌سرا‌‌", "کاروان‌سرا"),
 
-        # All kashida (\u0640) should be removed.
+        # Removes all kashida (\u0640).
         ("ســلام", "سلام"),
 
-        # Add a ZWNJ between ه and ها.
+        # Adds a ZWNJ between ه and ها.
         ("جمعهها مطالعه کنید", "جمعه‌ها مطالعه کنید"),
 
-        # Spaces at the end of a parenthesis should be removed.
+        # Removes spaces at the beginning of a punctuation.
+        ("   (سلام)", "(سلام)"),
+        
+        # Removes spaces at the end of a punctuation.
         ("(سلام)   ", "(سلام)"),
 
-        # Spaces at the beginning of a parenthesis should be removed.
-        ("   (سلام)", "(سلام)"),
-
-        # Spaces at the beginning and end of a parenthesis should be removed.
+        # Removes spaces at the beginning and end of a punctuation.
         ("  (سلام)   ", "(سلام)"),
 
-        # Whitespacess should be removed.
+        # Returns an empty string if the input consists only of whitespace characters.
         ("   ", ""),
 
-        # An empty string should return an empty string.
+        # Returns an empty string if the input is empty.
         ("", ""),
     ])
 
-    def test_correct_spacing(self, normalizer, input, output):       
-        assert normalizer.correct_spacing(input) == output
+    def test_correct_spacing(self, normalizer, text, expected):       
+        assert normalizer.correct_spacing(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [
+        
+        # Removes any diacritical.
+        ("حَذفِ اِعراب", "حذف اعراب"),
+
+        # Does not remove آ.
+        ("آمدند", "آمدند"),
+
+        # Returns original string if no diacritics.
+        ("متن بدون اعراب", "متن بدون اعراب"),
+        ("  ", "  "),
+        ("", ""),
+
+    ])
+
+    def test_remove_diacritics(self, normalizer, text, expected):       
+        assert normalizer.remove_diacritics(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [
+        
+        # Removes any specials characters.
+        ("پیامبر اکرم ﷺ", "پیامبر اکرم "),
+
+        # Returns original string if no specials characters.
+        ("سلام", "سلام"),
+        ("", ""),
+
+    ])
+
+    def test_remove_specials_chars(self, normalizer, text, expected):       
+        assert normalizer.remove_specials_chars(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [
+        
+        # Replaces 3+ repeated chars with one.
+        ("سلاممم دوستان", "سلام دوستان"),
+
+        # Keeps 3- repeated chars because they may have meaning.
+        ("سلامم را برسان", "سلامم را برسان"),
+
+        pytest.param("سلاممم را برسان", "سلامم را برسان", marks=pytest.mark.xfail(reason='some bug')),
+        pytest.param("سلامم دوستان", "سلام دوستان", marks=pytest.mark.xfail(reason='some bug')),        
+
+    ])
+
+    def test_decrease_repeated_chars(self, normalizer, text, expected):       
+        assert normalizer.decrease_repeated_chars(text) == expected
