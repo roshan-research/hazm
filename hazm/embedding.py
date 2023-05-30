@@ -268,13 +268,13 @@ class WordEmbedding:
 
         return self.model.get_vector(word=word, norm=True)
     
-    def get_vocabs(self: "WordEmbedding") -> List[str]:
+    def vocabs(self: "WordEmbedding") -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
-            >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
+            >>> wordEmbedding.vocabs() # doctest: +ELLIPSIS
             ['و', '.', 'در', '،', ...]
 
         Returns:
@@ -288,12 +288,25 @@ class WordEmbedding:
 
     def vocab_to_index(self: "WordEmbedding") -> dict:
         """دیکشنری برمی‌گرداند که هر کلمه موجود در فایل امبدینگ را به ایندکس آن کلمه در لیست بردارها مپ می‌کند.
+        
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
+            >>> vocab_to_index = wordEmbedding.vocab_to_index()
+            >>> vocab_to_index
 
         """
         return self.model.key_to_index
 
-    def get_vectors(self: "WordEmbedding") -> Type(ndarray):
+    def vectors(self: "WordEmbedding") -> Type(ndarray):
         """وکتورهای توصیف کننده کلمات را برمیگرداند.(عناصر این وکتور با وکتور کلمات تابع  get_vocabs هم‌اندیس هستند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> vectors = wordEmbedding.vectors()
+            >>> vectors
+
         """
         return self.model.vectors
 
