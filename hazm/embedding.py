@@ -346,7 +346,7 @@ class SentEmbedding:
             self.load_model(model_path)
             self.__load_word_embedding_model()
 
-    def __load_word_embedding_model(self):
+    def __load_word_embedding_model(self: "SentEmbedding") -> None:
         self.word_embedding = WordEmbedding(model_type='keyedvector')
         self.word_embedding.model = self.model.wv
 
