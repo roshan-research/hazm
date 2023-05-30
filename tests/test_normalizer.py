@@ -1,78 +1,44 @@
 import pytest
-from hazm import Normalizer
 
 class TestNormazlier:
+    
+    @pytest.mark.parametrize("text,expected", [        
+        
+        ("اِعلاممممم کَرد : « زمین لرزه ای به بُزرگیِ 6 دهم ریشتر ...»", "اعلام کرد: «زمین‌لرزه‌ای به بزرگی ۶ دهم ریشتر …»"),             
+        ("  ", ""),        
+        ("", ""),
+    ])
 
-    @pytest.fixture(scope="class")
-    def normalizer(self):
-        return Normalizer()
+    def test_seperate_mi(self, normalizer, text, expected):       
+        assert normalizer.seperate_mi(text) == expected
     
     @pytest.mark.parametrize("text,expected", [
-
-        # Replaces multiple spaces between words with one space.
-        ("سلام    دنیا", "سلام دنیا"),
-
-        # Removes spaces at the beginning of the string.
-        ("     سلام", "سلام"),
-
-        # Removes spaces at the end of the string.
-        ("سلام     ", "سلام"),
-
-        # Adds a space after numbers.
-        ("مسافت ۹کیلومتر", "مسافت ۹ کیلومتر"),
-
-        # Adds a space before numbers.
-        ("مسافت۹ کیلومتر", "مسافت ۹ کیلومتر"),
-
-        # Replaces more than one ZWNJ (\u200c) with one ZWNJ.
-        ("کاروان‌‌سرا", "کاروان‌سرا"),
-
-        # Removes ZWNJs after spaces.
-        ("سلام ‌‌دنیا", "سلام دنیا"),
-
-        # Removes ZWNJs before spaces.
-        ("سلام‌‌ دنیا", "سلام دنیا"),
-
-        # Removes ZWNJs at the beginning of the string.
-        ("‌‌کاروان‌سرا", "کاروان‌سرا"),
-
-        # Removes ZWNJs at the end of the string.
-        ("کاروان‌سرا‌‌", "کاروان‌سرا"),
-
-        # Removes all kashida (\u0640).
-        ("ســلام", "سلام"),
-
-        # Adds a ZWNJ between ه and ها.
-        ("جمعهها مطالعه کنید", "جمعه‌ها مطالعه کنید"),
-
-        # Removes spaces at the beginning of a punctuation.
-        ("   (سلام)", "(سلام)"),
         
-        # Removes spaces at the end of a punctuation.
+        ("سلام    دنیا", "سلام دنیا"),        
+        ("     سلام", "سلام"),
+        ("سلام     ", "سلام"),
+        ("مسافت ۹کیلومتر", "مسافت ۹ کیلومتر"),
+        ("مسافت۹ کیلومتر", "مسافت ۹ کیلومتر"),        
+        ("کاروان‌‌سرا", "کاروان‌سرا"), # Replaces more than one ZWNJ (\u200c) with one ZWNJ.        
+        ("سلام ‌‌دنیا", "سلام دنیا"), # Removes ZWNJs after spaces.       
+        ("سلام‌‌ دنیا", "سلام دنیا"), # Removes ZWNJs before spaces.
+        ("‌‌کاروان‌سرا", "کاروان‌سرا"), # Removes ZWNJs at the beginning of the string.
+        ("کاروان‌سرا‌‌", "کاروان‌سرا"), # Removes ZWNJs at the end of the string.        
+        ("ســلام", "سلام"),
+        ("جمعهها مطالعه کنید", "جمعه‌ها مطالعه کنید"),
+        ("   (سلام)", "(سلام)"),        
         ("(سلام)   ", "(سلام)"),
-
-        # Removes spaces at the beginning and end of a punctuation.
         ("  (سلام)   ", "(سلام)"),
-
-        # Returns an empty string if the input consists only of whitespace characters.
         ("   ", ""),
-
-        # Returns an empty string if the input is empty.
         ("", ""),
     ])
 
     def test_correct_spacing(self, normalizer, text, expected):       
         assert normalizer.correct_spacing(text) == expected
 
-    @pytest.mark.parametrize("text,expected", [
-        
-        # Removes any diacritical.
+    @pytest.mark.parametrize("text,expected", [        
         ("حَذفِ اِعراب", "حذف اعراب"),
-
-        # Does not remove آ.
         ("آمدند", "آمدند"),
-
-        # Returns original string if no diacritics.
         ("متن بدون اعراب", "متن بدون اعراب"),
         ("  ", "  "),
         ("", ""),
@@ -82,12 +48,8 @@ class TestNormazlier:
     def test_remove_diacritics(self, normalizer, text, expected):       
         assert normalizer.remove_diacritics(text) == expected
 
-    @pytest.mark.parametrize("text,expected", [
-        
-        # Removes any specials characters.
+    @pytest.mark.parametrize("text,expected", [        
         ("پیامبر اکرم ﷺ", "پیامبر اکرم "),
-
-        # Returns original string if no specials characters.
         ("سلام", "سلام"),
         ("", ""),
 
@@ -98,11 +60,8 @@ class TestNormazlier:
 
     @pytest.mark.parametrize("text,expected", [
         
-        # Replaces 3+ repeated chars with one.
-        ("سلاممم دوستان", "سلام دوستان"),
-
-        # Keeps 3- repeated chars because they may have meaning.
-        ("سلامم را برسان", "سلامم را برسان"),
+        ("سلاممم دوستان", "سلام دوستان"), # Replaces 3+ repeated chars with one.       
+        ("سلامم را برسان", "سلامم را برسان"),  # Does not replace 3- repeated chars because they may have meaning.
 
         pytest.param("سلاممم را برسان", "سلامم را برسان", marks=pytest.mark.xfail(reason='some bug')),
         pytest.param("سلامم دوستان", "سلام دوستان", marks=pytest.mark.xfail(reason='some bug')),        
@@ -111,3 +70,65 @@ class TestNormazlier:
 
     def test_decrease_repeated_chars(self, normalizer, text, expected):       
         assert normalizer.decrease_repeated_chars(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [        
+        
+        ('"نقل‌قول"', "«نقل‌قول»"),        
+        ("و...", "و …"),
+        ("10.450", "10٫450"),        
+        ("سلام", "سلام"),
+        ("  ", "  "),
+        ("", ""),
+
+    ])
+
+    def test_persian_style(self, normalizer, text, expected):       
+        assert normalizer.persian_style(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [        
+        
+        ("ساعت 18", "ساعت ۱۸"),        
+        ("ساعت ۱۸", "ساعت ۱۸"),
+        ("  ", "  "),        
+        ("", ""),
+    ])
+
+    def test_persian_number(self, normalizer, text, expected):       
+        assert normalizer.persian_number(text) == expected
+    
+    @pytest.mark.parametrize("text,expected", [        
+        
+        ("﷽", "بسم الله الرحمن الرحیم"),        
+        ("  ", "  "),        
+        ("", ""),
+    ])
+
+    def test_unicodes_replacement(self, normalizer, text, expected):       
+        assert normalizer.unicodes_replacement(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [        
+        
+        ("نمیدانم چه میگفت", "نمی‌دانم چه می‌گفت"),        
+        ("میز", "میز"),        
+        ("میانه", "میانه"),        
+        ("ماهان", "ماهان"),        
+        ("  ", "  "),        
+        ("", ""),
+    ])
+
+    def test_seperate_mi(self, normalizer, text, expected):       
+        assert normalizer.seperate_mi(text) == expected
+
+    @pytest.mark.parametrize("text,expected", [        
+        
+        (['کتاب', 'ها'], ['کتاب‌ها']),        
+        (['او', 'می', 'رود'], ['او', 'می‌رود']),        
+        (['ماه', 'می', 'سال', 'جدید'], ['ماه', 'می', 'سال', 'جدید']),        
+        (['اخلال', 'گر'], ['اخلال‌گر']),     
+        (['زمین', 'لرزه', 'ای'], ['زمین‌لرزه‌ای']),
+        ([],[])  
+        
+    ])
+
+    def test_token_spacing(self, normalizer, text, expected):       
+        assert normalizer.token_spacing(text) == expected
