@@ -477,3 +477,18 @@ class SentEmbedding:
                 ),
             ),
         )
+    
+    def get_vector_size(self: "WordEmbedding") -> int:
+        """طول وکتور بیان‌کننده هر جمله در مدل را برمی‌گرداند.
+
+        Examples:
+            >>> sentEmbedding = SentEmbedding()
+            >>> sentEmbedding.load_model("resources/sent2vec.model")
+            >>> sentEmbedding.get_vector_size()
+            300
+        
+        Returns:
+            طول وکتور بیان‌کننده جملات.
+
+        """
+        return self.model.vector_size
