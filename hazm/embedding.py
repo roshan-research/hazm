@@ -346,6 +346,11 @@ class SentEmbedding:
     def __init__(self: "SentEmbedding", model_path: str = None) -> None:
         if model_path:
             self.load_model(model_path)
+            self.__load_word_embedding_model()
+
+    def __load_word_embedding_model(self):
+        self.word_embedding = WordEmbedding(model_type='keyedvector')
+        self.word_embedding.model = self.model.wv
 
     def load_model(self: "SentEmbedding", model_path: str) -> None:
         """فایل امبدینگ را بارگذاری می‌کند.
@@ -360,6 +365,7 @@ class SentEmbedding:
 
         """
         self.model = Doc2Vec.load(model_path)
+        self.__load_word_embedding_model()
 
     def train(
         self: "SentEmbedding",
