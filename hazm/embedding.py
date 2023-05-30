@@ -293,7 +293,12 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
             >>> vocab_to_index = wordEmbedding.vocab_to_index()
-            >>> vocab_to_index
+            >>> index = vocab_to_index['سلام']
+            >>> index
+            524
+            >>> vocabs = wordEmbedding.vocabs()
+            >>> vocabs[index]
+            'سلام'
 
         """
         return self.model.key_to_index
@@ -305,7 +310,8 @@ class WordEmbedding:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
             >>> vectors = wordEmbedding.vectors()
-            >>> vectors
+            >>> all(vectors[wordEmbedding.vocab_to_index('سلام')] == wordEmbedding['سلام'])
+            True
 
         """
         return self.model.vectors
