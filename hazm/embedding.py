@@ -198,25 +198,6 @@ class WordEmbedding:
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
-        return float(str(self.model.similarity(word1, word2)))
-
-    def get_vocab(self: "WordEmbedding") -> List[str]:
-        """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
-
-        Examples:
-            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
-            >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
-            ['و', '.', 'در', '،', ...
-
-        Returns:
-            لیست کلمات موجود در فایل امبدینگ.
-
-        """
-        if not self.model:
-            msg = "Model must not be None! Please load model first."
-            raise AttributeError(msg)
-        return self.model.index_to_key
 
     def nearest_words(
         self: "WordEmbedding",
@@ -294,27 +275,44 @@ class WordEmbedding:
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
             >>> vocab_to_index = wordEmbedding.vocab_to_index()
             >>> index = vocab_to_index['سلام']
-            >>> index
-            524
             >>> vocabs = wordEmbedding.vocabs()
             >>> vocabs[index]
             'سلام'
 
+        Returns:
+            دیکشنری که هر کلمه را به ایندکس آن مپ می‌کند.
         """
         return self.model.key_to_index
 
-    def vectors(self: "WordEmbedding") -> Type(ndarray):
+    def vectors(self: "WordEmbedding") -> Type[ndarray]:
         """وکتورهای توصیف کننده کلمات را برمیگرداند.(عناصر این وکتور با وکتور کلمات تابع  get_vocabs هم‌اندیس هستند.
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
             >>> vectors = wordEmbedding.vectors()
-            >>> all(vectors[wordEmbedding.vocab_to_index('سلام')] == wordEmbedding['سلام'])
+            >>> all(vectors[wordEmbedding.vocab_to_index()['سلام']] == wordEmbedding['سلام'])
             True
 
+        Returns:
+            تمامی وکتور بیان‌کننده کلمات.
         """
-        return self.model.vectors
+        return self.model.vectors()
+    
+    def vector_size(self: "WordEmbedding") -> int:
+        """طول وکتور بیان‌کننده هر کلمه در مدل را برمی‌گرداند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> wordEmbedding.vector_size()
+            300
+        
+        Returns:
+            طول وکتور بیان‌کننده کلمات.
+
+        """
+        return self.model.vector_size
 
 
 class SentenceEmbeddingCorpus:
