@@ -198,8 +198,10 @@ class WordEmbedding:
         if not self.model:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
+
         return float(str(self.model.similarity(word1, word2)))
 
+      
     def get_vocab(self: "WordEmbedding") -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
@@ -217,6 +219,7 @@ class WordEmbedding:
             msg = "Model must not be None! Please load model first."
             raise AttributeError(msg)
         return self.model.index_to_key
+
 
     def nearest_words(
         self: "WordEmbedding",
@@ -267,6 +270,89 @@ class WordEmbedding:
             raise AttributeError(msg)
 
         return self.model.get_vector(word=word, norm=True)
+    
+    def get_vocabs(self: "WordEmbedding") -> List[str]:
+        """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.get_vocabs() # doctest: +ELLIPSIS
+            ['و', '.', 'در', '،', ...]
+
+        Returns:
+            لیست کلمات موجود در فایل امبدینگ.
+
+        """
+        if not self.model:
+            msg = "Model must not be None! Please load model first."
+            raise AttributeError(msg)
+        return self.model.index_to_key
+
+    def get_vocab_to_index(self: "WordEmbedding") -> dict:
+        """دیکشنری برمی‌گرداند که هر کلمه موجود در فایل امبدینگ را به ایندکس آن کلمه در لیست بردارها مپ می‌کند.
+        
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
+            >>> vocab_to_index = wordEmbedding.get_vocab_to_index()
+            >>> index = vocab_to_index['سلام']
+            >>> vocabs = wordEmbedding.get_vocabs()
+            >>> vocabs[index]
+            'سلام'
+
+        Returns:
+            دیکشنری که هر کلمه را به ایندکس آن مپ می‌کند.
+        """
+        return self.model.key_to_index
+
+    def get_vectors(self: "WordEmbedding") -> Type[ndarray]:
+        """وکتورهای توصیف کننده کلمات را برمیگرداند.(عناصر این وکتور با وکتور کلمات تابع  get_vocabs هم‌اندیس هستند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> vectors = wordEmbedding.get_vectors()
+            >>> all(vectors[wordEmbedding.get_vocab_to_index()['سلام']] == wordEmbedding['سلام'])
+            True
+
+        Returns:
+            تمامی وکتور بیان‌کننده کلمات.
+        """
+        return self.model.vectors
+    
+    def get_vector_size(self: "WordEmbedding") -> int:
+        """طول وکتور بیان‌کننده هر کلمه در مدل را برمی‌گرداند.
+
+        Examples:
+            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
+            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> wordEmbedding.get_vector_size()
+            300
+        
+        Returns:
+            طول وکتور بیان‌کننده کلمات.
+
+        """
+        return self.model.vector_size
+
+
+class SentenceEmbeddingCorpus:
+    """SentenceEmbeddingCorpus."""
+
+    def __init__(self: "SentenceEmbeddingCorpus", data_path: str) -> None:
+        """__init__."""
+        self.data_path = data_path
+
+    def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
+        """__iter__."""
+        corpus_path = datapath(self.data_path)
+
+        for i, list_of_words in enumerate(Path.open(corpus_path)):
+            yield TaggedDocument(
+                word_tokenize(Normalizer().normalize(list_of_words)),
+                [i],
+            )
 
 
 class SentEmbedding:
@@ -280,6 +366,11 @@ class SentEmbedding:
     def __init__(self: "SentEmbedding", model_path: str = None) -> None:
         if model_path:
             self.load_model(model_path)
+            self.__load_word_embedding_model()
+
+    def __load_word_embedding_model(self: "SentEmbedding") -> None:
+        self.word_embedding = WordEmbedding(model_type='keyedvector')
+        self.word_embedding.model = self.model.wv
 
     def load_model(self: "SentEmbedding", model_path: str) -> None:
         """فایل امبدینگ را بارگذاری می‌کند.
@@ -294,6 +385,7 @@ class SentEmbedding:
 
         """
         self.model = Doc2Vec.load(model_path)
+        self.__load_word_embedding_model()
 
     def train(
         self: "SentEmbedding",
@@ -407,21 +499,18 @@ class SentEmbedding:
                 ),
             ),
         )
+    
+    def get_vector_size(self: "WordEmbedding") -> int:
+        """طول وکتور بیان‌کننده هر جمله در مدل را برمی‌گرداند.
 
+        Examples:
+            >>> sentEmbedding = SentEmbedding()
+            >>> sentEmbedding.load_model("resources/sent2vec.model")
+            >>> sentEmbedding.get_vector_size()
+            300
+        
+        Returns:
+            طول وکتور بیان‌کننده جملات.
 
-class SentenceEmbeddingCorpus:
-    """SentenceEmbeddingCorpus."""
-
-    def __init__(self: "SentenceEmbeddingCorpus", data_path: str) -> None:
-        """__init__."""
-        self.data_path = data_path
-
-    def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
-        """__iter__."""
-        corpus_path = datapath(self.data_path)
-
-        for i, list_of_words in enumerate(Path.open(corpus_path)):
-            yield TaggedDocument(
-                word_tokenize(Normalizer().normalize(list_of_words)),
-                [i],
-            )
+        """
+        return self.model.vector_size
