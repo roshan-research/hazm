@@ -49,8 +49,12 @@ optional=true
 [tool.poetry.group.dev.dependencies]
 pandas= "^2.0.1"
 pytest = "^7.3.1"
+pytest-xdist = {extras = ["psutil"], version = "^3.3.1"}
 poethepoet = "^0.20.0"
 ruff = "^0.0.269"
+pytest-cov = "^4.1.0"
+pytest-sugar = "^0.9.7"
+pytest-randomly = "^3.12.0"
 
 [tool.poetry.group.typing.dependencies]
 #mypy = "*"
@@ -162,8 +166,10 @@ addopts = """
 --ignore=hazm/corpus_readers/wikipedia_reader.py
 --ignore=hazm/corpus_readers/Wiki_extractor.py
 --ignore=hazm/embedding.py
+--ignore=data.py
 """
 filterwarnings = "ignore::DeprecationWarning"
+disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
 
 [tool.poe.tasks]
 # poetry poe test
