@@ -201,7 +201,7 @@ class WordEmbedding:
 
         return float(str(self.model.similarity(word1, word2)))
 
-      
+
     def get_vocab(self: "WordEmbedding") -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
@@ -270,7 +270,7 @@ class WordEmbedding:
             raise AttributeError(msg)
 
         return self.model.get_vector(word=word, norm=True)
-    
+
     def get_vocabs(self: "WordEmbedding") -> List[str]:
         """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
 
@@ -291,7 +291,8 @@ class WordEmbedding:
 
     def get_vocab_to_index(self: "WordEmbedding") -> dict:
         """دیکشنری برمی‌گرداند که هر کلمه موجود در فایل امبدینگ را به ایندکس آن کلمه در لیست بردارها مپ می‌کند.
-        
+
+
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
             >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
@@ -320,7 +321,7 @@ class WordEmbedding:
             تمامی وکتور بیان‌کننده کلمات.
         """
         return self.model.vectors
-    
+
     def get_vector_size(self: "WordEmbedding") -> int:
         """طول وکتور بیان‌کننده هر کلمه در مدل را برمی‌گرداند.
 
@@ -329,7 +330,8 @@ class WordEmbedding:
             >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
             >>> wordEmbedding.get_vector_size()
             300
-        
+
+
         Returns:
             طول وکتور بیان‌کننده کلمات.
 
@@ -369,7 +371,7 @@ class SentEmbedding:
             self.__load_word_embedding_model()
 
     def __load_word_embedding_model(self: "SentEmbedding") -> None:
-        self.word_embedding = WordEmbedding(model_type='keyedvector')
+        self.word_embedding = WordEmbedding(model_type="keyedvector")
         self.word_embedding.model = self.model.wv
 
     def load_model(self: "SentEmbedding", model_path: str) -> None:
@@ -499,7 +501,7 @@ class SentEmbedding:
                 ),
             ),
         )
-    
+
     def get_vector_size(self: "WordEmbedding") -> int:
         """طول وکتور بیان‌کننده هر جمله در مدل را برمی‌گرداند.
 
@@ -508,7 +510,8 @@ class SentEmbedding:
             >>> sentEmbedding.load_model("resources/sent2vec.model")
             >>> sentEmbedding.get_vector_size()
             300
-        
+
+
         Returns:
             طول وکتور بیان‌کننده جملات.
 
