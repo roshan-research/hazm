@@ -180,7 +180,7 @@ disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
 [tool.poe.tasks]
 # poetry poe test
 # poetry poe test hazm/normalizer.py
-test = "pytest --doctest-modules --doctest-continue-on-failure ${py_file}"
+test = "pytest -n auto ${path}"
 
 # poetry poe lint
 # poetry poe lint -t hazm/normalizer.py
