@@ -38,4 +38,4 @@ jobs:
                   unzip resources-0.9.zip -d resources
 
             - name: Run tests
-              run: pytest
+              run: poetry poe test
