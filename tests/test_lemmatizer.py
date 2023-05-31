@@ -4,7 +4,7 @@ import pytest
 class TestLemmatizer:
 
     @pytest.mark.parametrize(
-        "word, expected",
+        ("word", "expected"),
         [
             ("کتاب‌ها", "کتاب"),
             ("آتشفشان", "آتشفشان"),
@@ -14,17 +14,17 @@ class TestLemmatizer:
             ("می‌روم", "رفت#رو"),
         ],
     )
-    def test_lemmatize(self, lemmatizer, word, expected):
+    def test_lemmatize(self: "TestLemmatizer", lemmatizer, word, expected):
         assert lemmatizer.lemmatize(word) == expected
 
     @pytest.mark.parametrize(
-        "word, pos, expected",
+        ("word", "pos", "expected"),
         [
             ("مردم", "N", "مردم"),
             ("اجتماعی", "AJ", "اجتماعی"),
         ],
     )
-    def test_lemmatize(self, lemmatizer, word, pos, expected):
+    def test_lemmatize_with_pos(self: "TestLemmatizer", lemmatizer, word, pos, expected):
         assert lemmatizer.lemmatize(word, pos) == expected
 
 
@@ -32,17 +32,17 @@ class TestConjugation:
     # ri: بن ماضی
     # rii: بن مضارع
 
-    def test_perfective_past(self, conjugation):
+    def test_perfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.perfective_past("دید")
         expected = ["دیدم", "دیدی", "دید", "دیدیم", "دیدید", "دیدند"]
         assert actual == expected
 
-    def test_negative_perfective_past(self, conjugation):
+    def test_negative_perfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.negative_perfective_past("دید")
         expected = ["ندیدم", "ندیدی", "ندید", "ندیدیم", "ندیدید", "ندیدند"]
         assert actual == expected
 
-    def test_passive_perfective_past(self, conjugation):
+    def test_passive_perfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.passive_perfective_past("دید")
         expected = [
             "دیده شدم",
@@ -54,7 +54,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_perfective_past(self, conjugation):
+    def test_negative_passive_perfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_perfective_past("دید")
         expected = [
             "دیده نشدم",
@@ -66,17 +66,17 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_past(self, conjugation):
+    def test_imperfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_past("دید")
         expected = ["می‌دیدم", "می‌دیدی", "می‌دید", "می‌دیدیم", "می‌دیدید", "می‌دیدند"]
         assert actual == expected
 
-    def test_negative_imperfective_past(self, conjugation):
+    def test_negative_imperfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_past("دید")
         expected = ["نمی‌دیدم", "نمی‌دیدی", "نمی‌دید", "نمی‌دیدیم", "نمی‌دیدید", "نمی‌دیدند"]
         assert actual == expected
 
-    def test_passive_imperfective_past(self, conjugation):
+    def test_passive_imperfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_past("دید")
         expected = [
             "دیده می‌شدم",
@@ -88,7 +88,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_past(self, conjugation):
+    def test_negative_passive_imperfective_past(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_past("دید")
         expected = [
             "دیده نمی‌شدم",
@@ -100,7 +100,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_past_progresive(self, conjugation):
+    def test_past_progresive(self: "TestConjugation", conjugation):
         actual = conjugation.past_progresive("دید")
         expected = [
             "داشتم می‌دیدم",
@@ -112,7 +112,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_past_progresive(self, conjugation):
+    def test_passive_past_progresive(self: "TestConjugation", conjugation):
         actual = conjugation.passive_past_progresive("دید")
         expected = [
             "داشتم دیده می‌شدم",
@@ -124,7 +124,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_present_perfect(self, conjugation):
+    def test_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.present_perfect("دید")
         expected = [
             "دیده‌ام",
@@ -137,7 +137,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_present_perfect(self, conjugation):
+    def test_negative_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_present_perfect("دید")
         expected = [
             "ندیده‌ام",
@@ -150,7 +150,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_subjunctive_present_perfect(self, conjugation):
+    def test_subjunctive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.subjunctive_present_perfect("دید")
         expected = [
             "دیده باشم",
@@ -162,7 +162,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_subjunctive_present_perfect(self, conjugation):
+    def test_negative_subjunctive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_subjunctive_present_perfect("دید")
         expected = [
             "ندیده باشم",
@@ -174,7 +174,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_grammatical_present_perfect(self, conjugation):
+    def test_grammatical_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.grammatical_present_perfect("دید")
         expected = [
             "دیده باشم",
@@ -186,7 +186,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_grammatical_present_perfect(self, conjugation):
+    def test_negative_grammatical_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_grammatical_present_perfect("دید")
         expected = [
             "ندیده باشم",
@@ -198,7 +198,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_present_perfect(self, conjugation):
+    def test_passive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_present_perfect("دید")
         expected = [
             "دیده شده‌ام",
@@ -211,7 +211,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_present_perfect(self, conjugation):
+    def test_negative_passive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_present_perfect("دید")
         expected = [
             "دیده نشده‌ام",
@@ -224,7 +224,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_subjunctive_present_perfect(self, conjugation):
+    def test_passive_subjunctive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_subjunctive_present_perfect("دید")
         expected = [
             "دیده شده باشم",
@@ -236,7 +236,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_subjunctive_present_perfect(self, conjugation):
+    def test_negative_passive_subjunctive_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_subjunctive_present_perfect("دید")
         expected = [
             "دیده نشده باشم",
@@ -248,7 +248,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_grammatical_present_perfect(self, conjugation):
+    def test_passive_grammatical_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_grammatical_present_perfect("دید")
         expected = [
             "دیده شده باشم",
@@ -260,7 +260,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_grammatical_present_perfect(self, conjugation):
+    def test_negative_passive_grammatical_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_grammatical_present_perfect("دید")
         expected = [
             "دیده نشده باشم",
@@ -272,7 +272,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_present_perfect(self, conjugation):
+    def test_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_present_perfect("دید")
         expected = [
             "می‌دیده‌ام",
@@ -285,7 +285,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_imperfective_present_perfect(self, conjugation):
+    def test_negative_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_present_perfect("دید")
         expected = [
             "نمی‌دیده‌ام",
@@ -298,7 +298,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_subjunctive_imperfective_present_perfect(self, conjugation):
+    def test_subjunctive_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.subjunctive_imperfective_present_perfect("دید")
         expected = [
             "می‌دیده باشم",
@@ -310,7 +310,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_subjunctive_imperfective_present_perfect(self, conjugation):
+    def test_negative_subjunctive_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_subjunctive_imperfective_present_perfect("دید")
         expected = [
             "نمی‌دیده باشم",
@@ -322,7 +322,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_imperfective_present_perfect(self, conjugation):
+    def test_passive_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_present_perfect("دید")
         expected = [
             "دیده می‌شده‌ام",
@@ -335,7 +335,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_present_perfect(self, conjugation):
+    def test_negative_passive_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_present_perfect("دید")
         expected = [
             "دیده نمی‌شده‌ام",
@@ -348,7 +348,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_subjunctive_imperfective_present_perfect(self, conjugation):
+    def test_passive_subjunctive_imperfective_present_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_subjunctive_imperfective_present_perfect("دید")
         expected = [
             "دیده می‌شده باشم",
@@ -361,10 +361,10 @@ class TestConjugation:
         assert actual == expected
 
     def test_negative_passive_subjunctive_imperfective_present_perfect(
-        self, conjugation
+        self: "TestConjugation", conjugation,
     ):
         actual = conjugation.negative_passive_subjunctive_imperfective_present_perfect(
-            "دید"
+            "دید",
         )
         expected = [
             "دیده نمی‌شده باشم",
@@ -376,7 +376,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_present_perfect_progressive(self, conjugation):
+    def test_present_perfect_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.present_perfect_progressive("دید")
         expected = [
             "داشته‌ام می‌دیده‌ام",
@@ -389,7 +389,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_present_perfect_progressive(self, conjugation):
+    def test_passive_present_perfect_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.passive_present_perfect_progressive("دید")
         expected = [
             "داشته‌ام دیده می‌شده‌ام",
@@ -402,7 +402,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_past_precedent(self, conjugation):
+    def test_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.past_precedent("دید")
         expected = [
             "دیده بودم",
@@ -414,7 +414,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_past_precedent(self, conjugation):
+    def test_negative_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_past_precedent("دید")
         expected = [
             "ندیده بودم",
@@ -426,7 +426,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_past_precedent(self, conjugation):
+    def test_passive_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.passive_past_precedent("دید")
         expected = [
             "دیده شده بودم",
@@ -438,7 +438,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_past_precedent(self, conjugation):
+    def test_negative_passive_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_past_precedent("دید")
         expected = [
             "دیده نشده بودم",
@@ -450,7 +450,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_past_precedent(self, conjugation):
+    def test_imperfective_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_past_precedent("دید")
         expected = [
             "می‌دیده بودم",
@@ -462,7 +462,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_imperfective_past_precedent(self, conjugation):
+    def test_negative_imperfective_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_past_precedent("دید")
         expected = [
             "نمی‌دیده بودم",
@@ -474,7 +474,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_imperfective_past_precedent(self, conjugation):
+    def test_passive_imperfective_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_past_precedent("دید")
         expected = [
             "دیده می‌شده بودم",
@@ -486,7 +486,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_past_precedent(self, conjugation):
+    def test_negative_passive_imperfective_past_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_past_precedent("دید")
         expected = [
             "دیده نمی‌شده بودم",
@@ -498,7 +498,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_past_precedent_progressive(self, conjugation):
+    def test_past_precedent_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.past_precedent_progressive("دید")
         expected = [
             "داشتم می‌دیده بودم",
@@ -510,7 +510,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_past_precedent_progressive(self, conjugation):
+    def test_passive_past_precedent_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.passive_past_precedent_progressive("دید")
         expected = [
             "داشتم دیده می‌شده بودم",
@@ -522,7 +522,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_past_precedent_perfect(self, conjugation):
+    def test_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.past_precedent_perfect("دید")
         expected = [
             "دیده بوده‌ام",
@@ -535,7 +535,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_past_precedent_perfect(self, conjugation):
+    def test_negative_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_past_precedent_perfect("دید")
         expected = [
             "ندیده بوده‌ام",
@@ -548,7 +548,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_subjunctive_past_precedent_perfect(self, conjugation):
+    def test_subjunctive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.subjunctive_past_precedent_perfect("دید")
         expected = [
             "دیده بوده باشم",
@@ -560,7 +560,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_subjunctive_past_precedent_perfect(self, conjugation):
+    def test_negative_subjunctive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_subjunctive_past_precedent_perfect("دید")
         expected = [
             "ندیده بوده باشم",
@@ -572,7 +572,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_grammatical_past_precedent_perfect(self, conjugation):
+    def test_grammatical_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.grammatical_past_precedent_perfect("دید")
         expected = [
             "دیده بوده باشم",
@@ -584,7 +584,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_grammatical_past_precedent_perfect(self, conjugation):
+    def test_negative_grammatical_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_grammatical_past_precedent_perfect("دید")
         expected = [
             "ندیده بوده باشم",
@@ -596,7 +596,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_past_precedent_perfect(self, conjugation):
+    def test_passive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_past_precedent_perfect("دید")
         expected = [
             "دیده شده بوده‌ام",
@@ -609,7 +609,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_past_precedent_perfect(self, conjugation):
+    def test_negative_passive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_past_precedent_perfect("دید")
         expected = [
             "دیده نشده بوده‌ام",
@@ -622,7 +622,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_subjunctive_past_precedent_perfect(self, conjugation):
+    def test_passive_subjunctive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_subjunctive_past_precedent_perfect("دید")
         expected = [
             "دیده شده بوده باشم",
@@ -634,7 +634,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_subjunctive_past_precedent_perfect(self, conjugation):
+    def test_negative_passive_subjunctive_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_subjunctive_past_precedent_perfect("دید")
         expected = [
             "دیده نشده بوده باشم",
@@ -646,7 +646,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_grammatical_past_precedent_perfect(self, conjugation):
+    def test_passive_grammatical_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_grammatical_past_precedent_perfect("دید")
         expected = [
             "دیده شده بوده باشم",
@@ -658,7 +658,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_grammatical_past_precedent_perfect(self, conjugation):
+    def test_negative_passive_grammatical_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_grammatical_past_precedent_perfect("دید")
         expected = [
             "دیده نشده بوده باشم",
@@ -670,7 +670,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_past_precedent_perfect(self, conjugation):
+    def test_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_past_precedent_perfect("دید")
         expected = [
             "می‌دیده بوده‌ام",
@@ -683,7 +683,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_imperfective_past_precedent_perfect(self, conjugation):
+    def test_negative_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_past_precedent_perfect("دید")
         expected = [
             "نمی‌دیده بوده‌ام",
@@ -696,7 +696,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_subjunctive_imperfective_past_precedent_perfect(self, conjugation):
+    def test_subjunctive_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.subjunctive_imperfective_past_precedent_perfect("دید")
         expected = [
             "می‌دیده بوده باشم",
@@ -709,10 +709,10 @@ class TestConjugation:
         assert actual == expected
 
     def test_negative_subjunctive_imperfective_past_precedent_perfect(
-        self, conjugation
+        self: "TestConjugation", conjugation,
     ):
         actual = conjugation.negative_subjunctive_imperfective_past_precedent_perfect(
-            "دید"
+            "دید",
         )
         expected = [
             "نمی‌دیده بوده باشم",
@@ -724,7 +724,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_imperfective_past_precedent_perfect(self, conjugation):
+    def test_passive_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_past_precedent_perfect("دید")
         expected = [
             "دیده می‌شده بوده‌ام",
@@ -737,7 +737,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_past_precedent_perfect(self, conjugation):
+    def test_negative_passive_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_past_precedent_perfect("دید")
         expected = [
             "دیده نمی‌شده بوده‌ام",
@@ -750,9 +750,9 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_subjunctive_imperfective_past_precedent_perfect(self, conjugation):
+    def test_passive_subjunctive_imperfective_past_precedent_perfect(self: "TestConjugation", conjugation):
         actual = conjugation.passive_subjunctive_imperfective_past_precedent_perfect(
-            "دید"
+            "دید",
         )
         expected = [
             "دیده می‌شده بوده باشم",
@@ -765,10 +765,10 @@ class TestConjugation:
         assert actual == expected
 
     def test_negative_passive_subjunctive_imperfective_past_precedent_perfect(
-        self, conjugation
+        self: "TestConjugation", conjugation,
     ):
         actual = conjugation.negative_passive_subjunctive_imperfective_past_precedent_perfect(
-            "دید"
+            "دید",
         )
         expected = [
             "دیده نمی‌شده بوده باشم",
@@ -780,7 +780,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_past_precedent_perfect_progressive(self, conjugation):
+    def test_past_precedent_perfect_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.past_precedent_perfect_progressive("دید")
         expected = [
             "داشته‌ام می‌دیده بوده‌ام",
@@ -793,7 +793,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_past_precedent_perfect_progressive(self, conjugation):
+    def test_passive_past_precedent_perfect_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.passive_past_precedent_perfect_progressive("دید")
         expected = [
             "داشته‌ام دیده می‌شده بوده‌ام",
@@ -806,37 +806,37 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_perfective_present(self, conjugation):
+    def test_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.perfective_present("بین")
         expected = ["بینم", "بینی", "بیند", "بینیم", "بینید", "بینند"]
         assert actual == expected
 
-    def test_negative_perfective_present(self, conjugation):
+    def test_negative_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_perfective_present("بین")
         expected = ["نبینم", "نبینی", "نبیند", "نبینیم", "نبینید", "نبینند"]
         assert actual == expected
 
-    def test_subjunctive_perfective_present(self, conjugation):
+    def test_subjunctive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.subjunctive_perfective_present("بین")
         expected = ["ببینم", "ببینی", "ببیند", "ببینیم", "ببینید", "ببینند"]
         assert actual == expected
 
-    def test_negative_subjunctive_perfective_present(self, conjugation):
+    def test_negative_subjunctive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_subjunctive_perfective_present("بین")
         expected = ["نبینم", "نبینی", "نبیند", "نبینیم", "نبینید", "نبینند"]
         assert actual == expected
 
-    def test_grammatical_perfective_present(self, conjugation):
+    def test_grammatical_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.grammatical_perfective_present("بین")
         expected = ["ببینم", "ببین", "ببیند", "ببینیم", "ببینید", "ببینند"]
         assert actual == expected
 
-    def test_negative_grammatical_perfective_present(self, conjugation):
+    def test_negative_grammatical_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_grammatical_perfective_present("بین")
         expected = ["نبینم", "نبین", "نبیند", "نبینیم", "نبینید", "نبینند"]
         assert actual == expected
 
-    def test_passive_perfective_present(self, conjugation):
+    def test_passive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.passive_perfective_present("دید")
         expected = [
             "دیده شوم",
@@ -848,7 +848,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_perfective_present(self, conjugation):
+    def test_negative_passive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_perfective_present("دید")
         expected = [
             "دیده نشوم",
@@ -860,7 +860,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_subjunctive_perfective_present(self, conjugation):
+    def test_passive_subjunctive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.passive_subjunctive_perfective_present("دید")
         expected = [
             "دیده بشوم",
@@ -872,7 +872,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_subjunctive_perfective_present(self, conjugation):
+    def test_negative_passive_subjunctive_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_subjunctive_perfective_present("دید")
         expected = [
             "دیده نشوم",
@@ -884,7 +884,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_grammatical_perfective_present(self, conjugation):
+    def test_passive_grammatical_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.passive_grammatical_perfective_present("دید")
         expected = [
             "دیده بشوم",
@@ -896,7 +896,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_grammatical_perfective_present(self, conjugation):
+    def test_negative_passive_grammatical_perfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_grammatical_perfective_present("دید")
         expected = [
             "دیده نشوم",
@@ -908,17 +908,17 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_present(self, conjugation):
+    def test_imperfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_present("بین")
         expected = ["می‌بینم", "می‌بینی", "می‌بیند", "می‌بینیم", "می‌بینید", "می‌بینند"]
         assert actual == expected
 
-    def test_negative_imperfective_present(self, conjugation):
+    def test_negative_imperfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_present("بین")
         expected = ["نمی‌بینم", "نمی‌بینی", "نمی‌بیند", "نمی‌بینیم", "نمی‌بینید", "نمی‌بینند"]
         assert actual == expected
 
-    def test_passive_imperfective_present(self, conjugation):
+    def test_passive_imperfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_present("دید")
         expected = [
             "دیده می‌شوم",
@@ -930,7 +930,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_present(self, conjugation):
+    def test_negative_passive_imperfective_present(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_present("دید")
         expected = [
             "دیده نمی‌شوم",
@@ -942,7 +942,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_present_progressive(self, conjugation):
+    def test_present_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.present_progressive("بین")
         expected = [
             "دارم می‌بینم",
@@ -954,7 +954,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_present_progressive(self, conjugation):
+    def test_passive_present_progressive(self: "TestConjugation", conjugation):
         actual = conjugation.passive_present_progressive("دید")
         expected = [
             "دارم دیده می‌شوم",
@@ -966,7 +966,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_perfective_future(self, conjugation):
+    def test_perfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.perfective_future("دید")
         expected = [
             "خواهم دید",
@@ -978,7 +978,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_perfective_future(self, conjugation):
+    def test_negative_perfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.negative_perfective_future("دید")
         expected = [
             "نخواهم دید",
@@ -990,7 +990,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_perfective_future(self, conjugation):
+    def test_passive_perfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.passive_perfective_future("دید")
         expected = [
             "دیده خواهم شد",
@@ -1002,7 +1002,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_perfective_future(self, conjugation):
+    def test_negative_passive_perfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_perfective_future("دید")
         expected = [
             "دیده نخواهم شد",
@@ -1014,7 +1014,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_imperfective_future(self, conjugation):
+    def test_imperfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.imperfective_future("دید")
         expected = [
             "می‌خواهم دید",
@@ -1026,7 +1026,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_imperfective_future(self, conjugation):
+    def test_negative_imperfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.negative_imperfective_future("دید")
         expected = [
             "نمی‌خواهم دید",
@@ -1038,7 +1038,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_imperfective_future(self, conjugation):
+    def test_passive_imperfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.passive_imperfective_future("دید")
         expected = [
             "دیده می‌خواهم شد",
@@ -1050,7 +1050,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_imperfective_future(self, conjugation):
+    def test_negative_passive_imperfective_future(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_imperfective_future("دید")
         expected = [
             "دیده نمی‌خواهم شد",
@@ -1062,7 +1062,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_future_precedent(self, conjugation):
+    def test_future_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.future_precedent("دید")
         expected = [
             "دیده خواهم بود",
@@ -1074,7 +1074,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_future_precedent(self, conjugation):
+    def test_negative_future_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_future_precedent("دید")
         expected = [
             "ندیده خواهم بود",
@@ -1086,7 +1086,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_future_precedent(self, conjugation):
+    def test_passive_future_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.passive_future_precedent("دید")
         expected = [
             "دیده شده خواهم بود",
@@ -1098,7 +1098,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_future_precedent(self, conjugation):
+    def test_negative_passive_future_precedent(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_future_precedent("دید")
         expected = [
             "دیده نشده خواهم بود",
@@ -1110,7 +1110,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_future_precedent_imperfective(self, conjugation):
+    def test_future_precedent_imperfective(self: "TestConjugation", conjugation):
         actual = conjugation.future_precedent_imperfective("دید")
         expected = [
             "می‌دیده خواهم بود",
@@ -1122,7 +1122,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_future_precedent_imperfective(self, conjugation):
+    def test_negative_future_precedent_imperfective(self: "TestConjugation", conjugation):
         actual = conjugation.negative_future_precedent_imperfective("دید")
         expected = [
             "نمی‌دیده خواهم بود",
@@ -1134,7 +1134,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_passive_future_precedent_imperfective(self, conjugation):
+    def test_passive_future_precedent_imperfective(self: "TestConjugation", conjugation):
         actual = conjugation.passive_future_precedent_imperfective("دید")
         expected = [
             "دیده می‌شده خواهم بود",
@@ -1146,7 +1146,7 @@ class TestConjugation:
         ]
         assert actual == expected
 
-    def test_negative_passive_future_precedent_imperfective(self, conjugation):
+    def test_negative_passive_future_precedent_imperfective(self: "TestConjugation", conjugation):
         actual = conjugation.negative_passive_future_precedent_imperfective("دید")
         expected = [
             "دیده نمی‌شده خواهم بود",

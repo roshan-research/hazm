@@ -126,7 +126,6 @@ ignore=[
 "F401", # imported but unused; consider adding to `__all__` or using a redundant alias
 "TID252", # Relative imports from parent modules are banned
 "PLR0913", # Too many arguments to function call
-"D107", # Missing docstring in `__init__`
 "ANN001", # Missing type annotation for function argument
 "ANN201", # Missing return type annotation for public function
 "ANN202", # Missing return type annotation for private function
@@ -138,7 +137,14 @@ ignore=[
 "E722", # Do not use bare `except`
 "PLW2901", # `for` loop variable `{variable name}` overwritten by assignment target
 "TRY002", # Create your own exception
-
+"D100",	# Missing docstring in public module	
+"D101",	# Missing docstring in public class	
+"D102",	# Missing docstring in public method	
+"D103",	# Missing docstring in public function	
+"D104",	# Missing docstring in public package	
+"D105",	# Missing docstring in magic method	
+"D106",	# Missing docstring in public nested class	
+"D107",	# Missing docstring in __init__
 ]
 
 fix=true

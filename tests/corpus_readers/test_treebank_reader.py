@@ -1,10 +1,12 @@
 import pytest
+
 from hazm import TreebankReader
 from hazm import tree2brackets
 
-@pytest.fixture(scope='module')
+
+@pytest.fixture(scope="module")
 def treebank_reader():
-    return TreebankReader(root='corpora/treebank')
+    return TreebankReader(root="corpora/treebank")
 
 def test_trees(treebank_reader):
     actual = str(next(treebank_reader.trees()))
@@ -19,10 +21,10 @@ def test_trees(treebank_reader):
 
 def test_sents(treebank_reader):
     actual = next(treebank_reader.sents())
-    expected = [('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
+    expected = [("دنیای", "Ne"), ("آدولف", "N"), ("بورن", "N"), ("دنیای", "Ne"), ("اتفاقات", "Ne"), ("رویایی", "AJ"), ("است", "V"), (".", "PUNC")]
     assert actual == expected
 
 def test_chunked_trees(treebank_reader):
     actual = tree2brackets(next(treebank_reader.chunked_trees()))
-    expected = '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
+    expected = "[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] ."
     assert actual == expected

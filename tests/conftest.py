@@ -1,18 +1,20 @@
 import pytest
-from hazm import Stemmer
-from hazm import POSTagger
+
+from hazm import Chunker
+from hazm import Conjugation
 from hazm import DependencyParser
 from hazm import Lemmatizer
 from hazm import Normalizer
-from hazm import Conjugation
-from hazm import Chunker
+from hazm import POSTagger
 from hazm import RuleBasedChunker
-from hazm import StanfordPOSTagger
+from hazm import SentEmbedding
 from hazm import SentenceTokenizer
-from hazm import WordTokenizer
+from hazm import StanfordPOSTagger
+from hazm import Stemmer
 from hazm import TokenSplitter
 from hazm import WordEmbedding
-from hazm import SentEmbedding
+from hazm import WordTokenizer
+
 
 @pytest.fixture(scope="session")
 def stemmer():
@@ -40,15 +42,15 @@ def conjugation():
 
 @pytest.fixture(scope="session")
 def pos_tagger():
-    return POSTagger(model='resources/pos_tagger.model')
+    return POSTagger(model="resources/pos_tagger.model")
 
 @pytest.fixture(scope="session")
 def universal_pos_tagger():
-    return POSTagger(model='resources/pos_tagger.model',universal_tag=True)
+    return POSTagger(model="resources/pos_tagger.model",universal_tag=True)
 
 @pytest.fixture(scope="session")
 def stanford_pos_tagger():
-    return StanfordPOSTagger(model_filename='resources/persian.tagger', path_to_jar='resources/stanford_postagger.jar')
+    return StanfordPOSTagger(model_filename="resources/persian.tagger", path_to_jar="resources/stanford_postagger.jar")
 
 @pytest.fixture(scope="session")
 def token_splitter():
@@ -60,22 +62,22 @@ def dependency_parser(pos_tagger, lemmatizer):
 
 @pytest.fixture(scope="session")
 def chunker():
-    return Chunker(model='resources/chunker.model')
+    return Chunker(model="resources/chunker.model")
 
 @pytest.fixture(scope="session")
 def rull_based_chunker():
     return RuleBasedChunker()
 
 @pytest.fixture(scope="session")
-def word_embedding(): 
-    word_embedding=WordEmbedding(model_type = 'fasttext')
-    word_embedding.load_model('resources/cc.fa.300.bin')
+def word_embedding():
+    word_embedding=WordEmbedding(model_type = "fasttext")
+    word_embedding.load_model("resources/cc.fa.300.bin")
     return word_embedding
 
 @pytest.fixture(scope="session")
 def sent_embedding():
     sent_embedding = SentEmbedding()
-    sent_embedding.load_model('resources/sent2vec.model')
+    sent_embedding.load_model("resources/sent2vec.model")
     return sent_embedding
 
 
