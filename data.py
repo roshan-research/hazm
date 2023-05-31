@@ -1,5 +1,5 @@
-import random
 import subprocess
+import random
 from collections import Counter
 from itertools import islice
 
