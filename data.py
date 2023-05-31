@@ -424,4 +424,5 @@ def train_stanford_postagger(
     ).wait()
 
     tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
-    print(tagger.evaluate(test))
+    print(tagger.evaluate(test))    
+    
