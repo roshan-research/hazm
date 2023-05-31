@@ -34,6 +34,7 @@ jobs:
 
             - name: Download resources
               run: |
+                  mkdir resources
                   wget -P /resources https://download1488.mediafire.com/f9dh0pxekptgNUY_U1Xu5g7p8a153EfPZkuTPGj6ov6yEe187_A4eJI3kOU5AKMGQYmLerkeCYS4HSnqj9Gg2YmIUuHi2sOD-id1et79FctWCigkqar-y0i1S1a2mcpwOZtl0VznQAfWkNjLoYILYT4WSBSeVquRZ7_ctrQ624aQJg/963bufx117w5aan/cc.fa.300.bin
                   wget -P /resources https://download843.mediafire.com/urcyz5l2ldygsHOfz_sMhpQ2vTcnhnVCxiyuCYbDm4z50JMTCD4u4puAQWC7nV5oxZrcojDeoZrxoCdmmvzOXv2Bl7Kup0lHRFuMS7D_I9S8TyuYJdRN-cS5exAAMlHO9YCm-h7T64M-CyTCsG0_0TPZQZdkrxbkzt1da5O7OEI_Ew/nvea42k6epj5rn0/chunker.model
                   wget -P /resources https://download1530.mediafire.com/uod84bh0l4vgvmWtDWxQobnfZJ4CCRFZ2GMNPTDD7pRjMO-9yoxupW1L6e8VOdMe1-kFyOfnytFXnX_3i7gF43Xr8TYfsXroNfsJe3iM7Iv6eFOr30oU-R63i4h2e_nnltGKX7OdjurMAAH280vXWsdtpz2sO9WPEYZEW6gIHA0Ipg/zm1jufrj8dqg6up/langModel.mco
