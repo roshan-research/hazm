@@ -1,6 +1,7 @@
 """این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است."""
 import multiprocessing
 import smart_open
+import numpy as np
 import os
 import warnings
 from pathlib import Path
@@ -13,6 +14,7 @@ from typing import Type
 from gensim.models import Doc2Vec
 from gensim.models import KeyedVectors
 from gensim.models import fasttext
+from gensim.models.callbacks import CallbackAny2Vec
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
@@ -356,6 +358,7 @@ class SentenceEmbeddingCorpus:
             )
 
 
+
 class SentEmbedding:
     """این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.
 
@@ -427,8 +430,10 @@ class SentEmbedding:
         )
         model.build_vocab(doc)
         model.train(doc, total_examples=model.corpus_count, epochs=epochs)
-
+        
+        model.dv.vectors = np.array([[]])
         self.model = model
+        self.__load_word_embedding_model()
 
         print("Model trained.")
 
