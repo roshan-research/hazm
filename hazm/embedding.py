@@ -93,6 +93,7 @@ class WordEmbedding:
         workers: int = multiprocessing.cpu_count() - 1,  # noqa: B008
         vector_size: int = 200,
         epochs: int = 10,
+        min_count: int = 5,
         fasttext_type: str = "skipgram",
         dest_path: str = 'fasttext_word2vec_model.bin',
     ) -> None:
@@ -108,6 +109,7 @@ class WordEmbedding:
             workers: تعداد هسته درگیر برای ترین مدل.
             vector_size: طول وکتور خروجی به ازای هر کلمه.
             epochs: تعداد تکرار ترین بر روی کل دیتا.
+            min_count:  حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.
             fasttext_type: نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
 
@@ -141,7 +143,7 @@ class WordEmbedding:
             dim=vector_size,
             epoch=epochs,
             thread=workers,
-            min_count = 5
+            min_count = min_count
         )
 
         print("Model trained.")
@@ -402,7 +404,7 @@ class SentEmbedding:
 
         Args:
             dataset_path: مسیر فایل متنی.
-            min_count: مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
+            min_count: حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.
             workers: تعداد هسته درگیر برای ترین مدل.
             windows: طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
             vector_size: طول وکتور خروجی به ازای هر جمله.
