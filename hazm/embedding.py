@@ -435,8 +435,11 @@ class SentEmbedding:
             vector_size=vector_size,
             workers=workers,
         )
+        print('building vocab...')
         model.build_vocab(doc)
-        model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+        print('training model...')
+        callbacks = [CallbackSentEmbedding()]
+        model.train(doc, total_examples=model.corpus_count, epochs=epochs, callbacks=callbacks)
         
         model.dv.vectors = np.array([[]])
         self.model = model
@@ -445,6 +448,7 @@ class SentEmbedding:
         print("Model trained.")
 
         if dest_path is not None:
+            print('saving model...')
             model.save(dest_path)
             print("Model saved.")
 
