@@ -2,6 +2,7 @@
 import multiprocessing
 import smart_open
 import numpy as np
+import fasttext as fstxt
 import os
 import warnings
 from pathlib import Path
@@ -93,7 +94,7 @@ class WordEmbedding:
         vector_size: int = 200,
         epochs: int = 10,
         fasttext_type: str = "skipgram",
-        dest_path: str = None,
+        dest_path: str = 'fasttext_word2vec_model.bin',
     ) -> None:
         """یک فایل امبدینگ از نوع fasttext ترین می‌کند.
 
@@ -133,21 +134,25 @@ class WordEmbedding:
 
         workers = 1 if workers == 0 else workers
 
-        model = fasttext.train_unsupervised(
+        print('training model...')
+        model = fstxt.train_unsupervised(
             dataset_path,
             model=fasttext_type,
             dim=vector_size,
             epoch=epochs,
             thread=workers,
+            min_count = 5
         )
-
-        self.model = model.wv
 
         print("Model trained.")
 
-        if dest_path is not None:
-            model.save_model(dest_path)
-            print("Model saved.")
+        print('saving model...')
+        model.save_model(dest_path)
+        print("Model saved.")
+
+        print('loading model...')
+        self.load_model(model_path=dest_path)
+        print('model loaded.')
 
     def __getitem__(self: "WordEmbedding", word: str) -> str:
         """__getitem__."""
@@ -203,26 +208,6 @@ class WordEmbedding:
             raise AttributeError(msg)
 
         return float(str(self.model.similarity(word1, word2)))
-
-
-    def get_vocab(self: "WordEmbedding") -> List[str]:
-        """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
-
-        Examples:
-            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
-            >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
-            ['و', '</s>', 'به', 'که', ...
-
-        Returns:
-            لیست کلمات موجود در فایل امبدینگ.
-
-        """
-        if not self.model:
-            msg = "Model must not be None! Please load model first."
-            raise AttributeError(msg)
-        return self.model.index_to_key
-
 
     def nearest_words(
         self: "WordEmbedding",
@@ -406,7 +391,7 @@ class SentEmbedding:
         windows: int = 5,
         vector_size: int = 300,
         epochs: int = 10,
-        dest_path: str = None,
+        dest_path: str = 'gensim_sent2vec.model',
     ) -> None:
         """یک فایل امبدینگ doc2vec ترین می‌کند.
 
@@ -444,13 +429,11 @@ class SentEmbedding:
         model.dv.vectors = np.array([[]])
         self.model = model
         self.__load_word_embedding_model()
-
         print("Model trained.")
 
-        if dest_path is not None:
-            print('saving model...')
-            model.save(dest_path)
-            print("Model saved.")
+        print('saving model...')
+        model.save(dest_path)
+        print("Model saved.")
 
     def __getitem__(self: "SentEmbedding", sent: str) -> Type[ndarray]:
         """__getitem__."""
