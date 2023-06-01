@@ -54,7 +54,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin') # doctest: +ELLIPSIS
+            >>> wordEmbedding.load_model('resources/word2vec.bin') # doctest: +ELLIPSIS
             ...
 
         Args:
@@ -158,7 +158,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> wordEmbedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
             'پنجره'
             >>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
@@ -181,7 +181,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> wordEmbedding.similarity('ایران', 'آلمان')
             0.72231203
             >>> wordEmbedding.similarity('ایران', 'پنجره')
@@ -207,7 +207,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
             ['و', '</s>', 'به', 'که', ...
 
@@ -230,7 +230,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> wordEmbedding.nearest_words('ایران', topn = 5)
             [('ایران،', 0.8742443919181824), ('کشور', 0.8735059499740601), ('کشورمان', 0.8443885445594788), ('ایران\u200cبه', 0.8271722197532654), ('خاورمیانه', 0.8266966342926025)]
 
@@ -253,7 +253,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> result = wordEmbedding.get_normal_vector('سرباز')
             >>> isinstance(result, ndarray)
             True
@@ -276,7 +276,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resources/word2vec.bin')
             >>> wordEmbedding.get_vocabs() # doctest: +ELLIPSIS
             ['و', '.', 'در', '،', ...]
 
@@ -295,7 +295,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/cc.fa.300.bin)
+            >>> wordEmbedding.load_model('resources/word2vec.bin)
             >>> vocab_to_index = wordEmbedding.get_vocab_to_index()
             >>> index = vocab_to_index['سلام']
             >>> vocabs = wordEmbedding.get_vocabs()
@@ -312,7 +312,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resorces/word2vec.bin')
             >>> vectors = wordEmbedding.get_vectors()
             >>> all(vectors[wordEmbedding.get_vocab_to_index()['سلام']] == wordEmbedding['سلام'])
             True
@@ -327,7 +327,7 @@ class WordEmbedding:
 
         Examples:
             >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resorces/cc.fa.300.bin')
+            >>> wordEmbedding.load_model('resorces/word2vec.bin')
             >>> wordEmbedding.get_vector_size()
             300
 

@@ -12,14 +12,14 @@ class TestWordEmbedding:
         assert word_embedding.doesnt_match(["ساعت", "پلنگ", "شیر"]) == "ساعت"
 
     def test_similarity(self: "TestWordEmbedding", word_embedding):
-        assert word_embedding.similarity("ایران", "آلمان") == 0.72231203
-        assert word_embedding.similarity("ایران", "پنجره") ==  0.04535884
+        assert word_embedding.similarity("ایران", "آلمان") == 0.94321066
+        assert word_embedding.similarity("ایران", "پنجره") ==  0.19852939
 
     def test_get_vocab(self: "TestWordEmbedding", word_embedding):
         assert len(word_embedding.get_vocab()) == 186659
 
     def test_nearest_words(self: "TestWordEmbedding", word_embedding):
-        assert word_embedding.nearest_words("ایران", topn = 5) == [("ایران،", 0.8742443919181824), ("کشور", 0.8735059499740601), ("کشورمان", 0.8443885445594788), ("ایران\u200cبه", 0.8271722197532654), ("خاورمیانه", 0.8266966342926025)]
+        assert word_embedding.nearest_words("ایران", topn = 5) == [('تاریخی.', 0.9997861385345459), ('نام\u200cگذاری', 0.9993206858634949), ('پناه\u200cجو', 0.9992603063583374), ('قرارگرفت', 0.9990856647491455), ('امدادگری', 0.998709499835968)]
 
 
     def test_normal_vector(self: "TestWordEmbedding", word_embedding):
