@@ -1,5 +1,6 @@
 """این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است."""
 import multiprocessing
+import smart_open
 import os
 import warnings
 from pathlib import Path
@@ -348,9 +349,7 @@ class SentenceEmbeddingCorpus:
 
     def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
         """__iter__."""
-        corpus_path = datapath(self.data_path)
-
-        for i, list_of_words in enumerate(Path.open(corpus_path)):
+        for i, list_of_words in enumerate(smart_open.open(self.data_path)):
             yield TaggedDocument(
                 word_tokenize(Normalizer().normalize(list_of_words)),
                 [i],
