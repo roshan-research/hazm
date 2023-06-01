@@ -34,7 +34,7 @@ jobs:
 
             - name: Download resources
               run: |                  
-                  wget https://github.com/sir-kokabi/test/raw/main/resources-0.9.zip
+                  wget https://download1523.mediafire.com/5pzua7tmiiwgyfqVbWZbCnJ_Tgn9fao4Gj54Nb0pvO1o_uFHDFhkeIM-1VgBw1bM1a0UWBEa_TDTiclAbOSWGDlKcZLECX_UpYTt0c1I4UOVVCQrCA3F3CcPnTZ6AdvJQkDE6CvsH0iZ-zkt0cmu1b7r4Ux0G1vIptIpuBesvzJo1hdo/qj9hqpo8608jr4v/resources-0.9.zip
                   unzip resources-0.9.zip -d resources
 
             - name: Run tests
