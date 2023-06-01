@@ -19,7 +19,7 @@ class TestWordEmbedding:
         assert len(word_embedding.get_vocab()) == 186659
 
     def test_nearest_words(self: "TestWordEmbedding", word_embedding):
-        assert word_embedding.nearest_words("ایران", topn = 5) == [('تاریخی.', 0.9997861385345459), ('نام\u200cگذاری', 0.9993206858634949), ('پناه\u200cجو', 0.9992603063583374), ('قرارگرفت', 0.9990856647491455), ('امدادگری', 0.998709499835968)]
+        assert word_embedding.nearest_words("ایران", topn = 5) == [("تاریخی.", 0.9997861385345459), ("نام\u200cگذاری", 0.9993206858634949), ("پناه\u200cجو", 0.9992603063583374), ("قرارگرفت", 0.9990856647491455), ("امدادگری", 0.998709499835968)]
 
 
     def test_normal_vector(self: "TestWordEmbedding", word_embedding):
