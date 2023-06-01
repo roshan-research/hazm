@@ -31,7 +31,7 @@ python= ">=3.8"
 nltk="^3.8.1"
 gensim="^4.3.1"
 python-crfsuite="^0.9.9"
-numpy = "^1.24.3" # "1.23.5"
+numpy = ">=1.22,<1.24"
 scikit-learn = "^1.2.2"
 
 [tool.poetry.group.docs.dependencies]
