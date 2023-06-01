@@ -357,6 +357,13 @@ class SentenceEmbeddingCorpus:
                 [i],
             )
 
+class CallbackSentEmbedding(CallbackAny2Vec):
+    def __init__(self):
+        self.epoch = 0
+
+    def on_epoch_end(self, model):
+        print(f"Epoch {self.epoch+1}...")
+        self.epoch += 1
 
 
 class SentEmbedding:
