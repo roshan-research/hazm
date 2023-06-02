@@ -345,13 +345,13 @@ class SentenceEmbeddingCorpus:
             )
 
 class CallbackSentEmbedding(CallbackAny2Vec):
-    def __init__(self):
+    def __init__(self: "CallbackSentEmbedding"):
         self.epoch = 0
 
-    def on_epoch_end(self, model):
-        print(f"Epoch {self.epoch+1}...")
+    def on_epoch_end(self: "CallbackSentEmbedding", model: Doc2Vec):
+        print(f"Epoch {self.epoch+1} of {model.epochs}...")
         self.epoch += 1
-
+        
 
 class SentEmbedding:
     """این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.
