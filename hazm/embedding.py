@@ -1,8 +1,5 @@
 """این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است."""
 import multiprocessing
-import smart_open
-import numpy as np
-import fasttext as fstxt
 import os
 import warnings
 from pathlib import Path
@@ -12,6 +9,9 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
+import fasttext as fstxt
+import numpy as np
+import smart_open
 from gensim.models import Doc2Vec
 from gensim.models import KeyedVectors
 from gensim.models import fasttext
@@ -95,7 +95,7 @@ class WordEmbedding:
         epochs: int = 10,
         min_count: int = 5,
         fasttext_type: str = "skipgram",
-        dest_path: str = 'fasttext_word2vec_model.bin',
+        dest_path: str = "fasttext_word2vec_model.bin",
     ) -> None:
         """یک فایل امبدینگ از نوع fasttext ترین می‌کند.
 
@@ -136,25 +136,25 @@ class WordEmbedding:
 
         workers = 1 if workers == 0 else workers
 
-        print('training model...')
+        print("training model...")
         model = fstxt.train_unsupervised(
             dataset_path,
             model=fasttext_type,
             dim=vector_size,
             epoch=epochs,
             thread=workers,
-            min_count = min_count
+            min_count = min_count,
         )
 
         print("Model trained.")
 
-        print('saving model...')
+        print("saving model...")
         model.save_model(dest_path)
         print("Model saved.")
 
-        print('loading model...')
+        print("loading model...")
         self.load_model(model_path=dest_path)
-        print('model loaded.')
+        print("model loaded.")
 
     def __getitem__(self: "WordEmbedding", word: str) -> str:
         """__getitem__."""
@@ -345,13 +345,13 @@ class SentenceEmbeddingCorpus:
             )
 
 class CallbackSentEmbedding(CallbackAny2Vec):
-    def __init__(self: "CallbackSentEmbedding"):
+    def __init__(self: "CallbackSentEmbedding") -> None:
         self.epoch = 0
 
     def on_epoch_end(self: "CallbackSentEmbedding", model: Doc2Vec):
         print(f"Epoch {self.epoch+1} of {model.epochs}...")
         self.epoch += 1
-        
+
 
 class SentEmbedding:
     """این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.
@@ -393,7 +393,7 @@ class SentEmbedding:
         windows: int = 5,
         vector_size: int = 300,
         epochs: int = 10,
-        dest_path: str = 'gensim_sent2vec.model',
+        dest_path: str = "gensim_sent2vec.model",
     ) -> None:
         """یک فایل امبدینگ doc2vec ترین می‌کند.
 
@@ -422,18 +422,18 @@ class SentEmbedding:
             vector_size=vector_size,
             workers=workers,
         )
-        print('building vocab...')
+        print("building vocab...")
         model.build_vocab(doc)
-        print('training model...')
+        print("training model...")
         callbacks = [CallbackSentEmbedding()]
         model.train(doc, total_examples=model.corpus_count, epochs=epochs, callbacks=callbacks)
-        
+
         model.dv.vectors = np.array([[]])
         self.model = model
         self.__load_word_embedding_model()
         print("Model trained.")
 
-        print('saving model...')
+        print("saving model...")
         model.save(dest_path)
         print("Model saved.")
 
