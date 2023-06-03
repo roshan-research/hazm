@@ -6,7 +6,7 @@ Thank you for your interest in contributing to our project. Please follow these 
 2. Fork and clone the repo.
 3. Install [poetry](https://python-poetry.org/) if you haven't already.
 4. Run `poetry update --with docs, dev`.
-5. Work on your changes using `python 3.8.0` and follow [coding style guide](./CODING.md).
+5. Write your code using `python 3.8.0` and follow [coding style guide](./CODING.md).
 6. Run `poetry run poe lint` and fix linting errors.
 7. Run `poetry run poe test` and fix any failing tests.
 8. push & pull request and link to the issue  (if any).
