@@ -86,7 +86,9 @@ But for testing or using Hazm with the latest updates you may use:
 
 ## Contribution
 
-We welcome and appreciate any contributions to this repo, such as bug reports, feature requests, code improvements, documentation updates, etc. Please follow the [Contribution guideline](./CONTRIBUTION.md) when contributing. You can open an issue, fork the repo, write your code, create a pull request and wait for a review and feedback. Thank you for your interest and support in this repo!
+We welcome contributions!
+
+See [CONTRIBUTION.md](./CONTRIBUTION.md) for information on how to develop.
 
 ## Thanks
 
