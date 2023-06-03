@@ -2,9 +2,9 @@
 
 Thank you for your interest in contributing to our project. Please follow these steps:
 
-1. (**Optional but recommended, especially for big changes**) Create an issue and let's discuss your idea to avoid wasting time and effort on something we may not accept.
+1. (**Optional but recommended, especially for big changes**) Create an issue and let's discuss your idea to avoid wasting time on something that we may not accept.
 2. Fork and clone the repo. 
-3. Install poetry and run poetry update.
+3. Install poetry and run `poetry update --with docs, dev`.
 4. Work on your changes in your fork. Follow the [coding style guide](./CODING.md) and conventions (if any).
 5. Run `poetry run poe lint` and `poetry run poe test` and fix any possible issues.
 6. Commit and push your changes. Open a pull request and link to the issue.
