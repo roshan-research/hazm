@@ -1,32 +1,21 @@
-## Contribution
+## Contribution Guideline
 
-Before you start development, open a new issue and discuss your idea with a team member. Make sure you have a clear agreement on the approach or a written and approved spec. Then follow these steps:
+Thank you for your interest in contributing to our project. Please follow these steps:
 
-1. If you are not a team member, fork the repo and clone it to your local machine. If you are a team member, clone the repo directly without forking.
-
-2. Create a feature branch, for example: `migrate-py2-to-py3`.
-
-3. Make and commit changes to your feature branch.
-
-4. Create a pull request from your feature branch to the main branch and fill out the details.
-
-5. Wait for someone to review your PR and provide feedback.
-
-6. Address the review comments by making changes in your feature branch and pushing them back.
-
-7. After your PR is approved, an authorized team member (maybe you yourself) will merge it into the main branch and delete your feature branch. It's recommended to delete your feature branch from your local machine to keep your repository clean and avoid confusion.
-
-8. Sync your local main branch with the remote main branch using git checkout main && git pull.
-
-9. Keep making changes to the code using new feature branches as described above, if you like.
+1. (**Optional but recommended**) Open an issue and discuss your idea to avoid effort on something that may not be accepted.
+2. Fork and clone the repo.
+3. Install [poetry](https://python-poetry.org/) if you haven't already.
+4. Run `poetry update --with docs, dev`.
+5. Write your code using `python 3.8.0` and follow [coding style guide](./CODING.md).
+6. Run `poetry run poe lint` and fix linting errors.
+7. Run `poetry run poe test` and fix any failing tests.
+8. push & pull request and link to the issue  (if any).
+9. Keep in touch with reviewers until merge.
 
 Thank you for your contribution! 😍
 
 ## Rules
 
-1. **Follow the pattern of what you already see in the code**. This is our [coding style guide](./CODING.md).
-
-2. **Make atomic commits**: each commit should contain a single logical change that can be easily understood and reverted if needed. Avoid making large or unrelated changes in one commit. If you find it difficult to come up with a brief and clear commit message, it could be a sign that your changes are too large or not related to each other. It's recommended to split them into smaller, logical chunks and make separate commits for better code management and collaboration.
-
-
-3. **Use new feature branches for every change**: create a new feature branch from the main branch for each new feature or bug fix that you want to contribute. Do not work directly on the main branch or reuse old feature branches.
+1. Follow the pattern of what you already see in the code. 
+2. Follow [coding style guide](./CODING.md).
+2. Make atomic commits, one change per commit. Split large or unrelated changes into smaller commits.
