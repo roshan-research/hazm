@@ -9,9 +9,13 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
+import fasttext as fstxt
+import numpy as np
+import smart_open
 from gensim.models import Doc2Vec
 from gensim.models import KeyedVectors
 from gensim.models import fasttext
+from gensim.models.callbacks import CallbackAny2Vec
 from gensim.models.doc2vec import TaggedDocument
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath
@@ -89,8 +93,9 @@ class WordEmbedding:
         workers: int = multiprocessing.cpu_count() - 1,  # noqa: B008
         vector_size: int = 200,
         epochs: int = 10,
+        min_count: int = 5,
         fasttext_type: str = "skipgram",
-        dest_path: str = None,
+        dest_path: str = "fasttext_word2vec_model.bin",
     ) -> None:
         """یک فایل امبدینگ از نوع fasttext ترین می‌کند.
 
@@ -104,6 +109,7 @@ class WordEmbedding:
             workers: تعداد هسته درگیر برای ترین مدل.
             vector_size: طول وکتور خروجی به ازای هر کلمه.
             epochs: تعداد تکرار ترین بر روی کل دیتا.
+            min_count:  حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.
             fasttext_type: نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.
             dest_path: مسیر مورد نظر برای ذخیره فایل امبدینگ.
 
@@ -130,21 +136,25 @@ class WordEmbedding:
 
         workers = 1 if workers == 0 else workers
 
-        model = fasttext.train_unsupervised(
+        print("training model...")
+        model = fstxt.train_unsupervised(
             dataset_path,
             model=fasttext_type,
             dim=vector_size,
             epoch=epochs,
             thread=workers,
+            min_count = min_count,
         )
-
-        self.model = model.wv
 
         print("Model trained.")
 
-        if dest_path is not None:
-            model.save_model(dest_path)
-            print("Model saved.")
+        print("saving model...")
+        model.save_model(dest_path)
+        print("Model saved.")
+
+        print("loading model...")
+        self.load_model(model_path=dest_path)
+        print("model loaded.")
 
     def __getitem__(self: "WordEmbedding", word: str) -> str:
         """__getitem__."""
@@ -200,26 +210,6 @@ class WordEmbedding:
             raise AttributeError(msg)
 
         return float(str(self.model.similarity(word1, word2)))
-
-
-    def get_vocab(self: "WordEmbedding") -> List[str]:
-        """لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.
-
-        Examples:
-            >>> wordEmbedding = WordEmbedding(model_type = 'fasttext')
-            >>> wordEmbedding.load_model('resources/word2vec.bin')
-            >>> wordEmbedding.get_vocab() # doctest: +ELLIPSIS
-            ['و', '</s>', 'به', 'که', ...
-
-        Returns:
-            لیست کلمات موجود در فایل امبدینگ.
-
-        """
-        if not self.model:
-            msg = "Model must not be None! Please load model first."
-            raise AttributeError(msg)
-        return self.model.index_to_key
-
 
     def nearest_words(
         self: "WordEmbedding",
@@ -348,13 +338,19 @@ class SentenceEmbeddingCorpus:
 
     def __iter__(self: "SentenceEmbeddingCorpus") -> Iterator[TaggedDocument]:
         """__iter__."""
-        corpus_path = datapath(self.data_path)
-
-        for i, list_of_words in enumerate(Path.open(corpus_path)):
+        for i, list_of_words in enumerate(smart_open.open(self.data_path)):
             yield TaggedDocument(
                 word_tokenize(Normalizer().normalize(list_of_words)),
                 [i],
             )
+
+class CallbackSentEmbedding(CallbackAny2Vec):
+    def __init__(self: "CallbackSentEmbedding") -> None:
+        self.epoch = 0
+
+    def on_epoch_end(self: "CallbackSentEmbedding", model: Doc2Vec):
+        print(f"Epoch {self.epoch+1} of {model.epochs}...")
+        self.epoch += 1
 
 
 class SentEmbedding:
@@ -397,7 +393,7 @@ class SentEmbedding:
         windows: int = 5,
         vector_size: int = 300,
         epochs: int = 10,
-        dest_path: str = None,
+        dest_path: str = "gensim_sent2vec.model",
     ) -> None:
         """یک فایل امبدینگ doc2vec ترین می‌کند.
 
@@ -408,7 +404,7 @@ class SentEmbedding:
 
         Args:
             dataset_path: مسیر فایل متنی.
-            min_count: مینیموم دفعات تکرار یک کلمه برای حضور آن در لیست کلمات امبدینگ.
+            min_count: حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.
             workers: تعداد هسته درگیر برای ترین مدل.
             windows: طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.
             vector_size: طول وکتور خروجی به ازای هر جمله.
@@ -426,16 +422,20 @@ class SentEmbedding:
             vector_size=vector_size,
             workers=workers,
         )
+        print("building vocab...")
         model.build_vocab(doc)
-        model.train(doc, total_examples=model.corpus_count, epochs=epochs)
+        print("training model...")
+        callbacks = [CallbackSentEmbedding()]
+        model.train(doc, total_examples=model.corpus_count, epochs=epochs, callbacks=callbacks)
 
+        model.dv.vectors = np.array([[]])
         self.model = model
-
+        self.__load_word_embedding_model()
         print("Model trained.")
 
-        if dest_path is not None:
-            model.save(dest_path)
-            print("Model saved.")
+        print("saving model...")
+        model.save(dest_path)
+        print("Model saved.")
 
     def __getitem__(self: "SentEmbedding", sent: str) -> Type[ndarray]:
         """__getitem__."""
