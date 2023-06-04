@@ -71,13 +71,13 @@ def rull_based_chunker():
 @pytest.fixture(scope="session")
 def word_embedding():
     word_embedding=WordEmbedding(model_type = "fasttext")
-    word_embedding.load_model("resources/word2vec.bin")
+    word_embedding.load_model("resources/light_word2vec.bin")
     return word_embedding
 
 @pytest.fixture(scope="session")
 def sent_embedding():
     sent_embedding = SentEmbedding()
-    sent_embedding.load_model("resources/sent2vec.model")
+    sent_embedding.load_model("resources/light_sent2vec.model")
     return sent_embedding
 
 
