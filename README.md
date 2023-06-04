@@ -86,7 +86,7 @@ But for testing or using Hazm with the latest updates you may use:
 >>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'resources/word2vec.bin')
 >>> word_embedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
 'پنجره'
->>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
+>>> word_embedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
 'ساعت'
 
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
