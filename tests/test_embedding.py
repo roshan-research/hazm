@@ -24,13 +24,13 @@ class TestWordEmbedding:
 
     def test_get_vocab_to_index(self: "TestWordEmbedding", word_embedding):
         vocab_to_index = word_embedding.get_vocab_to_index()
-        index = vocab_to_index['سلام']
+        index = vocab_to_index["سلام"]
         vocabs = word_embedding.get_vocabs()
-        assert vocabs[index] == 'سلام'
+        assert vocabs[index] == "سلام"
 
     def test_get_vectors(self: "TestWordEmbedding", word_embedding):
         vectors = word_embedding.get_vectors()
-        assert all(vectors[word_embedding.get_vocab_to_index()['سلام']] == word_embedding['سلام'])
+        assert all(vectors[word_embedding.get_vocab_to_index()["سلام"]] == word_embedding["سلام"])
 
     def test_get_vector_size(self: "TestWordEmbedding", word_embedding):
         assert isinstance(word_embedding.get_vector_size(), int)
