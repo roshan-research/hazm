@@ -11,6 +11,8 @@ Python library for digesting Persian text.
 - Sentence and word tokenizer
 - Word lemmatizer
 - POS tagger
+- Word embedding
+- Sent embeddding
 - Shallow parser
 - Dependency parser
 - Interfaces for Persian corpora
