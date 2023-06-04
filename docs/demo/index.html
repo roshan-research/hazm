@@ -16,62 +16,74 @@
 
 
 <body>
-<!------------------------- header section -------------------------->
-<div class="header-container">
-  <div class="header my-container">
-    <h1 class="logo">هضم</h1>
-    <span class="text">برای پردازش زبان فارسی</span>
-    <img class="menu-icon active" src="../images/menu/mobile/menu.svg" alt="menu icon">
-    <img class="close-icon" src="../images/menu/mobile/close.svg" alt="close icon">
-    <div class="menu">
-      <a href="#" class="donate-link">
-        <img src="../images/menu/web/support_icon.svg" alt="support icon">
-        <span>حمایت از پروژه</span>
-      </a>
-      <a href="#">
-        <img src="../images/menu/web/demo_icon.svg" alt="demoIcon">
-        <span>اجرای نمونه</span>
-      </a>
-      <a href="https://github.com/roshan-research/hazm">
-        <img src="../images/menu/web/git_icon.svg" alt="git_icon">
-        <span>گیت هاب</span>
-      </a>
-      <a href="https://www.roshan-ai.ir/join-us/">
-        <img src="../images/menu/web/join_us_icon.svg" alt="joinUsIcon">
-        <span>فرصت همکاری</span>
-      </a>
+    <!------------------------- header section -------------------------->
+    <div class="header-container">
+      <div class="header my-container">
+        <h1 class="logo">هضم</h1>
+        <span class="text">برای پردازش زبان فارسی</span>
+        <img
+          class="menu-icon active"
+          src="../images/menu/mobile/menu.svg"
+          alt="menu icon"
+        />
+        <img
+          class="close-icon"
+          src="../images/menu/mobile/close.svg"
+          alt="close icon"
+        />
+        <div class="menu">
+          <a href="https://www.roshan-ai.ir/hazm/docs/">
+            <img
+              style="width: 19px; height: 19px; opacity: 0.6"
+              src="../images/menu/web/doc_icon.svg"
+              alt="doc_icon"
+            />
+            <span>مستندات</span>
+          </a>
+          <a href="demo/">
+            <img src="../images/menu/web/demo_icon.svg" alt="demoIcon" />
+            <span>دموی آنلاین</span>
+          </a>
+          <a href="https://github.com/roshan-research/hazm">
+            <img src="../images/menu/web/git_icon.svg" alt="git_icon" />
+            <span>سورس پروژه</span>
+          </a>
+          <a href="https://www.roshan-ai.ir/join-us/">
+            <img src="../images/menu/web/join_us_icon.svg" alt="joinUsIcon" />
+            <span>همکاری با ما</span>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="line" style="display: none"></div>
-<div class="mobile-menu" style="display: none">
-  <ul class="my-container">
-    <li>
-      <a href="#">
-        <img src="../images/menu/mobile/demo_icon.svg" alt="demoIcon">
-        <span>اجرای نمونه</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://github.com/roshan-research/hazm">
-        <img src="../images/menu/mobile/git_icon.svg" alt="git_icon">
-        <span>گیت هاب</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="donate-link">
-        <img src="../images/menu/mobile/support_icon.svg" alt="support icon">
-        <span>حمایت از پروژه</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.roshan-ai.ir/join-us/">
-        <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon">
-        <span>فرصت همکاری</span>
-      </a>
-    </li>
-  </ul>
-</div>
+    <div class="separator-line" style="display: none"></div>
+    <div class="mobile-menu" style="display: none">
+      <ul class="my-container">
+        <li>
+          <a href="docs">
+            <img src="../images/menu/mobile/doc_icon.svg" alt="doc_icon" />
+            <span>مستندات</span>
+          </a>
+        </li>
+        <li>
+          <a href="demo/">
+            <img src="../images/menu/mobile/demo_icon.svg" alt="demoIcon" />
+            <span>دموی آنلاین</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/roshan-research/hazm">
+            <img src="../images/menu/mobile/git_icon.svg" alt="git_icon" />
+            <span>سورس پروژه</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.roshan-ai.ir/join-us/">
+            <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon" />
+            <span>همکاری با ما</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
 <!------------------------- content section -------------------------->
 <div class="content my-container">
@@ -89,21 +101,7 @@
     <div class="demo" id="normalized">
       <h3>متن تمیز</h3>
       <div></div>
-    </div>
-    <div class="demo" id="corrected">
-      <h3>
-        متن اصلاح‌شده
-        <img
-            class="plus_icon"
-            src="../images/add.png"
-            alt="add_png"
-            data-toggle="tooltip"
-            data-placement="auto"
-            title="این ابزار به صورت متن‌باز ارائه نشده است. برای استفاده، لطفا تماس بگیرید."
-        />
-      </h3>
-      <div></div>
-    </div>
+    </div>    
     <div class="demo" id="tokenized">
       <h3>واژه‌های متن</h3>
       <div>
