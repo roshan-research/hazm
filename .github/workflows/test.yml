@@ -35,7 +35,7 @@ jobs:
             - name: Download resources
               run: |                  
                   wget https://github.com/sir-kokabi/resources/archive/refs/heads/main.zip
-                  unzip -j resources-main.zip resources-main/* -d resources
+                  unzip -j main.zip resources-main/* -d resources
 
             - name: Run tests
               run: poetry run poe test
