@@ -22,13 +22,22 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
 ## Modules accuracy
 
-| **Module name**          | **accuracy** |  |
-|:------------------------ |:------------|:--------------------:|
-| **Lemmatizer**           | 89.9%        |              |
-| **Chunker**              | 93.4%        | [download pre-trained model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)             |
-| **POSTagger** | 97.2% <br> universal: 98.8%        | [download pre-trained model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)             |
-| **DependencyParser**     | 97.1%        | [download pre-trained model](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)             |
+| **Module name**          | **accuracy**  |
+|:------------------------ |:--------------|
+| **Lemmatizer**           | 89.9%         |
+| **Chunker**              | 93.4%         | 
+| **POSTagger** | 97.2% <br> universal: 98.8% |
+| **DependencyParser**     | 97.1%         | 
 
+## Pre-trained models
+
+| **Module name**          |  |
+|:------------------------ |:--------------------:|
+| **WordEmbedding**        | [download pre-trained word2vec model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)      |
+| **SentEmbedding**        | [download pre-trained sent2vec model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)      |
+| **Chunker**              | [download pre-trained chunker model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)       |
+| **POSTagger**            | [download pre-trained pos_tagger model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)    |
+| **DependencyParser**     | [download pre-trained dependency parser](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)   |
 
 ## Installation
 
