@@ -48,5 +48,7 @@ class TestSentEmbedding:
         assert isinstance(sent_embedding.similarity("هضم یک محصول پردازش متن فارسی است", "شیر حیوانی وحشی است"), float) is True
 
 
+    def test_get_vector_size(self: "TestSentEmbedding", sent_embedding):
+        assert isinstance(sent_embedding.get_vector_size(), int)
 
 
