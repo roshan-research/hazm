@@ -156,7 +156,7 @@ class WordEmbedding:
         self.load_model(model_path=dest_path)
         print("model loaded.")
 
-    def __getitem__(self: "WordEmbedding", word: str) -> str:
+    def __getitem__(self: "WordEmbedding", word: str) -> Type[ndarray]:
         """__getitem__."""
         if not self.model:
             msg = "Model must not be None! Please load model first."
