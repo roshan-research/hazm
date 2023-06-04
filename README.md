@@ -83,6 +83,12 @@ But for testing or using Hazm with the latest updates you may use:
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
 
+>>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'resources/word2vec.bin')
+>>> word_embedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
+'پنجره'
+>>> wordEmbedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])
+'ساعت'
+
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
