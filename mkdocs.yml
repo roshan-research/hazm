@@ -110,6 +110,10 @@ nav:
       - هضم در زبان‌های دیگر: content/in-other-languages.md
 
 extra:
+  analytics:
+    provider: google
+    property: G-D32414H137
+    
   repo_url: https://github.com/roshan-research/hazm
   consent:
     title: درخواست استفاده از کوکی
