@@ -34,7 +34,7 @@ jobs:
 
             - name: Download resources
               run: |                  
-                  git clone https://github.com/sir-kokabi/test1.git resources
+                  git clone https://github.com/sir-kokabi/resources.git resources
 
             - name: Run tests
               run: poetry run poe test
