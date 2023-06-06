@@ -18,29 +18,18 @@ Python library for digesting Persian text.
 - Interfaces for Persian corpora
 - [NLTK](http://nltk.org/) compatible
 
-## Documentation
-
-Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
-
-## Modules accuracy
-
-| **Module name**          | **accuracy**  |
-|:------------------------ |:--------------|
-| **Lemmatizer**           | 89.9%         |
-| **Chunker**              | 93.4%         | 
-| **POSTagger** | 97.2% <br> universal: 98.8% |
-| **DependencyParser**     | 97.1%         | 
-
-## Pre-trained models
-
-| **Module name**          |  |
-|:------------------------ |:--------------------|
-| **WordEmbedding**        | [download pre-trained word2vec model](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)|
-| **SentEmbedding**        | [download pre-trained sent2vec model](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)|
-| **Chunker**              | [download pre-trained chunker model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)         |
-| **POSTagger**            | [download pre-trained pos_tagger model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)      |
-| **DependencyParser**     | [download pre-trained dependency parser](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)     |
-
+## Table of content
+- [Hazm](#hazm)
+- [Installation](#installation)
+  - [Download Pre-trained models](#download-pre-trained-models)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Modules accuracy](#modules-accuracy)
+- [Hazm in other languages](#hazm-in-other-languages)
+- [Contribution](#contribution)
+- [Thanks](#thanks)
+  - [Code contributores](#code-contributores)
+  - [Others](#others)
 
 ## Installation
 
@@ -51,7 +40,16 @@ The latest stable version of Hazm can be installed through `pip`:
 But for testing or using Hazm with the latest updates you may use:
 
     pip install https://github.com/roshan-research/hazm/archive/master.zip --upgrade
+    
+### Download Pre-trained models
 
+| **Module name**          |  |
+|:------------------------ |:--------------------|
+| **WordEmbedding**        | [download pre-trained word2vec model](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)|
+| **SentEmbedding**        | [download pre-trained sent2vec model](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)|
+| **Chunker**              | [download pre-trained chunker model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)         |
+| **POSTagger**            | [download pre-trained pos_tagger model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)      |
+| **DependencyParser**     | [download pre-trained dependency parser](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)     |
 
 ## Usage
 
@@ -94,6 +92,19 @@ But for testing or using Hazm with the latest updates you may use:
 <DependencyGraph with 8 nodes>
 
 ```
+
+## Documentation
+
+Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
+
+## Modules accuracy
+
+| **Module name**          | **accuracy**  |
+|:------------------------ |:--------------|
+| **Lemmatizer**           | 89.9%         |
+| **Chunker**              | 93.4%         | 
+| **POSTagger** | 97.2% <br> universal: 98.8% |
+| **DependencyParser**     | 97.1%         | 
 
 ## Hazm in other languages
 
