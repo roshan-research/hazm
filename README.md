@@ -43,13 +43,14 @@ But for testing or using Hazm with the latest updates you may use:
     
 ### Download Pre-trained models
 
-| **Module name**          |  |
-|:------------------------ |:--------------------|
-| **WordEmbedding**        | [download pre-trained word2vec model](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)|
-| **SentEmbedding**        | [download pre-trained sent2vec model](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)|
-| **Chunker**              | [download pre-trained chunker model](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)         |
-| **POSTagger**            | [download pre-trained pos_tagger model](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)      |
-| **DependencyParser**     | [download pre-trained dependency parser](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)     |
+| **Module name**          | **Size** |
+|:------------------------ |:-------- |
+| [**WordEmbedding**](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)        | ~ 5 GB |
+| [**SentEmbedding**](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)        | ~ 1 GB |
+| [**DependencyParser**](https://drive.google.com/file/d/1tAy6bV57ZXGCRcxqzMBcsHejr78rRM98)     | ~ 60 MB |
+| [**POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)            | ~ 18 MB |
+| [**Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)              | ~ 4 MB |
+
 
 ## Usage
 
