@@ -39,7 +39,7 @@ The latest stable version of Hazm can be installed through `pip`:
 
 But for testing or using Hazm with the latest updates you may use:
 
-    pip install https://github.com/roshan-research/hazm/archive/master.zip --upgrade
+    pip install git+https://github.com/roshan-research/hazm.git
     
 ### Download Pre-trained models
 
