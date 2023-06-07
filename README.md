@@ -33,15 +33,17 @@ Python library for digesting Persian text.
 
 ## Installation
 
-The latest stable version of Hazm can be installed through `pip`:
+To install the latest version of Hazm, run the following command in your terminal:
 
     pip install hazm
 
-But for testing or using Hazm with the latest updates you may use:
+Alternatively, you can install the latest update from GitHub (this version may be unstable and buggy):
 
     pip install git+https://github.com/roshan-research/hazm.git
     
-### Download Pre-trained models
+then download [resources.zip (~4 MB)](https://github.com/sir-kokabi/resources/releases/download/0.9.0/resources.zip) and extract it to a to a folder named `resources` in the root of your project.
+
+Finally if you do not want to train and use your own model, you can download our pre-trained models: 
 
 | **Module name**          | **Size** |
 |:------------------------ |:-------- |
