@@ -21,7 +21,6 @@ Python library for digesting Persian text.
 ## Table of content
 - [Hazm](#hazm)
 - [Installation](#installation)
-  - [Download Pre-trained models](#download-pre-trained-models)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Modules accuracy](#modules-accuracy)
