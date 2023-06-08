@@ -27,13 +27,13 @@
 
 ## Features:
 
-- Normalization: Converts text to a standard form, such as removing diacritics, correcting spacing, etc.
-- Tokenization: Splits text into sentences and words.
-- Lemmatization: Reduces words to their base forms.
-- POS tagging: Assigns a part of speech to each word.
-- Dependency parsing: Identifies the syntactic relations between words.
-- Embedding: Creates vector representations of words and sentences.
-- Persian corpora reading: Easily read popular Persian corpora with ready-made scripts and minimal code.
+- **Normalization:** Converts text to a standard form, such as removing diacritics, correcting spacing, etc.
+- **Tokenization:** Splits text into sentences and words.
+- **Lemmatization:** Reduces words to their base forms.
+- **POS tagging:** Assigns a part of speech to each word.
+- **Dependency parsing:** Identifies the syntactic relations between words.
+- **Embedding:** Creates vector representations of words and sentences.
+- **Persian corpora reading:** Easily read popular Persian corpora with ready-made scripts and minimal code.
 
 ## Installation
 
