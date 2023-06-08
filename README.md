@@ -23,7 +23,9 @@
 
 ## Introduction
 
-[**Hazm**](https://www.roshan-ai.ir/hazm/) is a natural language processing toolkit for Persian. It is a python package that offers a range of features to help you analyze, process, and understand Persian text. Whether you want to normalize text, tokenize sentences and words, lemmatize words, assign part-of-speech tags, identify dependency relations, create word and sentence embeddings, or read popular Persian corpora, Hazm has you covered. Hazm is easy to use and integrates well with other NLP libraries. With Hazm, you can take your Persian NLP projects to the next level.
+[**Hazm**](https://www.roshan-ai.ir/hazm/) is a natural language processing toolkit for Persian. 
+
+It is a python package that offers a range of features to help you analyze, process, and understand Persian text. Whether you want to normalize text, tokenize sentences and words, lemmatize words, assign part-of-speech tags, identify dependency relations, create word and sentence embeddings, or read popular Persian corpora, Hazm has you covered. Hazm is easy to use and integrates well with other NLP libraries. With Hazm, you can take your Persian NLP projects to the next level.
 
 ## Features:
 
