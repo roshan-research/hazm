@@ -1,25 +1,14 @@
-# Hazm
+# Hazm - Persian NLP Toolkit
 
 ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/test.yml?branch=master)
 ![PyPI - Downloads](https://img.shields.io/github/downloads/roshan-research/hazm/total)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hazm)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
 
-Python library for digesting Persian text.
+<img src="docs/docs/assets/sample.png" align="right">
 
-- Text cleaning
-- Sentence and word tokenizer
-- Word lemmatizer
-- POS tagger
-- Word embedding
-- Sent embeddding
-- Shallow parser
-- Dependency parser
-- Interfaces for Persian corpora
-- [NLTK](http://nltk.org/) compatible
-
-## Table of content
-- [Hazm](#hazm)
+- [Introduction](#introduction)
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
@@ -29,6 +18,20 @@ Python library for digesting Persian text.
 - [Thanks](#thanks)
   - [Code contributores](#code-contributores)
   - [Others](#others)
+
+## Introduction
+
+[Hazm](https://www.roshan-ai.ir/hazm/) is a natural language processing toolkit for Persian. It offers a range of features to help you analyze, process, and understand Persian text. Whether you want to normalize text, tokenize sentences and words, lemmatize words, assign part-of-speech tags, identify dependency relations, create word and sentence embeddings, or read popular Persian corpora, Hazm has you covered. Hazm is easy to use and integrates well with other NLP libraries. With Hazm, you can take your Persian NLP projects to the next level.
+
+## Features:
+
+- Normalization: Converts text to a standard form, such as removing diacritics, correcting spacing, etc.
+- Tokenization: Splits text into sentences and words.
+- Lemmatization: Reduces words to their base forms.
+- POS tagging: Assigns a part of speech to each word.
+- Dependency parsing: Identifies the syntactic relations between words.
+- Embedding: Creates vector representations of words and sentences.
+- Persian corpora reading: Easily read popular Persian corpora with ready-made scripts and minimal code.
 
 ## Installation
 
