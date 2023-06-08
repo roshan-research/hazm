@@ -5,7 +5,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hazm)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
 
-<img src="docs/docs/assets/sample.png" align="right">
+<img src="docs/docs/assets/sample.png">
 
 - [Introduction](#introduction)
 - [Features](#features)
