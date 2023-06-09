@@ -108,7 +108,7 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 
 ## Modules accuracy
 
-| **Module name**          | **accuracy**  |
+| **Module name**          | **Accuracy**  |
 |:------------------------ |:--------------|
 | **Lemmatizer**           | 89.9%         |
 | **Chunker**              | 93.4%         | 
