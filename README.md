@@ -112,7 +112,7 @@ Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
 |:------------------------ |:--------------|
 | **Lemmatizer**           | 89.9%         |
 | **Chunker**              | 93.4%         | 
-| **POSTagger** | 97.2% <br> universal: 98.8% |
+| **POSTagger**            | 98.8% |
 | **DependencyParser**     | 97.1%         | 
 
 ## Hazm in other languages
