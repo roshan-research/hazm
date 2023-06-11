@@ -47,7 +47,7 @@ Alternatively, you can install the latest update from GitHub (this version may b
 
     pip install git+https://github.com/roshan-research/hazm.git
     
-then download [resources.zip (~4 MB)](https://github.com/sir-kokabi/resources/releases/download/0.9.0/resources.zip) and extract it to a to a folder named `resources` in the root of your project.
+then **download [resources.zip (~4 MB)](https://github.com/sir-kokabi/resources/releases/download/0.9.0/resources.zip)** and extract it to a to a folder named `resources` in the root of your project.
 
 Finally if you do not want to train and use your own model, you can download our pre-trained models: 
 
