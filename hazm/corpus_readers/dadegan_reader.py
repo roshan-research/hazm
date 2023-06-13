@@ -3,14 +3,12 @@
 PerDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده با اطلاعات نحوی و ساخت‌واژی است.
 
 """
-from pathlib import Path
-from typing import Any
-from typing import Dict
 from typing import Iterator
 from typing import List
 from typing import Tuple
 from typing import Type
 
+from conllu import TokenTree
 from conllu import parse
 from conllu import parse_tree
 from nltk.tree import Tree
@@ -29,18 +27,18 @@ class DadeganReader:
         conllu_file: str,
     ) -> None:
 
-        with Path.open(conllu_file, encoding="utf-8") as conllu:
+        with open(conllu_file, encoding="utf-8") as conllu: # noqa: PTH123
             self._conllu_content = conllu.read()
 
 
-    def trees(self: "DadeganReader") -> Iterator[Type[Tree]]:
+    def trees(self: "DadeganReader") ->  Iterator[TokenTree]:
         """ساختار درختی جملات را برمی‌گرداند.
 
         Yields:
             ساختار درختی جملهٔ بعدی.
 
         """
-        yield from parse_tree(self._conllu_content) # token_tree.print_tree()
+        yield from parse_tree(self._conllu_content) # .print_tree()
 
     def sents(self: "DadeganReader") -> Iterator[List[Tuple[str, str]]]:
         """لیستی از جملات را برمی‌گرداند.
