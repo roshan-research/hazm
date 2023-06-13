@@ -5,12 +5,14 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hazm)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
 
+| Accuracy | DependencyParser: 97.1% | POSTagger: 98.8% | Chunker: 93.4% | Lemmatizer: 89.9% |
+| -------- | ----------------------- | ---------------- | -------------- | ----------------- |
+
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
-- [Modules accuracy](#modules-accuracy)
 - [Hazm in other languages](#hazm-in-other-languages)
 - [Contribution](#contribution)
 - [Thanks](#thanks)
@@ -101,15 +103,6 @@ Finally if you do not want to train and use your own model, you can download our
 ## Documentation
 
 Visit https://roshan-ai.ir/hazm/docs to view the full documentation.
-
-## Modules accuracy
-
-| **Module name**          | **Accuracy**  |
-|:------------------------ |:--------------|
-| **Lemmatizer**           | 89.9%         |
-| **Chunker**              | 93.4%         | 
-| **POSTagger**            | 98.8% |
-| **DependencyParser**     | 97.1%         | 
 
 ## Hazm in other languages
 
