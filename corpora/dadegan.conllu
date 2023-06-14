@@ -1,4 +1,4 @@
-# sent_id = test-s8
+# sent_id = test-s1
 # text = هر جسمی با دمای بالاتر از صفر مطلق انرژی تابش خواهد کرد.
 1	هر	هر	DET	PREM_AMBAJ	_	2	det	_	_
 2	جسمی	جسم	NOUN	N_IANM	Number=Sing	12	nsubj	_	_
@@ -13,3 +13,14 @@
 11	خواهد	خواست	AUX	AUX	Number=Sing|Person=3|Tense=Fut|VerbForm=Fin	12	aux	_	OrigLemma=خواست#خواه
 12	کرد	کرد	VERB	V_ACT	Number=Sing|Person=3|Tense=Past|Voice=Act	0	root	_	OrigLemma=کرد#کن|SpaceAfter=No
 13	.	.	PUNCT	PUNC	_	12	punct	_	_
+
+# sent_id = test-s2
+# text = دست فاطمه‌ام پینه بسته است.
+1	دست	دست	NOUN	N_IANM	Number=Sing	5	nsubj	_	_
+2-3	فاطمه‌ام	_	_	_	_	_	_	_	_
+2	فاطمه‌	فاطمه	PROPN	N_ANM	Number=Sing	1	nmod	_	_
+3	ام	من	PRON	PR_JOPER	Number=Sing|Person=1|PronType=Prs	2	nmod	_	_
+4	پینه	پینه	NOUN	N_IANM	Number=Sing	5	compound:lvc	_	_
+5	بسته	بست	VERB	V_ACT	Number=Sing|Person=3|Tense=Past|VerbForm=Part|Voice=Act	0	root	_	OrigLemma=بست#بند
+6	است	است	AUX	AUX	Number=Sing|Person=3|Tense=Pres	5	aux	_	OrigLemma=#است|SpaceAfter=No
+7	.	.	PUNCT	PUNC	_	5	punct	_	_

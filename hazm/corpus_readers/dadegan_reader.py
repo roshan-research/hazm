@@ -55,11 +55,17 @@ class DadeganReader:
 
         """
         for sent in parse(self._conllu_content):
-            sents = list(sent)
-            for sent in sents:
+
+            filtered_sents = [sent_dict for sent_dict in sent if str(sent_dict.get("id")).isdigit()]
+            # filter out non-digit 'id' values like second line in the following sample:
+            # 11	مردم	مردم	NOUN	N_ANM	Number=Plur	21	nsubj	_	_
+            # 12-13	کشورمان	_	_	_	_	_	_	_	_
+            # 12	کشور	کشور	NOUN	N_IANM	Number=Sing	11	nmod	_	_
+
+            for sent in filtered_sents:
                 sent["mtag"] = ",".join([sent["upos"], sent["xpos"]])
                 if sent["feats"] is not None and "ezafe" in sent["feats"]:
                     sent["mtag"] += ",EZ"
 
-            yield [(sent["form"], sent["mtag"]) for sent in sents]
+            yield [(sent["form"], sent["mtag"]) for sent in filtered_sents]
 
