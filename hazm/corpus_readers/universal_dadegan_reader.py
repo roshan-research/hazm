@@ -3,6 +3,8 @@ from hazm import DadeganReader
 import sys
 
 def conllu2conll(conllu_path: str) -> str :
+    """این تابع برای تبدیل فایل conllu به فایل conll است.
+    """
     reader1 = open(conllu_path, 'r')
 
     delex = False
@@ -48,5 +50,13 @@ class UniversalDadeganReader(DadeganReader):
         Yields:
             (str): جملهٔ بعدی.
         """
-        pass
+        text = conllu2conll(self._conll_file)
+
+        # refine text
+        text = text.replace('‌‌', '‌').replace('\t‌', '\t').replace('‌\t', '\t').replace('\t ', '\t').replace(' \t', '\t').replace(
+            '\r', '').replace('\u2029', '‌')
+
+        for item in text.replace(' ', '_').split('\n\n'):
+            if item.strip():
+                yield item
 
