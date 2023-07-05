@@ -58,7 +58,7 @@ def token_splitter():
 
 @pytest.fixture(scope="session")
 def dependency_parser(pos_tagger, lemmatizer):
-    return DependencyParser(tagger=pos_tagger, lemmatizer=lemmatizer)
+    return DependencyParser(tagger=pos_tagger, lemmatizer=lemmatizer, working_dir='resources/dependency_parser')
 
 @pytest.fixture(scope="session")
 def chunker():
