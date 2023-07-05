@@ -1,7 +1,7 @@
 import sys
 from typing import Iterator
 
-from hazm import DadeganReader
+from hazm.corpus_readers import DadeganReader
 
 
 def conllu2conll(conllu_path: str) -> str :
