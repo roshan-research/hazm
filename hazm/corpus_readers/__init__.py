@@ -3,6 +3,7 @@
 """init."""
 from .bijankhan_reader import BijankhanReader
 from .dadegan_reader import DadeganReader
+from .universal_dadegan_reader import UniversalDadeganReader
 from .degarbayan_reader import DegarbayanReader
 from .hamshahri_reader import HamshahriReader
 from .mirastext_reader import MirasTextReader
