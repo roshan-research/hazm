@@ -11,6 +11,7 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+- [Pretrained-Models](#pretrained-models)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Hazm in other languages](#hazm-in-other-languages)
@@ -45,7 +46,9 @@ Alternatively, you can install the latest update from GitHub (this version may b
     
 then **download [resources.zip (~4 MB)](https://github.com/sir-kokabi/resources/releases/download/0.9.0/resources.zip)** and extract it to a to a folder named `resources` in the root of your project.
 
-Finally if you do not want to train and use your own model, you can download our pre-trained models: 
+## Pretrained-Models
+
+Finally if you want to use our pretrained models, you can download it from the links below: 
 
 | **Module name**          | **Size** |
 |:------------------------ |:-------- |
