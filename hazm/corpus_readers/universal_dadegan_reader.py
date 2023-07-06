@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from typing import Iterator
 
 from hazm.corpus_readers import DadeganReader
@@ -6,7 +7,7 @@ from hazm.corpus_readers import DadeganReader
 
 def conllu2conll(conllu_path: str) -> str :
     """این تابع برای تبدیل فایل conllu به فایل conll است."""
-    reader1 = open(conllu_path)
+    reader1 = Path(conllu_path).open()
 
     delex = False
     if len(sys.argv) > 3 and sys.argv[3] == "delex":

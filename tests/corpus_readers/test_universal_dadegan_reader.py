@@ -11,7 +11,7 @@ def universal_dadegan_reader():
 def test_sents(universal_dadegan_reader: UniversalDadeganReader):
     sents = universal_dadegan_reader.sents()
     actual = next(sents)
-    expected = [('هر', 'DET,PREM_AMBAJ'), ('جسمی', 'NOUN,N_IANM'), ('با', 'ADP,PREP'), ('دمای', 'NOUN,N_IANM'), ('بالاتر', 'ADJ,ADJ_AJCM'), ('از', 'ADP,PREP'), ('صفر', 'NOUN,N_IANM'), ('مطلق', 'ADJ,ADJ_AJP'), ('انرژی', 'NOUN,N_IANM'), ('تابش', 'NOUN,N_IANM'), ('خواهد', 'AUX,AUX'), ('کرد', 'VERB,V_ACT'), ('.', 'PUNCT,PUNC')]
+    expected = [("هر", "DET,PREM_AMBAJ"), ("جسمی", "NOUN,N_IANM"), ("با", "ADP,PREP"), ("دمای", "NOUN,N_IANM"), ("بالاتر", "ADJ,ADJ_AJCM"), ("از", "ADP,PREP"), ("صفر", "NOUN,N_IANM"), ("مطلق", "ADJ,ADJ_AJP"), ("انرژی", "NOUN,N_IANM"), ("تابش", "NOUN,N_IANM"), ("خواهد", "AUX,AUX"), ("کرد", "VERB,V_ACT"), (".", "PUNCT,PUNC")]
     assert actual == expected
 
 def test_trees(universal_dadegan_reader: UniversalDadeganReader):
