@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 from typing import Iterator
 from typing import List
+from typing import Optional
 from typing import Tuple
 from typing import Type
 
@@ -39,7 +40,7 @@ class WordEmbedding:
     def __init__(
         self: "WordEmbedding",
         model_type: str,
-        model_path: str = None,
+        model_path: Optional[str] = None,
     ) -> None:
         if model_type not in supported_embeddings:
             msg = (
@@ -361,7 +362,7 @@ class SentEmbedding:
 
     """
 
-    def __init__(self: "SentEmbedding", model_path: str = None) -> None:
+    def __init__(self: "SentEmbedding", model_path: Optional[str] = None) -> None:
         if model_path:
             self.load_model(model_path)
             self.__load_word_embedding_model()
@@ -383,6 +384,9 @@ class SentEmbedding:
 
         """
         self.model = Doc2Vec.load(model_path)
+        self.model.alpha = 0.015
+        self.model.min_alpha = 0.0001
+        self.model.epochs = 40
         self.__load_word_embedding_model()
 
     def train(
