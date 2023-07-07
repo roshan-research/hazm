@@ -9,6 +9,7 @@
 from typing import Dict
 from typing import Iterator
 from typing import List
+from typing import Optional
 from typing import Tuple
 from typing import Union
 
@@ -66,8 +67,8 @@ class Chunker(IOBTagger):
 
     def __init__(
         self: "Chunker",
-        model: str = None,
-        data_maker: List[List[Dict]] = None,
+        model: Optional[str] = None,
+        data_maker: Optional[List[List[Dict]]] = None,
     ) -> None:
         """constructor."""
         data_maker = self.data_maker if data_maker is None else data_maker
