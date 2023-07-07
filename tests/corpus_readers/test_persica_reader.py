@@ -5,7 +5,7 @@ from hazm import PersicaReader
 
 @pytest.fixture(scope="module")
 def persica_reader():
-    return PersicaReader("corpora/persica.csv")
+    return PersicaReader("tests/files/persica.csv")
 
 def test_docs(persica_reader):
     actual = next(persica_reader.docs())["id"]

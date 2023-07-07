@@ -39,7 +39,7 @@ class TNewsReader:
         - تاریخ و زمان انتشار (datetime).
 
         Examples:
-            >>> tnews = TNewsReader(root='corpora/tnews')
+            >>> tnews = TNewsReader(root='tnews')
             >>> next(tnews.docs())['id']
             '14092303482300013653'
 
@@ -110,7 +110,7 @@ class TNewsReader:
         `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:
-            >>> tnews = TNewsReader(root='corpora/tnews')
+            >>> tnews = TNewsReader(root='tnews')
             >>> next(tnews.texts()).startswith('به گزارش ”  شبکه اطلاع رسانی اینترنتی بوتیا  ” به نقل از ارگ نیوز')
             True
 

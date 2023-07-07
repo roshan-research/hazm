@@ -317,7 +317,7 @@ class PeykareReader:
         """جملات پیکره را در قالب لیستی از `(توکن، برچسب)`ها برمی‌گرداند.
 
         Examples:
-            >>> peykare = PeykareReader(root='corpora/peykare')
+            >>> peykare = PeykareReader(root='peykare')
             >>> next(peykare.sents())
             [('دیرزمانی', 'N'), ('از', 'P'), ('راه\u200cاندازی', 'N,EZ'), ('شبکه\u200cی', 'N,EZ'), ('خبر', 'N,EZ'), ('الجزیره', 'N'), ('نمی\u200cگذرد', 'V'), ('،', 'PUNC'), ('اما', 'CONJ'), ('این', 'DET'), ('شبکه\u200cی', 'N,EZ'), ('خبری', 'AJ,EZ'), ('عربی', 'N'), ('بسیار', 'ADV'), ('سریع', 'ADV'), ('توانسته', 'V'), ('در', 'P'), ('میان', 'N,EZ'), ('شبکه\u200cهای', 'N,EZ'), ('عظیم', 'AJ,EZ'), ('خبری', 'AJ'), ('و', 'CONJ'), ('بنگاه\u200cهای', 'N,EZ'), ('چندرسانه\u200cای', 'AJ,EZ'), ('دنیا', 'N'), ('خودی', 'N'), ('نشان', 'N'), ('دهد', 'V'), ('.', 'PUNC')]
 
@@ -326,7 +326,7 @@ class PeykareReader:
 
         """
 
-        # >>> peykare = PeykareReader(root='corpora/peykare', joined_verb_parts=False, pos_map=None)
+        # >>> peykare = PeykareReader(root='peykare', joined_verb_parts=False, pos_map=None)
         # >>> next(peykare.sents())
         def map_pos(item: str) -> Tuple:
             return (item[0], self._pos_map(item[1].split(","), item[0]))

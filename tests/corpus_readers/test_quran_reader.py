@@ -5,7 +5,7 @@ from hazm import QuranReader
 
 @pytest.fixture(scope="module")
 def quran_reader():
-    return QuranReader(quran_file="corpora/quranic_corpus_morphology.txt")
+    return QuranReader(quran_file="tests/files/quranic_corpus_morphology.txt")
 
 def test_parts(quran_reader):
     parts = quran_reader.parts()

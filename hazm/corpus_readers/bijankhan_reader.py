@@ -13,6 +13,7 @@ import re
 from pathlib import Path
 from typing import Iterator
 from typing import List
+from typing import Optional
 from typing import Tuple
 
 from hazm import Normalizer
@@ -77,7 +78,7 @@ class BijankhanReader:
         self: "BijankhanReader",
         bijankhan_file: str,
         joined_verb_parts: bool = True,
-        pos_map: str = None,
+        pos_map: Optional[str] = None,
     ) -> None:
         """Init."""
         if pos_map is None:
@@ -116,7 +117,7 @@ class BijankhanReader:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
 
         Examples:
-            >>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
+            >>> bijankhan = BijankhanReader(bijankhan_file='bijankhan.txt')
             >>> next(bijankhan.sents())
             [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 

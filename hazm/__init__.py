@@ -50,6 +50,7 @@ def word_tokenize(sentence: str) -> List[str]:
 from hazm.corpus_readers import PeykareReader
 from hazm.corpus_readers import BijankhanReader
 from hazm.corpus_readers import DadeganReader
+from hazm.corpus_readers import UniversalDadeganReader
 from hazm.corpus_readers import DegarbayanReader
 from hazm.corpus_readers import HamshahriReader
 from hazm.corpus_readers import MirasTextReader
@@ -59,7 +60,6 @@ from hazm.corpus_readers import SentiPersReader
 from hazm.corpus_readers import TNewsReader
 from hazm.corpus_readers import TreebankReader
 from hazm.corpus_readers import VerbValencyReader
-from hazm.corpus_readers import WikipediaReader
 from hazm.corpus_readers import persian_plain_text_reader
 
 from hazm.dependency_parser import DependencyParser

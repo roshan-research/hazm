@@ -6,7 +6,7 @@ from hazm import tree2brackets
 
 @pytest.fixture(scope="module")
 def treebank_reader():
-    return TreebankReader(root="corpora/treebank")
+    return TreebankReader(root="tests/files/treebank")
 
 def test_trees(treebank_reader):
     actual = str(next(treebank_reader.trees()))

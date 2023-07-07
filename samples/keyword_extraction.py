@@ -38,7 +38,7 @@ def tokenize(text):
     ]
 
 
-def posTagger(text, pos_model_path="resources/pos_tagger.model", posTaggerModel=None):
+def posTagger(text, pos_model_path="pos_tagger.model", posTaggerModel=None):
     tokens = tokenize(text)
     tagger = POSTagger(pos_model_path) if posTaggerModel is None else posTaggerModel
     return tagger.tag_sents(tokens)

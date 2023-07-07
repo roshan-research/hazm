@@ -34,7 +34,7 @@ class MaltParser(MaltParser):
         self: "MaltParser",
         tagger: str,
         lemmatizer: str,
-        working_dir: str = "resources",
+        working_dir: str = "dependency_parser",
         model_file: str = "langModel.mco",  # Don't rename this file
     ) -> None:
         self.tagger = tagger
@@ -180,12 +180,12 @@ class TurboParser(ParserI):
         """tagged_parse_sents."""
         input_file = tempfile.NamedTemporaryFile(
             prefix="turbo_input.conll",
-            dir="resources",
+            dir="dependency_parser",
             delete=False,
         )
         output_file = tempfile.NamedTemporaryFile(
             prefix="turbo_output.conll",
-            dir="resources",
+            dir="dependency_parser",
             delete=False,
         )
 
@@ -240,7 +240,7 @@ class DependencyParser(MaltParser):
 
     Examples:
         >>> from hazm import POSTagger, Lemmatizer, DependencyParser
-        >>> parser = DependencyParser(tagger=POSTagger(model='resources/pos_tagger.model'), lemmatizer=Lemmatizer())
+        >>> parser = DependencyParser(tagger=POSTagger(model='pos_tagger.model'), lemmatizer=Lemmatizer())
         >>> parser.parse(['من', 'به', 'مدرسه', 'رفته بودم', '.']).tree().pprint()
         (من (به (مدرسه (رفته_بودم .))))
     """

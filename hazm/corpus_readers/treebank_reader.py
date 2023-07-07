@@ -125,7 +125,7 @@ class TreebankReader:
         """ساختارهای درختی موجود در پیکره را برمی‌گرداند.
 
         Examples:
-            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> treebank = TreebankReader(root='treebank')
             >>> print(next(treebank.trees()))
             (S
               (VPS
@@ -259,7 +259,7 @@ class TreebankReader:
         """جملات را به شکل مجموعه‌ای از `(توکن،برچسب)`ها برمی‌گرداند.
 
         Examples:
-            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> treebank = TreebankReader(root='treebank')
             >>> next(treebank.sents())
             [('دنیای', 'Ne'), ('آدولف', 'N'), ('بورن', 'N'), ('دنیای', 'Ne'), ('اتفاقات', 'Ne'), ('رویایی', 'AJ'), ('است', 'V'), ('.', 'PUNC')]
 
@@ -275,7 +275,7 @@ class TreebankReader:
 
         Examples:
             >>> from hazm.chunker import tree2brackets
-            >>> treebank = TreebankReader(root='corpora/treebank')
+            >>> treebank = TreebankReader(root='treebank')
             >>> tree2brackets(next(treebank.chunked_trees()))
             '[دنیای آدولف بورن NP] [دنیای اتفاقات رویایی NP] [است VP] .'
 

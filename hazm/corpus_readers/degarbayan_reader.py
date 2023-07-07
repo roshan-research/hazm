@@ -34,7 +34,6 @@ class DegarbayanReader:
             در حالت `three_class` جملات سه برچسب می‌خورند: ۱. `Paraphrase`(دگربیان)
             ۲. `SemiParaphrase`(تقریباً دگربیان) ۳. `NotParaphrase`(غیر دگربیان). در حالت
             `two_class` حالت دوم یعنی `SemiParaphrase` هم برچسب `Paraphrase` می‌خورَد.
-        version: شمارهٔ نسخهٔ پیکره
 
     """
 
@@ -132,7 +131,7 @@ class DegarbayanReader:
         """متن‌های دگربیان را در قالب یک `(متن اصلی، شکل دگربیان، برچسب)` برمی‌گرداند.
 
         Examples:
-            >>> degarbayan = DegarbayanReader(root='corpora/degarbayan')
+            >>> degarbayan = DegarbayanReader(root='degarbayan')
             >>> next(degarbayan.pairs())
             ('24 نفر نهایی تیم ملی بدون تغییری خاص معرفی شد', 'کی روش 24 بازیکن را به تیم ملی فوتبال دعوت کرد', 'Paraphrase')
 

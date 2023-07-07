@@ -36,7 +36,7 @@ class QuranReader:
         شده است.
 
         Examples:
-            >>> parts=QuranReader(quran_file='corpora/quranic_corpus_morphology.txt').parts()
+            >>> parts=QuranReader(quran_file='quranic_corpus_morphology.txt').parts()
             >>> print(next(parts))
             {'loc': (1, 1, 1, 1), 'text': 'بِ', 'tag': 'P'}
             >>> print(next(parts))
@@ -73,7 +73,7 @@ class QuranReader:
         """اطلاعات صرفی کلمات قرآن را برمی‌گرداند.
 
         Examples:
-            >>> words=QuranReader(quran_file='corpora/quranic_corpus_morphology.txt').words()
+            >>> words=QuranReader(quran_file='quranic_corpus_morphology.txt').words()
             >>> print(next(words))
             ('1.1.1', 'بِسْمِ', 'ٱسْم', 'سمو', 'P-N', [{'text': 'بِ', 'tag': 'P'}, {'text': 'سْمِ', 'tag': 'N', 'lem': 'ٱسْم', 'root': 'سمو'}])
 

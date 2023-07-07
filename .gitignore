@@ -156,3 +156,11 @@ cython_debug/
 poetry.lock
 
 sample.py
+
+# ipynb files 
+
+ss.ipynb
+
+.ruff_cache
+
+tests/files/

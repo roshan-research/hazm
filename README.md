@@ -43,8 +43,6 @@ To install the latest version of Hazm, run the following command in your termina
 Alternatively, you can install the latest update from GitHub (this version may be unstable and buggy):
 
     pip install git+https://github.com/roshan-research/hazm.git
-    
-then **download [resources.zip (~4 MB)](https://github.com/sir-kokabi/resources/releases/download/0.9.0/resources.zip)** and extract it to a to a folder named `resources` in the root of your project.
 
 ## Pretrained-Models
 
@@ -59,6 +57,13 @@ Finally if you want to use our pretrained models, you can download it from the l
 | [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)            | ~ 18 MB |
 | [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)              | ~ 4 MB |
 
+| **Module name**                                                                                                        | **Size** |
+| :--------------------------------------------------------------------------------------------------------------------- | :------- |
+| [**Download WordEmbedding**](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)                | ~ 5 GB   |
+| [**Download SentEmbedding**](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)                | ~ 1 GB   |
+| [**Download DependencyParser**](https://drive.google.com/file/d/1Ww3xsZC5BXY5eN8-2TWo40G-WvppkXYD/view?usp=drive_link) | ~ 60 MB  |
+| [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)                            | ~ 18 MB  |
+| [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)                              | ~ 4 MB   |
 
 ## Usage
 
@@ -81,16 +86,16 @@ Finally if you want to use our pretrained models, you can download it from the l
 >>> lemmatizer.lemmatize('می‌روم')
 'رفت#رو'
 
->>> tagger = POSTagger(model='resources/pos_tagger.model')
+>>> tagger = POSTagger(model='pos_tagger.model')
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
->>> chunker = Chunker(model='resources/chunker.model')
+>>> chunker = Chunker(model='chunker.model')
 >>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
 
->>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'resources/word2vec.bin')
+>>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'word2vec.bin')
 >>> word_embedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
 'پنجره'
 >>> word_embedding.doesnt_match(['ساعت' ,'پلنگ' ,'شیر'])

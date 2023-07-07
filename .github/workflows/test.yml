@@ -32,9 +32,9 @@ jobs:
                 poetry lock
                 poetry install --with dev            
 
-            - name: Download resources
+            - name: Download test files
               run: |                  
-                  git clone https://github.com/sir-kokabi/resources.git resources
+                  git clone https://github.com/sir-kokabi/resources.git tests/files/
 
             - name: Run tests
               run: poetry run poe test

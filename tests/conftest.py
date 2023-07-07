@@ -42,15 +42,15 @@ def conjugation():
 
 @pytest.fixture(scope="session")
 def pos_tagger():
-    return POSTagger(model="resources/pos_tagger.model")
+    return POSTagger(model="tests/files/pos_tagger.model")
 
 @pytest.fixture(scope="session")
 def universal_pos_tagger():
-    return POSTagger(model="resources/pos_tagger.model",universal_tag=True)
+    return POSTagger(model="tests/files/pos_tagger.model",universal_tag=True)
 
 @pytest.fixture(scope="session")
 def stanford_pos_tagger():
-    return StanfordPOSTagger(model_filename="resources/persian.tagger", path_to_jar="resources/stanford_postagger.jar")
+    return StanfordPOSTagger(model_filename="tests/files/persian.tagger", path_to_jar="tests/files/stanford_postagger.jar")
 
 @pytest.fixture(scope="session")
 def token_splitter():
@@ -58,11 +58,11 @@ def token_splitter():
 
 @pytest.fixture(scope="session")
 def dependency_parser(pos_tagger, lemmatizer):
-    return DependencyParser(tagger=pos_tagger, lemmatizer=lemmatizer)
+    return DependencyParser(tagger=pos_tagger, lemmatizer=lemmatizer, working_dir="tests/files/dependency_parser")
 
 @pytest.fixture(scope="session")
 def chunker():
-    return Chunker(model="resources/chunker.model")
+    return Chunker(model="tests/files/chunker.model")
 
 @pytest.fixture(scope="session")
 def rull_based_chunker():
@@ -71,13 +71,13 @@ def rull_based_chunker():
 @pytest.fixture(scope="session")
 def word_embedding():
     word_embedding=WordEmbedding(model_type = "fasttext")
-    word_embedding.load_model("resources/light_word2vec.bin")
+    word_embedding.load_model("tests/files/light_word2vec.bin")
     return word_embedding
 
 @pytest.fixture(scope="session")
 def sent_embedding():
     sent_embedding = SentEmbedding()
-    sent_embedding.load_model("resources/light_sent2vec.model")
+    sent_embedding.load_model("tests/files/light_sent2vec.model")
     return sent_embedding
 
 
