@@ -40,7 +40,7 @@ class MirasTextReader:
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:
-            >>> mirastext = MirasTextReader(filename='corpora/mirastext.txt')
+            >>> mirastext = MirasTextReader(filename='mirastext.txt')
             >>> next(mirastext.texts())[:42]  # first 42 characters of fitst text
             'ایرانی‌ها چقدر از اینترنت استفاده می‌کنند؟'
 

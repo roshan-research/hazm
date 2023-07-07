@@ -5,7 +5,7 @@ from hazm import TNewsReader
 
 @pytest.fixture(scope="module")
 def tnews_reader():
-    return TNewsReader(root="corpora/tnews")
+    return TNewsReader(root="tests/files/tnews")
 
 def test_docs(tnews_reader):
     actual = next(tnews_reader.docs())["id"]

@@ -40,7 +40,7 @@ class PersicaReader:
         - دستهٔ فرعی (`category2`)
 
         Examples:
-            >>> persica = PersicaReader('corpora/persica.csv')
+            >>> persica = PersicaReader('persica.csv')
             >>> next(persica.docs())['id']
             843656
 
@@ -75,7 +75,7 @@ class PersicaReader:
         `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:
-            >>> persica = PersicaReader('corpora/persica.csv')
+            >>> persica = PersicaReader('persica.csv')
             >>> next(persica.texts()).startswith('وزير علوم در جمع استادان نمونه كشور گفت')
             True
 

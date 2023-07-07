@@ -26,7 +26,7 @@
 $ pip install hazm
 ```
 
-سپس [منابع موردنظر را دانلود کنید](https://github.com/roshan-research/hazm#modules-accuracy) و در پوشه‌ای به اسم resources در ریشهٔ پروژهٔ خود قرار دهید.
+سپس [منابع موردنظر را دانلود کنید](https://github.com/roshan-research/hazm#pretrained-models) و ترجیحاً در ریشهٔ پروژهٔ خود اکسترکت کنید.
 
 و در آخر، هضم را را در پروژه خود ایمپورت کنید:
 
@@ -62,12 +62,12 @@ print(WordTokenizer().tokenize("پرسید، چرا دیروز نیامدی؟"))
 # ['پرسید', '،', 'چرا', 'دیروز', 'نیامدی', '؟']
 
 # Assigns parts of speech to each word, such as noun, verb, adjective, etc.
-tagger = POSTagger(model='resources/pos_tagger.model')
+tagger = POSTagger(model='pos_tagger.model')
 print(tagger.tag(WordTokenizer().tokenize("ما بسیار کتاب می‌خوانیم")))
 # [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
 # Labels each word with its part of speech, such as noun, verb, adjective, etc.
-chunker = chunker('resources/chunker.model')
+chunker = chunker('chunker.model')
 tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 tree2brackets(chunker.parse(tagged))
 # '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'

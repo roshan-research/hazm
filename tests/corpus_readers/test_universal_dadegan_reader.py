@@ -6,7 +6,7 @@ from hazm import tree2brackets
 
 @pytest.fixture(scope="module")
 def universal_dadegan_reader():
-    return UniversalDadeganReader("corpora/dadegan.conllu")
+    return UniversalDadeganReader("tests/files/dadegan.conllu")
 
 def test_sents(universal_dadegan_reader: UniversalDadeganReader):
     sents = universal_dadegan_reader.sents()

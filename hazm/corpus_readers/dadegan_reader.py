@@ -160,7 +160,7 @@ class DadeganReader:
         هر جمله لیستی از `(توکن، برچسب)`ها است.
 
         Examples:
-            >>> dadegan = DadeganReader(conll_file='corpora/dadegan.conll')
+            >>> dadegan = DadeganReader(conll_file='dadegan.conll')
             >>> next(dadegan.sents())
             [('این', 'DET'), ('میهمانی', 'N'), ('به', 'P'), ('منظور', 'Ne'), ('آشنایی', 'Ne'), ('هم‌تیمی‌های', 'Ne'), ('او', 'PRO'), ('با', 'P'), ('غذاهای', 'Ne'), ('ایرانی', 'AJ'), ('ترتیب', 'N'), ('داده_شد', 'V'), ('.', 'PUNC')]
 
@@ -176,7 +176,7 @@ class DadeganReader:
 
         Examples:
             >>> from hazm.chunker import tree2brackets
-            >>> dadegan = DadeganReader(conll_file='corpora/dadegan.conll')
+            >>> dadegan = DadeganReader(conll_file='dadegan.conll')
             >>> tree2brackets(next(dadegan.chunked_trees()))
             '[این میهمانی NP] [به PP] [منظور آشنایی هم‌تیمی‌های او NP] [با PP] [غذاهای ایرانی NP] [ترتیب داده_شد VP] .'
 

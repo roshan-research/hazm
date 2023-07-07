@@ -138,7 +138,7 @@ tokenize_text
 بعد از لودکردن مدل POS، هر یک از کلمات را با ماژول POSTagger هضم برچسب‌گذاری می‌کنیم.
 
 ```python
-model_path = '/resources/pos_tagger.model'
+model_path = 'pos_tagger.model'
 tagger = POSTagger(model = model_path)
 token_tag_list = tagger.tag_sents(tokenize_text)
 token_tag_list
@@ -296,7 +296,7 @@ print(np.array(list(all_candidates)))
 مدل sent2vec را لود می‌کنیم.
 
 ```python
-sent2vec_model_path = '/resources/sent2vec.model'
+sent2vec_model_path = 'sent2vec.model'
 sent2vec_model = SentEmbedding(sent2vec_model_path)
 ```
 

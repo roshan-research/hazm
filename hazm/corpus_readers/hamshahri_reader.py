@@ -92,7 +92,7 @@ class HamshahriReader:
         - موضوعات (`categories`)
 
         Examples:
-            >>> hamshahri = HamshahriReader(root='corpora/hamshahri')
+            >>> hamshahri = HamshahriReader(root='hamshahri')
             >>> next(hamshahri.docs())['id']
             'HAM2-750403-001'
 

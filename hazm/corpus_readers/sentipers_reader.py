@@ -115,7 +115,7 @@ class SentiPersReader:
         """نظرات مربوط به متن را برمی‌گرداند.
 
         Examples:
-            >>> sentipers = SentiPersReader(root='corpora/sentipers')
+            >>> sentipers = SentiPersReader(root='sentipers')
             >>> next(sentipers.comments())[0][1]
             'بيشتر مناسب است براي کساني که به دنبال تنوع هستند و در همه چيز نو گرايي دارند .'
 

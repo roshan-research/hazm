@@ -116,7 +116,7 @@ class BijankhanReader:
         """جملات پیکره را به شکل لیستی از `(توکن،برچسب)`ها برمی‌گرداند..
 
         Examples:
-            >>> bijankhan = BijankhanReader(bijankhan_file='corpora/bijankhan.txt')
+            >>> bijankhan = BijankhanReader(bijankhan_file='bijankhan.txt')
             >>> next(bijankhan.sents())
             [('اولین', 'ADJ'), ('سیاره', 'N'), ('خارج', 'ADJ'), ('از', 'PREP'), ('منظومه', 'N'), ('شمسی', 'ADJ'), ('دیده_شد', 'V'), ('.', 'PUNC')]
 

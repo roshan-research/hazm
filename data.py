@@ -17,7 +17,7 @@ from hazm.dependency_parser import MaltParser, TurboParser
 from hazm.pos_tagger import StanfordPOSTagger
 
 
-def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.dat"):
+def create_words_file(dic_file="tests/files/persian.dic", output="hazm/data/words.dat"):
     """prepares list of persian word words from [Virastyar](https://sourceforge.net/projects/virastyar/) dic file."""
 
     dic_words = [
@@ -38,12 +38,12 @@ def create_words_file(dic_file="resources/persian.dic", output="hazm/data/words.
 
 
 def evaluate_lemmatizer(
-    conll_file="resources/train.conll", peykare_root="corpora/peykare"
+    conll_file="tests/files/train.conll", peykare_root="tests/files/peykare"
 ):
     lemmatizer = Lemmatizer()
 
     errors = []
-    with open("resources/lemmatizer_errors.txt", "w", "utf8") as output:
+    with open("tests/files/lemmatizer_errors.txt", "w", "utf8") as output:
         dadegan = DadeganReader(conll_file)
         for tree in dadegan.trees():
             for node in tree.nodelist[1:]:
@@ -58,7 +58,7 @@ def evaluate_lemmatizer(
             print(count, *item, file=output)
 
     missed = []
-    with open("resources/lemmatizer_missed.txt", "w", "utf8") as output:
+    with open("tests/files/lemmatizer_missed.txt", "w", "utf8") as output:
         peykare = PeykareReader(peykare_root)
         for sentence in peykare.sents():
             for word in sentence:
@@ -73,7 +73,7 @@ def evaluate_lemmatizer(
             print(count, item, file=output)
 
 
-def evaluate_normalizer(tnews_root="corpora/tnews"):
+def evaluate_normalizer(tnews_root="tests/files/tnews"):
     tnews = TNewsReader(root=tnews_root)
     normalizer = Normalizer(
         persian_style=False,
@@ -90,8 +90,8 @@ def evaluate_normalizer(tnews_root="corpora/tnews"):
         affix_spacing=False,
     )
 
-    with open("resources/normalized.txt", "w", "utf8") as output1, open(
-        "resources/normalized_token_based.txt", "w", "utf8"
+    with open("tests/files/normalized.txt", "w", "utf8") as output1, open(
+        "tests/files/normalized_token_based.txt", "w", "utf8"
     ) as output2:
         random.seed(0)
         for text in tnews.texts():
@@ -103,12 +103,12 @@ def evaluate_normalizer(tnews_root="corpora/tnews"):
                 print(token_normalizer.normalize(sentence), "\n", file=output2)
 
 
-def evaluate_informal_normalizer(sentipars_root="corpora/sentipers"):
+def evaluate_informal_normalizer(sentipars_root="tests/files/sentipers"):
     sentipers = SentiPersReader(root=sentipars_root)
     normalizer = Normalizer()
     informal_normalizer = InformalNormalizer()
 
-    output = open("resources/normalized.txt", "w", "utf8")
+    output = open("tests/files/normalized.txt", "w", "utf8")
     for comments in sentipers.comments():
         for comment in comments:
             for sentence in comment:
@@ -122,14 +122,14 @@ def evaluate_informal_normalizer(sentipars_root="corpora/sentipers"):
                 print(file=output)
 
 
-def evaluate_chunker(treebank_root="corpora/treebank"):
+def evaluate_chunker(treebank_root="tests/files/treebank"):
     treebank = TreebankReader(treebank_root, join_clitics=True, join_verb_parts=True)
     chunker = Chunker()
     chunked_trees = list(treebank.chunked_trees())
 
     print(chunker.evaluate(chunked_trees))
 
-    output = open("resources/chunker_errors.txt", "w", "utf8")
+    output = open("tests/files/chunker_errors.txt", "w", "utf8")
     for sentence, gold in zip(treebank.sents(), chunked_trees):
         chunked = chunker.parse(sentence)
         if chunked != gold:
@@ -139,8 +139,8 @@ def evaluate_chunker(treebank_root="corpora/treebank"):
 
 
 def train_postagger(
-    peykare_root="corpora/peykare",
-    model_file="resources/postagger.model",
+    peykare_root="tests/files/peykare",
+    model_file="tests/files/postagger.model",
     test_size=0.1,
     sents_limit=None,
     pos_map=peykare_coarse_pos_e,
@@ -187,12 +187,12 @@ def train_postagger(
 
 
 def train_chunker(
-    train_file="corpora/train.conll",
-    dev_file="corpora/dev.conll",
-    test_file="corpora/test.conll",
-    model_file="resources/chunker.model",
+    train_file="tests/files/train.conll",
+    dev_file="tests/files/dev.conll",
+    test_file="tests/files/test.conll",
+    model_file="tests/files/chunker.model",
 ):
-    tagger = POSTagger(model="resources/postagger.model")
+    tagger = POSTagger(model="tests/files/postagger.model")
     chunker = Chunker(
         type="crf",
         algo="l-bfgs",
@@ -229,17 +229,17 @@ def train_chunker(
 
 
 def train_maltparser(
-    train_file="corpora/train.conll",
-    dev_file="corpora/dev.conll",
-    test_file="corpora/test.conll",
+    train_file="tests/files/train.conll",
+    dev_file="tests/files/dev.conll",
+    test_file="tests/files/test.conll",
     model_file="langModel.mco",
-    path_to_jar="resources/malt.jar",
-    options_file="resources/malt-options.xml",
-    features_file="resources/malt-features.xml",
+    path_to_jar="tests/files/malt.jar",
+    options_file="tests/files/malt-options.xml",
+    features_file="tests/files/malt-features.xml",
     memory_min="-Xms7g",
     memory_max="-Xmx8g",
 ):
-    lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/pos_tagger.model")
+    lemmatizer, tagger = Lemmatizer(), POSTagger(model="tests/files/pos_tagger.model")
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
     train_data = train_file + ".data"
@@ -304,17 +304,17 @@ def train_maltparser(
         file=open(test_results, "w", encoding="utf8"),
     )
     subprocess.Popen(
-        ["java", "-jar", "resources/MaltEval.jar", "-g", test_data, "-s", test_results]
+        ["java", "-jar", "tests/files/MaltEval.jar", "-g", test_data, "-s", test_results]
     ).wait()
 
 
 def train_turboparser(
-    train_file="corpora/train.conll",
-    dev_file="corpora/dev.conll",
-    test_file="corpora/test.conll",
-    model_file="resources/turboparser.model",
+    train_file="tests/files/train.conll",
+    dev_file="tests/files/dev.conll",
+    test_file="tests/files/test.conll",
+    model_file="tests/files/turboparser.model",
 ):
-    lemmatizer, tagger = Lemmatizer(), POSTagger(model="resources/postagger.model")
+    lemmatizer, tagger = Lemmatizer(), POSTagger(model="tests/files/postagger.model")
 
     train, test = DadeganReader(train_file), DadeganReader(test_file)
     train_data = train_file + ".data"
@@ -345,7 +345,7 @@ def train_turboparser(
 
     subprocess.Popen(
         [
-            "./resources/TurboParser",
+            "./tests/files/TurboParser",
             "--train",
             "--file_train=" + train_data,
             "--file_model=" + model_file,
@@ -370,7 +370,7 @@ def train_turboparser(
         [
             "java",
             "-jar",
-            "resources/MaltEval.jar",
+            "tests/files/MaltEval.jar",
             "-g",
             test_data,
             "-s",
@@ -384,17 +384,17 @@ def train_turboparser(
 
 
 def train_stanford_postagger(
-    peykare_root="corpora/peykare",
-    path_to_model="resources/persian.tagger",
-    path_to_jar="resources/stanford_postagger.jar",
-    properties_file="resources/stanford-postagger.props",
+    peykare_root="tests/files/peykare",
+    path_to_model="tests/files/persian.tagger",
+    path_to_jar="tests/files/stanford_postagger.jar",
+    properties_file="tests/files/stanford-postagger.props",
     memory_min="-Xms1g",
     memory_max="-Xmx6g",
     test_size=0.1,
     pos_map=peykare_coarse_pos_e,
 ):
     peykare = PeykareReader(peykare_root, pos_map=pos_map)
-    train_file = "resources/tagger_train_data.txt"
+    train_file = "tests/files/tagger_train_data.txt"
     train, test = train_test_split(
         list(peykare.sents()), test_size=test_size, random_state=0
     )

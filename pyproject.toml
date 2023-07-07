@@ -153,7 +153,6 @@ show-fixes = true
 
 [tool.ruff.per-file-ignores]
 "data.py"=["ALL"] # temporary
-"wiki_extractor.py"=["ALL"] # temporary
 "sample.py"=["ALL"] # always
 
 [tool.ruff.isort]

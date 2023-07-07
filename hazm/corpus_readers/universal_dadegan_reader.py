@@ -7,7 +7,7 @@ from hazm.corpus_readers import DadeganReader
 
 def conllu2conll(conllu_path: str) -> str :
     """این تابع برای تبدیل فایل conllu به فایل conll است."""
-    reader1 = Path(conllu_path).open()
+    reader1 = Path(conllu_path).open(encoding="utf8")
 
     delex = False
     if len(sys.argv) > 3 and sys.argv[3] == "delex":
