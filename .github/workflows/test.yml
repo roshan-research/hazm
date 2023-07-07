@@ -32,6 +32,11 @@ jobs:
                 poetry lock
                 poetry install --with dev            
 
+            - uses: actions/setup-java@v3
+              with:
+                distribution: 'oracle'
+                java-version: '17'
+
             - name: Download test files
               run: |                  
                   git clone https://github.com/sir-kokabi/resources.git tests/files/
