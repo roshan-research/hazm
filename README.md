@@ -52,18 +52,10 @@ Finally if you want to use our pretrained models, you can download it from the l
 |:------------------------ |:-------- |
 | [**Download WordEmbedding**](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)        | ~ 5 GB |
 | [**Download SentEmbedding**](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)        | ~ 1 GB |
-| [**Download DependencyParser**](https://drive.google.com/file/d/1Ww3xsZC5BXY5eN8-2TWo40G-WvppkXYD/view?usp=drive_link)     | ~ 13 MB |
-| [**Download UniversalDependencyParser**](https://drive.google.com/file/d/1MDapMSUXYfmQlu0etOAkgP5KDiWrNAV6/view?usp=share_link)     | ~ 15 MB |
 | [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)            | ~ 18 MB |
+| [**Download UniversalDependencyParser**](https://drive.google.com/file/d/1MDapMSUXYfmQlu0etOAkgP5KDiWrNAV6/view?usp=share_link)     | ~ 15 MB |
+| [**Download DependencyParser**](https://drive.google.com/file/d/1Ww3xsZC5BXY5eN8-2TWo40G-WvppkXYD/view?usp=drive_link)     | ~ 13 MB |
 | [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)              | ~ 4 MB |
-
-| **Module name**                                                                                                        | **Size** |
-| :--------------------------------------------------------------------------------------------------------------------- | :------- |
-| [**Download WordEmbedding**](https://mega.nz/file/GqZUlbpS#XRYP5FHbPK2LnLZ8IExrhrw3ZQ-jclNSVCz59uEhrxY)                | ~ 5 GB   |
-| [**Download SentEmbedding**](https://mega.nz/file/WzR0QChY#J1nG-HGq0UJP69VMY8I1YGl_MfEAFCo5iizpjofA4OY)                | ~ 1 GB   |
-| [**Download DependencyParser**](https://drive.google.com/file/d/1Ww3xsZC5BXY5eN8-2TWo40G-WvppkXYD/view?usp=drive_link) | ~ 60 MB  |
-| [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)                            | ~ 18 MB  |
-| [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)                              | ~ 4 MB   |
 
 ## Usage
 
