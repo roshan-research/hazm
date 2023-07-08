@@ -384,9 +384,6 @@ class SentEmbedding:
 
         """
         self.model = Doc2Vec.load(model_path)
-        self.model.alpha = 0.015
-        self.model.min_alpha = 0.0001
-        self.model.epochs = 40
         self.__load_word_embedding_model()
 
     def train(
