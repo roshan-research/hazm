@@ -21,7 +21,7 @@ keywords = ["nlp", "persian nlp", "persian"]
 
 [tool.poetry.urls]
 "Demo" = "https://www.roshan-ai.ir/hazm/demo/"
-"Changelog" = "https://github.com/roshan-research/hazm/blob/master/CHANGELOG.md"
+"Changelog" = "https://github.com/roshan-research/hazm/releases/latest"
 "Contribution" = "https://github.com/roshan-research/hazm/blob/master/CONTRIBUTION.md"
 "Issues" = "https://github.com/roshan-research/hazm/issues"
 "Join-us" = "https://www.roshan-ai.ir/join-us/"
