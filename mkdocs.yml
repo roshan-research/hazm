@@ -101,7 +101,8 @@ nav:
           - SentiPersReader: content/hazm/corpus_readers/sentipers_reader.md
           - TNewsReader: content/hazm/corpus_readers/tnews_reader.md
           - TreebankReader: content/hazm/corpus_readers/treebank_reader.md
-          - VerbValencyReader: content/hazm/corpus_readers/verbvalency_reader.md          
+          - VerbValencyReader: content/hazm/corpus_readers/verbvalency_reader.md
+          - WikipediaReader: content/hazm/corpus_readers/wikipedia_reader.md     
   - کاربردهای هضم:
       - استخراج کلمات کلیدی: content/samples/keyword_extraction.md
 

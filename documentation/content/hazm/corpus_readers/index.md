@@ -31,3 +31,5 @@
 ## [TreebankReader](./treebank_reader.md)
 
 ## [VerbValencyReader](./verbvalency_reader.md)
+
+## [WikipediaReader](./wikipedia_reader.md)
