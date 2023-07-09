@@ -21,10 +21,10 @@
 ## Evaluation
 |  Module name   |     |
 | :--- | --- |
-| DependencyParser | 85.6% |
-| POSTagger | 98.8% |
-| Chunker | 93.4% |
-| Lemmatizer | 89.9% |
+| DependencyParser | **85.6%** |
+| POSTagger | **98.8%** |
+| Chunker | **93.4%** |
+| Lemmatizer | **89.9%** |
 
 ## Introduction
 
