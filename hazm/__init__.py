@@ -60,7 +60,8 @@ from hazm.corpus_readers import SentiPersReader
 from hazm.corpus_readers import TNewsReader
 from hazm.corpus_readers import TreebankReader
 from hazm.corpus_readers import VerbValencyReader
-from hazm.corpus_readers import persian_plain_text_reader
+from hazm.corpus_readers import PersianPlainTextReader
+from hazm.corpus_readers import WikipediaReader
 
 from hazm.dependency_parser import DependencyParser
 from hazm.dependency_parser import MaltParser
