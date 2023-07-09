@@ -1,7 +1,6 @@
 """این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ ویکی‌پدیا است.
 
-[پیکرهٔ ویکی‌پدیا](http://download.wikimedia.org/fawiki/latest/fawiki-latest-
-pages-articles.xml.bz2) پیکرهٔ
+[پیکرهٔ ویکی‌پدیا](http://download.wikimedia.org/fawiki/latest/fawiki-latest-pages-articles.xml.bz2) پیکرهٔ
 عظیمی مشتمل بر تمام مقالات ویکی‌پدیای فارسی است که هر دوماه یکبار بروزرسانی
 می‌شود. برای کسب اطلاعات بیشتر دربارهٔ این پیکره می‌توانید به [صفحهٔ اصلی
 آن](https://dumps.wikimedia.org/backup-index.html) مراجعه کنید.

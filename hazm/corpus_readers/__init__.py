@@ -14,4 +14,5 @@ from .sentipers_reader import SentiPersReader
 from .tnews_reader import TNewsReader
 from .treebank_reader import TreebankReader
 from .verbvalency_reader import VerbValencyReader
+from .persian_plain_text_reader import PersianPlainTextReader
 from .wikipedia_reader import WikipediaReader
