@@ -5,9 +5,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hazm)
 ![GitHub](https://img.shields.io/github/license/roshan-research/hazm)
 
-| Accuracy | DependencyParser: 85.6% | POSTagger: 98.8% | Chunker: 93.4% | Lemmatizer: 89.9% |
-| -------- | ----------------------- | ---------------- | -------------- | ----------------- |
-
+- [Evaluation](#Evaluation)
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
@@ -19,6 +17,14 @@
 - [Thanks](#thanks)
   - [Code contributores](#code-contributores)
   - [Others](#others)
+
+## Evaluation
+|  Module name   |     |
+| :--- | --- |
+| DependencyParser | 85.6% |
+| POSTagger | 98.8% |
+| Chunker | 93.4% |
+| Lemmatizer | 89.9% |
 
 ## Introduction
 
