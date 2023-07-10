@@ -65,7 +65,7 @@ class WikipediaReader:
         doc_pattern = re.compile(r'<doc id="(\d+)" url="([^\"]+)" title="([^\"]+)">')
 
         doc = []
-        for line in iter(proc.stdout.readline, b""):
+        for line in iter(proc.stdout.readline, ""):
             line = line.strip().decode("utf8")
             if line:
                 doc.append(line)
