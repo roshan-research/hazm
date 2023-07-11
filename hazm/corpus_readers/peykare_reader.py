@@ -280,6 +280,8 @@ class PeykareReader:
                     encoding="windows-1256",
                 ) as peykare_file:
                     text = peykare_file.read()
+                    # Convert LF to CRLF
+                    text = text.replace('\n', '\r\n')
                     if text:
                         yield text
 
