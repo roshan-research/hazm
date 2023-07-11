@@ -281,7 +281,7 @@ class PeykareReader:
                 ) as peykare_file:
                     text = peykare_file.read()
                     # Convert LF to CRLF
-                    text = text.replace('\n', '\r\n')
+                    text = text.replace("\n", "\r\n")
                     if text:
                         yield text
 
