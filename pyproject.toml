@@ -154,6 +154,7 @@ show-fixes = true
 [tool.ruff.per-file-ignores]
 "data.py"=["ALL"] # temporary
 "sample.py"=["ALL"] # always
+"wiki_extractor.py"=["ALL"] # temporary
 
 [tool.ruff.isort]
 force-single-line = true

@@ -164,3 +164,4 @@ ss.ipynb
 .ruff_cache
 
 tests/files/
+wiki.bz2

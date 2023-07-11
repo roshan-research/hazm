@@ -275,13 +275,13 @@ class PeykareReader:
         """
         for root, _, files in os.walk(self._root):
             for name in sorted(files):
-                with codecs.open(
+                with Path.open(
                     Path(root) / name,
                     encoding="windows-1256",
                 ) as peykare_file:
                     text = peykare_file.read()
-                    # Convert LF to CRLF
-                    text = text.replace("\n", "\r\n")
+                    # Convert all EOL to CRLF
+                    text = text.replace("\r\n", "\n").replace("\n", "\r\n")
                     if text:
                         yield text
 
