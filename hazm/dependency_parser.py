@@ -16,10 +16,10 @@ from typing import Type
 
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
-from nltk.parse.malt import MaltParser
+from nltk.parse.malt import MaltParser as NLTKMaltParser
 
 
-class MaltParser(MaltParser):
+class MaltParser(NLTKMaltParser):
     """این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.
 
     Args:
