@@ -79,7 +79,7 @@ class BijankhanReader:
         bijankhan_file: str,
         joined_verb_parts: bool = True,
         pos_map: Optional[str] = None,
-    ) -> None:        
+    ) -> None:
         if pos_map is None:
             pos_map = default_pos_map
         self._bijankhan_file = bijankhan_file

@@ -11,7 +11,7 @@ from hazm import SentenceTokenizer
 from hazm import WordTokenizer
 
 
-class PersianPlainTextReader(PlaintextCorpusReader):    
+class PersianPlainTextReader(PlaintextCorpusReader):
 
     CorpusView = StreamBackedCorpusView
 
