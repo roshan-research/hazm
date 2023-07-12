@@ -1,1 +1,1 @@
-::: hazm.corpus_readers.SentiPersReader
+::: hazm.corpus_readers.sentipers_reader

@@ -11,13 +11,7 @@ from hazm import SentenceTokenizer
 from hazm import WordTokenizer
 
 
-class PersianPlainTextReader(PlaintextCorpusReader):
-    """Reader for corpora that consist of plaintext documents.  Paragraphs
-    are assumed to be split using blank lines.  Sentences and words can
-    be tokenized using the default tokenizers, or by custom tokenizers
-    specificed as parameters to the constructor.
-
-    """
+class PersianPlainTextReader(PlaintextCorpusReader):    
 
     CorpusView = StreamBackedCorpusView
 

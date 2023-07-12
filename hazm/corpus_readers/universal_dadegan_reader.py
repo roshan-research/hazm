@@ -1,3 +1,6 @@
+"""این ماژول شامل کلاس‌ها و توابعی برای خواندن پیکرهٔ [PerUDT](https://github.com/phsfr/UD_Persian-PerDT) است.
+PerUDT حاوی تعداد قابل‌توجهی جملۀ برچسب‌خورده با اطلاعات نحوی و ساخت‌واژی است.
+"""
 import sys
 from pathlib import Path
 from typing import Iterator
@@ -6,7 +9,7 @@ from hazm.corpus_readers import DadeganReader
 
 
 def conllu2conll(conllu_path: str) -> str :
-    """این تابع برای تبدیل فایل conllu به فایل conll است."""
+    """یک فایل conllu را می‌گیرد و بعد از تبدیل به فرمت قدیمی conll آن را به صورت یک رشتهٔ متنی برمی‌گرداند."""
     reader1 = Path(conllu_path).open(encoding="utf8")
 
     delex = False
@@ -35,7 +38,7 @@ def conllu2conll(conllu_path: str) -> str :
     return "".join(lines)
 
 class UniversalDadeganReader(DadeganReader):
-    """این کلاس شامل توابعی برای خواندن پیکرهٔ یونیورسال PerDT است.
+    """این کلاس شامل توابعی برای خواندن پیکرهٔ PerUDT است.
 
     Args:
         conllu_file: مسیر فایلِ پیکره.
@@ -49,7 +52,7 @@ class UniversalDadeganReader(DadeganReader):
         """جملات پیکره را به شکل متن خام برمی‌گرداند.
 
         Yields:
-            (str): جملهٔ بعدی.
+            جملهٔ بعدی.
         """
         text = conllu2conll(self._conll_file)
 

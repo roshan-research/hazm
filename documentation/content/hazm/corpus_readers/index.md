@@ -8,28 +8,32 @@
 پیکره‌های معروف فارسی را بخوانید. کلاس‌ها و توابعِ این بخش صرفاً برای تسهیل کار
 توسعه‌دهندگان تهیه شده است و اساساً جزئی در کتابخانهٔ هضم به شمار نمی‌روند.
 
-## [HamshahriReader](./hamshahri_reader.md)
+## [hamshahri_reader](./hamshahri_reader.md)
 
-## [MirasTextReader](./mirastext_reader.md)
+## [mirastext_reader](./mirastext_reader.md)
 
-## [QuranReader](./quran_reader.md)
+## [quran_reader](./quran_reader.md)
 
-## [BijankhanReader](./bijankhan_reader.md)
+## [bijankhan_reader](./bijankhan_reader.md)
 
-## [DadeganReader](./dadegan_reader.md)
+## [dadegan_reader](./dadegan_reader.md)
 
-## [DegarbayanReader](./degarbayan_reader.md)
+## [universal_dadegan_reader](./universal_dadegan_reader.md)
 
-## [PersicaReader](./persica_reader.md)
+## [degarbayan_reader](./degarbayan_reader.md)
 
-## [PeykareReader](./peykare_reader.md)
+## [persica_reader](./persica_reader.md)
 
-## [SentiPersReader](./sentipers_reader.md)
+## [persian_plain_text_reader](./persian_plain_text_reader.md)
 
-## [TNewsReader](./tnews_reader.md)
+## [peykare_reader](./peykare_reader.md)
 
-## [TreebankReader](./treebank_reader.md)
+## [sentipers_reader](./sentipers_reader.md)
 
-## [VerbValencyReader](./verbvalency_reader.md)
+## [tnews_reader](./tnews_reader.md)
 
-## [WikipediaReader](./wikipedia_reader.md)
+## [treebank_reader](./treebank_reader.md)
+
+## [verbvalency_reader](./verbvalency_reader.md)
+
+## [wikipedia_reader](./wikipedia_reader.md)

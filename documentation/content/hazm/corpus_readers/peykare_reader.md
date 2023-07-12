@@ -1,1 +1,1 @@
-::: hazm.corpus_readers.PeykareReader
+::: hazm.corpus_readers.peykare_reader

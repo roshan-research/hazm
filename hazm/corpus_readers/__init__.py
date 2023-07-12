@@ -1,6 +1,5 @@
 # ruff: noqa
 
-"""init."""
 from .bijankhan_reader import BijankhanReader
 from .dadegan_reader import DadeganReader
 from .universal_dadegan_reader import UniversalDadeganReader

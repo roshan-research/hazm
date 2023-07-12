@@ -1,1 +1,1 @@
-::: hazm.corpus_readers.WikipediaReader
+::: hazm.corpus_readers.wikipedia_reader

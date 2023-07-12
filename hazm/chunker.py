@@ -223,8 +223,7 @@ class RuleBasedChunker(RegexpParser):
 
     """
 
-    def __init__(self: "RuleBasedChunker") -> None:
-        """Init."""
+    def __init__(self: "RuleBasedChunker") -> None:        
         grammar = r"""
 
             NP:

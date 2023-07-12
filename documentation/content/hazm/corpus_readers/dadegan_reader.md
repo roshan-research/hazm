@@ -1,1 +1,1 @@
-::: hazm.corpus_readers.DadeganReader
+::: hazm.corpus_readers.dadegan_reader

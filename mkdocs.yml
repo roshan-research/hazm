@@ -75,34 +75,36 @@ nav:
   - معرفی و نصب: index.md
   - کلاس‌ها و توابع:
       - content/hazm/index.md
-      - Normalizer: content/hazm/normalizer.md
-      - InformalNormalizer: content/hazm/informal_normalizer.md
-      - Stemmer: content/hazm/stemmer.md
-      - Lemmatizer: content/hazm/lemmatizer.md
-      - SentenceTokenizer: content/hazm/sentence_tokenizer.md
-      - WordTokenizer: content/hazm/word_tokenizer.md
-      - Embedding: content/hazm/embedding.md
-      - SequenceTagger: content/hazm/sequence_tagger.md
-      - TokenSplitter: content/hazm/token_splitter.md
-      - Chunker: content/hazm/chunker.md
-      - POSTagger: content/hazm/pos_tagger.md
-      - DependencyParser: content/hazm/dependency_parser.md
-      - Utils: content/utils.md
+      - normalizer: content/hazm/normalizer.md
+      - informal_normalizer: content/hazm/informal_normalizer.md
+      - stemmer: content/hazm/stemmer.md
+      - lemmatizer: content/hazm/lemmatizer.md
+      - sentence_tokenizer: content/hazm/sentence_tokenizer.md
+      - word_tokenizer: content/hazm/word_tokenizer.md
+      - embedding: content/hazm/embedding.md
+      - sequence_tagger: content/hazm/sequence_tagger.md
+      - token_splitter: content/hazm/token_splitter.md
+      - chunker: content/hazm/chunker.md
+      - pos_tagger: content/hazm/pos_tagger.md
+      - dependency_parser: content/hazm/dependency_parser.md
+      - utils: content/utils.md
       - پیکره‌خوان‌ها:
           - content/hazm/corpus_readers/index.md
-          - MirasTextReader: content/hazm/corpus_readers/mirastext_reader.md
-          - BijankhanReader: content/hazm/corpus_readers/bijankhan_reader.md
-          - DadeganReader: content/hazm/corpus_readers/dadegan_reader.md
-          - DegarbayanReader: content/hazm/corpus_readers/degarbayan_reader.md
-          - HamshahriReader: content/hazm/corpus_readers/hamshahri_reader.md
-          - PersicaReader: content/hazm/corpus_readers/persica_reader.md
-          - PeykareReader: content/hazm/corpus_readers/peykare_reader.md
-          - QuranReader: content/hazm/corpus_readers/quran_reader.md
-          - SentiPersReader: content/hazm/corpus_readers/sentipers_reader.md
-          - TNewsReader: content/hazm/corpus_readers/tnews_reader.md
-          - TreebankReader: content/hazm/corpus_readers/treebank_reader.md
-          - VerbValencyReader: content/hazm/corpus_readers/verbvalency_reader.md
-          - WikipediaReader: content/hazm/corpus_readers/wikipedia_reader.md     
+          - mirastext_reader: content/hazm/corpus_readers/mirastext_reader.md
+          - bijankhan_reader: content/hazm/corpus_readers/bijankhan_reader.md
+          - dadegan_reader: content/hazm/corpus_readers/dadegan_reader.md
+          - universal_dadegan_reader: content/hazm/corpus_readers/universal_dadegan_reader.md
+          - degarbayan_reader: content/hazm/corpus_readers/degarbayan_reader.md
+          - hamshahri_reader: content/hazm/corpus_readers/hamshahri_reader.md
+          - persica_reader: content/hazm/corpus_readers/persica_reader.md
+          - persian_plain_text_reader: content/hazm/corpus_readers/persian_plain_text_reader.md
+          - peykare_reader: content/hazm/corpus_readers/peykare_reader.md
+          - quran_reader: content/hazm/corpus_readers/quran_reader.md
+          - sentiPers_reader: content/hazm/corpus_readers/sentipers_reader.md
+          - tnews_reader: content/hazm/corpus_readers/tnews_reader.md
+          - treebank_reader: content/hazm/corpus_readers/treebank_reader.md
+          - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
+          - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
   - کاربردهای هضم:
       - استخراج کلمات کلیدی: content/samples/keyword_extraction.md
 

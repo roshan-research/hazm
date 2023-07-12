@@ -1,1 +1,1 @@
-::: hazm.corpus_readers.MirasTextReader
+::: hazm.corpus_readers.mirastext_reader
