@@ -42,7 +42,7 @@ class WikipediaReader:
         - آدرس صفحه (url).
 
         Examples:
-            >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
+            >>> wikipedia = WikipediaReader('fawiki-latest-pages-articles.xml.bz2')
             >>> next(wikipedia.docs())['id']
 
         Yields:
@@ -86,7 +86,7 @@ class WikipediaReader:
         پراپرتی `text` نیز می‌توانید همین کار را انجام دهید.
 
         Examples:
-            >>> wikipedia = WikipediaReader('corpora/wikipedia.csv')
+            >>> wikipedia = WikipediaReader('fawiki-latest-pages-articles.xml.bz2')
             >>> next(wikipedia.texts())[:30]
 
         Yields:
