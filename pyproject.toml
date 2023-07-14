@@ -170,13 +170,13 @@ filterwarnings = "ignore::DeprecationWarning"
 disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
 
 [tool.poe.tasks]
-# poetry poe test
-# poetry poe test hazm/normalizer.py
+# poetry run poe test
+# poetry run poe test hazm/normalizer.py
 test = "pytest -n auto ${path}"
 
-# poetry poe lint
-# poetry poe lint -t hazm/normalizer.py
-# poetry poe lint -- --no-fix
+# poetry run poe lint
+# poetry run poe lint -t hazm/normalizer.py
+# poetry run poe lint -- --no-fix
 [tool.poe.tasks.lint]
 cmd  = "ruff check ${target_dir}" 
 args = { target_dir = { options = ["--target", "-t"], default = "." }}   
