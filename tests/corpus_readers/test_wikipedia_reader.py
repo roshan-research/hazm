@@ -5,7 +5,7 @@ from hazm import WikipediaReader
 
 @pytest.fixture(scope="module")
 def wikipedia_reader():
-    return WikipediaReader("wiki.xml.bz2")
+    return WikipediaReader("tests/files/wiki.xml.bz2")
 
 def test_docs(wikipedia_reader):
     actual = next(wikipedia_reader.docs())["id"]
