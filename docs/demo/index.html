@@ -209,7 +209,7 @@
           tagged.show().find('ul').empty();
           for (s in sentences) {
             sentence = $.map(sentences[s], function (word) {
-              return word.join('/');
+              return `<span dir="rtl">${word.join("/")}</span>`
             });
             $('#tagged ul').append('<li>' + sentence.join(' ') + '</li>');
           }
@@ -265,7 +265,7 @@
       showLoading();
     }
   });
-  $('#tag').click(function () {
+  $('#tag').click(function () {    
     tag({'tokenized_text': $(this).attr('tokenized_text')});
     showLoading();
   });
