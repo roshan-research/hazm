@@ -39,7 +39,7 @@ jobs:
 
             - name: Download test files
               run: |                  
-                  git clone https://github.com/sir-kokabi/resources.git tests/files/
+                  git clone https://github.com/roshan-research/hazm-test.git tests/files/
 
             - name: Run tests
               run: poetry run poe test
