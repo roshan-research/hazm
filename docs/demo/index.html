@@ -2,17 +2,14 @@
 <html lang="fa-IR">
   <head>
     <meta charset="utf-8" />
-    <title>هضم</title>
+    <title>دموی هضم</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="../images/favicon.png" />
-    <!-- external css -->
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <!-- my css -->
     <link rel="stylesheet" href="../fonts/font_face.css" />
     <link rel="stylesheet" href="../css/highlight_code.css" />
-    <link rel="stylesheet" href="../css/donation_modal.css" />
     <link rel="stylesheet" href="../css/demo.css" />
-    <link rel="stylesheet" href="../css/tree.css">
+    <link rel="stylesheet" href="../css/tree.css" />
   </head>
 
   <body>
@@ -21,23 +18,14 @@
       <div class="header my-container">
         <h1 class="logo">هضم</h1>
         <span class="text">برای پردازش زبان فارسی</span>
-        <img
-          class="menu-icon active"
-          src="../images/menu/mobile/menu.svg"
-          alt="menu icon" />
-        <img
-          class="close-icon"
-          src="../images/menu/mobile/close.svg"
-          alt="close icon" />
+        <img class="menu-icon active" src="../images/menu/mobile/menu.svg" alt="menu icon" />
+        <img class="close-icon" src="../images/menu/mobile/close.svg" alt="close icon" />
         <div class="menu">
           <a href="https://www.roshan-ai.ir/hazm/docs/">
-            <img
-              style="width: 19px; height: 19px; opacity: 0.6"
-              src="../images/menu/web/doc_icon.svg"
-              alt="doc_icon" />
+            <img style="width: 19px; height: 19px; opacity: 0.6" src="../images/menu/web/doc_icon.svg" alt="doc_icon" />
             <span>مستندات</span>
           </a>
-          <a href="demo/">
+          <a href="https://www.roshan-ai.ir/hazm/demo/">
             <img src="../images/menu/web/demo_icon.svg" alt="demoIcon" />
             <span>دموی آنلاین</span>
           </a>
@@ -56,13 +44,13 @@
     <div class="mobile-menu" style="display: none">
       <ul class="my-container">
         <li>
-          <a href="docs">
+          <a href="https://www.roshan-ai.ir/hazm/docs/">
             <img src="../images/menu/mobile/doc_icon.svg" alt="doc_icon" />
             <span>مستندات</span>
           </a>
         </li>
         <li>
-          <a href="demo/">
+          <a href="https://www.roshan-ai.ir/hazm/demo/">
             <img src="../images/menu/mobile/demo_icon.svg" alt="demoIcon" />
             <span>دموی آنلاین</span>
           </a>
@@ -75,9 +63,7 @@
         </li>
         <li>
           <a href="https://www.roshan-ai.ir/join-us/">
-            <img
-              src="../images/menu/mobile/join_us_icon.svg"
-              alt="joinUsIcon" />
+            <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon" />
             <span>همکاری با ما</span>
           </a>
         </li>
@@ -88,9 +74,7 @@
     <div class="content my-container">
       <div id="query">
         <label for="textarea">متن ورودی</label>
-        <textarea id="textarea">
-از نصایح باارزش مولای متقیان حضرت علی پند بگیرید.</textarea
-        >
+        <textarea id="textarea">از نصایح باارزش مولای متقیان حضرت علی پند بگیرید.</textarea>
 
         <button id="process" class="my-btn blue-btn">
           <div style="display: flex; align-items: center">
@@ -137,12 +121,8 @@
 
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://sir-kokabi.github.io/dependency-parse-tree/d3.js"></script>
-    <script
-      type="text/javascript"
-      src="https://sir-kokabi.github.io/dependency-parse-tree/dependency-tree.js"></script>
+    <script type="text/javascript" src="https://sir-kokabi.github.io/dependency-parse-tree/d3.js"></script>
+    <script type="text/javascript" src="https://sir-kokabi.github.io/dependency-parse-tree/dependency-tree.js"></script>
 
     <!-- My Js-->
     <script type="text/javascript">
@@ -226,17 +206,12 @@
         sentences = $.parseJSON(parsed);
         div = $("#parsed > div");
         div.empty();
-        for (s in sentences) {  
-
+        for (s in sentences) {
           if (sentences[s].length) {
-            div.append(
-              '<div class="tree"><svg id="tree' + s + '"></svg></div>'
-            );            
-            drawTree("#tree" + s, "\n\n"+sentences[s]);
+            div.append('<div class="tree"><svg id="tree' + s + '"></svg></div>');
+            drawTree("#tree" + s, "\n\n" + sentences[s]);
           }
         }
-        
-        //drawTree(".tree svg", d3.select("#data")[0][0].value, false);
       }
 
       $("#process").click(async function () {
