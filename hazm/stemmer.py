@@ -50,7 +50,7 @@ class Stemmer(StemmerI):
             >>> stemmer.stem('اندیشه‌اش')
             'اندیشه'
             >>> stemmer.stem('خانۀ')
-            'خانه'            
+            'خانه'
 
         Args:
             word: کلمه‌ای که باید ریشهٔ آن پیدا شود.
@@ -63,7 +63,7 @@ class Stemmer(StemmerI):
             if word.endswith(end):
                 word = word[:-len(end)]
 
-        if word.endswith('ۀ'):
-            word = word[:-1] + 'ه'
+        if word.endswith("ۀ"):
+            word = word[:-1] + "ه"
 
         return word
