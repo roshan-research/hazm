@@ -1,21 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa-IR">
-<head>
-  <meta charset="utf-8">
-  <title>هضم</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="../images/favicon.png"/>
-  <!-- external css -->
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <!-- my css -->
-  <link rel="stylesheet" href="../fonts/font_face.css">
-  <link rel="stylesheet" href="../css/highlight_code.css">
-  <link rel="stylesheet" href="../css/donation_modal.css">
-  <link rel="stylesheet" href="../css/demo.css">
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>هضم</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <!-- external css -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <!-- my css -->
+    <link rel="stylesheet" href="../fonts/font_face.css" />
+    <link rel="stylesheet" href="../css/highlight_code.css" />
+    <link rel="stylesheet" href="../css/donation_modal.css" />
+    <link rel="stylesheet" href="../css/demo.css" />
+    <link rel="stylesheet" href="../css/tree.css">
+  </head>
 
-
-<body>
+  <body>
     <!------------------------- header section -------------------------->
     <div class="header-container">
       <div class="header my-container">
@@ -24,20 +24,17 @@
         <img
           class="menu-icon active"
           src="../images/menu/mobile/menu.svg"
-          alt="menu icon"
-        />
+          alt="menu icon" />
         <img
           class="close-icon"
           src="../images/menu/mobile/close.svg"
-          alt="close icon"
-        />
+          alt="close icon" />
         <div class="menu">
           <a href="https://www.roshan-ai.ir/hazm/docs/">
             <img
               style="width: 19px; height: 19px; opacity: 0.6"
               src="../images/menu/web/doc_icon.svg"
-              alt="doc_icon"
-            />
+              alt="doc_icon" />
             <span>مستندات</span>
           </a>
           <a href="demo/">
@@ -78,309 +75,214 @@
         </li>
         <li>
           <a href="https://www.roshan-ai.ir/join-us/">
-            <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon" />
+            <img
+              src="../images/menu/mobile/join_us_icon.svg"
+              alt="joinUsIcon" />
             <span>همکاری با ما</span>
           </a>
         </li>
       </ul>
     </div>
 
-<!------------------------- content section -------------------------->
-<div class="content my-container">
-  <div id="query">
-    <label for="textarea">متن ورودی</label>
-    <textarea id="textarea">در     می زند و دوبـــــاره وارد میشود .</textarea>
-    <div class="controls">
-      <button id="process" class="my-btn blue-btn">پردازش</button>
-      <button id="tag" class="my-btn green-btn" style="display: none">تحلیل صرفی</button>
-      <button id="parse" class="my-btn red-btn" style="display: none">تجزیه نحوی</button>
-      <span class="loading"></span>
-    </div>
-  </div>
-  <div class="analyze-section" style="display: none">
-    <div class="demo" id="normalized">
-      <h3>متن تمیز</h3>
-      <div></div>
-    </div>    
-    <!-- <div class="demo" id="tokenized">
-      <h3>واژه‌های متن</h3>
-      <div>
-        <ul></ul>
+    <!------------------------- content section -------------------------->
+    <div class="content my-container">
+      <div id="query">
+        <label for="textarea">متن ورودی</label>
+        <textarea id="textarea">
+از نصایح باارزش مولای متقیان حضرت علی پند بگیرید.</textarea
+        >
+
+        <button id="process" class="my-btn blue-btn">
+          <div style="display: flex; align-items: center">
+            <span style="padding: 5px">پردازش</span>
+            <span class="loading" />
+          </div>
+        </button>
       </div>
-    </div> -->
-    <div class="demo" id="lemmatized">
-      <h3>ریشه واژه‌ها</h3>
-      <div>
-        <ul></ul>
+      <div class="analyze-section" style="display: none">
+        <div class="demo" id="normalized">
+          <h3>متن تمیز</h3>
+          <div></div>
+        </div>
+        <div class="demo" id="tokenized">
+          <h3>واژه‌های متن</h3>
+          <ul></ul>
+        </div>
+        <div class="demo" id="lemmatized">
+          <h3>ریشه واژه‌ها</h3>
+          <ul></ul>
+        </div>
+        <div class="demo" id="tagged">
+          <h3 class="green-title">تحلیل صرفی</h3>
+
+          <ul></ul>
+        </div>
+        <div class="demo" id="chunked">
+          <h3 class="red-title">تجزیه سطحی</h3>
+
+          <ul></ul>
+        </div>
+        <div class="demo" id="parsed">
+          <h3 class="red-title">تجزیه نحوی</h3>
+          <div></div>
+        </div>
       </div>
     </div>
-    <div class="demo" id="tagged">
-      <h3 class="green-title">تحلیل صرفی</h3>
-      <div>
-        <ul></ul>
-      </div>
-    </div>
-    <div class="demo" id="chunked">
-      <h3 class="red-title">تجزیه سطحی</h3>
-      <div>
-        <ul></ul>
-      </div>
-    </div>
-    <div class="demo" id="parsed">
-      <h3 class="red-title">تجزیه نحوی</h3>
-      <div></div>
-    </div>
-  </div>
-</div>
 
-<!------------------------- footer section -------------------------->
-<p class="footer my-container">
-  <span>کاری از </span>
-  <a href="https://www.roshan-ai.ir">روشن</a>
-</p>
+    <!------------------------- footer section -------------------------->
+    <p class="footer my-container">
+      <span>کاری از </span>
+      <a href="https://www.roshan-ai.ir">روشن</a>
+    </p>
 
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://sir-kokabi.github.io/dependency-parse-tree/d3.js"></script>
+    <script
+      type="text/javascript"
+      src="https://sir-kokabi.github.io/dependency-parse-tree/dependency-tree.js"></script>
 
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://www.roshan-ai.ir/dependency-parse-tree/d3.js"></script>
-<script type="text/javascript" src="https://www.roshan-ai.ir/dependency-parse-tree/dependency-tree.js"></script>
+    <!-- My Js-->
+    <script type="text/javascript">
+      var server = "https://hazm.roshan-ai.ir/api";
 
-<!-- My Js-->
-<script type="text/javascript">
-  var server = 'https://hazm.roshan-ai.ir/api';
-  var analyze_section = $(".analyze-section");
-  var normalized = $('#normalized');
-  var lemmatized = $('#lemmatized');
-  var corrected = $('#corrected');
-  var tokenized = $('#tokenized');
-  var tagged = $('#tagged');
-  var chunked = $('#chunked');
-  var parsed = $('#parsed');
+      let normalized = "";
+      let tokenized = "";
+      let lemmatized = "";
+      let tagged = "";
 
-  var normalize = function (data) {
-    $.post(server + '/normalize', data)
-        .done(function (normalized_text) {
-          analyze_section.show();
-          normalized.show().find('div').text(normalized_text);
-          normalized.addClass('added-data');
-          tokenize({'normalized_text': normalized_text});
-          correct({'text': data['text'], 'mode': 'cleaner'});
-        })
-  };
-  var correct = function (data) {
-    $.post(server + '/correct', data)
-        .done(function (corrected_text) {
-          corrected.show().find('div').text(corrected_text);
-          corrected.addClass('added-data')
-        })
-  };
-  var tokenize = function (data) {
-    $.post(server + '/tokenize', data)
-        .done(function (tokenized_text) {
-          lemmatize({'tokenized_text': tokenized_text});
-          $('#tag').attr('tokenized_text', tokenized_text).show();
-          sentences = $.parseJSON(tokenized_text);
-          tokenized.show().find('ul').empty();
-          for (s in sentences) {
-            $('#tokenized ul').append('<li>' + sentences[s].join(' ') + '</li>');
-          }
-          tokenized.addClass('added-data')
-        })
-        .always(hideLoading);
-  };
-  var lemmatize = function (data) {
-    $.post(server + '/lemmatize', data)
-        .done(function (lemmatized_text) {
-          sentences = $.parseJSON(lemmatized_text);
-          lemmatized.show().find('ul').empty();
-          for (s in sentences) {
-            $('#lemmatized ul').append('<li>' + sentences[s].join(' ') + '</li>');
-          }
-          lemmatized.addClass('added-data')
+      async function callAPI(text) {
+        const server = "https://hazm.roshan-ai.ir/api";
+
+        // sample input: او   رفـــــــــــت . من آمدم.
+
+        normalized = await $.post(`${server}/normalize`, { text });
+        //او رفت. من آمدم.
+
+        tokenized = await $.post(`${server}/tokenize`, {
+          normalized_text: normalized,
         });
-  };
-  var tag = function (data) {
-    $.post(server + '/tag', data)
-        .done(function (tagged_text) {
-          lemmatize({'tagged_text': tagged_text});
-          $('#tag').hide();
-          $('#parse').attr('tagged_text', tagged_text).show();
-          sentences = $.parseJSON(tagged_text);
-          tagged.show().find('ul').empty();
-          for (s in sentences) {
-            sentence = $.map(sentences[s], function (word) {
-              return `<span dir="rtl">${word.join("/")}</span>`
-            });
-            $('#tagged ul').append('<li>' + sentence.join(' ') + '</li>');
-          }
-          tagged.addClass('added-data')
-        })
-        .always(hideLoading);
-  };
-  var chunk = function (data) {
-    $.post(server + '/chunk', data)
-        .done(function (chunked_text) {
-          sentences = $.parseJSON(chunked_text);
-          chunked.show().find('ul').empty();
-          for (s in sentences) {
-            $('#chunked ul').append('<li>' + sentences[s] + '</li>');
-          }
-          chunked.addClass('added-data')
+        //[["او", "رفت", "."], ["من", "آمدم", "."]]
+
+        lemmatized = await $.post(`${server}/lemmatize`, {
+          tokenized_text: tokenized,
         });
-  };
-  var parse = function (data) {
-    $.post(server + '/parse', data)
-        .done(function (parsed_text) {
-          $('#parse').hide();
-          sentences = $.parseJSON(parsed_text);
-          div = $('#parsed > div');
-          div.empty();
-          for (s in sentences) {
-            // div.append('<li>' + sentences[s] + '</li>');
-            if (sentences[s].length) {
-              div.append('<div class="tree"><svg id="tree' + s + '"></svg></div>');
-              drawTree('#tree' + s, sentences[s].replace(/_/g, ' '));
-            }
-          }
-          parsed.show();
-          parsed.addClass('added-data')
-        })
-        .always(hideLoading);
-  };
+        //[["او", "رفت#رو", "."], ["من", "آمد#آ", "."]]
 
-  var hideLoading = function () {
-    $('#query .my-btn').removeAttr('disabled');
-    $('#query .loading').hide();
-  };
-  var showLoading = function () {
-    $('#query .loading').css('display', 'inline-block');
-    $('#query .my-btn').attr('disabled', 'disabled');
-  };
+        tagged = await $.post(`${server}/tag`, { tokenized_text: tokenized });
+        //[[["او", "PRON"], ["رفت", "VERB"], [".", "PUNCT"]], [["من", "PRON"], ["آمدم", "VERB"], [".", "PUNCT"]]]
 
-  $('#process').click(function () {
-    $('.demo, #tag, #parse').hide();
-    var text = $('#query textarea').val();
-    if (text) {
-      normalize({text});
-      showLoading();
-    }
-  });
-  $('#tag').click(function () {    
-    tag({'tokenized_text': $(this).attr('tokenized_text')});
-    showLoading();
-  });
-  $('#parse').click(function () {
-    chunk({'tagged_text': $(this).attr('tagged_text')});
-    parse({'tagged_text': $(this).attr('tagged_text')});
-    showLoading();
-  });
-</script>
-<script type="text/javascript">
-  (function (e, t) {
-    var n = e.amplitude || {_q: [], _iq: {}};
-    var r = t.createElement("script");
-    r.type = "text/javascript";
-    r.integrity = "sha384-RsEu4WZflrqYcEacpfoGSib3qaSvdYwT4D+DrWqeBuDarSzjwUQR1jO8gDiXZd0E";
-    r.crossOrigin = "anonymous";
-    r.async = true;
-    r.src = "https://cdn.amplitude.com/libs/amplitude-6.2.0-min.gz.js";
-    r.onload = function () {
-      if (!e.amplitude.runQueuedFunctions) {
-        console.log("[Amplitude] Error: could not load SDK")
+        chunked = await $.post(`${server}/chunk`, { tagged_text: tagged });
+        //["[او NP] [رفت VP] .", "[من NP] [آمدم VP] ."]
+
+        parsed = await $.post(`${server}/parse`, { tagged_text: tagged });
+        //["1\tاو\tاو\tPRON\tPRON\t_\t2\tnsubj\t_\t_\n2\tرفت\tرف\tVERB\tVERB\t_\t0\troot\t_\t_\n3\t.\t.\tPUNCT\tPUNCT\t_\t2\tpunct\t_\t_\n","1\tمن\tمن\tPRON\tPRON\t_\t2\tnsubj\t_\t_\n2\tآمدم\tآمدم\tVERB\tVERB\t_\t0\troot\t_\t_\n3\t.\t.\tPUNCT\tPUNCT\t_\t2\tpunct\t_\t_\n"]
       }
-    };
-    var i = t.getElementsByTagName("script")[0];
-    i.parentNode.insertBefore(r, i);
 
-    function s(e, t) {
-      e.prototype[t] = function () {
-        this._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
-        return this
+      function showNormalized() {
+        let result = normalized;
+        $("#normalized div").text(result);
       }
-    }
 
-    var o = function () {
-      this._q = [];
-      return this
-    };
-    var a = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset"];
-    for (var u = 0; u < a.length; u++) {
-      s(o, a[u])
-    }
-    n.Identify = o;
-    var c = function () {
-      this._q = [];
-      return this
-    };
-    var l = ["setProductId", "setQuantity", "setPrice", "setRevenueType", "setEventProperties"];
-    for (var p = 0; p < l.length; p++) {
-      s(c, l[p])
-    }
-    n.Revenue = c;
-    var d = ["init", "logEvent", "logRevenue", "setUserId", "setUserProperties", "setOptOut", "setVersionName", "setDomain", "setDeviceId", "enableTracking", "setGlobalUserProperties", "identify", "clearUserProperties", "setGroup", "logRevenueV2", "regenerateDeviceId", "groupIdentify", "onInit", "logEventWithTimestamp", "logEventWithGroups", "setSessionId", "resetSessionId"];
+      function showTokenized() {
+        let sentences = JSON.parse(tokenized);
 
-    function v(e) {
-      function t(t) {
-        e[t] = function () {
-          e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)))
+        $("#tokenized ul").empty();
+        sentences.forEach((sentence) => {
+          $("#tokenized ul").append("<li>" + sentence.join(" / ") + "</li>");
+        });
+      }
+
+      function showLemmatized() {
+        let sentences = $.parseJSON(lemmatized);
+        $("#lemmatized ul").empty();
+        for (s in sentences) {
+          $("#lemmatized ul").append("<li>" + sentences[s].join(" ") + "</li>");
         }
       }
 
-      for (var n = 0; n < d.length; n++) {
-        t(d[n])
+      function showTagged() {
+        let sentences = $.parseJSON(tagged);
+        $("#tagged ul").empty();
+        for (s in sentences) {
+          sentence = $.map(sentences[s], function (word) {
+            return `<span dir="rtl">${word.join(" ")}</span>`;
+          });
+          $("#tagged ul").append("<li>" + sentence.join(" / ") + "</li>");
+        }
       }
-    }
 
-    v(n);
-    n.getInstance = function (e) {
-      e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase();
-      if (!n._iq.hasOwnProperty(e)) {
-        n._iq[e] = {_q: []};
-        v(n._iq[e])
+      function showChunked() {
+        let sentences = $.parseJSON(chunked);
+        $("#chunked ul").empty();
+        for (s in sentences) {
+          $("#chunked ul").append("<li>" + sentences[s] + "</li>");
+        }
       }
-      return n._iq[e]
-    };
-    e.amplitude = n
-  })(window, document);
-  amplitude.getInstance().init("a113f04bf0c7f77d3803dfabd7877032");
-</script>
-<script type="text/javascript">
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
 
-  $('.donate-link').click(function () {
-    amplitude.getInstance().logEvent('Hazm Donate');
-  });
+      function showParsed() {
+        sentences = $.parseJSON(parsed);
+        div = $("#parsed > div");
+        div.empty();
+        for (s in sentences) {  
 
-  amplitude.getInstance().logEvent('Hazm Demo');
-</script>
-<script type="text/javascript">
-  $(document).ready(function () {
-    const menu = $(".menu-icon");
-    const close = $(".close-icon");
-    const mobile_menu = $(".mobile-menu");
-    const line = $(".line");
+          if (sentences[s].length) {
+            div.append(
+              '<div class="tree"><svg id="tree' + s + '"></svg></div>'
+            );            
+            drawTree("#tree" + s, "\n\n"+sentences[s]);
+          }
+        }
+        
+        //drawTree(".tree svg", d3.select("#data")[0][0].value, false);
+      }
 
-    menu.on('click', function () {
-      menu.removeClass('active');
-      close.addClass('active');
-      mobile_menu.show();
-      line.show()
-    });
+      $("#process").click(async function () {
+        var text = $("#query textarea").val();
 
-    close.on('click', function () {
-      close.removeClass('active');
-      menu.addClass('active');
-      mobile_menu.hide();
-      line.hide()
-    });
+        if (text) {
+          var analyze_section = $(".analyze-section");
+          $(".loading").show();
+          analyze_section.hide();
+          await callAPI(text);
+          showNormalized();
+          showTokenized();
+          showLemmatized();
+          showTagged();
+          showChunked();
+          showParsed();
+          $(".loading").hide();
+          analyze_section.show();
+        }
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        const menu = $(".menu-icon");
+        const close = $(".close-icon");
+        const mobile_menu = $(".mobile-menu");
+        const line = $(".line");
 
-    $('.logo').click(function () {
-      window.location.href = "../"
-    })
-  });
-</script>
-<script type="text/javascript" src="../js/donation_modal.js"></script>
-</body>
+        menu.on("click", function () {
+          menu.removeClass("active");
+          close.addClass("active");
+          mobile_menu.show();
+          line.show();
+        });
+
+        close.on("click", function () {
+          close.removeClass("active");
+          menu.addClass("active");
+          mobile_menu.hide();
+          line.hide();
+        });
+
+        $(".logo").click(function () {
+          window.location.href = "../";
+        });
+      });
+    </script>
+  </body>
 </html>

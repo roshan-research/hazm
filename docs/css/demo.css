@@ -232,9 +232,7 @@ textarea {
 
 .loading {
     display: none;
-    background: url(../images/loading.gif) no-repeat center;
-    height: 35px;
-    width: 35px;
+    background: url(../images/loading.svg) no-repeat center;    
 }
 
 /*---------- show-text-section ---- */
@@ -244,6 +242,10 @@ textarea {
 
 .added-data:not(:first-child) {
     margin-top: 40px;
+}
+
+.demo{
+    margin-top: 30px;
 }
 
 .demo h3 {
@@ -465,10 +467,10 @@ textarea {
     }
 
     /*----------------- query buttons -------------- */
-    .my-btn {
-        padding: 7px 16px 6px 16px;
+    .my-btn {        
         border-radius: 7px;
-        margin-left: 15px;
+        padding-right: 25px;        
+        padding-left: 25px;
     }
 
     .loading {
