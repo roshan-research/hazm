@@ -592,6 +592,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hazm.chunker.RuleBasedChunker" class="md-nav__link">
+    RuleBasedChunker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hazm.chunker.tree2brackets" class="md-nav__link">
     tree2brackets()
   </a>
@@ -1143,6 +1150,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hazm.chunker.RuleBasedChunker" class="md-nav__link">
+    RuleBasedChunker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hazm.chunker.tree2brackets" class="md-nav__link">
     tree2brackets()
   </a>
@@ -1171,12 +1185,6 @@
 
 
   <h1>chunker</h1>
-
-<div class="admonition note">
-<p class="admonition-title">برچسب‌های تولیدشده</p>
-<p>برای آشنایی با برچسب‌های تولیدشده توسط این ماژول می‌توانید <a href="../Parsing-By-Chunks.pdf">این مقاله</a> را مطالعه کنید. البته برخی از برچسب‌های عنوان‌شده در مقاله هنوز پیاده‌سازی نشده؛ ولی در نسخهٔ بعدی که به زودی منتشر خواهد شد این برچسب‌ها اضافه می‌شود.</p>
-</div>
-
 
 <div class="doc doc-object doc-module">
 
@@ -1641,6 +1649,45 @@
 
 </div>
 
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="hazm.chunker.RuleBasedChunker" class="doc doc-heading">
+        <code>RuleBasedChunker</code>
+
+
+<a href="#hazm.chunker.RuleBasedChunker" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        کلاس(های) پایه: <code><span title="nltk.chunk.RegexpParser">RegexpParser</span></code></p>
+
+  
+      <p>کلاس RuleBasedChunker.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    
+      <blockquote>
+<blockquote>
+<blockquote>
+<p>chunker = RuleBasedChunker()
+tree2brackets(chunker.parse([('نامه', 'Ne'), ('۱۰', 'NUMe'), ('فوریه', 'Ne'), ('شما', 'PRO'), ('را', 'POSTP'), ('دریافت', 'N'), ('داشتم', 'V'), ('.', 'PUNC')]))
+'[نامه ۱۰ فوریه شما NP] [را POSTP] [دریافت داشتم VP] .'</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+
+<div class="doc doc-children">
+</div>
+  </div>
+
+</div>
+
 <div class="doc doc-object doc-function">
 
 
@@ -1717,7 +1764,11 @@
 </div></div>
   </div>
 
-</div>
+</div><p>handler: python
+options:
+members: - Chunker - tree2brackets
+show_root_heading: false
+show_source: false</p>
 
 
   
