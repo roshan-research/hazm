@@ -80,7 +80,7 @@ class POSTagger(SequenceTagger):
             "next_word": "" if index == len(sentence) - 1 else sentence[index + 1],
             "two_next_word": (
                 ""
-                if (index == len(sentence) - 1 or index == len(sentence) - 2)
+                if index in {len(sentence) - 1, len(sentence) - 2}
                 else sentence[index + 2]
             ),
             # digit
