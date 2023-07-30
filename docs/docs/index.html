@@ -12,14 +12,14 @@
         <meta name="author" content="روشن">
       
       
-        <link rel="canonical" href="https://roshan-research.github.io/index.html">
+        <link rel="canonical" href="https://www.roshan-ai.ir/hazm/index.html">
       
       
       
         <link rel="next" href="content/hazm/index.html">
       
       <link rel="icon" href="assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
@@ -902,13 +902,23 @@
       
         
           
+            
+          
+        
+          
         
       
       
-        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-          کاربردهای هضم
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="content/samples/index.html">کاربردهای هضم</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3">
@@ -916,6 +926,8 @@
           کاربردهای هضم
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
           
             
               
@@ -1067,7 +1079,7 @@
 <p class="admonition-title">مبتنی بر کتابخانهٔ nltk و سازگار با پایتون +۳.۸</p>
 </div>
 <p>هضم بر مبنای کتابخانهٔ <a href="https://www.nltk.org/">NLTK</a> توسعه داده شده و برای
-<strong>زبان فارسی</strong> بومی‌سازی شده است. هضم با پایتون ۳.۸ و بالاتر سازگار است.</p>
+<strong>زبان فارسی</strong> بومی‌سازی شده است. هضم با پایتون +۳.۸ سازگار است.</p>
 <div class="admonition info">
 <p class="admonition-title">محصولی از تیم روشن</p>
 </div>
@@ -1082,49 +1094,48 @@
 <p>ابتدا پکیج هضم را نصب کنید:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>hazm
 </code></pre></div>
-<p>سپس <a href="https://github.com/roshan-research/hazm#pretrained-models">منابع موردنظر را دانلود کنید</a> و ترجیحاً در ریشهٔ پروژهٔ خود اکسترکت کنید.</p>
+<p>سپس <a href="https://github.com/roshan-research/hazm#pretrained-models">منابع موردنظر را دانلود کنید</a> و ترجیحاً در ریشهٔ پروژه اکسترکت کنید.</p>
 <p>و در آخر، هضم را را در پروژه خود ایمپورت کنید:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 <h2 id="_3">استفاده از هضم<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>کد پایین دیدی کلی از کاربردهای هضم نشان می‌دهد:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">hazm</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="c1"># Clean and normalize a text.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Normalizer</span><span class="p">()</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">&quot;چه گل های زیبایی.&quot;</span><span class="p">))</span>
-<span class="c1"># چه گل‌های زیبایی</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s1">&#39;اصلاح نويسه ها و استفاده از نیم‌فاصله پردازش را آسان مي كند&#39;</span><span class="p">)</span>
+<span class="s1">&#39;اصلاح نویسه‌ها و استفاده از نیم‌فاصله پردازش را آسان می‌کند&#39;</span>
 
-<span class="c1"># Find the word’s root (faster but less accurate)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Stemmer</span><span class="p">()</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s2">&quot;کتاب‌هایشان&quot;</span><span class="p">))</span>
-<span class="c1"># کتاب</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="s1">&#39;ما هم برای وصل کردن آمدیم! ولی برای پردازش، جدا بهتر نیست؟&#39;</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;ما هم برای وصل کردن آمدیم!&#39;</span><span class="p">,</span> <span class="s1">&#39;ولی برای پردازش، جدا بهتر نیست؟&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;ولی برای پردازش، جدا بهتر نیست؟&#39;</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;ولی&#39;</span><span class="p">,</span> <span class="s1">&#39;برای&#39;</span><span class="p">,</span> <span class="s1">&#39;پردازش&#39;</span><span class="p">,</span> <span class="s1">&#39;،&#39;</span><span class="p">,</span> <span class="s1">&#39;جدا&#39;</span><span class="p">,</span> <span class="s1">&#39;بهتر&#39;</span><span class="p">,</span> <span class="s1">&#39;نیست&#39;</span><span class="p">,</span> <span class="s1">&#39;؟&#39;</span><span class="p">]</span>
 
-<span class="c1"># Find the word’s root (More accurate but slower)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Lemmatizer</span><span class="p">()</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s2">&quot;می‌روم&quot;</span><span class="p">))</span>
-<span class="c1"># رفت#رو</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="s1">&#39;کتاب‌ها&#39;</span><span class="p">)</span>
+<span class="s1">&#39;کتاب&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">Lemmatizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="s1">&#39;می‌روم&#39;</span><span class="p">)</span>
+<span class="s1">&#39;رفت#رو&#39;</span>
 
-<span class="c1"># Break text into sentences.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">SentenceTokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s2">&quot;بسیار خوشحال بود! پرسید، چرا دیروز نیامدی ؟&quot;</span><span class="p">))</span>
-<span class="c1"># [&#39;پرسید، چرا دیروز نیامدی ؟&#39;,&#39;! بسیار خوشحال بود&#39;]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;pos_tagger.model&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;ما بسیار کتاب می‌خوانیم&#39;</span><span class="p">))</span>
+<span class="p">[(</span><span class="s1">&#39;ما&#39;</span><span class="p">,</span> <span class="s1">&#39;PRO&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;بسیار&#39;</span><span class="p">,</span> <span class="s1">&#39;ADV&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;کتاب&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;می‌خوانیم&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">)]</span>
 
-<span class="c1"># Break text into tokens.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">WordTokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s2">&quot;پرسید، چرا دیروز نیامدی؟&quot;</span><span class="p">))</span>
-<span class="c1"># [&#39;پرسید&#39;, &#39;،&#39;, &#39;چرا&#39;, &#39;دیروز&#39;, &#39;نیامدی&#39;, &#39;؟&#39;]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">chunker</span> <span class="o">=</span> <span class="n">Chunker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;chunker.model&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;کتاب خواندن را دوست داریم&#39;</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tree2brackets</span><span class="p">(</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tagged</span><span class="p">))</span>
+<span class="s1">&#39;[کتاب خواندن NP] [را POSTP] [دوست داریم VP]&#39;</span>
 
-<span class="c1"># Assigns parts of speech to each word, such as noun, verb, adjective, etc.</span>
-<span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;pos_tagger.model&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">WordTokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s2">&quot;ما بسیار کتاب می‌خوانیم&quot;</span><span class="p">)))</span>
-<span class="c1"># [(&#39;ما&#39;, &#39;PRO&#39;), (&#39;بسیار&#39;, &#39;ADV&#39;), (&#39;کتاب&#39;, &#39;N&#39;), (&#39;می‌خوانیم&#39;, &#39;V&#39;)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_embedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_embedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">&#39;سلام&#39;</span> <span class="p">,</span><span class="s1">&#39;درود&#39;</span> <span class="p">,</span><span class="s1">&#39;خداحافظ&#39;</span> <span class="p">,</span><span class="s1">&#39;پنجره&#39;</span><span class="p">])</span>
+<span class="s1">&#39;پنجره&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word_embedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">&#39;ساعت&#39;</span> <span class="p">,</span><span class="s1">&#39;پلنگ&#39;</span> <span class="p">,</span><span class="s1">&#39;شیر&#39;</span><span class="p">])</span>
+<span class="s1">&#39;ساعت&#39;</span>
 
-<span class="c1"># Labels each word with its part of speech, such as noun, verb, adjective, etc.</span>
-<span class="n">chunker</span> <span class="o">=</span> <span class="n">chunker</span><span class="p">(</span><span class="s1">&#39;chunker.model&#39;</span><span class="p">)</span>
-<span class="n">tagged</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;کتاب خواندن را دوست داریم&#39;</span><span class="p">))</span>
-<span class="n">tree2brackets</span><span class="p">(</span><span class="n">chunker</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tagged</span><span class="p">))</span>
-<span class="c1"># &#39;[کتاب خواندن NP] [را POSTP] [دوست داریم VP]&#39;</span>
-
-<span class="c1"># Identify semantic relations between words in a sentence.</span>
-<span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">tagger</span><span class="p">,</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">lemmatizer</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;زنگ‌ها برای که به صدا درمی‌آید؟&#39;</span><span class="p">))</span>
-<span class="c1"># &lt;DependencyGraph with 8 nodes&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">DependencyParser</span><span class="p">(</span><span class="n">tagger</span><span class="o">=</span><span class="n">tagger</span><span class="p">,</span> <span class="n">lemmatizer</span><span class="o">=</span><span class="n">lemmatizer</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="s1">&#39;زنگ‌ها برای که به صدا درمی‌آید؟&#39;</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">DependencyGraph</span> <span class="k">with</span> <span class="mi">8</span> <span class="n">nodes</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>جزئیات بیشترِ این توابع را در بخش <a href="content/modules">کلاس‌ها و توابع</a> پی بگیرید.
 هضم علاوه بر کلاس‌ها و توابع مختص خود، کلاس‌ها و توابعی نیز برای خواندن
@@ -1159,7 +1170,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+      © کلیهٔ حقوق این سایت محفوظ و متعلق به شرکت روشن است. &nbsp;|&nbsp;
 <a href="#__consent">تغییر تنظیمات کوکی</a>
 
     </div>
@@ -1217,7 +1228,7 @@
 
 
 <h4>درخواست استفاده از کوکی</h4>
-<p>با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود بخشیم. <br> سپاس از همکاری شما. ❤️</p>
+<p>با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود ببخشیم. <br> سپاس از همکاری شما. ❤️</p>
 <input class="md-toggle" type="checkbox" id="__settings" >
 <div class="md-consent__settings">
   <ul class="task-list">
@@ -1270,7 +1281,7 @@
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs.sticky", "navigation.indexes", "navigation.prune", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.tooltips", "content.code.annotate", "content.code.copy"], "search": "assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "\u06a9\u067e\u06cc \u0634\u062f", "clipboard.copy": "\u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646", "search.result.more.one": "1 \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.more.other": "# \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.none": "\u0633\u0646\u062f\u06cc \u06cc\u0627\u0641\u062a \u0646\u0634\u062f", "search.result.one": "1 \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.other": "# \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.placeholder": "\u0628\u0631\u0627\u06cc \u0634\u0631\u0648\u0639 \u062c\u0633\u062a\u062c\u0648 \u062a\u0627\u06cc\u067e \u06a9\u0646\u06cc\u062f", "search.result.term.missing": "\u0645\u0648\u062c\u0648\u062f \u0646\u06cc\u0633\u062a", "select.version": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0648\u06cc\u0631\u0627\u06cc\u0634"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs.sticky", "navigation.indexes", "navigation.prune", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.tooltips", "content.code.annotate", "content.code.copy", "content.code.select"], "search": "assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "\u06a9\u067e\u06cc \u0634\u062f", "clipboard.copy": "\u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646", "search.result.more.one": "1 \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.more.other": "# \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.none": "\u0633\u0646\u062f\u06cc \u06cc\u0627\u0641\u062a \u0646\u0634\u062f", "search.result.one": "1 \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.other": "# \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.placeholder": "\u0628\u0631\u0627\u06cc \u0634\u0631\u0648\u0639 \u062c\u0633\u062a\u062c\u0648 \u062a\u0627\u06cc\u067e \u06a9\u0646\u06cc\u062f", "search.result.term.missing": "\u0645\u0648\u062c\u0648\u062f \u0646\u06cc\u0633\u062a", "select.version": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0648\u06cc\u0631\u0627\u06cc\u0634"}}</script>
     
     
       <script src="assets/javascripts/bundle.220ee61c.min.js"></script>
