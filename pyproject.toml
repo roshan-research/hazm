@@ -43,6 +43,8 @@ pymdown-extensions="^9.11"
 mkdocs-glightbox="^0.3.4"
 mkdocstrings = "^0.21.2"
 mkdocstrings-python = "^1.0.0"
+mkdocs-macros-plugin = "^1.0.2"
+toml = "^0.10.2"
 
 
 [tool.poetry.group.docs]

@@ -12,7 +12,7 @@ docs_dir: documentation
 site_dir: docs/docs
 
 copyright: |
-  کپی‌رایت &copy; ۱۴۰۱ - ۱۴۰۲ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+  © کلیهٔ حقوق این سایت محفوظ و متعلق به شرکت روشن است. &nbsp;|&nbsp;
   <a href="#__consent">تغییر تنظیمات کوکی</a>
 
 theme:
@@ -54,6 +54,8 @@ theme:
     - content.code.select
 
 plugins:
+  - macros:
+      module_name: mkdocs_macros
   - autorefs
   - mkdocstrings:
       custom_templates: documentation/templates
