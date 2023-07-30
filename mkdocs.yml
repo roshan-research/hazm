@@ -2,18 +2,17 @@
 site_name: هضم | کتابخانهٔ پردازش زبان فارسی
 site_description: کتابخانه‌ای پایتونی برای پردازش زبان فارسی
 site_author: روشن
-site_url: https://roshan-research.github.io
+site_url: https://www.roshan-ai.ir/hazm/
 repo_url: https://github.com/roshan-research/hazm
 
 remote_branch: master
 repo_name: hazm
-edit_uri: edit/master/documentation
 
 docs_dir: documentation
 site_dir: docs/docs
 
 copyright: |
-  کپی‌رایت &copy; ۱۴۰۰ - ۱۴۰۱ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
+  کپی‌رایت &copy; ۱۴۰۱ - ۱۴۰۲ <a href="https://github.com/roshan-research/hazm"  target="_blank" rel="noopener">روشن</a> &nbsp;|&nbsp;
   <a href="#__consent">تغییر تنظیمات کوکی</a>
 
 theme:
@@ -52,6 +51,7 @@ theme:
     - content.tooltips
     - content.code.annotate
     - content.code.copy
+    - content.code.select
 
 plugins:
   - autorefs
@@ -106,6 +106,7 @@ nav:
           - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
           - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
   - کاربردهای هضم:
+      - content/samples/index.md
       - استخراج کلمات کلیدی: content/samples/keyword_extraction.md
 
   - سایر بخش‌ها:
@@ -114,13 +115,13 @@ nav:
 extra:
   analytics:
     provider: google
-    property: G-D32414H137
+    property: G-D32414H137  
     
   repo_url: https://github.com/roshan-research/hazm
   consent:
     title: درخواست استفاده از کوکی
     description: >-
-      با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود بخشیم.
+      با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود ببخشیم.
       <br>
       سپاس از همکاری شما. ❤️
 

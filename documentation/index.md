@@ -26,7 +26,7 @@
 $ pip install hazm
 ```
 
-سپس [منابع موردنظر را دانلود کنید](https://github.com/roshan-research/hazm#pretrained-models) و ترجیحاً در ریشهٔ پروژهٔ خود اکسترکت کنید.
+سپس [منابع موردنظر را دانلود کنید](https://github.com/roshan-research/hazm#pretrained-models) و ترجیحاً در ریشهٔ پروژه اکسترکت کنید.
 
 و در آخر، هضم را را در پروژه خود ایمپورت کنید:
 
