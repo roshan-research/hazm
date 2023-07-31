@@ -1,4 +1,4 @@
-# Hazm - Persian NLP Toolkit
+# Hazm - Persian NLP Toolkit ![Twitter Follow](https://img.shields.io/twitter/follow/roshan_ai?label=follow)
 
 ![Tests](https://img.shields.io/github/actions/workflow/status/roshan-research/hazm/test.yml?branch=master)
 ![PyPI - Downloads](https://img.shields.io/github/downloads/roshan-research/hazm/total)
