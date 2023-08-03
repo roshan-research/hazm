@@ -275,9 +275,8 @@ class Normalizer:
         text = "\n".join(result)
 
         text = regex_replace(self.affix_spacing_patterns, text)
-        text = regex_replace(self.punctuation_spacing_patterns, text)
+        return regex_replace(self.punctuation_spacing_patterns, text)
 
-        return text
 
     def remove_diacritics(self: "Normalizer", text: str) -> str:
         """اِعراب را از متن حذف می‌کند.
