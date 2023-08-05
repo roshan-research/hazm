@@ -31,7 +31,7 @@ class MaltParser(NLTKMaltParser):
         self: "MaltParser",
         tagger: str,
         lemmatizer: str,
-        working_dir: str = "dependency_parser",
+        working_dir: str = "universal_dependency_parser",
         model_file: str = "langModel.mco",  # Don't rename this file
     ) -> None:
         self.tagger = tagger
