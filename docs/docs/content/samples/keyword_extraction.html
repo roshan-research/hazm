@@ -21,7 +21,7 @@
         <link rel="next" href="../in-other-languages.html">
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
@@ -1160,6 +1160,9 @@
 
 <p>در این مثال قصد داریم با کمک هضم و برخی از کتابخانه‌های پردازش زبان، کلمات کلیدی یک متن را استخراج کنیم. در تمام الگوریتم‌های استخراج کلمات کلیدی، ابتدا باید متن خام
 ورودی نرمال‌سازی، توکنایز و برچسب‌گذاری شود که انجام این کارها به سادگی توسط کتابخانهٔ هضم میسر است.</p>
+<div class="admonition info">
+<p><a href="https://github.com/roshan-research/hazm/blob/master/samples/keyword_extraction.py">سورس این مثال</a></p>
+</div>
 <p>ابتدا آخرین نسخهٔ هضم و تمام کتابخانه‌هایی را که در مثال زیر ایمپورت شده‌اند نصب کنید.</p>
 <div class="highlight"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">hazm</span>
 </code></pre></div>
@@ -1182,7 +1185,7 @@
 <span class="n">keyword_count</span> <span class="o">=</span> <span class="mi">10</span>
 </code></pre></div>
 <h2 id="_1">نرمال‌سازی متن و استخراج توکن‌ها توسط هضم<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>متن ورودی را با کمک نرمالایزر هضم نرمال‌سازی می‌کنیم و پس از آن با کمک توکنایزر به جملات و در نهایت به کلمات می‌شکنیم.</p>
+<p>متن ورودی را با کمک <a href="../hazm/normalizer.html">نرمالایزر هضم</a> نرمال‌سازی می‌کنیم و پس از آن با کمک توکنایزر به <a href="../hazm/sentence_tokenizer.html">جملات</a> و در نهایت به <a href="../hazm/word_tokenizer.html">کلمات</a> می‌شکنیم.</p>
 <div class="highlight"><pre><span></span><code><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
 <span class="n">normalize_text</span> <span class="o">=</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 <span class="n">tokenize_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span> <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">normalize_text</span><span class="p">)]</span>
@@ -1198,7 +1201,7 @@
   ...]]
 </code></pre></div>
 <h2 id="pos">استخراج تگ POS برای هر یک از کلمات<a class="headerlink" href="#pos" title="Permanent link">&para;</a></h2>
-<p>بعد از لودکردن مدل POS، هر یک از کلمات را با ماژول POSTagger هضم برچسب‌گذاری می‌کنیم.</p>
+<p>بعد از لودکردن مدل POS، هر یک از کلمات را با ماژول <a href="../hazm/pos_tagger.html">POSTagger</a> هضم برچسب‌گذاری می‌کنیم.</p>
 <div class="highlight"><pre><span></span><code><span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;pos_tagger.model&#39;</span>
 <span class="n">tagger</span> <span class="o">=</span> <span class="n">POSTagger</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_path</span><span class="p">)</span>
 <span class="n">token_tag_list</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag_sents</span><span class="p">(</span><span class="n">tokenize_text</span><span class="p">)</span>
@@ -1273,7 +1276,7 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>[array([-0.01188162, -0.01629335, -0.02919522, -0.00783677, -0.00102758,
         -0.03208233, -0.01709846,  0.0117062 ,  0.03449516,  0.07738346,
-        ...],dtype=float32),            
+        ...],dtype=float32),
  array([ 1.61259193e-02, -2.24474519e-02, -3.80111709e-02,  2.28938404e-02,
          1.09725883e-02,  3.17719281e-02,  6.31656572e-02,  8.05895310e-03,
         ...],dtype=float32)]
