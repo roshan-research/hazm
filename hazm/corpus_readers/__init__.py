@@ -15,3 +15,4 @@ from .treebank_reader import TreebankReader
 from .verbvalency_reader import VerbValencyReader
 from .persian_plain_text_reader import PersianPlainTextReader
 from .wikipedia_reader import WikipediaReader
+from .mizan_reader import MizanReader

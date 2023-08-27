@@ -107,6 +107,7 @@ nav:
           - treebank_reader: content/hazm/corpus_readers/treebank_reader.md
           - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
           - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
+          - mizan_reader: content/hazm/corpus_readers/mizan_reader.md
   - کاربردهای هضم:
       - content/samples/index.md
       - استخراج کلمات کلیدی: content/samples/keyword_extraction.md

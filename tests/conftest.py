@@ -4,6 +4,7 @@ from hazm import Chunker
 from hazm import Conjugation
 from hazm import DependencyParser
 from hazm import Lemmatizer
+from hazm import MizanReader
 from hazm import Normalizer
 from hazm import POSTagger
 from hazm import RuleBasedChunker
@@ -79,6 +80,10 @@ def sent_embedding():
     sent_embedding = SentEmbedding()
     sent_embedding.load_model("tests/files/light_sent2vec.model")
     return sent_embedding
+
+@pytest.fixture(scope="session")
+def mizan_reader():
+    return MizanReader("tests/files/mizan")
 
 
 

@@ -37,3 +37,5 @@
 ## [verbvalency_reader](./verbvalency_reader.md)
 
 ## [wikipedia_reader](./wikipedia_reader.md)
+
+## [mizan_reader](./mizan_reader.md)
