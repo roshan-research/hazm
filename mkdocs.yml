@@ -108,6 +108,8 @@ nav:
           - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
           - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
           - mizan_reader: content/hazm/corpus_readers/mizan_reader.md
+          - ner_reader: content/hazm/corpus_readers/ner_reader.md
+
   - کاربردهای هضم:
       - content/samples/index.md
       - استخراج کلمات کلیدی: content/samples/keyword_extraction.md

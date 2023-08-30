@@ -39,3 +39,5 @@
 ## [wikipedia_reader](./wikipedia_reader.md)
 
 ## [mizan_reader](./mizan_reader.md)
+
+## [ner_reader](./ner_reader.md)
