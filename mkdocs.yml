@@ -109,6 +109,7 @@ nav:
           - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
           - mizan_reader: content/hazm/corpus_readers/mizan_reader.md
           - ner_reader: content/hazm/corpus_readers/ner_reader.md
+          - naab_reader: content/hazm/corpus_readers/naab_reader.md
 
   - کاربردهای هضم:
       - content/samples/index.md

@@ -17,3 +17,4 @@ from .persian_plain_text_reader import PersianPlainTextReader
 from .wikipedia_reader import WikipediaReader
 from .mizan_reader import MizanReader
 from .ner_reader import NerReader
+from .naab_reader import NaabReader

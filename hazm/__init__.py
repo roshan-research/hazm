@@ -65,6 +65,8 @@ from hazm.corpus_readers import PersianPlainTextReader
 from hazm.corpus_readers import WikipediaReader
 from hazm.corpus_readers import MizanReader
 from hazm.corpus_readers import NerReader
+from hazm.corpus_readers import NaabReader
+
 
 from hazm.dependency_parser import DependencyParser
 from hazm.dependency_parser import MaltParser
