@@ -17,7 +17,7 @@ class NerReader:
     """
     def __init__(self: "NerReader", corpus_folder) -> None:
         self._corpus_folder = corpus_folder
-        self._file_paths = Path.glob(f"{corpus_folder}/*.txt")
+        self._file_paths = Path(corpus_folder).glob("*.txt")
 
 
     def sents(self: "NerReader") -> Iterator[List[Tuple[str,str]]]:

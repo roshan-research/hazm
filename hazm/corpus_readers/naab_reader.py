@@ -16,7 +16,7 @@ class NaabReader:
     """
 
     def __init__(self: "NaabReader", corpus_folder: str, subset: str="train") -> None:
-        self._file_paths=Path.glob(f"{corpus_folder}/{subset}*.txt")
+        self._file_paths=Path(corpus_folder).glob(f"{subset}*.txt")
 
     def sents(self: "NaabReader") -> Iterator[str]:
         """جملات پیکره را یک‌به‌یک برمی‌گرداند.
