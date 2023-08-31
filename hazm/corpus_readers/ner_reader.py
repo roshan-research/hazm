@@ -3,7 +3,6 @@
 [پیکرهٔ موجودیت‌های نامدار](https://github.com/Text-Mining/Persian-NER/) حاوی ۲۵ میلیون توکنِ برچسب‌خورده از ویکی‌پدیای فارسی در قالب حدود یک میلیون جمله است.
 """
 
-import glob
 from pathlib import Path
 from typing import Iterator
 from typing import List
@@ -18,7 +17,7 @@ class NerReader:
     """
     def __init__(self: "NerReader", corpus_folder) -> None:
         self._corpus_folder = corpus_folder
-        self._file_paths = glob.glob(f"{corpus_folder}/*.txt")
+        self._file_paths = Path.glob(f"{corpus_folder}/*.txt")
 
 
     def sents(self: "NerReader") -> Iterator[List[Tuple[str,str]]]:

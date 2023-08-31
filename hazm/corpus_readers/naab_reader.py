@@ -3,7 +3,6 @@
 [پیکرهٔ ناب](https://huggingface.co/datasets/SLPL/naab/) متشکل از ۱۳۰ گیگابایت متن تمیزشدهٔ فارسی متشکل از ۲۵۰ میلیون پاراگراف و ۱۵ میلیارد کلمه است.
 
 """
-import glob
 from pathlib import Path
 from typing import Iterator
 
@@ -17,7 +16,7 @@ class NaabReader:
     """
 
     def __init__(self: "NaabReader", corpus_folder: str, subset: str="train") -> None:
-        self._file_paths=glob.glob(f"{corpus_folder}/{subset}*.txt")
+        self._file_paths=Path.glob(f"{corpus_folder}/{subset}*.txt")
 
     def sents(self: "NaabReader") -> Iterator[str]:
         """جملات پیکره را یک‌به‌یک برمی‌گرداند.
