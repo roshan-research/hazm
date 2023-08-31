@@ -104,21 +104,3 @@ def regex_replace(patterns: str, text: str) -> str:
     for pattern, repl in patterns:
         text = re.sub(pattern, repl, text)
     return text
-
-
-def get_lines(file_path: str, strip_line: bool = False) -> Iterator[str]:
-    """یک فایل متنی را می‌گیرد و سطر به سطر برمی‌گرداند..
-
-    Args:
-        file_path: مسیر فایل متنی.
-        strip_line: اگر `True` باشد فضای خالی ابتدا و انتهای هر سطر را حذف می‌کند.
-
-    Yields:
-        سطر بعدی.
-    """
-    with Path(file_path).open("r", encoding="utf-8") as file:
-        for line in file:
-            if strip_line:
-                yield line.strip()
-            else:
-                yield line

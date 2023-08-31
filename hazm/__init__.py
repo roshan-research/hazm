@@ -13,7 +13,6 @@ from hazm.utils import words_list
 from hazm.utils import NUMBERS
 from hazm.utils import informal_verbs
 from hazm.utils import informal_words
-from hazm.utils import get_lines
 
 from hazm.sequence_tagger import IOBTagger
 from hazm.sequence_tagger import SequenceTagger
