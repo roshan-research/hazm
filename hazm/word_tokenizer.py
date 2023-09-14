@@ -302,9 +302,8 @@ class WordTokenizer(TokenizerI):
 
 
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-        tokens = self.join_abbreviations(tokens) if self._join_abbreviation else tokens
+        return self.join_abbreviations(tokens) if self._join_abbreviation else tokens
 
-        return tokens
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
         """افعال چندبخشی را به هم می‌چسباند.
