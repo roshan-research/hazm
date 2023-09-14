@@ -79,6 +79,3 @@ def sent_embedding():
     sent_embedding = SentEmbedding()
     sent_embedding.load_model("tests/files/light_sent2vec.model")
     return sent_embedding
-
-
-

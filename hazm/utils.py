@@ -16,6 +16,7 @@ default_stopwords = Path(data_path) / "stopwords.dat"
 default_verbs = Path(data_path) / "verbs.dat"
 informal_words = Path(data_path) / "iwords.dat"
 informal_verbs = Path(data_path) / "iverbs.dat"
+abbreviations = Path(data_path) / "abbreviations.dat"
 
 NUMBERS = "۰۱۲۳۴۵۶۷۸۹"
 

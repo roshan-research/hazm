@@ -5,13 +5,13 @@
 
 """
 
-
 import re
 from pathlib import Path
 from typing import List
 
 from nltk.tokenize.api import TokenizerI
 
+from hazm import abbreviations
 from hazm import default_verbs
 from hazm import default_words
 from hazm import words_list
@@ -30,6 +30,7 @@ class WordTokenizer(TokenizerI):
             این حال شما می‌توانید فایل موردنظر خود را معرفی کنید. برای آگاهی از
             ساختار این فایل به فایل پیش‌فرض مراجعه کنید.
         join_verb_parts: اگر `True` باشد افعال چندبخشی را با خط زیر به هم می‌چسباند؛ مثلاً «گفته شده است» را به صورت «گفته_شده_است» برمی‌گرداند.
+        join_abbreviations: اگر `True` باشد مخفف‌ها را نمی‌شکند و به شکل یک توکن برمی‌گرداند.
         separate_emoji: اگر `True` باشد اموجی‌ها را با یک فاصله از هم جدا می‌کند.
         replace_links: اگر `True` باشد لینک‌ها را با کلمهٔ `LINK` جایگزین می‌کند.
         replace_ids: اگر `True` باشد شناسه‌ها را با کلمهٔ `ID` جایگزین می‌کند.
@@ -44,6 +45,7 @@ class WordTokenizer(TokenizerI):
         words_file: str = default_words,
         verbs_file: str = default_verbs,
         join_verb_parts: bool = True,
+        join_abbreviations: bool=True,
         separate_emoji: bool = False,
         replace_links: bool = False,
         replace_ids: bool = False,
@@ -52,6 +54,7 @@ class WordTokenizer(TokenizerI):
         replace_hashtags: bool = False,
     ) -> None:
         self._join_verb_parts = join_verb_parts
+        self._join_abbreviation = join_abbreviations
         self.separate_emoji = separate_emoji
         self.replace_links = replace_links
         self.replace_ids = replace_ids
@@ -240,6 +243,13 @@ class WordTokenizer(TokenizerI):
                     + ["ن" + bon + "ه" for bon in self.bons],
                 )
 
+        abbreviations_file = Path(abbreviations)
+
+        with abbreviations_file.open("r", encoding="utf-8") as f:
+            self.abbreviations = [line.strip() for line in f]
+
+
+
     def tokenize(self: "WordTokenizer", text: str) -> List[str]:
         """توکن‌های متن را استخراج می‌کند.
 
@@ -289,8 +299,11 @@ class WordTokenizer(TokenizerI):
         text = self.pattern.sub(r" \1 ", text.replace("\n", " ").replace("\t", " "))
 
         tokens = [word for word in text.split(" ") if word]
-        if self._join_verb_parts:
-            tokens = self.join_verb_parts(tokens)
+
+
+        tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
+        tokens = self.join_abbreviations(tokens) if self._join_abbreviation else tokens
+
         return tokens
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
@@ -328,3 +341,38 @@ class WordTokenizer(TokenizerI):
             else:
                 result.append(token)
         return list(reversed(result[1:]))
+
+    def join_abbreviations(self: "WordTokenizer", tokens: List[str]) -> List[str]:
+        """در آرایهٔ ورودی جستجو می‌کند و هر جایی کلمهٔ مخففی دید که به چند توکن شکسته شده بود آن توکن‌ها را به هم می‌چسباند تا آن کلمه به یک توکنِ واحد تبدیل شود.
+
+        Examples:
+            >>> tokenizer = WordTokenizer()
+            >>> tokenizer.join_abbreviations(['سال','۱۴۰۲','ه', '.','ش'])
+            ['سال','۱۴۰۲','ه.ش']
+            >>> tokenizer.join_abbreviations(['حضرت','مهدی','(', 'عج',')'])
+            ['حضرت','مهدی','(عج)']
+
+        Args:
+            tokens: فهرستی از توکن‌ها.
+
+        Returns:
+            فهرستی از توکن‌ها که در آن هر مخفف به یک توکن تبدیل شده است.
+
+        """
+        result = []
+        i = 0
+        abbreviations = self.abbreviations
+        while i < len(tokens):
+            longest = None
+            for j in range(i, len(tokens)):
+                candidate = "".join(tokens[i:j+1])
+                if candidate in abbreviations:
+                    longest = candidate
+                    longest_idx = j
+            if longest:
+                result.append(abbreviations[abbreviations.index(longest)])
+                i = longest_idx + 1
+            else:
+                result.append(tokens[i])
+                i += 1
+        return result

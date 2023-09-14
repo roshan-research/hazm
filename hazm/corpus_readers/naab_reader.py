@@ -32,6 +32,3 @@ class NaabReader:
         for file_path in self._file_paths:
                 with Path(file_path).open("r", encoding="utf-8") as file:
                     yield from (line.strip() for line in file)
-
-ner = NaabReader("tests/files/naab","test")
-print(next(ner.sents()))

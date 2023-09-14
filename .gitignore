@@ -166,3 +166,5 @@ ss.ipynb
 tests/files/
 wiki.bz2
 .vscode/settings.json
+
+.python-version
