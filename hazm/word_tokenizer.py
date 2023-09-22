@@ -243,10 +243,19 @@ class WordTokenizer(TokenizerI):
                     + ["ن" + bon + "ه" for bon in self.bons],
                 )
 
-        abbreviations_file = Path(abbreviations)
+        if (join_abbreviations):
+            abbreviations_file = Path(abbreviations)
 
-        with abbreviations_file.open("r", encoding="utf-8") as f:
-            self.abbreviations = [line.strip() for line in f]
+            with abbreviations_file.open("r", encoding="utf-8") as f:
+                lines = [line.strip() for line in f]
+                sorted_lines= sorted(lines, key=len, reverse=True)
+
+                abbrs = []
+                for abbr in sorted_lines:
+                    arr = [item for item in re.split(r'([.()])', abbr) if item]        
+                    abbrs.append(arr)
+                
+                self.abbreviations = abbrs
 
 
 
@@ -361,18 +370,24 @@ class WordTokenizer(TokenizerI):
         """
         result = []
         i = 0
-        abbreviations = self.abbreviations
+
         while i < len(tokens):
-            longest = None
-            for j in range(i, len(tokens)):
-                candidate = "".join(tokens[i:j+1])
-                if candidate in abbreviations:
-                    longest = candidate
-                    longest_idx = j
-            if longest:
-                result.append(abbreviations[abbreviations.index(longest)])
-                i = longest_idx + 1
-            else:
+            found = False
+            
+            for abbr in self.abbreviations:                
+                if tokens[i:i + len(abbr)] == abbr:
+                    result.append("".join(abbr))
+                    i += len(abbr)
+                    found = True
+                    break
+            
+            if not found:
                 result.append(tokens[i])
                 i += 1
+
         return result
+
+            
+        
+    
+
