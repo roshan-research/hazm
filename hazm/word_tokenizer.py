@@ -252,9 +252,9 @@ class WordTokenizer(TokenizerI):
 
                 abbrs = []
                 for abbr in sorted_lines:
-                    arr = [item for item in re.split(r'([.()])', abbr) if item]        
+                    arr = [item for item in re.split(r"([.()])", abbr) if item]
                     abbrs.append(arr)
-                
+
                 self.abbreviations = abbrs
 
 
@@ -311,9 +311,8 @@ class WordTokenizer(TokenizerI):
 
 
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-        tokens = self.join_abbreviations(tokens) if self._join_abbreviation else tokens
+        return self.join_abbreviations(tokens) if self._join_abbreviation else tokens
 
-        return tokens
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
         """افعال چندبخشی را به هم می‌چسباند.
@@ -373,21 +372,21 @@ class WordTokenizer(TokenizerI):
 
         while i < len(tokens):
             found = False
-            
-            for abbr in self.abbreviations:                
+
+            for abbr in self.abbreviations:
                 if tokens[i:i + len(abbr)] == abbr:
                     result.append("".join(abbr))
                     i += len(abbr)
                     found = True
                     break
-            
+
             if not found:
                 result.append(tokens[i])
                 i += 1
 
         return result
 
-            
-        
-    
+
+
+
 
