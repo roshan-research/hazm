@@ -61,14 +61,4 @@ class TestWordTokenizer:
     def test_join_verb_parts(self: "TestWordTokenizer", word_tokenizer, words, expected):
         assert word_tokenizer.join_verb_parts(words) == expected
 
-    @pytest.mark.parametrize(("words", "expected"), [
-
-        (["سال","۱۴۰۲","ه", ".","ش"], ["سال","۱۴۰۲","ه.ش"]),
-        (["حضرت","مهدی","(", "عج",")"], ["حضرت","مهدی","(عج)"]),
-        (["سال","۱۴۰۲","ه",".","ش", "."], ["سال","۱۴۰۲","ه.ش."]),
-        ([], []),
-    ])
-    def test_join_abbreviation(self: "TestWordTokenizer", word_tokenizer, words, expected):
-        assert word_tokenizer.join_abbreviations(words) == expected
-
 

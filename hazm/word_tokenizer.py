@@ -7,6 +7,7 @@
 
 import re
 from pathlib import Path
+from typing import Dict
 from typing import List
 
 from nltk.tokenize.api import TokenizerI
@@ -247,14 +248,7 @@ class WordTokenizer(TokenizerI):
             abbreviations_file = Path(abbreviations)
 
             with abbreviations_file.open("r", encoding="utf-8") as f:
-                lines = [line.strip() for line in f]
-                sorted_lines= sorted(lines, key=len, reverse=True)
-
-                abbrs = []
-                for abbr in sorted_lines:
-                    arr = [item for item in re.split(r"([.()])", abbr) if item]
-                    abbrs.append(arr)
-
+                abbrs = [line.strip() for line in f]
                 self.abbreviations = abbrs
 
 
@@ -291,6 +285,20 @@ class WordTokenizer(TokenizerI):
         # >>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
         # 📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
+
+        if self._join_abbreviation:
+            replaced_abbrs = []
+
+            rnd = "_"
+
+            while rnd in text: rnd +="_" # if rnd exists in text, add loop until text has no rnd
+
+            for abbr in self.abbreviations:
+                pattern = re.escape(abbr)
+                pattern = r"(?<!\w)" + pattern + r"(?!\w)"
+                text = re.sub(pattern, rnd, text)
+                replaced_abbrs.append(abbr)
+
         if self.separate_emoji:
             text = self.emoji_pattern.sub(self.emoji_repl, text)
         if self.replace_emails:
@@ -311,7 +319,13 @@ class WordTokenizer(TokenizerI):
 
 
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-        return self.join_abbreviations(tokens) if self._join_abbreviation else tokens
+
+        if self._join_abbreviation:
+            for i in range(len(tokens)):
+                if tokens[i] == rnd:
+                    tokens[i] = replaced_abbrs.pop(0)
+
+        return tokens
 
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
@@ -349,42 +363,6 @@ class WordTokenizer(TokenizerI):
             else:
                 result.append(token)
         return list(reversed(result[1:]))
-
-    def join_abbreviations(self: "WordTokenizer", tokens: List[str]) -> List[str]:
-        """در آرایهٔ ورودی جستجو می‌کند و هر جایی کلمهٔ مخففی دید که به چند توکن شکسته شده بود آن توکن‌ها را به هم می‌چسباند تا آن کلمه به یک توکنِ واحد تبدیل شود.
-
-        Examples:
-            >>> tokenizer = WordTokenizer()
-            >>> tokenizer.join_abbreviations(['سال','۱۴۰۲','ه', '.','ش'])
-            ['سال','۱۴۰۲','ه.ش']
-            >>> tokenizer.join_abbreviations(['حضرت','مهدی','(', 'عج',')'])
-            ['حضرت','مهدی','(عج)']
-
-        Args:
-            tokens: فهرستی از توکن‌ها.
-
-        Returns:
-            فهرستی از توکن‌ها که در آن هر مخفف به یک توکن تبدیل شده است.
-
-        """
-        result = []
-        i = 0
-
-        while i < len(tokens):
-            found = False
-
-            for abbr in self.abbreviations:
-                if tokens[i:i + len(abbr)] == abbr:
-                    result.append("".join(abbr))
-                    i += len(abbr)
-                    found = True
-                    break
-
-            if not found:
-                result.append(tokens[i])
-                i += 1
-
-        return result
 
 
 
