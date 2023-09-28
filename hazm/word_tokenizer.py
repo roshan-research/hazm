@@ -10,13 +10,13 @@ from pathlib import Path
 from typing import Dict
 from typing import List
 
+from flashtext import KeywordProcessor
 from nltk.tokenize.api import TokenizerI
 
 from hazm import abbreviations
 from hazm import default_verbs
 from hazm import default_words
 from hazm import words_list
-from flashtext import KeywordProcessor
 
 
 class WordTokenizer(TokenizerI):
@@ -47,7 +47,7 @@ class WordTokenizer(TokenizerI):
         words_file: str = default_words,
         verbs_file: str = default_verbs,
         join_verb_parts: bool = True,
-        join_abbreviations: bool=True,
+        join_abbreviations: bool=False,
         separate_emoji: bool = False,
         replace_links: bool = False,
         replace_ids: bool = False,
@@ -287,17 +287,18 @@ class WordTokenizer(TokenizerI):
         # 📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
 
-        if self._join_abbreviation:          
+        if self._join_abbreviation:
 
             rnd = 313 # random number that is less likely to appear within the text
-            while str(rnd) in text: rnd=rnd+1 # if rnd is found within the text, increment it by 1 until it no longer appears in the text.
+            while str(rnd) in text:
+                rnd=rnd+1 # if rnd is found within the text, increment it by 1 until it no longer appears in the text.
             rnd = str (rnd)
-                      
-            keyword_processor = KeywordProcessor()           
+
+            keyword_processor = KeywordProcessor()
 
             for (i, abbr) in enumerate(self.abbreviations):
                 keyword_processor.add_keyword(abbr, rnd+str(i))
-          
+
             text = keyword_processor.replace_keywords(text)
 
         if self.separate_emoji:
@@ -318,14 +319,14 @@ class WordTokenizer(TokenizerI):
 
         tokens = [word for word in text.split(" ") if word]
 
-
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-        
-        if self._join_abbreviation:                        
+
+        if self._join_abbreviation:
             reversed_dict = {value: key for key, value in keyword_processor.get_all_keywords().items()}
-            for i, token in enumerate(tokens):                
+            for i, token in enumerate(tokens):
                 if token in reversed_dict:
-                    tokens[i] = reversed_dict[token]            
+                    tokens[i] = reversed_dict[token]
+
 
         return tokens
 
