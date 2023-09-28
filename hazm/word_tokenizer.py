@@ -297,7 +297,7 @@ class WordTokenizer(TokenizerI):
             keyword_processor = KeywordProcessor()
 
             for (i, abbr) in enumerate(self.abbreviations):
-                keyword_processor.add_keyword(abbr, rnd+str(i))
+                keyword_processor.add_keyword(" "+abbr+" ", rnd+str(i))               
 
             text = keyword_processor.replace_keywords(text)
 
