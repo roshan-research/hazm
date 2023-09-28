@@ -16,6 +16,7 @@ from hazm import abbreviations
 from hazm import default_verbs
 from hazm import default_words
 from hazm import words_list
+from flashtext import KeywordProcessor
 
 
 class WordTokenizer(TokenizerI):
@@ -286,18 +287,18 @@ class WordTokenizer(TokenizerI):
         # 📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
 
-        if self._join_abbreviation:
-            replaced_abbrs = []
+        if self._join_abbreviation:          
 
-            rnd = "_"
+            rnd = 313 # random number that is less likely to appear within the text
+            while str(rnd) in text: rnd=rnd+1 # if rnd is found within the text, increment it by 1 until it no longer appears in the text.
+            rnd = str (rnd)
+                      
+            keyword_processor = KeywordProcessor()           
 
-            while rnd in text: rnd +="_" # if rnd exists in text, add loop until text has no rnd
-
-            for abbr in self.abbreviations:
-                pattern = re.escape(abbr)
-                pattern = r"(?<!\w)" + pattern + r"(?!\w)"
-                text = re.sub(pattern, rnd, text)
-                replaced_abbrs.append(abbr)
+            for (i, abbr) in enumerate(self.abbreviations):
+                keyword_processor.add_keyword(abbr, rnd+str(i))
+          
+            text = keyword_processor.replace_keywords(text)
 
         if self.separate_emoji:
             text = self.emoji_pattern.sub(self.emoji_repl, text)
@@ -319,11 +320,12 @@ class WordTokenizer(TokenizerI):
 
 
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-
-        if self._join_abbreviation:
-            for i in range(len(tokens)):
-                if tokens[i] == rnd:
-                    tokens[i] = replaced_abbrs.pop(0)
+        
+        if self._join_abbreviation:                        
+            reversed_dict = {value: key for key, value in keyword_processor.get_all_keywords().items()}
+            for i, token in enumerate(tokens):                
+                if token in reversed_dict:
+                    tokens[i] = reversed_dict[token]            
 
         return tokens
 
