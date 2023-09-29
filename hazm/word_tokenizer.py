@@ -290,14 +290,17 @@ class WordTokenizer(TokenizerI):
         if self._join_abbreviation:
 
             rnd = 313 # random number that is less likely to appear within the text
+
             while str(rnd) in text:
                 rnd=rnd+1 # if rnd is found within the text, increment it by 1 until it no longer appears in the text.
+
             rnd = str (rnd)
 
             keyword_processor = KeywordProcessor()
+            text = text.replace(" "," " * 3)
 
             for (i, abbr) in enumerate(self.abbreviations):
-                keyword_processor.add_keyword(" "+abbr+" ", rnd+str(i))               
+                keyword_processor.add_keyword(" "+abbr+" ", rnd+str(i))
 
             text = keyword_processor.replace_keywords(text)
 
@@ -325,7 +328,7 @@ class WordTokenizer(TokenizerI):
             reversed_dict = {value: key for key, value in keyword_processor.get_all_keywords().items()}
             for i, token in enumerate(tokens):
                 if token in reversed_dict:
-                    tokens[i] = reversed_dict[token]
+                    tokens[i] = reversed_dict[token].strip()
 
 
         return tokens
