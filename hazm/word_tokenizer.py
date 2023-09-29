@@ -331,7 +331,6 @@ class WordTokenizer(TokenizerI):
                     tokens[i] = reversed_dict[token].strip()
 
 
-        return tokens
 
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
