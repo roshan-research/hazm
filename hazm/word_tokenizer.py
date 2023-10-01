@@ -7,8 +7,10 @@
 
 import re
 from pathlib import Path
+from typing import Dict
 from typing import List
 
+from flashtext import KeywordProcessor
 from nltk.tokenize.api import TokenizerI
 
 from hazm import abbreviations
@@ -45,7 +47,7 @@ class WordTokenizer(TokenizerI):
         words_file: str = default_words,
         verbs_file: str = default_verbs,
         join_verb_parts: bool = True,
-        join_abbreviations: bool=True,
+        join_abbreviations: bool=False,
         separate_emoji: bool = False,
         replace_links: bool = False,
         replace_ids: bool = False,
@@ -243,10 +245,12 @@ class WordTokenizer(TokenizerI):
                     + ["ن" + bon + "ه" for bon in self.bons],
                 )
 
-        abbreviations_file = Path(abbreviations)
+        if (join_abbreviations):
+            abbreviations_file = Path(abbreviations)
 
-        with abbreviations_file.open("r", encoding="utf-8") as f:
-            self.abbreviations = [line.strip() for line in f]
+            with abbreviations_file.open("r", encoding="utf-8") as f:
+                abbrs = [line.strip() for line in f]
+                self.abbreviations = abbrs
 
 
 
@@ -282,6 +286,24 @@ class WordTokenizer(TokenizerI):
         # >>> print(' '.join(tokenizer.tokenize('📍عرضه بلوک 17 درصدی #های_وب به قیمت')))
         # 📍 عرضه بلوک NUM2 درصدی TAG های وب به قیمت
 
+
+        if self._join_abbreviation:
+
+            rnd = 313 # random number that is less likely to appear within the text
+
+            while str(rnd) in text:
+                rnd=rnd+1 # if rnd is found within the text, increment it by 1 until it no longer appears in the text.
+
+            rnd = str (rnd)
+
+            keyword_processor = KeywordProcessor()
+            text = text.replace(" "," " * 3)
+
+            for (i, abbr) in enumerate(self.abbreviations):
+                keyword_processor.add_keyword(" "+abbr+" ", rnd+str(i))
+
+            text = keyword_processor.replace_keywords(text)
+
         if self.separate_emoji:
             text = self.emoji_pattern.sub(self.emoji_repl, text)
         if self.replace_emails:
@@ -300,9 +322,17 @@ class WordTokenizer(TokenizerI):
 
         tokens = [word for word in text.split(" ") if word]
 
-
         tokens = self.join_verb_parts(tokens) if self._join_verb_parts else tokens
-        return self.join_abbreviations(tokens) if self._join_abbreviation else tokens
+
+        if self._join_abbreviation:
+            reversed_dict = {value: key for key, value in keyword_processor.get_all_keywords().items()}
+            for i, token in enumerate(tokens):
+                if token in reversed_dict:
+                    tokens[i] = reversed_dict[token].strip()
+
+        return tokens
+
+
 
 
     def join_verb_parts(self: "WordTokenizer", tokens: List[str]) -> List[str]:
@@ -341,37 +371,7 @@ class WordTokenizer(TokenizerI):
                 result.append(token)
         return list(reversed(result[1:]))
 
-    def join_abbreviations(self: "WordTokenizer", tokens: List[str]) -> List[str]:
-        """در آرایهٔ ورودی جستجو می‌کند و هر جایی کلمهٔ مخففی دید که به چند توکن شکسته شده بود آن توکن‌ها را به هم می‌چسباند تا آن کلمه به یک توکنِ واحد تبدیل شود.
 
-        Examples:
-            >>> tokenizer = WordTokenizer()
-            >>> tokenizer.join_abbreviations(['سال','۱۴۰۲','ه', '.','ش'])
-            ['سال','۱۴۰۲','ه.ش']
-            >>> tokenizer.join_abbreviations(['حضرت','مهدی','(', 'عج',')'])
-            ['حضرت','مهدی','(عج)']
 
-        Args:
-            tokens: فهرستی از توکن‌ها.
 
-        Returns:
-            فهرستی از توکن‌ها که در آن هر مخفف به یک توکن تبدیل شده است.
 
-        """
-        result = []
-        i = 0
-        abbreviations = self.abbreviations
-        while i < len(tokens):
-            longest = None
-            for j in range(i, len(tokens)):
-                candidate = "".join(tokens[i:j+1])
-                if candidate in abbreviations:
-                    longest = candidate
-                    longest_idx = j
-            if longest:
-                result.append(abbreviations[abbreviations.index(longest)])
-                i = longest_idx + 1
-            else:
-                result.append(tokens[i])
-                i += 1
-        return result
