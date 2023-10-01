@@ -4,6 +4,6 @@
 
     در پروژه‌های زیر از این ماژول استفاده شده است:
 
-    [پروژهٔ استخراج کلمات کلیدی](../samples/keyword_extraction.html)
+    [پروژهٔ استخراج کلمات کلیدی](../samples/keyword_extraction.md)
 
 ::: hazm.word_tokenizer

@@ -212,7 +212,7 @@ templateKeys = set(['10', '828'])
 
 ##
 # Regex for identifying disambig pages
-filter_disambig_page_pattern = re.compile("{{disambig(uation)?(\|[^}]*)?}}")
+filter_disambig_page_pattern = re.compile(r"{{disambig(uation)?(\|[^}]*)?}}")
 
 ##
 # page filtering logic -- remove templates, undesired xml namespaces, and disambiguation pages
@@ -330,7 +330,7 @@ def unescape(text):
         except:
             return text  # leave as is
 
-    return re.sub("&#?(\w+);", fixup, text)
+    return re.sub(r"&#?(\w+);", fixup, text)
 
 # Match HTML comments
 # The buggy template {{Template:T}} has a comment terminating with just "->"
@@ -770,8 +770,8 @@ class Extractor(object):
         text = text.replace('\t', ' ')
         text = spaces.sub(' ', text)
         text = dots.sub('...', text)
-        text = re.sub(' (,:\.\)\]»)', r'\1', text)
-        text = re.sub('(\[\(«) ', r'\1', text)
+        text = re.sub(r' (,:\.\)\]»)', r'\1', text)
+        text = re.sub(r'(\[\(«) ', r'\1', text)
         text = re.sub(r'\n\W+?\n', '\n', text, flags=re.U)  # lines with only punctuations
         text = text.replace(',,', ',').replace(',.', '.')
         if options.keep_tables:
@@ -1193,8 +1193,8 @@ def findMatchingBraces(text, ldelim=0):
         reOpen = re.compile('[{]{%d,}' % ldelim)  # at least ldelim
         reNext = re.compile('[{]{2,}|}{2,}')  # at least 2
     else:
-        reOpen = re.compile('{{2,}|\[{2,}')
-        reNext = re.compile('{{2,}|}{2,}|\[{2,}|]{2,}')  # at least 2
+        reOpen = re.compile(r'{{2,}|\[{2,}')
+        reNext = re.compile(r'{{2,}|}{2,}|\[{2,}|]{2,}')  # at least 2
 
     cur = 0
     while True:
@@ -1752,7 +1752,7 @@ def sharp_ifeq(extr, lvalue, rvalue, valueIfTrue, valueIfFalse=None, *args):
     return ""
 
 def sharp_iferror(extr, test, then='', Else=None, *args):
-    if re.match('<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"', test):
+    if re.match(r'<(?:strong|span|p|div)\s(?:[^\s>]*\s+)*?class="(?:[^"\s>]*\s+)*?error(?:\s[^">]*)?"', test):
         return extr.expand(then.strip())
     elif Else is None:
         return test.strip()
@@ -1925,7 +1925,7 @@ def define_template(title, page):
     if not page: return
 
     # check for redirects
-    m = re.match('#REDIRECT.*?\[\[([^\]]*)]]', page[0], re.IGNORECASE)
+    m = re.match(r'#REDIRECT.*?\[\[([^\]]*)]]', page[0], re.IGNORECASE)
     if m:
         options.redirects[title] = m.group(1)  # normalizeTitle(m.group(1))
         return
@@ -2385,7 +2385,7 @@ wgUrlProtocols = [
 EXT_LINK_URL_CLASS = r'[^][<>"\x00-\x20\x7F\s]'
 ANCHOR_CLASS = r'[^][\x00-\x08\x0a-\x1F]'
 ExtLinkBracketedRegex = re.compile(
-    '\[(((?i)' + '|'.join(wgUrlProtocols) + ')' + EXT_LINK_URL_CLASS + r'+)' +
+    r'\[(((?i)' + '|'.join(wgUrlProtocols) + ')' + EXT_LINK_URL_CLASS + r'+)' +
     r'\s*((?:' + ANCHOR_CLASS + r'|\[\[' + ANCHOR_CLASS + r'+\]\])' + r'*?)\]',
     re.S | re.U)
 # A simpler alternative:
@@ -2450,7 +2450,7 @@ def makeExternalImage(url, alt=''):
 # ----------------------------------------------------------------------
 
 # match tail after wikilink
-tailRE = re.compile('\w+')
+tailRE = re.compile(r'\w+')
 
 syntaxhighlight = re.compile('&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;', re.DOTALL)
 

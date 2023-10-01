@@ -168,3 +168,7 @@ wiki.bz2
 .vscode/settings.json
 
 .python-version
+
+.vscode
+
+docs

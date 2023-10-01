@@ -15,7 +15,7 @@ class NerReader:
     Args:
         corpus_folder: مسیر فولدرِ حاوی فایل‌های پیکره.
     """
-    def __init__(self: "NerReader", corpus_folder) -> None:
+    def __init__(self: "NerReader", corpus_folder: str) -> None:
         self._corpus_folder = corpus_folder
         self._file_paths = Path(corpus_folder).glob("*.txt")
 

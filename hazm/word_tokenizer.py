@@ -273,6 +273,9 @@ class WordTokenizer(TokenizerI):
             >>> tokenizer = WordTokenizer(join_verb_parts=False, separate_emoji=True)
             >>> print(' '.join(tokenizer.tokenize('دیگه میخوام ترک تحصیل کنم 😂😂😂')))
             دیگه میخوام ترک تحصیل کنم 😂 😂 😂
+            >>> tokenizer = WordTokenizer(join_abbreviations=True)
+            >>> print(' '.join(tokenizer.tokenize('امام علی (ع) فرمود: برترین زهد، پنهان داشتن زهد است')))
+            ['امام', 'علی', '(ع)', 'فرمود', ':', 'برترین', 'زهد', '،', 'پنهان', 'داشتن', 'زهد', 'است']
 
         Args:
             text: متنی که باید توکن‌های آن استخراج شود.

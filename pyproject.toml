@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hazm"
-version = "0.9.3"
+version = "0.9.4"
 description = "Persian NLP Toolkit"
 authors = ["Roshan <salam@roshan-ai.com>"]
 maintainers = ["Roshan <salam@roshan-ai.com>"]
@@ -43,9 +43,8 @@ pymdown-extensions="^9.11"
 mkdocs-glightbox="^0.3.4"
 mkdocstrings = "^0.21.2"
 mkdocstrings-python = "^1.0.0"
-mkdocs-macros-plugin = "^1.0.2"
 toml = "^0.10.2"
-
+mkdocs-macros-plugin = "^1.0.4"
 
 [tool.poetry.group.docs]
 optional=true

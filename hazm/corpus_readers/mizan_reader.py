@@ -42,7 +42,7 @@ class MizanReader:
         Examples:
             >>> mizan = MizanReader("mizan")
             >>> next(mizan.persian_sentences())
-            The story which follows was first written out in Paris during the Peace Conference
+            داستانی که از نظر شما می‌گذرد، ابتدا ضمن کنفرانس صلح پاریس از روی یادداشت‌هائی که به طور روزانه در حال خدمت در صف برداشته شده بودند
 
         Yields:
             جملهٔ فارسی بعدی.
