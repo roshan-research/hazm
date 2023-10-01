@@ -130,7 +130,7 @@ We welcome and appreciate any contributions to this repo, such as bug reports, f
   <img src="https://contrib.rocks/image?repo=roshan-research/hazm" />
 </a>
 
-### Others
+### Others 
 
 - Thanks to [Virastyar](http://virastyar.ir/) project for providing the persian word list.
 
