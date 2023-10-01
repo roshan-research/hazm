@@ -330,6 +330,8 @@ class WordTokenizer(TokenizerI):
                 if token in reversed_dict:
                     tokens[i] = reversed_dict[token].strip()
 
+        return tokens
+
 
 
 
