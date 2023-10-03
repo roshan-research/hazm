@@ -1,7 +1,5 @@
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست."""
 
-from nltk.tag import stanford
-
 from hazm import SequenceTagger
 
 punctuation_list = [
@@ -155,38 +153,3 @@ class POSTagger(SequenceTagger):
             if self.__is_universal
             else tagged_sents
         )
-
-
-class StanfordPOSTagger(stanford.StanfordPOSTagger):
-    """StanfordPOSTagger."""
-
-    def __init__(
-        self: "StanfordPOSTagger",
-        model_filename: "str",
-        path_to_jar: str,
-        *args, # noqa: ANN002
-        **kwargs, # noqa: ANN003
-    ) -> None:
-        self._SEPARATOR = "/"
-        super(stanford.StanfordPOSTagger, self).__init__(
-            model_filename=model_filename,
-            path_to_jar=path_to_jar,
-            *args,  # noqa: B026
-            **kwargs,
-        )
-
-    def tag(self: "StanfordPOSTagger", tokens):
-        """tag.
-
-        Examples:
-            >>> tagger = StanfordPOSTagger(model_filename='persian.tagger', path_to_jar='stanford_postagger.jar')
-            >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
-            [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
-
-        """
-        return self.tag_sents([tokens])[0]
-
-    def tag_sents(self: "StanfordPOSTagger", sentences):
-        """tag_sents."""
-        refined = ([w.replace(" ", "_") for w in s] for s in sentences)
-        return super(stanford.StanfordPOSTagger, self).tag_sents(refined)

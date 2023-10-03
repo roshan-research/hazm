@@ -19,9 +19,3 @@ class TestPOSTagger:
         actual = universal_pos_tagger.tag_sents([["من", "به", "مدرسه", "ایران", "رفته_بودم", "."]])
         expected = [[("من", "PRON"), ("به", "ADP"), ("مدرسه", "NOUN"), ("ایران", "NOUN"), ("رفته_بودم", "VERB"), (".", "PUNCT")]]
         assert actual == expected
-
-class TestStanfordPOSTagger:
-    def test_data_maker(self:"TestPOSTagger", stanford_pos_tagger):
-        actual = stanford_pos_tagger.tag(["من", "به", "مدرسه", "رفته_بودم", "."])
-        expected = [("من", "PRO"), ("به", "P"), ("مدرسه", "N"), ("رفته_بودم", "V"), (".", "PUNC")]
-        assert actual == expected

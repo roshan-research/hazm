@@ -14,7 +14,6 @@ from hazm.corpus_readers import (DadeganReader, PeykareReader, SentiPersReader,
 from hazm.corpus_readers.peykare_reader import \
     coarse_pos_e as peykare_coarse_pos_e
 from hazm.dependency_parser import MaltParser, TurboParser
-from hazm.pos_tagger import StanfordPOSTagger
 
 
 def create_words_file(dic_file="tests/files/persian.dic", output="hazm/data/words.dat"):
@@ -381,48 +380,4 @@ def train_turboparser(
             "LAS;UAS",
         ]
     ).wait()
-
-
-def train_stanford_postagger(
-    peykare_root="tests/files/peykare",
-    path_to_model="tests/files/persian.tagger",
-    path_to_jar="tests/files/stanford_postagger.jar",
-    properties_file="tests/files/stanford-postagger.props",
-    memory_min="-Xms1g",
-    memory_max="-Xmx6g",
-    test_size=0.1,
-    pos_map=peykare_coarse_pos_e,
-):
-    peykare = PeykareReader(peykare_root, pos_map=pos_map)
-    train_file = "tests/files/tagger_train_data.txt"
-    train, test = train_test_split(
-        list(peykare.sents()), test_size=test_size, random_state=0
-    )
-
-    output = open(train_file, "w", "utf8")
-    for sentence in train:
-        print(*(["/".join(w).replace(" ", "_") for w in sentence]), file=output)
-    subprocess.Popen(
-        [
-            "java",
-            memory_min,
-            memory_max,
-            "-classpath",
-            path_to_jar,
-            "edu.stanford.nlp.tagger.maxent.MaxentTagger",
-            "-prop",
-            properties_file,
-            "-model",
-            path_to_model,
-            "-trainFile",
-            train_file,
-            "-tagSeparator",
-            "/",
-            "-search",
-            "owlqn2",
-        ]
-    ).wait()
-
-    tagger = StanfordPOSTagger(path_to_jar=path_to_jar, path_to_model=path_to_model)
-    print(tagger.evaluate(test))    
     
