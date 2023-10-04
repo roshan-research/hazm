@@ -9,7 +9,6 @@ from hazm import POSTagger
 from hazm import RuleBasedChunker
 from hazm import SentEmbedding
 from hazm import SentenceTokenizer
-from hazm import StanfordPOSTagger
 from hazm import Stemmer
 from hazm import TokenSplitter
 from hazm import WordEmbedding
@@ -47,10 +46,6 @@ def pos_tagger():
 @pytest.fixture(scope="session")
 def universal_pos_tagger():
     return POSTagger(model="tests/files/pos_tagger.model",universal_tag=True)
-
-@pytest.fixture(scope="session")
-def stanford_pos_tagger():
-    return StanfordPOSTagger(model_filename="tests/files/persian.tagger", path_to_jar="tests/files/stanford_postagger.jar")
 
 @pytest.fixture(scope="session")
 def token_splitter():
