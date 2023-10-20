@@ -106,10 +106,11 @@ nav:
           - tnews_reader: content/hazm/corpus_readers/tnews_reader.md
           - treebank_reader: content/hazm/corpus_readers/treebank_reader.md
           - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
-          - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md     
+          - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md
           - mizan_reader: content/hazm/corpus_readers/mizan_reader.md
           - ner_reader: content/hazm/corpus_readers/ner_reader.md
           - naab_reader: content/hazm/corpus_readers/naab_reader.md
+          - arman_reader: content/hazm/corpus_readers/arman_reader.md
 
   - کاربردهای هضم:
       - content/samples/index.md
@@ -121,8 +122,8 @@ nav:
 extra:
   analytics:
     provider: google
-    property: G-D32414H137  
-    
+    property: G-D32414H137
+
   repo_url: https://github.com/roshan-research/hazm
   consent:
     title: درخواست استفاده از کوکی
