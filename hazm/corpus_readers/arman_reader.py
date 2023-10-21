@@ -14,10 +14,11 @@ class ArmanReader:
 
     Args:
         corpus_folder: مسیر فولدرِ حاوی فایل‌های پیکره.
+        subset: نوع دیتاست: `test` یا `train`
     """
-    def __init__(self: "ArmanReader", corpus_folder: str) -> None:
+    def __init__(self: "ArmanReader", corpus_folder: str, subset: str="train") -> None:
         self._corpus_folder = corpus_folder
-        self._file_paths = Path(corpus_folder).glob("*.txt")
+        self._file_paths = Path(corpus_folder).glob(f"{subset}*.txt")
 
 
     def sents(self: "ArmanReader") -> Iterator[List[Tuple[str,str]]]:
