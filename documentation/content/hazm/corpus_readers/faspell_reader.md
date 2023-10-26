@@ -1,0 +1,1 @@
+::: hazm.corpus_readers.faspell_reader

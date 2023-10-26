@@ -19,3 +19,4 @@ from .mizan_reader import MizanReader
 from .ner_reader import NerReader
 from .naab_reader import NaabReader
 from .arman_reader import ArmanReader
+from .faspell_reader import FaSpellReader
