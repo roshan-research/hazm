@@ -43,3 +43,5 @@
 ## [ner_reader](./ner_reader.md)
 
 ## [naab_reader](./naab_reader.md)
+
+## [faspell_reader](./faspell_reader.md)
