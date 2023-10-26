@@ -44,4 +44,6 @@
 
 ## [naab_reader](./naab_reader.md)
 
+## [arman_reader](./arman_reader.md)
+
 ## [faspell_reader](./faspell_reader.md)

@@ -65,6 +65,7 @@ from hazm.corpus_readers import WikipediaReader
 from hazm.corpus_readers import MizanReader
 from hazm.corpus_readers import NerReader
 from hazm.corpus_readers import NaabReader
+from hazm.corpus_readers import ArmanReader
 from hazm.corpus_readers import FaSpellReader
 
 
