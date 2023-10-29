@@ -11,7 +11,7 @@
 
     [سورس این مثال](https://github.com/roshan-research/hazm/blob/master/samples/keyword_extraction.py)
 
-ابتدا آخرین نسخهٔ هضم و تمام کتابخانه‌هایی را که در مثال زیر ایمپورت شده‌اند نصب کنید.
+ابتدا آخرین نسخهٔ هضم را نصب کنید.
 
 ```python
 pip install hazm
