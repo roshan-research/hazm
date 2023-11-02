@@ -15,6 +15,19 @@ from nltk.chunk import tree2conlltags
 from hazm import IOBTagger
 from hazm import POSTagger
 
+import os
+import subprocess
+import spacy
+
+from spacy.tokens import Doc
+from spacy.tokens import DocBin
+from spacy.vocab import Vocab
+
+from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
+
+from tqdm import tqdm
+
+
 
 def tree2brackets(tree: str) -> str:
     """خروجی درختی تابع [parse()][hazm.chunker.Chunker.parse] را به یک ساختار
@@ -250,3 +263,157 @@ class RuleBasedChunker(RegexpParser):
         """
 
         super().__init__(grammar=grammar)
+
+
+
+class SpacyChunker(Chunker):
+    def __init__(
+            self: "SpacyChunker",
+            model_path=None,
+            train_dataset=None,
+            dev_dataset=None,
+            test_dataset=None,
+            spacy_train_dir=None,
+            spacy_dev_dir=None,
+            spacy_test_dir=None,
+            using_gpu=None
+        ):
+        """
+        Initialize the SpacyChunker with data and model paths.
+
+        Args:
+        - model_path: Path to a pre-trained spaCy model.
+        - train_dataset: Training dataset for the chunker.
+        - dev_dataset: Development dataset for evaluation.
+        - test_dataset: Test dataset for evaluation.
+        - spacy_train_dir: Directory to save the training data in spaCy format.
+        - spacy_dev_dir: Directory to save the development data in spaCy format.
+        - spacy_test_dir: Directory to save the test data in spaCy format.
+        - using_gpu: Flag indicating whether to use GPU for processing.
+
+        This constructor initializes the SpacyChunker and performs the initial setup.
+        """
+        super().__init()
+        self.model_path = model_path
+        self.train_dataset = train_dataset
+        self.dev_dataset = dev_dataset
+        self.test_dataset = test_dataset
+        self.spacy_train_dir = spacy_train_dir
+        self.spacy_dev_dir = spacy_dev_dir
+        self.spacy_test_dir = spacy_test_dir
+        self.using_gpu = using_gpu
+        self.setup(target_dataset_for_evaluation='test')
+
+    def setup(self: "SpacyChunker", target_dataset_for_evaluation):
+        """
+        Set up the configuration for the spaCy model, including GPU settings.
+
+        This function initializes and configures the spaCy model and data for training and evaluation.
+        It ensures that GPU usage is appropriately configured if specified.
+
+        Args:
+        - target_dataset_for_evaluation: The dataset type to use for evaluation, either 'dev' or 'test'.
+
+        This setup function is a crucial part of preparing the SpacyChunker for training and evaluation.
+        """
+        assert target_dataset_for_evaluation in ['dev', 'test']
+        self._setup_gpu()
+        self._setup_model(dataset_type=target_dataset_for_evaluation)
+        self._setup_dataset(self.train_dataset, self.spacy_train_dir, dataset_type='train')
+        self._setup_dataset(self.dev_dataset, self.spacy_dev_dir, dataset_type='dev')
+        self._setup_dataset(self.test_dataset, self.spacy_test_dir, dataset_type='test')
+
+    def _setup_gpu(self: "SpacyChunker"):
+        """
+        Check GPU availability and configure spaCy to use it if possible.
+
+        This method checks whether a GPU is available and, if so, configures spaCy to utilize it for improved processing speed.
+        The GPU availability is determined based on the 'using_gpu' flag.
+
+        This check is performed during setup to make use of available GPU resources for enhanced performance.
+        """
+        print("------------------ GPU Setup Process Started ---------------------")
+        if self.using_gpu:
+            gpu_available = spacy.prefer_gpu()
+            if gpu_available:
+                print("------------ GPU is available and ready for use -------------")
+                spacy.require_gpu()
+                self.gpu_availability = True
+            else:
+                print("------------ GPU is not available; spaCy will use CPU -------------")
+                self.gpu_availability = False
+
+    def _setup_model(self: "SpacyChunker", dataset_type='test'):
+        """
+        Load and configure the spaCy model for a specific dataset type.
+
+        This function loads a pre-trained spaCy model and configures it for a specific dataset type ('train', 'dev', or 'test').
+
+        Args:
+        - dataset_type: The type of dataset ('train', 'dev', or 'test') for which the model is being set up.
+
+        The model setup process is essential for training and evaluation on the chosen dataset type.
+        """
+        assert dataset_type in ['train', 'dev', 'test']
+        sents = self._choose_dataset(dataset_type)
+        self.model = spacy.load(self.model_path)
+        self._setup_dictionary(sents)
+        self.model.tokenizer = self._custom_tokenizer
+
+    def _choose_dataset(self: "SpacyChunker", dataset_type):
+        """
+        Select the dataset based on the specified type.
+
+        This function selects the appropriate dataset based on the given dataset type.
+
+        Args:
+        - dataset_type: The type of dataset ('train', 'dev', or 'test') for which data is selected.
+
+        The selected dataset is used during model setup for training or evaluation.
+        """
+        if dataset_type == 'train':
+            sents = self.train_dataset
+        elif dataset_type == 'dev':
+            sents = self.dev_dataset
+        elif dataset_type == 'test':
+            sents = self.test_dataset
+        return sents
+    
+    def _custom_tokenizer(self,text):
+        if text in self.peykare_dict:
+            return Doc(self.model.vocab, self.peykare_dict[text])
+        else:
+            raise ValueError('No tokenization available for input.')
+        
+    def _setup_dictionary(self:"SpacyChunker",sents):
+        self.peykare_dict = {}
+        for item in sents:
+            self.peykare_dict[' '.join([w for w,_,tag in item])] = [w for w,_,tag in item]
+
+
+    def _setup_dataset(self: "SpacyChunker",sents,saved_directory,dataset_type):
+        assert dataset_type in ['train','dev','test']
+        db = DocBin()
+        for sent in tqdm(sents):
+            words = [word[0] for word in sent]
+            tags = [word[2] for word in sent]
+            doc = Doc(Vocab(strings=words), words = words)
+            for d, tag in zip(doc, tags):
+                d.tag_ = tag
+            db.add(doc)
+        db.to_disk(f'{saved_directory}/{dataset_type}.spacy')
+        
+
+    def train(self: "SpacyChunker"):
+        pass
+
+    def evaluate(self: "SpacyChunker"):
+        pass
+
+    def parse(self: "SpacyChunker", sentence: List[Tuple[str, str]]) -> str:
+        return super().parse(sentence)
+        
+    def parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str]]]) -> Iterator[str]:
+        return super().parse_sents(sentences)
+    
+

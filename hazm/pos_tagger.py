@@ -1,6 +1,19 @@
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست."""
 
+from nltk.tag import stanford
 from hazm import SequenceTagger
+
+import os
+import subprocess
+import spacy
+
+from spacy.tokens import Doc
+from spacy.tokens import DocBin
+from spacy.vocab import Vocab
+
+from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
+
+from tqdm import tqdm
 
 punctuation_list = [
     '"',
@@ -153,3 +166,410 @@ class POSTagger(SequenceTagger):
             if self.__is_universal
             else tagged_sents
         )
+
+
+class StanfordPOSTagger(stanford.StanfordPOSTagger):
+    """StanfordPOSTagger."""
+
+    def __init__(
+        self: "StanfordPOSTagger",
+        model_filename: "str",
+        path_to_jar: str,
+        *args, # noqa: ANN002
+        **kwargs, # noqa: ANN003
+    ) -> None:
+        self._SEPARATOR = "/"
+        super(stanford.StanfordPOSTagger, self).__init__(
+            model_filename=model_filename,
+            path_to_jar=path_to_jar,
+            *args,  # noqa: B026
+            **kwargs,
+        )
+
+    def tag(self: "StanfordPOSTagger", tokens):
+        """tag.
+
+        Examples:
+            >>> tagger = StanfordPOSTagger(model_filename='persian.tagger', path_to_jar='stanford_postagger.jar')
+            >>> tagger.tag(['من', 'به', 'مدرسه', 'رفته_بودم', '.'])
+            [('من', 'PRO'), ('به', 'P'), ('مدرسه', 'N'), ('رفته_بودم', 'V'), ('.', 'PUNC')]
+
+        """
+        return self.tag_sents([tokens])[0]
+
+    def tag_sents(self: "StanfordPOSTagger", sentences):
+        """tag_sents."""
+        refined = ([w.replace(" ", "_") for w in s] for s in sentences)
+        return super(stanford.StanfordPOSTagger, self).tag_sents(refined)
+
+
+
+
+
+
+class SpacyPOSTagger(POSTagger):
+    def __init__(
+        self: "SpacyPOSTagger",
+        model_path=None,
+        train_dataset=None,
+        train_directory=None,
+        test_dataset=None,
+        test_directory=None,
+        using_gpu=False
+    ):
+        """
+        Initialize the SpacyPOSTagger with a model and data paths.
+
+        Args:
+        - model_path: Path to a pre-trained spaCy model.
+        - train_dataset: Training dataset for the tagger. It is a list of sentences, where each sentence is a list of token-tag pairs.
+        - train_directory: Directory to save the training data in spaCy format.
+        - test_dataset: Test dataset for evaluation. It has a similar structure to the training dataset.
+        - test_directory: Directory to save the test data in spaCy format.
+        - using_gpu: Set to True if you want use gpu (if you dont have one and set this to True the function use cpu automatically)
+        This constructor calls the constructor of the parent class POSTagger.
+        """
+        super().__init__(universal_tag=True)
+        self.model_path = model_path #### Usually an output directory for spacy model contain two other directory name model-last , model-best,You should give model_path like this : output/model-last
+        self.train_dataset = train_dataset ### List[List[Tuple]]
+        self.test_dataset = test_dataset ### List[List[Tuple]]
+        self.spacy_train_directory = train_directory
+        self.spacy_test_directory = test_directory
+        self.using_gpu = using_gpu
+        self.setup()
+
+    def setup(self: "SpacyPOSTagger"):
+        """
+        Set up the configuration for the spaCy model, including GPU settings and data preparation.
+
+        This function initializes and configures the spaCy model, checks for GPU availability, and prepares the training and testing datasets in spaCy format.
+
+        If using GPU, GPU settings are configured to enhance processing speed. Then, the pre-trained spaCy model is loaded based on the provided model path.
+        
+        Training and testing datasets are prepared and saved in the respective directories for use during model training and evaluation.
+        """
+        if self.using_gpu:
+            self._setup_gpu()
+        else:
+            print("------------- You Prefer to use CPU --------------")
+        
+        if self.model_path is not None:
+            self._setup_model()
+
+        # Set up the training dataset configuration
+        self._setup_dataset(dataset=self.train_dataset, saved_directory=self.spacy_train_directory, data_type='train')
+        
+        # Set up the testing dataset configuration
+        self._setup_dataset(dataset=self.test_dataset, saved_directory=self.spacy_test_directory, data_type='test')
+
+
+    def _setup_model(self: "SpacyPOSTagger"):
+        """
+        Initialize and configure the spaCy model for tagging without GPU settings.
+
+        This method loads and configures the spaCy model based on the provided model path. It also sets up a custom tokenizer for text processing and constructs a dictionary for reference.
+
+        Args:
+            - model_path: Path to the pre-trained spaCy model.
+
+        This method is typically called during setup to prepare the model for tagging tasks.
+        """
+        self.peykare_dict = {}  # Initialize a dictionary for reference
+        self.tagger = spacy.load(self.model_path)  # Load the spaCy model
+        self._set_peykare_dictionary(self.test_dataset)  # Construct a reference dictionary
+        self.tagger.tokenizer = self._custom_tokenizer  # Set a custom tokenizer for the model.
+
+    def _setup_gpu(self: "SpacyPOSTagger"):
+        """
+        Check GPU availability and configure spaCy to use it if possible.
+
+        This method checks whether a GPU is available and, if so, configures spaCy to utilize it for improved processing speed. It sets the 'gpu_availability' attribute to 'True' or 'False' accordingly.
+
+        This check is performed during setup to make use of available GPU resources for enhanced performance.
+        """
+        print("------------------ GPU Setup Process Started ---------------------")
+        gpu_available = spacy.prefer_gpu()  # Check if a GPU is available
+        if gpu_available:
+            print("------------ GPU is available and ready for use -------------")
+            spacy.require_gpu()  # Configure spaCy to use the GPU
+            self.gpu_availability = True
+        else:
+            print("------------ GPU is not available; spaCy will use CPU -------------")
+            self.gpu_availability = False
+
+
+    def _setup_dataset(self: "SpacyPOSTagger", dataset,saved_directory,data_type='train'):
+        """
+        Setup the training dataset in spaCy's binary format.
+
+        This function prepares the training dataset and saves it in spaCy's binary format.
+        """
+        assert data_type in ['train','test']
+        db = DocBin()
+        for sent in tqdm(dataset):
+            words = [word[0] for word in sent]
+            tags = [word[1] for word in sent]
+            doc = Doc(Vocab(strings=words), words=words)
+            for d, tag in zip(doc, tags):
+                d.tag_ = tag
+            db.add(doc)
+
+        self._handle_data_path(saved_directory)
+        db.to_disk(f'{saved_directory}/{data_type}.spacy')
+
+    def _handle_data_path(self,path='POSTaggerDataset'):
+        """
+        Create the directory if it doesn't exist.
+
+        This method checks if the specified directory exists, and if not, it creates the directory to store the data.
+
+        Args:
+            - path: The path to the directory (default is 'POSTaggerDataset').
+
+        This method is called to ensure the directory is available for saving processed data.
+        """
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+    def _custom_tokenizer(self: "SpacyPOSTagger", text):
+        """
+        Implement a custom tokenization method for spaCy.
+
+        This method defines a custom tokenization method for spaCy. It is used to tokenize input text based on a custom dictionary, or it raises an error if tokenization is not available.
+
+        Args:
+            - text: The input text to be tokenized.
+
+        This custom tokenization method is used by the spaCy model during processing.
+
+        """
+
+        if text in self.peykare_dict:
+            return Doc(self.tagger.vocab, self.peykare_dict[text])
+        else:
+            raise ValueError('No tokenization available for input.')
+
+    def _set_peykare_dictionary(self: "SpacyPOSTagger", sents):
+        """
+        Create a dictionary for custom tokenization.
+
+        This method constructs a dictionary to store custom tokenization mappings based on input sentences. It is used for custom tokenization in spaCy.
+
+        Args:
+            - sents: Input sentences to build the custom tokenization dictionary.
+
+        This method is called during setup to establish a dictionary for tokenization.
+        """
+        
+        for item in sents:
+            self.peykare_dict[' '.join([w for w, tag in item])] = [w for w, tag in item]
+
+
+    def tag_sents(self:"SpacyPOSTagger",sents):
+        tags = []
+        for sent in sents:
+            sent_tags = self.tag(sent)
+            tags.append(sent_tags)
+
+        return tags
+    
+    def tag(self:"SpacyPOSTagger", sent):
+        doc = self.tagger(' '.join([w for w, tag in sent]))
+        pred = [w.tag_ for w in doc]
+        return pred
+
+    def train(
+        self: "SpacyPOSTagger",
+        base_config_file,
+        train_config_path,
+        output_dir,
+        train_data,
+        test_data,
+        gpu_id,
+        use_direct_config=False
+    ):
+        """
+        Train the spaCy model using a subprocess and a configuration file.
+
+        This method executes the training process for the spaCy model by invoking spaCy's training module using subprocess. It takes input configuration files, training and testing data, and GPU settings (if available).
+
+        Args:
+            - base_config_file: Path to the base configuration file for spaCy.
+            - train_config_path: if use_direct_config set to True this is the path of config file for training that you will use
+              if use_direct_config set to False this is the path that you want train config file will create with base_config
+            - output_dir: Directory for storing the trained model and training logs.
+            - train_data: Path to the training dataset in spaCy format.
+            - test_data: Path to the testing dataset in spaCy format.
+            - gpu_id: GPU ID (if GPU is available).
+
+        Upon successful training, this method updates the model path to the trained model.
+
+        This method is typically called to initiate the training process of the spaCy model.
+        """
+        if use_direct_config == False:
+            self._setup_train_config(base_config_file, train_config_file_name=train_config_path)
+        else:
+            self.train_config_file = train_config_path
+
+        command = f"python -m spacy train {self.train_config_file} --output ./{output_dir} --paths.train ./{train_data} --paths.dev ./{test_data}"
+        if self.gpu_availability:
+            command += f" --gpu-id {gpu_id}"
+
+        subprocess.run(command, shell=True)
+        self.model_path = f"{output_dir}/model-last"
+        self._setup_model()
+
+    def _setup_train_config(self: "SpacyPOSTagger", base_config, train_config_path):
+        """
+        Create and configure the training configuration file for spaCy.
+
+        This method sets up the training configuration file by copying a base configuration file and customizing it according to the specified parameters.
+
+        Args:
+            - base_config: Path to the base configuration file.
+            - train_config_file_name: Name of the training configuration file for saving it.
+
+        This method is called to generate the training configuration file used in the training process.
+        """
+        print("----------------- Setting up the training configuration file ----------------------")
+        self.train_config_file = train_config_path  # Set the path for the training configuration file
+        command = f"python -m spacy init fill-config {base_config} {train_config_path}"  # Generate the training configuration file
+        subprocess.run(command, shell=True)
+        print("----------------- Training configuration file created successfully ----------------------")
+        print(f"----------------- Training Config file address is {self.train_config_file} --------------------")
+
+
+    def evaluate(self: "SpacyPOSTagger", sents):
+        """
+        Evaluate the spaCy model on input sentences using different tag options.
+
+        This method evaluates the spaCy model on input sentences with and without 'EZ' tags and reports classification metrics.
+
+        Args:
+            - sents: List of sentences for evaluation.
+
+        This method calls the internal evaluation method for both tag options.
+
+        This method is typically used for model evaluation and reporting metrics.
+        """
+        golds, predictions = self._get_labels_and_predictions(sents)     
+        print("-----------------------------------------")
+        self._evaluate_tags(sents, golds, predictions, use_ez_tags=True)
+        print("-----------------------------------------")
+        self._evaluate_tags(sents, golds, predictions, use_ez_tags=False)
+
+    def _evaluate_tags(self, sents, golds=None, predictions=None, use_ez_tags=True):
+        """
+        Evaluate model predictions and report classification metrics.
+
+        This method evaluates model predictions and reports classification metrics for the specified tag option.
+
+        Args:
+            - sents: List of sentences for evaluation.
+            - golds: List of gold labels (optional).
+            - predictions: List of model predictions (optional).
+            - use_ez_tags: A flag indicating whether to consider 'EZ' tags.
+
+        If `golds` and `predictions` are not provided, they are automatically extracted from the input sentences.
+
+        This method calculates and displays precision, recall, and F1-score for the specified tag option.
+
+        This method is called by the `evaluate` method to perform model evaluation.
+        """
+        if golds is None or predictions is None:
+            golds, predictions = self._get_labels_and_predictions(sents)
+
+        predictions_cleaned = []
+        golds_cleaned = []
+        if use_ez_tags:
+            get_tag_func = self._get_ez_tags
+        else:
+            get_tag_func = self._remove_ez_tags
+
+        for preds, golds in zip(predictions, golds):
+            for pred in preds:
+                pred_cleaned = get_tag_func(pred)
+                predictions_cleaned.append(pred_cleaned)
+            for gold in golds:
+                gold_cleaned = get_tag_func(gold)
+                golds_cleaned.append(gold_cleaned)
+
+        print(classification_report(golds_cleaned, predictions_cleaned))
+        print('Precision: %.5f' % precision_score(golds_cleaned, predictions_cleaned, average='weighted'))
+        print('Recall: %.5f' % recall_score(golds_cleaned, predictions_cleaned, average='weighted'))
+        print('F1-Score: %.5f' % f1_score(golds_cleaned, predictions_cleaned, average='weighted'))
+
+    def _get_ez_tags(self, label):
+        """
+        Extract 'EZ' tags from labels.
+
+        This method extracts 'EZ' tags from labels if they are present and returns them.
+
+        Args:
+            - label: The label containing 'EZ' tags.
+
+        Returns:
+            The 'EZ' tags or '-' if 'EZ' tags are not present.
+        """
+        if 'EZ' in label:
+            label = 'EZ'
+        else:
+            label = '-'
+
+        return label
+
+    def _remove_ez_tags(self, label):
+        """
+        Remove 'EZ' tags from labels.
+
+        This method removes 'EZ' tags from labels if they are present and returns the cleaned label.
+
+        Args:
+            - label: The label containing 'EZ' tags.
+
+        Returns:
+            The label with 'EZ' tags removed.
+        """
+        return label.replace(',EZ', '') if 'EZ' in label else label
+
+    def _evaluate_ez_tags(self, sents):
+        """
+        Evaluate model predictions with 'EZ' tags included.
+
+        This method evaluates model predictions with 'EZ' tags included.
+        """
+        self._evaluate_tags(sents, use_ez_tags=True)
+
+    def _evaluate_normal_tags(self, sents):
+        """
+        Evaluate model predictions without 'EZ' tags.
+
+        This method evaluates model predictions without 'EZ' tags.
+        """
+        self._evaluate_tags(sents, use_ez_tags=False)
+
+    def _get_labels_and_predictions(self: "SpacyPOSTagger", sents):
+        """
+        Extract gold labels and model predictions for evaluation.
+
+        This method extracts gold labels and model predictions from input sentences.
+
+        Args:
+            - sents: List of sentences for evaluation.
+
+        Returns:
+            Lists of gold labels and model predictions.
+
+        This method is typically used for gathering data to perform model evaluation.
+        """
+        gold_labels = []
+        prediction_labels = []
+        for sent in tqdm(sents):
+            doc = self.tagger(' '.join([w for w, tag in sent]))
+            y = [tag for w, tag in sent]
+            pred = [w.tag_ for w in doc]
+
+            gold_labels.append(y)
+            prediction_labels.append(pred)
+
+        return gold_labels, prediction_labels
