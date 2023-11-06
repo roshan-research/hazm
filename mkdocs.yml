@@ -112,6 +112,7 @@ nav:
           - naab_reader: content/hazm/corpus_readers/naab_reader.md
           - arman_reader: content/hazm/corpus_readers/arman_reader.md
           - faspell_reader: content/hazm/corpus_readers/faspell_reader.md
+          - pn_summary_reader: content/hazm/corpus_readers/pn_summary_reader.md
 
   - کاربردهای هضم:
       - content/samples/index.md
