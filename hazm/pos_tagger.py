@@ -253,14 +253,17 @@ class SpacyPOSTagger(POSTagger):
         else:
             print("------------- You Prefer to use CPU --------------")
         
+        # if model_path is None this instance is for training probably !
         if self.model_path is not None:
             self._setup_model()
 
-        # Set up the training dataset configuration
-        self._setup_dataset(dataset=self.train_dataset, saved_directory=self.spacy_train_directory, data_type='train')
+        if self.train_dataset:
+            # Set up the training dataset configuration
+            self._setup_dataset(dataset=self.train_dataset, saved_directory=self.spacy_train_directory, data_type='train')
         
-        # Set up the testing dataset configuration
-        self._setup_dataset(dataset=self.test_dataset, saved_directory=self.spacy_test_directory, data_type='test')
+        if self.test_dataset:
+            # Set up the testing dataset configuration
+            self._setup_dataset(dataset=self.test_dataset, saved_directory=self.spacy_test_directory, data_type='test')
 
 
     def _setup_model(self: "SpacyPOSTagger"):
@@ -365,15 +368,15 @@ class SpacyPOSTagger(POSTagger):
             self.peykare_dict[' '.join([w for w, tag in item])] = [w for w, tag in item]
 
 
-    def tag_sents(self:"SpacyPOSTagger",sents):
+    def _tag_sents(self:"SpacyPOSTagger",sents):
         tags = []
-        for sent in sents:
-            sent_tags = self.tag(sent)
+        for sent in tqdm(sents):
+            sent_tags = self._tag(sent)
             tags.append(sent_tags)
 
         return tags
     
-    def tag(self:"SpacyPOSTagger", sent):
+    def _tag(self:"SpacyPOSTagger", sent):
         doc = self.tagger(' '.join([w for w, tag in sent]))
         pred = [w.tag_ for w in doc]
         return pred
@@ -452,11 +455,14 @@ class SpacyPOSTagger(POSTagger):
 
         This method is typically used for model evaluation and reporting metrics.
         """
-        golds, predictions = self._get_labels_and_predictions(sents)     
-        print("-----------------------------------------")
-        self._evaluate_tags(sents, golds, predictions, use_ez_tags=True)
-        print("-----------------------------------------")
-        self._evaluate_tags(sents, golds, predictions, use_ez_tags=False)
+        if self.tagger:
+            golds, predictions = self._get_labels_and_predictions(sents)     
+            print("-----------------------------------------")
+            self._evaluate_tags(sents, golds, predictions, use_ez_tags=True)
+            print("-----------------------------------------")
+            self._evaluate_tags(sents, golds, predictions, use_ez_tags=False)
+        else:
+            raise ValueError("Model does not exist.Please train a new one with train method of this instance or give a model_path to it then eval")
 
     def _evaluate_tags(self, sents, golds=None, predictions=None, use_ez_tags=True):
         """
@@ -562,14 +568,6 @@ class SpacyPOSTagger(POSTagger):
 
         This method is typically used for gathering data to perform model evaluation.
         """
-        gold_labels = []
-        prediction_labels = []
-        for sent in tqdm(sents):
-            doc = self.tagger(' '.join([w for w, tag in sent]))
-            y = [tag for w, tag in sent]
-            pred = [w.tag_ for w in doc]
-
-            gold_labels.append(y)
-            prediction_labels.append(pred)
-
+        gold_labels = [[tag for _, tag in sent] for sent in sents]
+        prediction_labels = self._tag_sents(sents)
         return gold_labels, prediction_labels
