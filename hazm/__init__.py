@@ -67,6 +67,7 @@ from hazm.corpus_readers import NerReader
 from hazm.corpus_readers import NaabReader
 from hazm.corpus_readers import ArmanReader
 from hazm.corpus_readers import FaSpellReader
+from hazm.corpus_readers import PnSummaryReader
 
 
 from hazm.dependency_parser import DependencyParser
