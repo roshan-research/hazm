@@ -405,7 +405,7 @@ class SpacyPOSTagger(POSTagger):
             self._setup_dataset(dataset=self.train_dataset, saved_directory=self.spacy_train_directory, data_type='train')
 
         if self.test_dataset:
-            self._setup_dataset(test_sents,saved_directory=data_directory,data_type='test')
+            self._setup_dataset(test_dataset,saved_directory=data_directory,data_type='test')
 
         train_data = f'{data_directory}/train.spacy'
         test_data = f'{data_directory}/test.spacy'
@@ -421,7 +421,7 @@ class SpacyPOSTagger(POSTagger):
 
         subprocess.run(command, shell=True)
         self.model_path = f"{output_dir}/model-last"
-        self._setup_model(test_dataset)
+        self._setup_model([[w for w,_ in sent] for sent in test_dataset])
 
     def _setup_train_config(self: "SpacyPOSTagger", base_config, train_config_path):
         """
