@@ -242,10 +242,6 @@ class SpacyPOSTagger(POSTagger):
         else:
             print("------------- You Prefer to use CPU --------------")
         
-        # if model_path is None this instance is for training probably !
-        # if self.model_path is not None:
-            # self._setup_model()
-
 
     def _setup_model(self: "SpacyPOSTagger",sents):
         """
@@ -353,17 +349,9 @@ class SpacyPOSTagger(POSTagger):
                 sents : List[List[Tokens]]
                 batch_size : number of batches give to model for processing sentences each time
         """
-        # try:
-        #     if self.tagger:
-        #         pass
-        #     else:
-        #         self._setup_model(sents)
-        # except:
-        #     raise ValueError("The model doesnt exist.Please insert model_path then call self._setup_model() or train a new model with train function")
-        # self._setup_model(sents)
         if self.tagger == None:
             self._setup_model(sents)
-        # self._set_peykare_dictionary(sents)
+
         docs = list(self.tagger.pipe((' '.join([w for w in sent]) for sent in sents), batch_size=batch_size))
         tags = [[w.tag_ for w in doc] for doc in docs]
         return tags

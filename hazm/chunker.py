@@ -288,11 +288,11 @@ class SpacyChunker(Chunker):
         self.using_gpu = using_gpu
         self.gpu_id = gpu_id
         self.model = None
-        self._setup(target_dataset_for_evaluation='test')
+        self._setup()
 
     # Edit : این تابع داخلی هست و بهتر هست با _ شروع شود
 
-    def _setup(self: "SpacyChunker", target_dataset_for_evaluation):
+    def _setup(self: "SpacyChunker"):
         """
         Set up the configuration for the spaCy model, including GPU settings.
 
@@ -304,7 +304,6 @@ class SpacyChunker(Chunker):
 
         This setup function is a crucial part of preparing the SpacyChunker for training and evaluation.
         """
-        assert target_dataset_for_evaluation in ['dev', 'test']
         self._setup_gpu()
 
     def _setup_gpu(self: "SpacyChunker"):
@@ -334,7 +333,7 @@ class SpacyChunker(Chunker):
         This function loads a pre-trained spaCy model and configures it for a specific dataset type ('train', 'dev', or 'test').
 
         Args:
-        - dataset_type: The type of dataset ('train', 'dev', or 'test') for which the model is being set up.
+        - sents : List[List[str]] contain each sentence tokens in a separate list.All lists are in one major list
 
         The model setup process is essential for training and evaluation on the chosen dataset type.
         """
@@ -344,17 +343,45 @@ class SpacyChunker(Chunker):
         self.model.tokenizer = self._custom_tokenizer
     
     def _custom_tokenizer(self,text):
+        """
+        Custom tokenizer for spaCy.
+
+        Args:
+            - text: Input text to be tokenized.
+
+        Returns:
+            - Doc: SpaCy Doc object representing the tokenized text.
+        """
         if text in self.peykare_dict:
             return Doc(self.model.vocab, self.peykare_dict[text])
         else:
             raise ValueError('No tokenization available for input.')
         
     def _setup_dictionary(self:"SpacyChunker",sents):
+        """
+        Set up a dictionary for custom tokenization.
+
+        Args:
+            - sents: List of sentences, each represented as a list of words.
+
+        This dictionary is used for custom tokenization in the spaCy model.
+        """
         for item in sents:
             self.peykare_dict[' '.join([w for w in item])] = [w for w in item]
 
 
     def _setup_dataset(self: "SpacyChunker",sents,saved_directory,dataset_type):
+        """
+        Set up spaCy DocBin dataset for training.
+
+        Args:
+            - sents: List of sentences, each represented as a list of (word, tag) tuples.
+            - saved_directory: Directory to save the spaCy dataset.
+            - dataset_type: Type of the dataset ('train', 'dev', or 'test').
+
+        This function prepares the dataset in spaCy format and saves it to disk.
+        """
+
         assert dataset_type in ['train','dev','test']
         db = DocBin()
         for sent in tqdm(sents):
@@ -377,6 +404,20 @@ class SpacyChunker(Chunker):
             output_dir,
             use_direct_config=False        
         ):
+        """
+        Train the spaCy chunker model.
+
+        Args:
+            - train_dataset: Training dataset, each sentence represented as a list of (word, tag) tuples.
+            - test_dataset: Testing dataset, each sentence represented as a list of (word, tag) tuples.
+            - data_directory: Directory to save the spaCy datasets.
+            - base_config_file: Path to the base configuration file.
+            - train_config_path: Path to the training configuration file.
+            - output_dir: Directory to save the trained model.
+            - use_direct_config: Boolean indicating whether to use a directly provided config file.
+
+        This function trains the spaCy chunker model and sets up the model for prediction.
+        """
         if use_direct_config == False:
             self._setup_train_config(
                 base_config=base_config_file,
@@ -412,8 +453,6 @@ class SpacyChunker(Chunker):
         """
         Create and configure the training configuration file for spaCy.
 
-        This method sets up the training configuration file by copying a base configuration file and customizing it according to the specified parameters.
-
         Args:
             - base_config: Path to the base configuration file.
             - train_config_file_name: Name of the training configuration file for saving it.
@@ -430,15 +469,13 @@ class SpacyChunker(Chunker):
 
     def evaluate(self:"SpacyChunker",test_sents):
         """
-        test_sent : List(List(Tuple(str,str,str)))
         Score the accuracy of the chunker against the gold standard.
-        Remove the chunking the gold standard text, rechunk it using
-        the chunker, and return a ``ChunkScore`` object
-        reflecting the performance of this chunk peraser.
 
-        :type gold: list(Tree)
-        :param gold: The list of chunked sentences to score the chunker on.
-        :rtype: ChunkScore
+        Args:
+            - test_sents: List of sentences, each represented as a list of (word, tag) tuples.
+
+        Returns:
+            - ChunkScore: Object reflecting the performance of this chunk peraser.
         """
         predictions , golds = self._label_yielder(test_sents)
         chunkscore = ChunkScore()
@@ -465,12 +502,12 @@ class SpacyChunker(Chunker):
         """
         golds = sents
         test_inp = [[(prev_tuple[0], prev_tuple[1]) for prev_tuple in inner_list] for inner_list in golds]
-        parsed = self._parse_sents(test_inp)
+        parsed = self.parse_sents(test_inp)
         preds_tree = list(parsed)
         golds_tree = list(self._make_tree_generator(golds))
         return preds_tree, golds_tree
 
-    def _parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str]]],batch_size=128) -> Iterator[str]:
+    def parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str]]],batch_size=128) -> Iterator[str]:
         """
         Parse multiple sentences and extract predictions.
 
@@ -479,6 +516,7 @@ class SpacyChunker(Chunker):
 
         Args:
         - sentences: List of sentences, each represented as a list of word-tag tuples.
+        - Batch size: number of batchces that model should process
 
         Returns:
         - Iterator of predictions for multiple sentences.
