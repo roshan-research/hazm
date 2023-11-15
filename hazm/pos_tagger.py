@@ -435,6 +435,7 @@ class SpacyPOSTagger(POSTagger):
 
         This method is called to generate the training configuration file used in the training process.
         """
+        self.train_config_file = train_config_path
         print("----------------- Setting up the training configuration file ----------------------")
         command = f"python -m spacy init fill-config {base_config} {train_config_path}"  # Generate the training configuration file
         subprocess.run(command, shell=True)

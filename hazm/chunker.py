@@ -270,41 +270,29 @@ class SpacyChunker(Chunker):
     def __init__(
             self: "SpacyChunker",
             model_path=None,
-            train_dataset=None,
-            dev_dataset=None,
-            test_dataset=None,
-            spacy_train_dir=None,
-            spacy_dev_dir=None,
-            spacy_test_dir=None,
-            using_gpu=None
+            using_gpu=None,
+            gpu_id=0
         ):
         """
         Initialize the SpacyChunker with data and model paths.
 
         Args:
         - model_path: Path to a pre-trained spaCy model.
-        - train_dataset: Training dataset for the chunker.
-        - dev_dataset: Development dataset for evaluation.
-        - test_dataset: Test dataset for evaluation.
-        - spacy_train_dir: Directory to save the training data in spaCy format.
-        - spacy_dev_dir: Directory to save the development data in spaCy format.
-        - spacy_test_dir: Directory to save the test data in spaCy format.
         - using_gpu: Flag indicating whether to use GPU for processing.
+        - gpu_id: id of gpu core that you want to train or evaluate model on it
 
         This constructor initializes the SpacyChunker and performs the initial setup.
         """
         super().__init__()
         self.model_path = model_path
-        self.train_dataset = train_dataset
-        self.dev_dataset = dev_dataset
-        self.test_dataset = test_dataset
-        self.spacy_train_dir = spacy_train_dir
-        self.spacy_dev_dir = spacy_dev_dir
-        self.spacy_test_dir = spacy_test_dir
         self.using_gpu = using_gpu
-        self.setup(target_dataset_for_evaluation='test')
+        self.gpu_id = gpu_id
+        self.model = None
+        self._setup(target_dataset_for_evaluation='test')
 
-    def setup(self: "SpacyChunker", target_dataset_for_evaluation):
+    # Edit : این تابع داخلی هست و بهتر هست با _ شروع شود
+
+    def _setup(self: "SpacyChunker", target_dataset_for_evaluation):
         """
         Set up the configuration for the spaCy model, including GPU settings.
 
@@ -318,17 +306,6 @@ class SpacyChunker(Chunker):
         """
         assert target_dataset_for_evaluation in ['dev', 'test']
         self._setup_gpu()
-        if self.model_path:
-            self._setup_model(dataset_type=target_dataset_for_evaluation)
-
-        if self.train_dataset:
-            self._setup_dataset(self.train_dataset, self.spacy_train_dir, dataset_type='train')
-
-        if self.dev_dataset:
-            self._setup_dataset(self.dev_dataset, self.spacy_dev_dir, dataset_type='dev')
-
-        if self.test_dataset:
-            self._setup_dataset(self.test_dataset, self.spacy_test_dir, dataset_type='test')
 
     def _setup_gpu(self: "SpacyChunker"):
         """
@@ -341,16 +318,16 @@ class SpacyChunker(Chunker):
         """
         print("------------------ GPU Setup Process Started ---------------------")
         if self.using_gpu:
-            gpu_available = spacy.prefer_gpu()
+            gpu_available = spacy.prefer_gpu(self.gpu_id)
             if gpu_available: 
                 print("------------ GPU is available and ready for use -------------")
-                spacy.require_gpu()
+                spacy.require_gpu(self.gpu_id)
                 self.gpu_availability = True
             else:
                 print("------------ GPU is not available; spaCy will use CPU -------------")
                 self.gpu_availability = False
 
-    def _setup_model(self: "SpacyChunker", dataset_type='test'):
+    def _setup_model(self: "SpacyChunker",sents):
         """
         Load and configure the spaCy model for a specific dataset type.
 
@@ -361,31 +338,10 @@ class SpacyChunker(Chunker):
 
         The model setup process is essential for training and evaluation on the chosen dataset type.
         """
-        assert dataset_type in ['train', 'dev', 'test']
         self.peykare_dict = {}
-        sents = self._choose_dataset(dataset_type)
         self.model = spacy.load(self.model_path)
         self._setup_dictionary(sents)
         self.model.tokenizer = self._custom_tokenizer
-
-    def _choose_dataset(self: "SpacyChunker", dataset_type):
-        """
-        Select the dataset based on the specified type.
-
-        This function selects the appropriate dataset based on the given dataset type.
-
-        Args:
-        - dataset_type: The type of dataset ('train', 'dev', or 'test') for which data is selected.
-
-        The selected dataset is used during model setup for training or evaluation.
-        """
-        if dataset_type == 'train':
-            sents = self.train_dataset
-        elif dataset_type == 'dev':
-            sents = self.dev_dataset
-        elif dataset_type == 'test':
-            sents = self.test_dataset
-        return self.test_dataset
     
     def _custom_tokenizer(self,text):
         if text in self.peykare_dict:
@@ -395,7 +351,7 @@ class SpacyChunker(Chunker):
         
     def _setup_dictionary(self:"SpacyChunker",sents):
         for item in sents:
-            self.peykare_dict[' '.join([w for w,_,tag in item])] = [w for w,_,tag in item]
+            self.peykare_dict[' '.join([w for w in item])] = [w for w in item]
 
 
     def _setup_dataset(self: "SpacyChunker",sents,saved_directory,dataset_type):
@@ -413,12 +369,12 @@ class SpacyChunker(Chunker):
 
     def train(
             self: "SpacyChunker",
+            train_dataset,
+            test_dataset,
+            data_directory,
             base_config_file,
             train_config_path,
             output_dir,
-            train_data,
-            test_data,
-            gpu_id,
             use_direct_config=False        
         ):
         if use_direct_config == False:
@@ -429,13 +385,27 @@ class SpacyChunker(Chunker):
         else:
             self.train_config_file = train_config_path
 
+        self.train_dataset = train_dataset
+        self.test_dataset = test_dataset
+
+        if self.train_dataset:
+            # Set up the training dataset configuration
+            self._setup_dataset(sents=self.train_dataset,saved_directory=data_directory, dataset_type='train')
+
+        if self.test_dataset:
+            self._setup_dataset(sents=self.test_dataset,saved_directory=data_directory,dataset_type='test')
+
+        train_data = f'{data_directory}/train.spacy'
+        test_data = f'{data_directory}/test.spacy'
+
         command = f"python -m spacy train {self.train_config_file} --output ./{output_dir} --paths.train ./{train_data} --paths.dev ./{test_data}"
         if self.gpu_availability:
-            command += f" --gpu-id {gpu_id}"
+            command += f" --gpu-id {self.gpu_id}"
         
         subprocess.run(command, shell=True)
         self.model_path = f"{output_dir}/model-last"
-        self._setup_model()
+        self._setup_model([[w for w,_,_ in sent] for sent in test_dataset])
+
 
 
     def _setup_train_config(self:"SpacyChunker",base_config,train_config_path):
@@ -455,11 +425,12 @@ class SpacyChunker(Chunker):
         command = f"python -m spacy init fill-config {base_config} {train_config_path}"  # Generate the training configuration file
         subprocess.run(command, shell=True)
         print("----------------- Training configuration file created successfully ----------------------")
-        print(f"----------------- Training Config file address is {self.train_config_file} --------------------")
+        print(f"----------------- Training Config file address is {train_config_path} --------------------")
 
 
-    def evaluate(self:"SpacyChunker"):
+    def evaluate(self:"SpacyChunker",test_sents):
         """
+        test_sent : List(List(Tuple(str,str,str)))
         Score the accuracy of the chunker against the gold standard.
         Remove the chunking the gold standard text, rechunk it using
         the chunker, and return a ``ChunkScore`` object
@@ -469,9 +440,7 @@ class SpacyChunker(Chunker):
         :param gold: The list of chunked sentences to score the chunker on.
         :rtype: ChunkScore
         """
-        predictions , golds = self._label_yielder()
-        predictions = list(predictions)
-        golds = list(golds)
+        predictions , golds = self._label_yielder(test_sents)
         chunkscore = ChunkScore()
         for pred, correct in zip(predictions, golds):
             chunkscore.score(correct, pred)
@@ -483,8 +452,9 @@ class SpacyChunker(Chunker):
 
         return chunkscore
 
-    def _label_yielder(self: "SpacyChunker"):
+    def _label_yielder(self: "SpacyChunker",sents):
         """
+        sents: List(List(Tuple(str,str,str)))
         Yield gold and predicted trees for evaluation.
 
         This function prepares gold and predicted trees for evaluation by parsing the test data.
@@ -493,33 +463,14 @@ class SpacyChunker(Chunker):
         - preds_tree: Predicted trees for evaluation.
         - golds_tree: Gold standard trees for evaluation.
         """
-        golds = self.test_dataset
-        preds = self._parse_sents(golds)
-        golds_tree = self._make_tree_generator(golds)
-        preds_tree = self._make_tree_generator(preds)
-
+        golds = sents
+        test_inp = [[(prev_tuple[0], prev_tuple[1]) for prev_tuple in inner_list] for inner_list in golds]
+        parsed = self._parse_sents(test_inp)
+        preds_tree = list(parsed)
+        golds_tree = list(self._make_tree_generator(golds))
         return preds_tree, golds_tree
 
-    def _parse(self: "SpacyChunker", sentence: List[Tuple[str, str, str]]) -> str:
-        """
-        Parse a single sentence and extract predictions.
-
-        This function takes a single sentence and processes it using the spaCy model,
-        extracting predictions for words and their associated tags.
-
-        Args:
-        - sentence: List of word-tag tuples representing the sentence.
-
-        Returns:
-        - Predictions for words, tags, and associated predicted tags.
-        """
-        doc = self.model(' '.join(w for w, _, tag in sentence))
-        words = [w for w, _, tag in sentence]
-        tags = [tag for w, tag, _ in sentence]
-        preds = [w.tag_ for w in doc]
-        return tuple(zip(words, tags, preds))
-
-    def _parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str, str]]]) -> Iterator[str]:
+    def _parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str]]],batch_size=128) -> Iterator[str]:
         """
         Parse multiple sentences and extract predictions.
 
@@ -532,10 +483,15 @@ class SpacyChunker(Chunker):
         Returns:
         - Iterator of predictions for multiple sentences.
         """
-        test_preds = []
-        for sentence in sentences:
-            sent_preds = self._parse(sentence)
-            test_preds.append(sent_preds)
+        if self.model == None:
+            self._setup_model([[w for w , _ in sentence] for sentence in sentences])
+
+        docs = list(self.model.pipe((' '.join([w for w , _ in sent]) for sent in sentences), batch_size=batch_size))
+        words = [[w for w,_, in sentence] for sentence in sentences]
+        tags = [[tag for _, tag in sentence] for sentence in sentences]
+        preds = [[w.tag_ for w in doc] for doc in docs]
+        combined = [list(zip(word_list, tag_list, pred_list)) for word_list, tag_list, pred_list in zip(words, tags, preds)]
+        test_preds = self._make_tree_generator(combined)
         return test_preds
 
     def _make_tree_generator(self: "SpacyChunker", sents):
