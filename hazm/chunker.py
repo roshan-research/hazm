@@ -506,6 +506,41 @@ class SpacyChunker(Chunker):
         preds_tree = list(parsed)
         golds_tree = list(self._make_tree_generator(golds))
         return preds_tree, golds_tree
+    
+    def parse(self: "SpacyChunker", sentence: List[Tuple[str, str]]) -> str:
+        """جمله‌ای را در قالب لیستی از تاپل‌های دوتایی [(توکن, نوع), (توکن, نوع), ...]
+        دریافت می‌کند و درخت تقطع‌شدهٔ آن را بر می‌گرداند.
+
+        Examples:
+            >>> chunker = Chunker(model = 'chunker.model')
+            >>> tree = chunker.parse(sentence = [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
+            >>> print(tree)
+            (S
+              (NP نامه/NOUN,EZ ایشان/PRON)
+              (POSTP را/ADP)
+              (VP دریافت/NOUN داشتم/VERB)
+              ./PUNCT)
+
+        Args:
+            sentence: جمله‌ای که باید درخت تقطیع‌شدهٔ آن تولید شود.
+
+        Returns:
+            ساختار درختی حاصل از تقطیع.
+            برای تبدیل این ساختار درختی به یک ساختار کروشه‌ای و قابل‌درک‌تر
+            می‌توانید از تابع `tree2brackets()` استفاده کنید.
+
+        """
+        if self.model == None:
+            self._setup_model([[w for w,_ in sentence]])
+
+        doc = self.model(' '.join([w for w , _ in sentence]))
+        words = [w for w , _ in sentence]
+        tags = [tag for _ , tag in sentence]
+        preds = [w.tag_ for w in doc]
+        chunk = list(zip(words,tags,preds))
+        return conlltags2tree(chunk)
+
+
 
     def parse_sents(self: "SpacyChunker", sentences: List[List[Tuple[str, str]]],batch_size=128) -> Iterator[str]:
         """

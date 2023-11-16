@@ -342,19 +342,58 @@ class SpacyPOSTagger(POSTagger):
         This method is called during setup to establish a dictionary for tokenization.
         """
         self.peykare_dict = {' '.join([w for w in item]): [w for w in item] for item in sents}
+
+    def tag(self: "SpacyPOSTagger", tokens,include_ez):
+        """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
+        `(توکن، برچسب)`ها برمی‌گرداند.
+
+        Examples:
+            >>> posTagger = POSTagger(model = 'pos_tagger.model')
+            >>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+
+            >>> posTagger = POSTagger(model = 'pos_tagger.model', universal_tag = True)
+            >>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+            [('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+
+        Args:
+            tokens (List[str]): لیستی از توکن‌های یک جمله که باید برچسب‌گذاری شود.
+
+        Returns:
+            (List[Tuple[str,str]]): ‌لیستی از `(توکن، برچسب)`ها.
+
+        """
+        if self.tagger == None:
+            self._setup_model([tokens])
+        
+        doc = self.tagger([' '.join([tok for tok in tokens])])
+        if include_ez:
+            tags = [tok.tag_ for tok in doc]
+        else:
+            tags = [tok.tag_.replace(',EZ','') for tok in doc]
+
+        return list(zip(tokens,tags))
             
-    def tag_sents(self:"SpacyPOSTagger",sents,batch_size):
+    def tag_sents(self:"SpacyPOSTagger",sents,include_ez,batch_size):
         """
             Args:
                 sents : List[List[Tokens]]
                 batch_size : number of batches give to model for processing sentences each time
         """
+        """
+            Returns : List[List[Tuple(str,str)]]
+        """
         if self.tagger == None:
             self._setup_model(sents)
 
         docs = list(self.tagger.pipe((' '.join([w for w in sent]) for sent in sents), batch_size=batch_size))
-        tags = [[w.tag_ for w in doc] for doc in docs]
-        return tags
+        if include_ez:
+            tags = [[w.tag_ for w in doc] for doc in docs]
+        else:
+            tags = [[w.tag_.replace(',EZ','') for w in doc] for doc in docs]
+        
+        combined_out = [list(zip(tok,tag)) for tok,tag in zip(sents,tags)]
+        return combined_out
 
     def train(
         self: "SpacyPOSTagger",
