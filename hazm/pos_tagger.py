@@ -343,7 +343,7 @@ class SpacyPOSTagger(POSTagger):
         """
         self.peykare_dict = {' '.join([w for w in item]): [w for w in item] for item in sents}
 
-    def tag(self: "SpacyPOSTagger", tokens,include_ez):
+    def tag(self: "SpacyPOSTagger", tokens,include_ez=True):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
         `(توکن، برچسب)`ها برمی‌گرداند.
 
@@ -374,7 +374,7 @@ class SpacyPOSTagger(POSTagger):
 
         return list(zip(tokens,tags))
             
-    def tag_sents(self:"SpacyPOSTagger",sents,include_ez,batch_size):
+    def tag_sents(self:"SpacyPOSTagger",sents,include_ez=True,batch_size=128):
         """
             Args:
                 sents : List[List[Tokens]]
