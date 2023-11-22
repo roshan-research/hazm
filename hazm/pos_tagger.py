@@ -5,15 +5,7 @@ from hazm import SequenceTagger
 
 import os
 import subprocess
-import spacy
 
-from spacy.tokens import Doc
-from spacy.tokens import DocBin
-from spacy.vocab import Vocab
-
-from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
-
-from tqdm import tqdm
 
 punctuation_list = [
     '"',
@@ -210,6 +202,16 @@ class SpacyPOSTagger(POSTagger):
         using_gpu=False,
         gpu_id=0
     ):
+        
+        import spacy
+
+        from spacy.tokens import Doc
+        from spacy.tokens import DocBin
+        from spacy.vocab import Vocab
+
+        from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
+
+        from tqdm import tqdm
         """
         Initialize the SpacyPOSTagger with a model and data paths.
 
