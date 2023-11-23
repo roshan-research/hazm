@@ -16,17 +16,7 @@ from nltk.chunk.util import ChunkScore
 from hazm import IOBTagger
 from hazm import POSTagger
 
-import os
-import subprocess
-import spacy
 
-from spacy.tokens import Doc
-from spacy.tokens import DocBin
-from spacy.vocab import Vocab
-
-from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
-
-from tqdm import tqdm
 
 
 
@@ -273,6 +263,19 @@ class SpacyChunker(Chunker):
             using_gpu=None,
             gpu_id=0
         ):
+        import os
+        import subprocess
+        import spacy
+
+        from spacy.tokens import Doc
+        from spacy.tokens import DocBin
+        from spacy.vocab import Vocab
+
+        from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
+
+        from tqdm import tqdm
+
+
         """
         Initialize the SpacyChunker with data and model paths.
 
