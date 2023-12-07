@@ -345,6 +345,17 @@ class SpacyPOSTagger(POSTagger):
         """
         self.peykare_dict = {' '.join([w for w in item]): [w for w in item] for item in sents}
 
+
+    def _add_to_dict(self: "SpacyPOSTagger", sents):
+        """
+            Add the sentences to dictianory if it doesnt exist already
+        """
+        for sent in sents:
+            key = ' '.join(sent)
+            if key not in self.peykare_dict:
+                self.peykare_dict[key] = sent
+
+
     def tag(self: "SpacyPOSTagger", tokens,include_ez=True):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
         `(توکن، برچسب)`ها برمی‌گرداند.
@@ -367,7 +378,8 @@ class SpacyPOSTagger(POSTagger):
         """
         if self.tagger == None:
             self._setup_model([tokens])
-        
+        self._add_to_dict([tokens])
+
         doc = self.tagger([' '.join([tok for tok in tokens])])
         if include_ez:
             tags = [tok.tag_ for tok in doc]
@@ -388,6 +400,8 @@ class SpacyPOSTagger(POSTagger):
         if self.tagger == None:
             self._setup_model(sents)
 
+        self._add_to_dict(sents)
+        
         docs = list(self.tagger.pipe((' '.join([w for w in sent]) for sent in sents), batch_size=batch_size))
         if include_ez:
             tags = [[w.tag_ for w in doc] for doc in docs]
