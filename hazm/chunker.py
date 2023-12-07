@@ -372,6 +372,15 @@ class SpacyChunker(Chunker):
         for item in sents:
             self.peykare_dict[' '.join([w for w in item])] = [w for w in item]
 
+    def _add_to_dict(self: "SpacyChunker", sents):
+        """
+            Add the sentences to dictianory if it doesnt exist already
+        """
+        for sent in sents:
+            key = ' '.join(sent)
+            if key not in self.peykare_dict:
+                self.peykare_dict[key] = sent
+
 
     def _setup_dataset(self: "SpacyChunker",sents,saved_directory,dataset_type):
         """
@@ -536,6 +545,8 @@ class SpacyChunker(Chunker):
         if self.model == None:
             self._setup_model([[w for w,_ in sentence]])
 
+        self._add_to_dict([[w[0] for w in sentence]])
+
         doc = self.model(' '.join([w for w , _ in sentence]))
         words = [w for w , _ in sentence]
         tags = [tag for _ , tag in sentence]
@@ -561,6 +572,7 @@ class SpacyChunker(Chunker):
         """
         if self.model == None:
             self._setup_model([[w for w , _ in sentence] for sentence in sentences])
+        self._add_to_dict([[w for w,_ in sentence] for sentence in sentences])
 
         docs = list(self.model.pipe((' '.join([w for w , _ in sent]) for sent in sentences), batch_size=batch_size))
         words = [[w for w,_, in sentence] for sentence in sentences]
