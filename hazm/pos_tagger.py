@@ -1,6 +1,6 @@
 """این ماژول شامل کلاس‌ها و توابعی برای برچسب‌گذاری توکن‌هاست."""
 
-from nltk.tag import stanford
+from nltk.tag import stanford  # noqa: I001
 from hazm import SequenceTagger
 
 import os
@@ -203,7 +203,7 @@ class SpacyPOSTagger(POSTagger):
         gpu_id=0
     ):
         
-        import spacy
+        import spacy  # noqa: I001
 
         from spacy.tokens import Doc
         from spacy.tokens import DocBin
@@ -238,7 +238,7 @@ class SpacyPOSTagger(POSTagger):
         If using GPU, GPU settings are configured to enhance processing speed. Then, the pre-trained spaCy model is loaded based on the provided model path.
         
         Training and testing datasets are prepared and saved in the respective directories for use during model training and evaluation.
-        """
+        """  # noqa: D212
         if self.using_gpu:
             self._setup_gpu()
         else:
@@ -356,7 +356,7 @@ class SpacyPOSTagger(POSTagger):
                 self.peykare_dict[key] = sent
 
 
-    def tag(self: "SpacyPOSTagger", tokens,include_ez=True):
+    def tag(self: "SpacyPOSTagger", tokens,universal_tag=True):
         """یک جمله را در قالب لیستی از توکن‌ها دریافت می‌کند و در خروجی لیستی از
         `(توکن، برچسب)`ها برمی‌گرداند.
 
@@ -381,14 +381,14 @@ class SpacyPOSTagger(POSTagger):
         self._add_to_dict([tokens])
 
         doc = self.tagger([' '.join([tok for tok in tokens])])
-        if include_ez:
+        if not universal_tag:
             tags = [tok.tag_ for tok in doc]
         else:
             tags = [tok.tag_.replace(',EZ','') for tok in doc]
 
         return list(zip(tokens,tags))
-            
-    def tag_sents(self:"SpacyPOSTagger",sents,include_ez=True,batch_size=128):
+              # noqa: W293
+    def tag_sents(self:"SpacyPOSTagger",sents,universal_tag=True,batch_size=128):
         """
             Args:
                 sents : List[List[Tokens]]
@@ -403,7 +403,7 @@ class SpacyPOSTagger(POSTagger):
         self._add_to_dict(sents)
         
         docs = list(self.tagger.pipe((' '.join([w for w in sent]) for sent in sents), batch_size=batch_size))
-        if include_ez:
+        if not universal_tag:
             tags = [[w.tag_ for w in doc] for doc in docs]
         else:
             tags = [[w.tag_.replace(',EZ','') for w in doc] for doc in docs]
