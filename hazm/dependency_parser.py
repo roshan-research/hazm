@@ -19,19 +19,6 @@ import spacy
 from pos_tagger import POSTagger
 
 import os
-import subprocess
-import spacy
-
-from spacy.tokens import Doc
-from spacy.tokens import DocBin
-from spacy.vocab import Vocab
-
-from sklearn.metrics import classification_report,f1_score,accuracy_score,precision_score,recall_score
-
-from tqdm import tqdm
-
-
-
 
 class MaltParser(NLTKMaltParser):
     """این کلاس شامل توابعی برای شناسایی وابستگی‌های دستوری است.
@@ -260,76 +247,91 @@ class DependencyParser(MaltParser):
     """
 
 
+
 class SpacyDependencyParser(MaltParser):
     def __init__(
         self: "SpacyDependencyParser",
         tagger: object,
         lemmatizer: object,
         working_dir: str = "universal_dependency_parser",
-        model_file: str = "model/model-best"
+        model_file: str = "dependency_parser/ParsbertChangeTag/model-best"
     ) -> None:
+        import spacy
+        from spacy.tokens import Doc
+        from tqdm import tqdm
+        from typing import List, Tuple
+
+
+        """
+        Initialize the SpacyDependencyParser object.
+
+        Parameters:
+        - tagger: An object responsible for part-of-speech tagging.
+        - lemmatizer: An object responsible for lemmatization.
+        - working_dir: The directory where temporary files are stored.
+        - model_file: The path to the Spacy dependency parser model file.
+        """
         self.tagger = tagger
         self.working_dir = working_dir
         self.mco = model_file
         self.lemmatize = (
             lemmatizer.lemmatize if lemmatizer else lambda w, t: "_" # noqa: ARG005
         )
-        
+        self.peykare_dict = {}
         self._setup_model()
-        
+
     def _setup_model(self:"SpacyDependencyParser"):
+        """
+        Load the Spacy dependency parser model and set up a custom tokenizer.
+        """
         try:
             self.model = spacy.load(self.mco)
             self.model.tokenizer = self._custom_tokenizer
         except:
             raise ValueError("Something wrong loading the dependencyParser . Checkout for correctness or existence of path")
-            
-        try:
-            self.tagger = POSTagger(model=self.tagger)
-        except:
-            raise ValueError("Something wrong with loading the pos_tagger model . Checkout pos tagger path")
-    
-    def _add_sentence2dict(self:"SpacyDependencyParser",sent):
-        self.peykare_dict[' '.join([w for w,_,tag in sent])] = [w for w,_,tag in sent]
-        
-    def _custom_tokenizer(self:"SpacyDependencyParser",text):
+
+    def _add_sentence2dict(self:"SpacyDependencyParser", sent):
+        """
+        Add a sentence to the dictionary for later use in custom tokenization.
+
+        Parameters:
+        - sent: The sentence to be added to the dictionary.
+        """
+        self.peykare_dict[' '.join([w for w in sent])] = [w for w in sent]
+
+    def _custom_tokenizer(self:"SpacyDependencyParser", text):
+        """
+        Custom tokenizer function for Spacy, using a pre-built dictionary.
+
+        Parameters:
+        - text: The input text to be tokenized.
+        """
         if text not in self.peykare_dict:
             self._add_sentence2dict(text)
         return Doc(self.model.vocab, self.peykare_dict[text])
 
-
     def parse_sents(self: MaltParser, sentences: str, verbose: bool = False) -> str:
-        """گراف وابستگی را برمی‌گرداند.
-
-        Args:
-            sentences: جملاتی که باید گراف وابستگی آن‌ها استخراج شود.
-            verbose: اگر `True` باشد وابستگی‌های بیشتری را برمی‌گرداند.
-
-        Returns:
-            گراف وابستگی.
-
         """
-        for sent in sentences:
-            self._add_sentence2dict(sent)
-        
+        Parse a list of sentences and return the dependency graphs.
+
+        Parameters:
+        - sentences: List of sentences to be parsed.
+        - verbose: Whether to print additional information during parsing.
+        """
+        for sentence in sentences:
+            self._add_sentence2dict(sentence)
+
         tagged_sentences = self.tagger.tag_sents(sentences)
         return self.parse_tagged_sents(tagged_sentences, verbose)
 
-    def parse_tagged_sents(self: MaltParser, sentences: List[List[Tuple[str, str]]], verbose: bool = False) -> str:
-        """گراف وابستگی‌ها را برای جملات ورودی برمی‌گرداند.
-
-        Args:
-            sentences: جملاتی که باید گراف وابستگی‌های آن استخراج شود.
-            verbose: اگر `True` باشد وابستگی‌های بیشتری را برمی‌گرداند..
-
-        Returns:
-            گراف وابستگی جملات.
-
-        Raises:
-            Exception: در صورت بروز خطا یک اکسپشن عمومی صادر می‌شود.
-
+    def parse_tagged_sents(self: "SpacyDependencyParser", sentences: List[List[Tuple[str, str]]], verbose: bool = False) -> str:
         """
+        Parse a list of tagged sentences and return the dependency graphs.
 
+        Parameters:
+        - sentences: List of tagged sentences to be parsed.
+        - verbose: Whether to print additional information during parsing.
+        """
         input_file = tempfile.NamedTemporaryFile(
             prefix="malt_input.conll",
             dir=self.working_dir,
@@ -374,7 +376,7 @@ class SpacyDependencyParser(MaltParser):
                 dependency_tags = []
                 dependency_index = []
                 tokens = [w for w , _ in sentence]
-                pos_tags = [tag for w , tag in sentence]
+                pos_tags = [tag.replace(",EZ","") for w , tag in sentence]
                 sent_text = ' '.join(tokens)
                 doc = self.model(sent_text)
                 for i, _ in enumerate(doc):
@@ -384,7 +386,6 @@ class SpacyDependencyParser(MaltParser):
                 
                 merge_sets = tuple(zip(tokens,pos_tags,dependency_tags,dependency_index))
                 list_of_tok_tag_dep_idx.append(merge_sets)
-
 
             for sentence in list_of_tok_tag_dep_idx:
                 for i, (word, tag,dep,dep_idx) in enumerate(sentence, start=1):
@@ -420,64 +421,6 @@ class SpacyDependencyParser(MaltParser):
 
         finally:
             input_file.close()
-            os.remove(input_file.name) # noqa: PTH107
+            os.remove(input_file.name)
             output_file.close()
-            os.remove(output_file.name) # noqa: PTH107
-
-
-
-
-
-
-
-"""Input code"""
-"""
-import spacy
-nlp = spacy.load('dependency_parser/ParsbertChangeTag/model-best')
-import spacy
-
-sentences = [
-    [('هر', 'ADP'), 
-     ('جسم', 'DET'), 
-     ('با', 'ADP'),
-     ('دما', 'ADP'),
-     ('بالا', 'ADP'),
-     ('از', 'ADP'),
-     ('صفر', 'ADP'),
-     ('مطلق', 'ADP'),
-     ('انرژی', 'ADP'),
-     ('تابش', 'ADP'),
-     ('خواهد_کرد', 'ADP'),
-     ('.', 'ADP')]
-]
-# text = 'هر جسمی با دمای بالاتر از صفر مطلق انرژی تابش خواهد کرد.'
-
-for sentence in sentences:
-    tokens, pos_tags = zip(*sentence)
-    text = ' '.join(tokens)
-    doc = nlp(text)
-    for i, token in enumerate(doc):
-        doc[i].pos_ = pos_tags[i]
-        print(f"Sentence {i + 1} - Token: {token.text}, POS: {token.pos_}, Dependency: {token.dep_}",token.head.i)
-    for ent in doc.ents:
-        print(f"Sentence {i + 1} - Entity: {ent.text}, Label: {ent.label_}")
-
-    print("\n")
-"""
-
-"""output result"""
-"""
-Sentence 1 - Token: هر, POS: ADP, Dependency: det , Index_Dependence: 1
-Sentence 2 - Token: جسم, POS: DET, Dependency: nsubj , Index_Dependence: 10
-Sentence 3 - Token: با, POS: ADP, Dependency: case , Index_Dependence: 3
-Sentence 4 - Token: دما, POS: ADP, Dependency: nmod , Index_Dependence: 1
-Sentence 5 - Token: بالا, POS: ADP, Dependency: amod , Index_Dependence: 3
-Sentence 6 - Token: از, POS: ADP, Dependency: case , Index_Dependence: 6
-Sentence 7 - Token: صفر, POS: ADP, Dependency: nummod , Index_Dependence: 7
-Sentence 8 - Token: مطلق, POS: ADP, Dependency: obl:arg , Index_Dependence: 4
-Sentence 9 - Token: انرژی, POS: ADP, Dependency: nmod , Index_Dependence: 7
-Sentence 10 - Token: تابش, POS: ADP, Dependency: compound:lvc , Index_Dependence: 10
-Sentence 11 - Token: خواهد_کرد, POS: ADP, Dependency: ROOT , Index_Dependence: 10
-Sentence 12 - Token: ., POS: ADP, Dependency: punct , Index_Dependence: 10
-
-"""
+            os.remove(output_file.name)
