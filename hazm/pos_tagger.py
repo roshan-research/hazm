@@ -6,8 +6,6 @@ from hazm import SequenceTagger
 import os
 import subprocess
 
-import spacy
-
 
 punctuation_list = [
     '"',
