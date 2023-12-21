@@ -7,8 +7,6 @@
 import os
 import tempfile
 from pathlib import Path
-from typing import List
-from typing import Tuple
 from typing import Type
 
 from nltk.parse import DependencyGraph
@@ -17,6 +15,11 @@ from nltk.parse.malt import MaltParser as NLTKMaltParser
 import spacy
 
 from pos_tagger import POSTagger
+import spacy
+from spacy.tokens import Doc
+from tqdm import tqdm
+from typing import List, Tuple
+
 
 import os
 
@@ -321,8 +324,30 @@ class SpacyDependencyParser(MaltParser):
         for sentence in sentences:
             self._add_sentence2dict(sentence)
 
-        tagged_sentences = self.tagger.tag_sents(sentences)
+        tagged_sentences = self.tagger.tag_sents(sentences,universal_tag=True)
         return self.parse_tagged_sents(tagged_sentences, verbose)
+
+
+    def _spacy_to_conll(self,doc):
+        conll_lines = []
+        for token in doc:
+            head_id = token.head.i + 1
+
+            conll_lines.append(
+                "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(
+                    token.i + 1,
+                    token.text.replace(" ", "_"),
+                    self.lemmatize(token.text, token.pos_).replace(" ", "_"),
+                    token.pos_,
+                    token.pos_,
+                    "_",
+                    head_id,
+                    token.dep_, 
+                    "_",
+                    "_",
+                )
+            )
+        return "\n".join(conll_lines)
 
     def parse_tagged_sents(self: "SpacyDependencyParser", sentences: List[List[Tuple[str, str]]], verbose: bool = False) -> str:
         """
@@ -332,95 +357,18 @@ class SpacyDependencyParser(MaltParser):
         - sentences: List of tagged sentences to be parsed.
         - verbose: Whether to print additional information during parsing.
         """
-        input_file = tempfile.NamedTemporaryFile(
-            prefix="malt_input.conll",
-            dir=self.working_dir,
-            delete=False,
+        texts = [' '.join([w for w , _ in sentence]) for sentence in sentences]
+        docs = list(self.model.pipe(texts))
+        conll_list = []
+        for doc_id , doc in enumerate(docs):
+            pos_tags = [tag for w , tag in sentences[doc_id]]
+            for i in range(len(doc)):
+                docs[doc_id][i].pos_ = pos_tags[i]
+            conll_sample = self._spacy_to_conll(docs[doc_id])
+            conll_list.append(conll_sample)
+
+        return (
+            DependencyGraph(item)
+            for item in conll_list
+            if item.strip()
         )
-        output_file = tempfile.NamedTemporaryFile(
-            prefix="malt_output.conll",
-            dir=self.working_dir,
-            delete=False,
-        )
-
-        try:
-            for sentence in sentences:
-                for i, (word, tag) in enumerate(sentence, start=1):
-                    word = word.strip()
-                    if not word:
-                        word = "_"
-                    input_file.write(
-                        (
-                            "\t".join(
-                                [
-                                    str(i),
-                                    word.replace(" ", "_"),
-                                    self.lemmatize(word, tag).replace(" ", "_"),
-                                    tag,
-                                    tag,
-                                    "_",
-                                    "0",
-                                    "ROOT",
-                                    "_",
-                                    "_",
-                                    "\n",
-                                ],
-                            )
-                        ).encode("utf8"),
-                    )
-                input_file.write(b"\n\n")
-            input_file.close()
-
-            list_of_tok_tag_dep_idx = []
-            for sentence in tqdm(sentences):
-                dependency_tags = []
-                dependency_index = []
-                tokens = [w for w , _ in sentence]
-                pos_tags = [tag.replace(",EZ","") for w , tag in sentence]
-                sent_text = ' '.join(tokens)
-                doc = self.model(sent_text)
-                for i, _ in enumerate(doc):
-                    doc[i].pos_ = pos_tags[i]
-                    dependency_tags.append(doc[i].dep_)
-                    dependency_index.append(doc[i].head.i)
-                
-                merge_sets = tuple(zip(tokens,pos_tags,dependency_tags,dependency_index))
-                list_of_tok_tag_dep_idx.append(merge_sets)
-
-            for sentence in list_of_tok_tag_dep_idx:
-                for i, (word, tag,dep,dep_idx) in enumerate(sentence, start=1):
-                    word = word.strip()
-                    if not word:
-                        word = "_"
-                    output_file.write(
-                        (
-                            "\t".join(
-                                [
-                                    str(i),
-                                    word.replace(" ", "_"),
-                                    self.lemmatize(word, tag).replace(" ", "_"),
-                                    tag,
-                                    tag,
-                                    "_",
-                                    str(dep_idx),
-                                    dep,
-                                    "_",
-                                    "_",
-                                    "\n",
-                                ],
-                            )
-                        ).encode("utf8"),
-                    )
-                output_file.write(b"\n\n")
-            output_file.close()
-            return (
-                DependencyGraph(item)
-                for item in open(output_file.name, encoding="utf8").read().split("\n\n")
-                if item.strip()
-            )
-
-        finally:
-            input_file.close()
-            os.remove(input_file.name)
-            output_file.close()
-            os.remove(output_file.name)
