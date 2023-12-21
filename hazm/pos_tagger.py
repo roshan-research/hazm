@@ -383,7 +383,7 @@ class SpacyPOSTagger(POSTagger):
         self._add_to_dict([tokens])
 
         doc = self.tagger([' '.join([tok for tok in tokens])])
-        if universal_tag:
+        if not universal_tag:
             tags = [tok.tag_ for tok in doc]
         else:
             tags = [tok.tag_.replace(',EZ','') for tok in doc]
@@ -405,7 +405,7 @@ class SpacyPOSTagger(POSTagger):
         self._add_to_dict(sents)
         
         docs = list(self.tagger.pipe((' '.join([w for w in sent]) for sent in sents), batch_size=batch_size))
-        if universal_tag:
+        if not universal_tag:
             tags = [[w.tag_ for w in doc] for doc in docs]
         else:
             tags = [[w.tag_.replace(',EZ','') for w in doc] for doc in docs]
