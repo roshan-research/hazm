@@ -12,11 +12,8 @@ from typing import Type
 from nltk.parse import DependencyGraph
 from nltk.parse.api import ParserI
 from nltk.parse.malt import MaltParser as NLTKMaltParser
-import spacy
 
 from pos_tagger import POSTagger
-import spacy
-from spacy.tokens import Doc
 from tqdm import tqdm
 from typing import List, Tuple
 
