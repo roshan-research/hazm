@@ -85,12 +85,12 @@ class Lemmatizer:
             'چشید#چش'
             >>> lemmatizer.lemmatize('مردم', pos='N')
             'مردم'
-            >>> lemmatizer.lemmatize('اجتماعی', pos='AJ')
+            >>> lemmatizer.lemmatize('اجتماعی', pos='ADJ')
             'اجتماعی'
 
         Args:
             word: کلمه‌ای که باید پردازش شود.
-            pos: نوع کلمه. این پارامتر سه مقدار `V` (فعل) و `AJ` (صفت) و `PRO` (ضمیر) را می‌پذیرد.
+            pos: نوع کلمه. این پارامتر سه مقدار `VERB` (فعل) و `ADJ` (صفت) و `PRON` (ضمیر) را می‌پذیرد.
 
         Returns:
             ریشهٔ کلمه
@@ -99,13 +99,13 @@ class Lemmatizer:
         if not pos and word in self.words:
             return word
 
-        if (not pos or pos == "V") and word in self.verbs:
+        if (not pos or pos == "VERB") and word in self.verbs:
             return self.verbs[word]
 
-        if pos.startswith("AJ") and word[-1] == "ی":
+        if pos.startswith("ADJ") and word[-1] == "ی":
             return word
 
-        if pos == "PRO":
+        if pos == "PRON":
             return word
 
         if word in self.words:
