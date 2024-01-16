@@ -27,6 +27,26 @@
 | Chunker          | **93.4%** |
 | Lemmatizer       | **89.9%** |
 
+|                                | Metric          | Value   |
+| ------------------------------ | --------------- | ------- |
+| **SpacyPOSTagger**             | Precision       | 0.99250 |
+|                                | Recall          | 0.99249 |
+|                                | F1-Score        | 0.99249 |
+| **EZ Detection in SpacyPOSTagger** | Precision   | 0.99301 |
+|                                | Recall          | 0.99297 |
+|                                | F1-Score        | 0.99298 |
+| **SpacyChunker**                | Accuracy        | 96.53%  |
+|                                | F-Measure       | 95.00%  |
+|                                | Recall          | 95.17%  |
+|                                | Precision       | 94.83%  |
+| **SpacyDependencyParser**       | TOK Accuracy    | 99.06   |
+|                                | UAS             | 92.30   |
+|                                | LAS             | 89.15   |
+|                                | SENT Precision  | 98.84   |
+|                                | SENT Recall     | 99.38   |
+|                                | SENT F-Measure  | 99.11   |
+
+
 ## Introduction
 
 [**Hazm**](https://www.roshan-ai.ir/hazm/) is a python library to perform natural language processing tasks on Persian text. It offers various features for analyzing, processing, and understanding Persian text. You can use Hazm to normalize text, tokenize sentences and words, lemmatize words, assign part-of-speech tags, identify dependency relations, create word and sentence embeddings, or read popular Persian corpora.
