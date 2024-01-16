@@ -113,10 +113,27 @@ Finally if you want to use our pretrained models, you can download it from the l
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
+>>> spacy_posTagger = SpacyPOSTagger(model_path = 'MODELPATH')
+>>> spacy_posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+
+>>> posTagger = POSTagger(model = 'pos_tagger.model', universal_tag = False)
+>>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')] 
+
 >>> chunker = Chunker(model='chunker.model')
 >>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
+
+>>> spacy_chunker = SpacyChunker(model_path = 'model_path')
+>>> tree = spacy_chunker.parse(sentence = [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
+>>> print(tree)
+(S
+  (NP نامه/NOUN,EZ ایشان/PRON)
+  (POSTP را/ADP)
+  (VP دریافت/NOUN داشتم/VERB)
+  ./PUNCT)
 
 >>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'word2vec.bin')
 >>> word_embedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
@@ -127,6 +144,9 @@ Finally if you want to use our pretrained models, you can download it from the l
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
+
+>>> spacy_parser = SpacyDependencyParser(tagger=tagger, lemmatizer=lemmatizer)
+>>> spacy_parser.parse_sents([word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟')])
 
 ```
 
