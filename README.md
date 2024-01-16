@@ -62,6 +62,11 @@ Finally if you want to use our pretrained models, you can download it from the l
 | [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)                                     | ~ 18 MB  |
 | [**Download DependencyParser**](https://drive.google.com/file/d/1MDapMSUXYfmQlu0etOAkgP5KDiWrNAV6/view?usp=share_link) | ~ 15 MB  |
 | [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)                                       | ~ 4 MB   |
+| [**Download spacy_pos_tagger_parsbertpostagger**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger)    | ~ 630 MB   |
+| [**Download spacy_pos_tagger_parsbertpostagger95**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger95)| ~ 630 MB   |
+| [**Download spacy_chunker_uncased_bert**](https://huggingface.co/roshan-research/spacy_chunker_uncased_bert)                    | ~ 650 MB   |
+| [**Download spacy_chunker_parsbert**](https://huggingface.co/roshan-research/spacy_chunker_parsbert)                            | ~ 630 MB   |
+| [**Download spacy_dependency_parser**](https://huggingface.co/roshan-research/spacy_dependency_parser)                          | ~ 630 MB   |
 
 ## Usage
 
