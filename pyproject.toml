@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hazm"
-version = "0.9.4"
+version = "0.10.0"
 description = "Persian NLP Toolkit"
 authors = ["Roshan <salam@roshan-ai.com>"]
 maintainers = ["Roshan <salam@roshan-ai.com>"]
