@@ -102,6 +102,9 @@ def present_roots() -> str:
 
 def regex_replace(patterns: str, text: str) -> str:
     """الگوی ریجکس را یافته و با متن داده شده جایگزین می‌کند."""
-    for pattern, repl in patterns:
-        text = re.sub(pattern, repl, text)
+    compiled_patterns = [(re.compile(pattern), repl) for pattern, repl in patterns]    
+
+    for pattern, repl in compiled_patterns:
+        text = pattern.sub(repl, text)
+    
     return text
