@@ -1,6 +1,79 @@
+import subprocess
+
 from typing import Tuple , List
 from tqdm import tqdm
 
+
+class BaseNER(object):
+    def __init__(self,model_path):
+        """
+            load_data: Load data from a file or any data source.
+            preprocess_data: Preprocess the loaded data, including tokenization, normalization, and any other necessary steps.
+            train_model: Train the NER model using the preprocessed data.
+            evaluate_model: Evaluate the trained model using appropriate metrics.
+            predict_entities: Predict named entities in new text using the trained model.
+            save_model: Save the trained NER model for future use.
+            load_model: Load a pre-trained NER model from disk.
+
+        """
+        pass
+
+    def predict_entities(self,sentences):
+        raise NotImplementedError
+    
+    def evaluate_model(self):
+        raise NotImplementedError
+
+    def load_data(self):
+        raise NotImplementedError
+    
+    def preprocess_data(self):
+        raise NotImplementedError
+    
+    def train_model(self):
+        raise NotImplementedError
+    
+    def save_model(self):
+        raise NotImplementedError
+    
+    def load_model(self):
+        raise NotImplementedError
+
+
+class HazmNER(BaseNER):
+    def __init__(self, model_path):
+        super().__init__(model_path)
+        import spacy
+
+
+        self.model_path = model_path
+        self.model = spacy.load(self.model_path)
+
+    def predict_entities(self,sentences):
+        results = []
+        for sentence in sentences:
+            doc = self.model(sentence)        
+            entities = [(ent.text, ent.label_) for ent in doc.ents]        
+            results.append(entities)
+        return results
+
+    def evaluate_model(self,dataset_path):
+        subprocess.run(f"python -m spacy evaluate {self.model_path} {dataset_path}")
+
+    def load_data(self):
+        raise NotImplementedError
+    
+    def preprocess_data(self):
+        raise NotImplementedError
+    
+    def train_model(self):
+        raise NotImplementedError
+    
+    def save_model(self):
+        raise NotImplementedError
+    
+    def load_model(self):
+        raise NotImplementedError
 
 def prepare_conll_data_format(
     path: str,
