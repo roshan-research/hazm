@@ -1,84 +1,12 @@
 import subprocess
-
 from typing import Tuple , List
 from tqdm import tqdm
 
 
-class BaseNER(object):
-    def __init__(self,model_path):
-        """
-            load_data: Load data from a file or any data source.
-            preprocess_data: Preprocess the loaded data, including tokenization, normalization, and any other necessary steps.
-            train_model: Train the NER model using the preprocessed data.
-            evaluate_model: Evaluate the trained model using appropriate metrics.
-            predict_entities: Predict named entities in new text using the trained model.
-            save_model: Save the trained NER model for future use.
-            load_model: Load a pre-trained NER model from disk.
-
-        """
-        pass
-
-    def predict_entities(self,sentences):
-        raise NotImplementedError
-    
-    def evaluate_model(self):
-        raise NotImplementedError
-
-    def load_data(self):
-        raise NotImplementedError
-    
-    def preprocess_data(self):
-        raise NotImplementedError
-    
-    def train_model(self):
-        raise NotImplementedError
-    
-    def save_model(self):
-        raise NotImplementedError
-    
-    def load_model(self):
-        raise NotImplementedError
-
-
-class HazmNER(BaseNER):
-    def __init__(self, model_path):
-        super().__init__(model_path)
-        import spacy
-
-
-        self.model_path = model_path
-        self.model = spacy.load(self.model_path)
-
-    def predict_entities(self,sentences):
-        results = []
-        for sentence in sentences:
-            doc = self.model(sentence)        
-            entities = [(ent.text, ent.label_) for ent in doc.ents]        
-            results.append(entities)
-        return results
-
-    def evaluate_model(self,dataset_path):
-        subprocess.run(f"python -m spacy evaluate {self.model_path} {dataset_path}")
-
-    def load_data(self):
-        raise NotImplementedError
-    
-    def preprocess_data(self):
-        raise NotImplementedError
-    
-    def train_model(self):
-        raise NotImplementedError
-    
-    def save_model(self):
-        raise NotImplementedError
-    
-    def load_model(self):
-        raise NotImplementedError
 
 def prepare_conll_data_format(
     path: str,
     sep: str = "\t",
-    lower: bool = True,
     verbose: bool = True,
 ) -> Tuple[List[List[str]], List[List[str]]]:
     """
@@ -113,9 +41,6 @@ def prepare_conll_data_format(
                 try:
                     # Split the line into token and label using the specified separator
                     token, label = line.strip().split(sep)
-                    # Optionally convert token to lowercase
-                    if lower:
-                        token = token.lower()
                     tokens.append(token)
                     labels.append(label)
                 except:
@@ -198,3 +123,151 @@ def merge_tags(tags):
         merged_tags.append((start, end, current_tag))
 
     return merged_tags
+
+
+
+
+class BaseNER(object):
+    def __init__(self,model_path):
+        """
+            load_data: Load data from a file or any data source.
+            preprocess_data: Preprocess the loaded data, including tokenization, normalization, and any other necessary steps.
+            train_model: Train the NER model using the preprocessed data.
+            evaluate_model: Evaluate the trained model using appropriate metrics.
+            predict_entities: Predict named entities in new text using the trained model.
+            save_model: Save the trained NER model for future use.
+            load_model: Load a pre-trained NER model from disk.
+
+        """
+        pass
+
+
+
+class HazmNER(BaseNER):
+    def __init__(self, model_path):
+        """
+        Initialize the HazmNER object.
+
+        Parameters:
+            model_path (str): The path to the pre-trained NER model.
+        """
+        super().__init__(model_path)
+        self.model_path = model_path
+        self.model = self.load_model(model_path)
+
+    def predict_entities(self, sentences):
+        """
+        Predict named entities in a list of sentences.
+
+        Parameters:
+            sentences (list of str): List of sentences to predict named entities.
+
+        Returns:
+            list of list of tuple: Predicted named entities for each sentence.
+        """
+        names = []
+        for sentence in sentences:
+            entities = self.predict_entity(sentence)
+            names.append(entities)
+        return names
+    
+    def predict_entity(self, sentence):
+        """
+        Predict named entities in a single sentence.
+
+        Parameters:
+            sentence (str): Input sentence to predict named entities.
+
+        Returns:
+            list of tuple: Predicted named entities in the input sentence.
+        """
+        doc = self.model(sentence)
+        entities = [(ent.text, ent.label_) for ent in doc.ents]
+        return entities
+
+    def evaluate_model(self, dataset_path):
+        """
+        Evaluate the performance of the NER model on a dataset.
+
+        Parameters:
+            dataset_path (str): Path to the evaluation dataset.
+        """
+        subprocess.run(f"python -m spacy evaluate {self.model_path} {dataset_path}")
+
+    
+    def _save_spacy_data(self, data, save_path):
+        """
+        Save data in Spacy format.
+
+        Parameters:
+            data (list of tuple): Data to be saved in Spacy format.
+            save_path (str): Path to save the Spacy data.
+        """
+        nlp = spacy.blank("fa")
+        db = DocBin()
+        for text, annotations in tqdm(data):
+            doc = nlp(text)
+            ents = []
+            if annotations:
+                for start, end, label in annotations:
+                    span = doc.char_span(start, end, label=label)
+                    ents.append(span)
+            else:
+                continue
+            doc.ents = ents
+            db.add(doc)
+        db.to_disk(save_path)
+    
+    def _preprocess_data(self, data_path, save_path, sep, set_type='train'):
+        """
+        Preprocess data for training or evaluation.
+
+        Parameters:
+            data_path (str): Path to the data file.
+            save_path (str): Path to save the preprocessed data.
+            sep (str): Separator used in the data file.
+            set_type (str): Type of data (train or val).
+
+        Raises:
+            AssertionError: If set_type is not 'train' or 'val'.
+        """
+        assert set_type in ['train', 'val']
+        data = []
+        spacy_data = []
+        tokens, entities = prepare_conll_data_format(data_path, sep=sep, verbose=False)
+        for i in range(len(tokens)):
+            data.append(list(zip(tokens[i], entities[i])))
+        
+        for sample in data:
+            spacy_data.append(convert_to_spacy_format(sample))
+
+        self._save_spacy_data(spacy_data, save_path + set_type + ".spacy")
+
+    
+    def train_model(self, model_save_path, train_path, dev_path, data_save_path, sep):
+        """
+        Train the NER model.
+
+        Parameters:
+            model_save_path (str): Path to save the trained model.
+            train_path (str): Path to the training data.
+            dev_path (str): Path to the validation data.
+            data_save_path (str): Path to save the preprocessed data.
+            sep (str): Separator used in the data files.
+        """
+        self._preprocess_data(train_path, save_path=data_save_path, sep=sep)
+        self._preprocess_data(dev_path, save_patdata_0h=data_save_path, sep=sep)
+        subprocess.run(f"python -m spacy train config.cfg --output {model_save_path} --paths.train {train_path+'train.spacy'} --paths.dev {dev_path+'dev.spacy'}")
+        self.model = self._load_model(model_save_path)
+    
+    def _load_model(self, model_path):
+        """
+        Load the trained NER model.
+
+        Parameters:
+            model_path (str): Path to the trained model.
+
+        Returns:
+            spacy.Language: Loaded NER model.
+        """
+        return spacy.load(model_path)
