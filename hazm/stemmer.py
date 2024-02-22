@@ -32,6 +32,9 @@ class Stemmer(StemmerI):
             "ٔ",
             "‌ا",
             "‌",
+            "ه",
+            "گان",
+            "جات"
         ]
 
     def stem(self: "Stemmer", word: str) -> str:
