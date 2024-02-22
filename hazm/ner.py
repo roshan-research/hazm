@@ -152,6 +152,12 @@ class HazmNER(BaseNER):
             model_path (str): The path to the pre-trained NER model.
         """
         super().__init__(model_path)
+        import spacy
+
+        from spacy.tokens import Doc
+        from spacy.tokens import DocBin
+        from spacy.vocab import Vocab
+
         self.model_path = model_path
         self.model = self.load_model(model_path)
 
