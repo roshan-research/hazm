@@ -83,7 +83,7 @@ Finally if you want to use our pretrained models, you can download it from the l
 | [**Download DependencyParser**](https://drive.google.com/file/d/1MDapMSUXYfmQlu0etOAkgP5KDiWrNAV6/view?usp=share_link) | ~ 15 MB  |
 | [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)                                       | ~ 4 MB   |
 | [**Download spacy_pos_tagger_parsbertpostagger**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger)    | ~ 630 MB   |
-| [**Download spacy_pos_tagger_parsbertpostagger95**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger95)| ~ 630 MB   |
+| [**Download spacy_pos_tagger_parsbertpostagger_Trained_on_95%**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger95)| ~ 630 MB   |
 | [**Download spacy_chunker_uncased_bert**](https://huggingface.co/roshan-research/spacy_chunker_uncased_bert)                    | ~ 650 MB   |
 | [**Download spacy_chunker_parsbert**](https://huggingface.co/roshan-research/spacy_chunker_parsbert)                            | ~ 630 MB   |
 | [**Download spacy_dependency_parser**](https://huggingface.co/roshan-research/spacy_dependency_parser)                          | ~ 630 MB   |
@@ -147,6 +147,16 @@ Finally if you want to use our pretrained models, you can download it from the l
 
 >>> spacy_parser = SpacyDependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> spacy_parser.parse_sents([word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟')])
+
+>>> ner = HazmNER(model_path='ner/model-best')
+>>> ner.predict_entity('حمله سایبری به سامانه سوخت در دولت سیزدهم برای بار دوم اتفاق افتاد، حادثه‌ای که در سال 1400 هم به وقوع پیوست اما رفع این مشکل بیش از یک هفته زمان برد، در حالی که آذر امسال پس از این حمله همه پمپ‌بنزین‌ها در کمتر از 24 ساعت فعالیت خود را از سر گرفتند.')
+>>> ner.predict(
+    [
+      'ریو در ایران توسط شرکت سایپا از سال 1384 تا سال 1391 تولید شد',
+      'به جز ایالات متحده ، این خودرو در اروپا ، آمریکای جنوبی و آسیا هم فروش بالایی داشته است',
+      'این گاه شمار با قدمتی کمتر از دویست سال ، از جدیدترین گاه شمار های رایج به شمار می رود'
+      ]
+)
 
 ```
 
