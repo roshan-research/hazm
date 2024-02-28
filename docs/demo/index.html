@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fa-IR">
+  <head>
+    <meta charset="utf-8" />
+    <title>دموی هضم</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../fonts/font_face.css" />
+    <link rel="stylesheet" href="../css/highlight_code.css" />
+    <link rel="stylesheet" href="../css/demo.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+  </head>
+
+  <body>
+    <!------------------------- header section -------------------------->
+    <div class="header-container">
+      <div class="header my-container">
+        <h1 class="logo">هضم</h1>
+        <span class="text">برای پردازش زبان فارسی</span>
+        <img class="menu-icon active" src="../images/menu/mobile/menu.svg" alt="menu icon" />
+        <img class="close-icon" src="../images/menu/mobile/close.svg" alt="close icon" />
+        <div class="menu">
+          <a href="https://www.roshan-ai.ir/hazm/docs/">
+            <img style="width: 19px; height: 19px; opacity: 0.6" src="../images/menu/web/doc_icon.svg" alt="doc_icon" />
+            <span>مستندات</span>
+          </a>
+          <a href="https://www.roshan-ai.ir/hazm/demo/">
+            <img src="../images/menu/web/demo_icon.svg" alt="demoIcon" />
+            <span>دموی آنلاین</span>
+          </a>
+          <a href="https://github.com/roshan-research/hazm">
+            <img src="../images/menu/web/git_icon.svg" alt="git_icon" />
+            <span>سورس پروژه</span>
+          </a>
+          <a href="https://www.roshan-ai.ir/join-us/">
+            <img src="../images/menu/web/join_us_icon.svg" alt="joinUsIcon" />
+            <span>همکاری با ما</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="separator-line" style="display: none"></div>
+    <div class="mobile-menu" style="display: none">
+      <ul class="my-container">
+        <li>
+          <a href="https://www.roshan-ai.ir/hazm/docs/">
+            <img src="../images/menu/mobile/doc_icon.svg" alt="doc_icon" />
+            <span>مستندات</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.roshan-ai.ir/hazm/demo/">
+            <img src="../images/menu/mobile/demo_icon.svg" alt="demoIcon" />
+            <span>دموی آنلاین</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/roshan-research/hazm">
+            <img src="../images/menu/mobile/git_icon.svg" alt="git_icon" />
+            <span>سورس پروژه</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.roshan-ai.ir/join-us/">
+            <img src="../images/menu/mobile/join_us_icon.svg" alt="joinUsIcon" />
+            <span>همکاری با ما</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!------------------------- content section -------------------------->
+    <div class="content my-container">
+      <div id="query">
+        <label for="textarea">متن ورودی</label>
+        <textarea id="textarea">در می‌زند و   دوبـــــاره وارد ميشود . همه مي گویند قدمش پربركت است .</textarea>
+
+        <button id="process" class="my-btn blue-btn">
+          <div style="display: flex; align-items: center">
+            <span style="padding: 5px">پردازش</span>
+            <span class="loading" />
+          </div>
+        </button>
+      </div>
+      <div class="analyze-section" style="display: none">
+        <div class="demo" id="normalized">
+          <h3>متن تمیز</h3>
+          <div></div>
+        </div>
+        <div class="demo" id="tokenized">
+          <h3>واژه‌های متن</h3>
+          <ul></ul>
+        </div>
+        <div class="demo" id="lemmatized">
+          <h3>ریشه واژه‌ها</h3>
+          <ul></ul>
+        </div>
+        <div class="demo" id="tagged">
+          <h3 class="green-title">تحلیل صرفی</h3>
+
+          <ul></ul>
+        </div>
+        <div class="demo" id="chunked">
+          <h3 class="red-title">تجزیه سطحی</h3>
+
+          <ul></ul>
+        </div>
+        <div class="demo" id="parsed">
+          <h3 class="red-title">تجزیه نحوی</h3>
+          <div></div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------- footer section -------------------------->
+    <p class="footer my-container">
+      <span>کاری از </span>
+      <a href="https://www.roshan-ai.ir">روشن</a>
+    </p>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://sir-kokabi.github.io/dependency-parse-tree/d3.js"></script>
+    <script type="text/javascript" src="https://sir-kokabi.github.io/dependency-parse-tree/dependency-tree.js"></script>
+
+    <!-- My Js-->
+    <script type="text/javascript">
+      var server = "https://hazm.roshan-ai.ir/api";
+
+      let normalized = "";
+      let tokenized = "";
+      let lemmatized = "";
+      let tagged = "";
+
+      async function callAPI(text) {
+        const server = "https://hazm.roshan-ai.ir/api";
+
+        // sample input: او   رفـــــــــــت . من آمدم.
+
+        normalized = await $.post(`${server}/normalize`, { text });
+        //او رفت. من آمدم.
+
+        tokenized = await $.post(`${server}/tokenize`, {
+          normalized_text: normalized,
+        });
+        //[["او", "رفت", "."], ["من", "آمدم", "."]]
+
+        lemmatized = await $.post(`${server}/lemmatize`, {
+          tokenized_text: tokenized,
+        });
+        //[["او", "رفت#رو", "."], ["من", "آمد#آ", "."]]
+
+        tagged = await $.post(`${server}/tag`, { tokenized_text: tokenized });
+        //[[["او", "PRON"], ["رفت", "VERB"], [".", "PUNCT"]], [["من", "PRON"], ["آمدم", "VERB"], [".", "PUNCT"]]]
+
+        chunked = await $.post(`${server}/chunk`, { tagged_text: tagged });
+        //["[او NP] [رفت VP] .", "[من NP] [آمدم VP] ."]
+
+        parsed = await $.post(`${server}/parse`, { tagged_text: tagged });
+        //["1\tاو\tاو\tPRON\tPRON\t_\t2\tnsubj\t_\t_\n2\tرفت\tرف\tVERB\tVERB\t_\t0\troot\t_\t_\n3\t.\t.\tPUNCT\tPUNCT\t_\t2\tpunct\t_\t_\n","1\tمن\tمن\tPRON\tPRON\t_\t2\tnsubj\t_\t_\n2\tآمدم\tآمدم\tVERB\tVERB\t_\t0\troot\t_\t_\n3\t.\t.\tPUNCT\tPUNCT\t_\t2\tpunct\t_\t_\n"]
+      }
+
+      function showNormalized() {
+        let result = normalized;
+        $("#normalized div").text(result);
+      }
+
+      function showTokenized() {
+        let sentences = JSON.parse(tokenized);
+
+        $("#tokenized ul").empty();
+        sentences.forEach((sentence) => {
+          $("#tokenized ul").append("<li>" + sentence.join(" / ") + "</li>");
+        });
+      }
+
+      function showLemmatized() {
+        let sentences = $.parseJSON(lemmatized);
+        $("#lemmatized ul").empty();
+        for (s in sentences) {
+          $("#lemmatized ul").append("<li>" + sentences[s].join(" ") + "</li>");
+        }
+      }
+
+      function showTagged() {
+        let sentences = $.parseJSON(tagged);
+        $("#tagged ul").empty();
+        for (s in sentences) {
+          sentence = $.map(sentences[s], function (word) {
+            return `<span dir="rtl">${word.join(" ")}</span>`;
+          });
+          $("#tagged ul").append("<li>" + sentence.join(" / ") + "</li>");
+        }
+      }
+
+      function showChunked() {
+        let sentences = $.parseJSON(chunked);
+        $("#chunked ul").empty();
+        for (s in sentences) {
+          $("#chunked ul").append("<li>" + sentences[s] + "</li>");
+        }
+      }
+
+      function showParsed() {
+        sentences = $.parseJSON(parsed);
+        div = $("#parsed > div");
+        div.empty();
+        for (s in sentences) {
+          if (sentences[s].length) {
+            div.append('<div class="tree"><svg id="tree' + s + '"></svg></div>');
+            drawTree("#tree" + s, "\n\n" + sentences[s]);
+          }
+        }
+      }
+
+      $("#process").click(async function () {
+        var text = $("#query textarea").val();
+
+        if (text) {
+          var analyze_section = $(".analyze-section");
+          $(".loading").show();
+          analyze_section.hide();
+          await callAPI(text);
+          showNormalized();
+          showTokenized();
+          showLemmatized();
+          showTagged();
+          showChunked();
+          showParsed();
+          $(".loading").hide();
+          analyze_section.show();
+        }
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        const menu = $(".menu-icon");
+        const close = $(".close-icon");
+        const mobile_menu = $(".mobile-menu");
+        const line = $(".line");
+
+        menu.on("click", function () {
+          menu.removeClass("active");
+          close.addClass("active");
+          mobile_menu.show();
+          line.show();
+        });
+
+        close.on("click", function () {
+          close.removeClass("active");
+          menu.addClass("active");
+          mobile_menu.hide();
+          line.hide();
+        });
+
+        $(".logo").click(function () {
+          window.location.href = "../";
+        });
+      });
+    </script>
+  </body>
+</html>

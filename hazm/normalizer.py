@@ -467,12 +467,15 @@ class Normalizer:
             متنی با «می» و «نمی» جدا شده.
 
         """
-        matches = re.findall(r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", text)
-        for m in matches:
+        def replace_match(match):
+            m = match.group(0)
             r = re.sub("^(ن?می)", r"\1‌", m)
             if r in self.verbs:
-                text = text.replace(m, r)
+                return r
+            return m
 
+        text = re.sub(r"\bن?می[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+", replace_match, text)
+    
         return text
 
     def token_spacing(self: "Normalizer", tokens: List[str]) -> List[str]:

@@ -27,6 +27,26 @@
 | Chunker          | **93.4%** |
 | Lemmatizer       | **89.9%** |
 
+|                                | Metric          | Value   |
+| ------------------------------ | --------------- | ------- |
+| **SpacyPOSTagger**             | Precision       | 0.99250 |
+|                                | Recall          | 0.99249 |
+|                                | F1-Score        | 0.99249 |
+| **EZ Detection in SpacyPOSTagger** | Precision   | 0.99301 |
+|                                | Recall          | 0.99297 |
+|                                | F1-Score        | 0.99298 |
+| **SpacyChunker**                | Accuracy        | 96.53%  |
+|                                | F-Measure       | 95.00%  |
+|                                | Recall          | 95.17%  |
+|                                | Precision       | 94.83%  |
+| **SpacyDependencyParser**       | TOK Accuracy    | 99.06   |
+|                                | UAS             | 92.30   |
+|                                | LAS             | 89.15   |
+|                                | SENT Precision  | 98.84   |
+|                                | SENT Recall     | 99.38   |
+|                                | SENT F-Measure  | 99.11   |
+
+
 ## Introduction
 
 [**Hazm**](https://www.roshan-ai.ir/hazm/) is a python library to perform natural language processing tasks on Persian text. It offers various features for analyzing, processing, and understanding Persian text. You can use Hazm to normalize text, tokenize sentences and words, lemmatize words, assign part-of-speech tags, identify dependency relations, create word and sentence embeddings, or read popular Persian corpora.
@@ -62,6 +82,11 @@ Finally if you want to use our pretrained models, you can download it from the l
 | [**Download POSTagger**](https://drive.google.com/file/d/1Q3JK4NVUC2t5QT63aDiVrCRBV225E_B3)                                     | ~ 18 MB  |
 | [**Download DependencyParser**](https://drive.google.com/file/d/1MDapMSUXYfmQlu0etOAkgP5KDiWrNAV6/view?usp=share_link) | ~ 15 MB  |
 | [**Download Chunker**](https://drive.google.com/file/d/16hlAb_h7xdlxF4Ukhqk_fOV3g7rItVtk)                                       | ~ 4 MB   |
+| [**Download spacy_pos_tagger_parsbertpostagger**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger)    | ~ 630 MB   |
+| [**Download spacy_pos_tagger_parsbertpostagger95**](https://huggingface.co/roshan-research/spacy_pos_tagger_parsbertpostagger95)| ~ 630 MB   |
+| [**Download spacy_chunker_uncased_bert**](https://huggingface.co/roshan-research/spacy_chunker_uncased_bert)                    | ~ 650 MB   |
+| [**Download spacy_chunker_parsbert**](https://huggingface.co/roshan-research/spacy_chunker_parsbert)                            | ~ 630 MB   |
+| [**Download spacy_dependency_parser**](https://huggingface.co/roshan-research/spacy_dependency_parser)                          | ~ 630 MB   |
 
 ## Usage
 
@@ -88,10 +113,27 @@ Finally if you want to use our pretrained models, you can download it from the l
 >>> tagger.tag(word_tokenize('ما بسیار کتاب می‌خوانیم'))
 [('ما', 'PRO'), ('بسیار', 'ADV'), ('کتاب', 'N'), ('می‌خوانیم', 'V')]
 
+>>> spacy_posTagger = SpacyPOSTagger(model_path = 'MODELPATH')
+>>> spacy_posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN,EZ'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')]
+
+>>> posTagger = POSTagger(model = 'pos_tagger.model', universal_tag = False)
+>>> posTagger.tag(tokens = ['من', 'به', 'مدرسه', 'ایران', 'رفته_بودم', '.'])
+[('من', 'PRON'), ('به', 'ADP'), ('مدرسه', 'NOUN'), ('ایران', 'NOUN'), ('رفته_بودم', 'VERB'), ('.', 'PUNCT')] 
+
 >>> chunker = Chunker(model='chunker.model')
 >>> tagged = tagger.tag(word_tokenize('کتاب خواندن را دوست داریم'))
 >>> tree2brackets(chunker.parse(tagged))
 '[کتاب خواندن NP] [را POSTP] [دوست داریم VP]'
+
+>>> spacy_chunker = SpacyChunker(model_path = 'model_path')
+>>> tree = spacy_chunker.parse(sentence = [('نامه', 'NOUN,EZ'), ('ایشان', 'PRON'), ('را', 'ADP'), ('دریافت', 'NOUN'), ('داشتم', 'VERB'), ('.', 'PUNCT')])
+>>> print(tree)
+(S
+  (NP نامه/NOUN,EZ ایشان/PRON)
+  (POSTP را/ADP)
+  (VP دریافت/NOUN داشتم/VERB)
+  ./PUNCT)
 
 >>> word_embedding = WordEmbedding(model_type = 'fasttext', model_path = 'word2vec.bin')
 >>> word_embedding.doesnt_match(['سلام' ,'درود' ,'خداحافظ' ,'پنجره'])
@@ -102,6 +144,9 @@ Finally if you want to use our pretrained models, you can download it from the l
 >>> parser = DependencyParser(tagger=tagger, lemmatizer=lemmatizer)
 >>> parser.parse(word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟'))
 <DependencyGraph with 8 nodes>
+
+>>> spacy_parser = SpacyDependencyParser(tagger=tagger, lemmatizer=lemmatizer)
+>>> spacy_parser.parse_sents([word_tokenize('زنگ‌ها برای که به صدا درمی‌آید؟')])
 
 ```
 
