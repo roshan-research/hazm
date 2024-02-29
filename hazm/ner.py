@@ -9,18 +9,18 @@ class HazmNER:
     from spacy.tokens import DocBin
     from spacy.vocab import Vocab
 
-    def __init__(self, model_path):
+    def __init__(self, model_path, use_gpu=False):
         """
         Initialize the HazmNER object.
 
         Parameters:
             model_path (str): The path to the pre-trained NER model.
+            use_gpu (bool): Whether to use GPU for processing.
         """
-        # super(HazmNER,self).__init__(model_path)
-
         self.model_path = model_path
-        self.model = self._load_model(model_path)
-
+        self.use_gpu = use_gpu
+        self.model = self._load_model(model_path, use_gpu)
+        
     def predict_entities(self, sentences):
         """
         Predict named entities in a list of sentences.
@@ -60,15 +60,18 @@ class HazmNER:
         """
         subprocess.run(f"python -m spacy evaluate {self.model_path} {dataset_path}")
     
-    def _load_model(self, model_path):
+    def _load_model(self, model_path, use_gpu):
         """
         Load the trained NER model.
 
         Parameters:
             model_path (str): Path to the trained model.
+            use_gpu (bool): Whether to use GPU for processing.
 
         Returns:
             spacy.Language: Loaded NER model.
         """
         import spacy
+        if use_gpu:
+            spacy.require_gpu()
         return spacy.load(model_path)
