@@ -1,187 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/index.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/index.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/in-other-languages.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/in-other-languages.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/utils.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/utils.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/index.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/index.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/chunker.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/chunker.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/dependency_parser.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/dependency_parser.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/embedding.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/embedding.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/informal_normalizer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/informal_normalizer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/lemmatizer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/lemmatizer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/normalizer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/normalizer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/pos_tagger.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/pos_tagger.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/sentence_tokenizer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/sentence_tokenizer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/sequence_tagger.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/sequence_tagger.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/stemmer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/stemmer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/token_splitter.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/token_splitter.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/word_tokenizer.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/word_tokenizer.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/index.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/index.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/bijankhan_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/bijankhan_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/dadegan_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/dadegan_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/degarbayan_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/degarbayan_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/hamshahri_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/hamshahri_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/mirastext_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/mirastext_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/mizan_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/mizan_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/naab_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/naab_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/ner_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/ner_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/persian_plain_text_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/persian_plain_text_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/persica_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/persica_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/peykare_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/peykare_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/quran_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/quran_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/sentipers_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/sentipers_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/tnews_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/tnews_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/treebank_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/treebank_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/universal_dadegan_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/universal_dadegan_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/verbvalency_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/verbvalency_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/hazm/corpus_readers/wikipedia_reader.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/hazm/corpus_readers/wikipedia_reader.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/samples/index.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/samples/index.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.roshan-ai.ir/hazm/content/samples/keyword_extraction.html</loc>
+         <loc>https://www.roshan-ai.ir/hazm/docs/content/samples/keyword_extraction.html</loc>
          <lastmod>2023-10-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
