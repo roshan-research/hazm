@@ -133,7 +133,7 @@ class MaltParser(NLTKMaltParser):
                 raise Exception("MaltParser parsing failed: %s" % " ".join(cmd))
 
             return (
-                DependencyGraph(item)
+                DependencyGraph(item, top_relation_label='root')
                 for item in open(output_file.name, encoding="utf8").read().split("\n\n") # noqa: SIM115, PTH123
                 if item.strip()
             )
