@@ -1,0 +1,2603 @@
+
+<!doctype html>
+<html lang="fa" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="کتابخانه‌ای پایتونی برای پردازش زبان فارسی">
+      
+      
+        <meta name="author" content="روشن">
+      
+      
+        <link rel="canonical" href="https://www.roshan-ai.ir/hazm/docs/content/hazm/embedding.html">
+      
+      
+        <link rel="prev" href="word_tokenizer.html">
+      
+      
+        <link rel="next" href="sequence_tagger.html">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.2.6">
+    
+    
+      
+        <title>embedding - هضم | کتابخانهٔ پردازش زبان فارسی</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../hint.min.css">
+    
+      <link rel="stylesheet" href="../../custom-style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-D32414H137"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-D32414H137",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-D32414H137",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hazm.embedding" class="md-skip">
+          پرش به محتویات
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="سرتیتر">
+    <a href="../../index.html" title="هضم | کتابخانهٔ پردازش زبان فارسی" class="md-header__button md-logo" aria-label="هضم | کتابخانهٔ پردازش زبان فارسی" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            هضم | کتابخانهٔ پردازش زبان فارسی
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              embedding
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="تغییر به حالت شب"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="تغییر به حالت شب" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="تغییر به حالت روز"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="تغییر به حالت روز" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="جستجو" placeholder="جستجو" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="جستجو">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="هم‌رسانی" aria-label="هم‌رسانی" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="بازنشانی" aria-label="بازنشانی" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            راه‌اندازی جستجو
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/roshan-research/hazm" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hazm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="هدایت" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="هضم | کتابخانهٔ پردازش زبان فارسی" class="md-nav__button md-logo" aria-label="هضم | کتابخانهٔ پردازش زبان فارسی" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    هضم | کتابخانهٔ پردازش زبان فارسی
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/roshan-research/hazm" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hazm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    معرفی و نصب
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    کلاس‌ها و توابع
+  </span>
+  
+
+            </a>
+            
+              <label class="md-nav__link " for="__nav_2">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            کلاس‌ها و توابع
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="normalizer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    normalizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="informal_normalizer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    informal_normalizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stemmer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stemmer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lemmatizer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    lemmatizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sentence_tokenizer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sentence_tokenizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="word_tokenizer.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    word_tokenizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    embedding
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="embedding.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    embedding
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding" class="md-nav__link">
+    embedding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding" class="md-nav__link">
+    WordEmbedding
+  </a>
+  
+    <nav class="md-nav" aria-label="WordEmbedding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.load_model" class="md-nav__link">
+    load_model()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.doesnt_match" class="md-nav__link">
+    doesnt_match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.similarity" class="md-nav__link">
+    similarity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.nearest_words" class="md-nav__link">
+    nearest_words()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_normal_vector" class="md-nav__link">
+    get_normal_vector()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vocabs" class="md-nav__link">
+    get_vocabs()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vocab_to_index" class="md-nav__link">
+    get_vocab_to_index()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vectors" class="md-nav__link">
+    get_vectors()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vector_size" class="md-nav__link">
+    get_vector_size()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus" class="md-nav__link">
+    SentenceEmbeddingCorpus
+  </a>
+  
+    <nav class="md-nav" aria-label="SentenceEmbeddingCorpus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding" class="md-nav__link">
+    SentEmbedding
+  </a>
+  
+    <nav class="md-nav" aria-label="SentEmbedding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.load_model" class="md-nav__link">
+    load_model()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.get_sentence_vector" class="md-nav__link">
+    get_sentence_vector()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.similarity" class="md-nav__link">
+    similarity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.get_vector_size" class="md-nav__link">
+    get_vector_size()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sequence_tagger.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sequence_tagger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="token_splitter.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    token_splitter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chunker.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    chunker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pos_tagger.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pos_tagger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dependency_parser.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dependency_parser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    utils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="corpus_readers/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    پیکره‌خوان‌ها
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../samples/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    کاربردهای هضم
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../in-other-languages.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    سایر بخش‌ها
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding" class="md-nav__link">
+    embedding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding" class="md-nav__link">
+    WordEmbedding
+  </a>
+  
+    <nav class="md-nav" aria-label="WordEmbedding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.load_model" class="md-nav__link">
+    load_model()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.doesnt_match" class="md-nav__link">
+    doesnt_match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.similarity" class="md-nav__link">
+    similarity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.nearest_words" class="md-nav__link">
+    nearest_words()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_normal_vector" class="md-nav__link">
+    get_normal_vector()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vocabs" class="md-nav__link">
+    get_vocabs()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vocab_to_index" class="md-nav__link">
+    get_vocab_to_index()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vectors" class="md-nav__link">
+    get_vectors()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.WordEmbedding.get_vector_size" class="md-nav__link">
+    get_vector_size()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus" class="md-nav__link">
+    SentenceEmbeddingCorpus
+  </a>
+  
+    <nav class="md-nav" aria-label="SentenceEmbeddingCorpus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentenceEmbeddingCorpus.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding" class="md-nav__link">
+    SentEmbedding
+  </a>
+  
+    <nav class="md-nav" aria-label="SentEmbedding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.load_model" class="md-nav__link">
+    load_model()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.get_sentence_vector" class="md-nav__link">
+    get_sentence_vector()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.similarity" class="md-nav__link">
+    similarity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hazm.embedding.SentEmbedding.get_vector_size" class="md-nav__link">
+    get_vector_size()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>embedding</h1>
+
+<details class="info">
+<summary>کاربرد عملی</summary>
+<p>برای آشنایی با کاربرد این ماژول می‌توانید به بخش کاربردهای هضم مراجعه کنید.</p>
+<p>در پروژه‌های زیر از این ماژول استفاده شده است:</p>
+<ul>
+<li><a href="../samples/keyword_extraction.html">پروژهٔ استخراج کلمات کلیدی</a></li>
+</ul>
+</details>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="hazm.embedding"></a>
+  <div class="doc doc-contents first">
+  
+      <p>این ماژول شامل کلاس‌ها و توابعی برای تبدیل کلمه یا متن به برداری از اعداد است.</p>
+
+
+<div class="doc doc-children">
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="hazm.embedding.WordEmbedding" class="doc doc-heading">
+        <code>WordEmbedding</code>
+
+
+<a href="#hazm.embedding.WordEmbedding" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>این کلاس شامل توابعی برای تبدیل کلمه به برداری از اعداد است.</p>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model_type</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>نوع امبدینگ که می‌تواند یکی از مقادیر ‍<code>fasttext</code>, <code>keyedvector</code>, <code>glove</code> باشد.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_path</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td><p>مسیر فایل امبدینگ.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+<div class="doc doc-children">
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.load_model" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.load_model" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>فایل امبدینگ را بارگزاری می‌کند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر فایل امبدینگ.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.train" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">fasttext_type</span><span class="o">=</span><span class="s1">&#39;skipgram&#39;</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="s1">&#39;fasttext_word2vec_model.bin&#39;</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.train" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>یک فایل امبدینگ از نوع fasttext ترین می‌کند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="s1">&#39;dataset.txt&#39;</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">fasttext_type</span> <span class="o">=</span> <span class="s1">&#39;cbow&#39;</span><span class="p">,</span> <span class="n">dest_path</span> <span class="o">=</span> <span class="s1">&#39;fasttext_model&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>dataset_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر فایل متنی.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>workers</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>تعداد هسته درگیر برای ترین مدل.</p></td>
+          <td>
+                <code><span title="multiprocessing.cpu_count">cpu_count</span>() - 1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>vector_size</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>طول وکتور خروجی به ازای هر کلمه.</p></td>
+          <td>
+                <code>200</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>epochs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>تعداد تکرار ترین بر روی کل دیتا.</p></td>
+          <td>
+                <code>10</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_count</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.</p></td>
+          <td>
+                <code>5</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>fasttext_type</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>نوع fasttext مورد نظر برای ترین که میتواند یکی از مقادیر skipgram یا cbow را داشته باشد.</p></td>
+          <td>
+                <code>&#39;skipgram&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dest_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر مورد نظر برای ذخیره فایل امبدینگ.</p></td>
+          <td>
+                <code>&#39;fasttext_word2vec_model.bin&#39;</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.__getitem__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__getitem__</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.__getitem__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p><strong>getitem</strong>.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.doesnt_match" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">doesnt_match</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.doesnt_match" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>لیستی از کلمات را دریافت می‌کند و کلمهٔ نامرتبط را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">&#39;سلام&#39;</span> <span class="p">,</span><span class="s1">&#39;درود&#39;</span> <span class="p">,</span><span class="s1">&#39;خداحافظ&#39;</span> <span class="p">,</span><span class="s1">&#39;پنجره&#39;</span><span class="p">])</span>
+<span class="go">&#39;پنجره&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">doesnt_match</span><span class="p">([</span><span class="s1">&#39;ساعت&#39;</span> <span class="p">,</span><span class="s1">&#39;پلنگ&#39;</span> <span class="p">,</span><span class="s1">&#39;شیر&#39;</span><span class="p">])</span>
+<span class="go">&#39;ساعت&#39;</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>words</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[str]</code>
+          </td>
+          <td><p>لیست کلمات.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>کلمهٔ نامرتبط.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.similarity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.similarity" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>میزان شباهت دو کلمه را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">&#39;ایران&#39;</span><span class="p">,</span> <span class="s1">&#39;آلمان&#39;</span><span class="p">)</span>
+<span class="go">0.72231203</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">&#39;ایران&#39;</span><span class="p">,</span> <span class="s1">&#39;پنجره&#39;</span><span class="p">)</span>
+<span class="go">0.04535884</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>word1</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>کلمهٔ اول</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>word2</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>کلمهٔ دوم</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>میزان شباهت دو کلمه.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.nearest_words" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">nearest_words</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.nearest_words" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>کلمات مرتبط با یک واژه را به همراه میزان ارتباط آن برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">nearest_words</span><span class="p">(</span><span class="s1">&#39;ایران&#39;</span><span class="p">,</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[(&#39;ایران،&#39;, 0.8742443919181824), (&#39;کشور&#39;, 0.8735059499740601), (&#39;کشورمان&#39;, 0.8443885445594788), (&#39;ایران‌به&#39;, 0.8271722197532654), (&#39;خاورمیانه&#39;, 0.8266966342926025)]</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>word</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>کلمه‌ای که می‌خواهید واژگان مرتبط با آن را بدانید.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>topn</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>تعداد کلمات مرتبطی که می‌خواهید برگردانده شود.</p></td>
+          <td>
+                <code>5</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, str]]</code>
+          </td>
+          <td><p>لیستی از تاپل‌های [<code>کلمهٔ مرتبط</code>, <code>میزان ارتباط</code>].</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.get_normal_vector" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_normal_vector</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.get_normal_vector" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>بردار امبدینگ نرمالایزشدهٔ کلمه ورودی را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_normal_vector</span><span class="p">(</span><span class="s1">&#39;سرباز&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">)</span>
+<span class="go">True</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>word</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>کلمه‌ای که می‌خواهید بردار متناظر با آن را بدانید.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Type">Type</span>[<span title="numpy.ndarray">ndarray</span>]</code>
+          </td>
+          <td><p>لیست بردار نرمالایزشدهٔ مرتبط با کلمهٔ ورودی.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.get_vocabs" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_vocabs</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.get_vocabs" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>لیستی از کلمات موجود در فایل امبدینگ را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocabs</span><span class="p">()</span>
+<span class="go">[&#39;و&#39;, &#39;.&#39;, &#39;در&#39;, &#39;،&#39;, ...]</span>
+</code></pre></div>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.List">List</span>[str]</code>
+          </td>
+          <td><p>لیست کلمات موجود در فایل امبدینگ.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.get_vocab_to_index" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_vocab_to_index</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.get_vocab_to_index" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>دیکشنری برمی‌گرداند که هر کلمه موجود در فایل امبدینگ را به ایندکس آن کلمه در لیست بردارها مپ می‌کند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;word2vec.bin)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vocab_to_index</span> <span class="o">=</span> <span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocab_to_index</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span> <span class="o">=</span> <span class="n">vocab_to_index</span><span class="p">[</span><span class="s1">&#39;سلام&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vocabs</span> <span class="o">=</span> <span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocabs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vocabs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+<span class="go">&#39;سلام&#39;</span>
+</code></pre></div>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>دیکشنری که هر کلمه را به ایندکس آن مپ می‌کند.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.get_vectors" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_vectors</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.get_vectors" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>وکتورهای توصیف کننده کلمات را برمیگرداند.(عناصر این وکتور با وکتور کلمات تابع  get_vocabs هم‌اندیس هستند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;resorces/word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vectors</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vocab_to_index</span><span class="p">()[</span><span class="s1">&#39;سلام&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="n">wordEmbedding</span><span class="p">[</span><span class="s1">&#39;سلام&#39;</span><span class="p">])</span>
+<span class="go">True</span>
+</code></pre></div>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Type">Type</span>[<span title="numpy.ndarray">ndarray</span>]</code>
+          </td>
+          <td><p>تمامی وکتور بیان‌کننده کلمات.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.WordEmbedding.get_vector_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_vector_size</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.WordEmbedding.get_vector_size" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>طول وکتور بیان‌کننده هر کلمه در مدل را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span> <span class="o">=</span> <span class="n">WordEmbedding</span><span class="p">(</span><span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;resorces/word2vec.bin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordEmbedding</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span>
+<span class="go">300</span>
+</code></pre></div>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>طول وکتور بیان‌کننده کلمات.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div></div>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="hazm.embedding.SentenceEmbeddingCorpus" class="doc doc-heading">
+        <code>SentenceEmbeddingCorpus</code>
+
+
+<a href="#hazm.embedding.SentenceEmbeddingCorpus" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>SentenceEmbeddingCorpus.</p>
+
+
+
+
+<div class="doc doc-children">
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentenceEmbeddingCorpus.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentenceEmbeddingCorpus.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p><strong>init</strong>.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentenceEmbeddingCorpus.__iter__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__iter__</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.SentenceEmbeddingCorpus.__iter__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p><strong>iter</strong>.</p>
+
+  </div>
+
+</div></div>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="hazm.embedding.SentEmbedding" class="doc doc-heading">
+        <code>SentEmbedding</code>
+
+
+<a href="#hazm.embedding.SentEmbedding" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>این کلاس شامل توابعی برای تبدیل جمله به برداری از اعداد است.</p>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model_path</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td><p>مسیر فایل امبدینگ.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+<div class="doc doc-children">
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.load_model" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.load_model" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>فایل امبدینگ را بارگذاری می‌کند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;sent2vec.model&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر فایل امبدینگ.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.train" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="s1">&#39;gensim_sent2vec.model&#39;</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.train" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>یک فایل امبدینگ doc2vec ترین می‌کند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="s1">&#39;dataset.txt&#39;</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">windows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">35</span><span class="p">,</span> <span class="n">dest_path</span> <span class="o">=</span> <span class="s1">&#39;doc2vec_model&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>dataset_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر فایل متنی.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_count</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>حداقل تعداد تکرار یک کلمه برای قرارگیری آن در مدل امبدینگ.</p></td>
+          <td>
+                <code>5</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>workers</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>تعداد هسته درگیر برای ترین مدل.</p></td>
+          <td>
+                <code><span title="multiprocessing.cpu_count">cpu_count</span>() - 1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>windows</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>طول پنجره برای لحاظ کلمات اطراف یک کلمه در ترین آن.</p></td>
+          <td>
+                <code>5</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>vector_size</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>طول وکتور خروجی به ازای هر جمله.</p></td>
+          <td>
+                <code>300</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>epochs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>تعداد تکرار ترین بر روی کل دیتا.</p></td>
+          <td>
+                <code>10</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dest_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>مسیر مورد نظر برای ذخیره فایل امبدینگ.</p></td>
+          <td>
+                <code>&#39;gensim_sent2vec.model&#39;</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.__getitem__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__getitem__</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.__getitem__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p><strong>getitem</strong>.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.get_sentence_vector" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_sentence_vector</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.get_sentence_vector" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>جمله‌ای را دریافت می‌کند و بردار امبدینگ متناظر با آن را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;sent2vec.model&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">sentEmbedding</span><span class="o">.</span><span class="n">get_sentence_vector</span><span class="p">(</span><span class="s1">&#39;این متن به برداری متناظر با خودش تبدیل خواهد شد&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">)</span>
+<span class="go">True</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>sent</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>جمله‌ای که می‌خواهید بردار امبیدنگ آن را دریافت کنید.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>لیست بردار مرتبط با جملهٔ ورودی.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.similarity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">similarity</span><span class="p">(</span><span class="n">sent1</span><span class="p">,</span> <span class="n">sent2</span><span class="p">)</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.similarity" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>میزان شباهت دو جمله را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;sent2vec.model&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">sentEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">&#39;شیر حیوانی وحشی است&#39;</span><span class="p">,</span> <span class="s1">&#39;پلنگ از دیگر جانوران درنده است&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">sentEmbedding</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s1">&#39;هضم یک محصول پردازش متن فارسی است&#39;</span><span class="p">,</span> <span class="s1">&#39;شیر حیوانی وحشی است&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="go">True</span>
+</code></pre></div>
+
+  <p><strong>پارامترها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نام</th>
+        <th>نوع</th>
+        <th>توضیحات</th>
+        <th>پیش‌فرض</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>sent1</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>جملهٔ اول.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+        <tr>
+          <td><code>sent2</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>جملهٔ دوم.</p></td>
+          <td>
+              <span class="required-parameter">اجباری</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>میزان شباهت دو جمله که عددی بین <code>0</code> و<code>1</code> است.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="hazm.embedding.SentEmbedding.get_vector_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_vector_size</span><span class="p">()</span></code>
+
+<a href="#hazm.embedding.SentEmbedding.get_vector_size" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>طول وکتور بیان‌کننده هر جمله در مدل را برمی‌گرداند.</p>
+
+<p><strong>مثال‌ها:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span> <span class="o">=</span> <span class="n">SentEmbedding</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;sent2vec.model&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sentEmbedding</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span>
+<span class="go">300</span>
+</code></pre></div>
+
+  <p><strong>خروجی‌ها:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>نوع</th>
+        <th>توضیحات</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>طول وکتور بیان‌کننده جملات.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div></div>
+  </div>
+
+</div></div>
+  </div>
+
+</div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            برگشت به بالا
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © کلیهٔ حقوق این سایت محفوظ و متعلق به شرکت روشن است. &nbsp;|&nbsp;
+<a href="#__consent">تغییر تنظیمات کوکی</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/roshan-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
+
+
+  
+    
+  
+
+
+
+  
+
+
+<h4>درخواست استفاده از کوکی</h4>
+<p>با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود ببخشیم. <br> سپاس از همکاری شما. ❤️</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="github" checked>
+          <span class="task-list-indicator"></span>
+          GitHub
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">تایید</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">مدیریت تنظیمات</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs.sticky", "navigation.indexes", "navigation.prune", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.tooltips", "content.code.annotate", "content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u06a9\u067e\u06cc \u0634\u062f", "clipboard.copy": "\u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646", "search.result.more.one": "1 \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.more.other": "# \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.none": "\u0633\u0646\u062f\u06cc \u06cc\u0627\u0641\u062a \u0646\u0634\u062f", "search.result.one": "1 \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.other": "# \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.placeholder": "\u0628\u0631\u0627\u06cc \u0634\u0631\u0648\u0639 \u062c\u0633\u062a\u062c\u0648 \u062a\u0627\u06cc\u067e \u06a9\u0646\u06cc\u062f", "search.result.term.missing": "\u0645\u0648\u062c\u0648\u062f \u0646\u06cc\u0633\u062a", "select.version": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0648\u06cc\u0631\u0627\u06cc\u0634"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

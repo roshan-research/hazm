@@ -1,40 +1,85 @@
+# ruff: noqa
+"""entry point for the package."""
 
-from .WordTokenizer import WordTokenizer
-from .SentenceTokenizer import SentenceTokenizer
-from .TokenSplitter import TokenSplitter
-from .HamshahriReader import HamshahriReader
-from .PersicaReader import PersicaReader
-from .BijankhanReader import BijankhanReader
-from .PeykareReader import PeykareReader
-from .VerbValencyReader import VerbValencyReader
-from .DadeganReader import DadeganReader
-from .TreebankReader import TreebankReader
-from .WikipediaReader import WikipediaReader
-from .SentiPersReader import SentiPersReader
-from .DegarbayanReader import DegarbayanReader
-from .QuranCorpusReader import QuranCorpusReader
-from .TNewsReader import TNewsReader
-from .MirasTextReader import MirasTextReader
-from .Normalizer import Normalizer
-from .InformalNormalizer import InformalNormalizer, InformalLemmatizer
-from .Stemmer import Stemmer
-from .Lemmatizer import Lemmatizer
-from .SequenceTagger import SequenceTagger, IOBTagger
-from .POSTagger import POSTagger, StanfordPOSTagger
-from .Chunker import Chunker, RuleBasedChunker, tree2brackets
-from .DependencyParser import DependencyParser, MaltParser, TurboParser
+from typing import List
+
+from hazm.utils import default_verbs
+from hazm.utils import default_words
+from hazm.utils import stopwords_list
+from hazm.utils import words_list
+from hazm.utils import maketrans
+from hazm.utils import regex_replace
+from hazm.utils import words_list
+from hazm.utils import NUMBERS
+from hazm.utils import informal_verbs
+from hazm.utils import informal_words
+from hazm.utils import abbreviations
+
+from hazm.sequence_tagger import IOBTagger
+from hazm.sequence_tagger import SequenceTagger
+
+from hazm.pos_tagger import POSTagger
+
+from hazm.stemmer import Stemmer
+from hazm.word_tokenizer import WordTokenizer
+
+from hazm.lemmatizer import Conjugation
+from hazm.lemmatizer import Lemmatizer
+
+from hazm.normalizer import Normalizer
+
+from hazm.chunker import Chunker
+from hazm.chunker import RuleBasedChunker
+from hazm.chunker import tree2brackets
+
+from hazm.sentence_tokenizer import SentenceTokenizer
+
+def sent_tokenize(text: str) -> List[str]:
+    """Sentence Tokenizer."""
+    if not hasattr(sent_tokenize, "tokenizer"):
+        sent_tokenize.tokenizer = SentenceTokenizer()
+    return sent_tokenize.tokenizer.tokenize(text)
 
 
-from .utils import words_list, stopwords_list
+def word_tokenize(sentence: str) -> List[str]:
+    """Word Tokenizer."""
+    if not hasattr(word_tokenize, "tokenizer"):
+        word_tokenize.tokenizer = WordTokenizer()
+    return word_tokenize.tokenizer.tokenize(sentence)
+
+from hazm.corpus_readers import PeykareReader
+from hazm.corpus_readers import BijankhanReader
+from hazm.corpus_readers import DadeganReader
+from hazm.corpus_readers import UniversalDadeganReader
+from hazm.corpus_readers import DegarbayanReader
+from hazm.corpus_readers import HamshahriReader
+from hazm.corpus_readers import MirasTextReader
+from hazm.corpus_readers import PersicaReader
+from hazm.corpus_readers import QuranReader
+from hazm.corpus_readers import SentiPersReader
+from hazm.corpus_readers import TNewsReader
+from hazm.corpus_readers import TreebankReader
+from hazm.corpus_readers import VerbValencyReader
+from hazm.corpus_readers import PersianPlainTextReader
+from hazm.corpus_readers import WikipediaReader
+from hazm.corpus_readers import MizanReader
+from hazm.corpus_readers import NerReader
+from hazm.corpus_readers import NaabReader
+from hazm.corpus_readers import ArmanReader
+from hazm.corpus_readers import FaSpellReader
+from hazm.corpus_readers import PnSummaryReader
 
 
-def sent_tokenize(text):
-	if not hasattr(sent_tokenize, 'tokenizer'):
-		sent_tokenize.tokenizer = SentenceTokenizer()
-	return sent_tokenize.tokenizer.tokenize(text)
+from hazm.dependency_parser import DependencyParser
+from hazm.dependency_parser import MaltParser
+from hazm.dependency_parser import TurboParser
+
+from hazm.embedding import SentEmbedding
+from hazm.embedding import WordEmbedding
+
+from hazm.informal_normalizer import InformalLemmatizer
+from hazm.informal_normalizer import InformalNormalizer
+
+from hazm.token_splitter import TokenSplitter
 
 
-def word_tokenize(sentence):
-	if not hasattr(word_tokenize, 'tokenizer'):
-		word_tokenize.tokenizer = WordTokenizer()
-	return word_tokenize.tokenizer.tokenize(sentence)

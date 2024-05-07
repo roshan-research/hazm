@@ -1,0 +1,38 @@
+name: Build docs
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+        
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+          virtualenvs-in-project: false
+          
+      - name: Install requirements
+        run: |
+          poetry lock
+          poetry install --with docs
+
+      - name: Build docs
+        run: mkdocs build --clean
+
+      - name: Push back changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "update docs"
+          commit_user_name: "documentation-bot"
+          commit_user_email: "documentation-bot@users.noreply.github.com"

@@ -1,0 +1,45 @@
+name: Run tests
+
+on:
+    workflow_dispatch:
+    push:
+        branches: [master]
+        paths: ["**.py", "pyproject.toml"]
+    pull_request:
+        branches: [master]
+
+jobs:
+    build:
+        runs-on: ubuntu-20.04
+        strategy:
+            matrix:
+                python-versions: ["3.8", "3.9", "3.10", "3.11"]               
+
+        steps:
+            - name: Checkout master
+              uses: actions/checkout@v4
+
+            - name: Install Python ${{ matrix.python-versions }}
+              uses: actions/setup-python@v4
+              with:
+                  python-version: ${{ matrix.python-versions }}
+
+            - name: Install poetry
+              run: curl -sSL https://install.python-poetry.org | python3 -
+
+            - name: Install dependencies
+              run: |
+                poetry lock
+                poetry install --with dev            
+
+            - uses: actions/setup-java@v3
+              with:
+                distribution: 'oracle'
+                java-version: '17'
+
+            - name: Download test files
+              run: |                  
+                  git clone https://github.com/roshan-research/hazm-test.git tests/files/
+
+            - name: Run tests
+              run: poetry run poe test

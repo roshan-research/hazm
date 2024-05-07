@@ -1,0 +1,171 @@
+# mkdocs.yml
+site_name: هضم | کتابخانهٔ پردازش زبان فارسی
+site_description: کتابخانه‌ای پایتونی برای پردازش زبان فارسی
+site_author: روشن
+site_url: https://www.roshan-ai.ir/hazm/
+repo_url: https://github.com/roshan-research/hazm
+
+remote_branch: master
+repo_name: hazm
+
+docs_dir: documentation
+site_dir: docs/docs
+
+copyright: |
+  © کلیهٔ حقوق این سایت محفوظ و متعلق به شرکت روشن است. &nbsp;|&nbsp;
+  <a href="#__consent">تغییر تنظیمات کوکی</a>
+
+theme:
+  name: material
+  custom_dir: documentation/theme
+  favicon: assets/favicon.png
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: تغییر به حالت شب
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: تغییر به حالت روز
+  logo: assets/logo.svg
+  font:
+    code: Fira Code
+  icon:
+    repo: fontawesome/brands/github
+  language: custom
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.prune
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tooltips
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+
+plugins:
+  - macros:
+      module_name: mkdocs_macros
+  - autorefs
+  - mkdocstrings:
+      custom_templates: documentation/templates
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+  - search
+  - tags
+  - glightbox
+  - offline
+
+extra_css:
+  - hint.min.css
+  - custom-style.css
+
+nav:
+  - معرفی و نصب: index.md
+  - کلاس‌ها و توابع:
+      - content/hazm/index.md
+      - normalizer: content/hazm/normalizer.md
+      - informal_normalizer: content/hazm/informal_normalizer.md
+      - stemmer: content/hazm/stemmer.md
+      - lemmatizer: content/hazm/lemmatizer.md
+      - sentence_tokenizer: content/hazm/sentence_tokenizer.md
+      - word_tokenizer: content/hazm/word_tokenizer.md
+      - embedding: content/hazm/embedding.md
+      - sequence_tagger: content/hazm/sequence_tagger.md
+      - token_splitter: content/hazm/token_splitter.md
+      - chunker: content/hazm/chunker.md
+      - pos_tagger: content/hazm/pos_tagger.md
+      - dependency_parser: content/hazm/dependency_parser.md
+      - utils: content/utils.md
+      - پیکره‌خوان‌ها:
+          - content/hazm/corpus_readers/index.md
+          - mirastext_reader: content/hazm/corpus_readers/mirastext_reader.md
+          - bijankhan_reader: content/hazm/corpus_readers/bijankhan_reader.md
+          - dadegan_reader: content/hazm/corpus_readers/dadegan_reader.md
+          - universal_dadegan_reader: content/hazm/corpus_readers/universal_dadegan_reader.md
+          - degarbayan_reader: content/hazm/corpus_readers/degarbayan_reader.md
+          - hamshahri_reader: content/hazm/corpus_readers/hamshahri_reader.md
+          - persica_reader: content/hazm/corpus_readers/persica_reader.md
+          - persian_plain_text_reader: content/hazm/corpus_readers/persian_plain_text_reader.md
+          - peykare_reader: content/hazm/corpus_readers/peykare_reader.md
+          - quran_reader: content/hazm/corpus_readers/quran_reader.md
+          - sentiPers_reader: content/hazm/corpus_readers/sentipers_reader.md
+          - tnews_reader: content/hazm/corpus_readers/tnews_reader.md
+          - treebank_reader: content/hazm/corpus_readers/treebank_reader.md
+          - verbvalency_reader: content/hazm/corpus_readers/verbvalency_reader.md
+          - Wikipedia_reader: content/hazm/corpus_readers/wikipedia_reader.md
+          - mizan_reader: content/hazm/corpus_readers/mizan_reader.md
+          - ner_reader: content/hazm/corpus_readers/ner_reader.md
+          - naab_reader: content/hazm/corpus_readers/naab_reader.md
+          - arman_reader: content/hazm/corpus_readers/arman_reader.md
+          - faspell_reader: content/hazm/corpus_readers/faspell_reader.md
+          - pn_summary_reader: content/hazm/corpus_readers/pn_summary_reader.md
+
+  - کاربردهای هضم:
+      - content/samples/index.md
+      - استخراج کلمات کلیدی: content/samples/keyword_extraction.md
+
+  - سایر بخش‌ها:
+      - هضم در زبان‌های دیگر: content/in-other-languages.md
+
+extra:
+  analytics:
+    provider: google
+    property: G-D32414H137
+
+  repo_url: https://github.com/roshan-research/hazm
+  consent:
+    title: درخواست استفاده از کوکی
+    description: >-
+      با پذیرش کوکی به ما اجازه می‌دهید تا با بررسی تعامل شما با سایت و شناسایی بازدیدهای بعدی‌‌تان، کیفیت مستندات را بهبود ببخشیم.
+      <br>
+      سپاس از همکاری شما. ❤️
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/roshan-research
+
+extra_javascript:
+  - https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js
+
+markdown_extensions:
+  - markdown.extensions.abbr
+  - markdown.extensions.admonition
+  - markdown.extensions.footnotes
+  - markdown.extensions.tables
+  - markdown.extensions.attr_list
+  - markdown.extensions.def_list
+  - markdown.extensions.md_in_html
+  - markdown.extensions.toc:
+      permalink: true
+
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.magiclink
+  - pymdownx.keys
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.b64
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.striphtml
+  - pymdownx.tabbed
+  - pymdownx.tilde
+  - pymdownx.arithmatex
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
