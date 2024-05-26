@@ -29,7 +29,7 @@ keywords = ["nlp", "persian nlp", "persian"]
 [tool.poetry.dependencies]
 python= ">=3.9"
 nltk="^3.8.1"
-gensim="^4.3.2"
+gensim={git = "https://github.com/piskvorky/gensim.git", rev ="da2f388"}
 python-crfsuite="^0.9.9"
 numpy = "^1.26.4"
 scikit-learn = "^1.2.2"
