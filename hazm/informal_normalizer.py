@@ -92,14 +92,13 @@ class InformalNormalizer(Normalizer):
             self.iword_map = dict([x.strip().split(" ", 1) for x in wf])
 
         self.words = set()
-        if self.seperation_flag:
-            self.words.update(list(self.iword_map.keys()))
-            self.words.update(list(self.iword_map.values()))
-            self.words.update(list(self.iverb_map.keys()))
-            self.words.update(list(self.iverb_map.values()))
-            self.words.update(self.lemmatizer.words)
-            self.words.update(list(self.lemmatizer.verbs.keys()))
-            self.words.update(list(self.lemmatizer.verbs.values()))
+        self.words.update(list(self.iword_map.keys()))
+        self.words.update(list(self.iword_map.values()))
+        self.words.update(list(self.iverb_map.keys()))
+        self.words.update(list(self.iverb_map.values()))
+        self.words.update(self.lemmatizer.words)
+        self.words.update(list(self.lemmatizer.verbs.keys()))
+        self.words.update(list(self.lemmatizer.verbs.values()))
 
     def split_token_words(self: "InformalNormalizer", token: str) -> str:
         """Inserts spaces where necessary in the token.
@@ -119,6 +118,10 @@ class InformalNormalizer(Normalizer):
         def shekan(token):
             res = [""]
             for i in token:
+                if i == "‌":
+                    if res[-1] != "":
+                        res.append("")
+                    continue
                 res[-1] += i
                 if i in {"ا", "د", "ذ", "ر", "ز", "ژ", "و", *list(NUMBERS)}:
                     res.append("")
@@ -135,14 +138,64 @@ class InformalNormalizer(Normalizer):
             for i in up:
                 res.append([lst[0], *i])
                 res.append([lst[0] + i[0], *i[1:]])
-            res.sort(key=len)
+            res.sort(key=len, reverse=True)
             return res
 
         token = re.sub(r"(.)\1{2,}", r"\1", token)
+        if "‌" in token:
+            return " ".join(
+                self.split_token_words(part)
+                for part in token.split("‌")
+            )
+        if re.search(r"\s", token):
+            return re.sub(
+                r"\S+",
+                lambda m: self.split_token_words(m.group(0)),
+                token,
+            )
+
         ps = perm(shekan(token))
-        for c in ps:
-            if {self.ilemmatizer.lemmatize(x) for x in c}.issubset(self.words):
-                return " ".join(c)
+        valid_candidates = [
+            c
+            for c in ps
+            if {self.ilemmatizer.lemmatize(x) for x in c}.issubset(self.words)
+        ]
+        if valid_candidates:
+            allowed_short = {
+                "تو",
+                "را",
+                "او",
+                "ما",
+                "من",
+                "با",
+                "در",
+                "از",
+                "به",
+                "هم",
+                "هر",
+                "که",
+                "یا",
+                "تا",
+                "آن",
+                "این",
+            }
+
+            def score(candidate):
+                one_letter = sum(1 for x in candidate if len(x) == 1)
+                two_letter_penalty = sum(
+                    10
+                    for x in candidate
+                    if len(x) == 2 and x not in allowed_short
+                )
+                return (
+                    len(candidate) * 10
+                    + sum(len(x) ** 2 for x in candidate)
+                    - one_letter * 100
+                    - two_letter_penalty
+                )
+
+            best = max(valid_candidates, key=score)
+            return " ".join(best)
         return token
 
     def normalized_word(self: "InformalNormalizer", word: str) -> list[str]:
