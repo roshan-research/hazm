@@ -1,5 +1,7 @@
 import pytest
 
+from hazm.informal_normalizer import InformalNormalizer
+
 
 class TestNormazlier:
 
@@ -136,3 +138,11 @@ class TestNormazlier:
 
     def test_token_spacing(self: "TestNormazlier", normalizer, text, expected):
         assert normalizer.token_spacing(text) == expected
+
+    @pytest.mark.parametrize(("token", "expected"), [
+        ("تورادوست دارم", "تو را دوست دارم"),
+        ("تورادوست‌دارم", "تو را دوست دارم"),
+    ])
+    def test_split_token_words(self: "TestNormazlier", token, expected):
+        normalizer = InformalNormalizer()
+        assert normalizer.split_token_words(token) == expected
