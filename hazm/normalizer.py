@@ -1,6 +1,7 @@
 """This module contains classes and functions for text normalization."""
 
 import re
+from typing import Final
 
 from hazm.api import NormalizerProtocol
 from hazm.constants import AFFIX_SPACING_PATTERNS
@@ -23,6 +24,10 @@ from hazm.word_tokenizer import WordTokenizer
 
 class Normalizer(NormalizerProtocol):
     """This class includes functions for text normalization."""
+
+    # Non-left-joining letters (isolated form) in Persian/Arabic
+    # These letters don't connect to the next letter, so ZWNJ is not needed before suffixes
+    _NON_LEFT_JOINING_LETTERS: Final[tuple[str]] = ("ا", "د", "ذ", "ر", "ز", "ژ", "و")
 
     def __init__(
         self,
@@ -362,6 +367,7 @@ class Normalizer(NormalizerProtocol):
         result: list[str] = []
         for t, token in enumerate(tokens):
             joined = False
+            use_zwnj = True
 
             if result:
                 token_pair = result[-1] + "‌" + token
@@ -380,9 +386,16 @@ class Normalizer(NormalizerProtocol):
 
                 elif self._words and token in SUFFIXES and result[-1] in self._words:
                     joined = True
+                    # Only use ZWNJ if the last character is left-joining
+                    # Non-left-joining letters (ا, د, ذ, ر, ز, ژ, و) already create a visual gap
+                    if result[-1] and result[-1][-1] in self._NON_LEFT_JOINING_LETTERS:
+                        use_zwnj = False
 
             if joined:
-                result[-1] = token_pair
+                if use_zwnj:
+                    result[-1] = result[-1] + "‌" + token
+                else:
+                    result[-1] = result[-1] + token
             else:
                 result.append(token)
 
