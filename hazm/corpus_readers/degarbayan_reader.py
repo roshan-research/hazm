@@ -131,7 +131,7 @@ class DegarbayanReader:
             except Exception as e:
                 print("error in reading", filename, e, file=sys.stderr)
         else:
-            print("error in reading file", filename, e, file=sys.stderr)  # noqa: F821
+            print("error in reading file", filename, file=sys.stderr)
             msg = "error in reading file"
             raise FileNotFoundError(msg, filename)
 

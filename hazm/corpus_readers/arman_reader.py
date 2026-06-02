@@ -24,7 +24,10 @@ class ArmanReader:
             subset: The dataset subset: 'test' or 'train'. Defaults to 'train'.
         """
         self._corpus_folder = corpus_folder
-        self._file_paths = Path(corpus_folder).glob(f"{subset}*.txt")
+        # Materialize the glob into a list so sents() can be called more than
+        # once; a bare glob() returns a one-shot iterator that yields nothing on
+        # the second pass.
+        self._file_paths = sorted(Path(corpus_folder).glob(f"{subset}*.txt"))
 
 
     def sents(self: "ArmanReader") -> Iterator[list[tuple[str,str]]]:
@@ -45,7 +48,7 @@ class ArmanReader:
                 for line in lines:
                     line = line.strip()
                     if line:
-                        token, label = line.split(" ")
+                        token, label = line.split()
                         sentence.append((token, label))
                     elif sentence:
                         yield sentence

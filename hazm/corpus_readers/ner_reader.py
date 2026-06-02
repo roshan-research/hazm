@@ -22,7 +22,9 @@ class NerReader:
             corpus_folder: Path to the folder containing the corpus files.
         """
         self._corpus_folder = corpus_folder
-        self._file_paths = Path(corpus_folder).glob("*.txt")
+        # Materialize the glob into a list so sents() can be iterated more than
+        # once (a bare glob() is a one-shot iterator).
+        self._file_paths = sorted(Path(corpus_folder).glob("*.txt"))
 
 
     def sents(self: "NerReader") -> Iterator[list[tuple[str,str]]]:

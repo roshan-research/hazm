@@ -25,7 +25,9 @@ class PnSummaryReader:
             corpus_folder: Path to the folder containing the corpus files.
             subset: The dataset subset; can be `test`, `train`, or `dev`.
         """
-        self._file_paths=Path(corpus_folder).glob(f"{subset}*.csv")
+        # Materialize the glob into a list so docs() can be iterated more than
+        # once (a bare glob() is a one-shot iterator).
+        self._file_paths = sorted(Path(corpus_folder).glob(f"{subset}*.csv"))
 
     def docs(self: "PnSummaryReader") -> Iterator[tuple[str, str, str, str, str, list[str], str, str]]:
         """Yields news articles one by one.
