@@ -20,6 +20,12 @@ from hazm.utils import maketrans
 from hazm.utils import regex_replace
 from hazm.word_tokenizer import WordTokenizer
 
+# Build the character translation tables once at import time. They are derived
+# from immutable module constants and are identical for every Normalizer
+# instance, so there is no need to rebuild them on each call.
+_TRANSLATION_TABLE = maketrans(TRANSLATION_SRC, TRANSLATION_DST)
+_NUMBERS_TABLE = maketrans(NUMBERS_SRC, NUMBERS_DST)
+
 
 class Normalizer(NormalizerProtocol):
     """This class includes functions for text normalization."""
@@ -94,8 +100,7 @@ class Normalizer(NormalizerProtocol):
         Returns:
             The normalized text.
         """
-        translations = maketrans(TRANSLATION_SRC, TRANSLATION_DST)
-        text = text.translate(translations)
+        text = text.translate(_TRANSLATION_TABLE)
 
         if self._persian_style:
             text = self.persian_style(text)
@@ -285,17 +290,18 @@ class Normalizer(NormalizerProtocol):
         Returns:
             The text with Persian numbers.
         """
-        translations = maketrans(NUMBERS_SRC, NUMBERS_DST)
-        return text.translate(translations)
+        return text.translate(_NUMBERS_TABLE)
 
     def unicodes_replacement(self, text: str) -> str:
         """Replaces certain Unicode characters with normalized equivalents.
 
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
-            'پیامبر اکرم '
-            >>> normalizer.remove_specials_chars('')
+            >>> normalizer.unicodes_replacement('﷽')
+            'بسم الله الرحمن الرحیم'
+            >>> normalizer.unicodes_replacement('ﷲ')
+            'الله'
+            >>> normalizer.unicodes_replacement('')
             ''
 
         Args:
