@@ -121,7 +121,9 @@ convention = "google"
 target-version = ['py312']
 preview = true
 
-filterwarnings = "ignore::DeprecationWarning"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
 disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
 
 [tool.poe.tasks]
