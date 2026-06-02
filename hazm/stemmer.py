@@ -50,6 +50,11 @@ class Stemmer(StemmerI):
                 if len(end) == 1 and len(word) - len(end) < 3:
                     continue
 
+                # Avoid stripping a multi-character suffix when doing so would
+                # leave an empty or single-character stem (e.g. 'ها' -> '').
+                if len(word) - len(end) < 2:
+                    continue
+
                 word = word[:-len(end)]
                 break
 
