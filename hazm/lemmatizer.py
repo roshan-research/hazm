@@ -1969,7 +1969,11 @@ class Lemmatizer(LemmatizerProtocol):
             self.verbs["است"] = "#است"
             for verb in tokenizer.verbs:
                 for tense in self.conjugation.get_all(verb):
-                    self.verbs[tense] = verb
+                    # Skip empty/single-character conjugations (e.g. produced by
+                    # the empty past-root entry '#هست') that would otherwise map
+                    # spurious keys such as '' or 'م' to a verb lemma.
+                    if len(tense) >= 2:
+                        self.verbs[tense] = verb
             if joined_verb_parts:
                 for verb in tokenizer.verbs:
                     bon = verb.split("#")[0]
@@ -2006,6 +2010,9 @@ class Lemmatizer(LemmatizerProtocol):
         Returns:
             The lemma of the word.
         """
+        if not word:
+            return word
+
         if not pos and word in self.words:
             return word
 

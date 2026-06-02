@@ -32,8 +32,8 @@ class WordTokenizer(TokenizerI, TokenizerProtocol):
         replace_ids: If `True`, replaces IDs with the word `ID`.
         replace_emails: If `True`, replaces email addresses with the word `EMAIL`.
         replace_numbers: If `True`, replaces decimal numbers with `NUMF` and
-            integers with `NUM`. For non-decimal numbers, the number of digits
-            is appended to `NUM`.
+            each integer with `NUM` followed by its digit count (for example,
+            `123` becomes `NUM3`).
         replace_hashtags: If `True`, replaces the `#` symbol with `TAG`.
     """
 
@@ -131,7 +131,7 @@ class WordTokenizer(TokenizerI, TokenizerProtocol):
         }
 
         with Path(verbs_file).open(encoding="utf-8") as file:
-            self.verbs = list(reversed([verb.strip() for verb in file if verb]))
+            self.verbs = list(reversed([verb.strip() for verb in file if verb.strip()]))
             self.bons = {verb.split("#")[0] for verb in self.verbs}
             self.verbe = set(
                 [bon + "ه" for bon in self.bons]
@@ -244,7 +244,7 @@ class WordTokenizer(TokenizerI, TokenizerProtocol):
 
         result = [""]
         for token in reversed(tokens):
-            if token in self.before_verbs or (
+            if (result[-1] and token in self.before_verbs) or (
                 result[-1] in self.after_verbs and token in self.verbe
             ):
                 result[-1] = f"{token}_{result[-1]}"

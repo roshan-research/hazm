@@ -55,7 +55,7 @@ AFFIX_SPACING_PATTERNS = [
 
 PERSIAN_STYLE_PATTERNS = [
     (r'"([^\n"]+)"', r"«\1»"),
-    (r"([\d+])\.([\d+])", r"\1٫\2"),
+    (r"(\d)\.(\d)", r"\1٫\2"),
     (r" ?\.\.\.", " …"),
 ]
 

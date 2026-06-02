@@ -129,10 +129,10 @@ class POSTagger(SequenceTagger, TaggerProtocol):
             "is_first": index == 0,
             "is_last": index == len(sentence) - 1,
             # *ix
-            "prefix-1": word[0],
+            "prefix-1": word[:1],
             "prefix-2": word[:2],
             "prefix-3": word[:3],
-            "suffix-1": word[-1],
+            "suffix-1": word[-1:],
             "suffix-2": word[-2:],
             "suffix-3": word[-3:],
             # word

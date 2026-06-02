@@ -113,7 +113,8 @@ def past_roots() -> str:
     roots = []
     for verb in verbs_list():
         split = verb.split("#")
-        roots.append(split[0])
+        if split and split[0]:
+            roots.append(split[0])
     return "|".join(roots)
 
 def present_roots() -> str:
@@ -130,7 +131,8 @@ def present_roots() -> str:
     roots = []
     for verb in verbs_list():
         split = verb.split("#")
-        roots.append(split[1])
+        if len(split) >= 2:
+            roots.append(split[1])
     return "|".join(roots)
 
 def regex_replace(patterns: list[tuple[str, str]], text: str) -> str:

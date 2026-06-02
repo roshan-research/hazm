@@ -22,7 +22,9 @@ class NaabReader:
             corpus_folder: Path to the folder containing the corpus files.
             subset: The dataset subset: `test` or `train`.
         """
-        self._file_paths=Path(corpus_folder).glob(f"{subset}*.txt")
+        # Materialize the glob into a list so sents() can be iterated more than
+        # once (a bare glob() is a one-shot iterator).
+        self._file_paths = sorted(Path(corpus_folder).glob(f"{subset}*.txt"))
 
     def sents(self: "NaabReader") -> Iterator[str]:
         """Yields sentences from the corpus one by one.

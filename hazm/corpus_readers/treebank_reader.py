@@ -255,7 +255,6 @@ class TreebankReader:
 
         for doc in self.docs():
             for s in doc.getElementsByTagName("S"):
-                traverse(s)
                 yield traverse(s)
 
     def sents(self: "TreebankReader") -> Iterator[list[tuple[str, str]]]:
