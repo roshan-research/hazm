@@ -134,7 +134,12 @@ class MaltParser(NLTKMaltParser):
                 text=True,
                 cwd=str(temp_path),
             )
-            stdout, stderr = process.communicate()
+            try:
+                stdout, stderr = process.communicate()
+            finally:
+                if process.poll() is None:
+                    process.terminate()
+                    process.wait()
 
             if process.returncode != 0:
                 msg = f"MaltParser execution failed.\nCMD: {' '.join(cmd)}\nSTDOUT: {stdout}\nSTDERR: {stderr}"

@@ -40,7 +40,7 @@ def maketrans(a: str, b: str) -> dict[int, Any]:
     Returns:
         A dictionary mapping character ordinals to their replacements.
     """
-    return {ord(a): b for a, b in zip(a, b, strict=False)}
+    return {ord(src): dst for src, dst in zip(a, b, strict=False)}
 
 def words_list(words_file: str | Path = default_words) -> list[tuple[str, int, tuple[str, ...]]]:
     """Returns a list of words from the specified file.
@@ -60,11 +60,14 @@ def words_list(words_file: str | Path = default_words) -> list[tuple[str, int, t
 
     with file_path.open(encoding="utf-8") as file:
         items = [line.strip().split("\t") for line in file]
-        return [
-            (item[0], int(item[1]), tuple(item[2].split(",")))
-            for item in items
-            if len(item) == 3
-        ]
+        results = []
+        for item in items:
+            if len(item) == 3:
+                try:
+                    results.append((item[0], int(item[1]), tuple(item[2].split(","))))
+                except ValueError:
+                    continue
+        return results
 
 def stopwords_list(stopwords_file: str | Path = default_stopwords) -> list[str]:
     """Returns a sorted list of stopwords.

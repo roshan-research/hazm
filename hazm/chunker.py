@@ -417,9 +417,8 @@ class SpacyChunker(Chunker):
             logger.info("Setting up training configuration...")
             self.train_config_file = train_config_path
             subprocess.run(
-                f"python -m spacy init fill-config {base_config_file} {train_config_path}",
+                ["python", "-m", "spacy", "init", "fill-config", str(base_config_file), str(train_config_path)],
                 check=False,
-                shell=True,
             )
         else:
             self.train_config_file = train_config_path
@@ -441,11 +440,12 @@ class SpacyChunker(Chunker):
         train_data = f"{data_directory}/train.spacy"
         test_data = f"{data_directory}/test.spacy"
 
-        cmd = f"python -m spacy train {self.train_config_file} --output ./{output_dir} --paths.train ./{train_data} --paths.dev ./{test_data}"
+        cmd = ["python", "-m", "spacy", "train", str(self.train_config_file),
+               "--output", f"./{output_dir}", "--paths.train", f"./{train_data}", "--paths.dev", f"./{test_data}"]
         if self.gpu_availability:
-            cmd += f" --gpu-id {self.gpu_id}"
+            cmd.extend(["--gpu-id", str(self.gpu_id)])
 
-        subprocess.run(cmd, check=False, shell=True)
+        subprocess.run(cmd, check=False)
         self.model_path = f"{output_dir}/model-last"
 
         if test_dataset:

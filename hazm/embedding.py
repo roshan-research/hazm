@@ -245,11 +245,12 @@ class SentenceEmbeddingCorpus:
     def __init__(self, data_path: str) -> None:
         _check_embeddings_deps()
         self.data_path = data_path
+        self._normalizer = Normalizer()
 
     def __iter__(self) -> Iterator[TaggedDocument]:
         for i, list_of_words in enumerate(smart_open.open(self.data_path, encoding="utf-8")):
             yield TaggedDocument(
-                word_tokenize(Normalizer().normalize(list_of_words)),
+                word_tokenize(self._normalizer.normalize(list_of_words)),
                 [i],
             )
 
@@ -338,7 +339,7 @@ class SentEmbedding:
         model = Doc2Vec(min_count=min_count, window=windows, vector_size=vector_size, workers=workers)
         model.build_vocab(doc)
         model.train(doc, total_examples=model.corpus_count, epochs=epochs, callbacks=[CallbackSentEmbedding()])
-        model.dv.vectors = np.array([[]])
+        model.dv.vectors = np.empty((0, vector_size))
         self.model = model
         self._update_word_embedding()
         model.save(dest_path)

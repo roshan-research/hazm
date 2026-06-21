@@ -293,9 +293,11 @@ class Normalizer(NormalizerProtocol):
 
         Examples:
             >>> normalizer = Normalizer()
-            >>> normalizer.remove_specials_chars('پیامبر اکرم ﷺ')
-            'پیامبر اکرم '
-            >>> normalizer.remove_specials_chars('')
+            >>> normalizer.unicodes_replacement('ﷲ')
+            'الله'
+            >>> normalizer.unicodes_replacement('﷼')
+            'ریال'
+            >>> normalizer.unicodes_replacement('')
             ''
 
         Args:
