@@ -1623,12 +1623,15 @@ class Conjugation:
         """Generates all conjugated forms of the verb.
 
         Args:
-            verb: The verb to be conjugated.
+            verb: The verb to be conjugated in format 'past#present'.
 
         Returns:
             A list of all conjugated verb forms.
         """
-        ri, rii = verb.split("#")
+        parts = verb.split("#")
+        if len(parts) != 2:
+            raise ValueError(f"Invalid verb format: '{verb}'. Expected 'past#present'.")
+        ri, rii = parts
         infinitive = [ri + "ن"]
         result = [infinitive]
 

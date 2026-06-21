@@ -477,16 +477,16 @@ class SpacyPOSTagger(POSTagger):
         if not use_direct_config:
             logger.info("Setting up training configuration...")
             subprocess.run(
-                f"python -m spacy init fill-config {base_config_file} {train_config_path}",
+                ["python", "-m", "spacy", "init", "fill-config", str(base_config_file), str(train_config_path)],
                 check=False,
-                shell=True,
             )
 
-        cmd = f"python -m spacy train {train_config_path} --output ./{output_dir} --paths.train ./{train_data} --paths.dev ./{test_data}"
+        cmd = ["python", "-m", "spacy", "train", str(train_config_path),
+               "--output", f"./{output_dir}", "--paths.train", f"./{train_data}", "--paths.dev", f"./{test_data}"]
         if self.gpu_availability:
-            cmd += f" --gpu-id {self.gpu_id}"
+            cmd.extend(["--gpu-id", str(self.gpu_id)])
 
-        subprocess.run(cmd, check=False, shell=True)
+        subprocess.run(cmd, check=False)
         self.model_path = f"{output_dir}/model-last"
 
         if test_dataset:
