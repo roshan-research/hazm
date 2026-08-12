@@ -6,6 +6,7 @@ from hazm.api import NormalizerProtocol
 from hazm.constants import AFFIX_SPACING_PATTERNS
 from hazm.constants import DIACRITICS_PATTERNS
 from hazm.constants import EXTRA_SPACE_PATTERNS
+from hazm.constants import NON_LEFT_JOINING
 from hazm.constants import NUMBERS_DST
 from hazm.constants import NUMBERS_SRC
 from hazm.constants import PERSIAN_STYLE_PATTERNS
@@ -342,6 +343,8 @@ class Normalizer(NormalizerProtocol):
             >>> normalizer = Normalizer()
             >>> normalizer.token_spacing(['کتاب', 'ها'])
             ['کتاب‌ها']
+            >>> normalizer.token_spacing(['بندر', 'ها'])
+            ['بندرها']
             >>> normalizer.token_spacing(['او', 'می', 'رود'])
             ['او', 'می‌رود']
             >>> normalizer.token_spacing(['ماه', 'می', 'سال', 'جدید'])
@@ -380,6 +383,11 @@ class Normalizer(NormalizerProtocol):
 
                 elif self._words and token in SUFFIXES and result[-1] in self._words:
                     joined = True
+
+                    # A zwnj after a non-left-joining letter is invisible, so
+                    # the suffix is attached directly instead.
+                    if result[-1][-1] in NON_LEFT_JOINING:
+                        token_pair = result[-1] + token
 
             if joined:
                 result[-1] = token_pair

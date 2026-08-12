@@ -7,6 +7,11 @@ NUMBERS_DST = "۰۱۲۳۴۵۶۷۸۹٪۰۱۲۳۴۵۶۷۸۹"
 PUNC_AFTER = r"\.:!،؛؟»\]\)\}"
 PUNC_BEFORE = r"«\[\(\{"
 
+# Letters that do not join to the letter following them. After one of these the
+# next glyph already starts in its isolated form, so a ZWNJ there produces no
+# visual change and only adds an invisible character to the text.
+NON_LEFT_JOINING = "اآأإٱدذرزژوةؤء"
+
 EXTRA_SPACE_PATTERNS = [
     (r"^ +| +$", ""),
     (r" {2,}", " "),  # remove extra spaces
@@ -36,6 +41,20 @@ PUNCTUATION_SPACING_PATTERNS = [
 AFFIX_SPACING_PATTERNS = [
     (r"([^ ]ه) ی ", r"\1‌ی "),  # fix ی space
     (r"(^| )(ن?می) ", r"\1\2‌"),  # put zwnj after می, نمی
+    # attach the affix directly after a non-left-joining letter, where a zwnj
+    # would be invisible anyway
+    (
+        r"(?<=[^\n\d "
+        + PUNC_AFTER
+        + PUNC_BEFORE
+        + r"]["
+        + NON_LEFT_JOINING
+        + r"]) (تر(ین?)?|گری?|های?)(?=[ \n"
+        + PUNC_AFTER
+        + PUNC_BEFORE
+        + r"]|$)",
+        r"\1",
+    ),
     (
         r"(?<=[^\n\d "
         + PUNC_AFTER
