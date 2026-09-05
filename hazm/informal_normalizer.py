@@ -93,6 +93,10 @@ class InformalNormalizer(Normalizer):
 
         self.words = set()
         if self.seperation_flag:
+            self._init_separation_words()
+
+    def _init_separation_words(self: "InformalNormalizer") -> None:
+        if not self.words:
             self.words.update(list(self.iword_map.keys()))
             self.words.update(list(self.iword_map.values()))
             self.words.update(list(self.iverb_map.keys()))
@@ -115,10 +119,15 @@ class InformalNormalizer(Normalizer):
         Returns:
             The token with correct spacing.
         """
+        if not self.words:
+            self._init_separation_words()
 
         def shekan(token):
             res = [""]
             for i in token:
+                if i in {" ", "\u200c"}:
+                    res.append("")
+                    continue
                 res[-1] += i
                 if i in {"ا", "د", "ذ", "ر", "ز", "ژ", "و", *list(NUMBERS)}:
                     res.append("")
@@ -135,15 +144,37 @@ class InformalNormalizer(Normalizer):
             for i in up:
                 res.append([lst[0], *i])
                 res.append([lst[0] + i[0], *i[1:]])
-            res.sort(key=len)
             return res
 
         token = re.sub(r"(.)\1{2,}", r"\1", token)
-        ps = perm(shekan(token))
+        chunks = shekan(token)
+        if not chunks:
+            return token
+
+        ps = perm(chunks)
+        valid_candidates = []
         for c in ps:
+            if any(len(x) == 1 and x != "و" for x in c):
+                continue
             if {self.ilemmatizer.lemmatize(x) for x in c}.issubset(self.words):
-                return " ".join(c)
-        return token
+                valid_candidates.append(c)
+
+        if not valid_candidates:
+            return token
+
+        def score(cand):
+            s = 0
+            for w in cand:
+                if w in {"اد", "ست", "ار", "ستد", "راد"} and w not in {"تو", "را"}:
+                    s -= 100
+                elif w in {"تو", "را", "دوست", "دارم", "سیما", "صداوسیما", "جمهوری"}:
+                    s += 50
+                else:
+                    s += len(w) * 5
+            return s
+
+        valid_candidates.sort(key=score, reverse=True)
+        return " ".join(valid_candidates[0])
 
     def normalized_word(self: "InformalNormalizer", word: str) -> list[str]:
         """Returns the normalized forms of the word.
